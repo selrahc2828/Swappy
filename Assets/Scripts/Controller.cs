@@ -18,6 +18,9 @@ public class Controller : MonoBehaviour
     public Rigidbody rb;
     public Transform root;//pas utile actuellement voir pour les slope / angle à monter
     public Transform orientation;
+    public Transform playerObjRenderer;
+    public float renderRotationSpeed = 20f;
+
     public float moveForce;
     public float maxSpeed;
     private float rotationSpeed;
@@ -149,6 +152,9 @@ public class Controller : MonoBehaviour
 
         //moveDir = root.TransformDirection(new Vector3(moveInputVector.x, 0f, moveInputVector.y));
         moveDir = orientation.forward * moveInputVector.y + orientation.right * moveInputVector.x;
+        Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+        
+        playerObjRenderer.rotation = Quaternion.Slerp(playerObjRenderer.rotation, targetRotation, Time.deltaTime * renderRotationSpeed);
 
 
         if (Grounded())

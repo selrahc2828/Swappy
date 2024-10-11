@@ -17,6 +17,7 @@ public class ComponentStealer : MonoBehaviour
     public float radius;
     public LineRenderer line;
     public float longueur = 10f;
+    public LayerMask hitLayer;
 
     //public bool isStealing;
     public List<Component> listComportement = new List<Component>();
@@ -48,7 +49,7 @@ public class ComponentStealer : MonoBehaviour
 
         //if (Physics.SphereCast(_ray, radius, out _hit, Mathf.Infinity)) //mask
 
-        if (Physics.Raycast(castStealerPoint.position, castStealerPoint.forward, out _hit, Mathf.Infinity)) //mask
+        if (Physics.Raycast(castStealerPoint.position, castStealerPoint.forward, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
             if (_hit.collider == null)
             {
@@ -65,7 +66,7 @@ public class ComponentStealer : MonoBehaviour
     {
         //Debug.Log("StealComp  _mvtData.type : " + _mvtData.type);
         //isStealing = true;
-        if (Physics.Raycast(castStealerPoint.position, castStealerPoint.forward, out _hit, Mathf.Infinity)) //mask
+        if (Physics.Raycast(castStealerPoint.position, castStealerPoint.forward, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
             if (_hit.collider == null)
             {
@@ -96,7 +97,7 @@ public class ComponentStealer : MonoBehaviour
     {
         //Debug.Log("PasteComp  _mvtData.type : " + _mvtData.type);
         //isStealing = false;
-        if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out _hit, Mathf.Infinity)) //mask
+        if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
             if (_hit.collider == null || _hit.collider.GetComponent<Rigidbody>() == null)
             {
