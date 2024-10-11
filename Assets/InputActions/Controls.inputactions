@@ -2,7 +2,7 @@
     "name": "Controls",
     "maps": [
         {
-            "name": "PlayerGod",
+            "name": "Player",
             "id": "e392c65e-f392-42af-81ad-9456cbef46a3",
             "actions": [
                 {
@@ -63,6 +63,15 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "ab72754d-9bed-480a-8a6b-6b87694672c6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchCam",
+                    "type": "Button",
+                    "id": "aaaafa7e-e1b9-4ef9-92f4-4a8ec6fc9813",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -182,12 +191,34 @@
                 },
                 {
                     "name": "",
+                    "id": "554af14f-c7ee-447a-a265-89f70064c2f0",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7b054430-d555-40d3-8417-acf8dd7c8168",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e0a6e16-3d94-4f91-8fef-a44384c4d540",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "SwitchCam",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

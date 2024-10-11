@@ -21,6 +21,8 @@ public class ComponentStealer : MonoBehaviour
     //public bool isStealing;
     public List<Component> listComportement = new List<Component>();
     public Camera mainCam;
+    public Transform rayPointStrat;
+    public Transform castStealerPoint;
 
     [Header("Variation")]
     [Tooltip("Vol ou copie")]
@@ -41,12 +43,12 @@ public class ComponentStealer : MonoBehaviour
         RaycastHit _hit;
         Vector3 rayTail = mainCam.transform.position + mainCam.transform.forward * longueur;
         Ray _ray = new Ray(mainCam.transform.position, rayTail);
-        line.SetPosition(0, line.transform.position);
+        line.SetPosition(0, rayPointStrat.position);
         line.SetPosition(1, rayTail);
 
         //if (Physics.SphereCast(_ray, radius, out _hit, Mathf.Infinity)) //mask
 
-        if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out _hit, Mathf.Infinity)) //mask
+        if (Physics.Raycast(castStealerPoint.position, castStealerPoint.forward, out _hit, Mathf.Infinity)) //mask
         {
             if (_hit.collider == null)
             {
@@ -63,7 +65,7 @@ public class ComponentStealer : MonoBehaviour
     {
         //Debug.Log("StealComp  _mvtData.type : " + _mvtData.type);
         //isStealing = true;
-        if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out _hit, Mathf.Infinity)) //mask
+        if (Physics.Raycast(castStealerPoint.position, castStealerPoint.forward, out _hit, Mathf.Infinity)) //mask
         {
             if (_hit.collider == null)
             {

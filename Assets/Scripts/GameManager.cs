@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
         if (controls == null)
         {
             Debug.LogWarning("------ set controls ------");
-            controls = new Controls(); // pour rebind, sinon pas même instance
+            controls = new Controls();
         }
     }
 
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        controls.PlayerGod.Enable();
+        controls.Player.Enable();
     }
 
     // Update is called once per frame

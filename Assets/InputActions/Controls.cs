@@ -24,7 +24,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     ""name"": ""Controls"",
     ""maps"": [
         {
-            ""name"": ""PlayerGod"",
+            ""name"": ""Player"",
             ""id"": ""e392c65e-f392-42af-81ad-9456cbef46a3"",
             ""actions"": [
                 {
@@ -85,6 +85,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""ab72754d-9bed-480a-8a6b-6b87694672c6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchCam"",
+                    ""type"": ""Button"",
+                    ""id"": ""aaaafa7e-e1b9-4ef9-92f4-4a8ec6fc9813"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -204,12 +213,34 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""554af14f-c7ee-447a-a265-89f70064c2f0"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""7b054430-d555-40d3-8417-acf8dd7c8168"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e0a6e16-3d94-4f91-8fef-a44384c4d540"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""SwitchCam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -229,20 +260,21 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // PlayerGod
-        m_PlayerGod = asset.FindActionMap("PlayerGod", throwIfNotFound: true);
-        m_PlayerGod_Movement = m_PlayerGod.FindAction("Movement", throwIfNotFound: true);
-        m_PlayerGod_Look = m_PlayerGod.FindAction("Look", throwIfNotFound: true);
-        m_PlayerGod_CopySteal = m_PlayerGod.FindAction("CopySteal", throwIfNotFound: true);
-        m_PlayerGod_StopTime = m_PlayerGod.FindAction("StopTime", throwIfNotFound: true);
-        m_PlayerGod_PasteSteal = m_PlayerGod.FindAction("PasteSteal", throwIfNotFound: true);
-        m_PlayerGod_ReloadScene = m_PlayerGod.FindAction("ReloadScene", throwIfNotFound: true);
-        m_PlayerGod_Jump = m_PlayerGod.FindAction("Jump", throwIfNotFound: true);
+        // Player
+        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+        m_Player_CopySteal = m_Player.FindAction("CopySteal", throwIfNotFound: true);
+        m_Player_StopTime = m_Player.FindAction("StopTime", throwIfNotFound: true);
+        m_Player_PasteSteal = m_Player.FindAction("PasteSteal", throwIfNotFound: true);
+        m_Player_ReloadScene = m_Player.FindAction("ReloadScene", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_SwitchCam = m_Player.FindAction("SwitchCam", throwIfNotFound: true);
     }
 
     ~@Controls()
     {
-        UnityEngine.Debug.Assert(!m_PlayerGod.enabled, "This will cause a leak and performance issues, Controls.PlayerGod.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, Controls.Player.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -301,36 +333,38 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // PlayerGod
-    private readonly InputActionMap m_PlayerGod;
-    private List<IPlayerGodActions> m_PlayerGodActionsCallbackInterfaces = new List<IPlayerGodActions>();
-    private readonly InputAction m_PlayerGod_Movement;
-    private readonly InputAction m_PlayerGod_Look;
-    private readonly InputAction m_PlayerGod_CopySteal;
-    private readonly InputAction m_PlayerGod_StopTime;
-    private readonly InputAction m_PlayerGod_PasteSteal;
-    private readonly InputAction m_PlayerGod_ReloadScene;
-    private readonly InputAction m_PlayerGod_Jump;
-    public struct PlayerGodActions
+    // Player
+    private readonly InputActionMap m_Player;
+    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
+    private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_Look;
+    private readonly InputAction m_Player_CopySteal;
+    private readonly InputAction m_Player_StopTime;
+    private readonly InputAction m_Player_PasteSteal;
+    private readonly InputAction m_Player_ReloadScene;
+    private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_SwitchCam;
+    public struct PlayerActions
     {
         private @Controls m_Wrapper;
-        public PlayerGodActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Movement => m_Wrapper.m_PlayerGod_Movement;
-        public InputAction @Look => m_Wrapper.m_PlayerGod_Look;
-        public InputAction @CopySteal => m_Wrapper.m_PlayerGod_CopySteal;
-        public InputAction @StopTime => m_Wrapper.m_PlayerGod_StopTime;
-        public InputAction @PasteSteal => m_Wrapper.m_PlayerGod_PasteSteal;
-        public InputAction @ReloadScene => m_Wrapper.m_PlayerGod_ReloadScene;
-        public InputAction @Jump => m_Wrapper.m_PlayerGod_Jump;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerGod; }
+        public PlayerActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputAction @Look => m_Wrapper.m_Player_Look;
+        public InputAction @CopySteal => m_Wrapper.m_Player_CopySteal;
+        public InputAction @StopTime => m_Wrapper.m_Player_StopTime;
+        public InputAction @PasteSteal => m_Wrapper.m_Player_PasteSteal;
+        public InputAction @ReloadScene => m_Wrapper.m_Player_ReloadScene;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @SwitchCam => m_Wrapper.m_Player_SwitchCam;
+        public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerGodActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerGodActions instance)
+        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerGodActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerGodActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
@@ -352,9 +386,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @SwitchCam.started += instance.OnSwitchCam;
+            @SwitchCam.performed += instance.OnSwitchCam;
+            @SwitchCam.canceled += instance.OnSwitchCam;
         }
 
-        private void UnregisterCallbacks(IPlayerGodActions instance)
+        private void UnregisterCallbacks(IPlayerActions instance)
         {
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
@@ -377,23 +414,26 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @SwitchCam.started -= instance.OnSwitchCam;
+            @SwitchCam.performed -= instance.OnSwitchCam;
+            @SwitchCam.canceled -= instance.OnSwitchCam;
         }
 
-        public void RemoveCallbacks(IPlayerGodActions instance)
+        public void RemoveCallbacks(IPlayerActions instance)
         {
-            if (m_Wrapper.m_PlayerGodActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerGodActions instance)
+        public void SetCallbacks(IPlayerActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerGodActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerGodActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerGodActions @PlayerGod => new PlayerGodActions(this);
+    public PlayerActions @Player => new PlayerActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -412,7 +452,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_GamepadSchemeIndex];
         }
     }
-    public interface IPlayerGodActions
+    public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
@@ -421,5 +461,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnPasteSteal(InputAction.CallbackContext context);
         void OnReloadScene(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnSwitchCam(InputAction.CallbackContext context);
     }
 }
