@@ -21,6 +21,8 @@ public class Controller : MonoBehaviour
     public Transform playerObjRenderer;
     public float renderRotationSpeed = 20f;
 
+    public bool timeIsStop;
+
     public float moveForce;
     public float maxSpeed;
     private float rotationSpeed;
@@ -63,12 +65,13 @@ public class Controller : MonoBehaviour
         controls.Player.PasteSteal.performed += PasteComp;
         controls.Player.ReloadScene.performed += ReloadScene;
         controls.Player.Jump.performed += Jump;
-
+        
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
     }
 
-    private void OnDisable()
+private void OnDisable()
     {
         controls.Player.StopTime.performed -= StopTime;
         controls.Player.CopySteal.performed -= CopyStealComp;
@@ -81,9 +84,20 @@ public class Controller : MonoBehaviour
     void Update()
     {
 
-
-
         speedText.text = rb.velocity.magnitude.ToString();
+
+        if (timeIsStop)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Time.timeScale = 1;
+        }
 
     }
 
@@ -109,6 +123,8 @@ public class Controller : MonoBehaviour
         if (context.performed)
         {
             // if bool == true set false et vice versa
+
+            timeIsStop = !timeIsStop;
         }
     }
 
@@ -215,7 +231,7 @@ public class Controller : MonoBehaviour
         //    rb.velocity = moveVector;
         //}
 
-        root.eulerAngles = new Vector3(root.eulerAngles.x, mainCamera.transform.eulerAngles.y, mainCamera.transform.eulerAngles.z);
+        //root.eulerAngles = new Vector3(root.eulerAngles.x, mainCamera.transform.eulerAngles.y, mainCamera.transform.eulerAngles.z);
 
         //rb.AddForce(moveVector, ForceMode.Acceleration);
         //rb.velocity = moveVector;
@@ -223,7 +239,7 @@ public class Controller : MonoBehaviour
 
     void handleGravity()
     {
-        Debug.Log(rb.velocity.y);
+        //Debug.Log(rb.velocity.y);
 
         if (!Grounded())
         {

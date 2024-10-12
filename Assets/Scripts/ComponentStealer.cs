@@ -11,6 +11,12 @@ public class ComponentStealer : MonoBehaviour
     public TextMeshProUGUI surface;
     public TextMeshProUGUI lastSteal;
 
+    private Vector3 rayTail;
+    private Ray _ray;
+
+    public Controller controller;
+    public CameraController camController;
+
     [Header("Raycast et line render")]
     private RaycastHit _hit;
     [HideInInspector]
@@ -21,7 +27,7 @@ public class ComponentStealer : MonoBehaviour
 
     //public bool isStealing;
     public List<Component> listComportement = new List<Component>();
-    public Camera mainCam;
+    private Camera mainCam;
     public Transform rayPointStrat;
     public Transform castStealerPoint;
 
@@ -37,19 +43,27 @@ public class ComponentStealer : MonoBehaviour
     void Start()
     {
         lastSteal.text = "";
+        mainCam = camController.mainCamera;
+
     }
 
     void Update()
     {
         RaycastHit _hit;
-        Vector3 rayTail = mainCam.transform.position + mainCam.transform.forward * longueur;
-        Ray _ray = new Ray(mainCam.transform.position, rayTail);
+
+        mainCam = camController.mainCamera;
+
+        _ray = mainCam.ScreenPointToRay(Input.mousePosition);
+
+        rayTail = mainCam.transform.position + mainCam.transform.forward * longueur;
         line.SetPosition(0, rayPointStrat.position);
         line.SetPosition(1, rayTail);
 
+
+
         //if (Physics.SphereCast(_ray, radius, out _hit, Mathf.Infinity)) //mask
 
-        if (Physics.Raycast(castStealerPoint.position, castStealerPoint.forward, out _hit, Mathf.Infinity, hitLayer)) //mask
+        if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer))// (Physics.Raycast(castStealerPoint.position, castStealerPoint.forward, out _hit, Mathf.Infinity, hitLayer))
         {
             if (_hit.collider == null)
             {
@@ -66,7 +80,7 @@ public class ComponentStealer : MonoBehaviour
     {
         //Debug.Log("StealComp  _mvtData.type : " + _mvtData.type);
         //isStealing = true;
-        if (Physics.Raycast(castStealerPoint.position, castStealerPoint.forward, out _hit, Mathf.Infinity, hitLayer)) //mask
+        if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
             if (_hit.collider == null)
             {
@@ -89,7 +103,6 @@ public class ComponentStealer : MonoBehaviour
                         Destroy(item);// ou disable
                 }
             }
-
         }
     }
 
@@ -97,7 +110,7 @@ public class ComponentStealer : MonoBehaviour
     {
         //Debug.Log("PasteComp  _mvtData.type : " + _mvtData.type);
         //isStealing = false;
-        if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out _hit, Mathf.Infinity, hitLayer)) //mask
+        if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
             if (_hit.collider == null || _hit.collider.GetComponent<Rigidbody>() == null)
             {
@@ -124,7 +137,7 @@ public class ComponentStealer : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(mainCam.transform.position, mainCam.transform.position + mainCam.transform.forward * 10);
+        //Gizmos.color = Color.blue;
+        //Gizmos.DrawLine(mainCam.transform.position, mainCam.transform.position + mainCam.transform.forward * 10);
     }
 }

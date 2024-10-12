@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
@@ -16,8 +17,14 @@ public class CameraController : MonoBehaviour
 
     public float sensitivity = 100f;
 
+    [Header("Cinemachine Brain")]
+    public CinemachineBrain Brain;
+    [Tooltip("Vitesse de transition entre camera")]
+    public float blendCamSpeed;
+
     [Header("FPS")]
     public Camera FPSCam;
+    public GameObject FPSCamObj;
     public MeshRenderer eyes;
     private float _xRot;
     [Tooltip("Vers le bas")]
@@ -29,6 +36,7 @@ public class CameraController : MonoBehaviour
     [Header("TPS")]
     [Tooltip("Groupe Cam cinemachine")]
     public Camera TPSCam_CM;
+    public GameObject TPSCam_CMObj;
     public float rotationPlayerSpeed;
 
     [Header("Variations")]
@@ -39,14 +47,16 @@ public class CameraController : MonoBehaviour
     {
         controls = GameManager.controls;
         controls.Player.SwitchCam.performed += SwitchCam;
+
         mainCamera = FPSCam;
+        Brain.m_DefaultBlend.m_Time = blendCamSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        FPSCam.enabled = isFPS;
-        TPSCam_CM.enabled = !isFPS;
+        FPSCamObj.SetActive(isFPS);
+        TPSCam_CMObj.SetActive(!isFPS);
 
         if (isFPS)
         {
@@ -75,6 +85,8 @@ public class CameraController : MonoBehaviour
         }
         else
         {
+            // changer sensi
+
             mainCamera = TPSCam_CM;
             //mainCamera.transform.position = cameraTPSPos.position;
             //eyes.enabled = false;

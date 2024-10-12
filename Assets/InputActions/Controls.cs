@@ -115,7 +115,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""52d2ddea-8b7b-4160-a1e2-f3812faa0c94"",
-                    ""path"": ""<Keyboard>/alt"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard"",
