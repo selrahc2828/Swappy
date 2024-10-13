@@ -29,7 +29,7 @@ public class ComponentStealer : MonoBehaviour
     public List<Component> listComportement = new List<Component>();
     private Camera mainCam;
     public Transform rayPointStrat;
-    public Transform castStealerPoint;
+    public Transform castStealerPoint;//à suppr
 
     [Header("Variation")]
     [Tooltip("Vol ou copie")]
@@ -51,15 +51,32 @@ public class ComponentStealer : MonoBehaviour
     {
         RaycastHit _hit;
 
-        mainCam = camController.mainCamera;
+        mainCam = camController.Brain.OutputCamera;
 
+        //Vector3 newMousePos = new Vector3(Mathf.Abs(Input.mousePosition.x), Mathf.Abs(Input.mousePosition.y), Mathf.Abs(Input.mousePosition.z));
         _ray = mainCam.ScreenPointToRay(Input.mousePosition);
 
-        rayTail = mainCam.transform.position + mainCam.transform.forward * longueur;
-        line.SetPosition(0, rayPointStrat.position);
-        line.SetPosition(1, rayTail);
+        //rayTail = mainCam.transform.position + mainCam.transform.forward * longueur;
 
+        float maxDistance = 500f;
+        // Si le raycast touche un objet
+        if (Physics.Raycast(_ray, out _hit, maxDistance, hitLayer))
+        {
+            // Positionner les points du LineRenderer pour dessiner la ligne
+            line.SetPosition(0, rayPointStrat.position);  // Début de la ligne (caméra)
+            line.SetPosition(1, _hit.point);  // Fin de la ligne (point touché par le rayon)
 
+            Debug.DrawLine(mainCam.transform.position, _hit.point, Color.red);
+        }
+        else
+        {
+            // Si rien n'est touché, on dessine la ligne jusqu'à la distance max du raycast
+            Vector3 farPoint = _ray.GetPoint(maxDistance);
+            line.SetPosition(0, rayPointStrat.position);  // Début de la ligne (caméra)
+            line.SetPosition(1, farPoint);  // Fin de la ligne (point éloigné)
+            Debug.DrawLine(mainCam.transform.position, farPoint, Color.green);
+
+        }
 
         //if (Physics.SphereCast(_ray, radius, out _hit, Mathf.Infinity)) //mask
 
@@ -73,6 +90,10 @@ public class ComponentStealer : MonoBehaviour
             //Debug.Log(_hit.collider.gameObject.name);
             //nameText.text = _hit.collider.gameObject.name;
             surface.SetText(_hit.collider.gameObject.name);
+        }
+        else
+        {
+            surface.SetText("");
         }
     }
 
