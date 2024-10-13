@@ -7,6 +7,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public static Controls controls;
 
+    [Header("Couleurs d'interaction")]
+    public Material defaultColor;
+    public Material interactAVolerMat;
+    public Material interactRienAVolerMat;
+    public Material interactNOTPossibleMat;
+
     private void OnEnable()
     {
         if (controls == null)
