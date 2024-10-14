@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bouncy : Comportment
+public class Physics_Stealable : Comportment
 {
     public PhysicMaterial bouncyMaterial;
 
