@@ -248,6 +248,37 @@ public class ComponentStealer : MonoBehaviour
         }
     }
 
+    public void PasteAtMe()
+    {
+        //si l'objectStolen existe (on a bien un script volé)
+        if (objectStolen != null && objectStolen.GetComponent<Collider>() != null)
+        {
+            GameObject objectGiven = gameObject; //à modif plus tard
+
+            //on parcour le dictionnaire des scripts a appliquer
+            foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
+            {
+                // Ajoute dynamiquement un script du même type sur l'objet cible
+                Component newComponent = objectGiven.AddComponent(script.Value);
+
+                //on parcour les variable du script qu'on vien d'ajouter
+                foreach (FieldInfo field in script.Value.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+                {
+                    //on leur donne les même valeur qu'au moment ou on a volé le script
+                    field.SetValue(newComponent, field.GetValue(script.Key));
+                }
+                //on détruit le script dans l'objet d'origine
+                Destroy(script.Key);
+                Debug.Log("Script " + script.Value.Name + " copié sur " + objectGiven.name + " et supprimé de " + objectStolen.name);
+            }
+            //on remet a zero les dictionnaire et les objets sauvegardé
+            steals.Clear();
+            lastSteal.text = "";
+            components = null;
+            objectStolen = null;
+        }
+    }
+
     void OnDrawGizmos()
     {
         //Gizmos.color = Color.blue;

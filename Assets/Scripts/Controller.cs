@@ -63,6 +63,7 @@ public class Controller : MonoBehaviour
         controls.Player.StopTime.performed += StopTime;
         controls.Player.CopySteal.performed += CopyStealComp;
         controls.Player.PasteSteal.performed += PasteComp;
+        controls.Player.PasteMe.performed += PasteAtMe;
         controls.Player.ReloadScene.performed += ReloadScene;
         controls.Player.Jump.performed += Jump;
         
@@ -146,6 +147,16 @@ private void OnDisable()
             //Debug.Log("PasteComp  _mvtData.type : " + _mvtData.type);
             //isStealing = false;
             stealPasteSript.PasteComp();
+        }
+    }
+
+    private void PasteAtMe(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            //Debug.Log("PasteComp  _mvtData.type : " + _mvtData.type);
+            //isStealing = false;
+            stealPasteSript.PasteAtMe();
         }
     }
 

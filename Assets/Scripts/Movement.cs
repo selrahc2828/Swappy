@@ -19,7 +19,7 @@ public class Movement : Comportment
     public float angle;
     public float force;
     public float interval;
-    private float saveTime;
+    public float useTime;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class Movement : Comportment
             //StartCoroutine("AutoJump");
         }
 
-        saveTime = interval;
+        useTime = interval;
     }
 
     // Update is called once per frame
@@ -41,11 +41,11 @@ public class Movement : Comportment
             case ListMovement.Null:
                 break;
             case ListMovement.Move:
-                interval -= Time.deltaTime;
-                if (interval < 0f)
+                useTime -= Time.deltaTime;
+                if (useTime < 0f)
                 {
                     AutoJumpBancale();
-                    interval = saveTime;
+                    useTime = interval;
                 }
                 break;
             case ListMovement.Rotate:
