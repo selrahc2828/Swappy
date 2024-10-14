@@ -64,7 +64,6 @@ public class Controller : MonoBehaviour
         controls.Player.CopySteal.performed += CopyStealComp;
         controls.Player.PasteSteal.performed += PasteComp;
         controls.Player.PasteMe.performed += PasteAtMe;
-        controls.Player.ReloadScene.performed += ReloadScene;
         controls.Player.Jump.performed += Jump;
         
         Cursor.lockState = CursorLockMode.Locked;
@@ -77,7 +76,6 @@ private void OnDisable()
         controls.Player.StopTime.performed -= StopTime;
         controls.Player.CopySteal.performed -= CopyStealComp;
         controls.Player.PasteSteal.performed -= PasteComp;
-        controls.Player.ReloadScene.performed -= ReloadScene;
         controls.Player.Jump.performed -= Jump;
     }
 
@@ -112,11 +110,6 @@ private void OnDisable()
             rb.drag = groundDrag;//applique un "frottement" par defaut au sol
         else
             rb.drag = 0f;//ou direct velocity à 0
-    }
-
-    private void ReloadScene(InputAction.CallbackContext context)
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void StopTime(InputAction.CallbackContext context)
