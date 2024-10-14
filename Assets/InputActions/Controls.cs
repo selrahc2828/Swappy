@@ -82,6 +82,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""ResetListComportement"",
+                    ""type"": ""Button"",
+                    ""id"": ""e417ad69-67cb-479e-b115-5aea522daf60"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ReloadScene"",
                     ""type"": ""Button"",
                     ""id"": ""c3c1b66b-7535-4f06-926d-8d5db4ddc621"",
@@ -263,6 +272,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""PasteMe"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f69c9b20-1ae0-471b-8954-cec46fe387d0"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetListComportement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -288,6 +308,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_StopTime = m_Player.FindAction("StopTime", throwIfNotFound: true);
         m_Player_PasteSteal = m_Player.FindAction("PasteSteal", throwIfNotFound: true);
         m_Player_PasteMe = m_Player.FindAction("PasteMe", throwIfNotFound: true);
+        m_Player_ResetListComportement = m_Player.FindAction("ResetListComportement", throwIfNotFound: true);
         m_Player_ReloadScene = m_Player.FindAction("ReloadScene", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SwitchCam = m_Player.FindAction("SwitchCam", throwIfNotFound: true);
@@ -363,6 +384,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_StopTime;
     private readonly InputAction m_Player_PasteSteal;
     private readonly InputAction m_Player_PasteMe;
+    private readonly InputAction m_Player_ResetListComportement;
     private readonly InputAction m_Player_ReloadScene;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SwitchCam;
@@ -376,6 +398,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @StopTime => m_Wrapper.m_Player_StopTime;
         public InputAction @PasteSteal => m_Wrapper.m_Player_PasteSteal;
         public InputAction @PasteMe => m_Wrapper.m_Player_PasteMe;
+        public InputAction @ResetListComportement => m_Wrapper.m_Player_ResetListComportement;
         public InputAction @ReloadScene => m_Wrapper.m_Player_ReloadScene;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @SwitchCam => m_Wrapper.m_Player_SwitchCam;
@@ -406,6 +429,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PasteMe.started += instance.OnPasteMe;
             @PasteMe.performed += instance.OnPasteMe;
             @PasteMe.canceled += instance.OnPasteMe;
+            @ResetListComportement.started += instance.OnResetListComportement;
+            @ResetListComportement.performed += instance.OnResetListComportement;
+            @ResetListComportement.canceled += instance.OnResetListComportement;
             @ReloadScene.started += instance.OnReloadScene;
             @ReloadScene.performed += instance.OnReloadScene;
             @ReloadScene.canceled += instance.OnReloadScene;
@@ -437,6 +463,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PasteMe.started -= instance.OnPasteMe;
             @PasteMe.performed -= instance.OnPasteMe;
             @PasteMe.canceled -= instance.OnPasteMe;
+            @ResetListComportement.started -= instance.OnResetListComportement;
+            @ResetListComportement.performed -= instance.OnResetListComportement;
+            @ResetListComportement.canceled -= instance.OnResetListComportement;
             @ReloadScene.started -= instance.OnReloadScene;
             @ReloadScene.performed -= instance.OnReloadScene;
             @ReloadScene.canceled -= instance.OnReloadScene;
@@ -489,6 +518,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnStopTime(InputAction.CallbackContext context);
         void OnPasteSteal(InputAction.CallbackContext context);
         void OnPasteMe(InputAction.CallbackContext context);
+        void OnResetListComportement(InputAction.CallbackContext context);
         void OnReloadScene(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSwitchCam(InputAction.CallbackContext context);

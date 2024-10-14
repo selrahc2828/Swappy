@@ -15,6 +15,13 @@ public class GameManager : MonoBehaviour
     public Material interactRienAVolerMat;
     public Material interactNOTPossibleMat;
 
+    public string scene1;
+    public string scene2;
+    public string scene3;
+
+    public KeyCode keyForScene1 = KeyCode.Alpha1;
+    public KeyCode keyForScene2 = KeyCode.Alpha2;
+    public KeyCode keyForScene3 = KeyCode.Alpha3;
     private void OnEnable()
     {
         if (controls == null)
@@ -52,11 +59,39 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Vérifier si la touche pour la scène 1 est pressée.
+        if (Input.GetKeyDown(keyForScene1))
+        {
+            ChangeScene(scene1);
+        }
 
+        // Vérifier si la touche pour la scène 2 est pressée.
+        if (Input.GetKeyDown(keyForScene2))
+        {
+            ChangeScene(scene2);
+        }
+
+        // Vérifier si la touche pour la scène 3 est pressée.
+        if (Input.GetKeyDown(keyForScene3))
+        {
+            ChangeScene(scene3);
+        }
     }
 
     private void ReloadScene(InputAction.CallbackContext context)
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void ChangeScene(string sceneName)
+    {
+        if (!string.IsNullOrEmpty(sceneName))
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            Debug.LogError("Le nom de la scène n'est pas défini !");
+        }
     }
 }
