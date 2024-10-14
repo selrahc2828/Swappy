@@ -110,6 +110,20 @@ public class ComponentStealer : MonoBehaviour
         //isStealing = true;
         if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
+
+            if (_hit.transform.gameObject.CompareTag("Spawner"))
+            {
+                objectStolen = _hit.collider.gameObject;
+                ModifiedSpawner SpawnerScript = objectStolen.GetComponent<ModifiedSpawner>();
+                steals = SpawnerScript.StealsToApply;
+
+                objectStolen = null;
+                SpawnerScript.StealsToApply = null;
+
+                Debug.Log("Got from Spawner these Steals: " + steals);
+                return;
+            }
+
             if (_hit.collider == null)
             {
                 return;
@@ -195,6 +209,22 @@ public class ComponentStealer : MonoBehaviour
         if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
             Debug.LogWarning("Hit ray donné : " + _hit.collider.name);
+
+            if (_hit.transform.gameObject.tag == "Spawner")
+            {
+                GameObject objectGiven = _hit.collider.gameObject;
+                ModifiedSpawner SpawnerScript = objectGiven.GetComponent<ModifiedSpawner>();
+                //SpawnerScript.StealsToApply = steals;
+
+                foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
+                {
+                    SpawnerScript.StealsToApply.TryAdd(script.Key, script.Value);
+                    Debug.Log("Applied to Spawner: " + script);
+                }
+
+                return;
+            }
+
             if (_hit.collider == null || _hit.collider.GetComponent<Rigidbody>() == null)
             {
                 return;
