@@ -15,7 +15,6 @@ public class CameraController : MonoBehaviour
     public Transform cameraFPSPos;
     public Transform cameraTPSPos;
 
-    public float sensitivity = 100f;
 
     [Header("Cinemachine Brain")]
     public CinemachineBrain Brain;
@@ -32,12 +31,16 @@ public class CameraController : MonoBehaviour
     [Tooltip("Vers le haut")]
     public float xRotMax;
     private float _yRot;
+    public float sensitivity = 100f;
 
     [Header("TPS")]
     [Tooltip("Groupe Cam cinemachine")]
     public Camera TPSCam_CM;
     public GameObject TPSCam_CMObj;
     public float rotationPlayerSpeed;
+    public float xAxisSensitivity = 300f;
+    public float yAxisSensitivity = 2f;
+    public CinemachineFreeLook cinemachineFreeLook;
 
     [Header("Variations")]
     public bool isFPS = true;
@@ -88,6 +91,12 @@ public class CameraController : MonoBehaviour
             // changer sensi
 
             mainCamera = TPSCam_CM;
+            if (cinemachineFreeLook != null)
+            {
+                cinemachineFreeLook.m_XAxis.m_MaxSpeed = xAxisSensitivity;
+                cinemachineFreeLook.m_YAxis.m_MaxSpeed = yAxisSensitivity;
+            }
+
             //mainCamera.transform.position = cameraTPSPos.position;
             //eyes.enabled = false;
 
