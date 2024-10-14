@@ -132,6 +132,7 @@ private void OnDisable()
     {
         if (context.performed)
         {
+
             //Debug.Log("StealComp  _mvtData.type : " + _mvtData.type);
             //isStealing = true;
             stealPasteSript.CopyStealComp();
