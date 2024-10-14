@@ -136,6 +136,8 @@ public class ComponentStealer : MonoBehaviour
                 }
                 //on clear le dictionnaire
                 steals.Clear();
+                lastSteal.text = "";
+
             }
             #endregion
 
@@ -161,6 +163,7 @@ public class ComponentStealer : MonoBehaviour
                             steals.Add(component, type);
                             // Désactive le script en le mettant inactif
                             component.enabled = false;
+                            lastSteal.text += component.name + " - " + type + "\n";
                         }
                     }
                 }
@@ -191,6 +194,7 @@ public class ComponentStealer : MonoBehaviour
         //isStealing = false;
         if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
+            Debug.LogWarning("Hit ray donné : " + _hit.collider.name);
             if (_hit.collider == null || _hit.collider.GetComponent<Rigidbody>() == null)
             {
                 return;
@@ -198,7 +202,7 @@ public class ComponentStealer : MonoBehaviour
             //si l'objectStolen existe (on a bien un script volé)
             if (objectStolen != null && objectStolen.GetComponent<Collider>() != null)
             {
-                GameObject objectGiven = gameObject;
+                GameObject objectGiven = _hit.collider.gameObject;
 
                 //on parcour le dictionnaire des scripts a appliquer
                 foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
@@ -218,6 +222,7 @@ public class ComponentStealer : MonoBehaviour
                 }
                 //on remet a zero les dictionnaire et les objets sauvegardé
                 steals.Clear();
+                lastSteal.text = "";
                 components = null;
                 objectStolen = null;
                 #region legacy code

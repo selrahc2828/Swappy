@@ -21,19 +21,29 @@ public class Destruct : Comportment
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        StartCoroutine("AutoDestruct");
+        //StartCoroutine("AutoDestruct");
     }
 
     // Update is called once per frame
     void Update()
     {
+        lifeTime -= Time.deltaTime;
+        if (lifeTime < 0f)
+        {
+            Boom();
+        }
     }
 
     IEnumerator AutoDestruct()
     {
-
+        //"marche plus" car on ne supprime plus on desactive
         yield return new WaitForSeconds(lifeTime);
+        Boom();
+    }
 
+
+    public void Boom()
+    {
         if (prefab)
         {
             GameObject souffle = Instantiate(prefab, transform.position, Quaternion.identity);
@@ -52,9 +62,7 @@ public class Destruct : Comportment
             }
         }
         Destroy(gameObject);
-
     }
-
 
     void OnDrawGizmos()
     {
