@@ -58,7 +58,7 @@ public class Velocity_Stealable : Comportment
     {
         if (rb != null)
         {
-            rb.velocity = savedVelocity;
+            rb.velocity += savedVelocity;
             //rb.angularVelocity = savedAngularVelocity;
             saved = false;
         }
@@ -69,7 +69,7 @@ public class Velocity_Stealable : Comportment
         {
             rb.velocity = Vector3.zero; // Réinitialise la vélocité à zéro
             //rb.angularVelocity = Vector3.zero; // Réinitialise la vélocité angulaire à zéro
-            rb.useGravity = false;
+            //rb.useGravity = false;
         }
     }
 }
