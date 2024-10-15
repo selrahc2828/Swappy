@@ -115,6 +115,7 @@ public class ComponentStealer : MonoBehaviour
             {
                 objectStolen = _hit.collider.gameObject;
                 ModifiedSpawner SpawnerScript = objectStolen.GetComponent<ModifiedSpawner>();
+                steals = null;
                 steals = SpawnerScript.StealsToApply;
 
                 objectStolen = null;
@@ -214,13 +215,16 @@ public class ComponentStealer : MonoBehaviour
             {
                 GameObject objectGiven = _hit.collider.gameObject;
                 ModifiedSpawner SpawnerScript = objectGiven.GetComponent<ModifiedSpawner>();
-                //SpawnerScript.StealsToApply = steals;
 
-                foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
+                if (steals != null)
                 {
-                    SpawnerScript.StealsToApply.TryAdd(script.Key, script.Value);
-                    Debug.Log("Applied to Spawner: " + script);
+                    foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
+                    {
+                        SpawnerScript.StealsToApply.TryAdd(script.Key, script.Value);
+                    }
+
                 }
+
 
                 return;
             }
