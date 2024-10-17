@@ -42,16 +42,16 @@ public class ComponentStealer : MonoBehaviour
     [Tooltip("Copie1DonneEtPerd = Celui de Charles, 1 seul copie possible et on la perd quand on la donne \n " +
         "CopieMultipleEtConserve = Celui de Greg, possible de voler plusieurs et de tout donner en 1 fois, on les garde après")]
     public TypeCopy typeCopy;
+
+    [Header("Pour CopieMultipleEtConserve")]
     [Tooltip("Vol ou copie")]
     public bool isSteal;
-    public bool copyPasteSpawner = false;
-    [Header("Pour CopieMultipleEtConserve")]
     public int maxSteal;
     public int nbSteal;
     public MonoBehaviour[] components;
 
     [Header("Pour Copie1DonneEtPerd_DonneMoi")]
-
+    public bool copyPasteSpawner = false;
     public GameObject objectStolen;
     public Dictionary<MonoBehaviour, System.Type> steals;
     public System.Type type;
