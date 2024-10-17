@@ -6595,9 +6595,13 @@ MonoBehaviour:
   listComportement: []
   rayPointStrat: {fileID: 2086075545}
   castStealerPoint: {fileID: 69783398}
+  typeCopy: 0
   isSteal: 0
-  objectStolen: {fileID: 0}
+  copyPasteSpawner: 0
+  maxSteal: 0
+  nbSteal: 0
   components: []
+  objectStolen: {fileID: 0}
 --- !u!114 &932118891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6775,9 +6779,13 @@ MonoBehaviour:
   listComportement: []
   rayPointStrat: {fileID: 0}
   castStealerPoint: {fileID: 0}
+  typeCopy: 0
   isSteal: 0
-  objectStolen: {fileID: 0}
+  copyPasteSpawner: 0
+  maxSteal: 0
+  nbSteal: 0
   components: []
+  objectStolen: {fileID: 0}
 --- !u!114 &963194231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6870,7 +6878,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c1d5c7c92c09bf043a7eb3e7755af18c, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -11656,9 +11665,8 @@ GameObject:
   - component: {fileID: 1927504555}
   - component: {fileID: 1927504559}
   - component: {fileID: 1927504561}
-  - component: {fileID: 1927504564}
   - component: {fileID: 1927504560}
-  - component: {fileID: 1927504563}
+  - component: {fileID: 1927504562}
   m_Layer: 6
   m_Name: -----Player-----
   m_TagString: Untagged
@@ -11778,13 +11786,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927504554}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b3ba24d15cf88c45a87d65baffb0817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 932118888}
-  stealPasteSript: {fileID: 0}
+  stealPasteSript: {fileID: 1927504562}
   speedText: {fileID: 67745246}
   rb: {fileID: 1927504559}
   root: {fileID: 0}
@@ -11803,7 +11811,7 @@ MonoBehaviour:
   floorMask:
     serializedVersion: 2
     m_Bits: 8
---- !u!114 &1927504563
+--- !u!114 &1927504562
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11812,7 +11820,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1927504554}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 601cf7df88debd84f81238a097078bfe, type: 3}
+  m_Script: {fileID: 11500000, guid: 6db42a1724a255e4c86920b80e97e673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   surface: {fileID: 380506810}
@@ -11828,43 +11836,13 @@ MonoBehaviour:
   listComportement: []
   rayPointStrat: {fileID: 1208497606}
   castStealerPoint: {fileID: 0}
+  typeCopy: 1
   isSteal: 1
+  copyPasteSpawner: 0
   maxSteal: 5
   nbSteal: 0
-  objectStolen: {fileID: 0}
   components: []
---- !u!114 &1927504564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1927504554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fee1fea7a123ce41a9d55651c85f41e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 1047841822}
-  stealPasteSript: {fileID: 1927504563}
-  speedText: {fileID: 67745246}
-  rb: {fileID: 1927504559}
-  root: {fileID: 1842890250}
-  orientation: {fileID: 1708632238}
-  playerObjRenderer: {fileID: 2108262117}
-  renderRotationSpeed: 20
-  timeIsStop: 0
-  moveForce: 70
-  maxSpeed: 100
-  groundDrag: 4
-  gravityForceY: 5
-  jumpForce: 30
-  airModifier: 0.1
-  groundCheck: {fileID: 1600777112}
-  groundCheckRadius: 0.2
-  floorMask:
-    serializedVersion: 2
-    m_Bits: 8
+  objectStolen: {fileID: 0}
 --- !u!1 &1960348704
 GameObject:
   m_ObjectHideFlags: 3
@@ -13262,7 +13240,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c1d5c7c92c09bf043a7eb3e7755af18c, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

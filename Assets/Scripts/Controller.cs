@@ -173,9 +173,13 @@ private void OnDisable()
 
         //moveDir = root.TransformDirection(new Vector3(moveInputVector.x, 0f, moveInputVector.y));
         moveDir = orientation.forward * moveInputVector.y + orientation.right * moveInputVector.x;
-        Quaternion targetRotation = Quaternion.LookRotation(moveDir);
-        
-        playerObjRenderer.rotation = Quaternion.Slerp(playerObjRenderer.rotation, targetRotation, Time.deltaTime * renderRotationSpeed);
+        Quaternion targetRotation;
+        if (moveDir != Vector3.zero)
+        {
+            targetRotation = Quaternion.LookRotation(moveDir);
+            playerObjRenderer.rotation = Quaternion.Slerp(playerObjRenderer.rotation, targetRotation, Time.deltaTime * renderRotationSpeed);
+        }
+
 
 
         if (Grounded())
