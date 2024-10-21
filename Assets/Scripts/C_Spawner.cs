@@ -14,8 +14,6 @@ public class C_Spawner : Comportment
     {
         spawnTimer += Time.deltaTime;
 
-        CheckNewComponents();
-
         if (spawnTimer > spawnTime)
         {
             GameObject instantiatedObject = Instantiate(objectSpawned, transform.position, Quaternion.identity);
