@@ -24,7 +24,7 @@ public class ColorInteract : MonoBehaviour
         _interactRienAVolerMat = GameManager.Instance.interactRienAVolerMat;
 
         //si pas de champs renseigné, on lui ajoute lui donne le material sur l'objet, sinon blanc
-        Debug.Log("_startColor : " + _startColor);
+        //Debug.Log("_startColor : " + _startColor);
         if (_startColor == null)
         {
             if (GetComponent<MeshRenderer>() != null )

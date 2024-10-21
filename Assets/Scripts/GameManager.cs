@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static Controls controls;
-
+    public CameraController camControllerScript;
     [Header("Couleurs d'interaction")]
     public Material defaultColor;
     public Material interactAVolerMat;
@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     {
         if (controls == null)
         {
-            Debug.LogWarning("------ set controls ------");
+            //Debug.LogWarning("------ set controls ------");
             controls = new Controls();
         }
     }
@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
         controls.Player.Enable();
 
         controls.Player.ReloadScene.performed += ReloadScene;
+
+        camControllerScript = FindObjectOfType<CameraController>();
 
     }
 
