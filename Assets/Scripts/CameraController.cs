@@ -79,7 +79,7 @@ public class CameraController : MonoBehaviour
             // roation player sur Y
             float mouseX = _moveMouseVector.x * sensitivity * Time.deltaTime;
             _yRot += mouseX;
-            //player.Rotate(Vector3.up * _yRot);
+            //player.LookAt(mainCamera.transform.forward);
 
             // rotation camera sur x (bas/haut)
             float mouseY = _moveMouseVector.y * sensitivity * Time.deltaTime;
@@ -89,7 +89,7 @@ public class CameraController : MonoBehaviour
             mainCamera.transform.localRotation = Quaternion.Euler(_xRot, _yRot, 0f);// y à 0f si cam dans player
 
             orientation.localRotation = Quaternion.Euler(0f, _yRot, 0f); // pour player dans le controller
-
+            player.rotation = Quaternion.Euler(0f, _yRot, 0f);
         }
         else
         {
