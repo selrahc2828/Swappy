@@ -9,42 +9,46 @@ public class ModifiedSpawner : MonoBehaviour
     public float SpawnRate;
     public Transform spwanPoint;
     public GameObject prefab;
-
     public Dictionary<MonoBehaviour, System.Type> StealsToApply;
+
+    private float timer;
 
     void Start()
     {
         StealsToApply = new Dictionary<MonoBehaviour, System.Type>();
-        StartCoroutine("Spawn");
     }
 
-    IEnumerator Spawn()
+    private void Update()
     {
-
-        while (true)
+        timer += Time.deltaTime;
+        if (timer >= SpawnRate)
         {
-            yield return new WaitForSeconds(SpawnRate);
+            SpawnObject();
+            timer = 0;
+        }
+    }
 
-            if (prefab)
+    private void SpawnObject()
+    {
+        if (prefab)
+        {
+            GameObject InstantiatedObject = Instantiate(prefab, spwanPoint.position, Quaternion.identity);
+
+            if (StealsToApply != null)
             {
-                GameObject InstantiatedObject = Instantiate(prefab, spwanPoint.position, Quaternion.identity);
-
-                if (StealsToApply != null)
+                foreach (KeyValuePair<MonoBehaviour, System.Type> script in StealsToApply)
                 {
-                    foreach (KeyValuePair<MonoBehaviour, System.Type> script in StealsToApply)
-                    {
-                        Component newComponent = InstantiatedObject.AddComponent(script.Value);
+                    Component newComponent = InstantiatedObject.AddComponent(script.Value);
 
-                        foreach (FieldInfo field in script.Value.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
-                        {
-                            field.SetValue(newComponent, field.GetValue(script.Key));
-                            
-                        }
+                    foreach (FieldInfo field in script.Value.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+                    {
+                        field.SetValue(newComponent, field.GetValue(script.Key));
+
                     }
                 }
-
-                InstantiatedObject = null;
             }
+            InstantiatedObject = null;
         }
     }
 }
+
