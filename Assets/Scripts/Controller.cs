@@ -10,6 +10,8 @@ public class Controller : MonoBehaviour
     public static Controls controls;
     public Camera mainCamera;
     public ComponentStealer stealPasteSript;
+    public GrabObject carryingScript;
+    
     //private CameraController cameraScript;
 
     public TextMeshProUGUI speedText;
@@ -65,7 +67,8 @@ public class Controller : MonoBehaviour
         controls.Player.PasteSteal.performed += PasteComp;
         controls.Player.PasteMe.performed += PasteAtMe;
         controls.Player.Jump.performed += Jump;
-        
+        controls.Player.GrabDrop.performed += GrabAndDrop;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -77,6 +80,8 @@ private void OnDisable()
         controls.Player.CopySteal.performed -= CopyStealComp;
         controls.Player.PasteSteal.performed -= PasteComp;
         controls.Player.Jump.performed -= Jump;
+        controls.Player.GrabDrop.performed -= GrabAndDrop;
+
     }
 
     // Update is called once per frame
@@ -167,6 +172,25 @@ private void OnDisable()
             }
         }
     }
+    void GrabAndDrop(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (carryingScript)
+            {
+                if (carryingScript.isCarrying)
+                {
+                    carryingScript.Drop();
+                }
+                else
+                {
+                    carryingScript.Carrying();
+
+                }
+
+            }
+        }
+    }
 
     void handleMovement()
     {
@@ -174,7 +198,7 @@ private void OnDisable()
         //moveDir = root.TransformDirection(new Vector3(moveInputVector.x, 0f, moveInputVector.y));
         moveDir = orientation.forward * moveInputVector.y + orientation.right * moveInputVector.x;
         Quaternion targetRotation;
-        if (moveDir != Vector3.zero)
+        if (moveDir != Vector3.zero && !GameManager.Instance.camControllerScript.isFPS)
         {
             targetRotation = Quaternion.LookRotation(moveDir);
             playerObjRenderer.rotation = Quaternion.Slerp(playerObjRenderer.rotation, targetRotation, Time.deltaTime * renderRotationSpeed);

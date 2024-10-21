@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static Controls controls;
+    public CameraController camControllerScript;
+    public GrabObject grabScript;
+
 
     [Header("Couleurs d'interaction")]
     public Material defaultColor;
@@ -44,6 +47,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        camControllerScript = FindObjectOfType<CameraController>();
+        grabScript = FindObjectOfType<GrabObject>();
+
         controls.Player.Enable();
 
         controls.Player.ReloadScene.performed += ReloadScene;

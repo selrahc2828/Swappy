@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using UnityEngine.Events;
 
 public class CameraController : MonoBehaviour
 {
@@ -42,8 +43,12 @@ public class CameraController : MonoBehaviour
     public float yAxisSensitivity = 2f;
     public CinemachineFreeLook cinemachineFreeLook;
 
+
     [Header("Variations")]
     public bool isFPS = true;
+
+    [Header("Events")]
+    public UnityEvent switchCam;//pour grab, sinon reset en décalage
 
     // Start is called before the first frame update
     void Start()
@@ -126,6 +131,8 @@ public class CameraController : MonoBehaviour
             Debug.Log("Switch");
 
             isFPS = !isFPS;
+            switchCam.Invoke();
+            //GameManager.Instance.grabScript.ResetCarryPos();
         }
     }
 }

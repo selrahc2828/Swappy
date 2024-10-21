@@ -116,6 +116,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabDrop"",
+                    ""type"": ""Button"",
+                    ""id"": ""0e892a30-63d7-4195-9d3e-1c494ec8887b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -283,6 +292,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""ResetListComportement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba10ab78-a2a4-4502-866d-0be0cc7f3ef5"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabDrop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -312,6 +332,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_ReloadScene = m_Player.FindAction("ReloadScene", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SwitchCam = m_Player.FindAction("SwitchCam", throwIfNotFound: true);
+        m_Player_GrabDrop = m_Player.FindAction("GrabDrop", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -388,6 +409,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ReloadScene;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SwitchCam;
+    private readonly InputAction m_Player_GrabDrop;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -402,6 +424,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @ReloadScene => m_Wrapper.m_Player_ReloadScene;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @SwitchCam => m_Wrapper.m_Player_SwitchCam;
+        public InputAction @GrabDrop => m_Wrapper.m_Player_GrabDrop;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -441,6 +464,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @SwitchCam.started += instance.OnSwitchCam;
             @SwitchCam.performed += instance.OnSwitchCam;
             @SwitchCam.canceled += instance.OnSwitchCam;
+            @GrabDrop.started += instance.OnGrabDrop;
+            @GrabDrop.performed += instance.OnGrabDrop;
+            @GrabDrop.canceled += instance.OnGrabDrop;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -475,6 +501,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @SwitchCam.started -= instance.OnSwitchCam;
             @SwitchCam.performed -= instance.OnSwitchCam;
             @SwitchCam.canceled -= instance.OnSwitchCam;
+            @GrabDrop.started -= instance.OnGrabDrop;
+            @GrabDrop.performed -= instance.OnGrabDrop;
+            @GrabDrop.canceled -= instance.OnGrabDrop;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -522,5 +551,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnReloadScene(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSwitchCam(InputAction.CallbackContext context);
+        void OnGrabDrop(InputAction.CallbackContext context);
     }
 }
