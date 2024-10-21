@@ -54,7 +54,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         controls = GameManager.controls;
-        controls.Player.SwitchCam.performed += SwitchCam;
+        //controls.Player.SwitchCam.performed += SwitchCam;
 
         mainCamera = FPSCam;
         Brain.m_DefaultBlend.m_Time = blendCamSpeed;
