@@ -44,14 +44,8 @@ public class GrabObject : MonoBehaviour
 
         //Vector3 newMousePos = new Vector3(Mathf.Abs(Input.mousePosition.x), Mathf.Abs(Input.mousePosition.y), Mathf.Abs(Input.mousePosition.z));
 
-        if (cam.isFPS)
-        {
-            _ray = mainCam.ScreenPointToRay(Input.mousePosition);
-        }
-        else
-        {
-            _ray = new Ray(interactorPos.position, interactorPos.forward);
-        }
+        _ray = mainCam.ScreenPointToRay(Input.mousePosition);
+        
 
 
 
