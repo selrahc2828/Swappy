@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawn_Magnet_Range : MonoBehaviour
+public class Spawn_Magnet_Range : Comportment
 {
     public GameObject magnetRange_Prefab;
     public float magnetRange_size;
-    private Collider childTrigger;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,8 +16,8 @@ public class Spawn_Magnet_Range : MonoBehaviour
         }
     }
 
-        // Update is called once per frame
-        void Update()
+    // Update is called once per frame
+    void Update()
     {
         
     }
