@@ -17,16 +17,21 @@ public class Comportment : MonoBehaviour
     public ListComp typeComp;
     public bool stealable = true;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         stealable = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        Debug.Log("Comportment : " + this);
+        
+        if (GetComponents<C_Spawner>() != null)
+        {
+            foreach (C_Spawner spawnScript in GetComponents<C_Spawner>())
+            {
+                if (spawnScript.enabled == true)
+                {
+                    spawnScript.ReferenceComportments(this);
+                    Debug.Log("Issue with ReferenceComportments() function in: " + this.name);
+                }
+            }
+        }
     }
 }

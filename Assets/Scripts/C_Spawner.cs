@@ -30,7 +30,7 @@ public class C_Spawner : Comportment
         }
     }
 
-    private void ReferenceComportments(Comportment NewComp)
+    public void ReferenceComportments(Comportment NewComp)
     {
         if (NewComp) //Quand on appel la fonction en possédant déjà le nouveau comportement à référencer
         {
