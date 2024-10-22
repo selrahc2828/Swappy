@@ -157,7 +157,7 @@ private void OnDisable()
     {
         if (context.performed)
         {
-            Debug.Log("jump");
+            //Debug.Log("jump");
             if (Grounded())//marche po
             {
                 //reset
