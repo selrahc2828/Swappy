@@ -30,7 +30,8 @@ public class GrabObject : MonoBehaviour
     public Vector3 detectionSize;
     void Start()
     {
-        interactText.gameObject.SetActive(false);
+        if (interactText)
+            interactText.gameObject.SetActive(false);
         // set la position du "vraie" handler qui est dans la camera, à la position qu'on a set dans le player
         handlerCamera.position = handlerPosistion.position;
         //on le met dans la camera
@@ -65,14 +66,16 @@ public class GrabObject : MonoBehaviour
                 {
                     closestDist = distanceToObject;
                     closestObj = item.gameObject;
-                    interactText.gameObject.SetActive(true);
+                    if (interactText)
+                        interactText.gameObject.SetActive(true);
                     //Debug.Log("closestObj : " + closestObj.name);
                 }
             }
         }
         else
         {
-            interactText.gameObject.SetActive(false);
+            if (interactText)
+                interactText.gameObject.SetActive(false);
             closestObj = null;
         }
     }
