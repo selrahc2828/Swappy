@@ -56,7 +56,7 @@ public class CameraController : MonoBehaviour
         controls = GameManager.controls;
         //controls.Player.SwitchCam.performed += SwitchCam;
 
-        mainCamera = FPSCam;
+        mainCamera = Brain.OutputCamera;
         Brain.m_DefaultBlend.m_Time = blendCamSpeed;
     }
 
@@ -88,7 +88,7 @@ public class CameraController : MonoBehaviour
 
             mainCamera.transform.localRotation = Quaternion.Euler(_xRot, _yRot, 0f);// y à 0f si cam dans player
 
-            orientation.localRotation = Quaternion.Euler(0f, _yRot, 0f); // pour player dans le controller
+            //orientation.localRotation = Quaternion.Euler(0f, _yRot, 0f); // pour player dans le controller
             player.rotation = Quaternion.Euler(0f, _yRot, 0f);
         }
         else

@@ -196,7 +196,7 @@ private void OnDisable()
     {
 
         //moveDir = root.TransformDirection(new Vector3(moveInputVector.x, 0f, moveInputVector.y));
-        moveDir = orientation.forward * moveInputVector.y + orientation.right * moveInputVector.x;
+        moveDir = transform.forward * moveInputVector.y + transform.right * moveInputVector.x;//orientation
         Quaternion targetRotation;
         if (moveDir != Vector3.zero && !GameManager.Instance.camControllerScript.isFPS)
         {

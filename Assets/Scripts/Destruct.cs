@@ -41,7 +41,6 @@ public class Destruct : Comportment
         Boom();
     }
 
-
     public void Boom()
     {
         if (prefab)

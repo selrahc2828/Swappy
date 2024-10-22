@@ -8,152 +8,152 @@ public class GrabObject : MonoBehaviour
     // var position / parent ou mettre obj
     // taille max qu'on peut porter + offset moitié largeur du player
     // isPickUp pour check si on a un objet ou non
-    public CameraController cam;
-    private Camera mainCam;
-    public Transform parentInteractorFPS;
-    public Transform interactorPosFPS;
-
-    public Transform parentInteractorTPS;
-    public Transform interactorPosTPS;
-
+    public CameraController camScript;
+    public Camera mainCam;
+    private Collider playerCollider;
     public TextMeshProUGUI interactText;
-    private Transform interactorPos;
-    public float largeurObjMax;
+    public Transform handlerPosistion;
+    public Transform handlerCamera;
+
+    public Transform interractorZonePos;//centre zone de detection
+    [HideInInspector]
     public bool isCarrying;
-    public LayerMask hitLayer;
-    private Ray _ray;
-    private RaycastHit _hit;
+
+    public LayerMask hitLayer;    
     private GameObject carriedObject;
     private Transform originParent;
 
+    private GameObject closestObj;
     [Header("Variation")]
     public bool isLaunchable;
     public float launchForce;
-    public float interactionRange;
+    public Vector3 detectionSize;
     void Start()
     {
         interactText.gameObject.SetActive(false);
-        ChangeParent();
+        // set la position du "vraie" handler qui est dans la camera, à la position qu'on a set dans le player
+        handlerCamera.position = handlerPosistion.position;
+        //on le met dans la camera
+        ChangeParent(handlerCamera);
+        playerCollider = GetComponent<Collider>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        mainCam = camScript.Brain.OutputCamera;
 
-        mainCam = cam.Brain.OutputCamera;
+        // Calcul de la nouvelle position du centre pour que le bord reste collé au joueur
+        // On décale le centre de la moitié de la profondeur (axe Z) de la boîte vers l'avant
+        // mainCam pour tourner la box vers où on regarde
+        Vector3 boxCenter = interractorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
 
-        //Vector3 newMousePos = new Vector3(Mathf.Abs(Input.mousePosition.x), Mathf.Abs(Input.mousePosition.y), Mathf.Abs(Input.mousePosition.z));
+        Quaternion boxRotation = mainCam.transform.rotation;
 
-        _ray = mainCam.ScreenPointToRay(Input.mousePosition);
-        
+        Collider[] hitColliders = Physics.OverlapBox(boxCenter, detectionSize / 2, boxRotation, hitLayer); // transform.rotation pour tourner avec player
 
-
-
-        if (Physics.Raycast(_ray, out _hit, interactionRange, hitLayer))
+        if (hitColliders.Length > 0 && !isCarrying)
         {
-            Vector3 objectSize = _hit.collider.bounds.size;
-            float objectWidth = objectSize.x;
-            if (!_hit.collider.CompareTag("NotInteract") && objectWidth <= largeurObjMax)
-                interactText.gameObject.SetActive(true);
-            else
-                interactText.gameObject.SetActive(false);
+            float closestDist = Mathf.Infinity;
+            // voir ajouter compare tag NotInteract ?
+            foreach (Collider item in hitColliders)
+            {
+                float distanceToObject = Vector3.Distance(transform.position, item.transform.position);
 
-            Debug.DrawLine(transform.position, _hit.point, Color.black);
+                // on part du principe que seul les objets qu'on peut porter auront le tag
+                if (distanceToObject < closestDist && item.CompareTag("Movable")) 
+                {
+                    closestDist = distanceToObject;
+                    closestObj = item.gameObject;
+                    interactText.gameObject.SetActive(true);
+                    //Debug.Log("closestObj : " + closestObj.name);
+                }
+            }
+        }
+        else
+        {
+            interactText.gameObject.SetActive(false);
+            closestObj = null;
         }
     }
 
     public void Carrying()
     {
-        
-        if (Physics.Raycast(_ray, out _hit, interactionRange, hitLayer))
+        if (closestObj != null && !isCarrying) 
         {
-            if (!_hit.collider.CompareTag("NotInteract"))
+            carriedObject = closestObj;
+            originParent = carriedObject.transform.parent;
+
+            // deplace obj
+            ResetCarryPos();
+
+            if (carriedObject.GetComponent<Rigidbody>())
             {
-                Vector3 objectSize = _hit.collider.bounds.size;
-                float objectWidth = objectSize.x;
-
-                if (objectWidth <= largeurObjMax) // utilisation du scale actuellement, faudra le changer quand les mesh blender seront toutes à 1
-                {
-                    carriedObject = _hit.collider.gameObject;
-                    originParent = carriedObject.transform.parent;
-
-                    // deplace obj
-                    ResetCarryPos();
-
-                    if (carriedObject.GetComponent<Rigidbody>())
-                    {
-                        carriedObject.GetComponent<Rigidbody>().isKinematic = true;
-                        carriedObject.GetComponent<Rigidbody>().excludeLayers = LayerMask.GetMask("Player");
-                    }
-
-                    isCarrying = true;
-                    Debug.Log("Grab : " + carriedObject.name);
-
-                }
-                else
-                {
-                    Debug.Log(" Pas Grab - Scale/taille: " + objectWidth);
-
-                }
-
+                carriedObject.GetComponent<Rigidbody>().isKinematic = true;
+                Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), true);
             }
 
-            Debug.DrawLine(transform.position, _hit.point, Color.black);
+            isCarrying = true;
+            closestObj = null;
+            //Debug.Log("Grab : " + carriedObject.name);
+
         }
     }
 
     public void Drop()
     {
-        carriedObject.transform.SetParent(originParent);
-        if (carriedObject.GetComponent<Rigidbody>()) {
-            carriedObject.GetComponent<Rigidbody>().isKinematic = false;
-            carriedObject.GetComponent<Rigidbody>().includeLayers = LayerMask.GetMask("Player");
+        if (isCarrying)
+        {
+            carriedObject.transform.SetParent(originParent);
+            if (carriedObject.GetComponent<Rigidbody>()) {
+                carriedObject.GetComponent<Rigidbody>().isKinematic = false;
+                Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), false);
 
-            if (isLaunchable)
-            {
-                carriedObject.GetComponent<Rigidbody>().AddForce(interactorPos.forward * launchForce, ForceMode.Impulse);
+                if (isLaunchable)
+                {
+                    carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosistion.forward * launchForce, ForceMode.Impulse);
+                }
             }
+
+            //reset
+            carriedObject = null;
+            isCarrying = false;
+
+            //Debug.Log("Drop");
         }
 
-        //reset
-        carriedObject = null;
-        isCarrying = false;
-
-        Debug.Log("Drop");
     }
     public void ResetCarryPos()
     {
-        Debug.Log("Reset obj carry, interactorPos : " + interactorPos);
+        //Debug.Log("Reset obj carry, interactorPos : " + handlerPos);
         if (carriedObject != null)
         {
-
-            carriedObject.transform.SetParent(interactorPos);
+            carriedObject.transform.SetParent(handlerPosistion);
             carriedObject.transform.rotation = Quaternion.Euler(0, 0, 0);
             carriedObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
             carriedObject.transform.localPosition = Vector3.zero;
         }
     }
 
-    public void ChangeParent()
+    public void ChangeParent(Transform pos)
     {
-        // appel dans event camcontroller
-
-        // faire juste un empty pivot dans qui tourne avec le rendere pour TPS et qui tourne avec mouvement cam avec FPS
-
-        if (GameManager.Instance.camControllerScript.isFPS)
-        {
-            interactorPos = interactorPosFPS;
-        }
-        else
-        {
-            interactorPos = interactorPosTPS;
-        }
+        handlerPosistion = pos;
     }
 
     private void OnDrawGizmos()
     {
+        if (mainCam == null) return;
+
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, interactionRange);
+
+        // Même calcul pour le gizmo de la box de detection
+        Vector3 boxCenter = interractorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
+        Quaternion boxRotation = mainCam.transform.rotation;
+
+        // Pour dessiner la boîte dans la scène avec Gizmos (comme avec Physics.OverlapBox)
+        // Matrix4x4.TRS permetd dessiner, position, rotation et echelle, juste DrawWireCube ne suffit pas 
+        Gizmos.matrix = Matrix4x4.TRS(boxCenter, boxRotation, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, detectionSize);
     }
 
 }
