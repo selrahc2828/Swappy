@@ -26,7 +26,7 @@ public class Comportment : MonoBehaviour
                 if (spawnScript.enabled && spawnScript != this)
                 {
                     spawnScript.ReferenceComportments(this); //appel le script du spawner permettant de référencer ce comportement en tant que comportement enfant et de le désactiver
-                    Debug.LogWarning("Issue with ReferenceComportments() function in: " + this.name); //si le comportement n'est pas désactivé correctement. Si cette erreur pop, DEMANDEZ A MARIU
+                    return;
                 }
             }
         }
