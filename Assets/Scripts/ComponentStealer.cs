@@ -260,7 +260,6 @@ public class ComponentStealer : MonoBehaviour
                         {
                             SpawnerScript.StealsToApply.TryAdd(script.Key, script.Value);
                         }
-
                     }
 
                     return;
@@ -268,7 +267,7 @@ public class ComponentStealer : MonoBehaviour
             }
 
 
-            if (_hit.collider == null || _hit.collider.GetComponent<Rigidbody>() == null)
+            if (_hit.collider == null)
             {
                 return;
             }
