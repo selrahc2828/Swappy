@@ -2766,7 +2766,6 @@ MonoBehaviour:
   maxSteal: 0
   nbSteal: 0
   components: []
-  copyPasteSpawner: 0
   objectStolen: {fileID: 0}
 --- !u!114 &932118891
 MonoBehaviour:
@@ -2920,6 +2919,11 @@ MonoBehaviour:
   _enableSpeedAcceleration: 1
   _speedAccelerationFactor: 1.5
   _initPositonButton: 114
+  _wantedMode: 0
+  _currentIncrease: 1
+  _currentIncreaseMem: 0
+  _initPosition: {x: 0, y: 0, z: 0}
+  _initRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2950,7 +2954,6 @@ MonoBehaviour:
   maxSteal: 0
   nbSteal: 0
   components: []
-  copyPasteSpawner: 0
   objectStolen: {fileID: 0}
 --- !u!114 &963194231
 MonoBehaviour:
@@ -2966,6 +2969,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   stealPasteSript: {fileID: 0}
+  carryingScript: {fileID: 0}
   speedText: {fileID: 0}
   rb: {fileID: 0}
   root: {fileID: 0}
@@ -4070,6 +4074,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a5e80d09521a44fad5dca4490a1e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camControllerScript: {fileID: 0}
+  grabScript: {fileID: 0}
   defaultColor: {fileID: 2100000, guid: acd0a1c2936eda841acbc8f868a8cf4c, type: 2}
   interactAVolerMat: {fileID: 2100000, guid: 9f40e193fdded1744a73a9b61d06c4ca, type: 2}
   interactRienAVolerMat: {fileID: 2100000, guid: 91000070d7519764cb026b60431260a5, type: 2}
@@ -4257,6 +4263,9 @@ MonoBehaviour:
   yAxisSensitivity: 2
   cinemachineFreeLook: {fileID: 1440394797}
   isFPS: 1
+  switchCam:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1927504561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4271,6 +4280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 932118888}
   stealPasteSript: {fileID: 1927504562}
+  carryingScript: {fileID: 0}
   speedText: {fileID: 67745246}
   rb: {fileID: 1927504559}
   root: {fileID: 0}
@@ -4319,7 +4329,6 @@ MonoBehaviour:
   maxSteal: 5
   nbSteal: 0
   components: []
-  copyPasteSpawner: 1
   objectStolen: {fileID: 0}
 --- !u!1 &1960348704
 GameObject:
