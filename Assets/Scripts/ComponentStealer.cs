@@ -51,7 +51,6 @@ public class ComponentStealer : MonoBehaviour
     public MonoBehaviour[] components;
 
     [Header("Pour Copie1DonneEtPerd_DonneMoi")]
-    public bool copyPasteSpawner = false;
     public GameObject objectStolen;
     public Dictionary<MonoBehaviour, System.Type> steals;
     public System.Type type;
@@ -123,23 +122,6 @@ public class ComponentStealer : MonoBehaviour
         //isStealing = true;
         if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
-            if (copyPasteSpawner)
-            {
-                if (_hit.transform.gameObject.CompareTag("Spawner"))
-                {
-                    objectStolen = _hit.collider.gameObject;
-                    ModifiedSpawner SpawnerScript = objectStolen.GetComponent<ModifiedSpawner>();
-                    steals = null;
-                    steals = SpawnerScript.StealsToApply;
-
-                    objectStolen = null;
-                    SpawnerScript.StealsToApply = null;
-
-                    Debug.Log("Got from Spawner these Steals: " + steals);
-                    return;
-                }
-            }
-
 
             if (_hit.collider == null)
             {
@@ -247,26 +229,6 @@ public class ComponentStealer : MonoBehaviour
         {
             //Debug.LogWarning("Hit ray donné : " + _hit.collider.name);
 
-            if (copyPasteSpawner)
-            {
-                if (_hit.transform.gameObject.tag == "Spawner")
-                {
-                    GameObject objectGiven = _hit.collider.gameObject;
-                    ModifiedSpawner SpawnerScript = objectGiven.GetComponent<ModifiedSpawner>();
-
-                    if (steals != null)
-                    {
-                        foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
-                        {
-                            SpawnerScript.StealsToApply.TryAdd(script.Key, script.Value);
-                        }
-                    }
-
-                    return;
-                }
-            }
-
-
             if (_hit.collider == null)
             {
                 return;
@@ -315,7 +277,7 @@ public class ComponentStealer : MonoBehaviour
                         Component newComp = _hit.collider.gameObject.AddComponent(type);
 
 
-                        foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+                        foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.Instance))
                         {
                             field.SetValue(newComp, field.GetValue(component));
                         }
