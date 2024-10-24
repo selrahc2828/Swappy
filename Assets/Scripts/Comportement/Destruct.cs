@@ -21,7 +21,6 @@ public class Destruct : Comportment
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        //StartCoroutine("AutoDestruct");
     }
 
     // Update is called once per frame
@@ -34,12 +33,6 @@ public class Destruct : Comportment
         }
     }
 
-    IEnumerator AutoDestruct()
-    {
-        //"marche plus" car on ne supprime plus on desactive
-        yield return new WaitForSeconds(lifeTime);
-        Boom();
-    }
 
     public void Boom()
     {
