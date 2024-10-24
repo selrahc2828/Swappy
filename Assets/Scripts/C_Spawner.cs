@@ -79,7 +79,9 @@ public class C_Spawner : Comportment
     private void OnDisable()
     {
         Debug.Log("OnDisable(): " + this.name);
-        foreach (Comportment component in listComportement )
+        listComportement.Clear(); //safety si jamais ComportmentStealer.cs copie aussi le contenu de la liste
+
+        foreach (Comportment component in listComportement)
         {
             component.enabled = true;
         }
