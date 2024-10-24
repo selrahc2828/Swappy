@@ -62,15 +62,6 @@ public class Movement : Comportment
         rb.AddForce(transform.up * force, ForceMode.Impulse);
     }
 
-    IEnumerator AutoJump()
-    {
-        while (true)
-        {
-            rb.AddForce(transform.up * force, ForceMode.Impulse);
-            yield return new WaitForSeconds(interval);
-        }
-    }
-
     void RotateObj()
     {
         transform.Rotate(new Vector3(x, y, z) * angle * Time.deltaTime);
