@@ -249,7 +249,7 @@ public class ComponentStealer : MonoBehaviour
                             Component newComponent = objectGiven.AddComponent(script.Value);
 
                             //on parcour les variable du script qu'on vien d'ajouter
-                            foreach (FieldInfo field in script.Value.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+                            foreach (FieldInfo field in script.Value.GetFields(BindingFlags.Public | BindingFlags.Instance))
                             {
                                 //on leur donne les même valeur qu'au moment ou on a volé le script
                                 field.SetValue(newComponent, field.GetValue(script.Key));
@@ -304,7 +304,7 @@ public class ComponentStealer : MonoBehaviour
                 Component newComponent = objectGiven.AddComponent(script.Value);
 
                 //on parcour les variable du script qu'on vien d'ajouter
-                foreach (FieldInfo field in script.Value.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+                foreach (FieldInfo field in script.Value.GetFields(BindingFlags.Public | BindingFlags.Instance))
                 {
                     //on leur donne les même valeur qu'au moment ou on a volé le script
                     field.SetValue(newComponent, field.GetValue(script.Key));
