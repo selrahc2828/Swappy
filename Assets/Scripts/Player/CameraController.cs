@@ -10,7 +10,6 @@ public class CameraController : MonoBehaviour
     private Controls controls;
     private Vector2 _moveMouseVector;
     public Transform player;
-    public Transform playerObjRenderer;
     public Camera mainCamera;
     public Transform orientation;
     public Transform cameraFPSPos;
@@ -78,7 +77,6 @@ public class CameraController : MonoBehaviour
             // roation player sur Y
             float mouseX = _moveMouseVector.x * sensitivity * Time.deltaTime;
             _yRot += mouseX;
-            //player.LookAt(mainCamera.transform.forward);
 
             // rotation camera sur x (bas/haut)
             float mouseY = _moveMouseVector.y * sensitivity * Time.deltaTime;

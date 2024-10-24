@@ -18,13 +18,11 @@ public class Comportment : MonoBehaviour
     public bool stealable = true;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         stealable = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
 

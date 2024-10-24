@@ -18,27 +18,22 @@ public class Controller : MonoBehaviour
 
     [Header("Controller Properties")]
     public Rigidbody rb;
-    public Transform root;//pas utile actuellement voir pour les slope / angle à monter
-    public Transform orientation;
-    public Transform playerObjRenderer;
+    //public Transform root;//pas utile actuellement voir pour les slope / angle à monter
+    //public Transform orientation;
     public float renderRotationSpeed = 20f;
 
+    [HideInInspector]
     public bool timeIsStop;
 
     public float moveForce;
     public float maxSpeed;
-    private float rotationSpeed;
     private Vector2 moveInputVector;
     [Tooltip("Frottement sur le rigidbody, ça le ralenti")]
     public float groundDrag;
     public float gravityForceY = 5f;
     
-    private Vector2 moveLookVector;
     private Vector3 moveDir;
-    private Vector3 moveVector;
 
-    //public float groundDrag;//pour le player qui glisse
-    //public float actualInertiaScale = 500f;
     [Header("Jump")]
     public float jumpForce;
     [Tooltip("Réduction de la force appliquée dans les air (0 à1 )")]
@@ -50,14 +45,12 @@ public class Controller : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask floorMask;
-    private bool isGrounded;
 
     private void OnEnable()
     {
 
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         controls = GameManager.controls;
@@ -198,16 +191,7 @@ private void OnDisable()
     void handleMovement()
     {
 
-        //moveDir = root.TransformDirection(new Vector3(moveInputVector.x, 0f, moveInputVector.y));
         moveDir = transform.forward * moveInputVector.y + transform.right * moveInputVector.x;//orientation
-        Quaternion targetRotation;
-        if (moveDir != Vector3.zero && !GameManager.Instance.camControllerScript.isFPS)
-        {
-            targetRotation = Quaternion.LookRotation(moveDir);
-            playerObjRenderer.rotation = Quaternion.Slerp(playerObjRenderer.rotation, targetRotation, Time.deltaTime * renderRotationSpeed);
-        }
-
-
 
         if (Grounded())
         {
@@ -223,7 +207,7 @@ private void OnDisable()
 
 
 
-        //faire un slope / pente 
+        //faire un slope / pente ?
     }
 
     void handleGravity()
