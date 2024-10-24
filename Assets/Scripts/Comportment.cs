@@ -17,19 +17,16 @@ public class Comportment : MonoBehaviour
     public ListComp typeComp;
     public bool stealable = true;
 
-    void Start()
-    {
-        stealable = true;
-        Debug.Log("Comportment : " + this);
-        
-        if (GetComponents<C_Spawner>() != null)
+    void Awake()
+    {      
+        if (GetComponent<C_Spawner>()) //vérifie si un spawner est présent sur l'objet (à remplacer plus tard par un type de comportement "Takeover" si on a + que spawner)
         {
             foreach (C_Spawner spawnScript in GetComponents<C_Spawner>())
             {
-                if (spawnScript.enabled == true)
+                if (spawnScript.enabled && spawnScript != this)
                 {
-                    spawnScript.ReferenceComportments(this);
-                    Debug.Log("Issue with ReferenceComportments() function in: " + this.name);
+                    spawnScript.ReferenceComportments(this); //appel le script du spawner permettant de référencer ce comportement en tant que comportement enfant et de le désactiver
+                    Debug.LogWarning("Issue with ReferenceComportments() function in: " + this.name); //si le comportement n'est pas désactivé correctement. Si cette erreur pop, DEMANDEZ A MARIU
                 }
             }
         }
