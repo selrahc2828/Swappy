@@ -71,7 +71,6 @@ public class Controller : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
     }
 
 private void OnDisable()
@@ -81,7 +80,6 @@ private void OnDisable()
         controls.Player.PasteSteal.performed -= PasteComp;
         controls.Player.Jump.performed -= Jump;
         controls.Player.GrabDrop.performed -= GrabAndDrop;
-
     }
 
     // Update is called once per frame
@@ -102,7 +100,6 @@ private void OnDisable()
             Cursor.visible = false;
             Time.timeScale = 1f;
         }
-
     }
 
     private void FixedUpdate()
@@ -112,9 +109,15 @@ private void OnDisable()
         handleGravity();
 
         if (Grounded())
+        {
             rb.drag = groundDrag;//applique un "frottement" par defaut au sol
+            rb.useGravity = false;
+        }
         else
+        {
             rb.drag = 0f;//ou direct velocity à 0
+            rb.useGravity = false;
+        }
     }
 
     private void StopTime(InputAction.CallbackContext context)
