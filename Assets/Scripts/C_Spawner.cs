@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class C_Spawner : Comportment
 {
-    [SerializeField] private GameObject objectSpawned;
+    public GameObject objectSpawned;
+    public float spawnTime;
+
     [SerializeField] private Transform spawnPoint;
-    [SerializeField] private float spawnTime;
 
     private List<Component> listComportement = new List<Component>();
     private float spawnTimer;
@@ -23,9 +24,19 @@ public class C_Spawner : Comportment
 
         if (spawnTimer > spawnTime)
         {
-            GameObject instantiatedObject = Instantiate(objectSpawned, transform.position, Quaternion.identity);
-            ApplyComportmentsTo(instantiatedObject);
+            GameObject instantiatedObject = Instantiate(objectSpawned);
 
+            if (spawnPoint)
+            {
+                instantiatedObject.transform.position = spawnPoint.transform.position;   
+            }
+
+            else
+            {
+                instantiatedObject.transform.position = transform.position + Vector3.one * 2;
+            }
+
+            ApplyComportmentsTo(instantiatedObject);
             spawnTimer = 0f;
         }
     }
