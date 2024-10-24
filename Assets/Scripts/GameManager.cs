@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         if (controls == null)
         {
-            Debug.LogWarning("------ set controls ------");
+            
             controls = new Controls();
         }
     }
