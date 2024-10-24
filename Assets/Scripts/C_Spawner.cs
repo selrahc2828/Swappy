@@ -15,7 +15,7 @@ public class C_Spawner : Comportment
 
     void Start()
     {
-        ReferenceComportments(null); 
+        ReferenceComportments(null);
     }
 
     void Update()
@@ -33,7 +33,7 @@ public class C_Spawner : Comportment
 
             else
             {
-                instantiatedObject.transform.position = transform.position + Vector3.one * 2;
+                instantiatedObject.transform.position = transform.position + Vector3.one * 2; //sécurité pour
             }
 
             ApplyComportmentsTo(instantiatedObject);
