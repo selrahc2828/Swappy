@@ -47,7 +47,6 @@ public class C_Spawner : Comportment
         {
             NewComp.enabled = false;
             listComportement.Add(NewComp);
-            Debug.Log("Add to list : " + NewComp);
         }
 
         else
@@ -58,7 +57,6 @@ public class C_Spawner : Comportment
                 {
                     Comportment.enabled = false;
                     listComportement.Add(Comportment);
-                    Debug.Log("Add to list : " + Comportment);
                 }
             }
         }
@@ -80,6 +78,7 @@ public class C_Spawner : Comportment
 
     private void OnDisable()
     {
+        Debug.Log("OnDisable(): " + this.name);
         foreach (Comportment component in listComportement )
         {
             component.enabled = true;
