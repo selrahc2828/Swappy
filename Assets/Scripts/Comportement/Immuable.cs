@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Immuable : Comportment
+public class Immuable : Comportement
 {
     // Start is called before the first frame update
     void Start()
@@ -10,9 +10,10 @@ public class Immuable : Comportment
         rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.velocity = Vector3.zero; // Réinitialise la vélocité à zéro
-            //rb.angularVelocity = Vector3.zero; // Réinitialise la vélocité angulaire à zéro
+            rb.velocity = Vector3.zero; // RÃ©initialise la vÃ©locitÃ© Ã  zÃ©ro
+            //rb.angularVelocity = Vector3.zero; // RÃ©initialise la vÃ©locitÃ© angulaire Ã  zÃ©ro
             rb.useGravity = false;
+            rb.isKinematic = true;
         }
         
     }
