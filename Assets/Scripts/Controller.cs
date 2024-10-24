@@ -116,7 +116,7 @@ private void OnDisable()
         else
         {
             rb.drag = 0f;//ou direct velocity à 0
-            rb.useGravity = false;
+            rb.useGravity = true;
         }
     }
 
