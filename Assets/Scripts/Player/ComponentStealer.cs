@@ -18,7 +18,6 @@ public class ComponentStealer : MonoBehaviour
     public TextMeshProUGUI surface;
     public TextMeshProUGUI lastSteal;
 
-    private Vector3 rayTail;
     private Ray _ray;
 
     public Controller controller;
@@ -34,7 +33,7 @@ public class ComponentStealer : MonoBehaviour
 
     //public bool isStealing;
     public List<Component> listComportement = new List<Component>();
-    private Camera mainCam;
+    public Camera mainCam;
     public Transform rayPointStrat;
     public Transform castStealerPoint;//à suppr
 
@@ -73,12 +72,11 @@ public class ComponentStealer : MonoBehaviour
     {
         RaycastHit _hit;
 
-        mainCam = camController.Brain.OutputCamera;
+        //mainCam = camController.Brain.OutputCamera;
 
         //Vector3 newMousePos = new Vector3(Mathf.Abs(Input.mousePosition.x), Mathf.Abs(Input.mousePosition.y), Mathf.Abs(Input.mousePosition.z));
         _ray = mainCam.ScreenPointToRay(Input.mousePosition);
 
-        //rayTail = mainCam.transform.position + mainCam.transform.forward * longueur;
 
         float maxDistance = 500f;
         // Si le raycast touche un objet

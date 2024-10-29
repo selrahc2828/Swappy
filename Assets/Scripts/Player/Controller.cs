@@ -62,6 +62,7 @@ public class Controller : MonoBehaviour
         controls.Player.Jump.performed += Jump;
         controls.Player.GrabDrop.performed += GrabAndDrop;
 
+        timeIsStop = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -79,22 +80,7 @@ private void OnDisable()
 
     void Update()
     {
-
         speedText.text = rb.velocity.magnitude.ToString();
-
-        if (timeIsStop)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            Time.timeScale = 1f;
-        }
-
     }
 
     private void FixedUpdate()
@@ -121,6 +107,7 @@ private void OnDisable()
         {
             // if bool == true set false et vice versa
             timeIsStop = !timeIsStop;
+            StopTime(timeIsStop);
         }
     }
 
@@ -205,8 +192,6 @@ private void OnDisable()
 
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 
-
-
         //faire un slope / pente ?
     }
 
@@ -223,6 +208,22 @@ private void OnDisable()
     public bool Grounded()
     {
         return Physics.CheckSphere(groundCheck.position, groundCheckRadius, floorMask);
+    }
+
+    public void StopTime(bool etat)
+    {
+        if (etat)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Time.timeScale = 1f;
+        }
     }
 
     void OnDrawGizmos()

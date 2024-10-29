@@ -42,7 +42,7 @@ public class GrabObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mainCam = camScript.Brain.OutputCamera;
+        //mainCam = camScript.Brain.OutputCamera;
 
         // Calcul de la nouvelle position du centre pour que le bord reste collé au joueur
         // On décale le centre de la moitié de la profondeur (axe Z) de la boîte vers l'avant
