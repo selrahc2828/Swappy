@@ -1,15 +1,20 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class FirstPersonController : MonoBehaviour
+public class TemporaryController : MonoBehaviour
 {
-    private Rigidbody rb;
-    public Camera mainCamera;
+    public float sensX;
+    public float sensY;
+
+    public Transform orientatiaon;
+
+    public float xRotation;
+    public float yRotation;
     
     void Start()
     {
-       rb = GetComponent<Rigidbody>();
-       Cursor.lockState = CursorLockMode.Locked;
+       //rb = GetComponent<Rigidbody>();
+       Cursor.lockState = CursorLockMode.Locked; 
     }
 
     void Update()
@@ -21,23 +26,7 @@ public class FirstPersonController : MonoBehaviour
 
     void LookAround()
     {
-        // Get the mouse position on the screen
-        Vector3 mousePosition = Input.mousePosition;
 
-        // Convert the mouse position to a ray from the main camera
-        Ray cameraRay = mainCamera.ScreenPointToRay(mousePosition);
-
-        // Cast the ray from the position of this object
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, cameraRay.direction, out hit, 100.0f))
-        {
-            Debug.Log("Hit " + hit.collider.gameObject.name);
-            // Do something with the hit object here, e.g., apply a force, change color, etc.
-        }
-        else
-        {
-            Debug.Log("No hit detected");
-        }
     }
 
     void MovePlayer()
