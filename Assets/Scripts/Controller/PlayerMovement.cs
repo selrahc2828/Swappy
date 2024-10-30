@@ -75,7 +75,11 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
-    
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
         if(grounded)
         {
             rb.drag = groundDrag;
@@ -84,12 +88,6 @@ public class PlayerMovement : MonoBehaviour
         { 
             rb.drag = 0;
         }
-
-    }
-
-    private void FixedUpdate()
-    {
-        MovePlayer();
     }
 
     private void MyInput()
@@ -165,9 +163,8 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
         }
-
-        //onGround
-        if (grounded)
+        //on Flat Ground
+        else if (grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
