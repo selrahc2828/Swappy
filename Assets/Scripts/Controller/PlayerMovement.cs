@@ -107,14 +107,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //start crouch
-        if (Input.GetKey(croutchKey))
+        if (Input.GetKeyDown(croutchKey))
         {
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
         }
 
         //Stop crouch
-        if (Input.GetKey(croutchKey))
+        if (Input.GetKeyUp(croutchKey))
         {
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
@@ -122,9 +122,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler()
     {
-        if(grounded)
+        if (grounded)
         {
-            if(Input.GetKey(sprintKey))
+            if(Input.GetKey(croutchKey))
+            {
+                // Mode - Crouching
+                state = MouvementState.crouching;
+                moveSpeed = crouchSpeed;
+                Debug.Log("ok");
+            }
+            else if(Input.GetKey(sprintKey))
             {
                 // Mode - Sprinting
                 state = MouvementState.sprinting;
@@ -132,25 +139,16 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                if (Input.GetKey(croutchKey))
-                {
-                    state = MouvementState.crouching; 
-                    moveSpeed = crouchSpeed;
-
-                }
-                else
-                {
-                    //Mode - Walking
-                    state = MouvementState.walking;
-                    moveSpeed = walkSpeed;
-                }
+                //Mode - Walking
+                state = MouvementState.walking;
+                moveSpeed = walkSpeed;
             }
         }
         else
         {
             //Mode - air
             state = MouvementState.air;
-        }
+        }       
     }
 
     private void MovePlayer()
