@@ -59,7 +59,6 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         controls.Player.ReloadScene.performed -= ReloadScene;
-
     }
 
     // Update is called once per frame

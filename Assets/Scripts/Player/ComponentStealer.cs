@@ -34,8 +34,7 @@ public class ComponentStealer : MonoBehaviour
     //public bool isStealing;
     public List<Component> listComportement = new List<Component>();
     public Camera mainCam;
-    public Transform rayPointStrat;
-    public Transform castStealerPoint;//à suppr
+    public Transform rayPointStart;
 
     [Header("Variations")]
     [Tooltip("Copie1DonneEtPerd = Celui de Charles, 1 seul copie possible et on la perd quand on la donne \n " +
@@ -83,7 +82,7 @@ public class ComponentStealer : MonoBehaviour
         if (Physics.Raycast(_ray, out _hit, maxDistance, hitLayer))
         {
             // Positionner les points du LineRenderer pour dessiner la ligne
-            line.SetPosition(0, rayPointStrat.position);  // Début de la ligne (caméra)
+            line.SetPosition(0, rayPointStart.position);  // Début de la ligne (caméra)
             line.SetPosition(1, _hit.point);  // Fin de la ligne (point touché par le rayon)
 
             Debug.DrawLine(mainCam.transform.position, _hit.point, Color.red);
@@ -92,7 +91,7 @@ public class ComponentStealer : MonoBehaviour
         {
             // Si rien n'est touché, on dessine la ligne jusqu'à la distance max du raycast
             Vector3 farPoint = _ray.GetPoint(maxDistance);
-            line.SetPosition(0, rayPointStrat.position);  // Début de la ligne (caméra)
+            line.SetPosition(0, rayPointStart.position);  // Début de la ligne (caméra)
             line.SetPosition(1, farPoint);  // Fin de la ligne (point éloigné)
             Debug.DrawLine(mainCam.transform.position, farPoint, Color.green);
 
@@ -100,7 +99,7 @@ public class ComponentStealer : MonoBehaviour
 
         //if (Physics.SphereCast(_ray, radius, out _hit, Mathf.Infinity)) //mask
 
-        if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer))// (Physics.Raycast(castStealerPoint.position, castStealerPoint.forward, out _hit, Mathf.Infinity, hitLayer))
+        if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer))
         {
             if (_hit.collider == null)
             {

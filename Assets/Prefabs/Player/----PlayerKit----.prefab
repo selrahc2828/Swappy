@@ -1289,7 +1289,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7472583160847742363}
   - {fileID: 8126471701266846898}
   - {fileID: 3240790102042095572}
   m_Father: {fileID: 5711528346511832651}
@@ -2765,13 +2764,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7120139155761927317}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 39.20314, y: 16.242725, z: -26.544582}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0.47100067}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 522521353752369700}
-  m_Father: {fileID: 562179387453850180}
+  m_Father: {fileID: 5038503226729393923}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &301775471937625502
 Camera:
@@ -3228,8 +3227,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 191
   listComportement: []
+  mainCam: {fileID: 0}
   rayPointStrat: {fileID: 7983597511077936809}
-  castStealerPoint: {fileID: 8367693022856831609}
   typeCopy: 0
   isSteal: 0
   maxSteal: 0
@@ -3653,6 +3652,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7472583160847742363}
   - {fileID: 7781609330459171055}
   - {fileID: 7977916664154052854}
   - {fileID: 7626226837717722421}
@@ -3729,9 +3729,6 @@ MonoBehaviour:
   carryingScript: {fileID: 7956193712786827154}
   speedText: {fileID: 6942866919132807403}
   rb: {fileID: 1633543625074889700}
-  root: {fileID: 0}
-  orientation: {fileID: 7781609330459171055}
-  playerObjRenderer: {fileID: 7626226837717722421}
   renderRotationSpeed: 20
   timeIsStop: 0
   moveForce: 70
@@ -3758,53 +3755,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 5038503226729393923}
-  playerObjRenderer: {fileID: 7626226837717722421}
   mainCamera: {fileID: 0}
   orientation: {fileID: 7781609330459171055}
   cameraFPSPos: {fileID: 7870482999255889342}
-  cameraTPSPos: {fileID: 19209124096439083}
-  Brain: {fileID: 2745253105693206930}
-  blendCamSpeed: 1
   FPSCam: {fileID: 3590207810156294687}
   FPSCamObj: {fileID: 7602637368439459147}
   eyes: {fileID: 2125133907165630576}
   xRotMin: -90
   xRotMax: 90
   sensitivity: 15
-  TPSCam_CM: {fileID: 301775471937625502}
-  TPSCam_CMObj: {fileID: 7022852610505760146}
-  rotationPlayerSpeed: 20
-  xAxisSensitivity: 400
-  yAxisSensitivity: 4
-  cinemachineFreeLook: {fileID: 3967086146149565162}
-  isFPS: 1
-  switchCam:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7956193712786827154}
-        m_TargetAssemblyTypeName: GrabObject, Assembly-CSharp
-        m_MethodName: ChangeParent
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7956193712786827154}
-        m_TargetAssemblyTypeName: GrabObject, Assembly-CSharp
-        m_MethodName: ResetCarryPos
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &9000596238172983818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3828,8 +3787,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 191
   listComportement: []
+  mainCam: {fileID: 0}
   rayPointStrat: {fileID: 289335774145183994}
-  castStealerPoint: {fileID: 0}
   typeCopy: 0
   isSteal: 1
   maxSteal: 5

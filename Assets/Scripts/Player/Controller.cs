@@ -18,8 +18,6 @@ public class Controller : MonoBehaviour
 
     [Header("Controller Properties")]
     public Rigidbody rb;
-    //public Transform root;//pas utile actuellement voir pour les slope / angle à monter
-    //public Transform orientation;
     public float renderRotationSpeed = 20f;
 
     [HideInInspector]
@@ -36,7 +34,7 @@ public class Controller : MonoBehaviour
 
     [Header("Jump")]
     public float jumpForce;
-    [Tooltip("Réduction de la force appliquée dans les air (0 à1 )")]
+    [Tooltip("Réduction de la force appliquée dans les air (0 à 1 )")]
     [Range(0,1)]
     public float airModifier;
     //cooldown ? 
@@ -65,7 +63,6 @@ public class Controller : MonoBehaviour
         timeIsStop = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
     }
 
 private void OnDisable()

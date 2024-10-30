@@ -15,8 +15,6 @@ public class CameraController : MonoBehaviour
     public Transform cameraFPSPos;
 
     [Header("FPS")]
-    public Camera FPSCam;
-    public GameObject FPSCamObj;
     public MeshRenderer eyes;
     private float _xRot;
     [Tooltip("Vers le bas")]
@@ -25,11 +23,6 @@ public class CameraController : MonoBehaviour
     public float xRotMax;
     private float _yRot;
     public float sensitivity = 100f;
-
-    [Header("TPS")]
-    public float rotationPlayerSpeed;
-    public float xAxisSensitivity = 300f;
-    public float yAxisSensitivity = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +33,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mainCamera.transform.position = cameraFPSPos.position;
+        //mainCamera.transform.position = cameraFPSPos.position;
 
         _moveMouseVector = controls.Player.Look.ReadValue<Vector2>();
         //Debug.Log(moveMouseVector);
@@ -54,10 +47,10 @@ public class CameraController : MonoBehaviour
         _xRot -= mouseY;
         _xRot = Mathf.Clamp(_xRot, xRotMin, xRotMax);
 
-        mainCamera.transform.localRotation = Quaternion.Euler(_xRot, _yRot, 0f);// y à 0f si cam dans player
+        mainCamera.transform.localRotation = Quaternion.Euler(_xRot, 0f, 0f);// y à 0f si cam dans player
 
         player.rotation = Quaternion.Euler(0f, _yRot, 0f);
-
+        //player.Rotate(Vector3.up * _xRot);
     }
 
 
