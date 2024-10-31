@@ -11,8 +11,7 @@ public class GrabObject : MonoBehaviour
     public Camera mainCam;
     private Collider playerCollider;
     public TextMeshProUGUI interactText;
-    public Transform handlerPosistion;
-    public Transform handlerCamera;
+    public Transform handlerPosition;
 
     public Transform interractorZonePos;//centre zone de detection
 
@@ -31,11 +30,12 @@ public class GrabObject : MonoBehaviour
     void Start()
     {
         if (interactText)
+        {
             interactText.gameObject.SetActive(false);
+        }
         // set la position du "vraie" handler qui est dans la camera, à la position qu'on a set dans le player
-        handlerCamera.position = handlerPosistion.position;
-        //on le met dans la camera
-        ChangeParent(handlerCamera);
+        // on le met dans la camera
+        ChangeParent(handlerPosition);
         playerCollider = GetComponent<Collider>();
     }
 
@@ -75,7 +75,9 @@ public class GrabObject : MonoBehaviour
         else
         {
             if (interactText)
+            {
                 interactText.gameObject.SetActive(false);
+            }
             closestObj = null;
         }
     }
@@ -114,7 +116,7 @@ public class GrabObject : MonoBehaviour
 
                 if (isLaunchable)
                 {
-                    carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosistion.forward * launchForce, ForceMode.Impulse);
+                    carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
                 }
             }
 
@@ -131,7 +133,7 @@ public class GrabObject : MonoBehaviour
         //Debug.Log("Reset obj carry, interactorPos : " + handlerPos);
         if (carriedObject != null)
         {
-            carriedObject.transform.SetParent(handlerPosistion);
+            carriedObject.transform.SetParent(handlerPosition);
             carriedObject.transform.rotation = Quaternion.Euler(0, 0, 0);
             carriedObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
             carriedObject.transform.localPosition = Vector3.zero;
@@ -140,7 +142,7 @@ public class GrabObject : MonoBehaviour
 
     public void ChangeParent(Transform pos)
     {
-        handlerPosistion = pos;
+        handlerPosition = pos;
     }
 
     private void OnDrawGizmos()

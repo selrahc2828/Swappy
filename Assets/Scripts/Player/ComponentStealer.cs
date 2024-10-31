@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using System.Reflection;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem.HID;
+using System;
 
 public enum TypeCopy
 {
@@ -15,25 +16,16 @@ public enum TypeCopy
 
 public class ComponentStealer : MonoBehaviour
 {
-
-
-    private Ray _ray;
-
-    public Controller controller;
     public CameraController camController;
 
-    [Header("Raycast et line render")]
-    private RaycastHit _hit;
-    [HideInInspector]
-    public float radius;
-    public LineRenderer line;
-    public float longueur = 10f;
+    [Header("Raycast")]
     public LayerMask hitLayer;
+    private Ray _ray;
+    private RaycastHit _hit;
 
     //public bool isStealing;
-    public List<Component> listComportement = new List<Component>();
+    [HideInInspector]
     public Camera mainCam;
-    public Transform rayPointStart;
 
     [Header("Variations")]
     [Tooltip("Copie1DonneEtPerd = Celui de Charles, 1 seul copie possible et on la perd quand on la donne \n " +
@@ -45,17 +37,20 @@ public class ComponentStealer : MonoBehaviour
     public bool isSteal;
     public int maxSteal;
     public int nbSteal;
-    public MonoBehaviour[] components;
+    public List<Component> listComportement = new List<Component>();
 
     [Header("Pour Copie1DonneEtPerd_DonneMoi")]
     public bool copyPasteSpawner = false;
     public GameObject objectStolen;
     public Dictionary<MonoBehaviour, System.Type> steals;
     public System.Type type;
+    public MonoBehaviour[] components;
 
     [Header("Debug")]
     public TextMeshProUGUI surface;
     public TextMeshProUGUI lastSteal;
+    public Transform rayPointStart;
+    public LineRenderer line;
 
     private void OnEnable()
     {
@@ -74,33 +69,10 @@ public class ComponentStealer : MonoBehaviour
     {
         RaycastHit _hit;
 
-        //mainCam = camController.Brain.OutputCamera;
-
         //Vector3 newMousePos = new Vector3(Mathf.Abs(Input.mousePosition.x), Mathf.Abs(Input.mousePosition.y), Mathf.Abs(Input.mousePosition.z));
         _ray = mainCam.ScreenPointToRay(Input.mousePosition);
 
-
-        float maxDistance = 500f;
-        // Si le raycast touche un objet
-        if (Physics.Raycast(_ray, out _hit, maxDistance, hitLayer))
-        {
-            // Positionner les points du LineRenderer pour dessiner la ligne
-            line.SetPosition(0, rayPointStart.position);  // Début de la ligne (caméra)
-            line.SetPosition(1, _hit.point);  // Fin de la ligne (point touché par le rayon)
-
-            Debug.DrawLine(mainCam.transform.position, _hit.point, Color.red);
-        }
-        else
-        {
-            // Si rien n'est touché, on dessine la ligne jusqu'à la distance max du raycast
-            Vector3 farPoint = _ray.GetPoint(maxDistance);
-            line.SetPosition(0, rayPointStart.position);  // Début de la ligne (caméra)
-            line.SetPosition(1, farPoint);  // Fin de la ligne (point éloigné)
-            Debug.DrawLine(mainCam.transform.position, farPoint, Color.green);
-
-        }
-
-        //if (Physics.SphereCast(_ray, radius, out _hit, Mathf.Infinity)) //mask
+        LineRendererETDebug();
 
         if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer))
         {
@@ -260,13 +232,10 @@ public class ComponentStealer : MonoBehaviour
                         {
                             SpawnerScript.StealsToApply.TryAdd(script.Key, script.Value);
                         }
-
                     }
-
                     return;
                 }
             }
-
 
             if (_hit.collider == null || _hit.collider.GetComponent<Rigidbody>() == null)
             {
@@ -357,6 +326,28 @@ public class ComponentStealer : MonoBehaviour
             lastSteal.text = "";
             components = null;
             objectStolen = null;
+        }
+    }
+
+    private void LineRendererETDebug()
+    {
+        float maxDistance = 500f;
+        // Si le raycast touche un objet
+        if (Physics.Raycast(_ray, out _hit, maxDistance, hitLayer))
+        {
+            // Positionner les points du LineRenderer pour dessiner la ligne
+            line.SetPosition(0, rayPointStart.position);  // Début de la ligne (caméra)
+            line.SetPosition(1, _hit.point);  // Fin de la ligne (point touché par le rayon)
+
+            Debug.DrawLine(mainCam.transform.position, _hit.point, Color.red);
+        }
+        else
+        {
+            // Si rien n'est touché, on dessine la ligne jusqu'à la distance max du raycast
+            Vector3 farPoint = _ray.GetPoint(maxDistance);
+            line.SetPosition(0, rayPointStart.position);  // Début de la ligne (caméra)
+            line.SetPosition(1, farPoint);  // Fin de la ligne (point éloigné)
+            Debug.DrawLine(mainCam.transform.position, farPoint, Color.green);
         }
     }
 

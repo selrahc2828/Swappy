@@ -63,37 +63,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7977916664154052854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1417760702516343390
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 522521353752369700}
-  m_Layer: 0
-  m_Name: handlerFPS
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &522521353752369700
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1417760702516343390}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7472583160847742363}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1647874278106409215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,7 +1232,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 522521353752369700}
   - {fileID: 7977916664154052854}
   m_Father: {fileID: 3706966855703290049}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1362,7 +1330,7 @@ GameObject:
   - component: {fileID: 3933387915412130142}
   - component: {fileID: 3746276605138968123}
   m_Layer: 5
-  m_Name: -----Canvas-----
+  m_Name: ---Canvas---
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1484,10 +1452,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4131357244269753801}
-  - {fileID: 1563438825121483343}
   - {fileID: 3706966855703290049}
   - {fileID: 5038503226729393923}
+  - {fileID: 4131357244269753801}
+  - {fileID: 1563438825121483343}
   - {fileID: 6630593014761060955}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1540,7 +1508,7 @@ GameObject:
   - component: {fileID: 9000596238172983818}
   - component: {fileID: 7956193712786827154}
   m_Layer: 6
-  m_Name: -----Player-----
+  m_Name: ---Player---
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1632,10 +1600,10 @@ MonoBehaviour:
   stealPasteSript: {fileID: 9000596238172983818}
   carryingScript: {fileID: 7956193712786827154}
   orientation: {fileID: 7781609330459171055}
-  moveSpeed: 70
-  maxSpeed: 100
   groundDrag: 4
   gravityForceY: 5
+  moveSpeed: 70
+  maxSpeed: 100
   jumpForce: 30
   airModifier: 0.1
   groundCheck: {fileID: 87184388393984951}
@@ -1678,26 +1646,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db42a1724a255e4c86920b80e97e673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 8479043468062421104}
   camController: {fileID: 8507278806808182358}
-  radius: 0
-  line: {fileID: 211544748913573683}
-  longueur: 10
   hitLayer:
     serializedVersion: 2
     m_Bits: 191
-  listComportement: []
   mainCam: {fileID: 301775471937625502}
-  rayPointStart: {fileID: 289335774145183994}
   typeCopy: 0
   isSteal: 1
   maxSteal: 5
   nbSteal: 0
-  components: []
+  listComportement: []
   copyPasteSpawner: 0
   objectStolen: {fileID: 0}
+  components: []
   surface: {fileID: 2448034939734827756}
   lastSteal: {fileID: 4604754560491378226}
+  rayPointStart: {fileID: 289335774145183994}
+  line: {fileID: 211544748913573683}
 --- !u!114 &7956193712786827154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1712,8 +1677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCam: {fileID: 301775471937625502}
   interactText: {fileID: 2403591786860560848}
-  handlerPosistion: {fileID: 7137300479943619025}
-  handlerCamera: {fileID: 522521353752369700}
+  handlerPosition: {fileID: 7137300479943619025}
   interractorZonePos: {fileID: 3614799476549743523}
   isCarrying: 0
   hitLayer:

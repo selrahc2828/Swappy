@@ -7,21 +7,22 @@ using TMPro;
 
 public class Controller : MonoBehaviour
 {
-    public static Controls controls;
+    private Controls controls;
+
     [Header("Scripts Reference")]
     public ComponentStealer stealPasteSript;
     public GrabObject carryingScript;
 
-
     [Header("Properties")]
     public Transform orientation;
-    public float moveSpeed;
-    public float maxSpeed;
-
     [Tooltip("Frottement sur le rigidbody, ça le ralenti")]
     public float groundDrag;
     public float gravityForceY = 5f;
 
+
+    [Header("Walk")]
+    public float moveSpeed;
+    public float maxSpeed;
 
     [Header("Jump")]
     public float jumpForce;
@@ -69,7 +70,7 @@ public class Controller : MonoBehaviour
         Cursor.visible = false;
     }
 
-private void OnDisable()
+    private void OnDisable()
     {
         controls.Player.StopTime.performed -= StopTime;
         controls.Player.CopySteal.performed -= CopyStealComp;
