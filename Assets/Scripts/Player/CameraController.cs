@@ -24,6 +24,12 @@ public class CameraController : MonoBehaviour
     private float _yRot;
     public float sensitivityX = 5f;
     public float sensitivityY = 5f;
+
+    public float sensitivityXSlowTime = 10f;
+    public float sensitivityYSlowTime = 10f;
+
+    private float _sensiX, _sensiY;
+
     [Range(0,179)]
     public float fov = 40f;
 
@@ -42,15 +48,25 @@ public class CameraController : MonoBehaviour
     {
         mainCamera.transform.position = camPosition.position;
 
+        if (GameManager.Instance.slowMotion)
+        {
+            _sensiX = sensitivityXSlowTime;
+            _sensiY = sensitivityYSlowTime;
+        }
+        else
+        {
+            _sensiX = sensitivityX;
+            _sensiY = sensitivityY;
+        }
 
         _moveMouseVector = controls.Player.Look.ReadValue<Vector2>();
 
         // roation player sur Y
-        float mouseX = _moveMouseVector.x * sensitivityX * Time.deltaTime;
+        float mouseX = _moveMouseVector.x * _sensiX * Time.deltaTime;
         _yRot += mouseX;
 
         // rotation camera sur x (bas/haut)
-        float mouseY = _moveMouseVector.y * sensitivityY * Time.deltaTime;
+        float mouseY = _moveMouseVector.y * _sensiY * Time.deltaTime;
         _xRot -= mouseY;
         _xRot = Mathf.Clamp(_xRot, xRotMin, xRotMax);
 

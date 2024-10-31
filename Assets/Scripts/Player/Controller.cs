@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using TMPro;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Controller : MonoBehaviour
 {
     private Controls controls;
@@ -19,6 +20,11 @@ public class Controller : MonoBehaviour
     public float groundDrag;
     public float gravityForceY = 5f;
 
+    [Header("SlowTime")]
+    [Range(0,1)]
+    public float slowCoeff;
+    public bool slowTimerActive;
+    public float slowTimeDuration;
 
     [Header("Walk")]
     public float moveSpeed;
@@ -37,11 +43,9 @@ public class Controller : MonoBehaviour
     public float groundCheckRadius;
     public LayerMask floorMask;
 
-    [HideInInspector]
-    public bool timeIsStop;
-
     [Header("Debug")]
     public TextMeshProUGUI speedText;
+    public TextMeshProUGUI timerSlowText;
 
     private Rigidbody _rb;
     private Vector2 moveInputVector;   
@@ -65,9 +69,14 @@ public class Controller : MonoBehaviour
         controls.Player.Jump.performed += Jump;
         controls.Player.GrabDrop.performed += GrabAndDrop;
 
-        timeIsStop = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        GameManager.Instance.slowTimerActive = slowTimerActive;
+        GameManager.Instance.slowTimeDuration = slowTimeDuration;
+
+        timerSlowText.text = slowTimeDuration.ToString();
+
     }
 
     private void OnDisable()
@@ -77,12 +86,16 @@ public class Controller : MonoBehaviour
         controls.Player.PasteSteal.performed -= PasteComp;
         controls.Player.Jump.performed -= Jump;
         controls.Player.GrabDrop.performed -= GrabAndDrop;
-
     }
 
     void Update()
     {
         speedText.text = _rb.velocity.magnitude.ToString();
+
+        if (timerSlowText != null)
+        {
+            timerSlowText.text = (slowTimeDuration - GameManager.Instance.slowTimer).ToString();
+        }
     }
 
     private void FixedUpdate()
@@ -108,8 +121,8 @@ public class Controller : MonoBehaviour
         if (context.performed)
         {
             // if bool == true set false et vice versa
-            timeIsStop = !timeIsStop;
-            StopTime(timeIsStop);
+            GameManager.Instance.slowMotion = !GameManager.Instance.slowMotion;
+            GameManager.Instance.StopTime(GameManager.Instance.slowMotion, slowCoeff);
         }
     }
 
@@ -117,9 +130,10 @@ public class Controller : MonoBehaviour
     {
         if (context.performed)
         {
-            //Debug.Log("StealComp  _mvtData.type : " + _mvtData.type);
-            //isStealing = true;
-            stealPasteSript.CopyStealComp();
+            if (stealPasteSript != null)
+            {
+                stealPasteSript.CopyStealComp();
+            }
         }
     }
 
@@ -127,9 +141,10 @@ public class Controller : MonoBehaviour
     {
         if (context.performed)
         {
-            //Debug.Log("PasteComp  _mvtData.type : " + _mvtData.type);
-            //isStealing = false;
-            stealPasteSript.PasteComp();
+            if (stealPasteSript != null)
+            {
+                stealPasteSript.PasteComp();
+            }
         }
     }
 
@@ -137,9 +152,10 @@ public class Controller : MonoBehaviour
     {
         if (context.performed)
         {
-            //Debug.Log("PasteComp  _mvtData.type : " + _mvtData.type);
-            //isStealing = false;
-            stealPasteSript.PasteAtMe();
+            if (stealPasteSript != null)
+            {
+                stealPasteSript.PasteAtMe();
+            }
         }
     }
 
@@ -210,22 +226,6 @@ public class Controller : MonoBehaviour
     public bool Grounded()
     {
         return Physics.CheckSphere(groundCheck.position, groundCheckRadius, floorMask);
-    }
-
-    public void StopTime(bool etat)
-    {
-        if (etat)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            Time.timeScale = 1f;
-        }
     }
 
     void OnDrawGizmos()

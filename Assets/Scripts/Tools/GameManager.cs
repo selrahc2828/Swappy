@@ -8,15 +8,20 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static Controls controls;
-    public CameraController camControllerScript;
-    public GrabObject grabScript;
+    //public CameraController camControllerScript;
+    //public GrabObject grabScript;
 
+    [HideInInspector]
+    public bool slowMotion, slowTimerActive;
+    [HideInInspector]
+    public float slowTimeDuration, slowTimer;
 
     [Header("Couleurs d'interaction")]
     public Material defaultColor;
     public Material interactAVolerMat;
     public Material interactRienAVolerMat;
     public Material interactNOTPossibleMat;
+
 
     public string scene1;
     public string scene2;
@@ -25,11 +30,11 @@ public class GameManager : MonoBehaviour
     public KeyCode keyForScene1 = KeyCode.Alpha1;
     public KeyCode keyForScene2 = KeyCode.Alpha2;
     public KeyCode keyForScene3 = KeyCode.Alpha3;
+
     private void OnEnable()
     {
         if (controls == null)
         {
-            
             controls = new Controls();
         }
     }
@@ -47,8 +52,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        camControllerScript = FindObjectOfType<CameraController>();
-        grabScript = FindObjectOfType<GrabObject>();
+        slowMotion = false;
+        slowTimer = 0f;
+
+        //camControllerScript = FindObjectOfType<CameraController>();
+        //grabScript = FindObjectOfType<GrabObject>();
 
         controls.Player.Enable();
 
@@ -64,18 +72,20 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        SlowTime();
+
+
         // Vérifier si la touche pour la scène 1 est pressée.
         if (Input.GetKeyDown(keyForScene1))
         {
             ChangeScene(scene1);
         }
-
         // Vérifier si la touche pour la scène 2 est pressée.
         if (Input.GetKeyDown(keyForScene2))
         {
             ChangeScene(scene2);
         }
-
         // Vérifier si la touche pour la scène 3 est pressée.
         if (Input.GetKeyDown(keyForScene3))
         {
@@ -97,6 +107,38 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogError("Le nom de la scène n'est pas défini !");
+        }
+    }
+
+    public void StopTime(bool etat, float slow = 0f) //float slow = 0f => si pas renseigné, par defaut = 0
+    {
+        if (etat)
+        {
+            Time.timeScale = slow;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+    }
+
+    public void SlowTime()
+    {
+        if (slowTimerActive && slowMotion)
+        {
+            slowTimer += Time.unscaledDeltaTime; // Utilise le temps réel
+
+            if (slowTimer > slowTimeDuration)
+            {
+                // Reset timeIsStop et kle timer
+                slowMotion = false;
+                slowTimer = 0f;
+                StopTime(false);
+            }
+        }
+        else
+        {
+            slowTimer = 0;
         }
     }
 }
