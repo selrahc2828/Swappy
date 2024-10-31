@@ -17,16 +17,18 @@ public class Comportment : MonoBehaviour
     public ListComp typeComp;
     public bool stealable = true;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        stealable = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+    void Awake()
+    {      
+        if (GetComponent<C_Spawner>()) //vérifie si un spawner est présent sur l'objet (à remplacer plus tard par un type de comportement "Takeover" si on a + que spawner)
+        {
+            foreach (C_Spawner spawnScript in GetComponents<C_Spawner>())
+            {
+                if (spawnScript.enabled && spawnScript != this)
+                {
+                    spawnScript.ReferenceComportments(this); //appel le script du spawner permettant de référencer ce comportement en tant que comportement enfant et de le désactiver
+                    return;
+                }
+            }
+        }
     }
 }

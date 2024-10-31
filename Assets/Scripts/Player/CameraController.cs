@@ -70,7 +70,6 @@ public class CameraController : MonoBehaviour
         {
             mainCamera = FPSCam;
             mainCamera.transform.position = cameraFPSPos.position;
-            //eyes.enabled = false;
 
 
             _moveMouseVector = controls.Player.Look.ReadValue<Vector2>();
@@ -88,7 +87,6 @@ public class CameraController : MonoBehaviour
 
             mainCamera.transform.localRotation = Quaternion.Euler(_xRot, _yRot, 0f);// y à 0f si cam dans player
 
-            //orientation.localRotation = Quaternion.Euler(0f, _yRot, 0f); // pour player dans le controller
             player.rotation = Quaternion.Euler(0f, _yRot, 0f);
         }
         else
@@ -102,26 +100,14 @@ public class CameraController : MonoBehaviour
                 cinemachineFreeLook.m_YAxis.m_MaxSpeed = yAxisSensitivity;
             }
 
-            //mainCamera.transform.position = cameraTPSPos.position;
-            //eyes.enabled = false;
-
-            //player(script sur player) - cam
-
             // faire rotate player pas orientation (sinon input bon mais avatar tourne pas)
             Vector3 direction = (player.position - mainCamera.transform.position).normalized;
             direction.y = 0;
             Quaternion lookRotation = Quaternion.LookRotation(direction); // Look at the player
             orientation.rotation = Quaternion.Slerp(orientation.rotation, lookRotation, Time.deltaTime * rotationPlayerSpeed);
-            //playerObjRenderer.rotation = Quaternion.Slerp(orientation.rotation, lookRotation, Time.deltaTime * rotationPlayerSpeed);
-            //player.Rotate(Vector3.up * _yRot);
+
         }
-        
-
         // ------- à mettre en fixed update ? 
-
-
-        //mainCamera.transform.eulerAngles = new Vector3(-mouseX, xRot, 0f); // -_yRot, xRot, _zTilt + _slideTilt
-        //orientation.localRotation = Quaternion.Euler(0f, _yRot, 0f); // pour player dans le controller
     }
 
     public void SwitchCam(InputAction.CallbackContext context)

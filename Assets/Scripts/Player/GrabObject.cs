@@ -67,7 +67,9 @@ public class GrabObject : MonoBehaviour
                     closestDist = distanceToObject;
                     closestObj = item.gameObject;
                     if (interactText)
+                    {
                         interactText.gameObject.SetActive(true);
+                    }
                     //Debug.Log("closestObj : " + closestObj.name);
                 }
             }
