@@ -8,7 +8,6 @@ public class GrabObject : MonoBehaviour
     // var position / parent ou mettre obj
     // taille max qu'on peut porter + offset moitié largeur du player
     // isPickUp pour check si on a un objet ou non
-    public CameraController camScript;
     public Camera mainCam;
     private Collider playerCollider;
     public TextMeshProUGUI interactText;
@@ -16,6 +15,7 @@ public class GrabObject : MonoBehaviour
     public Transform handlerCamera;
 
     public Transform interractorZonePos;//centre zone de detection
+
     [HideInInspector]
     public bool isCarrying;
 
@@ -42,8 +42,6 @@ public class GrabObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //mainCam = camScript.Brain.OutputCamera;
-
         // Calcul de la nouvelle position du centre pour que le bord reste collé au joueur
         // On décale le centre de la moitié de la profondeur (axe Z) de la boîte vers l'avant
         // mainCam pour tourner la box vers où on regarde

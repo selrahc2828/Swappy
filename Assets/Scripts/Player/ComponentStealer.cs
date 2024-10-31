@@ -15,8 +15,7 @@ public enum TypeCopy
 
 public class ComponentStealer : MonoBehaviour
 {
-    public TextMeshProUGUI surface;
-    public TextMeshProUGUI lastSteal;
+
 
     private Ray _ray;
 
@@ -53,6 +52,10 @@ public class ComponentStealer : MonoBehaviour
     public GameObject objectStolen;
     public Dictionary<MonoBehaviour, System.Type> steals;
     public System.Type type;
+
+    [Header("Debug")]
+    public TextMeshProUGUI surface;
+    public TextMeshProUGUI lastSteal;
 
     private void OnEnable()
     {

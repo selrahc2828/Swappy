@@ -8,41 +8,43 @@ using TMPro;
 public class Controller : MonoBehaviour
 {
     public static Controls controls;
-    public Camera mainCamera;
+    [Header("Scripts Reference")]
     public ComponentStealer stealPasteSript;
     public GrabObject carryingScript;
-    
-    //private CameraController cameraScript;
 
-    public TextMeshProUGUI speedText;
 
-    [Header("Controller Properties")]
-    public Rigidbody rb;
-    public float renderRotationSpeed = 20f;
-
-    [HideInInspector]
-    public bool timeIsStop;
-
-    public float moveForce;
+    [Header("Properties")]
+    public Transform orientation;
+    public float moveSpeed;
     public float maxSpeed;
-    private Vector2 moveInputVector;
+
     [Tooltip("Frottement sur le rigidbody, ça le ralenti")]
     public float groundDrag;
     public float gravityForceY = 5f;
-    
-    private Vector3 moveDir;
+
 
     [Header("Jump")]
     public float jumpForce;
     [Tooltip("Réduction de la force appliquée dans les air (0 à 1 )")]
     [Range(0,1)]
     public float airModifier;
-    //cooldown ? 
+    // cooldown ?
+    // et bool pour vérif en plus
 
     [Header("GroundCheck")]
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask floorMask;
+
+    [HideInInspector]
+    public bool timeIsStop;
+
+    [Header("Debug")]
+    public TextMeshProUGUI speedText;
+
+    private Rigidbody _rb;
+    private Vector2 moveInputVector;   
+    private Vector3 moveDir;
 
     private void OnEnable()
     {
@@ -51,6 +53,8 @@ public class Controller : MonoBehaviour
 
     void Start()
     {
+        _rb = GetComponent<Rigidbody>();
+
         controls = GameManager.controls;
         // assigne action du controleur au methode
         controls.Player.StopTime.performed += StopTime;
@@ -77,7 +81,7 @@ private void OnDisable()
 
     void Update()
     {
-        speedText.text = rb.velocity.magnitude.ToString();
+        speedText.text = _rb.velocity.magnitude.ToString();
     }
 
     private void FixedUpdate()
@@ -88,13 +92,13 @@ private void OnDisable()
 
         if (Grounded())
         {
-            rb.drag = groundDrag;//applique un "frottement" par defaut au sol
-            rb.useGravity = false;
+            _rb.drag = groundDrag;//applique un "frottement" par defaut au sol
+            _rb.useGravity = false;
         }
         else
         {
-            rb.drag = 0f;
-            rb.useGravity = true;
+            _rb.drag = 0f;
+            _rb.useGravity = true;
         }
     }
 
@@ -146,8 +150,8 @@ private void OnDisable()
             if (Grounded())//marche po
             {
                 //reset
-                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
+                _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 //isGrounded = false;
             }
         }
@@ -175,19 +179,19 @@ private void OnDisable()
     void handleMovement()
     {
 
-        moveDir = transform.forward * moveInputVector.y + transform.right * moveInputVector.x;//orientation
+        moveDir = orientation.forward * moveInputVector.y + orientation.right * moveInputVector.x;//orientation
 
         if (Grounded())
         {
-            rb.AddForce(moveDir.normalized * moveForce, ForceMode.Force);// * 10f
+            _rb.AddForce(moveDir.normalized * moveSpeed, ForceMode.Force);// * 10f
         }
         else
         {
             //in air
-            rb.AddForce(moveDir.normalized * moveForce  * airModifier, ForceMode.Force); //* 10f
+            _rb.AddForce(moveDir.normalized * moveSpeed  * airModifier, ForceMode.Force); //* 10f
         }
 
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+        _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, maxSpeed);
 
         //faire un slope / pente ?
     }
@@ -198,7 +202,7 @@ private void OnDisable()
 
         if (!Grounded())
         {
-            rb.velocity -= Vector3.down * (Physics.gravity.y * (gravityForceY) * Time.deltaTime);
+            _rb.velocity -= Vector3.down * (Physics.gravity.y * (gravityForceY) * Time.deltaTime);
         }
     }
 
@@ -233,7 +237,10 @@ private void OnDisable()
             Gizmos.DrawRay(transform.position, moveDir.normalized * 15);
             
             Gizmos.color = Color.green;
-            Gizmos.DrawRay(transform.position, rb.velocity.normalized * 15);
+            if (_rb)
+            {
+                Gizmos.DrawRay(transform.position, _rb.velocity.normalized * 15);
+            }
 
         }
     }
