@@ -18,9 +18,13 @@ public class Immuable : Comportment
         
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDisable()
     {
-        
+        if (rb != null)
+        {
+            rb.useGravity = true;
+            rb.isKinematic = false;
+        }
     }
+
 }
