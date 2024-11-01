@@ -21,19 +21,12 @@ public class Movement : Comportment
     public float interval;
     public float useTime;
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        if (type == ListMovement.Move)
-        {
-            //StartCoroutine("AutoJump");
-        }
-
         useTime = interval;
     }
 
-    // Update is called once per frame
     void Update()
     {
         switch (type)
@@ -60,15 +53,6 @@ public class Movement : Comportment
     void AutoJumpBancale()
     {
         rb.AddForce(transform.up * force, ForceMode.Impulse);
-    }
-
-    IEnumerator AutoJump()
-    {
-        while (true)
-        {
-            rb.AddForce(transform.up * force, ForceMode.Impulse);
-            yield return new WaitForSeconds(interval);
-        }
     }
 
     void RotateObj()
