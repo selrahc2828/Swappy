@@ -46,6 +46,7 @@ public class Controller : MonoBehaviour
     [Header("Debug")]
     public TextMeshProUGUI speedText;
     public TextMeshProUGUI timerSlowText;
+    public TextMeshProUGUI manqueGMText;
 
     private Rigidbody _rb;
     private Vector2 moveInputVector;   
@@ -53,11 +54,16 @@ public class Controller : MonoBehaviour
 
     private void OnEnable()
     {
-
+        if (!FindObjectOfType<GameManager>())
+        {
+            manqueGMText.gameObject.SetActive(true);
+            Debug.LogWarning("Aucun GameManager dans la scène");
+        }
     }
 
     void Start()
     {
+
         _rb = GetComponent<Rigidbody>();
 
         controls = GameManager.controls;
