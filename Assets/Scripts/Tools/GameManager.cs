@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
     {
         if (slowTimerActive && slowMotion)
         {
-            slowTimer += Time.deltaTime; // unscaledDeltaTime = Utilise le temps réel
+            slowTimer += Time.unscaledDeltaTime; // unscaledDeltaTime = Utilise le temps réel
 
             if (slowTimer > slowTimeDuration)
             {
