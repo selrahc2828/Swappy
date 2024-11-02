@@ -71,7 +71,6 @@ public class Controller : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
     }
 
 private void OnDisable()
@@ -81,9 +80,9 @@ private void OnDisable()
         controls.Player.PasteSteal.performed -= PasteComp;
         controls.Player.Jump.performed -= Jump;
         controls.Player.GrabDrop.performed -= GrabAndDrop;
-
     }
 
+    // Update is called once per frame
     void Update()
     {
 
@@ -101,7 +100,6 @@ private void OnDisable()
             Cursor.visible = false;
             Time.timeScale = 1f;
         }
-
     }
 
     private void FixedUpdate()
@@ -117,7 +115,7 @@ private void OnDisable()
         }
         else
         {
-            rb.drag = 0f;
+            rb.drag = 0f;//ou direct velocity à 0
             rb.useGravity = true;
         }
     }
@@ -127,6 +125,7 @@ private void OnDisable()
         if (context.performed)
         {
             // if bool == true set false et vice versa
+
             timeIsStop = !timeIsStop;
         }
     }
@@ -135,6 +134,7 @@ private void OnDisable()
     {
         if (context.performed)
         {
+
             //Debug.Log("StealComp  _mvtData.type : " + _mvtData.type);
             //isStealing = true;
             stealPasteSript.CopyStealComp();
@@ -224,6 +224,53 @@ private void OnDisable()
 
 
         //faire un slope / pente 
+
+
+
+        //if (moveInputVector.magnitude > 0.1f)
+        //{
+        //    //moving = true;
+        //    rb.drag = 0f;
+        //    moveVector = moveDir * moveForce; // +=  * Time.deltaTime
+        //    //moveVector += moveDirection * ((actualMaxSpeed * _actualAccelerationRate) / actualMaxSpeed);
+
+        //    //moveVector = Vector3.ClampMagnitude(moveVector, maxSpeed);//clamp pour pas dépasser
+        //    //rb.AddForce(moveVector, ForceMode.Force);
+        //}
+        //else
+        //{
+        //    //moving = false;
+        //    moveVector = Vector3.zero;
+        //    //rb.velocity = Vector3.zero;
+
+        //    //rb.drag = groundDrag;
+        //    // if (_sloped && _rb.velocity.magnitude < 1f && jumpTimer < -1f)
+        //    // {
+        //    //     _rb.drag = 100f;
+        //    // }
+        //}
+
+        // clamp magnitude max speed
+
+        //Vector3  inertiaVector = Vector3.MoveTowards(rb.velocity, moveVector, actualInertiaScale * Time.deltaTime);
+        //rb.velocity = new Vector3(inertiaVector.x, rb.velocity.y, inertiaVector.z);
+
+        //Vector3 flatSpeed = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        //if (flatSpeed.magnitude > moveSpeed)
+        //{
+        //    Vector3 limitSpeed = flatSpeed.normalized * moveSpeed;
+        //    rb.velocity = new Vector3(limitSpeed.x, rb.velocity.y, limitSpeed.z);
+        //}
+        //else
+        //{
+        //    rb.velocity = moveVector;
+        //}
+
+        //root.eulerAngles = new Vector3(root.eulerAngles.x, mainCamera.transform.eulerAngles.y, mainCamera.transform.eulerAngles.z);
+
+        //rb.AddForce(moveVector, ForceMode.Acceleration);
+        //rb.velocity = moveVector;
     }
 
     void handleGravity()
@@ -232,8 +279,25 @@ private void OnDisable()
 
         if (!Grounded())
         {
+            //rb.AddForce(Vector3.down * gravityForceY, ForceMode.Impulse);
+
+            //switch (rb.velocity.y)
+            //{
+            //    case < 0f:
+            //        rb.velocity += Vector3.up * (Physics.gravity.y * (gravityForceY)); ;
+            //        break;
+            //    case > 0f:
+            //        rb.velocity -= Vector3.down * (Physics.gravity.y * (gravityForceY));
+            //        break;
+            //    default:
+            //        break;
+            //}
             rb.velocity -= Vector3.down * (Physics.gravity.y * (gravityForceY) * Time.deltaTime);
+            //moveVector -= Vector3.down * (Physics.gravity.y * (gravityForceY) );
         }
+
+
+
     }
 
     public bool Grounded()
@@ -247,6 +311,7 @@ private void OnDisable()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+
 
             Gizmos.DrawRay(transform.position, moveDir.normalized * 15);
             

@@ -7273,6 +7273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   stealPasteSript: {fileID: 0}
+  carryingScript: {fileID: 0}
   speedText: {fileID: 0}
   rb: {fileID: 0}
   root: {fileID: 0}
@@ -13024,6 +13025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camControllerScript: {fileID: 0}
+  grabScript: {fileID: 0}
   defaultColor: {fileID: 2100000, guid: acd0a1c2936eda841acbc8f868a8cf4c, type: 2}
   interactAVolerMat: {fileID: 2100000, guid: 9f40e193fdded1744a73a9b61d06c4ca, type: 2}
   interactRienAVolerMat: {fileID: 2100000, guid: 91000070d7519764cb026b60431260a5, type: 2}
@@ -13647,6 +13649,9 @@ MonoBehaviour:
   yAxisSensitivity: 2
   cinemachineFreeLook: {fileID: 1440394797}
   isFPS: 1
+  switchCam:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1927504561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13661,6 +13666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 932118888}
   stealPasteSript: {fileID: 1927504562}
+  carryingScript: {fileID: 0}
   speedText: {fileID: 67745246}
   rb: {fileID: 1927504559}
   root: {fileID: 0}
@@ -15061,6 +15067,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2108262116}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &2110404361
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4934661490551399437, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.6220932
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934661490551399437, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5000019
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934661490551399437, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14.767809
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934661490551399437, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934661490551399437, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934661490551399437, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934661490551399437, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934661490551399437, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934661490551399437, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4934661490551399437, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8865937368722553911, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
+      propertyPath: m_Name
+      value: Aimant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
 --- !u!1 &2129761565
 GameObject:
   m_ObjectHideFlags: 0
@@ -15642,3 +15705,4 @@ SceneRoots:
   - {fileID: 2026896766}
   - {fileID: 448331103}
   - {fileID: 1927504558}
+  - {fileID: 2110404361}
