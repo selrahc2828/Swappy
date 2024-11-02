@@ -112,13 +112,19 @@ public class GameManager : MonoBehaviour
 
     public void StopTime(bool etat, float slow = 0f) //float slow = 0f => si pas renseigné, par defaut = 0
     {
+        Debug.Log(Time.fixedDeltaTime);
         if (etat)
         {
             Time.timeScale = slow;
+            // unity utilise fixedDeltaTime (intervalle fixe) pour calculer la physique qui n'est pas affecté par le timescale ce qui produit donne un aspect saccadé car les 2 ne sont plus synchro
+            // on synchronise dont le fixedDeltaTime par rapport au timescale
+            Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
         }
         else
         {
+            // valeurs par défaut de Unity
             Time.timeScale = 1f;
+            Time.fixedDeltaTime = 0.02f;
         }
     }
 
@@ -126,11 +132,11 @@ public class GameManager : MonoBehaviour
     {
         if (slowTimerActive && slowMotion)
         {
-            slowTimer += Time.unscaledDeltaTime; // Utilise le temps réel
+            slowTimer += Time.deltaTime; // unscaledDeltaTime = Utilise le temps réel
 
             if (slowTimer > slowTimeDuration)
             {
-                // Reset timeIsStop et kle timer
+                // Reset timeIsStop et le timer
                 slowMotion = false;
                 slowTimer = 0f;
                 StopTime(false);
