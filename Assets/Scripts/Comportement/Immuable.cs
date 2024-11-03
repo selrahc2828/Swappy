@@ -10,19 +10,14 @@ public class Immuable : Comportment
         rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.velocity = Vector3.zero; // Réinitialise la vélocité à zéro
-            //rb.angularVelocity = Vector3.zero; // Réinitialise la vélocité angulaire à zéro
-            rb.useGravity = false;
             rb.isKinematic = true;
         }
-
     }
 
     void OnDisable()
     {
         if (rb != null)
         {
-            rb.useGravity = true;
             rb.isKinematic = false;
         }
     }
