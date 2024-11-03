@@ -57,7 +57,7 @@ public class Controller : MonoBehaviour
 
         controls = GameManager.controls;
         // assigne action du controleur au methode
-        controls.Player.StopTime.performed += StopTime;
+        controls.Player.StopTime.performed += SlowMotion;
         controls.Player.CopySteal.performed += CopyStealComp;
         controls.Player.PasteSteal.performed += PasteComp;
         controls.Player.PasteMe.performed += PasteAtMe;
@@ -76,7 +76,7 @@ public class Controller : MonoBehaviour
 
     private void OnDisable()
     {
-        controls.Player.StopTime.performed -= StopTime;
+        controls.Player.StopTime.performed -= SlowMotion;
         controls.Player.CopySteal.performed -= CopyStealComp;
         controls.Player.PasteSteal.performed -= PasteComp;
         controls.Player.Jump.performed -= Jump;
@@ -112,13 +112,13 @@ public class Controller : MonoBehaviour
         }
     }
 
-    private void StopTime(InputAction.CallbackContext context)
+    private void SlowMotion(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
             // if bool == true set false et vice versa
             GameManager.Instance.slowMotion = !GameManager.Instance.slowMotion;
-            GameManager.Instance.StopTime(GameManager.Instance.slowMotion, slowCoeff);
+            GameManager.Instance.SlowMotion(GameManager.Instance.slowMotion, slowCoeff);
         }
     }
 

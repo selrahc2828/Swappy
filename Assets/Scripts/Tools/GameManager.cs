@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
 
     private void ReloadScene(InputAction.CallbackContext context)
     {
+        SlowMotion(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -110,7 +111,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StopTime(bool etat, float slow = 0f) //float slow = 0f => si pas renseigné, par defaut = 0
+    public void SlowMotion(bool etat, float slow = 0f) //float slow = 0f => si pas renseigné, par defaut = 0
     {
         Debug.Log(Time.fixedDeltaTime);
         if (etat)
@@ -139,7 +140,7 @@ public class GameManager : MonoBehaviour
                 // Reset timeIsStop et le timer
                 slowMotion = false;
                 slowTimer = 0f;
-                StopTime(false);
+                SlowMotion(false);
             }
         }
         else
