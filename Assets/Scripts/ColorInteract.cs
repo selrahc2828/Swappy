@@ -12,7 +12,7 @@ public class ColorInteract : MonoBehaviour
     private Material _interactRienAVolerMat;
     private Material _interactNOTPossibleMat;
 
-    public bool _actif;
+    private bool _actif;
 
 
     // Start is called before the first frame update
@@ -51,25 +51,31 @@ public class ColorInteract : MonoBehaviour
             _actif = false;
         }
 
-        if (Time.timeScale != 1)
+        if (GetComponent<MeshRenderer>() != null)
         {
-            if (gameObject.CompareTag("NotInteract"))
+            if (Time.timeScale != 1)
             {
-                GetComponent<MeshRenderer>().material = _interactNOTPossibleMat;
-            }else if (_actif)
-            {
-                // si un comportement est à voler 
-                GetComponent<MeshRenderer>().material = _interactAVolerMat;
+                if (gameObject.CompareTag("NotInteract"))
+                {
+                    GetComponent<MeshRenderer>().material = _interactNOTPossibleMat;
+                }
+                else if (_actif)
+                {
+                    // si un comportement est à voler 
+                    GetComponent<MeshRenderer>().material = _interactAVolerMat;
 
-            } else
+                }
+                else
+                {
+                    //si rien à voler
+                    GetComponent<MeshRenderer>().material = _interactRienAVolerMat;
+                }
+            }
+            else
             {
-                //si rien à voler
-                GetComponent<MeshRenderer>().material = _interactRienAVolerMat;
+                GetComponent<MeshRenderer>().material = _startColor;
             }
         }
-        else
-        {
-            GetComponent<MeshRenderer>().material = _startColor;
-        }
+        
     }
 }

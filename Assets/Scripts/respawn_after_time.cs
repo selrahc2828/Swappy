@@ -29,16 +29,17 @@ public class respawn_after_time : MonoBehaviour
             respawnTime -= Time.deltaTime;
             if (respawnTime <= 0)
             {
+                if(rb != null && !rb.isKinematic)
+                {
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                }
                 startTimer = false;
                 transform.position = spawnPosition;
                 transform.rotation = spawnRotation;
-                rb.velocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
                 respawnTime = 4f;
             }
-        }
-
-        
+        }        
     }
 
     private void OnCollisionEnter(Collision other)

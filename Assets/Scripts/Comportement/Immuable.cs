@@ -6,7 +6,7 @@ public class Immuable : Comportment
 {
     // Start is called before the first frame update
     void Start()
-    {   
+    {
         rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -15,7 +15,7 @@ public class Immuable : Comportment
             rb.useGravity = false;
             rb.isKinematic = true;
         }
-        
+
     }
 
     void OnDisable()
