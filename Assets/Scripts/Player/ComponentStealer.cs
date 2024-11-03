@@ -293,6 +293,51 @@ public class ComponentStealer : MonoBehaviour
         }
     }
 
+    public void ResetListeComp()
+    {
+        switch (typeCopy)
+        {
+            case TypeCopy.Copie1DonneEtPerd_DonneMoi:
+                if (steals != null)
+                {
+                    //on parcour le dictionnaire
+                    foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
+                    {
+                        //si le monobehavior existe encore (verification obligatoire en cas de destruction de objectStolen)
+                        if (script.Key != null)
+                        {
+                            //on le réactive
+                            script.Key.enabled = true;
+                        }
+                        else
+                        {
+                            //on arrete de parcourir le dictionnaire car il contiens des valeurs appartenant a un objet détruit
+                            break;
+                        }
+                    }
+                }
+                steals.Clear();
+                components = null;
+                objectStolen = null;
+
+                break;
+            case TypeCopy.CopieMultipleEtConserve:
+                listComportement.Clear();
+
+                break;
+        }
+
+        // Supprime tous les comportements sur le GameObject (voir pour réactiver ceux des script de base)
+        Comportment[] attachedComponents = gameObject.GetComponents<Comportment>();
+        foreach (MonoBehaviour component in attachedComponents)
+        {
+            Destroy(component);
+        }
+
+        lastSteal.text = "";
+
+    }
+
     private void LineRendererETDebug()
     {
         float maxDistance = 500f;

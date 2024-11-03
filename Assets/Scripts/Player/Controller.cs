@@ -63,6 +63,7 @@ public class Controller : MonoBehaviour
         controls.Player.PasteMe.performed += PasteAtMe;
         controls.Player.Jump.performed += Jump;
         controls.Player.GrabDrop.performed += GrabAndDrop;
+        controls.Player.ResetListComportement.performed += ResetListeComp;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -71,7 +72,6 @@ public class Controller : MonoBehaviour
         GameManager.Instance.slowTimeDuration = slowTimeDuration;
 
         timerSlowText.text = slowTimeDuration.ToString();
-
     }
 
     private void OnDisable()
@@ -81,6 +81,7 @@ public class Controller : MonoBehaviour
         controls.Player.PasteSteal.performed -= PasteComp;
         controls.Player.Jump.performed -= Jump;
         controls.Player.GrabDrop.performed -= GrabAndDrop;
+        controls.Player.ResetListComportement.performed -= ResetListeComp;
     }
 
     void Update()
@@ -154,6 +155,18 @@ public class Controller : MonoBehaviour
         }
     }
 
+    private void ResetListeComp(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (stealPasteSript != null)
+            {
+                stealPasteSript.ResetListeComp();
+            }
+        }
+    }
+    
+
     void Jump(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -181,7 +194,6 @@ public class Controller : MonoBehaviour
                 else
                 {
                     carryingScript.Carrying();
-
                 }
 
             }
