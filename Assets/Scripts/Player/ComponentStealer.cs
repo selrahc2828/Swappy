@@ -100,8 +100,7 @@ public class ComponentStealer : MonoBehaviour
                 return;
             }
 
-
-            if (_hit.collider.gameObject.GetComponent<Comportment>())
+            if (_hit.collider.gameObject.GetComponent<Comportment>() && !_hit.collider.CompareTag("NotInteract"))
             {
                 switch (typeCopy)
                 {
@@ -201,7 +200,7 @@ public class ComponentStealer : MonoBehaviour
         {
             //Debug.LogWarning("Hit ray donné : " + _hit.collider.name);
 
-            if (_hit.collider == null)
+            if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
             {
                 return;
             }
