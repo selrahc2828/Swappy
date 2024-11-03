@@ -38,8 +38,8 @@ public class Destruct : Comportment
     {
         if (prefab)
         {
-            GameObject souffle = Instantiate(prefab, transform.position, Quaternion.identity);
-            souffle.transform.localScale = transform.localScale * 6;
+            GameObject shockWave = Instantiate(prefab, transform.position, Quaternion.identity);
+            shockWave.GetComponent<GrowToRadius>().targetRadius = radiusSouffle;
 
             Collider[] objsImpact = Physics.OverlapSphere(transform.position, radiusSouffle);
 

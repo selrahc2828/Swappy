@@ -9,6 +9,8 @@ public class Repulse : Comportment
     public float repulserRange;
     public float repulserForce;
     public bool destroyOnUse = false;
+
+    public GameObject feedback;
     
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,9 @@ public class Repulse : Comportment
 
     public void Expulse()
     {
+        GameObject shockWave = Instantiate(feedback, transform.position, Quaternion.identity);
+        shockWave.GetComponent<GrowToRadius>().targetRadius = repulserRange;
+
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, repulserRange);
         if (objectsInRange.Length > 0)
         {
