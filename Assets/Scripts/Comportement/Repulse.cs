@@ -9,6 +9,7 @@ public class Repulse : Comportment
     public float repulserRange;
     public float repulserForce;
     public bool destroyOnUse = false;
+    public bool impulseGradiantForce = false;
     
     // Start is called before the first frame update
     void Start()
@@ -37,7 +38,15 @@ public class Repulse : Comportment
             {
                 if (objectInRange.GetComponent<Rigidbody>() != null)
                 {
-                    objectInRange.GetComponent<Rigidbody>().AddExplosionForce(repulserForce, transform.position, repulserRange);
+                    if(impulseGradiantForce)
+                    {
+                        objectInRange.GetComponent<Rigidbody>().AddExplosionForce(repulserForce, transform.position, repulserRange);
+
+                    }
+                    else
+                    {
+                        objectInRange.GetComponent<Rigidbody>().AddForce((objectInRange.transform.position - transform.position) * repulserForce, ForceMode.Impulse);
+                    }
                 }  
             }
         }
