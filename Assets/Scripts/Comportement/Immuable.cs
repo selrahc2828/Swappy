@@ -21,4 +21,5 @@ public class Immuable : Comportment
             rb.isKinematic = false;
         }
     }
+
 }
