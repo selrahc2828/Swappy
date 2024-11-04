@@ -14,6 +14,6 @@ public class Fusée : Comportment
     void FixedUpdate()
     {
         rb.AddForce(Vector3.up * speed, ForceMode.Force);
-        Debug.Log(rb.velocity.y);
+        //Debug.Log(rb.velocity.y);
     }
 }
