@@ -36,12 +36,14 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         controls = GameManager.controls;
+        
     }
 
-    //appel quand une valeur de l'inspecteur est changé
+    //appel quand une valeur de l'inspecteur est changï¿½
     private void OnValidate()
     {
         mainCamera.fieldOfView = fov;
+        
     }
 
     void Update()
@@ -70,12 +72,12 @@ public class CameraController : MonoBehaviour
         _xRot -= mouseY;
         _xRot = Mathf.Clamp(_xRot, xRotMin, xRotMax);
 
-        mainCamera.transform.localRotation = Quaternion.Euler(_xRot, _yRot, 0f);// y à 0f si cam dans player
+        mainCamera.transform.localRotation = Quaternion.Euler(_xRot, _yRot, 0f);// y ï¿½ 0f si cam dans player
 
-        // si utilise player, il arrive que les 2 ne soit pas synchro = mouvement ne se fait plus par rapport à la rotation du player/camera
+        // si utilise player, il arrive que les 2 ne soit pas synchro = mouvement ne se fait plus par rapport ï¿½ la rotation du player/camera
         orientation.rotation = Quaternion.Euler(0f, _yRot, 0f);
         playerRender.rotation = Quaternion.Euler(0f, _yRot, 0f);
-        // interractor placé dans la camera
+        // interractor placï¿½ dans la camera
 
     }
 
