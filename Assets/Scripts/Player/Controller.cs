@@ -5,103 +5,93 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using TMPro;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Controller : MonoBehaviour
 {
-    public static Controls controls;
-    public Camera mainCamera;
+    private Controls controls;
+
+    [Header("Scripts Reference")]
     public ComponentStealer stealPasteSript;
     public GrabObject carryingScript;
-    
-    //private CameraController cameraScript;
 
-    public TextMeshProUGUI speedText;
-
-    [Header("Controller Properties")]
-    public Rigidbody rb;
-    public Transform root;//pas utile actuellement voir pour les slope / angle à monter
+    [Header("Properties")]
     public Transform orientation;
-    public Transform playerObjRenderer;
-    public float renderRotationSpeed = 20f;
-
-    public bool timeIsStop;
-
-    public float moveForce;
-    public float maxSpeed;
-    private float rotationSpeed;
-    private Vector2 moveInputVector;
     [Tooltip("Frottement sur le rigidbody, ça le ralenti")]
     public float groundDrag;
     public float gravityForceY = 5f;
-    
-    private Vector2 moveLookVector;
-    private Vector3 moveDir;
-    private Vector3 moveVector;
 
-    //public float groundDrag;//pour le player qui glisse
-    //public float actualInertiaScale = 500f;
+    [Header("SlowTime")]
+    [Range(0,1)]
+    public float slowCoeff;
+    public bool slowTimerActive;
+    public float slowTimeDuration;
+
+    [Header("Walk")]
+    public float moveSpeed;
+    public float maxSpeed;
+
     [Header("Jump")]
     public float jumpForce;
-    [Tooltip("Réduction de la force appliquée dans les air (0 à1 )")]
+    [Tooltip("Réduction de la force appliquée dans les air (0 à 1 )")]
     [Range(0,1)]
     public float airModifier;
-    //cooldown ? 
+    // cooldown ?
+    // et bool pour vérif en plus
 
     [Header("GroundCheck")]
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask floorMask;
-    private bool isGrounded;
 
-    private void OnEnable()
-    {
+    [Header("Debug")]
+    public TextMeshProUGUI speedText;
+    public TextMeshProUGUI timerSlowText;
 
-    }
+    private Rigidbody _rb;
+    private Vector2 moveInputVector;   
+    private Vector3 moveDir;
 
-    // Start is called before the first frame update
     void Start()
     {
+        _rb = GetComponent<Rigidbody>();
+
         controls = GameManager.controls;
         // assigne action du controleur au methode
-        controls.Player.StopTime.performed += StopTime;
+        controls.Player.StopTime.performed += SlowMotion;
         controls.Player.CopySteal.performed += CopyStealComp;
         controls.Player.PasteSteal.performed += PasteComp;
         controls.Player.PasteMe.performed += PasteAtMe;
         controls.Player.Jump.performed += Jump;
         controls.Player.GrabDrop.performed += GrabAndDrop;
+        controls.Player.ResetListComportement.performed += ResetListeComp;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        GameManager.Instance.slowTimerActive = slowTimerActive;
+        GameManager.Instance.slowTimeDuration = slowTimeDuration;
+
+        timerSlowText.text = slowTimeDuration.ToString();
     }
 
-private void OnDisable()
+    private void OnDisable()
     {
-        controls.Player.StopTime.performed -= StopTime;
+        controls.Player.StopTime.performed -= SlowMotion;
         controls.Player.CopySteal.performed -= CopyStealComp;
         controls.Player.PasteSteal.performed -= PasteComp;
         controls.Player.Jump.performed -= Jump;
         controls.Player.GrabDrop.performed -= GrabAndDrop;
-
+        controls.Player.ResetListComportement.performed -= ResetListeComp;
     }
 
     void Update()
     {
+        speedText.text = _rb.velocity.magnitude.ToString();
 
-        speedText.text = rb.velocity.magnitude.ToString();
-
-        if (timeIsStop)
+        if (timerSlowText != null)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Time.timeScale = 0f;
+            timerSlowText.text = (slowTimeDuration - GameManager.Instance.slowTimer).ToString();
         }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            Time.timeScale = 1f;
-        }
-
     }
 
     private void FixedUpdate()
@@ -112,22 +102,23 @@ private void OnDisable()
 
         if (Grounded())
         {
-            rb.drag = groundDrag;//applique un "frottement" par defaut au sol
-            rb.useGravity = false;
+            _rb.drag = groundDrag;//applique un "frottement" par defaut au sol
+            _rb.useGravity = false;
         }
         else
         {
-            rb.drag = 0f;
-            rb.useGravity = true;
+            _rb.drag = 0f;
+            _rb.useGravity = true;
         }
     }
 
-    private void StopTime(InputAction.CallbackContext context)
+    private void SlowMotion(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
             // if bool == true set false et vice versa
-            timeIsStop = !timeIsStop;
+            GameManager.Instance.slowMotion = !GameManager.Instance.slowMotion;
+            GameManager.Instance.SlowMotion(GameManager.Instance.slowMotion, slowCoeff);
         }
     }
 
@@ -135,9 +126,10 @@ private void OnDisable()
     {
         if (context.performed)
         {
-            //Debug.Log("StealComp  _mvtData.type : " + _mvtData.type);
-            //isStealing = true;
-            stealPasteSript.CopyStealComp();
+            if (stealPasteSript != null)
+            {
+                stealPasteSript.CopyStealComp();
+            }
         }
     }
 
@@ -145,9 +137,10 @@ private void OnDisable()
     {
         if (context.performed)
         {
-            //Debug.Log("PasteComp  _mvtData.type : " + _mvtData.type);
-            //isStealing = false;
-            stealPasteSript.PasteComp();
+            if (stealPasteSript != null)
+            {
+                stealPasteSript.PasteComp();
+            }
         }
     }
 
@@ -155,11 +148,24 @@ private void OnDisable()
     {
         if (context.performed)
         {
-            //Debug.Log("PasteComp  _mvtData.type : " + _mvtData.type);
-            //isStealing = false;
-            stealPasteSript.PasteAtMe();
+            if (stealPasteSript != null)
+            {
+                stealPasteSript.PasteAtMe();
+            }
         }
     }
+
+    private void ResetListeComp(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (stealPasteSript != null)
+            {
+                stealPasteSript.ResetListeComp();
+            }
+        }
+    }
+    
 
     void Jump(InputAction.CallbackContext context)
     {
@@ -169,8 +175,8 @@ private void OnDisable()
             if (Grounded())//marche po
             {
                 //reset
-                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
+                _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 //isGrounded = false;
             }
         }
@@ -188,7 +194,6 @@ private void OnDisable()
                 else
                 {
                     carryingScript.Carrying();
-
                 }
 
             }
@@ -198,32 +203,21 @@ private void OnDisable()
     void handleMovement()
     {
 
-        //moveDir = root.TransformDirection(new Vector3(moveInputVector.x, 0f, moveInputVector.y));
-        moveDir = transform.forward * moveInputVector.y + transform.right * moveInputVector.x;//orientation
-        Quaternion targetRotation;
-        if (moveDir != Vector3.zero && !GameManager.Instance.camControllerScript.isFPS)
-        {
-            targetRotation = Quaternion.LookRotation(moveDir);
-            playerObjRenderer.rotation = Quaternion.Slerp(playerObjRenderer.rotation, targetRotation, Time.deltaTime * renderRotationSpeed);
-        }
-
-
+        moveDir = orientation.forward * moveInputVector.y + orientation.right * moveInputVector.x;//orientation
 
         if (Grounded())
         {
-            rb.AddForce(moveDir.normalized * moveForce, ForceMode.Force);// * 10f
+            _rb.AddForce(moveDir.normalized * moveSpeed, ForceMode.Force);// * 10f
         }
         else
         {
             //in air
-            rb.AddForce(moveDir.normalized * moveForce  * airModifier, ForceMode.Force); //* 10f
+            _rb.AddForce(moveDir.normalized * moveSpeed  * airModifier, ForceMode.Force); //* 10f
         }
 
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+        _rb.velocity = Vector3.ClampMagnitude(_rb.velocity, maxSpeed);
 
-
-
-        //faire un slope / pente 
+        //faire un slope / pente ?
     }
 
     void handleGravity()
@@ -232,7 +226,7 @@ private void OnDisable()
 
         if (!Grounded())
         {
-            rb.velocity -= Vector3.down * (Physics.gravity.y * (gravityForceY) * Time.deltaTime);
+            _rb.velocity -= Vector3.down * (Physics.gravity.y * (gravityForceY) * Time.deltaTime);
         }
     }
 
@@ -251,7 +245,10 @@ private void OnDisable()
             Gizmos.DrawRay(transform.position, moveDir.normalized * 15);
             
             Gizmos.color = Color.green;
-            Gizmos.DrawRay(transform.position, rb.velocity.normalized * 15);
+            if (_rb)
+            {
+                Gizmos.DrawRay(transform.position, _rb.velocity.normalized * 15);
+            }
 
         }
     }

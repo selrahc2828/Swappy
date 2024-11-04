@@ -9,116 +9,75 @@ public class CameraController : MonoBehaviour
 {
     private Controls controls;
     private Vector2 _moveMouseVector;
-    public Transform player;
-    public Transform playerObjRenderer;
+
     public Camera mainCamera;
     public Transform orientation;
-    public Transform cameraFPSPos;
-    public Transform cameraTPSPos;
+    public Transform camPosition;
+    public Transform playerRender; // model
 
-
-    [Header("Cinemachine Brain")]
-    public CinemachineBrain Brain;
-    [Tooltip("Vitesse de transition entre camera")]
-    public float blendCamSpeed;
-
-    [Header("FPS")]
-    public Camera FPSCam;
-    public GameObject FPSCamObj;
-    public MeshRenderer eyes;
-    private float _xRot;
+    [Header("Parameters")]
     [Tooltip("Vers le bas")]
     public float xRotMin;
     [Tooltip("Vers le haut")]
     public float xRotMax;
+    private float _xRot;
     private float _yRot;
-    public float sensitivity = 100f;
+    public float sensitivityX = 5f;
+    public float sensitivityY = 5f;
 
-    [Header("TPS")]
-    [Tooltip("Groupe Cam cinemachine")]
-    public Camera TPSCam_CM;
-    public GameObject TPSCam_CMObj;
-    public float rotationPlayerSpeed;
-    public float xAxisSensitivity = 300f;
-    public float yAxisSensitivity = 2f;
-    public CinemachineFreeLook cinemachineFreeLook;
+    public float sensitivityXSlowTime = 10f;
+    public float sensitivityYSlowTime = 10f;
 
+    private float _sensiX, _sensiY;
 
-    [Header("Variations")]
-    public bool isFPS = true;
+    [Range(0,179)]
+    public float fov = 40f;
 
-    [Header("Events")]
-    public UnityEvent switchCam;//pour grab, sinon reset en décalage
-
-    // Start is called before the first frame update
     void Start()
     {
         controls = GameManager.controls;
-        //controls.Player.SwitchCam.performed += SwitchCam;
-
-        mainCamera = Brain.OutputCamera;
-        Brain.m_DefaultBlend.m_Time = blendCamSpeed;
     }
 
-    // Update is called once per frame
+    //appel quand une valeur de l'inspecteur est changé
+    private void OnValidate()
+    {
+        mainCamera.fieldOfView = fov;
+    }
+
     void Update()
     {
-        FPSCamObj.SetActive(isFPS);
-        TPSCam_CMObj.SetActive(!isFPS);
+        mainCamera.transform.position = camPosition.position;
 
-        if (isFPS)
+        if (GameManager.Instance.slowMotion)
         {
-            mainCamera = FPSCam;
-            mainCamera.transform.position = cameraFPSPos.position;
-
-
-            _moveMouseVector = controls.Player.Look.ReadValue<Vector2>();
-            //Debug.Log(moveMouseVector);
-
-            // roation player sur Y
-            float mouseX = _moveMouseVector.x * sensitivity * Time.deltaTime;
-            _yRot += mouseX;
-            //player.LookAt(mainCamera.transform.forward);
-
-            // rotation camera sur x (bas/haut)
-            float mouseY = _moveMouseVector.y * sensitivity * Time.deltaTime;
-            _xRot -= mouseY;
-            _xRot = Mathf.Clamp(_xRot, xRotMin, xRotMax);
-
-            mainCamera.transform.localRotation = Quaternion.Euler(_xRot, _yRot, 0f);// y à 0f si cam dans player
-
-            player.rotation = Quaternion.Euler(0f, _yRot, 0f);
+            _sensiX = sensitivityXSlowTime;
+            _sensiY = sensitivityYSlowTime;
         }
         else
         {
-            // changer sensi
-
-            mainCamera = TPSCam_CM;
-            if (cinemachineFreeLook != null)
-            {
-                cinemachineFreeLook.m_XAxis.m_MaxSpeed = xAxisSensitivity;
-                cinemachineFreeLook.m_YAxis.m_MaxSpeed = yAxisSensitivity;
-            }
-
-            // faire rotate player pas orientation (sinon input bon mais avatar tourne pas)
-            Vector3 direction = (player.position - mainCamera.transform.position).normalized;
-            direction.y = 0;
-            Quaternion lookRotation = Quaternion.LookRotation(direction); // Look at the player
-            orientation.rotation = Quaternion.Slerp(orientation.rotation, lookRotation, Time.deltaTime * rotationPlayerSpeed);
-
+            _sensiX = sensitivityX;
+            _sensiY = sensitivityY;
         }
-        // ------- à mettre en fixed update ? 
+
+        _moveMouseVector = controls.Player.Look.ReadValue<Vector2>();
+
+        // roation player sur Y
+        float mouseX = _moveMouseVector.x * _sensiX * Time.deltaTime;
+        _yRot += mouseX;
+
+        // rotation camera sur x (bas/haut)
+        float mouseY = _moveMouseVector.y * _sensiY * Time.deltaTime;
+        _xRot -= mouseY;
+        _xRot = Mathf.Clamp(_xRot, xRotMin, xRotMax);
+
+        mainCamera.transform.localRotation = Quaternion.Euler(_xRot, _yRot, 0f);// y à 0f si cam dans player
+
+        // si utilise player, il arrive que les 2 ne soit pas synchro = mouvement ne se fait plus par rapport à la rotation du player/camera
+        orientation.rotation = Quaternion.Euler(0f, _yRot, 0f);
+        playerRender.rotation = Quaternion.Euler(0f, _yRot, 0f);
+        // interractor placé dans la camera
+
     }
 
-    public void SwitchCam(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            Debug.Log("Switch");
 
-            isFPS = !isFPS;
-            switchCam.Invoke();
-            //GameManager.Instance.grabScript.ResetCarryPos();
-        }
-    }
 }

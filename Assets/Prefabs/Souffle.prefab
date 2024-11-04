@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3432434050935538667}
   - component: {fileID: 1234092066778563106}
   - component: {fileID: 57455965250419852}
-  - component: {fileID: -65353058421509413}
+  - component: {fileID: -6118783830530869520}
   m_Layer: 0
   m_Name: Souffle
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5997281712086689970}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: -1.5}
   m_LocalScale: {x: 2.08, y: 2.08, z: 2.08}
   m_ConstrainProportionsScale: 1
@@ -100,13 +100,13 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-65353058421509413
+--- !u!114 &-6118783830530869520
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,14 +115,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5997281712086689970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 777eec07c77b96540b37dfc9731a18e0, type: 3}
+  m_Script: {fileID: 11500000, guid: f9adee708d8e0ae4abcc70887a458f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  rb: {fileID: 0}
-  typeComp: 0
-  type: 0
-  lifeTime: 0.2
-  forceSouffle: 0
-  radiusSouffle: 0
-  prefab: {fileID: 0}
+  targetRadius: 5
+  durationScaling: 0.2
