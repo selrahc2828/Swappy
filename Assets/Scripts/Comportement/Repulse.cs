@@ -11,6 +11,8 @@ public class Repulse : Comportment
     public bool destroyOnUse = false;
     public bool impulseGradiantForce = false;
     public GameObject feedback;
+    [Header("Si Rigidbody sur lui")]
+    public bool applyOnMe = false; // si rigid body sur objet, pour le lancer par exemple
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +34,11 @@ public class Repulse : Comportment
 
     public void Expulse()
     {
-        GameObject shockWave = Instantiate(feedback, transform.position, Quaternion.identity);
-        shockWave.GetComponent<GrowToRadius>().targetRadius = repulserRange;
+        if (feedback)
+        {
+            GameObject shockWave = Instantiate(feedback, transform.position, Quaternion.identity);
+            shockWave.GetComponent<GrowToRadius>().targetRadius = repulserRange;
+        }
 
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, repulserRange);
         if (objectsInRange.Length > 0)
@@ -42,7 +47,13 @@ public class Repulse : Comportment
             {
                 if (objectInRange.GetComponent<Rigidbody>() != null)
                 {
-                    if(impulseGradiantForce)
+                    if (!applyOnMe && objectInRange.gameObject == gameObject)
+                    {
+                        // si rigid body sur objet, on applique pas la force sur lui pour le lancer par exemple
+                        return;
+                    }
+
+                    if (impulseGradiantForce)
                     {
                         objectInRange.GetComponent<Rigidbody>().AddExplosionForce(repulserForce, transform.position, repulserRange);
 
