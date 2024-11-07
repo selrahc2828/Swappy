@@ -233,6 +233,7 @@ public class ComponentStealer : MonoBehaviour
                             }
                         }
                         Destroy(component);
+                        Debug.Log("Script " + type.Name + " renvoyé sur " + component.name + " et supprimé du Player");
                     }
                 }
             }
