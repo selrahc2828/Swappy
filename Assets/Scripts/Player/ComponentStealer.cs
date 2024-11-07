@@ -7,12 +7,6 @@ using System.Reflection;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem.HID;
 
-public enum TypeCopy
-{
-    Copie1DonneEtPerd_DonneMoi,
-    CopieMultipleEtConserve
-}
-
 public class ComponentStealer : MonoBehaviour
 {
     public CameraController camController;
@@ -22,24 +16,10 @@ public class ComponentStealer : MonoBehaviour
     private Ray _ray;
     private RaycastHit _hit;
 
-    //public bool isStealing;
     [HideInInspector]
     public Camera mainCam;
 
-    [Header("Variations")]
-    [Tooltip("Copie1DonneEtPerd = Celui de Charles, 1 seul copie possible et on la perd quand on la donne \n " +
-        "CopieMultipleEtConserve = Celui de Greg, possible de voler plusieurs et de tout donner en 1 fois, on les garde après")]
-    public TypeCopy typeCopy;
-
-    [Header("Pour CopieMultipleEtConserve")]
-    [Tooltip("Vol ou copie")]
-    public bool isSteal;
-    public int maxSteal;
-    public int nbSteal;
-    public List<Component> listComportement = new List<Component>();
-
-    [Header("Pour Copie1DonneEtPerd_DonneMoi")]
-    public bool copyPasteSpawner = false;
+    [Header("Properties")]
     public GameObject objectStolen;
     public Dictionary<MonoBehaviour, System.Type> steals;
     public System.Type type;
@@ -90,112 +70,74 @@ public class ComponentStealer : MonoBehaviour
 
     public void CopyStealComp()
     {
-        //Debug.Log("StealComp  _mvtData.type : " + _mvtData.type);
-        //isStealing = true;
         if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
 
-            if (_hit.collider == null)
+            if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
             {
                 return;
             }
 
-            if (_hit.collider.gameObject.GetComponent<Comportment>() && !_hit.collider.CompareTag("NotInteract"))
+            if (_hit.collider.gameObject.GetComponent<Comportment>())
             {
-                switch (typeCopy)
+                objectStolen = _hit.collider.gameObject;
+                components = objectStolen.GetComponents<MonoBehaviour>();
+                #region pour voler un objet a la fois
+                if (steals != null)
                 {
-                    case TypeCopy.Copie1DonneEtPerd_DonneMoi:
-                        objectStolen = _hit.collider.gameObject;
-                        components = objectStolen.GetComponents<MonoBehaviour>();
-                        #region pour voler un objet a la fois
-                        if (steals != null)
+                    //on parcour le dictionnaire
+                    foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
+                    {
+                        //si le monobehavior existe encore (verification obligatoire en cas de destruction de objectStolen)
+                        if (script.Key != null)
                         {
-                            //on parcour le dictionnaire
-                            foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
-                            {
-                                //si le monobehavior existe encore (verification obligatoire en cas de destruction de objectStolen)
-                                if (script.Key != null)
-                                {
-                                    //on le réactive
-                                    script.Key.enabled = true;
-                                }
-                                else
-                                {
-                                    //on arrete de parcourir le dictionnaire car il contiens des valeurs appartenant a un objet détruit
-                                    break;
-                                }
-                            }
-                            //on clear le dictionnaire
-                            steals.Clear();
-                            lastSteal.text = "";
-
+                            //on le réactive
+                            script.Key.enabled = true;
                         }
-                        #endregion
-
-                        foreach (MonoBehaviour component in components)
+                        else
                         {
-                            //on sauvegarde son type (le nom du script qu'on va voler s'y trouve)
-                            type = component.GetType();
-                            //on sauvgarde les field (les valeurs des variables du script qu'on va voler)
-                            FieldInfo stealableField = type.GetField("stealable");
-
-                            //s'il y a une valeurs dans stealableField et que cette valeur est un booléen
-                            if (stealableField != null && stealableField.FieldType == typeof(bool))
-                            {
-                                //on copie le booléen stealable du script volé
-                                bool isStealable = (bool)stealableField.GetValue(component);
-
-                                //on verifie qu'il est true
-                                if (isStealable)
-                                {
-                                    //on ajoute une entrée au dictionnaire avec en clé le component et en value son type
-                                    steals.Add(component, type);
-                                    // Désactive le script en le mettant inactif
-                                    component.enabled = false;
-                                    lastSteal.text += component.name + " - " + type + "\n";
-                                }
-                            }
+                            //on arrete de parcourir le dictionnaire car il contiens des valeurs appartenant a un objet détruit
+                            break;
                         }
-                        break;
-                    case TypeCopy.CopieMultipleEtConserve:
-                        //legacy code
-                        Comportment[] listComp = _hit.collider.gameObject.GetComponents<Comportment>();
+                    }
+                    //on clear le dictionnaire
+                    steals.Clear();
+                    lastSteal.text = "";
 
-                        foreach (Comportment item in listComp)
-                        {
-                            if (nbSteal >= maxSteal)
-                            {
-                                listComportement.RemoveAt(0);
-                                string[] lines = lastSteal.text.Split('\n');
-
-                                // Vérifier qu'il y a plus d'une ligne pour pouvoir supprimer
-                                if (lines.Length > 1)
-                                {
-                                    // Recréer le texte sans la première ligne
-                                    lastSteal.text = string.Join("\n", lines, 1, lines.Length - 1);
-                                }
-                            }
-
-                            listComportement.Add(item);
-                            lastSteal.text += item.name + " - " + item.typeComp + "\n";
-
-                            if (isSteal)
-                                Destroy(item);// ou disable
-
-                            nbSteal++;
-                        }
-                        break;
-                    default:
-                        break;
                 }
+                #endregion
+
+                foreach (MonoBehaviour component in components)
+                {
+                    //on sauvegarde son type (le nom du script qu'on va voler s'y trouve)
+                    type = component.GetType();
+                    //on sauvgarde les field (les valeurs des variables du script qu'on va voler)
+                    FieldInfo stealableField = type.GetField("stealable");
+
+                    //s'il y a une valeurs dans stealableField et que cette valeur est un booléen
+                    if (stealableField != null && stealableField.FieldType == typeof(bool))
+                    {
+                        //on copie le booléen stealable du script volé
+                        bool isStealable = (bool)stealableField.GetValue(component);
+
+                        //on verifie qu'il est true
+                        if (isStealable)
+                        {
+                            //on ajoute une entrée au dictionnaire avec en clé le component et en value son type
+                            steals.Add(component, type);
+                            // Désactive le script en le mettant inactif
+                            component.enabled = false;
+                            lastSteal.text += component.name + " - " + type + "\n";
+                        }
+                    }
+                }                
+
             }
         }
     }
 
     public void PasteComp()
     {
-        //Debug.Log("PasteComp  _mvtData.type : " + _mvtData.type);
-        //isStealing = false;
         if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
             //Debug.LogWarning("Hit ray donné : " + _hit.collider.name);
@@ -204,60 +146,33 @@ public class ComponentStealer : MonoBehaviour
             {
                 return;
             }
+                //si l'objectStolen existe (on a bien un script volé)
+                if (objectStolen != null && objectStolen.GetComponent<Collider>() != null)
+                {
+                    GameObject objectGiven = _hit.collider.gameObject;
 
-            switch (typeCopy)
-            {
-                case TypeCopy.Copie1DonneEtPerd_DonneMoi:
-                    //si l'objectStolen existe (on a bien un script volé)
-                    if (objectStolen != null && objectStolen.GetComponent<Collider>() != null)
+                    //on parcour le dictionnaire des scripts a appliquer
+                    foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
                     {
-                        GameObject objectGiven = _hit.collider.gameObject;
-
-                        //on parcour le dictionnaire des scripts a appliquer
-                        foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
-                        {
-                            // Ajoute dynamiquement un script du même type sur l'objet cible
-                            Component newComponent = objectGiven.AddComponent(script.Value);
-
-                            //on parcour les variable du script qu'on vien d'ajouter
-                            foreach (FieldInfo field in script.Value.GetFields(BindingFlags.Public | BindingFlags.Instance))
-                            {
-                                //on leur donne les même valeur qu'au moment ou on a volé le script
-                                field.SetValue(newComponent, field.GetValue(script.Key));
-                            }
-                            //on détruit le script dans l'objet d'origine
-                            Destroy(script.Key);
-                            Debug.Log("Script " + script.Value.Name + " copié sur " + objectGiven.name + " et supprimé de " + objectStolen.name);
-                        }
-                        //on remet a zero les dictionnaire et les objets sauvegardé
-                        steals.Clear();
-                        lastSteal.text = "";
-                        components = null;
-                        objectStolen = null;
-                    }
-                    break;
-                case TypeCopy.CopieMultipleEtConserve:
-                    // legacy code
-                    // Désactiver chaque script
-                    foreach (Comportment component in listComportement)
-                    {
-                        System.Type type = component.GetType();
-                        //FieldInfo stealableField = type.GetField("stealable");//nope
-
                         // Ajoute dynamiquement un script du même type sur l'objet cible
-                        Component newComp = _hit.collider.gameObject.AddComponent(type);
+                        Component newComponent = objectGiven.AddComponent(script.Value);
 
-
-                        foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.Instance))
+                        //on parcour les variable du script qu'on vien d'ajouter
+                        foreach (FieldInfo field in script.Value.GetFields(BindingFlags.Public | BindingFlags.Instance))
                         {
-                            field.SetValue(newComp, field.GetValue(component));
+                            //on leur donne les même valeur qu'au moment ou on a volé le script
+                            field.SetValue(newComponent, field.GetValue(script.Key));
                         }
+                        //on détruit le script dans l'objet d'origine
+                        Destroy(script.Key);
+                        Debug.Log("Script " + script.Value.Name + " copié sur " + objectGiven.name + " et supprimé de " + objectStolen.name);
                     }
-                    break;
-                default:
-                    break;
-            }
-
+                    //on remet a zero les dictionnaire et les objets sauvegardé
+                    steals.Clear();
+                    lastSteal.text = "";
+                    components = null;
+                    objectStolen = null;
+                }
         }
     }
 
@@ -294,39 +209,30 @@ public class ComponentStealer : MonoBehaviour
 
     public void ResetListeComp()
     {
-        switch (typeCopy)
+        if (steals != null)
         {
-            case TypeCopy.Copie1DonneEtPerd_DonneMoi:
-                if (steals != null)
+            //on parcour le dictionnaire
+            foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
+            {
+                //si le monobehavior existe encore (verification obligatoire en cas de destruction de objectStolen)
+                if (script.Key != null)
                 {
-                    //on parcour le dictionnaire
-                    foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
-                    {
-                        //si le monobehavior existe encore (verification obligatoire en cas de destruction de objectStolen)
-                        if (script.Key != null)
-                        {
-                            //on le réactive
-                            script.Key.enabled = true;
-                        }
-                        else
-                        {
-                            //on arrete de parcourir le dictionnaire car il contiens des valeurs appartenant a un objet détruit
-                            break;
-                        }
-                    }
+                    //on le réactive
+                    script.Key.enabled = true;
                 }
-                steals.Clear();
-                components = null;
-                objectStolen = null;
-
-                break;
-            case TypeCopy.CopieMultipleEtConserve:
-                listComportement.Clear();
-
-                break;
+                else
+                {
+                    //on arrete de parcourir le dictionnaire car il contiens des valeurs appartenant a un objet détruit
+                    break;
+                }
+            }
         }
+        steals.Clear();
+        components = null;
+        objectStolen = null;
 
-        // Supprime tous les comportements sur le GameObject (voir pour réactiver ceux des script de base)
+        // Supprime tous les comportements sur le GameObject
+        // (voir pour réactiver ceux des script de base)
         Comportment[] attachedComponents = gameObject.GetComponents<Comportment>();
         foreach (MonoBehaviour component in attachedComponents)
         {
