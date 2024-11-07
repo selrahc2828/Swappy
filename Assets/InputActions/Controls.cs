@@ -46,7 +46,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""CopySteal"",
+                    ""name"": ""VolDeComportement"",
                     ""type"": ""Button"",
                     ""id"": ""7ceda912-4f0e-4edc-9248-aff9cafbecd8"",
                     ""expectedControlType"": """",
@@ -64,7 +64,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""PasteSteal"",
+                    ""name"": ""ApplicationDeComportementSurObjet"",
                     ""type"": ""Button"",
                     ""id"": ""cf4fcf45-fe26-41e7-9bf0-7c875fc842e9"",
                     ""expectedControlType"": """",
@@ -73,7 +73,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""PasteMe"",
+                    ""name"": ""ApplicationDeComportementSurPlayer"",
                     ""type"": ""Button"",
                     ""id"": ""f91e9be7-4f72-478a-b71d-a61dfa28455e"",
                     ""expectedControlType"": """",
@@ -125,6 +125,51 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StartCrouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""776e59f9-10bf-47db-bcb4-368a83d5eea2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StopCrouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""5ecf4f5a-6c14-4438-9374-84c6a4ecfba4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StartSprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""9ef9b5a5-f4c2-43e5-81c5-90f09cde607f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StopSprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""00f81513-3bf3-4008-a7b7-1224705f5338"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ViderComportementDuPlayer"",
+                    ""type"": ""Button"",
+                    ""id"": ""a8b2de4b-31d7-472c-9782-d679ab464161"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -135,7 +180,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard"",
-                    ""action"": ""CopySteal"",
+                    ""action"": ""VolDeComportement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -157,7 +202,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard"",
-                    ""action"": ""PasteSteal"",
+                    ""action"": ""ApplicationDeComportementSurObjet"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -278,7 +323,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PasteMe"",
+                    ""action"": ""ApplicationDeComportementSurPlayer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -303,6 +348,61 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""GrabDrop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""371f9094-5953-45f3-9c0f-bf79692f468e"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartCrouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""199a3bab-35f9-4a9c-b0ee-8a61321bf251"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StopCrouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9eb5d3ca-e842-48fe-a005-38870ca4bfef"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartSprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ec8e422-9201-4d74-99a0-42917a7bdc40"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StopSprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c060c771-3726-430d-8f3f-a517c8561f89"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ViderComportementDuPlayer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -324,15 +424,20 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_CopySteal = m_Player.FindAction("CopySteal", throwIfNotFound: true);
+        m_Player_VolDeComportement = m_Player.FindAction("VolDeComportement", throwIfNotFound: true);
         m_Player_StopTime = m_Player.FindAction("StopTime", throwIfNotFound: true);
-        m_Player_PasteSteal = m_Player.FindAction("PasteSteal", throwIfNotFound: true);
-        m_Player_PasteMe = m_Player.FindAction("PasteMe", throwIfNotFound: true);
+        m_Player_ApplicationDeComportementSurObjet = m_Player.FindAction("ApplicationDeComportementSurObjet", throwIfNotFound: true);
+        m_Player_ApplicationDeComportementSurPlayer = m_Player.FindAction("ApplicationDeComportementSurPlayer", throwIfNotFound: true);
         m_Player_ResetListComportement = m_Player.FindAction("ResetListComportement", throwIfNotFound: true);
         m_Player_ReloadScene = m_Player.FindAction("ReloadScene", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SwitchCam = m_Player.FindAction("SwitchCam", throwIfNotFound: true);
         m_Player_GrabDrop = m_Player.FindAction("GrabDrop", throwIfNotFound: true);
+        m_Player_StartCrouch = m_Player.FindAction("StartCrouch", throwIfNotFound: true);
+        m_Player_StopCrouch = m_Player.FindAction("StopCrouch", throwIfNotFound: true);
+        m_Player_StartSprint = m_Player.FindAction("StartSprint", throwIfNotFound: true);
+        m_Player_StopSprint = m_Player.FindAction("StopSprint", throwIfNotFound: true);
+        m_Player_ViderComportementDuPlayer = m_Player.FindAction("ViderComportementDuPlayer", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -401,30 +506,40 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_CopySteal;
+    private readonly InputAction m_Player_VolDeComportement;
     private readonly InputAction m_Player_StopTime;
-    private readonly InputAction m_Player_PasteSteal;
-    private readonly InputAction m_Player_PasteMe;
+    private readonly InputAction m_Player_ApplicationDeComportementSurObjet;
+    private readonly InputAction m_Player_ApplicationDeComportementSurPlayer;
     private readonly InputAction m_Player_ResetListComportement;
     private readonly InputAction m_Player_ReloadScene;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SwitchCam;
     private readonly InputAction m_Player_GrabDrop;
+    private readonly InputAction m_Player_StartCrouch;
+    private readonly InputAction m_Player_StopCrouch;
+    private readonly InputAction m_Player_StartSprint;
+    private readonly InputAction m_Player_StopSprint;
+    private readonly InputAction m_Player_ViderComportementDuPlayer;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
         public PlayerActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @CopySteal => m_Wrapper.m_Player_CopySteal;
+        public InputAction @VolDeComportement => m_Wrapper.m_Player_VolDeComportement;
         public InputAction @StopTime => m_Wrapper.m_Player_StopTime;
-        public InputAction @PasteSteal => m_Wrapper.m_Player_PasteSteal;
-        public InputAction @PasteMe => m_Wrapper.m_Player_PasteMe;
+        public InputAction @ApplicationDeComportementSurObjet => m_Wrapper.m_Player_ApplicationDeComportementSurObjet;
+        public InputAction @ApplicationDeComportementSurPlayer => m_Wrapper.m_Player_ApplicationDeComportementSurPlayer;
         public InputAction @ResetListComportement => m_Wrapper.m_Player_ResetListComportement;
         public InputAction @ReloadScene => m_Wrapper.m_Player_ReloadScene;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @SwitchCam => m_Wrapper.m_Player_SwitchCam;
         public InputAction @GrabDrop => m_Wrapper.m_Player_GrabDrop;
+        public InputAction @StartCrouch => m_Wrapper.m_Player_StartCrouch;
+        public InputAction @StopCrouch => m_Wrapper.m_Player_StopCrouch;
+        public InputAction @StartSprint => m_Wrapper.m_Player_StartSprint;
+        public InputAction @StopSprint => m_Wrapper.m_Player_StopSprint;
+        public InputAction @ViderComportementDuPlayer => m_Wrapper.m_Player_ViderComportementDuPlayer;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -440,18 +555,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @CopySteal.started += instance.OnCopySteal;
-            @CopySteal.performed += instance.OnCopySteal;
-            @CopySteal.canceled += instance.OnCopySteal;
+            @VolDeComportement.started += instance.OnVolDeComportement;
+            @VolDeComportement.performed += instance.OnVolDeComportement;
+            @VolDeComportement.canceled += instance.OnVolDeComportement;
             @StopTime.started += instance.OnStopTime;
             @StopTime.performed += instance.OnStopTime;
             @StopTime.canceled += instance.OnStopTime;
-            @PasteSteal.started += instance.OnPasteSteal;
-            @PasteSteal.performed += instance.OnPasteSteal;
-            @PasteSteal.canceled += instance.OnPasteSteal;
-            @PasteMe.started += instance.OnPasteMe;
-            @PasteMe.performed += instance.OnPasteMe;
-            @PasteMe.canceled += instance.OnPasteMe;
+            @ApplicationDeComportementSurObjet.started += instance.OnApplicationDeComportementSurObjet;
+            @ApplicationDeComportementSurObjet.performed += instance.OnApplicationDeComportementSurObjet;
+            @ApplicationDeComportementSurObjet.canceled += instance.OnApplicationDeComportementSurObjet;
+            @ApplicationDeComportementSurPlayer.started += instance.OnApplicationDeComportementSurPlayer;
+            @ApplicationDeComportementSurPlayer.performed += instance.OnApplicationDeComportementSurPlayer;
+            @ApplicationDeComportementSurPlayer.canceled += instance.OnApplicationDeComportementSurPlayer;
             @ResetListComportement.started += instance.OnResetListComportement;
             @ResetListComportement.performed += instance.OnResetListComportement;
             @ResetListComportement.canceled += instance.OnResetListComportement;
@@ -467,6 +582,21 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @GrabDrop.started += instance.OnGrabDrop;
             @GrabDrop.performed += instance.OnGrabDrop;
             @GrabDrop.canceled += instance.OnGrabDrop;
+            @StartCrouch.started += instance.OnStartCrouch;
+            @StartCrouch.performed += instance.OnStartCrouch;
+            @StartCrouch.canceled += instance.OnStartCrouch;
+            @StopCrouch.started += instance.OnStopCrouch;
+            @StopCrouch.performed += instance.OnStopCrouch;
+            @StopCrouch.canceled += instance.OnStopCrouch;
+            @StartSprint.started += instance.OnStartSprint;
+            @StartSprint.performed += instance.OnStartSprint;
+            @StartSprint.canceled += instance.OnStartSprint;
+            @StopSprint.started += instance.OnStopSprint;
+            @StopSprint.performed += instance.OnStopSprint;
+            @StopSprint.canceled += instance.OnStopSprint;
+            @ViderComportementDuPlayer.started += instance.OnViderComportementDuPlayer;
+            @ViderComportementDuPlayer.performed += instance.OnViderComportementDuPlayer;
+            @ViderComportementDuPlayer.canceled += instance.OnViderComportementDuPlayer;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -477,18 +607,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @CopySteal.started -= instance.OnCopySteal;
-            @CopySteal.performed -= instance.OnCopySteal;
-            @CopySteal.canceled -= instance.OnCopySteal;
+            @VolDeComportement.started -= instance.OnVolDeComportement;
+            @VolDeComportement.performed -= instance.OnVolDeComportement;
+            @VolDeComportement.canceled -= instance.OnVolDeComportement;
             @StopTime.started -= instance.OnStopTime;
             @StopTime.performed -= instance.OnStopTime;
             @StopTime.canceled -= instance.OnStopTime;
-            @PasteSteal.started -= instance.OnPasteSteal;
-            @PasteSteal.performed -= instance.OnPasteSteal;
-            @PasteSteal.canceled -= instance.OnPasteSteal;
-            @PasteMe.started -= instance.OnPasteMe;
-            @PasteMe.performed -= instance.OnPasteMe;
-            @PasteMe.canceled -= instance.OnPasteMe;
+            @ApplicationDeComportementSurObjet.started -= instance.OnApplicationDeComportementSurObjet;
+            @ApplicationDeComportementSurObjet.performed -= instance.OnApplicationDeComportementSurObjet;
+            @ApplicationDeComportementSurObjet.canceled -= instance.OnApplicationDeComportementSurObjet;
+            @ApplicationDeComportementSurPlayer.started -= instance.OnApplicationDeComportementSurPlayer;
+            @ApplicationDeComportementSurPlayer.performed -= instance.OnApplicationDeComportementSurPlayer;
+            @ApplicationDeComportementSurPlayer.canceled -= instance.OnApplicationDeComportementSurPlayer;
             @ResetListComportement.started -= instance.OnResetListComportement;
             @ResetListComportement.performed -= instance.OnResetListComportement;
             @ResetListComportement.canceled -= instance.OnResetListComportement;
@@ -504,6 +634,21 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @GrabDrop.started -= instance.OnGrabDrop;
             @GrabDrop.performed -= instance.OnGrabDrop;
             @GrabDrop.canceled -= instance.OnGrabDrop;
+            @StartCrouch.started -= instance.OnStartCrouch;
+            @StartCrouch.performed -= instance.OnStartCrouch;
+            @StartCrouch.canceled -= instance.OnStartCrouch;
+            @StopCrouch.started -= instance.OnStopCrouch;
+            @StopCrouch.performed -= instance.OnStopCrouch;
+            @StopCrouch.canceled -= instance.OnStopCrouch;
+            @StartSprint.started -= instance.OnStartSprint;
+            @StartSprint.performed -= instance.OnStartSprint;
+            @StartSprint.canceled -= instance.OnStartSprint;
+            @StopSprint.started -= instance.OnStopSprint;
+            @StopSprint.performed -= instance.OnStopSprint;
+            @StopSprint.canceled -= instance.OnStopSprint;
+            @ViderComportementDuPlayer.started -= instance.OnViderComportementDuPlayer;
+            @ViderComportementDuPlayer.performed -= instance.OnViderComportementDuPlayer;
+            @ViderComportementDuPlayer.canceled -= instance.OnViderComportementDuPlayer;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -543,14 +688,19 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnCopySteal(InputAction.CallbackContext context);
+        void OnVolDeComportement(InputAction.CallbackContext context);
         void OnStopTime(InputAction.CallbackContext context);
-        void OnPasteSteal(InputAction.CallbackContext context);
-        void OnPasteMe(InputAction.CallbackContext context);
+        void OnApplicationDeComportementSurObjet(InputAction.CallbackContext context);
+        void OnApplicationDeComportementSurPlayer(InputAction.CallbackContext context);
         void OnResetListComportement(InputAction.CallbackContext context);
         void OnReloadScene(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSwitchCam(InputAction.CallbackContext context);
         void OnGrabDrop(InputAction.CallbackContext context);
+        void OnStartCrouch(InputAction.CallbackContext context);
+        void OnStopCrouch(InputAction.CallbackContext context);
+        void OnStartSprint(InputAction.CallbackContext context);
+        void OnStopSprint(InputAction.CallbackContext context);
+        void OnViderComportementDuPlayer(InputAction.CallbackContext context);
     }
 }

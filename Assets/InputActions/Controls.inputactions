@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "CopySteal",
+                    "name": "VolDeComportement",
                     "type": "Button",
                     "id": "7ceda912-4f0e-4edc-9248-aff9cafbecd8",
                     "expectedControlType": "",
@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PasteSteal",
+                    "name": "ApplicationDeComportementSurObjet",
                     "type": "Button",
                     "id": "cf4fcf45-fe26-41e7-9bf0-7c875fc842e9",
                     "expectedControlType": "",
@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PasteMe",
+                    "name": "ApplicationDeComportementSurPlayer",
                     "type": "Button",
                     "id": "f91e9be7-4f72-478a-b71d-a61dfa28455e",
                     "expectedControlType": "",
@@ -103,6 +103,51 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "StartCrouch",
+                    "type": "Button",
+                    "id": "776e59f9-10bf-47db-bcb4-368a83d5eea2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StopCrouch",
+                    "type": "Button",
+                    "id": "5ecf4f5a-6c14-4438-9374-84c6a4ecfba4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StartSprint",
+                    "type": "Button",
+                    "id": "9ef9b5a5-f4c2-43e5-81c5-90f09cde607f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StopSprint",
+                    "type": "Button",
+                    "id": "00f81513-3bf3-4008-a7b7-1224705f5338",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ViderComportementDuPlayer",
+                    "type": "Button",
+                    "id": "a8b2de4b-31d7-472c-9782-d679ab464161",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -113,7 +158,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "CopySteal",
+                    "action": "VolDeComportement",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -135,7 +180,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
-                    "action": "PasteSteal",
+                    "action": "ApplicationDeComportementSurObjet",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -256,7 +301,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "PasteMe",
+                    "action": "ApplicationDeComportementSurPlayer",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -279,6 +324,61 @@
                     "processors": "",
                     "groups": "",
                     "action": "GrabDrop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "371f9094-5953-45f3-9c0f-bf79692f468e",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartCrouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "199a3bab-35f9-4a9c-b0ee-8a61321bf251",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StopCrouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9eb5d3ca-e842-48fe-a005-38870ca4bfef",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartSprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ec8e422-9201-4d74-99a0-42917a7bdc40",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StopSprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c060c771-3726-430d-8f3f-a517c8561f89",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ViderComportementDuPlayer",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

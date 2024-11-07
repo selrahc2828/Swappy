@@ -16,6 +16,7 @@ public class Comportment : MonoBehaviour
     public Rigidbody rb;
     public ListComp typeComp;
     public bool stealable = true;
+    public GameObject originalOwner;
 
     void Awake()
     {      
