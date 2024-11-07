@@ -24,14 +24,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141477712097474210}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.00000020861623, z: -0, w: -1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7472583160847742363}
   m_Father: {fileID: 5711528346511832651}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -360, z: 0}
 --- !u!1 &1384991118227254776
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,7 +263,7 @@ Transform:
   m_GameObject: {fileID: 2156383771820046060}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.7099998, y: -14.8, z: -20.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1402,7 +1402,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 70
+  field of view: 90
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -1672,7 +1672,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8760109797842813243}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.00000020861623, z: -0, w: -1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1684,7 +1684,7 @@ Transform:
   - {fileID: 1439311586565779644}
   - {fileID: 87184388393984951}
   m_Father: {fileID: 5711528346511832651}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -360, z: 0}
 --- !u!136 &4353860794635453756
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1754,13 +1754,13 @@ MonoBehaviour:
   gravityForceY: 5
   slowCoeff: 0.3
   slowTimerActive: 1
-  slowTimeDuration: 2
+  slowTimeDuration: 5
   moveSpeed: 70
   maxSpeed: 100
-  jumpForce: 30
+  jumpForce: 25
   airModifier: 0.1
   groundCheck: {fileID: 87184388393984951}
-  groundCheckRadius: 0.2
+  groundCheckRadius: 0.4
   floorMask:
     serializedVersion: 2
     m_Bits: 8
@@ -1784,11 +1784,11 @@ MonoBehaviour:
   playerRender: {fileID: 5038503226729393923}
   xRotMin: -90
   xRotMax: 90
-  sensitivityX: 7
-  sensitivityY: 7
-  sensitivityXSlowTime: 10
-  sensitivityYSlowTime: 10
-  fov: 70
+  sensitivityX: 50
+  sensitivityY: 50
+  sensitivityXSlowTime: 50
+  sensitivityYSlowTime: 50
+  fov: 90
 --- !u!114 &9000596238172983818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1804,14 +1804,8 @@ MonoBehaviour:
   camController: {fileID: 8507278806808182358}
   hitLayer:
     serializedVersion: 2
-    m_Bits: 191
+    m_Bits: 187
   mainCam: {fileID: 301775471937625502}
-  typeCopy: 0
-  isSteal: 1
-  maxSteal: 5
-  nbSteal: 0
-  listComportement: []
-  copyPasteSpawner: 0
   objectStolen: {fileID: 0}
   components: []
   surface: {fileID: 2448034939734827756}
