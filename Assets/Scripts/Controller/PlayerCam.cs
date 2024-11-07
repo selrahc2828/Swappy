@@ -12,6 +12,8 @@ public class PlayerCam : MonoBehaviour
     float xRotation;
     float yRotation;
 
+    public LineRenderer line;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -33,5 +35,16 @@ public class PlayerCam : MonoBehaviour
         //rotate cam and orientation
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientatiaon.rotation = Quaternion.Euler(0, yRotation, 0);
+
+        LineRenderer();
+    }
+
+
+    private void LineRenderer()
+    {
+        float maxDistance = 500f;
+        // Si le raycast touche un objet
+        line.SetPosition(0, transform.position - transform.up/2 + transform.right/2);  // Début de la ligne (caméra)
+        line.SetPosition(1, transform.forward * maxDistance);  // Fin de la ligne (point touché par le rayon)
     }
 }

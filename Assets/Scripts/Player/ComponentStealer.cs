@@ -242,32 +242,4 @@ public class ComponentStealer : MonoBehaviour
         lastSteal.text = "";
 
     }
-
-    private void LineRendererETDebug()
-    {
-        float maxDistance = 500f;
-        // Si le raycast touche un objet
-        if (Physics.Raycast(_ray, out _hit, maxDistance, hitLayer))
-        {
-            // Positionner les points du LineRenderer pour dessiner la ligne
-            line.SetPosition(0, rayPointStart.position);  // Début de la ligne (caméra)
-            line.SetPosition(1, _hit.point);  // Fin de la ligne (point touché par le rayon)
-
-            Debug.DrawLine(mainCam.transform.position, _hit.point, Color.red);
-        }
-        else
-        {
-            // Si rien n'est touché, on dessine la ligne jusqu'à la distance max du raycast
-            Vector3 farPoint = _ray.GetPoint(maxDistance);
-            line.SetPosition(0, rayPointStart.position);  // Début de la ligne (caméra)
-            line.SetPosition(1, farPoint);  // Fin de la ligne (point éloigné)
-            Debug.DrawLine(mainCam.transform.position, farPoint, Color.green);
-        }
-    }
-
-    void OnDrawGizmos()
-    {
-        //Gizmos.color = Color.blue;
-        //Gizmos.DrawLine(mainCam.transform.position, mainCam.transform.position + mainCam.transform.forward * 10);
-    }
 }
