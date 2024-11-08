@@ -5,42 +5,37 @@ using UnityEngine.EventSystems;
 
 public class MouvementState : State
 {
-    private Controls controls;
-    private Vector2 moveInputVector;
+    protected Controls controls;
+    protected Vector2 moveInputVector;
 
     [Header("Movement")]
-    protected float moveSpeed;
+    protected float moveSpeed = 7;
     public float walkSpeed;
     public float sprintSpeed;
-
-    public float groundDrag;
+    private float groundDrag;
 
     [Header("Jumping")]
-    public float jumpForce;
-    public float jumpCooldown;
+    public float jumpTimer;
     public float airMultiplier;
-    protected bool readyToJump;
-
-    [Header("Crouching")]
-    public float crouchSpeed;
-    public float crouchYScale;
-    protected float startYScale;
+    protected bool readyToJump = true;
+    protected bool jumped = false;
 
     [Header("Ground Check")]
-    public float playerHeight;
-    public LayerMask whatIsGround;
-    bool grounded;
+    private float playerHeight;
+    private LayerMask whatIsGround;
+    protected bool grounded;
 
     [Header("Slope Handeling")]
-    public float maxSlopeAngle;
+    private float maxSlopeAngle;
     private RaycastHit slopeHit;
-    private bool exitingSlope;
+    protected bool exitingSlope;
 
-    public Transform orientation;
+    private Vector3 gravity;
+    private Vector3 slopeGravity;
 
-    Vector3 moveDirection;
+    protected Vector3 moveDirection;
 
-    private PlayerMouvementStateMachine _sm;
+    protected PlayerMouvementStateMachine _sm;
 
     public MouvementState(StateMachine stateMachine) : base(stateMachine)
     {
@@ -51,17 +46,27 @@ public class MouvementState : State
     {
         controls = GameManager.controls;
 
+        walkSpeed = _sm.gameManager.walkSpeed;
+        sprintSpeed = _sm.gameManager.sprintSpeed;
+        groundDrag = _sm.gameManager.groundDrag;
+        airMultiplier = _sm.gameManager.airMultiplier;
+        playerHeight = _sm.gameManager.playerHeight;
+        whatIsGround = _sm.gameManager.whatIsGround;
+        maxSlopeAngle = _sm.gameManager.maxSlopeAngle;
+
         _sm.rb.freezeRotation = true;
 
+        gravity = Physics.gravity;
     }
     public override void TickLogic()
     {
+        Debug.Log(_sm.currentState.ToString());
         //ground check
-        grounded = Physics.Raycast(_sm.rb.transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
+        grounded = Physics.Raycast(_sm.rb.transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+        JumpCooldown();
         SpeedControl();
     }
-    public override void TickPhisics()
+    public override void TickPhysics()
     {
         moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
         MovePlayer();
@@ -77,18 +82,21 @@ public class MouvementState : State
 
     public override void Exit()
     {
+
     }
 
 
     private void MovePlayer()
     {
         //calculate movement direction
-        moveDirection = orientation.forward * moveInputVector.y + orientation.right * moveInputVector.x;
+        moveDirection = _sm.gameManager.orientation.forward * moveInputVector.y + _sm.gameManager.orientation.right * moveInputVector.x;
 
         //on slope
         if (OnSlope() && !exitingSlope)
         {
             _sm.rb.AddForce(getSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
+            slopeGravity = Vector3.Project(gravity, slopeHit.normal);
+            _sm.rb.AddForce(slopeGravity * 5, ForceMode.Acceleration);
             if (_sm.rb.velocity.y > 0)
             {
                 _sm.rb.AddForce(Vector3.down * 80f, ForceMode.Force);
@@ -102,9 +110,9 @@ public class MouvementState : State
         //in air
         else
         {
-            _sm.rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            _sm.rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            //_sm.rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
-
         //turn gravity off while on slope
         _sm.rb.useGravity = !OnSlope();
     }
@@ -147,5 +155,23 @@ public class MouvementState : State
     private Vector3 getSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+    private void JumpCooldown()
+    {
+        if(jumped)
+        {
+            jumpTimer -= Time.deltaTime;
+            if(jumpTimer < 0)
+            {
+                ResetJump();
+                jumped = false;
+            }
+        }
+    }
+    private void ResetJump()
+    {
+        readyToJump = true;
+
+        exitingSlope = false;
     }
 }

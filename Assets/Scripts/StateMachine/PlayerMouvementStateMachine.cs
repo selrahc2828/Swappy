@@ -9,8 +9,10 @@ public class PlayerMouvementStateMachine : StateMachine
     public static Crouching crouchingState;
     public static Jumping jumpingState;
     public static Projecting projectingState;
+    public static Falling fallingState;
 
     public Rigidbody rb;
+    public GameManager gameManager;
     public override void Initialize()
     {
         DontDestroyOnLoad(this);
@@ -19,8 +21,10 @@ public class PlayerMouvementStateMachine : StateMachine
         crouchingState = new Crouching(this);
         jumpingState = new Jumping(this);
         projectingState = new Projecting(this);
+        fallingState = new Falling(this);
         currentState = walkingState;
         rb = GetComponent<Rigidbody>();
+        gameManager = FindAnyObjectByType<GameManager>();
         currentState.Enter();
     }
 }

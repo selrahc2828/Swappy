@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projecting : MouvementState
+public class Falling : MouvementState
 {
     protected StateMachine stateMachine;
 
-    public Projecting(StateMachine stateMachine) : base(stateMachine)
+    public Falling(StateMachine stateMachine) : base(stateMachine)
     {
 
     }
@@ -17,14 +17,19 @@ public class Projecting : MouvementState
     }
     public override void TickLogic()
     {
-        throw new System.NotImplementedException();
+        base.TickLogic();
+
+        if (grounded)
+        {
+            _sm.ChangeState(PlayerMouvementStateMachine.walkingState);
+        }
     }
     public override void TickPhysics()
     {
-        throw new System.NotImplementedException();
+        base.TickPhysics();
     }
     public override void Exit()
     {
-        throw new System.NotImplementedException();
+        base.Exit();
     }
 }

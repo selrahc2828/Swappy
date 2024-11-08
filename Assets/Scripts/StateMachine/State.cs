@@ -13,6 +13,6 @@ public abstract class State
 
     public abstract void Enter();
     public abstract void TickLogic();
-    public abstract void TickPhisics();
+    public abstract void TickPhysics();
     public abstract void Exit();
 }

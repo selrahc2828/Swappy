@@ -58,8 +58,6 @@ public class ComponentStealer : MonoBehaviour
 
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
             {
-                Debug.Log(_hit.collider.gameObject.name);
-
                 if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
                 {
                     return;
@@ -138,8 +136,6 @@ public class ComponentStealer : MonoBehaviour
 
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
             {
-
-                Debug.Log("ok");
                 //Debug.LogWarning("Hit ray donné : " + _hit.collider.name);
 
                 if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
