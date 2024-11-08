@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static Controls controls;
-    //public CameraController camControllerScript;
+    public CameraController camControllerScript;
     //public GrabObject grabScript;
 
     [HideInInspector]
@@ -27,7 +27,10 @@ public class GameManager : MonoBehaviour
 
     public KeyCode keyForScene1 = KeyCode.Alpha1;
     public KeyCode keyForScene2 = KeyCode.Alpha2;
-
+    
+    [HideInInspector]
+    public bool etatIsProjected;
+    
     private void OnEnable()
     {
         if (controls == null)
@@ -52,7 +55,11 @@ public class GameManager : MonoBehaviour
         slowMotion = false;
         slowTimer = 0f;
 
-        //camControllerScript = FindObjectOfType<CameraController>();
+        camControllerScript = FindObjectOfType<CameraController>();
+        if (camControllerScript == null)
+        {
+            Debug.LogWarning("Il n'y a pas de CameraController dans la scène");
+        }
         //grabScript = FindObjectOfType<GrabObject>();
 
         controls.Player.Enable();

@@ -33,10 +33,11 @@ public class CameraController : MonoBehaviour
     [Range(0,179)]
     public float fov = 40f;
 
+    [Header("Projection")] public Transform focusTarget;
     void Start()
     {
         controls = GameManager.controls;
-        
+        changeFocusTarget();
     }
 
     //appel quand une valeur de l'inspecteur est chang�
@@ -48,7 +49,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        mainCamera.transform.position = camPosition.position;
+        mainCamera.transform.position = focusTarget.position;
 
         if (GameManager.Instance.slowMotion)
         {
@@ -75,11 +76,27 @@ public class CameraController : MonoBehaviour
         mainCamera.transform.localRotation = Quaternion.Euler(_xRot, _yRot, 0f);// y � 0f si cam dans player
 
         // si utilise player, il arrive que les 2 ne soit pas synchro = mouvement ne se fait plus par rapport � la rotation du player/camera
-        orientation.rotation = Quaternion.Euler(0f, _yRot, 0f);
-        playerRender.rotation = Quaternion.Euler(0f, _yRot, 0f);
+        if (!GameManager.Instance.etatIsProjected)
+        {
+            //si pas en projection, on tourne l'avatar
+            // voir si on peut faire ça en même temps que la position cam pour pas avoir 2 if
+            orientation.rotation = Quaternion.Euler(0f, _yRot, 0f);
+            playerRender.rotation = Quaternion.Euler(0f, _yRot, 0f);
+        }
         // interractor plac� dans la camera
 
     }
 
+    public void changeFocusTarget(Transform target = null)
+    {
+        if (target)
+        {
+            focusTarget = target;
+        }
+        else
+        {
+            focusTarget = camPosition;
+        }
+    }
 
 }

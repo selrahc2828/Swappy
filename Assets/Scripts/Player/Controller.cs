@@ -42,6 +42,10 @@ public class Controller : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask floorMask;
+    
+    [Header("Projection")]
+    private Ray _ray;
+    public LayerMask hitLayer;
 
     [Header("Debug")]
     public TextMeshProUGUI speedText;
@@ -64,7 +68,8 @@ public class Controller : MonoBehaviour
         controls.Player.Jump.performed += Jump;
         controls.Player.GrabDrop.performed += GrabAndDrop;
         controls.Player.ResetListComportement.performed += ResetListeComp;
-
+        controls.Player.Projection.performed += Projection;
+        
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -82,6 +87,7 @@ public class Controller : MonoBehaviour
         controls.Player.Jump.performed -= Jump;
         controls.Player.GrabDrop.performed -= GrabAndDrop;
         controls.Player.ResetListComportement.performed -= ResetListeComp;
+        controls.Player.Projection.performed -= Projection;
     }
 
     void Update()
@@ -96,9 +102,14 @@ public class Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;//input
-        handleMovement();
-        handleGravity();
+        if (!GameManager.Instance.etatIsProjected)
+        {
+            //si pas en projection, l'avatar peut bouger
+            moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;//input
+            handleMovement();
+            handleGravity();            
+        }
+
 
         if (Grounded())
         {
@@ -197,6 +208,38 @@ public class Controller : MonoBehaviour
                 }
 
             }
+        }
+    }
+    
+    void Projection(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            
+            RaycastHit _hit;
+            _ray = GameManager.Instance.camControllerScript.mainCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer))
+            {
+
+            }
+            
+            
+            Debug.Log(GameManager.Instance.etatIsProjected);
+
+            if (!GameManager.Instance.etatIsProjected && _hit.collider != null)
+            {
+                GameManager.Instance.etatIsProjected = true;
+                
+                GameManager.Instance.camControllerScript.changeFocusTarget(_hit.collider.transform);
+            }
+            else if (GameManager.Instance.etatIsProjected)
+            {
+                GameManager.Instance.etatIsProjected = false;
+                GameManager.Instance.camControllerScript.changeFocusTarget();//pos cam player
+            }
+            
+
         }
     }
 

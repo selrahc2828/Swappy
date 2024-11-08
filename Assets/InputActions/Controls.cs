@@ -125,6 +125,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Projection"",
+                    ""type"": ""Button"",
+                    ""id"": ""f433ada3-f3ab-4214-b1c5-dc617b110973"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -303,6 +312,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""GrabDrop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2cbb1c73-5801-4c88-9c89-a38649922400"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Projection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -333,6 +353,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SwitchCam = m_Player.FindAction("SwitchCam", throwIfNotFound: true);
         m_Player_GrabDrop = m_Player.FindAction("GrabDrop", throwIfNotFound: true);
+        m_Player_Projection = m_Player.FindAction("Projection", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -410,6 +431,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SwitchCam;
     private readonly InputAction m_Player_GrabDrop;
+    private readonly InputAction m_Player_Projection;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -425,6 +447,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @SwitchCam => m_Wrapper.m_Player_SwitchCam;
         public InputAction @GrabDrop => m_Wrapper.m_Player_GrabDrop;
+        public InputAction @Projection => m_Wrapper.m_Player_Projection;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -467,6 +490,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @GrabDrop.started += instance.OnGrabDrop;
             @GrabDrop.performed += instance.OnGrabDrop;
             @GrabDrop.canceled += instance.OnGrabDrop;
+            @Projection.started += instance.OnProjection;
+            @Projection.performed += instance.OnProjection;
+            @Projection.canceled += instance.OnProjection;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -504,6 +530,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @GrabDrop.started -= instance.OnGrabDrop;
             @GrabDrop.performed -= instance.OnGrabDrop;
             @GrabDrop.canceled -= instance.OnGrabDrop;
+            @Projection.started -= instance.OnProjection;
+            @Projection.performed -= instance.OnProjection;
+            @Projection.canceled -= instance.OnProjection;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -552,5 +581,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSwitchCam(InputAction.CallbackContext context);
         void OnGrabDrop(InputAction.CallbackContext context);
+        void OnProjection(InputAction.CallbackContext context);
     }
 }
