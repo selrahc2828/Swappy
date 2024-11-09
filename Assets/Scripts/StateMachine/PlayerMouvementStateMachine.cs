@@ -15,7 +15,7 @@ public class PlayerMouvementStateMachine : StateMachine
     public GameManager gameManager;
     public override void Initialize()
     {
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
         walkingState = new Walking(this);
         sprintingState = new Sprinting(this);
         crouchingState = new Crouching(this);

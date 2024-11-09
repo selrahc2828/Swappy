@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class StateMachine : MonoBehaviour
@@ -32,6 +34,11 @@ public abstract class StateMachine : MonoBehaviour
         {
             currentState.TickPhysics();
         }
+    }
+
+    private void OnDisable()
+    {
+        currentState.Exit();
     }
 
     public void ChangeState(State newState)

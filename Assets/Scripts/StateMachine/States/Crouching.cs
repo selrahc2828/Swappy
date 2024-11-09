@@ -19,7 +19,7 @@ public class Crouching : MouvementState
     {
         base.Enter();
 
-        controls.Player.StartCrouch.performed += StopCrouch;
+        controls.Player.StopCrouch.performed += StopCrouch;
         controls.Player.Jump.performed += Jump;
         controls.Player.StartSprint.performed += StartSprint;
 
@@ -46,6 +46,10 @@ public class Crouching : MouvementState
     {
         base.Exit();
         _sm.transform.localScale = new Vector3(_sm.transform.localScale.x, startYScale, _sm.transform.localScale.z);
+        Debug.Log(startYScale);
+        controls.Player.StartCrouch.performed -= StopCrouch;
+        controls.Player.Jump.performed -= Jump;
+        controls.Player.StartSprint.performed -= StartSprint;
     }
 
     private void StopCrouch(InputAction.CallbackContext context)

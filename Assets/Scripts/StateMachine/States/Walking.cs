@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,7 +20,6 @@ public class Walking : MouvementState
         controls.Player.Jump.performed += Jump;
         controls.Player.StartSprint.performed += StartSprint;
 
-
         moveSpeed = walkSpeed;
     }
     public override void TickLogic()
@@ -38,15 +38,16 @@ public class Walking : MouvementState
     public override void Exit()
     {
         base.Exit();
+        controls.Player.StartCrouch.performed -= StartCrouch;
+        controls.Player.Jump.performed -= Jump;
+        controls.Player.StartSprint.performed -= StartSprint;
     }
-
-
+    
     private void StartCrouch(InputAction.CallbackContext context)
     {
         if (context.performed && grounded)
         {
             _sm.ChangeState(PlayerMouvementStateMachine.crouchingState);
-            
         }
     }
     private void StartSprint(InputAction.CallbackContext context)

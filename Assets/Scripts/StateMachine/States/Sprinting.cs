@@ -30,10 +30,18 @@ public class Sprinting : MouvementState
     public override void TickPhysics()
     {
         base.TickPhysics();
+        
+        if (!grounded)
+        {
+            _sm.ChangeState(PlayerMouvementStateMachine.fallingState);
+        }
     }
     public override void Exit()
     {
         base.Exit();
+        controls.Player.StartCrouch.performed -= StartCrouch;
+        controls.Player.StopSprint.performed -= StopSprint;
+        controls.Player.Jump.performed -= Jump;
     }
 
     private void StartCrouch(InputAction.CallbackContext context)
@@ -68,5 +76,4 @@ public class Sprinting : MouvementState
             
         }
     }
-
 }
