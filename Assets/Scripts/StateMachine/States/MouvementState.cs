@@ -61,13 +61,14 @@ public class MouvementState : State
     public override void TickLogic()
     {
         Debug.Log(_sm.currentState.ToString());
-        //ground check
-        grounded = Physics.Raycast(_sm.rb.transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+        
         JumpCooldown();
         SpeedControl();
     }
     public override void TickPhysics()
     {
+        //ground check
+        grounded = Physics.Raycast(_sm.rb.transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
         moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
         MovePlayer();
         if (grounded)
@@ -85,7 +86,6 @@ public class MouvementState : State
 
     }
 
-
     private void MovePlayer()
     {
         //calculate movement direction
@@ -94,7 +94,7 @@ public class MouvementState : State
         //on slope
         if (OnSlope() && !exitingSlope)
         {
-            _sm.rb.AddForce(getSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
+            _sm.rb.AddForce(getSlopeMoveDirection() * (moveSpeed * 20f), ForceMode.Force);
             slopeGravity = Vector3.Project(gravity, slopeHit.normal);
             _sm.rb.AddForce(slopeGravity * 5, ForceMode.Acceleration);
             if (_sm.rb.velocity.y > 0)
@@ -105,12 +105,12 @@ public class MouvementState : State
         //on Flat Ground
         else if (grounded)
         {
-            _sm.rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            _sm.rb.AddForce(moveDirection.normalized * (moveSpeed * 10f), ForceMode.Force);
         }
         //in air
         else
         {
-            _sm.rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            _sm.rb.AddForce(moveDirection.normalized * (moveSpeed * 10f), ForceMode.Force);
             //_sm.rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
         //turn gravity off while on slope
@@ -135,8 +135,10 @@ public class MouvementState : State
             //limit velocity if needed
             if (flatVel.magnitude > moveSpeed)
             {
+                /*
                 Vector3 limitedVel = flatVel.normalized * moveSpeed;
                 _sm.rb.velocity = new Vector3(limitedVel.x, _sm.rb.velocity.y, limitedVel.z);
+                */
             }
         }
     }
@@ -145,9 +147,11 @@ public class MouvementState : State
     {
         if (Physics.Raycast(_sm.rb.transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
+            /*
             //compare the slope angle to out max angle variable
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
+            */
         }
         return false;
     }

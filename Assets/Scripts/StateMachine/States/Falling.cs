@@ -18,15 +18,15 @@ public class Falling : MouvementState
     public override void TickLogic()
     {
         base.TickLogic();
-
-        if (grounded)
-        {
-            _sm.ChangeState(PlayerMouvementStateMachine.walkingState);
-        }
     }
     public override void TickPhysics()
     {
         base.TickPhysics();
+        
+        if (grounded)
+        {
+            _sm.ChangeState(PlayerMouvementStateMachine.walkingState);
+        }
     }
     public override void Exit()
     {

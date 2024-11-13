@@ -45,6 +45,20 @@ public class Repulse : Comportment
         {
             foreach (Collider objectInRange in objectsInRange)
             {
+                if (objectInRange.gameObject.tag == "Player")
+                {
+                    GameObject objectAffected = objectInRange.gameObject.GetComponentInParent<Rigidbody>().gameObject;
+                    Debug.Log(objectAffected);
+                    if (impulseGradiantForce)
+                    {
+                        objectAffected.GetComponent<Rigidbody>().AddExplosionForce(repulserForce, transform.position, repulserRange);
+
+                    }
+                    else
+                    {
+                        objectAffected.GetComponent<Rigidbody>().AddForce((objectInRange.transform.position - transform.position) * repulserForce, ForceMode.Impulse);
+                    }
+                }
                 if (objectInRange.GetComponent<Rigidbody>() != null)
                 {
                     if (!applyOnMe && objectInRange.gameObject == gameObject)
