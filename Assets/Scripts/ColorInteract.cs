@@ -24,7 +24,11 @@ public class ColorInteract : MonoBehaviour
     {
         _Color3 = GameManager.Instance.Uncomportemented_color;
         _Color2 = GameManager.Instance.Uncomportemented_color;
-        material = GetComponent<MeshRenderer>().materials[1];
+        
+        if (GetComponent<MeshRenderer>().materials.Length>1)
+        {
+            material = GetComponent<MeshRenderer>().materials[1];
+        }
 
         material.SetColor("_Color3", _Color3);
         material.SetColor("_Color2", _Color2);
@@ -53,62 +57,67 @@ public class ColorInteract : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_Color3 == GameManager.Instance.Uncomportemented_color)
+        if (gameObject.tag != "NotInteract")
         {
-            if (GetComponents<Repulse>().Length == 1)
+            if (_Color3 == GameManager.Instance.Uncomportemented_color)
             {
-                material.SetColor("_Color3", GameManager.Instance.Repulsive_color);
-            
+                if (GetComponentsInParent<Repulse>().Length == 1)
+                {
+                    material.SetColor("_Color3", GameManager.Instance.Repulsive_color);
+                
+                }
+                else if (GetComponentsInParent<Immuable>().Length == 1)
+                {
+                    material.SetColor("_Color3", GameManager.Instance.immuable_color);
+                
+                }
+                else if (GetComponentsInParent<Fusée>().Length == 1)
+                {
+                    material.SetColor("_Color3", GameManager.Instance.fusee_color);
+                
+                }
+                else if (GetComponentsInParent<Magnet_Effect>().Length == 1)
+                {
+                    material.SetColor("_Color3", GameManager.Instance.aimant_color);
+                
+                }
+                else if (GetComponentsInParent<Physics_Stealable>().Length == 1)
+                {
+                    material.SetColor("_Color3", GameManager.Instance.Rebond_color);
+                
+                }
             }
-            else if (GetComponents<Immuable>().Length == 1)
+            if (_Color2 == GameManager.Instance.Uncomportemented_color)
             {
-                material.SetColor("_Color3", GameManager.Instance.immuable_color);
-            
-            }
-            else if (GetComponents<Fusée>().Length == 1)
-            {
-                material.SetColor("_Color3", GameManager.Instance.fusee_color);
-            
-            }
-            else if (GetComponents<Magnet_Effect>().Length == 1)
-            {
-                material.SetColor("_Color3", GameManager.Instance.aimant_color);
-            
-            }
-            else if (GetComponents<Physics_Stealable>().Length == 1)
-            {
-                material.SetColor("_Color3", GameManager.Instance.Rebond_color);
-            
+                if (GetComponentsInParent<Repulse>().Length == 2)
+                {
+                    material.SetColor("_Color2", GameManager.Instance.Repulsive_color);
+                
+                }
+                else if (GetComponentsInParent<Immuable>().Length == 2)
+                {
+                    material.SetColor("_Color2", GameManager.Instance.immuable_color);
+                
+                }
+                else if (GetComponentsInParent<Fusée>().Length == 2)
+                {
+                    material.SetColor("_Color2", GameManager.Instance.fusee_color);
+                
+                }
+                else if (GetComponentsInParent<Magnet_Effect>().Length == 2)
+                {
+                    material.SetColor("_Color2", GameManager.Instance.aimant_color);
+                
+                }
+                else if (GetComponentsInParent<Physics_Stealable>().Length == 2)
+                {
+                    material.SetColor("_Color2", GameManager.Instance.Rebond_color);
+                
+                }
             }
         }
-        if (_Color2 == GameManager.Instance.Uncomportemented_color)
-        {
-            if (GetComponents<Repulse>().Length == 2)
-            {
-                material.SetColor("_Color2", GameManager.Instance.Repulsive_color);
-            
-            }
-            else if (GetComponents<Immuable>().Length == 2)
-            {
-                material.SetColor("_Color2", GameManager.Instance.immuable_color);
-            
-            }
-            else if (GetComponents<Fusée>().Length == 2)
-            {
-                material.SetColor("_Color2", GameManager.Instance.fusee_color);
-            
-            }
-            else if (GetComponents<Magnet_Effect>().Length == 2)
-            {
-                material.SetColor("_Color2", GameManager.Instance.aimant_color);
-            
-            }
-            else if (GetComponents<Physics_Stealable>().Length == 2)
-            {
-                material.SetColor("_Color2", GameManager.Instance.Rebond_color);
-            
-            }
-        }
+        
+        
         
         
         
