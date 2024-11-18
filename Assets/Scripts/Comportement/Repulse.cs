@@ -21,7 +21,7 @@ public class Repulse : Comportment
     {
         repulserTimer = 0;
         rb = GetComponent<Rigidbody>();
-        material = GetComponent<MeshRenderer>().material;
+        //material = GetComponent<MeshRenderer>().material;
     }
 
     // Update is called once per frame
@@ -34,7 +34,7 @@ public class Repulse : Comportment
             repulserTimer = 0;
         }
         
-        material.SetFloat("_timer", repulserTimer);
+       // material.SetFloat("_timer", repulserTimer);
     }
 
     public void Expulse()
