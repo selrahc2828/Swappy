@@ -1569,10 +1569,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8865937368722553911, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1819089314}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
 --- !u!1 &210391984
 GameObject:
@@ -1895,6 +1892,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 91417febf224f7644a3ce663050d1b4a, type: 3}
     - target: {fileID: 786925039624401034, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: m_Color.a
+      value: 0.7019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 786925039624401034, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
       propertyPath: m_Color.b
       value: 0.6574518
       objectReference: {fileID: 0}
@@ -1912,15 +1913,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1077155763430414303, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5496167
+      value: 0.2549233
       objectReference: {fileID: 0}
     - target: {fileID: 1077155763430414303, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5496167
+      value: 0.2549233
       objectReference: {fileID: 0}
     - target: {fileID: 1077155763430414303, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5496167
+      value: 0.2549233
       objectReference: {fileID: 0}
     - target: {fileID: 5711528346511832651, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1963,16 +1964,40 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8479043468062421104, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: maxSpeed
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 8479043468062421104, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
       propertyPath: jumpForce
-      value: 40
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8479043468062421104, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
       propertyPath: moveSpeed
-      value: 30
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 8479043468062421104, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
       propertyPath: airModifier
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8479043468062421104, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: gravityForceY
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8507278806808182358, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: sensitivityX
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8507278806808182358, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: sensitivityY
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8507278806808182358, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: sensitivityXSlowTime
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8507278806808182358, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: sensitivityYSlowTime
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8540604008974460389, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
       propertyPath: m_Name
@@ -7680,15 +7705,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1767383280669085481, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: scene1
-      value: Playground
+      value: Playground 3C classique
       objectReference: {fileID: 0}
     - target: {fileID: 1767383280669085481, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: scene2
-      value: Situation_de_jeu_Marius
+      value: Playground 3C fullspeed
       objectReference: {fileID: 0}
     - target: {fileID: 1767383280669085481, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: scene3
-      value: 
+      value: Playground 3C no jump
       objectReference: {fileID: 0}
     - target: {fileID: 2555637526324700904, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8423,11 +8448,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d63782a5a1b50044d8670005e17cee9b, type: 3}
---- !u!1 &1537335549 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8865937368722553911, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
-  m_PrefabInstance: {fileID: 196784748}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1540729202 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 178470489595495102, guid: d63782a5a1b50044d8670005e17cee9b, type: 3}
@@ -10458,18 +10478,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4934661490551399437, guid: 478d22ccae0dba14e94d11d24da36349, type: 3}
   m_PrefabInstance: {fileID: 196784748}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1819089314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1537335549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4926597b7a9069241b8cd4273a4371fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1841848415 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6644362582985112265, guid: 4a19b5fa0e6333e49a0e1cea0a83bcb5, type: 3}

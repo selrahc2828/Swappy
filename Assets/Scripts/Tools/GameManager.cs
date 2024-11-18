@@ -32,9 +32,11 @@ public class GameManager : MonoBehaviour
 
     public string scene1;
     public string scene2;
+    public string scene3;
 
     public KeyCode keyForScene1 = KeyCode.Alpha1;
     public KeyCode keyForScene2 = KeyCode.Alpha2;
+    public KeyCode keyForScene3 = KeyCode.Alpha3;
 
     private void OnEnable()
     {
@@ -92,6 +94,10 @@ public class GameManager : MonoBehaviour
             ChangeScene(scene2);
         }
 
+        if (Input.GetKeyDown(keyForScene3))
+        {
+            ChangeScene(scene3);
+        }
     }
 
     private void ReloadScene(InputAction.CallbackContext context)
