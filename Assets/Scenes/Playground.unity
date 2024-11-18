@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 56883448}
   - component: {fileID: 56883447}
   - component: {fileID: 56883446}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (11)
   m_TagString: NotInteract
   m_Icon: {fileID: 0}
@@ -715,7 +715,7 @@ GameObject:
   - component: {fileID: 95910861}
   - component: {fileID: 95910860}
   - component: {fileID: 95910859}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (4)
   m_TagString: NotInteract
   m_Icon: {fileID: 0}
@@ -1175,13 +1175,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142222384}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000017940994, y: -0.99818635, z: 0.06019999, w: -0.0000002974827}
-  m_LocalPosition: {x: 22.660006, y: -21.672298, z: -8.559984}
-  m_LocalScale: {x: 6.643873, y: 2.5971677, z: 15.298159}
+  m_LocalRotation: {x: -0.000000024761059, y: -0.9965425, z: 0.08308434, w: -0.00000029699288}
+  m_LocalPosition: {x: 22.66, y: -21.96, z: -9.958002}
+  m_LocalScale: {x: 6.643873, y: 2.8896086, z: 18.051826}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1744117396}
-  m_LocalEulerAnglesHint: {x: 6.903, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 9.532, y: 180, z: 0}
 --- !u!65 &142222386
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1969,6 +1969,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 786925039624401034, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 91417febf224f7644a3ce663050d1b4a, type: 3}
+    - target: {fileID: 786925039624401034, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6574518
+      objectReference: {fileID: 0}
+    - target: {fileID: 786925039624401034, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6698113
+      objectReference: {fileID: 0}
+    - target: {fileID: 786925039624401034, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 786925039624401034, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1077155763430414303, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5496167
+      objectReference: {fileID: 0}
+    - target: {fileID: 1077155763430414303, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5496167
+      objectReference: {fileID: 0}
+    - target: {fileID: 1077155763430414303, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5496167
+      objectReference: {fileID: 0}
     - target: {fileID: 5711528346511832651, guid: db848a6883ac1b8419ebcd7ef880aa6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 39.06
@@ -2101,7 +2133,7 @@ GameObject:
   - component: {fileID: 289028003}
   - component: {fileID: 289028002}
   - component: {fileID: 289028001}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (7)
   m_TagString: NotInteract
   m_Icon: {fileID: 0}
@@ -2312,8 +2344,8 @@ Transform:
   m_GameObject: {fileID: 304359803}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.9, y: -22.515, z: 6.5}
-  m_LocalScale: {x: 33.99, y: 7, z: 14.23}
+  m_LocalPosition: {x: 16.9, y: -22.515, z: 6.1366}
+  m_LocalScale: {x: 33.99, y: 7, z: 14.957152}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1744117396}
@@ -3206,6 +3238,18 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9a3c6969002f61e4c83567aaaa265f8d, type: 2}
+    - target: {fileID: 3771572199299144831, guid: 52211e4730a0feb46a4f27dd1b326d74, type: 3}
+      propertyPath: startTimer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3771572199299144831, guid: 52211e4730a0feb46a4f27dd1b326d74, type: 3}
+      propertyPath: respawnTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6201280249379911867, guid: 52211e4730a0feb46a4f27dd1b326d74, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6738534128018200895, guid: 52211e4730a0feb46a4f27dd1b326d74, type: 3}
       propertyPath: m_Name
       value: Immuable (5)
@@ -5068,7 +5112,7 @@ GameObject:
   - component: {fileID: 889853345}
   - component: {fileID: 889853344}
   - component: {fileID: 889853343}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (9)
   m_TagString: NotInteract
   m_Icon: {fileID: 0}
@@ -6680,7 +6724,7 @@ GameObject:
   - component: {fileID: 1173434931}
   - component: {fileID: 1173434930}
   - component: {fileID: 1173434929}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: NotInteract
   m_Icon: {fileID: 0}
@@ -9406,7 +9450,7 @@ GameObject:
   - component: {fileID: 1718827694}
   - component: {fileID: 1718827693}
   - component: {fileID: 1718827692}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (8)
   m_TagString: NotInteract
   m_Icon: {fileID: 0}
@@ -10923,6 +10967,18 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9a3c6969002f61e4c83567aaaa265f8d, type: 2}
+    - target: {fileID: 3771572199299144831, guid: 52211e4730a0feb46a4f27dd1b326d74, type: 3}
+      propertyPath: startTimer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3771572199299144831, guid: 52211e4730a0feb46a4f27dd1b326d74, type: 3}
+      propertyPath: respawnTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6201280249379911867, guid: 52211e4730a0feb46a4f27dd1b326d74, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6738534128018200895, guid: 52211e4730a0feb46a4f27dd1b326d74, type: 3}
       propertyPath: m_Name
       value: Immuable (6)
