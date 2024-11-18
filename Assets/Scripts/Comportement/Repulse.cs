@@ -13,12 +13,15 @@ public class Repulse : Comportment
     public GameObject feedback;
     [Header("Si Rigidbody sur lui")]
     public bool applyOnMe = false; // si rigid body sur objet, pour le lancer par exemple
+    
+    private Material material;
 
     // Start is called before the first frame update
     void Start()
     {
         repulserTimer = 0;
         rb = GetComponent<Rigidbody>();
+        material = GetComponent<MeshRenderer>().material;
     }
 
     // Update is called once per frame
@@ -30,6 +33,8 @@ public class Repulse : Comportment
             Expulse();
             repulserTimer = 0;
         }
+        
+        material.SetFloat("_timer", repulserTimer);
     }
 
     public void Expulse()

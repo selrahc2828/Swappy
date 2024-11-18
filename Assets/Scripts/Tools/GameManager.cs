@@ -22,6 +22,14 @@ public class GameManager : MonoBehaviour
     public Material interactRienAVolerMat;
     public Material interactNOTPossibleMat;
 
+    [Header("Comportement colors")] 
+    public Color Repulsive_color;
+    public Color Rebond_color;
+    public Color fusee_color;
+    public Color aimant_color;
+    public Color immuable_color;
+    public Color Uncomportemented_color;
+
     public string scene1;
     public string scene2;
 
