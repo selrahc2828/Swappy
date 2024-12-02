@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         controls = GameManager.controls;
-        changeFocusTarget();
+        ChangeFocusTarget();
     }
 
     //appel quand une valeur de l'inspecteur est chang�
@@ -87,7 +87,7 @@ public class CameraController : MonoBehaviour
 
     }
 
-    public void changeFocusTarget(Transform target = null)
+    public void ChangeFocusTarget(Transform target = null)
     {
         if (target)
         {

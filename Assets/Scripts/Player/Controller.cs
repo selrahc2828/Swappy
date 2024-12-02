@@ -231,12 +231,12 @@ public class Controller : MonoBehaviour
             {
                 GameManager.Instance.etatIsProjected = true;
                 
-                GameManager.Instance.camControllerScript.changeFocusTarget(_hit.collider.transform);
+                GameManager.Instance.camControllerScript.ChangeFocusTarget(_hit.collider.transform);
             }
             else if (GameManager.Instance.etatIsProjected)
             {
                 GameManager.Instance.etatIsProjected = false;
-                GameManager.Instance.camControllerScript.changeFocusTarget();//pos cam player
+                GameManager.Instance.camControllerScript.ChangeFocusTarget();//pos cam player
             }
             
 
