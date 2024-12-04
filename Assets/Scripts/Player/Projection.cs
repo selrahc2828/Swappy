@@ -52,27 +52,23 @@ public class Projection : MonoBehaviour
         RaycastHit _hit;
         _ray = GameManager.Instance.camControllerScript.mainCamera.ScreenPointToRay(Input.mousePosition);
 
-        // déplacer non projection en dehors du if hit
+        Physics.Raycast(_ray, out _hit, range, hitLayer);
         
-        
-        if (Physics.Raycast(_ray, out _hit, range, hitLayer))
+        // on peut se projeter
+        if (!GameManager.Instance.etatIsProjected && _hit.collider != null && _projectionTimer > 0)
         {
-            // on peut se projeter
-            if (!GameManager.Instance.etatIsProjected && _hit.collider != null && _projectionTimer > 0)
-            {
-                GameManager.Instance.etatIsProjected = true;
+            GameManager.Instance.etatIsProjected = true;
                 
-                GameManager.Instance.camControllerScript.ChangeFocusTarget(_hit.collider.transform);
+            GameManager.Instance.camControllerScript.ChangeFocusTarget(_hit.collider.transform);
                 
-                // on retire du temps de projection proportionnelle à la distance 
-                _distance = Vector3.Distance(_hit.collider.transform.position, transform.position);
-                _projectionTimer -= _distance * coeffReducProjection;
+            // on retire du temps de projection proportionnelle à la distance 
+            _distance = Vector3.Distance(_hit.collider.transform.position, transform.position);
+            _projectionTimer -= _distance * coeffReducProjection;
                 
-            }
-            else if (GameManager.Instance.etatIsProjected)
-            {
-                ResetProjection();
-            }
+        }
+        else if (GameManager.Instance.etatIsProjected)
+        {
+            ResetProjection();
         }
     }
     
