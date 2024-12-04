@@ -9,14 +9,12 @@ using UnityEngine.InputSystem.HID;
 
 public class ComponentStealer : MonoBehaviour
 {
-    public CameraController camController;
+    private Controls controls;
 
     [Header("Raycast")]
     public LayerMask hitLayer;
     private Ray _ray;
-    private RaycastHit _hit;
 
-    [HideInInspector]
     public Camera mainCam;
 
     [Header("Properties")]
@@ -31,43 +29,215 @@ public class ComponentStealer : MonoBehaviour
     public Transform rayPointStart;
     public LineRenderer line;
 
-    private void OnEnable()
-    {
-
-    }
 
     void Start()
     {
-        lastSteal.text = "";
-        mainCam = camController.mainCamera;
+        controls = GameManager.controls;
+
+        controls.Player.VolDeComportement.performed += VolDeComportement;
+        controls.Player.ApplicationDeComportementSurObjet.performed += ApplicationDeComportementSurObjet;
+        controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;
+        controls.Player.ViderComportementDuPlayer.performed += ViderComportementDuPlayer;
+
+        //lastSteal.text = "";
         steals = new Dictionary<MonoBehaviour, System.Type>();
 
     }
 
     void Update()
     {
-        RaycastHit _hit;
-
-        //Vector3 newMousePos = new Vector3(Mathf.Abs(Input.mousePosition.x), Mathf.Abs(Input.mousePosition.y), Mathf.Abs(Input.mousePosition.z));
         _ray = mainCam.ScreenPointToRay(Input.mousePosition);
-
-        LineRendererETDebug();
-
-        if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer))
+    }
+    private void VolDeComportement(InputAction.CallbackContext context)
+    {
+        if (context.performed)
         {
-            if (_hit.collider == null)
+            RaycastHit _hit;
+
+            _ray = mainCam.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
             {
-                surface.SetText("null");
-                return;
+                if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
+                {
+                    return;
+                }
+
+                if (_hit.collider.gameObject.GetComponent<Comportment>())
+                {
+                    objectStolen = _hit.collider.gameObject;
+                    components = objectStolen.GetComponents<MonoBehaviour>();
+
+                    #region pour voler un objet a la fois
+                    if (steals != null)
+                    {
+                        //on parcour le dictionnaire
+                        foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
+                        {
+                            //si le monobehavior existe encore (verification obligatoire en cas de destruction de objectStolen)
+                            if (script.Key != null)
+                            {
+                                //on le réactive
+                                script.Key.enabled = true;
+                            }
+                            else
+                            {
+                                //on arrete de parcourir le dictionnaire car il contiens des valeurs appartenant a un objet détruit
+                                break;
+                            }
+                        }
+                        //on clear le dictionnaire
+                        steals.Clear();
+
+                    }
+                    #endregion
+
+                    foreach (MonoBehaviour component in components)
+                    {
+                        //on sauvegarde son type (le nom du script qu'on va voler s'y trouve)
+                        type = component.GetType();
+                        //on sauvgarde les field (les valeurs des variables du script qu'on va voler)
+                        FieldInfo stealableField = type.GetField("stealable");
+                        //on sauvegarde le game object d'origine du comportement
+                        FieldInfo originalOwnerField = type.GetField("originalOwner");
+
+                        //s'il y a une valeurs dans stealableField et que cette valeur est un booléen, on vérifie aussi que la variable originalOwner est un gameObject
+                        if (stealableField != null && stealableField.FieldType == typeof(bool) && originalOwnerField.FieldType == typeof(GameObject))
+                        {
+                            //on modifie la variable originalOwner avant de copier l'état du script d'origine
+                            originalOwnerField.SetValue(component, objectStolen);
+
+                            //on copie le booléen stealable du script volé
+                            bool isStealable = (bool)stealableField.GetValue(component);
+
+
+                            //on verifie qu'il est true
+                            if (isStealable)
+                            {
+
+                                //on ajoute une entrée au dictionnaire avec en clé le component et en value son type
+                                steals.Add(component, type);
+                                // Désactive le script en le mettant inactif
+                                component.enabled = false;
+                            }
+                        }
+                    }
+                }
             }
-            surface.SetText(_hit.collider.gameObject.name);
-        }
-        else
-        {
-            surface.SetText("");
         }
     }
 
+    private void ApplicationDeComportementSurObjet(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("ok");
+            RaycastHit _hit;
+
+            if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
+            {
+                //Debug.LogWarning("Hit ray donné : " + _hit.collider.name);
+
+                if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
+                {
+                    if(_hit.collider.CompareTag("NotInteract"))
+                    {
+                        Debug.Log("pas ok interact");
+                        return;
+                    }
+                    Debug.Log("pas ok null");
+                    return;
+                }
+
+                ApplicationDeComportement(_hit.collider.gameObject);
+            }
+        }
+    }
+
+    private void ApplicationDeComportementSurPlayer(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            ApplicationDeComportement(gameObject);
+        }
+    }
+
+    private void ApplicationDeComportement(GameObject _objectGiven)
+    {
+        //si l'objectStolen existe (on a bien un script volé)
+        if (objectStolen != null && objectStolen.GetComponent<Collider>() != null)
+        {
+            //on parcour le dictionnaire des scripts a appliquer
+            foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
+            {
+                // Ajoute dynamiquement un script du même type sur l'objet cible
+                Component newComponent = _objectGiven.AddComponent(script.Value);
+
+                //on parcour les variable du script qu'on vien d'ajouter
+                foreach (FieldInfo field in script.Value.GetFields(BindingFlags.Public | BindingFlags.Instance))
+                {
+                    //on leur donne les même valeur qu'au moment ou on a volé le script
+                    field.SetValue(newComponent, field.GetValue(script.Key));
+                }
+                //on détruit le script dans l'objet d'origine
+                Destroy(script.Key);
+                Debug.Log("Script " + script.Value.Name + " copié sur " + _objectGiven.name + " et supprimé de " + objectStolen.name);
+            }
+            //on remet a zero les dictionnaire et les objets sauvegardé
+            steals.Clear();
+            components = null;
+            objectStolen = null;
+        }
+    }
+
+    private void ViderComportementDuPlayer(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            components = gameObject.GetComponents<MonoBehaviour>();
+
+            foreach (MonoBehaviour component in components)
+            {
+                //on sauvegarde son type (le nom du script qu'on va voler s'y trouve)
+                type = component.GetType();//on sauvgarde les field (les valeurs des variables du script qu'on va voler)
+                FieldInfo stealableField = type.GetField("stealable");
+                //on sauvegarde le game object d'origine du comportement
+                FieldInfo originalOwnerField = type.GetField("originalOwner");
+
+                //s'il y a une valeurs dans stealableField et que cette valeur est un booléen, on vérifie aussi que la variable originalOwner est un gameObject
+                if (stealableField != null && stealableField.FieldType == typeof(bool) && originalOwnerField.FieldType == typeof(GameObject))
+                {
+                    //on copie le booléen stealable du script volé
+                    bool isStealable = (bool)stealableField.GetValue(component);
+
+                    //on copie la variable originalOwner
+                    GameObject originalOwner = (GameObject)originalOwnerField.GetValue(component);
+
+                    //on verifie qu'il est true
+                    if (isStealable)
+                    {
+                        if(originalOwner != null)
+                        {
+                            // Ajoute dynamiquement un script du même type sur l'objet cible
+                            Component newComponent = originalOwner.AddComponent(type);
+
+                            //on parcour les variable du script qu'on vien d'ajouter
+                            foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.Instance))
+                            {
+                                //on leur donne les même valeur qu'au moment ou on a volé le script
+                                field.SetValue(newComponent, field.GetValue(component));
+                            }
+                        }
+                        Destroy(component);
+                        Debug.Log("Script " + type.Name + " renvoyé sur " + component.name + " et supprimé du Player");
+                    }
+                }
+            }
+            components = null;
+        }
+    }
+
+    /*
     public void CopyStealComp()
     {
         if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
@@ -146,33 +316,33 @@ public class ComponentStealer : MonoBehaviour
             {
                 return;
             }
-                //si l'objectStolen existe (on a bien un script volé)
-                if (objectStolen != null && objectStolen.GetComponent<Collider>() != null)
+            //si l'objectStolen existe (on a bien un script volé)
+            if (objectStolen != null && objectStolen.GetComponent<Collider>() != null)
+            {
+                GameObject objectGiven = _hit.collider.gameObject;
+
+                //on parcour le dictionnaire des scripts a appliquer
+                foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
                 {
-                    GameObject objectGiven = _hit.collider.gameObject;
+                    // Ajoute dynamiquement un script du même type sur l'objet cible
+                    Component newComponent = objectGiven.AddComponent(script.Value);
 
-                    //on parcour le dictionnaire des scripts a appliquer
-                    foreach (KeyValuePair<MonoBehaviour, System.Type> script in steals)
+                    //on parcour les variable du script qu'on vien d'ajouter
+                    foreach (FieldInfo field in script.Value.GetFields(BindingFlags.Public | BindingFlags.Instance))
                     {
-                        // Ajoute dynamiquement un script du même type sur l'objet cible
-                        Component newComponent = objectGiven.AddComponent(script.Value);
-
-                        //on parcour les variable du script qu'on vien d'ajouter
-                        foreach (FieldInfo field in script.Value.GetFields(BindingFlags.Public | BindingFlags.Instance))
-                        {
-                            //on leur donne les même valeur qu'au moment ou on a volé le script
-                            field.SetValue(newComponent, field.GetValue(script.Key));
-                        }
-                        //on détruit le script dans l'objet d'origine
-                        Destroy(script.Key);
-                        Debug.Log("Script " + script.Value.Name + " copié sur " + objectGiven.name + " et supprimé de " + objectStolen.name);
+                        //on leur donne les même valeur qu'au moment ou on a volé le script
+                        field.SetValue(newComponent, field.GetValue(script.Key));
                     }
-                    //on remet a zero les dictionnaire et les objets sauvegardé
-                    steals.Clear();
-                    lastSteal.text = "";
-                    components = null;
-                    objectStolen = null;
+                    //on détruit le script dans l'objet d'origine
+                    Destroy(script.Key);
+                    Debug.Log("Script " + script.Value.Name + " copié sur " + objectGiven.name + " et supprimé de " + objectStolen.name);
                 }
+                //on remet a zero les dictionnaire et les objets sauvegardé
+                steals.Clear();
+                lastSteal.text = "";
+                components = null;
+                objectStolen = null;
+            }
         }
     }
 
@@ -206,7 +376,7 @@ public class ComponentStealer : MonoBehaviour
             objectStolen = null;
         }
     }
-
+    */
     public void ResetListeComp()
     {
         if (steals != null)
@@ -241,33 +411,5 @@ public class ComponentStealer : MonoBehaviour
 
         lastSteal.text = "";
 
-    }
-
-    private void LineRendererETDebug()
-    {
-        float maxDistance = 500f;
-        // Si le raycast touche un objet
-        if (Physics.Raycast(_ray, out _hit, maxDistance, hitLayer))
-        {
-            // Positionner les points du LineRenderer pour dessiner la ligne
-            line.SetPosition(0, rayPointStart.position);  // Début de la ligne (caméra)
-            line.SetPosition(1, _hit.point);  // Fin de la ligne (point touché par le rayon)
-
-            Debug.DrawLine(mainCam.transform.position, _hit.point, Color.red);
-        }
-        else
-        {
-            // Si rien n'est touché, on dessine la ligne jusqu'à la distance max du raycast
-            Vector3 farPoint = _ray.GetPoint(maxDistance);
-            line.SetPosition(0, rayPointStart.position);  // Début de la ligne (caméra)
-            line.SetPosition(1, farPoint);  // Fin de la ligne (point éloigné)
-            Debug.DrawLine(mainCam.transform.position, farPoint, Color.green);
-        }
-    }
-
-    void OnDrawGizmos()
-    {
-        //Gizmos.color = Color.blue;
-        //Gizmos.DrawLine(mainCam.transform.position, mainCam.transform.position + mainCam.transform.forward * 10);
     }
 }

@@ -59,9 +59,9 @@ public class Controller : MonoBehaviour
         controls = GameManager.controls;
         // assigne action du controleur au methode
         controls.Player.StopTime.performed += SlowMotion;
-        controls.Player.CopySteal.performed += CopyStealComp;
-        controls.Player.PasteSteal.performed += PasteComp;
-        controls.Player.PasteMe.performed += PasteAtMe;
+        controls.Player.VolDeComportement.performed += VolDeComportement;
+        controls.Player.ApplicationDeComportementSurObjet.performed += PasteComp;
+        controls.Player.ApplicationDeComportementSurPlayer.performed += PasteAtMe;
         controls.Player.Jump.performed += Jump;
         controls.Player.GrabDrop.performed += GrabAndDrop;
         controls.Player.ResetListComportement.performed += ResetListeComp;
@@ -79,8 +79,9 @@ public class Controller : MonoBehaviour
     private void OnDisable()
     {
         controls.Player.StopTime.performed -= SlowMotion;
-        controls.Player.CopySteal.performed -= CopyStealComp;
-        controls.Player.PasteSteal.performed -= PasteComp;
+        controls.Player.VolDeComportement.performed -= VolDeComportement;
+        controls.Player.ApplicationDeComportementSurObjet.performed -= PasteComp;
+        controls.Player.ApplicationDeComportementSurPlayer.performed -= PasteAtMe;
         controls.Player.Jump.performed -= Jump;
         controls.Player.GrabDrop.performed -= GrabAndDrop;
         controls.Player.ResetListComportement.performed -= ResetListeComp;
@@ -130,13 +131,14 @@ public class Controller : MonoBehaviour
         }
     }
 
-    private void CopyStealComp(InputAction.CallbackContext context)
+    private void VolDeComportement(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
+            Debug.Log("ok");
             if (stealPasteSript != null)
             {
-                stealPasteSript.CopyStealComp();
+                //stealPasteSript.CopyStealComp();
             }
         }
     }
@@ -147,7 +149,7 @@ public class Controller : MonoBehaviour
         {
             if (stealPasteSript != null)
             {
-                stealPasteSript.PasteComp();
+                //stealPasteSript.PasteComp();
             }
         }
     }
@@ -158,7 +160,7 @@ public class Controller : MonoBehaviour
         {
             if (stealPasteSript != null)
             {
-                stealPasteSript.PasteAtMe();
+                //stealPasteSript.PasteAtMe();
             }
         }
     }

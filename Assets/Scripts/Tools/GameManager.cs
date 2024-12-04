@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static Controls controls;
-    public CameraController camControllerScript;
+    //public CameraController camControllerScript;
     //public GrabObject grabScript;
 
     [HideInInspector]
@@ -31,6 +31,31 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool etatIsProjected;
     
+    public KeyCode keyForScene3 = KeyCode.Alpha3;
+
+    [Header("Player Movement Parameters")]
+    public float walkSpeed;
+    public float sprintSpeed;
+    public float groundDrag;
+    public Transform orientation;
+
+    [Header("Player Jumping Parameters")]
+    public float jumpForce;
+    public float jumpCooldown;
+    public float airMultiplier;
+
+    [Header("Player Crouching Parameters")]
+    public float crouchSpeed;
+    public float crouchYScale;
+
+    [Header("Player Ground Check Parameters")]
+    public float playerHeight;
+    public LayerMask whatIsGround;
+
+    [Header("Player Slope Handeling Parameter")]
+    public float maxSlopeAngle;
+
+
     private void OnEnable()
     {
         if (controls == null)
@@ -55,11 +80,7 @@ public class GameManager : MonoBehaviour
         slowMotion = false;
         slowTimer = 0f;
 
-        camControllerScript = FindObjectOfType<CameraController>();
-        if (camControllerScript == null)
-        {
-            Debug.LogWarning("Il n'y a pas de CameraController dans la scène");
-        }
+        //camControllerScript = FindObjectOfType<CameraController>();
         //grabScript = FindObjectOfType<GrabObject>();
 
         controls.Player.Enable();

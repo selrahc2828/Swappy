@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1573964937435694765}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -71.20703, y: -7.395447, z: 4.039665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -44,15 +44,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a5e80d09521a44fad5dca4490a1e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camControllerScript: {fileID: 0}
-  grabScript: {fileID: 0}
+  slowMotion: 0
+  slowTimerActive: 0
+  slowTimeDuration: 0
+  slowTimer: 0
   defaultColor: {fileID: 2100000, guid: acd0a1c2936eda841acbc8f868a8cf4c, type: 2}
   interactAVolerMat: {fileID: 2100000, guid: 9f40e193fdded1744a73a9b61d06c4ca, type: 2}
   interactRienAVolerMat: {fileID: 2100000, guid: 91000070d7519764cb026b60431260a5, type: 2}
   interactNOTPossibleMat: {fileID: 2100000, guid: 0e71b22f21886af4688cb978b07a2f37, type: 2}
+  Repulsive_color: {r: 0.18867922, g: 0.17354928, b: 0.17354928, a: 0}
+  Rebond_color: {r: 0.26415092, g: 0.15574937, b: 0.15574937, a: 0}
+  fusee_color: {r: 0.3773585, g: 0.10857955, b: 0.10857955, a: 0}
+  aimant_color: {r: 0.754717, g: 0.50907797, b: 0.50907797, a: 0}
+  immuable_color: {r: 0.5471698, g: 0.2710039, b: 0.2710039, a: 0}
+  Uncomportemented_color: {r: 0.8018868, g: 0.13995194, b: 0.13995194, a: 0}
   scene1: Variation_1
   scene2: VariationGreg
-  scene3: Variation_Marius
+  scene3: 
   keyForScene1: 49
   keyForScene2: 50
   keyForScene3: 51
+  walkSpeed: 7
+  sprintSpeed: 10
+  groundDrag: 5
+  orientation: {fileID: 0}
+  jumpForce: 8
+  jumpCooldown: 0.25
+  airMultiplier: 0.4
+  crouchSpeed: 3.5
+  crouchYScale: 0.5
+  playerHeight: 2
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  maxSlopeAngle: 45
