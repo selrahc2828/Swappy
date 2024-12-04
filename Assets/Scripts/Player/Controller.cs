@@ -13,7 +13,8 @@ public class Controller : MonoBehaviour
     [Header("Scripts Reference")]
     public ComponentStealer stealPasteSript;
     public GrabObject carryingScript;
-
+    public Projection projectionScript;
+    
     [Header("Properties")]
     public Transform orientation;
     [Tooltip("Frottement sur le rigidbody, ça le ralenti")]
@@ -43,16 +44,9 @@ public class Controller : MonoBehaviour
     public float groundCheckRadius;
     public LayerMask floorMask;
     
-    [Header("Projection")]
-    public LayerMask hitLayer;
-    public float projectionTimeDuration;
-    private Ray _ray;
-    private float _projectionTimer;
-    
     [Header("Debug")]
     public TextMeshProUGUI speedText;
     public TextMeshProUGUI timerSlowText;
-    public TextMeshProUGUI timerProjectionText;
 
     private Rigidbody _rb;
     private Vector2 moveInputVector;   
@@ -80,8 +74,6 @@ public class Controller : MonoBehaviour
         GameManager.Instance.slowTimeDuration = slowTimeDuration;
 
         timerSlowText.text = slowTimeDuration.ToString();
-        _projectionTimer = projectionTimeDuration;
-        timerProjectionText.text = _projectionTimer.ToString();
     }
 
     private void OnDisable()
@@ -218,34 +210,11 @@ public class Controller : MonoBehaviour
     
     void Projection(InputAction.CallbackContext context)
     {
+        Debug.Log("etatIsProjected " + GameManager.Instance.etatIsProjected);
+
         if (context.performed)
         {
-            
-            RaycastHit _hit;
-            _ray = GameManager.Instance.camControllerScript.mainCamera.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer))
-            {
-
-            }
-            
-            
-            Debug.Log(GameManager.Instance.etatIsProjected);
-            // on peut se projeter
-            if (!GameManager.Instance.etatIsProjected && _hit.collider != null && _projectionTimer >= 0f)
-            {
-                GameManager.Instance.etatIsProjected = true;
-                
-                GameManager.Instance.camControllerScript.ChangeFocusTarget(_hit.collider.transform);
-                
-                _projectionTimer -= Time.deltaTime; // faire dans update
-            }
-            else if (GameManager.Instance.etatIsProjected || _projectionTimer < 0f)
-            {
-                GameManager.Instance.etatIsProjected = false;
-                GameManager.Instance.camControllerScript.ChangeFocusTarget();//pos cam player
-            }
-            
+            projectionScript.ProjectionBehavior();
         }
     }
 

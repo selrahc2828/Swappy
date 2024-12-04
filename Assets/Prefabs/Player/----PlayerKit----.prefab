@@ -2134,6 +2134,7 @@ GameObject:
   - component: {fileID: 8507278806808182358}
   - component: {fileID: 9000596238172983818}
   - component: {fileID: 7956193712786827154}
+  - component: {fileID: 715050694976198210}
   m_Layer: 6
   m_Name: ---Player---
   m_TagString: Untagged
@@ -2226,6 +2227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stealPasteSript: {fileID: 9000596238172983818}
   carryingScript: {fileID: 7956193712786827154}
+  projectionScript: {fileID: 715050694976198210}
   orientation: {fileID: 7781609330459171055}
   groundDrag: 4
   gravityForceY: 5
@@ -2241,13 +2243,8 @@ MonoBehaviour:
   floorMask:
     serializedVersion: 2
     m_Bits: 8
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 187
-  projectionTimeDuration: 20
   speedText: {fileID: 6942866919132807403}
   timerSlowText: {fileID: 8505487121205732960}
-  timerProjectionText: {fileID: 7679102489490436957}
 --- !u!114 &8507278806808182358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2318,6 +2315,27 @@ MonoBehaviour:
   isLaunchable: 1
   launchForce: 30
   detectionSize: {x: 1, y: 1, z: 3.5}
+--- !u!114 &715050694976198210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8760109797842813243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7c4caf26d7f4b42aae9e35decc519c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 27
+  projectionTimeDuration: 20
+  coeffRefill: 1.5
+  range: 200
+  coeffReducProjection: 0.1
+  timerProjectionText: {fileID: 7679102489490436957}
+  activeGizmoRange: 1
 --- !u!1 &9125884161072419671
 GameObject:
   m_ObjectHideFlags: 0
