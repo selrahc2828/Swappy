@@ -47,7 +47,7 @@ public class Controller : MonoBehaviour
     public LayerMask hitLayer;
     public float projectionTimeDuration;
     private Ray _ray;
-
+    private float _projectionTimer;
     
     [Header("Debug")]
     public TextMeshProUGUI speedText;
@@ -80,7 +80,8 @@ public class Controller : MonoBehaviour
         GameManager.Instance.slowTimeDuration = slowTimeDuration;
 
         timerSlowText.text = slowTimeDuration.ToString();
-        timerProjectionText.text = projectionTimeDuration.ToString();
+        _projectionTimer = projectionTimeDuration;
+        timerProjectionText.text = _projectionTimer.ToString();
     }
 
     private void OnDisable()
@@ -231,19 +232,20 @@ public class Controller : MonoBehaviour
             
             Debug.Log(GameManager.Instance.etatIsProjected);
             // on peut se projeter
-            if (!GameManager.Instance.etatIsProjected && _hit.collider != null)
+            if (!GameManager.Instance.etatIsProjected && _hit.collider != null && _projectionTimer >= 0f)
             {
                 GameManager.Instance.etatIsProjected = true;
                 
                 GameManager.Instance.camControllerScript.ChangeFocusTarget(_hit.collider.transform);
+                
+                _projectionTimer -= Time.deltaTime; // faire dans update
             }
-            else if (GameManager.Instance.etatIsProjected)
+            else if (GameManager.Instance.etatIsProjected || _projectionTimer < 0f)
             {
                 GameManager.Instance.etatIsProjected = false;
                 GameManager.Instance.camControllerScript.ChangeFocusTarget();//pos cam player
             }
             
-
         }
     }
 
