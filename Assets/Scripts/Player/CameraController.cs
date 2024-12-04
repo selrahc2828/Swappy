@@ -54,13 +54,15 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         // mainCamera.transform.position = focusTarget.position;
-        Debug.Log("Dist : " + Vector3.Distance(mainCamera.transform.position, focusTarget.position)
-        + " focus : " + focusTarget.name 
-        );
 
         if (Vector3.Distance(mainCamera.transform.position, focusTarget.position) > 2f) // si projection, pos cam change pos
         {
             mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, focusTarget.position, floatLerp);
+            
+            // Vector3 direction = (mainCamera.transform.position - focusTarget.position).normalized;
+            // Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+            // mainCamera.transform.localRotation = Quaternion.Slerp(mainCamera.transform.rotation, targetRotation, floatLerp);
+        
         }
         else
         {
@@ -88,7 +90,7 @@ public class CameraController : MonoBehaviour
         float mouseY = _moveMouseVector.y * _sensiY * Time.deltaTime;
         _xRot -= mouseY;
         _xRot = Mathf.Clamp(_xRot, xRotMin, xRotMax);
-
+        
         mainCamera.transform.localRotation = Quaternion.Euler(_xRot, _yRot, 0f);// y � 0f si cam dans player
 
         // si utilise player, il arrive que les 2 ne soit pas synchro = mouvement ne se fait plus par rapport � la rotation du player/camera
