@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private Controls controls;
+    private Vector2 moveInputVector;
+
     [Header("Movement")]
     private float moveSpeed;
     public float walkSpeed;
@@ -39,9 +43,6 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform orientation;
 
-    float horizontalInput;
-    float verticalInput;
-
     Vector3 moveDirection;
 
     Rigidbody rb;
@@ -58,9 +59,17 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        controls = GameManager.controls;
+
+        controls.Player.StartCrouch.performed += StartCrouch;
+        controls.Player.StopCrouch.performed += StopCrouch;
+        controls.Player.Jump.performed += Jump;
+        controls.Player.StartSprint.performed += StartSprint;
+        controls.Player.StopSprint.performed += StopSprint;
+
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-
+        moveSpeed = walkSpeed;
         readyToJump = true;
 
         startYScale = transform.localScale.y;
@@ -70,15 +79,15 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
 
-        MyInput();
         SpeedControl();
         StateHandler();
     }
 
     private void FixedUpdate()
     {
+        moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
         MovePlayer();
         if(grounded)
         {
@@ -89,57 +98,15 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = 0;
         }
     }
-
-    private void MyInput()
-    {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-
-        //when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
-        {
-            readyToJump = false;
-            Jump();
-
-            Invoke(nameof(ResetJump), jumpCooldown);
-        }
-
-        //start crouch
-        if (Input.GetKeyDown(croutchKey))
-        {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        }
-
-        //Stop crouch
-        if (Input.GetKeyUp(croutchKey))
-        {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
-        }
-    }
+    
 
     private void StateHandler()
     {
         if (grounded)
         {
-            if(Input.GetKey(croutchKey))
+            if(state != MouvementState.crouching && state != MouvementState.sprinting)
             {
-                // Mode - Crouching
-                state = MouvementState.crouching;
-                moveSpeed = crouchSpeed;
-                Debug.Log("ok");
-            }
-            else if(Input.GetKey(sprintKey))
-            {
-                // Mode - Sprinting
-                state = MouvementState.sprinting;
-                moveSpeed = sprintSpeed;
-            }
-            else
-            {
-                //Mode - Walking
                 state = MouvementState.walking;
-                moveSpeed = walkSpeed;
             }
         }
         else
@@ -152,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         //calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection = orientation.forward * moveInputVector.y + orientation.right * moveInputVector.x;
 
         //on slope
         if(OnSlope() && !exitingSlope)
@@ -202,13 +169,22 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Jump()
+    private void Jump(InputAction.CallbackContext context)
     {
-        exitingSlope = true;
+        if (context.performed)
+        { 
+            if (readyToJump && grounded)
+            {
+                readyToJump = false;
+                exitingSlope = true;
 
-        //reset y velocity
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                //reset y velocity
+                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+
+                Invoke(nameof(ResetJump), jumpCooldown);
+            }
+        }
     }
 
     private void ResetJump()
@@ -216,6 +192,62 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
 
         exitingSlope = false;
+    }
+
+    private void StartSprint(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if(grounded && state != MouvementState.crouching)
+            {
+                // Mode - Sprinting
+                state = MouvementState.sprinting;
+                moveSpeed = sprintSpeed;
+            }
+        }
+    }
+
+    private void StopSprint(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (state == MouvementState.sprinting)
+            {
+                // Mode - walking
+                state = MouvementState.walking;
+                moveSpeed = walkSpeed;
+            }
+        }
+    }
+
+    private void StartCrouch(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (grounded)
+            {
+                transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+                rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+
+
+                // Mode - Crouching
+                state = MouvementState.crouching;
+                moveSpeed = crouchSpeed;
+            }
+        }
+    }
+   
+    private void StopCrouch(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            if (state == MouvementState.crouching)
+            {
+                state = MouvementState.walking;
+                moveSpeed = walkSpeed;
+            }
+        }
     }
 
     private bool OnSlope()

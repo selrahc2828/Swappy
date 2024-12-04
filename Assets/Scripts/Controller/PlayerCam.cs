@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
@@ -11,6 +12,10 @@ public class PlayerCam : MonoBehaviour
 
     float xRotation;
     float yRotation;
+
+    public LineRenderer line;
+    private Ray _ray;
+    public LayerMask hitLayer;
 
     void Start()
     {
@@ -33,5 +38,29 @@ public class PlayerCam : MonoBehaviour
         //rotate cam and orientation
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientatiaon.rotation = Quaternion.Euler(0, yRotation, 0);
+
+        LineRenderer();
+    }
+
+
+    private void LineRenderer()
+    {
+
+        float maxDistance = 500f;
+        line.SetPosition(0, transform.position - transform.up / 5 + transform.right / 5);  // Début de la ligne (caméra)
+
+        RaycastHit _hit;
+
+        _ray = this.gameObject.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
+        {
+            // Si le raycast touche un objet
+            line.SetPosition(1, _hit.point);  // Fin de la ligne (point touché par le rayon)
+        }
+        else
+        {
+            line.SetPosition(1,transform.forward * maxDistance);
+        }
     }
 }
