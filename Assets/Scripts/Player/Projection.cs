@@ -52,6 +52,9 @@ public class Projection : MonoBehaviour
         RaycastHit _hit;
         _ray = GameManager.Instance.camControllerScript.mainCamera.ScreenPointToRay(Input.mousePosition);
 
+        // déplacer non projection en dehors du if hit
+        
+        
         if (Physics.Raycast(_ray, out _hit, range, hitLayer))
         {
             // on peut se projeter

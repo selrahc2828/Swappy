@@ -34,10 +34,14 @@ public class CameraController : MonoBehaviour
     public float fov = 40f;
 
     [Header("Projection")] public Transform focusTarget;
+    
+    public float floatLerp; // Utilisé pour SmoothDamp
+
     void Start()
     {
         controls = GameManager.controls;
         ChangeFocusTarget();
+        // floatLerp = 1;
     }
 
     //appel quand une valeur de l'inspecteur est chang�
@@ -49,8 +53,20 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        mainCamera.transform.position = focusTarget.position;
+        // mainCamera.transform.position = focusTarget.position;
+        Debug.Log("Dist : " + Vector3.Distance(mainCamera.transform.position, focusTarget.position)
+        + " focus : " + focusTarget.name 
+        );
 
+        if (Vector3.Distance(mainCamera.transform.position, focusTarget.position) > 2f) // si projection, pos cam change pos
+        {
+            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, focusTarget.position, floatLerp);
+        }
+        else
+        {
+            mainCamera.transform.position = focusTarget.position;
+        }
+        
         if (GameManager.Instance.slowMotion)
         {
             _sensiX = sensitivityXSlowTime;
