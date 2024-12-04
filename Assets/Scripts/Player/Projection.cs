@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Projection : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class Projection : MonoBehaviour
 
     public float coeffRefill = 0.75f;
     public float range;
-    public float coeffReducProjection;
+    public float coeffReducDistance;
     private float _distance;
     
     [Header("Debug")]
@@ -57,14 +58,19 @@ public class Projection : MonoBehaviour
         // on peut se projeter
         if (!GameManager.Instance.etatIsProjected && _hit.collider != null && _projectionTimer > 0)
         {
-            GameManager.Instance.etatIsProjected = true;
-                
-            GameManager.Instance.camControllerScript.ChangeFocusTarget(_hit.collider.transform);
-                
             // on retire du temps de projection proportionnelle à la distance 
             _distance = Vector3.Distance(_hit.collider.transform.position, transform.position);
-            _projectionTimer -= _distance * coeffReducProjection;
-                
+            float reduction = _distance * coeffReducDistance;
+            Debug.Log("reduc : " + (_projectionTimer - reduction));
+
+            if (_projectionTimer - reduction > 0)
+            {
+                _projectionTimer -= reduction;
+                Debug.Log("Apply : " + (_projectionTimer));
+
+                GameManager.Instance.etatIsProjected = true;
+                GameManager.Instance.camControllerScript.ChangeFocusTarget(_hit.collider.transform);
+            }
         }
         else if (GameManager.Instance.etatIsProjected)
         {
