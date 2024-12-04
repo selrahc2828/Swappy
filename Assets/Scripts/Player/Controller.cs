@@ -44,12 +44,15 @@ public class Controller : MonoBehaviour
     public LayerMask floorMask;
     
     [Header("Projection")]
-    private Ray _ray;
     public LayerMask hitLayer;
+    public float projectionTimeDuration;
+    private Ray _ray;
 
+    
     [Header("Debug")]
     public TextMeshProUGUI speedText;
     public TextMeshProUGUI timerSlowText;
+    public TextMeshProUGUI timerProjectionText;
 
     private Rigidbody _rb;
     private Vector2 moveInputVector;   
@@ -77,6 +80,7 @@ public class Controller : MonoBehaviour
         GameManager.Instance.slowTimeDuration = slowTimeDuration;
 
         timerSlowText.text = slowTimeDuration.ToString();
+        timerProjectionText.text = projectionTimeDuration.ToString();
     }
 
     private void OnDisable()
@@ -226,7 +230,7 @@ public class Controller : MonoBehaviour
             
             
             Debug.Log(GameManager.Instance.etatIsProjected);
-
+            // on peut se projeter
             if (!GameManager.Instance.etatIsProjected && _hit.collider != null)
             {
                 GameManager.Instance.etatIsProjected = true;
