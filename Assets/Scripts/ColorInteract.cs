@@ -28,10 +28,11 @@ public class ColorInteract : MonoBehaviour
         if (GetComponent<MeshRenderer>().materials.Length>1)
         {
             material = GetComponent<MeshRenderer>().materials[1];
+       
+            material.SetColor("_Color3", _Color3);
+            material.SetColor("_Color2", _Color2);
         }
 
-        material.SetColor("_Color3", _Color3);
-        material.SetColor("_Color2", _Color2);
         
         _defaultColor = GameManager.Instance.defaultColor;
         _interactAVolerMat = GameManager.Instance.interactAVolerMat;
