@@ -316,7 +316,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2cbb1c73-5801-4c88-9c89-a38649922400"",
-                    ""path"": ""<Keyboard>/alt"",
+                    ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
