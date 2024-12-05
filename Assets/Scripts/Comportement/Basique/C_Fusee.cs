@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class C_Fusee : Comportment
 {
+    [SerializeField] private float rocketForce;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -11,6 +12,6 @@ public class C_Fusee : Comportment
 
     void FixedUpdate()
     {
-        rb.AddForce(Vector3.up * speed, ForceMode.Force);
+        rb.AddForce(Vector3.up * rocketForce, ForceMode.Force);
     }
 }

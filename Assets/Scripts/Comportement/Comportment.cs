@@ -12,7 +12,6 @@ public enum ListComp
 //[ExecuteInEditMode]
 public class Comportment : MonoBehaviour
 {
-    public float speed;
     public Rigidbody rb;
     public ListComp typeComp;
     public bool stealable = true;
