@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class C_Immuable : Comportment
 {
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();

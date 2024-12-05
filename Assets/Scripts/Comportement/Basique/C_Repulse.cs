@@ -16,7 +16,6 @@ public class C_Repulse : Comportment
     
     private Material material;
 
-    // Start is called before the first frame update
     void Start()
     {
         repulserTimer = 0;
@@ -24,7 +23,6 @@ public class C_Repulse : Comportment
         //material = GetComponent<MeshRenderer>().material;
     }
 
-    // Update is called once per frame
     void Update()
     {
         repulserTimer += Time.deltaTime;

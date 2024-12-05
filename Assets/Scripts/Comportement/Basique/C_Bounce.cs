@@ -6,7 +6,6 @@ public class C_Bounce : Comportment
 {
     public PhysicMaterial bouncyMaterial;
 
-    // Start is called before the first frame update
     void Start()
     {
         stealable = true;
