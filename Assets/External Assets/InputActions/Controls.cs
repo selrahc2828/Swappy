@@ -172,9 +172,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ViderComportementDuPlayer"",
+                    ""name"": ""ViderSlots"",
                     ""type"": ""Button"",
                     ""id"": ""a8b2de4b-31d7-472c-9782-d679ab464161"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchSlotsValue"",
+                    ""type"": ""Button"",
+                    ""id"": ""0482c4b8-7211-4275-bc1e-2bf35fa7df3d"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -420,7 +429,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ViderComportementDuPlayer"",
+                    ""action"": ""ViderSlots"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c4890e7-d283-40b2-bf1f-1cf96cb2a121"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchSlotsValue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -458,7 +478,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_StopCrouch = m_Player.FindAction("StopCrouch", throwIfNotFound: true);
         m_Player_StartSprint = m_Player.FindAction("StartSprint", throwIfNotFound: true);
         m_Player_StopSprint = m_Player.FindAction("StopSprint", throwIfNotFound: true);
-        m_Player_ViderComportementDuPlayer = m_Player.FindAction("ViderComportementDuPlayer", throwIfNotFound: true);
+        m_Player_ViderSlots = m_Player.FindAction("ViderSlots", throwIfNotFound: true);
+        m_Player_SwitchSlotsValue = m_Player.FindAction("SwitchSlotsValue", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -541,7 +562,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_StopCrouch;
     private readonly InputAction m_Player_StartSprint;
     private readonly InputAction m_Player_StopSprint;
-    private readonly InputAction m_Player_ViderComportementDuPlayer;
+    private readonly InputAction m_Player_ViderSlots;
+    private readonly InputAction m_Player_SwitchSlotsValue;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -562,7 +584,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @StopCrouch => m_Wrapper.m_Player_StopCrouch;
         public InputAction @StartSprint => m_Wrapper.m_Player_StartSprint;
         public InputAction @StopSprint => m_Wrapper.m_Player_StopSprint;
-        public InputAction @ViderComportementDuPlayer => m_Wrapper.m_Player_ViderComportementDuPlayer;
+        public InputAction @ViderSlots => m_Wrapper.m_Player_ViderSlots;
+        public InputAction @SwitchSlotsValue => m_Wrapper.m_Player_SwitchSlotsValue;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -620,9 +643,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @StopSprint.started += instance.OnStopSprint;
             @StopSprint.performed += instance.OnStopSprint;
             @StopSprint.canceled += instance.OnStopSprint;
-            @ViderComportementDuPlayer.started += instance.OnViderComportementDuPlayer;
-            @ViderComportementDuPlayer.performed += instance.OnViderComportementDuPlayer;
-            @ViderComportementDuPlayer.canceled += instance.OnViderComportementDuPlayer;
+            @ViderSlots.started += instance.OnViderSlots;
+            @ViderSlots.performed += instance.OnViderSlots;
+            @ViderSlots.canceled += instance.OnViderSlots;
+            @SwitchSlotsValue.started += instance.OnSwitchSlotsValue;
+            @SwitchSlotsValue.performed += instance.OnSwitchSlotsValue;
+            @SwitchSlotsValue.canceled += instance.OnSwitchSlotsValue;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -675,9 +701,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @StopSprint.started -= instance.OnStopSprint;
             @StopSprint.performed -= instance.OnStopSprint;
             @StopSprint.canceled -= instance.OnStopSprint;
-            @ViderComportementDuPlayer.started -= instance.OnViderComportementDuPlayer;
-            @ViderComportementDuPlayer.performed -= instance.OnViderComportementDuPlayer;
-            @ViderComportementDuPlayer.canceled -= instance.OnViderComportementDuPlayer;
+            @ViderSlots.started -= instance.OnViderSlots;
+            @ViderSlots.performed -= instance.OnViderSlots;
+            @ViderSlots.canceled -= instance.OnViderSlots;
+            @SwitchSlotsValue.started -= instance.OnSwitchSlotsValue;
+            @SwitchSlotsValue.performed -= instance.OnSwitchSlotsValue;
+            @SwitchSlotsValue.canceled -= instance.OnSwitchSlotsValue;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -731,6 +760,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnStopCrouch(InputAction.CallbackContext context);
         void OnStartSprint(InputAction.CallbackContext context);
         void OnStopSprint(InputAction.CallbackContext context);
-        void OnViderComportementDuPlayer(InputAction.CallbackContext context);
+        void OnViderSlots(InputAction.CallbackContext context);
+        void OnSwitchSlotsValue(InputAction.CallbackContext context);
     }
 }
