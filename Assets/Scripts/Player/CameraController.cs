@@ -33,9 +33,10 @@ public class CameraController : MonoBehaviour
     [Range(0,179)]
     public float fov = 40f;
 
-    [Header("Projection")] public Transform focusTarget;
+    [Header("Projection")] 
     
     public float floatLerp; // Utilisé pour SmoothDamp
+    [HideInInspector] public Transform focusTarget;
 
     void Start()
     {
