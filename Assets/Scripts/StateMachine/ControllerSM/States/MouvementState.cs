@@ -60,7 +60,7 @@ public class MouvementState : State
     }
     public override void TickLogic()
     {
-        Debug.Log(_sm.currentState.ToString());
+        //Debug.Log(_sm.currentState.ToString());
         
         JumpCooldown();
         SpeedControl();
