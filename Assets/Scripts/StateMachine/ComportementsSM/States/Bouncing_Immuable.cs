@@ -11,6 +11,8 @@ public class Bouncing_Immuable : ComportementState
     public override void Enter()
     {
         stateValue = 12;
+        leftValue = 3;
+        rightValue = 9;
         base.Enter();
     }
 

@@ -11,6 +11,8 @@ public class Solo_Magnet : ComportementState
     public override void Enter()
     {
         stateValue = 27;
+        leftValue = 27;
+        rightValue = 0;
         base.Enter();
     }
 

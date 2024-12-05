@@ -34,8 +34,8 @@ public class ComponentStealer : MonoBehaviour
     {
         controls = GameManager.controls;
 
-        controls.Player.VolDeComportement.performed += VolDeComportement;
-        controls.Player.ApplicationDeComportementSurObjet.performed += ApplicationDeComportementSurObjet;
+        controls.Player.ActionSlot1.performed += VolDeComportement;
+        controls.Player.ActionSlot2.performed += ApplicationDeComportementSurObjet;
         controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;
         controls.Player.ViderComportementDuPlayer.performed += ViderComportementDuPlayer;
 

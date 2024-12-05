@@ -11,6 +11,8 @@ public class Double_Impulse : ComportementState
     public override void Enter()
     {
         stateValue = 2;
+        leftValue = 1;
+        rightValue = 1;
         base.Enter();
     }
 

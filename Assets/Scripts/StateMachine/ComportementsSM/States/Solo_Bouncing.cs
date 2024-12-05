@@ -11,6 +11,8 @@ public class Solo_Bouncing : ComportementState
     public override void Enter()
     {
         stateValue = 3;
+        leftValue = 3;
+        rightValue = 0;
         base.Enter();
     }
 

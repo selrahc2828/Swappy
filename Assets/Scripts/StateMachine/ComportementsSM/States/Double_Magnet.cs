@@ -11,6 +11,8 @@ public class Double_Magnet : ComportementState
     public override void Enter()
     {
         stateValue = 54;
+        leftValue = 27;
+        rightValue = 27;
         base.Enter();
     }
 

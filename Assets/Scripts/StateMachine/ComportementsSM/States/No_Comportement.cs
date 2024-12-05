@@ -12,6 +12,8 @@ public class No_Comportement : ComportementState
     public override void Enter()
     {
         stateValue = 0;
+        leftValue = 0;
+        rightValue = 0;
         base.Enter();
     }
 

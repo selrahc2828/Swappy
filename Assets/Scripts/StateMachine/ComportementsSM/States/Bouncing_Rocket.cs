@@ -11,6 +11,8 @@ public class Bouncing_Rocket : ComportementState
     public override void Enter()
     {
         stateValue = 84;
+        leftValue = 3;
+        rightValue = 81;
         base.Enter();
     }
 

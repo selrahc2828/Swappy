@@ -11,6 +11,8 @@ public class Immuable_Magnet : ComportementState
     public override void Enter()
     {
         stateValue = 36;
+        leftValue = 9;
+        rightValue = 27;
         base.Enter();
     }
 

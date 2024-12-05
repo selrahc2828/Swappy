@@ -11,6 +11,8 @@ public class Solo_Impulse : ComportementState
     public override void Enter()
     {
         stateValue = 1;
+        leftValue = 1;
+        rightValue = 0;
         base.Enter();
     }
 

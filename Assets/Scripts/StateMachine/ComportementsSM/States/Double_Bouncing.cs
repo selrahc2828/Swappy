@@ -11,6 +11,8 @@ public class Double_Bouncing : ComportementState
     public override void Enter()
     {
         stateValue = 6;
+        leftValue = 3;
+        rightValue = 3;
         base.Enter();
     }
 

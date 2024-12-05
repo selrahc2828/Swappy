@@ -11,6 +11,8 @@ public class Solo_Rocket : ComportementState
     public override void Enter()
     {
         stateValue = 81;
+        leftValue = 81;
+        rightValue = 0;
         base.Enter();
     }
 

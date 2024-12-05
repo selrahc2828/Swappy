@@ -11,6 +11,8 @@ public class Impulse_Magnet : ComportementState
     public override void Enter()
     {
         stateValue = 28;
+        leftValue = 1;
+        rightValue = 27;
         base.Enter();
     }
 

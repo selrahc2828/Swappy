@@ -11,6 +11,8 @@ public class Impulse_Rocket : ComportementState
     public override void Enter()
     {
         stateValue = 82;
+        leftValue = 1;
+        rightValue = 81;
         base.Enter();
     }
 

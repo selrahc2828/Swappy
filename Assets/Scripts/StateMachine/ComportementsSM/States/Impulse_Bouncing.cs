@@ -11,6 +11,8 @@ public class Impulse_Bouncing : ComportementState
     public override void Enter()
     {
         stateValue = 4;
+        leftValue = 1;
+        rightValue = 3;
         base.Enter();
     }
 

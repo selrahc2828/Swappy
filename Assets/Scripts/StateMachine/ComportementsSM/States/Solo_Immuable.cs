@@ -11,6 +11,8 @@ public class Solo_Immuable : ComportementState
     public override void Enter()
     {
         stateValue = 9;
+        leftValue = 9;
+        rightValue = 0;
         base.Enter();
     }
 

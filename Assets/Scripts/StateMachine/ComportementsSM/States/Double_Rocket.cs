@@ -11,6 +11,8 @@ public class Double_Rocket : ComportementState
     public override void Enter()
     {
         stateValue = 162;
+        leftValue = 81;
+        rightValue = 81;
         base.Enter();
     }
 

@@ -11,6 +11,8 @@ public class Immuable_Rocket : ComportementState
     public override void Enter()
     {
         stateValue = 90;
+        leftValue = 9;
+        rightValue = 81;
         base.Enter();
     }
 

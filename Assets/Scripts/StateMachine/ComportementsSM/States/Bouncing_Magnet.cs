@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bouncing_Magnet : ComportementState
 {
+
     public Bouncing_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -11,6 +12,8 @@ public class Bouncing_Magnet : ComportementState
     public override void Enter()
     {
         stateValue = 30;
+        leftValue = 3;
+        rightValue = 27;
         base.Enter();
     }
 

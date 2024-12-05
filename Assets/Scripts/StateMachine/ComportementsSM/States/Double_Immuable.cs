@@ -11,6 +11,8 @@ public class Double_Immuable : ComportementState
     public override void Enter()
     {
         stateValue = 18;
+        leftValue = 9;
+        rightValue = 9;
         base.Enter();
     }
 

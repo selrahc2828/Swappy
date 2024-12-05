@@ -11,6 +11,8 @@ public class Impulse_Immuable : ComportementState
     public override void Enter()
     {
         stateValue = 10;
+        leftValue = 1;
+        rightValue = 9;
         base.Enter();
     }
 

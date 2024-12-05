@@ -11,6 +11,8 @@ public class Magnet_Rocket : ComportementState
     public override void Enter()
     {
         stateValue = 108;
+        leftValue = 27;
+        rightValue = 81;
         base.Enter();
     }
 

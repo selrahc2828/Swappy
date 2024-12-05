@@ -6,6 +6,8 @@ using UnityEngine;
 public class ComportementState : State
 {
     public int stateValue;
+    public int leftValue;
+    public int rightValue;
 
     protected ComportementsStateMachine _sm;
 
@@ -106,5 +108,6 @@ public class ComportementState : State
                 break;
         }
     }
+
 
 }
