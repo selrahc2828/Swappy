@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class C_Fusee : Comportment
 {
-    [SerializeField] private float rocketForce;
+    public float rocketForce;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
