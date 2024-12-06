@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_Fusee : Comportment
+public class C_Rocket : Comportment
 {
     public float rocketForce;
     void Start()
