@@ -144,10 +144,10 @@ public class MouvementState : State
             //limit velocity if needed
             if (flatVel.magnitude > moveSpeed)
             {
-                /*
+                
                 Vector3 limitedVel = flatVel.normalized * moveSpeed;
                 _sm.rb.velocity = new Vector3(limitedVel.x, _sm.rb.velocity.y, limitedVel.z);
-                */
+                
             }
         }
     }
@@ -156,11 +156,11 @@ public class MouvementState : State
     {
         if (Physics.Raycast(_sm.rb.transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
-            /*
+            
             //compare the slope angle to out max angle variable
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
-            */
+            
         }
         return false;
     }
