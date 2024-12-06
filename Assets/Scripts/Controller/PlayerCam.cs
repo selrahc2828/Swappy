@@ -31,6 +31,9 @@ public class PlayerCam : MonoBehaviour
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensY;
         //unscaledDeltaTime = temps réel, non affecté par le timescale
         
+        // _moveMouseVector = GameManager.controls.Player.Look.ReadValue<Vector2>();
+        // possible vector look de input system mais pas du tout la meme sensi
+        
         yRotation += mouseX;
 
         xRotation -= mouseY;
