@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a5e80d09521a44fad5dca4490a1e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camControllerScript: {fileID: 0}
+  playerCamScript: {fileID: 0}
+  moveCamScript: {fileID: 0}
   slowMotion: 0
   slowTimerActive: 0
   slowTimeDuration: 0
@@ -58,9 +61,8 @@ MonoBehaviour:
   aimant_color: {r: 0.754717, g: 0.50907797, b: 0.50907797, a: 0}
   immuable_color: {r: 0.5471698, g: 0.2710039, b: 0.2710039, a: 0}
   Uncomportemented_color: {r: 0.8018868, g: 0.13995194, b: 0.13995194, a: 0}
-  scene1: Variation_1
-  scene2: VariationGreg
-  scene3: 
+  scene1: Playground
+  scene2: Situation_de_jeu_Marius
   keyForScene1: 49
   keyForScene2: 50
   keyForScene3: 51
@@ -78,3 +80,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   maxSlopeAngle: 45
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 9
+  projectionTimeDuration: 20
+  projectionTimer: 0
+  coeffRefill: 1.5
+  range: 200
+  coeffReducDistance: 0.1
+  activeGizmoRange: 1
+  etatIsProjected: 0
+  timerProjectionText: {fileID: 0}

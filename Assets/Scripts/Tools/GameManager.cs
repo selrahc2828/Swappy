@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static Controls controls;
     public CameraController camControllerScript;
+    public PlayerCam playerCamScript;
+    public MoveCamera moveCamScript;
     //public GrabObject grabScript;
 
     [HideInInspector]
@@ -58,10 +62,20 @@ public class GameManager : MonoBehaviour
 
     [Header("Player Slope Handeling Parameter")]
     public float maxSlopeAngle;
-
-    [HideInInspector]
-    public bool etatIsProjected;
     
+    [Header("Player Projecting Parameter")]
+    public LayerMask hitLayer;
+    public float projectionTimeDuration;
+    [HideInInspector]
+    public float projectionTimer;
+    public float coeffRefill = 0.75f;
+    public float range;
+    public float coeffReducDistance;
+    public bool activeGizmoRange;
+    
+    public bool etatIsProjected;
+    public TextMeshProUGUI timerProjectionText;
+
     private void OnEnable()
     {
         if (controls == null)
@@ -85,11 +99,28 @@ public class GameManager : MonoBehaviour
     {
         slowMotion = false;
         slowTimer = 0f;
+        etatIsProjected = false;
+        projectionTimer = projectionTimeDuration;
 
+        if (!timerProjectionText)
+        {
+            Debug.Log("Il n'y a pas de text Timer Projection");
+        }
+        
         camControllerScript = FindObjectOfType<CameraController>();
         if (camControllerScript == null)
         {
             Debug.LogWarning("Il n'y a pas de CameraController dans la scène");
+        }
+        playerCamScript = FindObjectOfType<PlayerCam>();
+        if (playerCamScript == null)
+        {
+            Debug.LogWarning("Il n'y a pas de PlayerCam dans la scène");
+        }
+        moveCamScript = FindObjectOfType<MoveCamera>();
+        if (moveCamScript == null)
+        {
+            Debug.LogWarning("Il n'y a pas de MoveCamera dans la scène");
         }
         //grabScript = FindObjectOfType<GrabObject>();
 
@@ -109,7 +140,7 @@ public class GameManager : MonoBehaviour
     {
 
         SlowTime();
-
+        ProjectionTimer();
 
         // Vérifier si la touche pour la scène 1 est pressée.
         if (Input.GetKeyDown(keyForScene1))
@@ -178,5 +209,20 @@ public class GameManager : MonoBehaviour
         {
             slowTimer = 0;
         }
+    }
+
+    void ProjectionTimer()
+    {
+        if (etatIsProjected)
+        {
+            projectionTimer -= Time.deltaTime;
+        }
+        else if (projectionTimer < projectionTimeDuration)
+        {
+            projectionTimer += Time.deltaTime * coeffRefill;
+        }
+        
+        projectionTimer = Mathf.Clamp(projectionTimer, 0, projectionTimeDuration);
+        timerProjectionText.text = projectionTimer.ToString("F2");// F2 arrondi à 2 décimal
     }
 }

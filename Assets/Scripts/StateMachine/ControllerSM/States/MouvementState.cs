@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class MouvementState : State
 {
@@ -57,6 +59,8 @@ public class MouvementState : State
         _sm.rb.freezeRotation = true;
 
         gravity = Physics.gravity;
+        
+        controls.Player.Projection.performed += Projection;
     }
     public override void TickLogic()
     {
@@ -69,7 +73,12 @@ public class MouvementState : State
     {
         //ground check
         grounded = Physics.Raycast(_sm.rb.transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
-        moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
+
+        if (_sm.currentState != PlayerMouvementStateMachine.projectingState)
+        {
+            moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
+        }
+        
         MovePlayer();
         if (grounded)
         {
@@ -83,9 +92,9 @@ public class MouvementState : State
 
     public override void Exit()
     {
-
+        controls.Player.Projection.performed -= Projection;
     }
-
+    
     private void MovePlayer()
     {
         //calculate movement direction
@@ -177,5 +186,19 @@ public class MouvementState : State
         readyToJump = true;
 
         exitingSlope = false;
+    }
+    void Projection(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (_sm.currentState == PlayerMouvementStateMachine.projectingState)//sort de projection si on l'est déjà
+            {
+                _sm.ChangeState(PlayerMouvementStateMachine.walkingState);
+            }
+            else
+            {
+                _sm.ChangeState(PlayerMouvementStateMachine.projectingState);
+            }
+        }
     }
 }

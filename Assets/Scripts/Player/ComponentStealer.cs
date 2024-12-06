@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -42,6 +43,14 @@ public class ComponentStealer : MonoBehaviour
         //lastSteal.text = "";
         steals = new Dictionary<MonoBehaviour, System.Type>();
 
+    }
+
+    private void OnDisable()
+    {
+        controls.Player.VolDeComportement.performed -= VolDeComportement;
+        controls.Player.ApplicationDeComportementSurObjet.performed -= ApplicationDeComportementSurObjet;
+        controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;
+        controls.Player.ViderComportementDuPlayer.performed -= ViderComportementDuPlayer;    
     }
 
     void Update()
