@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3659353255900612616}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,6 @@ GameObject:
   - component: {fileID: 1196972703279032411}
   - component: {fileID: 1059454568250839456}
   - component: {fileID: 8659065682313956082}
-  - component: {fileID: 6019408383606186971}
   m_Layer: 0
   m_Name: Spawner2
   m_TagString: NotInteract
@@ -261,20 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad501704e61a1047813a04ca3536729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectSpawned: {fileID: 0}
+  objectToSpawn: {fileID: 447375944755427264, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
   spawnPoint: {fileID: 3659353255900612616}
-  speed: 15
-  spawnTime: 0
---- !u!114 &6019408383606186971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8251376424755974935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4926597b7a9069241b8cd4273a4371fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _actif: 0
+  spawnForce: 1
+  spawnTime: 5

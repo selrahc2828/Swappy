@@ -4,27 +4,26 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject objectSpawned;
+    public GameObject objectToSpawn;
     public Transform spawnPoint;
-    public float speed;
+    public float spawnForce;
     private float spawnTimer;
     public float spawnTime;
-    // Start is called before the first frame update
+
     void Start()
     {
         spawnTimer = 0f;
     }
 
-    // Update is called once per frame
     void Update()
     {
         spawnTimer += Time.deltaTime;
 
         if (spawnTimer > spawnTime)
         {
-            GameObject bombSpawned = Instantiate(objectSpawned);
-            bombSpawned.transform.position = spawnPoint.position;
-            bombSpawned.GetComponent<Rigidbody>().AddForce(spawnPoint.up * speed, ForceMode.Impulse);
+            GameObject instantiatedObject = Instantiate(this.objectToSpawn);
+            instantiatedObject.transform.position = spawnPoint.position;
+            instantiatedObject.GetComponent<Rigidbody>().AddForce(spawnPoint.up * spawnForce, ForceMode.Impulse);
             spawnTimer = 0f;
         }
     }
