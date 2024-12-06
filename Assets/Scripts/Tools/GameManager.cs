@@ -15,11 +15,17 @@ public class GameManager : MonoBehaviour
     public MoveCamera moveCamScript;
     //public GrabObject grabScript;
 
+    [Header("SlowTimer")]
+    [Range(0f, 1f)]
+    public float slowCoeff = 0.3f;
     [HideInInspector]
-    public bool slowMotion, slowTimerActive;
+    public bool slowMotion;
+    public bool slowTimerActive = true;
     [HideInInspector]
-    public float slowTimeDuration, slowTimer;
-
+    public float slowTimer;
+    public float slowTimeDuration = 5f;
+    public TextMeshProUGUI timerSlowText;
+    
     [Header("Couleurs d'interaction")]
     public Material defaultColor;
     public Material interactAVolerMat;
@@ -106,6 +112,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Il n'y a pas de text Timer Projection");
         }
+        if (!timerSlowText)
+        {
+            Debug.Log("Il n'y a pas de text Timer Slow");
+        }
         
         camControllerScript = FindObjectOfType<CameraController>();
         if (camControllerScript == null)
@@ -127,12 +137,16 @@ public class GameManager : MonoBehaviour
         controls.Player.Enable();
 
         controls.Player.ReloadScene.performed += ReloadScene;
+        controls.Player.StopTime.performed += SlowMotionInput;
+
 
     }
 
     private void OnDisable()
     {
         controls.Player.ReloadScene.performed -= ReloadScene;
+        controls.Player.StopTime.performed -= SlowMotionInput;
+
     }
 
     // Update is called once per frame
@@ -209,8 +223,22 @@ public class GameManager : MonoBehaviour
         {
             slowTimer = 0;
         }
-    }
 
+        if (timerSlowText != null)
+        {
+            timerSlowText.text = (slowTimeDuration - slowTimer).ToString("F2");
+        }
+    }
+    private void SlowMotionInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            // if bool == true set false et vice versa
+            slowMotion = !slowMotion;
+            SlowMotion(slowMotion, slowCoeff);
+        }
+    }
+    
     void ProjectionTimer()
     {
         if (etatIsProjected)
@@ -223,6 +251,9 @@ public class GameManager : MonoBehaviour
         }
         
         projectionTimer = Mathf.Clamp(projectionTimer, 0, projectionTimeDuration);
-        timerProjectionText.text = projectionTimer.ToString("F2");// F2 arrondi à 2 décimal
+        if (timerProjectionText)
+        {
+            timerProjectionText.text = projectionTimer.ToString("F2");// F2 arrondi à 2 décimal
+        }
     }
 }

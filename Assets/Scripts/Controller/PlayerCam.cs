@@ -7,7 +7,7 @@ public class PlayerCam : MonoBehaviour
 {
     public float sensX;
     public float sensY;
-
+    
     public Transform orientatiaon;
 
     float xRotation;
@@ -27,9 +27,10 @@ public class PlayerCam : MonoBehaviour
     void Update()
     {
         //get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
-
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensX; //deltaTime
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensY;
+        //unscaledDeltaTime = temps rÃ©el, non affectÃ© par le timescale
+        
         yRotation += mouseX;
 
         xRotation -= mouseY;
@@ -47,7 +48,7 @@ public class PlayerCam : MonoBehaviour
     {
 
         float maxDistance = 500f;
-        line.SetPosition(0, transform.position - transform.up / 5 + transform.right / 5);  // Début de la ligne (caméra)
+        line.SetPosition(0, transform.position - transform.up / 5 + transform.right / 5);  // Dï¿½but de la ligne (camï¿½ra)
 
         RaycastHit _hit;
 
@@ -56,7 +57,7 @@ public class PlayerCam : MonoBehaviour
         if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
             // Si le raycast touche un objet
-            line.SetPosition(1, _hit.point);  // Fin de la ligne (point touché par le rayon)
+            line.SetPosition(1, _hit.point);  // Fin de la ligne (point touchï¿½ par le rayon)
         }
         else
         {
