@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class C_Immuable : Comportment
+public class C_Immutable : Comportment
 {
     void Start()
     {
