@@ -67,12 +67,12 @@ public class ColorInteract : MonoBehaviour
                     material.SetColor("_Color3", GameManager.Instance.Repulsive_color);
                 
                 }
-                else if (GetComponentsInParent<C_Immuable>().Length == 1)
+                else if (GetComponentsInParent<C_Immutable>().Length == 1)
                 {
                     material.SetColor("_Color3", GameManager.Instance.immuable_color);
                 
                 }
-                else if (GetComponentsInParent<C_Fusee>().Length == 1)
+                else if (GetComponentsInParent<C_Rocket>().Length == 1)
                 {
                     material.SetColor("_Color3", GameManager.Instance.fusee_color);
                 
@@ -95,12 +95,12 @@ public class ColorInteract : MonoBehaviour
                     material.SetColor("_Color2", GameManager.Instance.Repulsive_color);
                 
                 }
-                else if (GetComponentsInParent<C_Immuable>().Length == 2)
+                else if (GetComponentsInParent<C_Immutable>().Length == 2)
                 {
                     material.SetColor("_Color2", GameManager.Instance.immuable_color);
                 
                 }
-                else if (GetComponentsInParent<C_Fusee>().Length == 2)
+                else if (GetComponentsInParent<C_Rocket>().Length == 2)
                 {
                     material.SetColor("_Color2", GameManager.Instance.fusee_color);
                 
