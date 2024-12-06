@@ -72,7 +72,7 @@ public class Sprinting : MouvementState
     {
         if (context.performed && readyToJump && grounded)
         {
-            _sm.ChangeState(PlayerMouvementStateMachine.sprintingState);
+            _sm.ChangeState(PlayerMouvementStateMachine.jumpingState);
             
         }
     }
