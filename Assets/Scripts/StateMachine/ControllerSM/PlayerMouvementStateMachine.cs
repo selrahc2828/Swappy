@@ -30,10 +30,13 @@ public class PlayerMouvementStateMachine : StateMachine
     
     void OnDrawGizmos()
     {
-        if (gameManager.activeGizmoRange) // range projection
+        if (gameManager != null)
         {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position, gameManager.range);            
+            if (gameManager.activeGizmoRange) // range projection
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireSphere(transform.position, gameManager.range);            
+            }
         }
     }
 }

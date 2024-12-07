@@ -67,7 +67,7 @@ public class GrabObject : MonoBehaviour
             // voir ajouter compare tag NotInteract ?
             foreach (Collider item in hitColliders)
             {
-                Debug.LogWarning("item: "+ item.name);
+                // Debug.LogWarning("item: "+ item.name);
                 float distanceToObject = Vector3.Distance(transform.position, item.transform.position);
 
                 if (distanceToObject < closestDist) // && item.CompareTag("Movable")
@@ -163,15 +163,18 @@ public class GrabObject : MonoBehaviour
         // affiche box d'interaction
         
         Gizmos.color = Color.blue;
+        if (interractorZonePos != null && mainCam!= null)
+        {
+            // Meme calcul pour le gizmo de la box de detection
+            Vector3 boxCenter = interractorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
+            Quaternion boxRotation = mainCam.transform.rotation;
 
-        // M�me calcul pour le gizmo de la box de detection
-        Vector3 boxCenter = interractorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
-        Quaternion boxRotation = mainCam.transform.rotation;
+            // Pour dessiner la boite dans la scene avec Gizmos (comme avec Physics.OverlapBox)
+            // Matrix4x4.TRS permet de dessiner, position, rotation et echelle, juste DrawWireCube ne suffit pas 
+            Gizmos.matrix = Matrix4x4.TRS(boxCenter, boxRotation, Vector3.one);
+            Gizmos.DrawWireCube(Vector3.zero, detectionSize);            
+        }
 
-        // Pour dessiner la bo�te dans la sc�ne avec Gizmos (comme avec Physics.OverlapBox)
-        // Matrix4x4.TRS permetd dessiner, position, rotation et echelle, juste DrawWireCube ne suffit pas 
-        Gizmos.matrix = Matrix4x4.TRS(boxCenter, boxRotation, Vector3.one);
-        Gizmos.DrawWireCube(Vector3.zero, detectionSize);
     }
 
 }
