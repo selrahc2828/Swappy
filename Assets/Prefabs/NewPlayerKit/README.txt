@@ -17,3 +17,5 @@ Dans le script GrabObject du prefab Player renseigner :
 
 Dans le script ComponentStealer renseigner MainCamera
 
+Bien set les Layer à Ground pour les objets où l'avatar peut marcher/sauter
+

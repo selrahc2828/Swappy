@@ -20,10 +20,9 @@ public class GrabObject : MonoBehaviour
     public bool isCarrying;
 
     public LayerMask hitLayer;    
-    [SerializeField]
-    private GameObject _carriedObject;
+    [HideInInspector]
+    public GameObject carriedObject;
     private Transform _originParent;
-    [SerializeField]
     private GameObject _closestObj;
     [Header("Variation")]
     public bool isLaunchable;
@@ -96,18 +95,18 @@ public class GrabObject : MonoBehaviour
     {
         if (_closestObj != null && !isCarrying) 
         {
-            _carriedObject = _closestObj;
-            _originParent = _carriedObject.transform.parent;
+            carriedObject = _closestObj;
+            _originParent = carriedObject.transform.parent;
 
             // deplace obj
             ResetCarryPos();
 
-            if (_carriedObject.GetComponent<Rigidbody>())
+            if (carriedObject.GetComponent<Rigidbody>())
             {
-                _carriedObject.GetComponent<Rigidbody>().isKinematic = true;
+                carriedObject.GetComponent<Rigidbody>().isKinematic = true;
                 foreach (Collider collider in playerCollider)
                 {
-                    Physics.IgnoreCollision(collider, _carriedObject.GetComponent<Collider>(), true);
+                    Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), true);
                 }
             }
 
@@ -118,36 +117,36 @@ public class GrabObject : MonoBehaviour
         }
     }
 
-    public void Drop()
+    public void Drop(bool dropRepulse = false)
     {
         if (isCarrying)
         {
-            _carriedObject.transform.SetParent(_originParent);
-            if (_carriedObject.GetComponent<Rigidbody>()) {
-                _carriedObject.GetComponent<Rigidbody>().isKinematic = false;
+            carriedObject.transform.SetParent(_originParent);
+            if (carriedObject.GetComponent<Rigidbody>()) {
+                carriedObject.GetComponent<Rigidbody>().isKinematic = false;
                 foreach (Collider collider in playerCollider)
                 {
-                    Physics.IgnoreCollision(collider, _carriedObject.GetComponent<Collider>(), false);
+                    Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), false);
                 }
-                if (isLaunchable)
+                if (isLaunchable && !dropRepulse)
                 {
-                    _carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
+                    carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
                 }
             }
 
             //reset
-            _carriedObject = null;
+            carriedObject = null;
             isCarrying = false;
         }
     }
     public void ResetCarryPos()
     {
-        if (_carriedObject != null)
+        if (carriedObject != null)
         {
-            _carriedObject.transform.SetParent(handlerPosition);
-            _carriedObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-            _carriedObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            _carriedObject.transform.localPosition = Vector3.zero;
+            carriedObject.transform.SetParent(handlerPosition);
+            carriedObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            carriedObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            carriedObject.transform.localPosition = Vector3.zero;
         }
     }
 
