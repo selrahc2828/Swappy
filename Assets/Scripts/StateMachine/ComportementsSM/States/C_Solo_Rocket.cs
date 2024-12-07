@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Impulse_Magnet : ComportementState
+public class C_Solo_Rocket : ComportementState
 {
-    public Impulse_Magnet(StateMachine stateMachine) : base(stateMachine)
+    public C_Solo_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        stateValue = 28;
-        leftValue = 1;
-        rightValue = 27;
+        stateValue = 81;
+        leftValue = 81;
+        rightValue = 0;
         base.Enter();
     }
 

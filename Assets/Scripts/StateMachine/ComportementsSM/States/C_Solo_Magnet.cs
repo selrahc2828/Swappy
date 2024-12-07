@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Double_Impulse : ComportementState
+public class C_Solo_Magnet : ComportementState
 {
-    public Double_Impulse(StateMachine stateMachine) : base(stateMachine)
+    public C_Solo_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        stateValue = 2;
-        leftValue = 1;
-        rightValue = 1;
+        stateValue = 27;
+        leftValue = 27;
+        rightValue = 0;
         base.Enter();
     }
 

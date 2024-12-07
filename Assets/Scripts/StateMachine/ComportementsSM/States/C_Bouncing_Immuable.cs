@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Solo_Impulse : ComportementState
+public class C_Bouncing_Immuable : ComportementState
 {
-    public Solo_Impulse(StateMachine stateMachine) : base(stateMachine)
+    public C_Bouncing_Immuable(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        stateValue = 1;
-        leftValue = 1;
-        rightValue = 0;
+        stateValue = 12;
+        leftValue = 3;
+        rightValue = 9;
         base.Enter();
     }
 

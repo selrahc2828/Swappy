@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Solo_Bouncing : ComportementState
+public class C_Impulse_Bouncing : ComportementState
 {
-    public Solo_Bouncing(StateMachine stateMachine) : base(stateMachine)
+    public C_Impulse_Bouncing(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        stateValue = 3;
-        leftValue = 3;
-        rightValue = 0;
+        stateValue = 4;
+        leftValue = 1;
+        rightValue = 3;
         base.Enter();
     }
 

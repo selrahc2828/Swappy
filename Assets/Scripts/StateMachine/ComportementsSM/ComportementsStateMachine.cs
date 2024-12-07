@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class ComportementsStateMachine : StateMachine
 {
-    public static No_Comportement no_Comportement_state_0;
+    public static C_No_Comportement no_Comportement_state_0;
 
-    public static Solo_Impulse solo_Impulse_State_1;
-    public static Solo_Bouncing solo_Bouncing_State_3;
-    public static Solo_Immuable solo_Immuable_State_9;
-    public static Solo_Magnet solo_Magnet_State_27;
-    public static Solo_Rocket solo_Rocket_State_81;
+    public static C_Solo_Impulse solo_Impulse_State_1;
+    public static C_Solo_Bouncing solo_Bouncing_State_3;
+    public static C_Solo_Immuable solo_Immuable_State_9;
+    public static C_Solo_Magnet solo_Magnet_State_27;
+    public static C_Solo_Rocket solo_Rocket_State_81;
 
-    public static Double_Impulse double_Impulse_State_2;
-    public static Double_Bouncing double_Bouncing_State_6;
-    public static Double_Immuable double_Immuable_State_18;
-    public static Double_Magnet double_Magnet_State_54;
-    public static Double_Rocket double_Rocket_State_162;
+    public static C_Double_Impulse double_Impulse_State_2;
+    public static C_Double_Bouncing double_Bouncing_State_6;
+    public static C_Double_Immuable double_Immuable_State_18;
+    public static C_Double_Magnet double_Magnet_State_54;
+    public static C_Double_Rocket double_Rocket_State_162;
 
-    public static Impulse_Bouncing impulse_Bouncing_State_4;
-    public static Impulse_Immuable impulse_Immuable_State_10;
-    public static Impulse_Magnet impulse_Magnet_State_28;
-    public static Impulse_Rocket impulse_Rocket_State_82;
+    public static C_Impulse_Bouncing impulse_Bouncing_State_4;
+    public static C_Impulse_Immuable impulse_Immuable_State_10;
+    public static C_Impulse_Magnet impulse_Magnet_State_28;
+    public static C_Impulse_Rocket impulse_Rocket_State_82;
 
-    public static Bouncing_Immuable bouncing_Immuable_State_12;
-    public static Bouncing_Magnet bouncing_Magnet_State_30;
-    public static Bouncing_Rocket bouncing_Rocket_State_84;
+    public static C_Bouncing_Immuable bouncing_Immuable_State_12;
+    public static C_Bouncing_Magnet bouncing_Magnet_State_30;
+    public static C_Bouncing_Rocket bouncing_Rocket_State_84;
 
-    public static Immuable_Magnet immuable_Magnet_State_36;
-    public static Immuable_Rocket immuable_Rocket_State_90;
+    public static C_Immuable_Magnet immuable_Magnet_State_36;
+    public static C_Immuable_Rocket immuable_Rocket_State_90;
 
-    public static Magnet_Rocket magnet_Rocket_State_108;
+    public static C_Magnet_Rocket magnet_Rocket_State_108;
 
     public GameManager gameManager;
     public enum FirstState
@@ -61,33 +61,33 @@ public class ComportementsStateMachine : StateMachine
     public FirstState initialState;
     public override void Initialize()
     {
-        no_Comportement_state_0 = new No_Comportement(this);
+        no_Comportement_state_0 = new C_No_Comportement(this);
 
-        solo_Impulse_State_1 = new Solo_Impulse(this);
-        solo_Bouncing_State_3 = new Solo_Bouncing(this); 
-        solo_Immuable_State_9 = new Solo_Immuable(this);
-        solo_Magnet_State_27 = new Solo_Magnet(this);
-        solo_Rocket_State_81 = new Solo_Rocket(this);
+        solo_Impulse_State_1 = new C_Solo_Impulse(this);
+        solo_Bouncing_State_3 = new C_Solo_Bouncing(this); 
+        solo_Immuable_State_9 = new C_Solo_Immuable(this);
+        solo_Magnet_State_27 = new C_Solo_Magnet(this);
+        solo_Rocket_State_81 = new C_Solo_Rocket(this);
 
-        double_Impulse_State_2 = new Double_Impulse(this);
-        double_Bouncing_State_6 = new Double_Bouncing(this);
-        double_Immuable_State_18 = new Double_Immuable(this);
-        double_Magnet_State_54 = new Double_Magnet(this);
-        double_Rocket_State_162 = new Double_Rocket(this);
+        double_Impulse_State_2 = new C_Double_Impulse(this);
+        double_Bouncing_State_6 = new C_Double_Bouncing(this);
+        double_Immuable_State_18 = new C_Double_Immuable(this);
+        double_Magnet_State_54 = new C_Double_Magnet(this);
+        double_Rocket_State_162 = new C_Double_Rocket(this);
 
-        impulse_Bouncing_State_4 = new Impulse_Bouncing(this);
-        impulse_Immuable_State_10 = new Impulse_Immuable(this);
-        impulse_Magnet_State_28 = new Impulse_Magnet(this);
-        impulse_Rocket_State_82 = new Impulse_Rocket(this);
+        impulse_Bouncing_State_4 = new C_Impulse_Bouncing(this);
+        impulse_Immuable_State_10 = new C_Impulse_Immuable(this);
+        impulse_Magnet_State_28 = new C_Impulse_Magnet(this);
+        impulse_Rocket_State_82 = new C_Impulse_Rocket(this);
 
-        bouncing_Immuable_State_12 = new Bouncing_Immuable(this);
-        bouncing_Magnet_State_30 = new Bouncing_Magnet(this);
-        bouncing_Rocket_State_84 = new Bouncing_Rocket(this);
+        bouncing_Immuable_State_12 = new C_Bouncing_Immuable(this);
+        bouncing_Magnet_State_30 = new C_Bouncing_Magnet(this);
+        bouncing_Rocket_State_84 = new C_Bouncing_Rocket(this);
 
-        immuable_Magnet_State_36 = new Immuable_Magnet(this);
-        immuable_Rocket_State_90 = new Immuable_Rocket(this);
+        immuable_Magnet_State_36 = new C_Immuable_Magnet(this);
+        immuable_Rocket_State_90 = new C_Immuable_Rocket(this);
 
-        magnet_Rocket_State_108 = new Magnet_Rocket(this);
+        magnet_Rocket_State_108 = new C_Magnet_Rocket(this);
 
         //currentState = no_Comportement_state_0;
         GoToInitialState(initialState);

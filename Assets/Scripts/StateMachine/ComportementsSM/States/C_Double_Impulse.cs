@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Double_Magnet : ComportementState
+public class C_Double_Impulse : ComportementState
 {
-    public Double_Magnet(StateMachine stateMachine) : base(stateMachine)
+    public C_Double_Impulse(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        stateValue = 54;
-        leftValue = 27;
-        rightValue = 27;
+        stateValue = 2;
+        leftValue = 1;
+        rightValue = 1;
         base.Enter();
     }
 

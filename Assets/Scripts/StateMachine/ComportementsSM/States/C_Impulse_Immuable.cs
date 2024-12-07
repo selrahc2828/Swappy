@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Double_Rocket : ComportementState
+public class C_Impulse_Immuable : ComportementState
 {
-    public Double_Rocket(StateMachine stateMachine) : base(stateMachine)
+    public C_Impulse_Immuable(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        stateValue = 162;
-        leftValue = 81;
-        rightValue = 81;
+        stateValue = 10;
+        leftValue = 1;
+        rightValue = 9;
         base.Enter();
     }
 

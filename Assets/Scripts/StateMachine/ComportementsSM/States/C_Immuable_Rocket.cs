@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Immuable_Magnet : ComportementState
+public class C_Immuable_Rocket : ComportementState
 {
-    public Immuable_Magnet(StateMachine stateMachine) : base(stateMachine)
+    public C_Immuable_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        stateValue = 36;
+        stateValue = 90;
         leftValue = 9;
-        rightValue = 27;
+        rightValue = 81;
         base.Enter();
     }
 

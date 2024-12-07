@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Double_Bouncing : ComportementState
+public class C_Double_Bouncing : ComportementState
 {
-    public Double_Bouncing(StateMachine stateMachine) : base(stateMachine)
+    public C_Double_Bouncing(StateMachine stateMachine) : base(stateMachine)
     {
     }
 

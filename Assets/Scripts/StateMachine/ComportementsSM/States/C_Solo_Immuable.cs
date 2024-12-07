@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Double_Immuable : ComportementState
+public class C_Solo_Immuable : ComportementState
 {
-    public Double_Immuable(StateMachine stateMachine) : base(stateMachine)
+    public C_Solo_Immuable(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        stateValue = 18;
+        stateValue = 9;
         leftValue = 9;
-        rightValue = 9;
+        rightValue = 0;
         base.Enter();
     }
 

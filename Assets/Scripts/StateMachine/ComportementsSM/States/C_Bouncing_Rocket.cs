@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Magnet_Rocket : ComportementState
+public class C_Bouncing_Rocket : ComportementState
 {
-    public Magnet_Rocket(StateMachine stateMachine) : base(stateMachine)
+    public C_Bouncing_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        stateValue = 108;
-        leftValue = 27;
+        stateValue = 84;
+        leftValue = 3;
         rightValue = 81;
         base.Enter();
     }

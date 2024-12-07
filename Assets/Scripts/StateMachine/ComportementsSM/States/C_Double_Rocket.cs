@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class No_Comportement : ComportementState
+public class C_Double_Rocket : ComportementState
 {
-    public No_Comportement(StateMachine stateMachine) : base(stateMachine)
+    public C_Double_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
-
     }
 
     public override void Enter()
     {
-        stateValue = 0;
-        leftValue = 0;
-        rightValue = 0;
+        stateValue = 162;
+        leftValue = 81;
+        rightValue = 81;
         base.Enter();
     }
 

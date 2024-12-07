@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bouncing_Magnet : ComportementState
+public class C_Solo_Impulse : ComportementState
 {
-
-    public Bouncing_Magnet(StateMachine stateMachine) : base(stateMachine)
+    public C_Solo_Impulse(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        stateValue = 30;
-        leftValue = 3;
-        rightValue = 27;
+        stateValue = 1;
+        leftValue = 1;
+        rightValue = 0;
         base.Enter();
     }
 

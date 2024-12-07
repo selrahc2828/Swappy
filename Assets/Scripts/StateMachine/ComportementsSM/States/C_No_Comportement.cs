@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Solo_Magnet : ComportementState
+public class C_No_Comportement : ComportementState
 {
-    public Solo_Magnet(StateMachine stateMachine) : base(stateMachine)
+    public C_No_Comportement(StateMachine stateMachine) : base(stateMachine)
     {
+
     }
 
     public override void Enter()
     {
-        stateValue = 27;
-        leftValue = 27;
+        stateValue = 0;
+        leftValue = 0;
         rightValue = 0;
         base.Enter();
     }
