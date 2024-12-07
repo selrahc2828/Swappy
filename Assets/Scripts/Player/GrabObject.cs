@@ -1,28 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class GrabObject : MonoBehaviour
 {
     // var position / parent ou mettre obj
-    // taille max qu'on peut porter + offset moitié largeur du player
+    // taille max qu'on peut porter + offset moitiï¿½ largeur du player
     // isPickUp pour check si on a un objet ou non
     public Camera mainCam;
-    private Collider playerCollider;
-    public TextMeshProUGUI interactText;
     public Transform handlerPosition;
-
     public Transform interractorZonePos;//centre zone de detection
-
-    [HideInInspector]
+    
+    public Collider[] playerCollider; // on a 2 colliders
+    public TextMeshProUGUI interactText;
+    
     public bool isCarrying;
 
     public LayerMask hitLayer;    
-    private GameObject carriedObject;
-    private Transform originParent;
-
-    private GameObject closestObj;
+    [SerializeField]
+    private GameObject _carriedObject;
+    private Transform _originParent;
+    [SerializeField]
+    private GameObject _closestObj;
     [Header("Variation")]
     public bool isLaunchable;
     public float launchForce;
@@ -33,37 +35,45 @@ public class GrabObject : MonoBehaviour
         {
             interactText.gameObject.SetActive(false);
         }
-        // set la position du "vraie" handler qui est dans la camera, à la position qu'on a set dans le player
-        // on le met dans la camera
-        ChangeParent(handlerPosition);
-        playerCollider = GetComponent<Collider>();
+        
+        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        interractorZonePos = GameObject.FindGameObjectWithTag("InterractorZone").transform;
+        handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
+        
+        // set la position du "vraie" handler qui est dans la camera, Ã  la position qu'on a set dans le player
+        // on le met dans la camera (---OBSOLETE---)
+        // ChangeParent(handlerPosition);
+        // playerCollider = GetComponent<Collider>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Calcul de la nouvelle position du centre pour que le bord reste collé au joueur
-        // On décale le centre de la moitié de la profondeur (axe Z) de la boîte vers l'avant
-        // mainCam pour tourner la box vers où on regarde
+        // Calcul de la nouvelle position du centre pour que le bord reste collÃ© au joueur
+        // On dÃ©cale le centre de la moitiÃ© de la profondeur (axe Z) de la boite vers l'avant
+        // mainCam pour tourner la box vers oÃ¹ on regarde
         Vector3 boxCenter = interractorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
 
         Quaternion boxRotation = mainCam.transform.rotation;
 
-        Collider[] hitColliders = Physics.OverlapBox(boxCenter, detectionSize / 2, boxRotation, hitLayer); // transform.rotation pour tourner avec player
-
+        // on part du principe que seul les objets qu'on peut porter auront le tag
+        Collider[] hitColliders = Physics.OverlapBox(boxCenter, detectionSize / 2, boxRotation, hitLayer)
+            .Where(collider => collider.CompareTag("Movable"))
+            .ToArray();
+        //on recupÃ¨re un tableau triÃ© en amont avec juste les objets qu'on peut bouger
         if (hitColliders.Length > 0 && !isCarrying)
         {
             float closestDist = Mathf.Infinity;
             // voir ajouter compare tag NotInteract ?
             foreach (Collider item in hitColliders)
             {
+                Debug.LogWarning("item: "+ item.name);
                 float distanceToObject = Vector3.Distance(transform.position, item.transform.position);
 
-                // on part du principe que seul les objets qu'on peut porter auront le tag
-                if (distanceToObject < closestDist && item.CompareTag("Movable")) 
+                if (distanceToObject < closestDist) // && item.CompareTag("Movable")
                 {
                     closestDist = distanceToObject;
-                    closestObj = item.gameObject;
+                    _closestObj = item.gameObject;
                     if (interactText)
                     {
                         interactText.gameObject.SetActive(true);
@@ -78,28 +88,31 @@ public class GrabObject : MonoBehaviour
             {
                 interactText.gameObject.SetActive(false);
             }
-            closestObj = null;
+            _closestObj = null;
         }
     }
 
     public void Carrying()
     {
-        if (closestObj != null && !isCarrying) 
+        if (_closestObj != null && !isCarrying) 
         {
-            carriedObject = closestObj;
-            originParent = carriedObject.transform.parent;
+            _carriedObject = _closestObj;
+            _originParent = _carriedObject.transform.parent;
 
             // deplace obj
             ResetCarryPos();
 
-            if (carriedObject.GetComponent<Rigidbody>())
+            if (_carriedObject.GetComponent<Rigidbody>())
             {
-                carriedObject.GetComponent<Rigidbody>().isKinematic = true;
-                Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), true);
+                _carriedObject.GetComponent<Rigidbody>().isKinematic = true;
+                foreach (Collider collider in playerCollider)
+                {
+                    Physics.IgnoreCollision(collider, _carriedObject.GetComponent<Collider>(), true);
+                }
             }
 
             isCarrying = true;
-            closestObj = null;
+            _closestObj = null;
             //Debug.Log("Grab : " + carriedObject.name);
 
         }
@@ -109,34 +122,32 @@ public class GrabObject : MonoBehaviour
     {
         if (isCarrying)
         {
-            carriedObject.transform.SetParent(originParent);
-            if (carriedObject.GetComponent<Rigidbody>()) {
-                carriedObject.GetComponent<Rigidbody>().isKinematic = false;
-                Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), false);
-
+            _carriedObject.transform.SetParent(_originParent);
+            if (_carriedObject.GetComponent<Rigidbody>()) {
+                _carriedObject.GetComponent<Rigidbody>().isKinematic = false;
+                foreach (Collider collider in playerCollider)
+                {
+                    Physics.IgnoreCollision(collider, _carriedObject.GetComponent<Collider>(), false);
+                }
                 if (isLaunchable)
                 {
-                    carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
+                    _carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
                 }
             }
 
             //reset
-            carriedObject = null;
+            _carriedObject = null;
             isCarrying = false;
-
-            //Debug.Log("Drop");
         }
-
     }
     public void ResetCarryPos()
     {
-        //Debug.Log("Reset obj carry, interactorPos : " + handlerPos);
-        if (carriedObject != null)
+        if (_carriedObject != null)
         {
-            carriedObject.transform.SetParent(handlerPosition);
-            carriedObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-            carriedObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            carriedObject.transform.localPosition = Vector3.zero;
+            _carriedObject.transform.SetParent(handlerPosition);
+            _carriedObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            _carriedObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            _carriedObject.transform.localPosition = Vector3.zero;
         }
     }
 
@@ -149,13 +160,15 @@ public class GrabObject : MonoBehaviour
     {
         if (mainCam == null) return;
 
+        // affiche box d'interaction
+        
         Gizmos.color = Color.blue;
 
-        // Même calcul pour le gizmo de la box de detection
+        // Mï¿½me calcul pour le gizmo de la box de detection
         Vector3 boxCenter = interractorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
         Quaternion boxRotation = mainCam.transform.rotation;
 
-        // Pour dessiner la boîte dans la scène avec Gizmos (comme avec Physics.OverlapBox)
+        // Pour dessiner la boï¿½te dans la scï¿½ne avec Gizmos (comme avec Physics.OverlapBox)
         // Matrix4x4.TRS permetd dessiner, position, rotation et echelle, juste DrawWireCube ne suffit pas 
         Gizmos.matrix = Matrix4x4.TRS(boxCenter, boxRotation, Vector3.one);
         Gizmos.DrawWireCube(Vector3.zero, detectionSize);

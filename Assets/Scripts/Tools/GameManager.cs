@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public CameraController camControllerScript;
     public PlayerCam playerCamScript;
     public MoveCamera moveCamScript;
-    //public GrabObject grabScript;
+    public GrabObject grabScript;
 
     [Header("SlowTimer")]
     [Range(0f, 1f)]
@@ -132,8 +132,12 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("Il n'y a pas de MoveCamera dans la scène");
         }
-        //grabScript = FindObjectOfType<GrabObject>();
-
+        grabScript = FindObjectOfType<GrabObject>();
+        if (grabScript == null)
+        {
+            Debug.LogWarning("Il n'y a pas de grabScript dans la scène");
+        }
+        
         controls.Player.Enable();
 
         controls.Player.ReloadScene.performed += ReloadScene;

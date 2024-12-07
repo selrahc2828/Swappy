@@ -61,6 +61,7 @@ public class MouvementState : State
         gravity = Physics.gravity;
         
         controls.Player.Projection.performed += Projection;
+        controls.Player.GrabDrop.performed += GrabAndDrop;
     }
     public override void TickLogic()
     {
@@ -93,6 +94,7 @@ public class MouvementState : State
     public override void Exit()
     {
         controls.Player.Projection.performed -= Projection;
+        controls.Player.GrabDrop.performed -= GrabAndDrop;
     }
     
     private void MovePlayer()
@@ -198,6 +200,25 @@ public class MouvementState : State
             else
             {
                 _sm.ChangeState(PlayerMouvementStateMachine.projectingState);
+            }
+        }
+    }
+    
+    void GrabAndDrop(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (_sm.gameManager.grabScript)
+            {
+                if (_sm.gameManager.grabScript.isCarrying)
+                {
+                    _sm.gameManager.grabScript.Drop();
+                }
+                else
+                {
+                    _sm.gameManager.grabScript.Carrying();
+                }
+
             }
         }
     }
