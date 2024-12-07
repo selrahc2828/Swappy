@@ -15,16 +15,17 @@ public class C_No_Comportement : ComportementState
         leftValue = 0;
         rightValue = 0;
         base.Enter();
+        _sm.rend.material = _sm.rien;
     }
 
     public override void TickLogic()
     {
-        base.TickLogic();
+        
     }
 
     public override void TickPhysics()
     {
-        base.TickPhysics();
+        
     }
 
     public override void Exit()

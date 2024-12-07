@@ -8,6 +8,8 @@ public class ComportementState : State
     public int stateValue;
     public int leftValue;
     public int rightValue;
+    public bool isGrabbed = false;
+    public bool isOnPlayer = false;
 
     protected ComportementsStateMachine _sm;
 

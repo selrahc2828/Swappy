@@ -13,7 +13,7 @@ public class ComportementStealer_proto : MonoBehaviour
     private Ray _ray;
     public Camera mainCam;
 
-    [Header("Comportement stoqué")]
+    [Header("Comportement stoquï¿½")]
     public int slot1 = 0;
     public ComportementsStateMachine originSlot1;
     public int slot2 = 0;
@@ -61,21 +61,21 @@ public class ComportementStealer_proto : MonoBehaviour
                 var stateMachine = _hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
                 if (stateMachine != null)
                 {
-                    //On verifie si slot1 est superieur à 0, s'il l'est, on cherche alors à donner un comportement à l'objet visé, sinon on cherche à prélever un comportement à l'objet visé
+                    //On verifie si slot1 est superieur ï¿½ 0, s'il l'est, on cherche alors ï¿½ donner un comportement ï¿½ l'objet visï¿½, sinon on cherche ï¿½ prï¿½lever un comportement ï¿½ l'objet visï¿½
                     if (slot1 == 0)
                     {
-                        stateStolen = stateMachine; // Stocker la référence
+                        stateStolen = stateMachine; // Stocker la rï¿½fï¿½rence
                         if (stateStolen.currentState is ComportementState)
                         {
                             ComportementState currentObjectState = (ComportementState)stateStolen.currentState;
-                            Debug.Log("Right Value: " + currentObjectState.stateValue);
-                            //On vérifie que la stateValue de l'objet visé est superieur à 0, on ne peut prélever un comportement que si c'est le cas.
+                            Debug.Log("Right Value: " + currentObjectState.rightValue);
+                            //On vï¿½rifie que la stateValue de l'objet visï¿½ est superieur ï¿½ 0, on ne peut prï¿½lever un comportement que si c'est le cas.
                             if(currentObjectState.stateValue != 0)
                             {
-                                //stateValue est supperieur à 0, leftValue est donc obligatoirement remplie, etant donné qu'il s'agit du clique gauche, on ne cherche que la leftValue
+                                //stateValue est supperieur ï¿½ 0, leftValue est donc obligatoirement remplie, etant donnï¿½ qu'il s'agit du clique gauche, on ne cherche que la leftValue
                                 if (currentObjectState.leftValue != 0)
                                 {
-                                    Debug.Log("Soustraction de " + currentObjectState.leftValue + " à " + currentObjectState.stateValue);
+                                    Debug.Log("Soustraction de " + currentObjectState.leftValue + " ï¿½ " + currentObjectState.stateValue + " - Objet d'origine : "+ _hit.collider.gameObject.name);
                                     int futurState = currentObjectState.stateValue - currentObjectState.leftValue;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot1 = currentObjectState.leftValue;
@@ -83,29 +83,29 @@ public class ComportementStealer_proto : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.LogWarning("Normalement c'est litteralement impossible de faire ça");
+                                    Debug.LogWarning("Normalement c'est litteralement impossible de faire ï¿½a");
                                 }
                             }
                             else
                             {
-                                Debug.Log("L'objet ne contiens aucun comportement à prélever");
+                                Debug.Log("L'objet ne contiens aucun comportement ï¿½ prï¿½lever");
                             }
                         }
                     }
                     else
                     {
-                        stateStolen = stateMachine; // Stocker la référence
+                        stateStolen = stateMachine; // Stocker la rï¿½fï¿½rence
                         if (stateStolen.currentState is ComportementState)
                         {
                             ComportementState currentObjectState = (ComportementState)stateStolen.currentState;
                             Debug.Log("Right Value: " + currentObjectState.stateValue);
-                            //On verifie si l'objet visé est vide, si c'est le cas on lui donne directement un compôrtement avec leftValue, sinon on va vérifier si sa rightValue est vide
+                            //On verifie si l'objet visï¿½ est vide, si c'est le cas on lui donne directement un compï¿½rtement avec leftValue, sinon on va vï¿½rifier si sa rightValue est vide
                             if(currentObjectState.stateValue != 0)
                             {
-                                //On vérifie si le rightValue de l'objet Visé est vide, si c'est le cas, on lui ajoute le comportement stoqué dans slot1.
+                                //On vï¿½rifie si le rightValue de l'objet Visï¿½ est vide, si c'est le cas, on lui ajoute le comportement stoquï¿½ dans slot1.
                                 if (currentObjectState.rightValue == 0)
                                 {
-                                    Debug.Log("Addition de " + slot1 + " à " + currentObjectState.stateValue);
+                                    Debug.Log("Addition de " + slot1 + " ï¿½ " + currentObjectState.stateValue + " - Objet visÃ© : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot1.gameObject.name);
                                     int futurState = currentObjectState.stateValue + slot1;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot1 = 0;
@@ -113,12 +113,12 @@ public class ComportementStealer_proto : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.Log("L'objet contiens déjà 2 comportements");
+                                    Debug.Log("L'objet contiens dï¿½jï¿½ 2 comportements");
                                 }
                             }
                             else
                             {
-                                Debug.Log("Addition de " + slot1 + " à " + currentObjectState.stateValue);
+                                Debug.Log("Addition de " + slot1 + " ï¿½ " + currentObjectState.stateValue + " - Objet visÃ© : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot1.gameObject.name);
                                 int futurState = currentObjectState.stateValue + slot1;
                                 currentObjectState.CalculateNewtState(futurState);
                                 slot1 = 0;
@@ -147,21 +147,21 @@ public class ComportementStealer_proto : MonoBehaviour
                 var stateMachine = _hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
                 if (stateMachine != null)
                 {
-                    //On verifie si slot2 est superieur à 0, s'il l'est, on cherche alors à donner un comportement à l'objet visé, sinon on cherche à prélever un comportement à l'objet visé
+                    //On verifie si slot2 est superieur ï¿½ 0, s'il l'est, on cherche alors ï¿½ donner un comportement ï¿½ l'objet visï¿½, sinon on cherche ï¿½ prï¿½lever un comportement ï¿½ l'objet visï¿½
                     if (slot2 == 0)
                     {
-                        stateStolen = stateMachine; // Stocker la référence
+                        stateStolen = stateMachine; // Stocker la rï¿½fï¿½rence
                         if (stateStolen.currentState is ComportementState)
                         {
                             ComportementState currentObjectState = (ComportementState)stateStolen.currentState;
-                            //On verifie si l'objet visé contiens une stateValue, si la stateValue est superieur a 0, l'objet a un comportement
+                            //On verifie si l'objet visï¿½ contiens une stateValue, si la stateValue est superieur a 0, l'objet a un comportement
                             if (currentObjectState.stateValue != 0)
                             {
-                                //L'objet visé a une stateValue superieur à 0 donc sa leftValue est forcément remplis, on test dans un premier temps la rightValue etant donné que c'ets le click droit.
+                                //L'objet visï¿½ a une stateValue superieur ï¿½ 0 donc sa leftValue est forcï¿½ment remplis, on test dans un premier temps la rightValue etant donnï¿½ que c'ets le click droit.
                                 //Si la rightValue est superieur a 0, on la stoque, sinon on stoque la leftValue.
                                 if (currentObjectState.rightValue != 0)
                                 {
-                                    Debug.Log("Soustraction de " + currentObjectState.rightValue + " à " + currentObjectState.stateValue);
+                                    Debug.Log("Soustraction de " + currentObjectState.rightValue + " ï¿½ " + currentObjectState.stateValue + " - Objet d'origine : "+ _hit.collider.gameObject.name);
                                     int futurState = currentObjectState.stateValue - currentObjectState.rightValue;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.rightValue;
@@ -169,7 +169,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.Log("Soustraction de " + currentObjectState.leftValue + " à " + currentObjectState.stateValue);
+                                    Debug.Log("Soustraction de " + currentObjectState.leftValue + " ï¿½ " + currentObjectState.stateValue + " - Objet d'origine : "+ _hit.collider.gameObject.name);
                                     int futurState = currentObjectState.stateValue - currentObjectState.leftValue;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.leftValue;
@@ -178,23 +178,23 @@ public class ComportementStealer_proto : MonoBehaviour
                             }
                             else
                             {
-                                Debug.Log("L'objet ne contiens aucun comportement à prélever");
+                                Debug.Log("L'objet ne contiens aucun comportement ï¿½ prï¿½lever");
                             }
                         }
                     }
                     else
                     {
-                        stateStolen = stateMachine; // Stocker la référence
+                        stateStolen = stateMachine; // Stocker la rï¿½fï¿½rence
                         if (stateStolen.currentState is ComportementState)
                         {
                             ComportementState currentObjectState = (ComportementState)stateStolen.currentState;
-                            //On test si l'objet visé est vide ou non, s'il est vide, on lui ajoute directement le comportement, sinon on verifie s'il a une place libre
+                            //On test si l'objet visï¿½ est vide ou non, s'il est vide, on lui ajoute directement le comportement, sinon on verifie s'il a une place libre
                             if(currentObjectState.stateValue != 0)
                             {
-                                //L'objet visé à une stateValue superieur a 0 donc sa leftValue est forcément remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqué
+                                //L'objet visï¿½ ï¿½ une stateValue superieur a 0 donc sa leftValue est forcï¿½ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoquï¿½
                                 if (currentObjectState.rightValue == 0)
                                 {
-                                    Debug.Log("Soustraction de " + slot2 + " à " + currentObjectState.stateValue);
+                                    Debug.Log("Soustraction de " + slot2 + " ï¿½ " + currentObjectState.stateValue + " - Objet visÃ© : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot2.gameObject.name);
                                     int futurState = currentObjectState.stateValue + slot2;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = 0;
@@ -202,12 +202,12 @@ public class ComportementStealer_proto : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.Log("L'objet contiens déjà 2 comportements");
+                                    Debug.Log("L'objet contiens dï¿½jï¿½ 2 comportements");
                                 }
                             }
                             else
                             {
-                                Debug.Log("Soustraction de " + slot2 + " à " + currentObjectState.stateValue);
+                                Debug.Log("Soustraction de " + slot2 + " ï¿½ " + currentObjectState.stateValue + " - Objet visÃ© : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot2.gameObject.name);
                                 int futurState = currentObjectState.stateValue + slot2;
                                 currentObjectState.CalculateNewtState(futurState);
                                 slot2 = 0;
@@ -251,7 +251,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     {
                         if (originObjectState1.rightValue == 0)
                         {
-                            Debug.Log("rétribution du comportement : Addition de " + slot1 + " à " + originObjectState1.stateValue);
+                            Debug.Log("rï¿½tribution du comportement : Addition de " + slot1 + " ï¿½ " + originObjectState1.stateValue);
                             int futurState = originObjectState1.stateValue + slot1;
                             originObjectState1.CalculateNewtState(futurState);
                             slot1 = 0;
@@ -261,12 +261,12 @@ public class ComportementStealer_proto : MonoBehaviour
                         {
                             slot1 = 0;
                             originSlot1 = null;
-                            Debug.Log("L'objet d'origine possède déja 2 comportements, Le comportement stoqué dans la main gauche à été supprimé");
+                            Debug.Log("L'objet d'origine possï¿½de dï¿½ja 2 comportements, Le comportement stoquï¿½ dans la main gauche ï¿½ ï¿½tï¿½ supprimï¿½");
                         }
                     }
                     else
                     {
-                        Debug.Log("rétribution du comportement : Addition de " + slot1 + " à " + originObjectState1.stateValue);
+                        Debug.Log("rï¿½tribution du comportement : Addition de " + slot1 + " ï¿½ " + originObjectState1.stateValue);
                         int futurState = originObjectState1.stateValue + slot1;
                         originObjectState1.CalculateNewtState(futurState);
                         slot1 = 0;
@@ -284,7 +284,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     {
                         if (originObjectState2.rightValue == 0)
                         {
-                            Debug.Log("rétribution du comportement : Addition de " + slot2 + " à " + originObjectState2.stateValue);
+                            Debug.Log("rï¿½tribution du comportement : Addition de " + slot2 + " ï¿½ " + originObjectState2.stateValue);
                             int futurState = originObjectState2.stateValue + slot2;
                             originObjectState2.CalculateNewtState(futurState);
                             slot2 = 0;
@@ -294,12 +294,12 @@ public class ComportementStealer_proto : MonoBehaviour
                         {
                             slot2 = 0;
                             originSlot2 = null;
-                            Debug.Log("L'objet d'origine possède déja 2 comportements, Le comportement stoqué dans la main gauche à été supprimé");
+                            Debug.Log("L'objet d'origine possï¿½de dï¿½ja 2 comportements, Le comportement stoquï¿½ dans la main gauche ï¿½ ï¿½tï¿½ supprimï¿½");
                         }
                     }
                     else
                     {
-                        Debug.Log("rétribution du comportement : Addition de " + slot2 + " à " + originObjectState2.stateValue);
+                        Debug.Log("rï¿½tribution du comportement : Addition de " + slot2 + " ï¿½ " + originObjectState2.stateValue);
                         int futurState = originObjectState2.stateValue + slot2;
                         originObjectState2.CalculateNewtState(futurState);
                         slot2 = 0;

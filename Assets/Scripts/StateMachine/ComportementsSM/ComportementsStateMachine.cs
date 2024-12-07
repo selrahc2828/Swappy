@@ -33,6 +33,13 @@ public class ComportementsStateMachine : StateMachine
     public static C_Magnet_Rocket magnet_Rocket_State_108;
 
     public GameManager gameManager;
+    public Material bounce;
+    public Material rocket;
+    public Material immuable;
+    public Material rien;
+    public Material impulse;
+    public Material magnet;
+    public MeshRenderer rend;
     public enum FirstState
     {
         NoComportement = 0,
@@ -92,6 +99,7 @@ public class ComportementsStateMachine : StateMachine
         //currentState = no_Comportement_state_0;
         GoToInitialState(initialState);
         gameManager = FindAnyObjectByType<GameManager>();
+        rend = GetComponent<MeshRenderer>();
         currentState.Enter();
     }
     

@@ -14,16 +14,17 @@ public class C_Solo_Bouncing : ComportementState
         leftValue = 3;
         rightValue = 0;
         base.Enter();
+        _sm.rend.material = _sm.bounce;
     }
 
     public override void TickLogic()
     {
-        base.TickLogic();
+        
     }
 
     public override void TickPhysics()
     {
-        base.TickPhysics();
+        
     }
 
     public override void Exit()

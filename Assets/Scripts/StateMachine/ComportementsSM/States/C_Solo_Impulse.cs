@@ -14,16 +14,17 @@ public class C_Solo_Impulse : ComportementState
         leftValue = 1;
         rightValue = 0;
         base.Enter();
+        Debug.Log("Solo impulse");
+        _sm.rend.material = _sm.impulse;
     }
 
     public override void TickLogic()
     {
-        base.TickLogic();
     }
 
     public override void TickPhysics()
     {
-        base.TickPhysics();
+        
     }
 
     public override void Exit()
