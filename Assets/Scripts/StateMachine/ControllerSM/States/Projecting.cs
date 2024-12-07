@@ -16,6 +16,7 @@ public class Projecting : MouvementState
 
     public override void Enter()
     {
+        Debug.Log("Enter Projecting");
         base.Enter();
         // tous les controle sont ici plutot que dans l'input de projection car les variable ne sont pas save et on doit tout refaire ici
         
@@ -36,6 +37,10 @@ public class Projecting : MouvementState
                 _sm.gameManager.etatIsProjected = true;
                 _sm.gameManager.moveCamScript.ChangeFocusTarget(_cameraHitProjection.collider.transform);
             }
+            else
+            {
+                _sm.ChangeState(PlayerMouvementStateMachine.walkingState);
+            }
         }
         else
         {
@@ -44,6 +49,7 @@ public class Projecting : MouvementState
     }
     public override void TickLogic()
     {
+        base.TickLogic();
         if (_sm.gameManager.projectionTimer <= 0)
         {
             _sm.ChangeState(PlayerMouvementStateMachine.walkingState);
@@ -52,6 +58,7 @@ public class Projecting : MouvementState
     public override void Exit()
     {
         base.Exit();
+        Debug.Log("Exit Projecting");
         ResetProjection();
     }
     
