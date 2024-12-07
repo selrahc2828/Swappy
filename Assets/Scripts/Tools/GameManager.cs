@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
         camControllerScript = FindObjectOfType<CameraController>();
         if (camControllerScript == null)
         {
-            Debug.LogWarning("Il n'y a pas de CameraController dans la scène");
+            //Debug.LogWarning("Il n'y a pas de CameraController dans la scène");
         }
         playerCamScript = FindObjectOfType<PlayerCam>();
         if (playerCamScript == null)

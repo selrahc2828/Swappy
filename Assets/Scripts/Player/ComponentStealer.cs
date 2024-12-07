@@ -35,10 +35,10 @@ public class ComponentStealer : MonoBehaviour
     {
         controls = GameManager.controls;
 
-        controls.Player.VolDeComportement.performed += VolDeComportement;
-        controls.Player.ApplicationDeComportementSurObjet.performed += ApplicationDeComportementSurObjet;
+        controls.Player.ActionSlot1.performed += VolDeComportement;
+        controls.Player.ActionSlot2.performed += ApplicationDeComportementSurObjet;
         controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;
-        controls.Player.ViderComportementDuPlayer.performed += ViderComportementDuPlayer;
+        controls.Player.ViderSlots.performed += ViderComportementDuPlayer;
 
         //lastSteal.text = "";
         steals = new Dictionary<MonoBehaviour, System.Type>();

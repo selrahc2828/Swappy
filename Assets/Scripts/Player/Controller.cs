@@ -59,8 +59,8 @@ public class Controller : MonoBehaviour
         controls = GameManager.controls;
         // assigne action du controleur au methode
         controls.Player.StopTime.performed += SlowMotion;
-        controls.Player.VolDeComportement.performed += VolDeComportement;
-        controls.Player.ApplicationDeComportementSurObjet.performed += PasteComp;
+        controls.Player.ActionSlot1.performed += VolDeComportement;
+        controls.Player.ActionSlot2.performed += PasteComp;
         controls.Player.ApplicationDeComportementSurPlayer.performed += PasteAtMe;
         controls.Player.Jump.performed += Jump;
         controls.Player.GrabDrop.performed += GrabAndDrop;
@@ -79,8 +79,8 @@ public class Controller : MonoBehaviour
     private void OnDisable()
     {
         controls.Player.StopTime.performed -= SlowMotion;
-        controls.Player.VolDeComportement.performed -= VolDeComportement;
-        controls.Player.ApplicationDeComportementSurObjet.performed -= PasteComp;
+        controls.Player.ActionSlot1.performed -= VolDeComportement;
+        controls.Player.ActionSlot2.performed -= PasteComp;
         controls.Player.ApplicationDeComportementSurPlayer.performed -= PasteAtMe;
         controls.Player.Jump.performed -= Jump;
         controls.Player.GrabDrop.performed -= GrabAndDrop;

@@ -65,7 +65,7 @@ public class MouvementState : State
     }
     public override void TickLogic()
     {
-        Debug.Log(_sm.currentState.ToString());
+        //Debug.Log(_sm.currentState.ToString());
         
         JumpCooldown();
         SpeedControl();
@@ -121,7 +121,7 @@ public class MouvementState : State
         //in air
         else
         {
-            _sm.rb.AddForce(moveDirection.normalized * (moveSpeed * 10f), ForceMode.Force);
+            _sm.rb.AddForce(moveDirection.normalized * (moveSpeed * 10f * airMultiplier), ForceMode.Force);
             //_sm.rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
         //turn gravity off while on slope

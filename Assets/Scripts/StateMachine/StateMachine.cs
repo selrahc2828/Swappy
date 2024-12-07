@@ -45,7 +45,7 @@ public abstract class StateMachine : MonoBehaviour
     {
         if (newState != null)
         {
-            currentState.Exit();
+            currentState?.Exit();
             currentState = newState;
             currentState.Enter();
         }
