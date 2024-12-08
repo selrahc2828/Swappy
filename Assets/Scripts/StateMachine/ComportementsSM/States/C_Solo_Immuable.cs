@@ -17,6 +17,11 @@ public class C_Solo_Immuable : ComportementState
         Debug.Log("Solo Immuable");
         // _sm.rend.material = _sm.immuable;
         ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.noComportementColor);
+        
+        if (_sm.rb != null)
+        {
+            _sm.rb.isKinematic = true;
+        }
 
     }
 
@@ -33,5 +38,9 @@ public class C_Solo_Immuable : ComportementState
     public override void Exit()
     {
         base.Exit();
+        if (_sm.rb != null)
+        {
+            _sm.rb.isKinematic = false;
+        }
     }
 }
