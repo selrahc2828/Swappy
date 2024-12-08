@@ -34,6 +34,7 @@ public class C_Solo_Rocket : ComportementState
         if (_sm.rb)
         {
             _sm.rb.AddForce(Vector3.up * rocketForce, ForceMode.Force);
+            // passer en local avec _sm.transform.up, mais avec les modèle qu'on a c'est chiant
         }
 
     }
