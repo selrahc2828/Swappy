@@ -17,7 +17,7 @@ public class GrabObject : MonoBehaviour
     public Collider[] playerCollider; // on a 2 colliders
     public TextMeshProUGUI interactText;
     
-    public bool isCarrying;
+    [HideInInspector] public bool isCarrying;
 
     public LayerMask hitLayer;    
     [HideInInspector]
