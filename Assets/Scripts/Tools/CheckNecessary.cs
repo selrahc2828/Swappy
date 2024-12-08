@@ -5,14 +5,18 @@ using UnityEngine;
 
 public class CheckNecessary : MonoBehaviour
 {
-    public TextMeshProUGUI manqueGMText;
+    public GameObject manqueGMText;
 
     void Start()
     {
-        if (FindObjectOfType<GameManager>() == null)
+        if (FindObjectOfType<GameManager>() == null || FindObjectOfType<ComportementManager>() == null )
         {
-            manqueGMText.gameObject.SetActive(true);
-            Debug.LogWarning("Aucun GameManager dans la scène");
+            manqueGMText = GameObject.FindGameObjectWithTag("Necessary");
+            if (manqueGMText != null)
+            {
+                manqueGMText.GetComponent<TextMeshProUGUI>().enabled = true;
+            }
+            Debug.LogWarning("Aucun GameManager et/ ou ComportementManager dans la scï¿½ne");
         }
     }
 }

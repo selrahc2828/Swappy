@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class MouvementState : State
 {
@@ -57,10 +59,13 @@ public class MouvementState : State
         _sm.rb.freezeRotation = true;
 
         gravity = Physics.gravity;
+        
+        controls.Player.Projection.performed += Projection;
+        controls.Player.GrabDrop.performed += GrabAndDrop;
     }
     public override void TickLogic()
     {
-        Debug.Log(_sm.currentState.ToString());
+        //Debug.Log(_sm.currentState.ToString());
         
         JumpCooldown();
         SpeedControl();
@@ -69,7 +74,12 @@ public class MouvementState : State
     {
         //ground check
         grounded = Physics.Raycast(_sm.rb.transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
-        moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
+
+        if (_sm.currentState != PlayerMouvementStateMachine.projectingState)
+        {
+            moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
+        }
+        
         MovePlayer();
         if (grounded)
         {
@@ -83,9 +93,10 @@ public class MouvementState : State
 
     public override void Exit()
     {
-
+        controls.Player.Projection.performed -= Projection;
+        controls.Player.GrabDrop.performed -= GrabAndDrop;
     }
-
+    
     private void MovePlayer()
     {
         //calculate movement direction
@@ -110,7 +121,7 @@ public class MouvementState : State
         //in air
         else
         {
-            _sm.rb.AddForce(moveDirection.normalized * (moveSpeed * 10f), ForceMode.Force);
+            _sm.rb.AddForce(moveDirection.normalized * (moveSpeed * 10f * airMultiplier), ForceMode.Force);
             //_sm.rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
         //turn gravity off while on slope
@@ -135,10 +146,10 @@ public class MouvementState : State
             //limit velocity if needed
             if (flatVel.magnitude > moveSpeed)
             {
-                /*
+                
                 Vector3 limitedVel = flatVel.normalized * moveSpeed;
                 _sm.rb.velocity = new Vector3(limitedVel.x, _sm.rb.velocity.y, limitedVel.z);
-                */
+                
             }
         }
     }
@@ -147,11 +158,11 @@ public class MouvementState : State
     {
         if (Physics.Raycast(_sm.rb.transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
-            /*
+            
             //compare the slope angle to out max angle variable
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
-            */
+            
         }
         return false;
     }
@@ -177,5 +188,38 @@ public class MouvementState : State
         readyToJump = true;
 
         exitingSlope = false;
+    }
+    void Projection(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (_sm.currentState == PlayerMouvementStateMachine.projectingState)//sort de projection si on l'est déjà
+            {
+                _sm.ChangeState(PlayerMouvementStateMachine.walkingState);
+            }
+            else
+            {
+                _sm.ChangeState(PlayerMouvementStateMachine.projectingState);
+            }
+        }
+    }
+    
+    void GrabAndDrop(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (_sm.gameManager.grabScript)
+            {
+                if (_sm.gameManager.grabScript.isCarrying)
+                {
+                    _sm.gameManager.grabScript.Drop();
+                }
+                else
+                {
+                    _sm.gameManager.grabScript.Carrying();
+                }
+
+            }
+        }
     }
 }

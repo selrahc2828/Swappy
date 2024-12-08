@@ -1,41 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static Controls controls;
-    public CameraController camControllerScript;
-    //public GrabObject grabScript;
-
-    [HideInInspector]
-    public bool slowMotion, slowTimerActive;
-    [HideInInspector]
-    public float slowTimeDuration, slowTimer;
-
-    [Header("Couleurs d'interaction")]
-    public Material defaultColor;
-    public Material interactAVolerMat;
-    public Material interactRienAVolerMat;
-    public Material interactNOTPossibleMat;
-
-    [Header("Comportement colors")]
-    public Color Repulsive_color;
-    public Color Rebond_color;
-    public Color fusee_color;
-    public Color aimant_color;
-    public Color immuable_color;
-    public Color Uncomportemented_color;
     
+    [Header("Rendu Lotha")]
     public string scene1;
     public string scene2;
-
     public KeyCode keyForScene1 = KeyCode.Alpha1;
     public KeyCode keyForScene2 = KeyCode.Alpha2;
     public KeyCode keyForScene3 = KeyCode.Alpha3;
+    
+    [HideInInspector]public CameraController camControllerScript;
+    [HideInInspector]public PlayerCam playerCamScript;
+    [HideInInspector]public MoveCamera moveCamScript;
+    [HideInInspector]public GrabObject grabScript;
+
+    [Header("SlowTimer")]
+    [Range(0f, 1f)]
+    public float slowCoeff = 0.3f;
+    [HideInInspector]
+    public bool slowMotion;
+    public bool slowTimerActive = true;
+    [HideInInspector]
+    public float slowTimer;
+    public float slowTimeDuration = 5f;
+    public TextMeshProUGUI timerSlowText;
+    
+    //à supprimer, juste caché tant qu'on a interactColor
+    [Header("Couleurs d'interaction")]
+    [HideInInspector]public Material defaultColor;
+    [HideInInspector]public Material interactAVolerMat;
+    [HideInInspector]public Material interactRienAVolerMat;
+    [HideInInspector]public Material interactNOTPossibleMat;
+    //à supprimer, juste caché tant qu'on a interactColor
+
+    [Header("Comportement colors")]
+    [HideInInspector]public Color Repulsive_color;
+    [HideInInspector]public Color Rebond_color;
+    [HideInInspector]public Color fusee_color;
+    [HideInInspector]public Color aimant_color;
+    [HideInInspector]public Color immuable_color;
+    [HideInInspector]public Color Uncomportemented_color;
+    
+    [Header("Player")]
+    public GameObject player;
 
     [Header("Player Movement Parameters")]
     public float walkSpeed;
@@ -58,10 +74,20 @@ public class GameManager : MonoBehaviour
 
     [Header("Player Slope Handeling Parameter")]
     public float maxSlopeAngle;
-
-    [HideInInspector]
-    public bool etatIsProjected;
     
+    [Header("Player Projecting Parameter")]
+    public LayerMask hitLayer;
+    public float projectionTimeDuration;
+    [HideInInspector]
+    public float projectionTimer;
+    public float coeffRefill = 0.75f;
+    public float range;
+    public float coeffReducDistance;
+    public bool activeGizmoRange;
+    
+    [HideInInspector] public bool etatIsProjected;
+    public TextMeshProUGUI timerProjectionText;
+
     private void OnEnable()
     {
         if (controls == null)
@@ -85,23 +111,58 @@ public class GameManager : MonoBehaviour
     {
         slowMotion = false;
         slowTimer = 0f;
+        etatIsProjected = false;
+        projectionTimer = projectionTimeDuration;
 
+        if (!timerProjectionText)
+        {
+            Debug.Log("Il n'y a pas de text Timer Projection");
+        }
+        if (!timerSlowText)
+        {
+            Debug.Log("Il n'y a pas de text Timer Slow");
+        }
+        
+        //à virer quand player gre supprimé
         camControllerScript = FindObjectOfType<CameraController>();
         if (camControllerScript == null)
         {
-            Debug.LogWarning("Il n'y a pas de CameraController dans la scène");
+            //Debug.LogWarning("Il n'y a pas de CameraController dans la scène");
         }
-        //grabScript = FindObjectOfType<GrabObject>();
+        playerCamScript = FindObjectOfType<PlayerCam>();
+        if (playerCamScript == null)
+        {
+            Debug.LogWarning("Il n'y a pas de PlayerCam dans la scène");
+        }
+        moveCamScript = FindObjectOfType<MoveCamera>();
+        if (moveCamScript == null)
+        {
+            Debug.LogWarning("Il n'y a pas de MoveCamera dans la scène");
+        }
+        grabScript = FindObjectOfType<GrabObject>();
+        if (grabScript == null)
+        {
+            Debug.LogWarning("Il n'y a pas de grabScript dans la scène");
+        }
 
+        //player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogWarning("GameManager Player non renseigné");
+        }
         controls.Player.Enable();
 
         controls.Player.ReloadScene.performed += ReloadScene;
+        controls.Player.StopTime.performed += SlowMotionInput;
+
 
     }
 
     private void OnDisable()
     {
         controls.Player.ReloadScene.performed -= ReloadScene;
+        controls.Player.StopTime.performed -= SlowMotionInput;
+
     }
 
     // Update is called once per frame
@@ -109,7 +170,7 @@ public class GameManager : MonoBehaviour
     {
 
         SlowTime();
-
+        ProjectionTimer();
 
         // Vérifier si la touche pour la scène 1 est pressée.
         if (Input.GetKeyDown(keyForScene1))
@@ -177,6 +238,38 @@ public class GameManager : MonoBehaviour
         else
         {
             slowTimer = 0;
+        }
+
+        if (timerSlowText != null)
+        {
+            timerSlowText.text = (slowTimeDuration - slowTimer).ToString("F2");
+        }
+    }
+    private void SlowMotionInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            // if bool == true set false et vice versa
+            slowMotion = !slowMotion;
+            SlowMotion(slowMotion, slowCoeff);
+        }
+    }
+    
+    void ProjectionTimer()
+    {
+        if (etatIsProjected)
+        {
+            projectionTimer -= Time.deltaTime;
+        }
+        else if (projectionTimer < projectionTimeDuration)
+        {
+            projectionTimer += Time.deltaTime * coeffRefill;
+        }
+        
+        projectionTimer = Mathf.Clamp(projectionTimer, 0, projectionTimeDuration);
+        if (timerProjectionText)
+        {
+            timerProjectionText.text = projectionTimer.ToString("F2");// F2 arrondi à 2 décimal
         }
     }
 }

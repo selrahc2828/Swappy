@@ -27,4 +27,16 @@ public class PlayerMouvementStateMachine : StateMachine
         gameManager = FindAnyObjectByType<GameManager>();
         currentState.Enter();
     }
+    
+    void OnDrawGizmos()
+    {
+        if (gameManager != null)
+        {
+            if (gameManager.activeGizmoRange) // range projection
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireSphere(transform.position, gameManager.range);            
+            }
+        }
+    }
 }

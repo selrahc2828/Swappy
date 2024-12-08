@@ -46,9 +46,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""VolDeComportement"",
+                    ""name"": ""ActionSlot1"",
                     ""type"": ""Button"",
                     ""id"": ""7ceda912-4f0e-4edc-9248-aff9cafbecd8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ActionSlot2"",
+                    ""type"": ""Button"",
+                    ""id"": ""cf4fcf45-fe26-41e7-9bf0-7c875fc842e9"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -58,15 +67,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": ""StopTime"",
                     ""type"": ""Button"",
                     ""id"": ""e7830582-6053-4936-819b-14b884a0ac44"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ApplicationDeComportementSurObjet"",
-                    ""type"": ""Button"",
-                    ""id"": ""cf4fcf45-fe26-41e7-9bf0-7c875fc842e9"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -172,9 +172,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ViderComportementDuPlayer"",
+                    ""name"": ""ViderSlots"",
                     ""type"": ""Button"",
                     ""id"": ""a8b2de4b-31d7-472c-9782-d679ab464161"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchSlotsValue"",
+                    ""type"": ""Button"",
+                    ""id"": ""0482c4b8-7211-4275-bc1e-2bf35fa7df3d"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -189,7 +198,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard"",
-                    ""action"": ""VolDeComportement"",
+                    ""action"": ""ActionSlot1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -211,7 +220,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard"",
-                    ""action"": ""ApplicationDeComportementSurObjet"",
+                    ""action"": ""ActionSlot2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -420,7 +429,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ViderComportementDuPlayer"",
+                    ""action"": ""ViderSlots"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c4890e7-d283-40b2-bf1f-1cf96cb2a121"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchSlotsValue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -444,9 +464,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_VolDeComportement = m_Player.FindAction("VolDeComportement", throwIfNotFound: true);
+        m_Player_ActionSlot1 = m_Player.FindAction("ActionSlot1", throwIfNotFound: true);
+        m_Player_ActionSlot2 = m_Player.FindAction("ActionSlot2", throwIfNotFound: true);
         m_Player_StopTime = m_Player.FindAction("StopTime", throwIfNotFound: true);
-        m_Player_ApplicationDeComportementSurObjet = m_Player.FindAction("ApplicationDeComportementSurObjet", throwIfNotFound: true);
         m_Player_ApplicationDeComportementSurPlayer = m_Player.FindAction("ApplicationDeComportementSurPlayer", throwIfNotFound: true);
         m_Player_ResetListComportement = m_Player.FindAction("ResetListComportement", throwIfNotFound: true);
         m_Player_ReloadScene = m_Player.FindAction("ReloadScene", throwIfNotFound: true);
@@ -458,7 +478,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_StopCrouch = m_Player.FindAction("StopCrouch", throwIfNotFound: true);
         m_Player_StartSprint = m_Player.FindAction("StartSprint", throwIfNotFound: true);
         m_Player_StopSprint = m_Player.FindAction("StopSprint", throwIfNotFound: true);
-        m_Player_ViderComportementDuPlayer = m_Player.FindAction("ViderComportementDuPlayer", throwIfNotFound: true);
+        m_Player_ViderSlots = m_Player.FindAction("ViderSlots", throwIfNotFound: true);
+        m_Player_SwitchSlotsValue = m_Player.FindAction("SwitchSlotsValue", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -527,9 +548,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_VolDeComportement;
+    private readonly InputAction m_Player_ActionSlot1;
+    private readonly InputAction m_Player_ActionSlot2;
     private readonly InputAction m_Player_StopTime;
-    private readonly InputAction m_Player_ApplicationDeComportementSurObjet;
     private readonly InputAction m_Player_ApplicationDeComportementSurPlayer;
     private readonly InputAction m_Player_ResetListComportement;
     private readonly InputAction m_Player_ReloadScene;
@@ -541,16 +562,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_StopCrouch;
     private readonly InputAction m_Player_StartSprint;
     private readonly InputAction m_Player_StopSprint;
-    private readonly InputAction m_Player_ViderComportementDuPlayer;
+    private readonly InputAction m_Player_ViderSlots;
+    private readonly InputAction m_Player_SwitchSlotsValue;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
         public PlayerActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @VolDeComportement => m_Wrapper.m_Player_VolDeComportement;
+        public InputAction @ActionSlot1 => m_Wrapper.m_Player_ActionSlot1;
+        public InputAction @ActionSlot2 => m_Wrapper.m_Player_ActionSlot2;
         public InputAction @StopTime => m_Wrapper.m_Player_StopTime;
-        public InputAction @ApplicationDeComportementSurObjet => m_Wrapper.m_Player_ApplicationDeComportementSurObjet;
         public InputAction @ApplicationDeComportementSurPlayer => m_Wrapper.m_Player_ApplicationDeComportementSurPlayer;
         public InputAction @ResetListComportement => m_Wrapper.m_Player_ResetListComportement;
         public InputAction @ReloadScene => m_Wrapper.m_Player_ReloadScene;
@@ -562,7 +584,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @StopCrouch => m_Wrapper.m_Player_StopCrouch;
         public InputAction @StartSprint => m_Wrapper.m_Player_StartSprint;
         public InputAction @StopSprint => m_Wrapper.m_Player_StopSprint;
-        public InputAction @ViderComportementDuPlayer => m_Wrapper.m_Player_ViderComportementDuPlayer;
+        public InputAction @ViderSlots => m_Wrapper.m_Player_ViderSlots;
+        public InputAction @SwitchSlotsValue => m_Wrapper.m_Player_SwitchSlotsValue;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -578,15 +601,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @VolDeComportement.started += instance.OnVolDeComportement;
-            @VolDeComportement.performed += instance.OnVolDeComportement;
-            @VolDeComportement.canceled += instance.OnVolDeComportement;
+            @ActionSlot1.started += instance.OnActionSlot1;
+            @ActionSlot1.performed += instance.OnActionSlot1;
+            @ActionSlot1.canceled += instance.OnActionSlot1;
+            @ActionSlot2.started += instance.OnActionSlot2;
+            @ActionSlot2.performed += instance.OnActionSlot2;
+            @ActionSlot2.canceled += instance.OnActionSlot2;
             @StopTime.started += instance.OnStopTime;
             @StopTime.performed += instance.OnStopTime;
             @StopTime.canceled += instance.OnStopTime;
-            @ApplicationDeComportementSurObjet.started += instance.OnApplicationDeComportementSurObjet;
-            @ApplicationDeComportementSurObjet.performed += instance.OnApplicationDeComportementSurObjet;
-            @ApplicationDeComportementSurObjet.canceled += instance.OnApplicationDeComportementSurObjet;
             @ApplicationDeComportementSurPlayer.started += instance.OnApplicationDeComportementSurPlayer;
             @ApplicationDeComportementSurPlayer.performed += instance.OnApplicationDeComportementSurPlayer;
             @ApplicationDeComportementSurPlayer.canceled += instance.OnApplicationDeComportementSurPlayer;
@@ -620,9 +643,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @StopSprint.started += instance.OnStopSprint;
             @StopSprint.performed += instance.OnStopSprint;
             @StopSprint.canceled += instance.OnStopSprint;
-            @ViderComportementDuPlayer.started += instance.OnViderComportementDuPlayer;
-            @ViderComportementDuPlayer.performed += instance.OnViderComportementDuPlayer;
-            @ViderComportementDuPlayer.canceled += instance.OnViderComportementDuPlayer;
+            @ViderSlots.started += instance.OnViderSlots;
+            @ViderSlots.performed += instance.OnViderSlots;
+            @ViderSlots.canceled += instance.OnViderSlots;
+            @SwitchSlotsValue.started += instance.OnSwitchSlotsValue;
+            @SwitchSlotsValue.performed += instance.OnSwitchSlotsValue;
+            @SwitchSlotsValue.canceled += instance.OnSwitchSlotsValue;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -633,15 +659,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @VolDeComportement.started -= instance.OnVolDeComportement;
-            @VolDeComportement.performed -= instance.OnVolDeComportement;
-            @VolDeComportement.canceled -= instance.OnVolDeComportement;
+            @ActionSlot1.started -= instance.OnActionSlot1;
+            @ActionSlot1.performed -= instance.OnActionSlot1;
+            @ActionSlot1.canceled -= instance.OnActionSlot1;
+            @ActionSlot2.started -= instance.OnActionSlot2;
+            @ActionSlot2.performed -= instance.OnActionSlot2;
+            @ActionSlot2.canceled -= instance.OnActionSlot2;
             @StopTime.started -= instance.OnStopTime;
             @StopTime.performed -= instance.OnStopTime;
             @StopTime.canceled -= instance.OnStopTime;
-            @ApplicationDeComportementSurObjet.started -= instance.OnApplicationDeComportementSurObjet;
-            @ApplicationDeComportementSurObjet.performed -= instance.OnApplicationDeComportementSurObjet;
-            @ApplicationDeComportementSurObjet.canceled -= instance.OnApplicationDeComportementSurObjet;
             @ApplicationDeComportementSurPlayer.started -= instance.OnApplicationDeComportementSurPlayer;
             @ApplicationDeComportementSurPlayer.performed -= instance.OnApplicationDeComportementSurPlayer;
             @ApplicationDeComportementSurPlayer.canceled -= instance.OnApplicationDeComportementSurPlayer;
@@ -675,9 +701,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @StopSprint.started -= instance.OnStopSprint;
             @StopSprint.performed -= instance.OnStopSprint;
             @StopSprint.canceled -= instance.OnStopSprint;
-            @ViderComportementDuPlayer.started -= instance.OnViderComportementDuPlayer;
-            @ViderComportementDuPlayer.performed -= instance.OnViderComportementDuPlayer;
-            @ViderComportementDuPlayer.canceled -= instance.OnViderComportementDuPlayer;
+            @ViderSlots.started -= instance.OnViderSlots;
+            @ViderSlots.performed -= instance.OnViderSlots;
+            @ViderSlots.canceled -= instance.OnViderSlots;
+            @SwitchSlotsValue.started -= instance.OnSwitchSlotsValue;
+            @SwitchSlotsValue.performed -= instance.OnSwitchSlotsValue;
+            @SwitchSlotsValue.canceled -= instance.OnSwitchSlotsValue;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -717,9 +746,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnVolDeComportement(InputAction.CallbackContext context);
+        void OnActionSlot1(InputAction.CallbackContext context);
+        void OnActionSlot2(InputAction.CallbackContext context);
         void OnStopTime(InputAction.CallbackContext context);
-        void OnApplicationDeComportementSurObjet(InputAction.CallbackContext context);
         void OnApplicationDeComportementSurPlayer(InputAction.CallbackContext context);
         void OnResetListComportement(InputAction.CallbackContext context);
         void OnReloadScene(InputAction.CallbackContext context);
@@ -731,6 +760,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnStopCrouch(InputAction.CallbackContext context);
         void OnStartSprint(InputAction.CallbackContext context);
         void OnStopSprint(InputAction.CallbackContext context);
-        void OnViderComportementDuPlayer(InputAction.CallbackContext context);
+        void OnViderSlots(InputAction.CallbackContext context);
+        void OnSwitchSlotsValue(InputAction.CallbackContext context);
     }
 }

@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 1946511582474088869}
   - component: {fileID: 9067955373326925916}
   - component: {fileID: 8417560876531944415}
+  - component: {fileID: 3738601696558851606}
+  - component: {fileID: 368593988133447694}
+  - component: {fileID: 2249551179768967199}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -71,7 +74,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55948801783339615}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6db42a1724a255e4c86920b80e97e673, type: 3}
   m_Name: 
@@ -100,6 +103,76 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
   gameManager: {fileID: 0}
+--- !u!114 &3738601696558851606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55948801783339615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f17da78dade749479393c58a3229875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 9
+  mainCam: {fileID: 0}
+  slot1: 0
+  originSlot1: {fileID: 0}
+  slot2: 0
+  originSlot2: {fileID: 0}
+--- !u!114 &368593988133447694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55948801783339615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be0876c2ba0e33140b6f510489fd944c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  comportementManager: {fileID: 0}
+  bounce: {fileID: 0}
+  rocket: {fileID: 0}
+  immuable: {fileID: 0}
+  rien: {fileID: 0}
+  impulse: {fileID: 0}
+  magnet: {fileID: 0}
+  rend: {fileID: 0}
+  player: {fileID: 0}
+  isPlayer: 1
+  displayComportementName: 
+  initialState: 0
+--- !u!114 &2249551179768967199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55948801783339615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8873ab43ffa99a4ba740530311ce530, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCam: {fileID: 0}
+  handlerPosition: {fileID: 0}
+  interractorZonePos: {fileID: 0}
+  playerCollider: []
+  interactText: {fileID: 0}
+  isCarrying: 0
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 9
+  carriedObject: {fileID: 0}
+  isLaunchable: 0
+  launchForce: 30
+  detectionSize: {x: 1, y: 1, z: 3.5}
 --- !u!1 &709902461892241047
 GameObject:
   m_ObjectHideFlags: 0

@@ -51,15 +51,20 @@ public class C_Repulse : Comportment
                 if (objectInRange.gameObject.tag == "Player")
                 {
                     GameObject objectAffected = objectInRange.gameObject.GetComponentInParent<Rigidbody>().gameObject;
-                    Debug.Log(objectAffected);
+                    // Debug.Log("objectAffected repulse : " + objectAffected.name);
                     if (impulseGradiantForce)
                     {
                         objectAffected.GetComponent<Rigidbody>().AddExplosionForce(repulserForce, transform.position, repulserRange);
-
                     }
                     else
                     {
                         objectAffected.GetComponent<Rigidbody>().AddForce((objectInRange.transform.position - transform.position) * repulserForce, ForceMode.Impulse);
+                    }
+
+                    // player relache l'objet repulse
+                    if (objectAffected.GetComponent<GrabObject>().carriedObject == gameObject)
+                    {
+                        objectAffected.GetComponent<GrabObject>().Drop(true);
                     }
                 }
                 if (objectInRange.GetComponent<Rigidbody>() != null)
