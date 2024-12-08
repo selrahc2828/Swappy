@@ -113,7 +113,8 @@ public class ComportementsStateMachine : StateMachine
         rend = GetComponentInChildren<MeshRenderer>();//cherche dans lui même et enfant, les prefabs de comportement on le mesh en enfant
         player = gameManager.player;
         rb = GetComponent<Rigidbody>();
-        collider = GetComponent<Collider>();
+        //surtout pour Player ui en a 2 en enfant 
+        collider = GetComponentInChildren<Collider>();
         currentState.Enter();
     }
     
@@ -199,6 +200,12 @@ public class ComportementsStateMachine : StateMachine
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireSphere(transform.position, comportementManager.magnetRange);            
             }
+            if (initialState == FirstState.SoloImpulse && collider != null)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireSphere(transform.position, collider.bounds.extents.magnitude + comportementManager.repulserRange);          
+            }
+
         }
     }
 }

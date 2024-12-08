@@ -31,8 +31,8 @@ public class ComportementManager : MonoBehaviour
     public float rocketForce = 20f;
     
     [Header("Magnet")]
-    public float magnetForce;
     public float magnetRange = 10f;
+    public float magnetForce;
     public bool magnetGradiantForce;
 
     [Header("Bouncing")]

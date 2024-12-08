@@ -5,7 +5,9 @@ using UnityEngine;
 public class C_Solo_Magnet : ComportementState
 {
     public float magnetRange;
+    public float trueMagnetRange;
     public float magnetForce;
+    public bool magnetGradiantForce;
     public C_Solo_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -18,11 +20,12 @@ public class C_Solo_Magnet : ComportementState
         base.Enter();
 
         magnetRange = _sm.comportementManager.magnetRange;
+        trueMagnetRange = _sm.collider.bounds.extents.magnitude + magnetRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
         magnetForce = _sm.comportementManager.magnetForce;
+        magnetGradiantForce = _sm.comportementManager.magnetGradiantForce;
         
         // _sm.rend.material = _sm.magnet;
         ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.noComportementColor);
-
     }
 
     public override void TickLogic()
@@ -42,31 +45,42 @@ public class C_Solo_Magnet : ComportementState
 
     public void Attract()
     {
-        Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, _sm.comportementManager.magnetRange);
+        Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, magnetRange);
         if (objectsInRange.Length > 0)
         {
             foreach (Collider objectInRange in objectsInRange)
             {
-                // if (_sm.isPlayer && objectInRange.CompareTag("Player"))
-                // {
-                //     return; //pour le moment si on la sur nous on est pas affecté
-                // }
-                
-                if (objectInRange.GetComponent<Rigidbody>() != null)
+                if (objectInRange.gameObject.tag == "Player")
                 {
-
-                    Vector3 dir = _sm.transform.position - objectInRange.transform.position; // obj vers magnet
-                    if (_sm.comportementManager.magnetGradiantForce)
+                    if (!objectInRange.gameObject.GetComponentInParent<Rigidbody>())
                     {
-                        // -magnetForce 
-                        objectInRange.GetComponent<Rigidbody>().AddExplosionForce(-_sm.comportementManager.magnetForce, _sm.transform.position, _sm.comportementManager.magnetRange);
+                        return;
                     }
-                    else
-                    {
-                        objectInRange.GetComponent<Rigidbody>().AddForce( dir * _sm.comportementManager.magnetForce, ForceMode.Impulse);
-                    }
+                    //collider et rigid body pas au même endroit pour lui
+                    GameObject objectAffected = objectInRange.gameObject.GetComponentInParent<Rigidbody>().gameObject;
+                    
+                    // pb pour appliquer la force à cause du drag sur le rigidbody
+                    ApplyForce(objectAffected.GetComponent<Rigidbody>(), objectAffected,magnetForce);
+                }
+                else if (objectInRange.GetComponent<Rigidbody>() != null)
+                {
+                    ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+                    
                 }  
             }
+        }
+    }
+    
+    public void ApplyForce(Rigidbody rbObj,GameObject objToApply, float force)
+    {
+        if (magnetGradiantForce)
+        {
+            objToApply.GetComponent<Rigidbody>().AddExplosionForce(-magnetForce, _sm.transform.position, trueMagnetRange);
+        }
+        else
+        {
+            Vector3 dir = (_sm.transform.position - objToApply.transform.position).normalized; // obj vers magnet
+            rbObj.AddForce(dir * force, ForceMode.Impulse);
         }
     }
 }

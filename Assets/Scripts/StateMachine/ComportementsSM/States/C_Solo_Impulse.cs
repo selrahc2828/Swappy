@@ -7,6 +7,7 @@ public class C_Solo_Impulse : ComportementState
     public float repulserTime = 5f;
     public float repulserTimer;
     public float repulserRange;
+    public float trueRepulserRange;
     public float repulserForce;
     public bool destroyOnUse = false;
     public bool impulseGradiantForce = false;
@@ -28,11 +29,16 @@ public class C_Solo_Impulse : ComportementState
         repulserTime = _sm.comportementManager.repulserTime;
         repulserTimer = _sm.comportementManager.repulserTimer;
         repulserRange = _sm.comportementManager.repulserRange;
+
+        // trueRepulserRange = repulserRange;
+        trueRepulserRange = _sm.collider.bounds.extents.magnitude + repulserRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
+        // pb si obj n'a pas de collider direct (ax Player)
         repulserForce = _sm.comportementManager.repulserForce;
         destroyOnUse = _sm.comportementManager.destroyOnUse;
         impulseGradiantForce = _sm.comportementManager.impulseGradiantForce;
         applyOnMe= _sm.comportementManager.applyOnMe;
         feedback = _sm.comportementManager.feedback;
+        
         Debug.Log("Solo impulse");
         //_sm.rend.material = _sm.impulse;
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.noComportementColor);
@@ -64,50 +70,35 @@ public class C_Solo_Impulse : ComportementState
         if (feedback)
         {
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
-            shockWave.GetComponent<GrowToRadius>().targetRadius = repulserRange;
+            shockWave.GetComponent<GrowToRadius>().targetRadius = trueRepulserRange;
         }
 
-        Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, repulserRange);
+        Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueRepulserRange);
         if (objectsInRange.Length > 0)
         {
             foreach (Collider objectInRange in objectsInRange)
             {
                 if (objectInRange.gameObject.tag == "Player")
                 {
+                    if (!objectInRange.gameObject.GetComponentInParent<Rigidbody>())
+                    {
+                        return;
+                    }
+                    //collider et rigid body pas au même endroit pour lui
                     GameObject objectAffected = objectInRange.gameObject.GetComponentInParent<Rigidbody>().gameObject;
-                    // Debug.Log("objectAffected repulse : " + objectAffected.name);
-                    if (impulseGradiantForce)
-                    {
-                        objectAffected.GetComponent<Rigidbody>().AddExplosionForce(repulserForce, _sm.transform.position, repulserRange);
-                    }
-                    else
-                    {
-                        objectAffected.GetComponent<Rigidbody>().AddForce((objectInRange.transform.position - _sm.transform.position) * repulserForce, ForceMode.Impulse);
-                    }
-
+                    
+                    // pb pour appliquer la force à cause du drag sur le rigidbody
+                    ApplyForce(objectAffected.GetComponent<Rigidbody>(), objectAffected,repulserForce);
+                    
                     // player relache l'objet repulse
-                    if (objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject)
+                    if (objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject) //juste isGrabbed ?
                     {
                         objectAffected.GetComponent<GrabObject>().Drop(true);
                     }
                 }
-                if (objectInRange.GetComponent<Rigidbody>() != null)
+                else if (objectInRange.GetComponent<Rigidbody>() != null)
                 {
-                    if (!applyOnMe && objectInRange.gameObject == _sm.gameObject)
-                    {
-                        // si rigid body sur objet, on applique pas la force sur lui pour le lancer par exemple
-                        return;
-                    }
-
-                    if (impulseGradiantForce)
-                    {
-                        objectInRange.GetComponent<Rigidbody>().AddExplosionForce(repulserForce, _sm.transform.position, repulserRange);
-
-                    }
-                    else
-                    {
-                        objectInRange.GetComponent<Rigidbody>().AddForce((objectInRange.transform.position - _sm.transform.position) * repulserForce, ForceMode.Impulse);
-                    }
+                    ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, repulserForce);
                 }  
             }
         }
@@ -117,9 +108,23 @@ public class C_Solo_Impulse : ComportementState
             _sm.comportementManager.DestroyObj(_sm.gameObject);
         }
     }
-    void OnDrawGizmos()
+
+    public void ApplyForce(Rigidbody rbObj,GameObject objToApply, float force)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_sm.transform.position, repulserRange);
+        if (!applyOnMe && objToApply == _sm.gameObject)
+        {
+            // si rigid body sur objet, on applique pas la force sur lui pour le lancer par exemple
+            return;
+        }
+
+        if (impulseGradiantForce)
+        {
+            rbObj.AddExplosionForce(force, _sm.transform.position, trueRepulserRange,1f,ForceMode.Impulse);
+        }
+        else
+        {
+            Vector3 direction = (objToApply.transform.position - _sm.transform.position).normalized;
+            rbObj.AddForce( direction * force, ForceMode.Impulse);
+        }
     }
 }
