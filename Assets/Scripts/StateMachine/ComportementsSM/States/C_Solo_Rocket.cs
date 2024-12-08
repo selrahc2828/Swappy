@@ -14,6 +14,7 @@ public class C_Solo_Rocket : ComportementState
         leftValue = 81;
         rightValue = 0;
         base.Enter();
+        _sm.rend.material = _sm.rocket;
     }
 
     public override void TickLogic()
@@ -23,7 +24,7 @@ public class C_Solo_Rocket : ComportementState
 
     public override void TickPhysics()
     {
-        base.TickPhysics();
+        
     }
 
     public override void Exit()

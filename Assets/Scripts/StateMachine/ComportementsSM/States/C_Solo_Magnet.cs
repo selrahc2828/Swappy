@@ -10,20 +10,26 @@ public class C_Solo_Magnet : ComportementState
 
     public override void Enter()
     {
+        baseStateValue = 27;
         stateValue = 27;
         leftValue = 27;
         rightValue = 0;
         base.Enter();
+        _sm.rend.material = _sm.magnet;
     }
 
     public override void TickLogic()
     {
-        base.TickLogic();
+        if (baseStateValue != stateValue)
+        {
+            CalculateNewtState(stateValue);
+        }
+
     }
 
     public override void TickPhysics()
     {
-        base.TickPhysics();
+        
     }
 
     public override void Exit()

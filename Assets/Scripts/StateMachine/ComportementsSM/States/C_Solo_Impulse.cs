@@ -35,6 +35,8 @@ public class C_Solo_Impulse : ComportementState
         feedback = _sm.comportementManager.feedback;
         
         // Debug.LogWarning("NAME PORTEUR SM: " + _sm.gameObject.name);
+        Debug.Log("Solo impulse");
+        _sm.rend.material = _sm.impulse;
     }
 
     public override void TickLogic()
@@ -50,7 +52,7 @@ public class C_Solo_Impulse : ComportementState
 
     public override void TickPhysics()
     {
-        base.TickPhysics();
+        
     }
 
     public override void Exit()

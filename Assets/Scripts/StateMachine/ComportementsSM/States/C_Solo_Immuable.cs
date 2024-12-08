@@ -14,6 +14,8 @@ public class C_Solo_Immuable : ComportementState
         leftValue = 9;
         rightValue = 0;
         base.Enter();
+        Debug.Log("Solo Immuable");
+        _sm.rend.material = _sm.immuable;
     }
 
     public override void TickLogic()
@@ -23,7 +25,7 @@ public class C_Solo_Immuable : ComportementState
 
     public override void TickPhysics()
     {
-        base.TickPhysics();
+        
     }
 
     public override void Exit()

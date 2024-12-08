@@ -1,39 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ComportementsStateMachine : StateMachine
 {
-    public static C_No_Comportement no_Comportement_state_0;
+    public C_No_Comportement no_Comportement_state_0;
 
-    public static C_Solo_Impulse solo_Impulse_State_1;
-    public static C_Solo_Bouncing solo_Bouncing_State_3;
-    public static C_Solo_Immuable solo_Immuable_State_9;
-    public static C_Solo_Magnet solo_Magnet_State_27;
-    public static C_Solo_Rocket solo_Rocket_State_81;
+    public C_Solo_Impulse solo_Impulse_State_1;
+    public C_Solo_Bouncing solo_Bouncing_State_3;
+    public C_Solo_Immuable solo_Immuable_State_9;
+    public C_Solo_Magnet solo_Magnet_State_27;
+    public C_Solo_Rocket solo_Rocket_State_81;
 
-    public static C_Double_Impulse double_Impulse_State_2;
-    public static C_Double_Bouncing double_Bouncing_State_6;
-    public static C_Double_Immuable double_Immuable_State_18;
-    public static C_Double_Magnet double_Magnet_State_54;
-    public static C_Double_Rocket double_Rocket_State_162;
+    public C_Double_Impulse double_Impulse_State_2;
+    public C_Double_Bouncing double_Bouncing_State_6;
+    public C_Double_Immuable double_Immuable_State_18;
+    public C_Double_Magnet double_Magnet_State_54;
+    public C_Double_Rocket double_Rocket_State_162;
 
-    public static C_Impulse_Bouncing impulse_Bouncing_State_4;
-    public static C_Impulse_Immuable impulse_Immuable_State_10;
-    public static C_Impulse_Magnet impulse_Magnet_State_28;
-    public static C_Impulse_Rocket impulse_Rocket_State_82;
+    public C_Impulse_Bouncing impulse_Bouncing_State_4;
+    public C_Impulse_Immuable impulse_Immuable_State_10;
+    public C_Impulse_Magnet impulse_Magnet_State_28;
+    public C_Impulse_Rocket impulse_Rocket_State_82;
 
-    public static C_Bouncing_Immuable bouncing_Immuable_State_12;
-    public static C_Bouncing_Magnet bouncing_Magnet_State_30;
-    public static C_Bouncing_Rocket bouncing_Rocket_State_84;
+    public C_Bouncing_Immuable bouncing_Immuable_State_12;
+    public C_Bouncing_Magnet bouncing_Magnet_State_30;
+    public C_Bouncing_Rocket bouncing_Rocket_State_84;
 
-    public static C_Immuable_Magnet immuable_Magnet_State_36;
-    public static C_Immuable_Rocket immuable_Rocket_State_90;
+    public C_Immuable_Magnet immuable_Magnet_State_36;
+    public C_Immuable_Rocket immuable_Rocket_State_90;
 
-    public static C_Magnet_Rocket magnet_Rocket_State_108;
+    public C_Magnet_Rocket magnet_Rocket_State_108;
 
     public GameManager gameManager;
     public ComportementManager comportementManager;
+    public Material bounce;
+    public Material rocket;
+    public Material immuable;
+    public Material rien;
+    public Material impulse;
+    public Material magnet;
+    public MeshRenderer rend;
+    public TextMeshPro text;
     public enum FirstState
     {
         NoComportement = 0,
@@ -94,6 +103,7 @@ public class ComportementsStateMachine : StateMachine
         GoToInitialState(initialState);
         gameManager = FindAnyObjectByType<GameManager>();
         comportementManager = FindAnyObjectByType<ComportementManager>();
+        rend = GetComponent<MeshRenderer>();
         currentState.Enter();
     }
     
