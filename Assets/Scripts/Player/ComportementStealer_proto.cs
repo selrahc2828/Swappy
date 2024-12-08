@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -43,6 +44,15 @@ public class ComportementStealer_proto : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private void OnDisable()
+    {
+        controls.Player.ActionSlot1.performed -= ActionSlot1;
+        controls.Player.ActionSlot2.performed -= ActionSlot2;
+        controls.Player.SwitchSlotsValue.performed -= SwitchSlotsValue;
+        controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;
+        controls.Player.ViderSlots.performed -= ViderSlots;
     }
 
     void ActionSlot1(InputAction.CallbackContext context)
