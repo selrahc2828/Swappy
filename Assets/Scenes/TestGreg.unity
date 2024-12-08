@@ -154,6 +154,10 @@ PrefabInstance:
       propertyPath: interractorZonePos
       value: 
       objectReference: {fileID: 312400977}
+    - target: {fileID: 3738601696558851606, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
+      propertyPath: mainCam
+      value: 
+      objectReference: {fileID: 753062810}
     - target: {fileID: 5073832175352828605, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.589998
@@ -164,7 +168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5073832175352828605, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -22.256083
+      value: -24.51
       objectReference: {fileID: 0}
     - target: {fileID: 5073832175352828605, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: m_LocalRotation.w
@@ -225,6 +229,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 55948801783339615, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4384658}
+    - targetCorrespondingSourceObject: {fileID: 55948801783339615, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4384664}
   m_SourcePrefab: {fileID: 100100000, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
 --- !u!1 &4384657 stripped
 GameObject:
@@ -240,17 +247,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 4384657}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f17da78dade749479393c58a3229875, type: 3}
+  m_Script: {fileID: 11500000, guid: b8873ab43ffa99a4ba740530311ce530, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCam: {fileID: 753062810}
+  handlerPosition: {fileID: 312400978}
+  interractorZonePos: {fileID: 312400977}
+  playerCollider: []
+  interactText: {fileID: 513566281}
+  isCarrying: 0
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 9
+  carriedObject: {fileID: 0}
+  isLaunchable: 0
+  launchForce: 30
+  detectionSize: {x: 1, y: 1, z: 3.5}
+--- !u!114 &4384664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4384657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7c4caf26d7f4b42aae9e35decc519c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hitLayer:
     serializedVersion: 2
-    m_Bits: 9
-  mainCam: {fileID: 753062810}
-  slot1: 0
-  originSlot1: {fileID: 0}
-  slot2: 0
-  originSlot2: {fileID: 0}
+    m_Bits: 0
+  projectionTimeDuration: 20
+  coeffRefill: 1.5
+  range: 200
+  coeffReducDistance: 0.1
+  timerProjectionText: {fileID: 1818358924}
+  activeGizmoRange: 0
 --- !u!1 &25448189
 GameObject:
   m_ObjectHideFlags: 0
@@ -2445,19 +2478,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6665456295526574528, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-      propertyPath: line
-      value: 
-      objectReference: {fileID: 753062811}
-    - target: {fileID: 6665456295526574528, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
       propertyPath: orientatiaon
       value: 
       objectReference: {fileID: 1595139823}
     - target: {fileID: 6865014841614730721, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8101958145364833583, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8101958145364833583, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
@@ -3104,7 +3129,8 @@ MonoBehaviour:
   impulse: {fileID: 0}
   magnet: {fileID: 0}
   rend: {fileID: 0}
-  text: {fileID: 0}
+  player: {fileID: 0}
+  isPlayer: 0
   displayComportementName: 
   initialState: 3
 --- !u!1 &499196705
@@ -4407,11 +4433,6 @@ PrefabInstance:
 --- !u!20 &753062810 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 360774916830245804, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-  m_PrefabInstance: {fileID: 312400976}
-  m_PrefabAsset: {fileID: 0}
---- !u!120 &753062811 stripped
-LineRenderer:
-  m_CorrespondingSourceObject: {fileID: 2110565856000457164, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
   m_PrefabInstance: {fileID: 312400976}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &818616932
@@ -5984,7 +6005,8 @@ MonoBehaviour:
   impulse: {fileID: 2100000, guid: 9f40e193fdded1744a73a9b61d06c4ca, type: 2}
   magnet: {fileID: 2100000, guid: 6b6cb3f8babd7c144bc74aec27b5520a, type: 2}
   rend: {fileID: 0}
-  text: {fileID: 0}
+  player: {fileID: 0}
+  isPlayer: 0
   displayComportementName: 
   initialState: 0
 --- !u!4 &1010547591 stripped
@@ -9252,7 +9274,8 @@ MonoBehaviour:
   impulse: {fileID: 0}
   magnet: {fileID: 0}
   rend: {fileID: 0}
-  text: {fileID: 0}
+  player: {fileID: 0}
+  isPlayer: 0
   displayComportementName: 
   initialState: 1
 --- !u!1 &1586753350
