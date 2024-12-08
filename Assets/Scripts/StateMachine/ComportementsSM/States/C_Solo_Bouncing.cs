@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class C_Solo_Bouncing : ComportementState
 {
+    public PhysicMaterial bouncyMaterial;
+
     public C_Solo_Bouncing(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -14,9 +16,13 @@ public class C_Solo_Bouncing : ComportementState
         leftValue = 3;
         rightValue = 0;
         base.Enter();
+
+        bouncyMaterial = _sm.comportementManager.bouncyMaterial;
         // _sm.rend.material = _sm.bounce;
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.noComportementColor);
 
+        
+        _sm.collider.material = bouncyMaterial;
     }
 
     public override void TickLogic()
@@ -32,5 +38,8 @@ public class C_Solo_Bouncing : ComportementState
     public override void Exit()
     {
         base.Exit();
+        
+        _sm.collider.material = null;
+
     }
 }

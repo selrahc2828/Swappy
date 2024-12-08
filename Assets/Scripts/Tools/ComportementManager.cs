@@ -35,6 +35,9 @@ public class ComportementManager : MonoBehaviour
     public float magnetRange = 10f;
     public bool magnetGradiantForce;
 
+    [Header("Bouncing")]
+    public PhysicMaterial bouncyMaterial;
+
     private void Awake()
     {
         if (Instance != null)
