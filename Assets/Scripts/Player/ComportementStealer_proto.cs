@@ -98,8 +98,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot1 = currentObjectState.leftValue;
                                     originSlot1 = _stateStolen;
-                                    slot1Text.text = Enum.GetName(typeof(FirstState), slot1);
-                                    
+                                    slot1Text.text = ((FirstState)slot1).ToString();
                                 }
                                 else
                                 {
@@ -196,7 +195,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.leftValue;
                                     originSlot2 = _stateStolen;
-                                    slot2Text.text = Enum.GetName(typeof(FirstState), slot2);
+                                    slot2Text.text = ((FirstState)slot2).ToString();
                                 }
                             }
                             else
@@ -252,9 +251,8 @@ public class ComportementStealer_proto : MonoBehaviour
             slot1 = slot1 + slot2;
             slot2 = slot1 - slot2;
             slot1 = slot1 - slot2;
-            slot1Text.text = Enum.GetName(typeof(FirstState), slot1);
-            slot2Text.text = Enum.GetName(typeof(FirstState), slot2);
-
+            slot1Text.text = ((FirstState)slot1).ToString();
+            slot2Text.text = ((FirstState)slot2).ToString();
         }
     }
 
