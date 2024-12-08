@@ -10,7 +10,6 @@ public class ComportementState : State
     public int leftValue;
     public int rightValue;
     public bool isGrabbed = false;
-    public bool isOnPlayer = false;
 
     protected ComportementsStateMachine _sm;
 
@@ -38,10 +37,6 @@ public class ComportementState : State
     public override void Exit()
     {
         Debug.Log(_sm.currentState + " exit");
-    }
-    public void updateText(string text)
-    {
-        _sm.text.text = text;
     }
 
     public void CalculateNewtState(int newValue)
@@ -116,6 +111,4 @@ public class ComportementState : State
                 break;
         }
     }
-
-
 }

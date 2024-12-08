@@ -15,7 +15,7 @@ public class C_Solo_Impulse : ComportementState
         rightValue = 0;
         base.Enter();
         Debug.Log("Solo impulse");
-        _sm.rend.material = _sm.impulse;
+        //_sm.rend.material = _sm.impulse;
     }
 
     public override void TickLogic()

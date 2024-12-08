@@ -96,6 +96,10 @@ public class GrabObject : MonoBehaviour
             {
                 carriedObject.GetComponent<Rigidbody>().isKinematic = true;
                 Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), true);
+                //dire a l'objet qu'il est grab au niveau FSM
+                var FSM_OfObject = carriedObject.GetComponent<ComportementsStateMachine>();
+                ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
+                FSM_ObjectState.isGrabbed = true;
             }
 
             isCarrying = true;
@@ -111,6 +115,12 @@ public class GrabObject : MonoBehaviour
         {
             carriedObject.transform.SetParent(originParent);
             if (carriedObject.GetComponent<Rigidbody>()) {
+
+                //dire a l'objet qu'il est grab au niveau FSM
+                var FSM_OfObject = carriedObject.GetComponent<ComportementsStateMachine>();
+                ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
+                FSM_ObjectState.isGrabbed = false;
+
                 carriedObject.GetComponent<Rigidbody>().isKinematic = false;
                 Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), false);
 

@@ -15,7 +15,7 @@ public class C_Solo_Magnet : ComportementState
         leftValue = 27;
         rightValue = 0;
         base.Enter();
-        _sm.rend.material = _sm.magnet;
+        //_sm.rend.material = _sm.magnet;
     }
 
     public override void TickLogic()
