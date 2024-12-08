@@ -6,6 +6,7 @@ Placer les 2 préfabs Player et CameraHolder sur la scene
 Placer le ---Canvas--- dans la scene
 
 Dans le script Game Manager du prefab ----Manager---- renseigner :
+    - player mettre la prefab Player
     - Orientation de la categorie PlayerMouvementParameters (c'est l'enfant Orientation du prefab du player)
     - TimerSlowText de la categorie SlowTimer (Canvas >TimerSlow > CountSlow)
     - TimeProjectionText de la categorie PlayerProjectingParameter (Canvas > TimerProjection > CountProjection)

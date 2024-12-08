@@ -9,14 +9,14 @@ public class CheckNecessary : MonoBehaviour
 
     void Start()
     {
-        if (FindObjectOfType<GameManager>() == null)
+        if (FindObjectOfType<GameManager>() == null || FindObjectOfType<ComportementManager>() == null )
         {
             manqueGMText = GameObject.FindGameObjectWithTag("Necessary");
             if (manqueGMText != null)
             {
                 manqueGMText.GetComponent<TextMeshProUGUI>().enabled = true;
             }
-            Debug.LogWarning("Aucun GameManager dans la sc�ne");
+            Debug.LogWarning("Aucun GameManager et/ ou ComportementManager dans la sc�ne");
         }
     }
 }

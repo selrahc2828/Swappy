@@ -10,10 +10,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static Controls controls;
-    public CameraController camControllerScript;
-    public PlayerCam playerCamScript;
-    public MoveCamera moveCamScript;
-    public GrabObject grabScript;
+    
+    [Header("Rendu Lotha")]
+    public string scene1;
+    public string scene2;
+    public KeyCode keyForScene1 = KeyCode.Alpha1;
+    public KeyCode keyForScene2 = KeyCode.Alpha2;
+    public KeyCode keyForScene3 = KeyCode.Alpha3;
+    
+    [HideInInspector]public CameraController camControllerScript;
+    [HideInInspector]public PlayerCam playerCamScript;
+    [HideInInspector]public MoveCamera moveCamScript;
+    [HideInInspector]public GrabObject grabScript;
 
     [Header("SlowTimer")]
     [Range(0f, 1f)]
@@ -42,13 +50,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector]public Color immuable_color;
     [HideInInspector]public Color Uncomportemented_color;
     
-    public string scene1;
-    public string scene2;
-
-    public KeyCode keyForScene1 = KeyCode.Alpha1;
-    public KeyCode keyForScene2 = KeyCode.Alpha2;
-    public KeyCode keyForScene3 = KeyCode.Alpha3;
-
     [Header("Player")]
     public GameObject player;
 
@@ -84,7 +85,7 @@ public class GameManager : MonoBehaviour
     public float coeffReducDistance;
     public bool activeGizmoRange;
     
-    public bool etatIsProjected;
+    [HideInInspector] public bool etatIsProjected;
     public TextMeshProUGUI timerProjectionText;
 
     private void OnEnable()
@@ -122,6 +123,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Il n'y a pas de text Timer Slow");
         }
         
+        //à virer quand player gre supprimé
         camControllerScript = FindObjectOfType<CameraController>();
         if (camControllerScript == null)
         {
@@ -142,7 +144,12 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("Il n'y a pas de grabScript dans la scène");
         }
-        
+
+        //player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogWarning("GameManager Player non renseigné");
+        }
         controls.Player.Enable();
 
         controls.Player.ReloadScene.performed += ReloadScene;
