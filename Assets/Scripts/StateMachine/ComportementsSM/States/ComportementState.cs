@@ -23,6 +23,7 @@ public class ComportementState : State
     {
         Debug.Log(_sm.currentState + " enter " + stateValue);
         //_sm.text.text = stateValue.ToString();
+        _sm.displayComportementName = _sm.currentState.ToString();
     }
 
     public override void TickLogic()

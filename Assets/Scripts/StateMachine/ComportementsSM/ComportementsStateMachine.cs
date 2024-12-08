@@ -43,6 +43,8 @@ public class ComportementsStateMachine : StateMachine
     public Material magnet;
     public MeshRenderer rend;
     public TextMeshPro text;
+
+    public string displayComportementName;
     public enum FirstState
     {
         NoComportement = 0,
@@ -103,7 +105,7 @@ public class ComportementsStateMachine : StateMachine
         GoToInitialState(initialState);
         gameManager = FindAnyObjectByType<GameManager>();
         comportementManager = FindAnyObjectByType<ComportementManager>();
-        rend = GetComponent<MeshRenderer>();
+        rend = GetComponentInChildren<MeshRenderer>();//cherche dans lui même et enfant, les prefabs de comportement on le mesh en enfant
         currentState.Enter();
     }
     
