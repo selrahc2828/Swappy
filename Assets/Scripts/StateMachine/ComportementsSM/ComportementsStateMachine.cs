@@ -33,6 +33,7 @@ public class ComportementsStateMachine : StateMachine
     public static C_Magnet_Rocket magnet_Rocket_State_108;
 
     public GameManager gameManager;
+    public ComportementManager comportementManager;
     public enum FirstState
     {
         NoComportement = 0,
@@ -92,6 +93,7 @@ public class ComportementsStateMachine : StateMachine
         //currentState = no_Comportement_state_0;
         GoToInitialState(initialState);
         gameManager = FindAnyObjectByType<GameManager>();
+        comportementManager = FindAnyObjectByType<ComportementManager>();
         currentState.Enter();
     }
     
