@@ -208,11 +208,6 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 360774916830245804, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
   m_PrefabInstance: {fileID: 1176931274}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &737380365 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 55948801783339615, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
-  m_PrefabInstance: {fileID: 1428324524}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1088781563
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +514,8 @@ MonoBehaviour:
   impulse: {fileID: 2100000, guid: 67ec4f9128691574b94a5f2b00e492e8, type: 2}
   magnet: {fileID: 2100000, guid: 842d906db7e701945a7c037e46259246, type: 2}
   rend: {fileID: 0}
-  text: {fileID: 2122973225}
+  player: {fileID: 0}
+  isPlayer: 0
   initialState: 1
 --- !u!54 &1298273805
 Rigidbody:
@@ -647,6 +643,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3738601696558851606, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
+      propertyPath: mainCam
+      value: 
+      objectReference: {fileID: 151643819}
     - target: {fileID: 5073832175352828605, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -695,43 +695,16 @@ PrefabInstance:
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 151643819}
-    - target: {fileID: 9067955373326925916, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 55948801783339615, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1428324530}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
 --- !u!4 &1428324525 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8526656148825370485, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
   m_PrefabInstance: {fileID: 1428324524}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1428324530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 737380365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f17da78dade749479393c58a3229875, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 9
-  mainCam: {fileID: 151643819}
-  slot1: 0
-  originSlot1: {fileID: 0}
-  slot2: 0
-  originSlot2: {fileID: 0}
 --- !u!1 &2008705244
 GameObject:
   m_ObjectHideFlags: 0
@@ -971,7 +944,8 @@ MonoBehaviour:
   impulse: {fileID: 2100000, guid: 67ec4f9128691574b94a5f2b00e492e8, type: 2}
   magnet: {fileID: 2100000, guid: 842d906db7e701945a7c037e46259246, type: 2}
   rend: {fileID: 0}
-  text: {fileID: 2008705245}
+  player: {fileID: 0}
+  isPlayer: 0
   initialState: 9
 --- !u!65 &2089681531
 BoxCollider:

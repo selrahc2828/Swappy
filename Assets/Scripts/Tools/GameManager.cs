@@ -49,6 +49,9 @@ public class GameManager : MonoBehaviour
     public KeyCode keyForScene2 = KeyCode.Alpha2;
     public KeyCode keyForScene3 = KeyCode.Alpha3;
 
+    [Header("Player")]
+    public GameObject player;
+
     [Header("Player Movement Parameters")]
     public float walkSpeed;
     public float sprintSpeed;

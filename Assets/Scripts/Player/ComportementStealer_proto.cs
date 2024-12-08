@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ComportementStealer_proto : MonoBehaviour
 {
     private Controls controls;
+    private GameManager gameManager;
 
     [Header("Raycast")]
     public LayerMask hitLayer;
@@ -27,6 +29,7 @@ public class ComportementStealer_proto : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = FindAnyObjectByType<GameManager>();
         controls = GameManager.controls;
 
         controls.Player.ActionSlot1.performed += ActionSlot1;
@@ -244,7 +247,64 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
+            if(slot1 != 0 || slot2 != 0)
+            {
+                _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>(); ; // Stocker la r�f�rence
+                if (_stateStolen.currentState is ComportementState)
+                {
+                    ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
+                    //On test si l'objet vis� est vide ou non, s'il est vide, on lui ajoute directement le comportement, sinon on verifie s'il a une place libre
+                    if (playerObjectState.stateValue != 0)
+                    {
+                        if(slot2 == 0 || slot1 == 0)
+                        {
+                            //L'objet vis� � une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
+                            if (playerObjectState.rightValue == 0)
+                            {
 
+                                if (slot1 != 0)
+                                {
+                                    Debug.Log("Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
+                                    int futurState = playerObjectState.stateValue + slot1;
+                                    playerObjectState.CalculateNewtState(futurState);
+                                    slot1 = 0;
+                                    originSlot1 = null;
+                                }
+                                else
+                                {
+                                    Debug.Log("Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
+                                    int futurState = playerObjectState.stateValue + slot2;
+                                    playerObjectState.CalculateNewtState(futurState);
+                                    slot2 = 0;
+                                    originSlot2 = null;
+                                }
+                            }
+                            else
+                            {
+                                Debug.Log("Le Player contiens d�j� 2 comportements");
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Celui qui arrive a m'afficher cette erreur je lui dois 10 balles");
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Addition de " + slot2 + " et " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                        int futurState = playerObjectState.stateValue + slot2 +slot1;
+                        playerObjectState.CalculateNewtState(futurState);
+                        slot1 = 0;
+                        slot2 = 0;
+                        originSlot1 = null;
+                        originSlot2 = null;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Vous n'avez aucun comportement stoqué");
+            }
         }
     }
 

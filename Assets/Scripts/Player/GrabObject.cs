@@ -13,7 +13,7 @@ public class GrabObject : MonoBehaviour
     public Camera mainCam;
     public Transform handlerPosition;
     public Transform interractorZonePos;//centre zone de detection
-    
+    // private Collider playerCollider;
     public Collider[] playerCollider; // on a 2 colliders
     public TextMeshProUGUI interactText;
     
@@ -66,7 +66,6 @@ public class GrabObject : MonoBehaviour
             // voir ajouter compare tag NotInteract ?
             foreach (Collider item in hitColliders)
             {
-                // Debug.LogWarning("item: "+ item.name);
                 float distanceToObject = Vector3.Distance(transform.position, item.transform.position);
 
                 if (distanceToObject < closestDist) // && item.CompareTag("Movable")
@@ -108,6 +107,11 @@ public class GrabObject : MonoBehaviour
                 {
                     Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), true);
                 }
+                // Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), true);
+                //dire a l'objet qu'il est grab au niveau FSM
+                var FSM_OfObject = carriedObject.GetComponent<ComportementsStateMachine>();
+                ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
+                FSM_ObjectState.isGrabbed = true;
             }
 
             isCarrying = true;
@@ -117,13 +121,21 @@ public class GrabObject : MonoBehaviour
         }
     }
 
-    public void Drop(bool dropRepulse = false)
+    public void Drop(bool dropRepulse = false)//à voir pour modif dans FSM repulse
     {
         if (isCarrying)
         {
             carriedObject.transform.SetParent(_originParent);
             if (carriedObject.GetComponent<Rigidbody>()) {
+
+                //dire a l'objet qu'il est grab au niveau FSM
+                var FSM_OfObject = carriedObject.GetComponent<ComportementsStateMachine>();
+                ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
+                FSM_ObjectState.isGrabbed = false;
+
                 carriedObject.GetComponent<Rigidbody>().isKinematic = false;
+                // Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), false);
+
                 foreach (Collider collider in playerCollider)
                 {
                     Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), false);

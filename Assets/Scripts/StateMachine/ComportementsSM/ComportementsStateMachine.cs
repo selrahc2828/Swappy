@@ -33,16 +33,21 @@ public class ComportementsStateMachine : StateMachine
 
     public C_Magnet_Rocket magnet_Rocket_State_108;
 
-    public GameManager gameManager;
-    public ComportementManager comportementManager;
-    public Material bounce;
-    public Material rocket;
-    public Material immuable;
-    public Material rien;
-    public Material impulse;
-    public Material magnet;
-    public MeshRenderer rend;
-    public TextMeshPro text;
+    [HideInInspector] public GameManager gameManager;
+    [HideInInspector] public ComportementManager comportementManager;
+
+    //� voir si on garde �a
+    [HideInInspector] public Material bounce;
+    [HideInInspector] public Material rocket;
+    [HideInInspector] public Material immuable;
+    [HideInInspector] public Material rien;
+    [HideInInspector] public Material impulse;
+    [HideInInspector] public Material magnet;
+    [HideInInspector] public MeshRenderer rend;
+
+    [HideInInspector] public GameObject player;
+    public bool isPlayer = false;
+
 
     public string displayComportementName;
     public enum FirstState
@@ -101,11 +106,11 @@ public class ComportementsStateMachine : StateMachine
 
         magnet_Rocket_State_108 = new C_Magnet_Rocket(this);
 
-        //currentState = no_Comportement_state_0;
         GoToInitialState(initialState);
         gameManager = FindAnyObjectByType<GameManager>();
         comportementManager = FindAnyObjectByType<ComportementManager>();
         rend = GetComponentInChildren<MeshRenderer>();//cherche dans lui même et enfant, les prefabs de comportement on le mesh en enfant
+        player = gameManager.player;
         currentState.Enter();
     }
     
