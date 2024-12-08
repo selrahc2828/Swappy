@@ -26,19 +26,21 @@ public class GameManager : MonoBehaviour
     public float slowTimeDuration = 5f;
     public TextMeshProUGUI timerSlowText;
     
+    //à supprimer, juste caché tant qu'on a interactColor
     [Header("Couleurs d'interaction")]
-    public Material defaultColor;
-    public Material interactAVolerMat;
-    public Material interactRienAVolerMat;
-    public Material interactNOTPossibleMat;
+    [HideInInspector]public Material defaultColor;
+    [HideInInspector]public Material interactAVolerMat;
+    [HideInInspector]public Material interactRienAVolerMat;
+    [HideInInspector]public Material interactNOTPossibleMat;
+    //à supprimer, juste caché tant qu'on a interactColor
 
     [Header("Comportement colors")]
-    public Color Repulsive_color;
-    public Color Rebond_color;
-    public Color fusee_color;
-    public Color aimant_color;
-    public Color immuable_color;
-    public Color Uncomportemented_color;
+    [HideInInspector]public Color Repulsive_color;
+    [HideInInspector]public Color Rebond_color;
+    [HideInInspector]public Color fusee_color;
+    [HideInInspector]public Color aimant_color;
+    [HideInInspector]public Color immuable_color;
+    [HideInInspector]public Color Uncomportemented_color;
     
     public string scene1;
     public string scene2;
