@@ -2458,7 +2458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8024f089fed31854f953e4313b63d9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   rb: {fileID: 0}
   typeComp: 0
   stealable: 1
@@ -2684,11 +2683,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80fcab10b832b44bac79e82f5d7dcdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 25
   rb: {fileID: 0}
   typeComp: 0
   stealable: 1
   originalOwner: {fileID: 0}
+  rocketForce: 0
 --- !u!65 &434525489
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3033,6 +3032,7 @@ MonoBehaviour:
   rend: {fileID: 0}
   player: {fileID: 0}
   isPlayer: 0
+  rb: {fileID: 0}
   displayComportementName: 
   initialState: 3
 --- !u!1 &499196705
@@ -4831,7 +4831,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c116a485cf5f34195ff47976c1a537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   rb: {fileID: 0}
   typeComp: 0
   stealable: 1
@@ -5160,7 +5159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c116a485cf5f34195ff47976c1a537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   rb: {fileID: 0}
   typeComp: 0
   stealable: 1
@@ -5898,6 +5896,7 @@ MonoBehaviour:
   rend: {fileID: 0}
   player: {fileID: 0}
   isPlayer: 0
+  rb: {fileID: 0}
   displayComportementName: 
   initialState: 0
 --- !u!4 &1010547591 stripped
@@ -6836,7 +6835,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8024f089fed31854f953e4313b63d9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   rb: {fileID: 0}
   typeComp: 0
   stealable: 1
@@ -7554,7 +7552,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8024f089fed31854f953e4313b63d9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   rb: {fileID: 0}
   typeComp: 0
   stealable: 1
@@ -9015,6 +9012,7 @@ MonoBehaviour:
   rend: {fileID: 0}
   player: {fileID: 0}
   isPlayer: 0
+  rb: {fileID: 0}
   displayComportementName: 
   initialState: 1
 --- !u!1 &1586753350
@@ -9092,7 +9090,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c116a485cf5f34195ff47976c1a537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   rb: {fileID: 0}
   typeComp: 0
   stealable: 1
@@ -9186,7 +9183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c116a485cf5f34195ff47976c1a537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   rb: {fileID: 0}
   typeComp: 0
   stealable: 1
@@ -9855,7 +9851,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8024f089fed31854f953e4313b63d9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   rb: {fileID: 0}
   typeComp: 0
   stealable: 1
@@ -11126,6 +11121,97 @@ Transform:
   - {fileID: 1010547591}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1904911881
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 447375944755427264, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+      propertyPath: m_Name
+      value: Rocket
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156703577998449374, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 29.43444
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156703577998449374, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 17.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156703577998449374, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -18.397541
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156703577998449374, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156703577998449374, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156703577998449374, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156703577998449374, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156703577998449374, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156703577998449374, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156703577998449374, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 447375944755427264, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1904911883}
+  m_SourcePrefab: {fileID: 100100000, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+--- !u!1 &1904911882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 447375944755427264, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
+  m_PrefabInstance: {fileID: 1904911881}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1904911883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904911882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be0876c2ba0e33140b6f510489fd944c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  comportementManager: {fileID: 0}
+  bounce: {fileID: 0}
+  rocket: {fileID: 0}
+  immuable: {fileID: 0}
+  rien: {fileID: 0}
+  impulse: {fileID: 0}
+  magnet: {fileID: 0}
+  rend: {fileID: 0}
+  player: {fileID: 0}
+  isPlayer: 0
+  rb: {fileID: 0}
+  displayComportementName: 
+  initialState: 81
 --- !u!1001 &1911085719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11579,7 +11665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c116a485cf5f34195ff47976c1a537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   rb: {fileID: 0}
   typeComp: 0
   stealable: 1
@@ -12912,3 +12997,4 @@ SceneRoots:
   - {fileID: 1462723297}
   - {fileID: 1761288056}
   - {fileID: 1935701388}
+  - {fileID: 1904911881}

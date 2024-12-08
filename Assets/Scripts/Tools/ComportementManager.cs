@@ -15,7 +15,7 @@ public class ComportementManager : MonoBehaviour
     public Color immuableColor;
     public Color noComportementColor;
     
-    [Header("Repulse")]
+    [Header("Impulse")]
     public float repulserTime = 5f;
     [HideInInspector]
     public float repulserTimer;
@@ -26,6 +26,9 @@ public class ComportementManager : MonoBehaviour
     public GameObject feedback;
     [Tooltip("Si Rigidbody sur lui")]
     public bool applyOnMe = false;
+    
+    [Header("Rocket")]
+    public float rocketForce = 20f;
     
     private void Awake()
     {

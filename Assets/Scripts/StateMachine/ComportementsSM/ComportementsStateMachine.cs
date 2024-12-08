@@ -47,7 +47,7 @@ public class ComportementsStateMachine : StateMachine
 
     [HideInInspector] public GameObject player;
     public bool isPlayer = false;
-
+    [HideInInspector] public Rigidbody rb;
 
     public string displayComportementName;
     public enum FirstState
@@ -111,6 +111,7 @@ public class ComportementsStateMachine : StateMachine
         comportementManager = FindAnyObjectByType<ComportementManager>();
         rend = GetComponentInChildren<MeshRenderer>();//cherche dans lui même et enfant, les prefabs de comportement on le mesh en enfant
         player = gameManager.player;
+        rb = GetComponent<Rigidbody>();
         currentState.Enter();
     }
     

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class C_Solo_Rocket : ComportementState
 {
+    public float rocketForce = 20;
+
     public C_Solo_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -14,6 +16,9 @@ public class C_Solo_Rocket : ComportementState
         leftValue = 81;
         rightValue = 0;
         base.Enter();
+        
+        rocketForce = _sm.comportementManager.rocketForce;
+        
         // _sm.rend.material = _sm.rocket;
         ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
 
@@ -26,7 +31,11 @@ public class C_Solo_Rocket : ComportementState
 
     public override void TickPhysics()
     {
-        
+        if (_sm.rb)
+        {
+            _sm.rb.AddForce(Vector3.up * rocketForce, ForceMode.Force);
+        }
+
     }
 
     public override void Exit()
