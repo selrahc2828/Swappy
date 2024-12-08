@@ -33,10 +33,9 @@ public class C_Solo_Impulse : ComportementState
         impulseGradiantForce = _sm.comportementManager.impulseGradiantForce;
         applyOnMe= _sm.comportementManager.applyOnMe;
         feedback = _sm.comportementManager.feedback;
-        
-        // Debug.LogWarning("NAME PORTEUR SM: " + _sm.gameObject.name);
         Debug.Log("Solo impulse");
-        _sm.rend.material = _sm.impulse;
+        //_sm.rend.material = _sm.impulse;
+        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.noComportementColor);
     }
 
     public override void TickLogic()
