@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditorInternal;
 using UnityEngine;
@@ -25,6 +26,10 @@ public class ComportementStealer_proto : MonoBehaviour
 
     [Header("Properties")]
     private ComportementsStateMachine _stateStolen;
+    
+    [Header("UI")]
+    public TextMeshProUGUI slot1Text;
+    public TextMeshProUGUI slot2Text;
 
     // Start is called before the first frame update
     void Start()
@@ -93,6 +98,8 @@ public class ComportementStealer_proto : MonoBehaviour
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot1 = currentObjectState.leftValue;
                                     originSlot1 = _stateStolen;
+                                    slot1Text.text = Enum.GetName(typeof(FirstState), slot1);
+                                    
                                 }
                                 else
                                 {
@@ -123,6 +130,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot1 = 0;
                                     originSlot1 = null;
+                                    slot1Text.text = "";
                                 }
                                 else
                                 {
@@ -136,6 +144,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 currentObjectState.CalculateNewtState(futurState);
                                 slot1 = 0;
                                 originSlot1 = null;
+                                slot1Text.text = "";
                             }
                         }
                     }
@@ -187,6 +196,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.leftValue;
                                     originSlot2 = _stateStolen;
+                                    slot2Text.text = Enum.GetName(typeof(FirstState), slot2);
                                 }
                             }
                             else
@@ -212,6 +222,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = 0;
                                     originSlot2 = null;
+                                    slot2Text.text = "";
                                 }
                                 else
                                 {
@@ -225,6 +236,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 currentObjectState.CalculateNewtState(futurState);
                                 slot2 = 0;
                                 originSlot2 = null;
+                                slot2Text.text = "";
                             }
                         }
                     }
@@ -240,6 +252,9 @@ public class ComportementStealer_proto : MonoBehaviour
             slot1 = slot1 + slot2;
             slot2 = slot1 - slot2;
             slot1 = slot1 - slot2;
+            slot1Text.text = Enum.GetName(typeof(FirstState), slot1);
+            slot2Text.text = Enum.GetName(typeof(FirstState), slot2);
+
         }
     }
 
@@ -269,6 +284,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     playerObjectState.CalculateNewtState(futurState);
                                     slot1 = 0;
                                     originSlot1 = null;
+                                    slot1Text.text = "";
                                 }
                                 else
                                 {
@@ -277,6 +293,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     playerObjectState.CalculateNewtState(futurState);
                                     slot2 = 0;
                                     originSlot2 = null;
+                                    slot2Text.text = "";
                                 }
                             }
                             else
@@ -298,6 +315,8 @@ public class ComportementStealer_proto : MonoBehaviour
                         slot2 = 0;
                         originSlot1 = null;
                         originSlot2 = null;
+                        slot1Text.text = "";
+                        slot2Text.text = "";
                     }
                 }
             }
@@ -326,11 +345,13 @@ public class ComportementStealer_proto : MonoBehaviour
                             originObjectState1.CalculateNewtState(futurState);
                             slot1 = 0;
                             originSlot1 = null;
+                            slot1Text.text = "";
                         }
                         else
                         {
                             slot1 = 0;
                             originSlot1 = null;
+                            slot1Text.text = "";
                             Debug.Log("L'objet d'origine poss�de d�ja 2 comportements, Le comportement stoqu� dans la main gauche � �t� supprim�");
                         }
                     }
@@ -341,6 +362,8 @@ public class ComportementStealer_proto : MonoBehaviour
                         originObjectState1.CalculateNewtState(futurState);
                         slot1 = 0;
                         originSlot1 = null;
+                        slot1Text.text = "";
+
                     }
                 }
             }
@@ -359,11 +382,13 @@ public class ComportementStealer_proto : MonoBehaviour
                             originObjectState2.CalculateNewtState(futurState);
                             slot2 = 0;
                             originSlot2 = null;
+                            slot2Text.text = "";
                         }
                         else
                         {
                             slot2 = 0;
                             originSlot2 = null;
+                            slot2Text.text = "";
                             Debug.Log("L'objet d'origine poss�de d�ja 2 comportements, Le comportement stoqu� dans la main gauche � �t� supprim�");
                         }
                     }
@@ -374,6 +399,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         originObjectState2.CalculateNewtState(futurState);
                         slot2 = 0;
                         originSlot2 = null;
+                        slot2Text.text = "";
                     }
                 }
             }

@@ -3,6 +3,31 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum FirstState
+{
+    NoComportement = 0,
+    SoloImpulse = 1,
+    SoloBouncing = 3,
+    SoloImmuable = 9,
+    SoloMagnet = 27,
+    SoloRocket = 81,
+    DoubleImpulse = 2,
+    DoubleBounce = 6,
+    DoubleImmuable = 18,
+    DoubleMagnet = 54,
+    DoubleRocket = 162,
+    ImpulseBouncing = 4,
+    ImpulseImmuable = 10,
+    ImpulseMagnet = 28,
+    ImpulseRocket = 82,
+    BouncingImmuable = 12,
+    BouncingMagnet = 30,
+    BouncingRocket = 84,
+    ImmuableMagnet = 36,
+    ImmuableRocket = 90,
+    MagnetRocket = 108
+}
+
 public class ComportementsStateMachine : StateMachine
 {
     public C_No_Comportement no_Comportement_state_0;
@@ -51,30 +76,6 @@ public class ComportementsStateMachine : StateMachine
     [HideInInspector] public Collider collider;
     
     public string displayComportementName;
-    public enum FirstState
-    {
-        NoComportement = 0,
-        SoloImpulse = 1,
-        SoloBouncing = 3,
-        SoloImmuable = 9,
-        SoloMagnet = 27,
-        SoloRocket = 81,
-        DoubleImpulse = 2,
-        DoubleBounce = 6,
-        DoubleImmuable = 18,
-        DoubleMagnet = 54,
-        DoubleRocket = 162,
-        ImpulseBouncing = 4,
-        ImpulseImmuable = 10,
-        ImpulseMagnet = 28,
-        ImpulseRocket = 82,
-        BouncingImmuable = 12,
-        BouncingMagnet = 30,
-        BouncingRocket = 84,
-        ImmuableMagnet = 36,
-        ImmuableRocket = 90,
-        MagnetRocket = 108
-    }
 
     public FirstState initialState;
     public override void Initialize()

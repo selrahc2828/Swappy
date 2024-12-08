@@ -11,7 +11,10 @@ Dans le script Game Manager du prefab ----Manager---- renseigner :
     - TimerSlowText de la categorie SlowTimer (Canvas >TimerSlow > CountSlow)
     - TimeProjectionText de la categorie PlayerProjectingParameter (Canvas > TimerProjection > CountProjection)
 Dans le script PlayerMouvementStateMachine du prefab Player renseigner le ----Manager----
-Dans le script ComponentStealer_Proto renseigner MainCamera
+Dans le script ComponentStealer_Proto renseigner : 
+    - MainCamera
+    - Slot1Text qui est dans Slot1 - Left du Canvas (Slot1 - left > Slot1 - Left Comp)
+    - Slot2Text qui est dans Slot2 - Right du Canvas (Slot2 - Right > Slot2 - Right Comp)
 Dans le script PlayerCam de l'enfant MainCamera du prefab cameraHolder renseigner Orientation (c'est l'enfant Orientation du prefab du player)
 Dans le script MoveCam de l'enfant MainCamera du prefab cameraHolder renseigner CameraPosition (c'est l'enfant CameraPos du prefab du player)
 Dans le script GrabObject du prefab Player renseigner :
