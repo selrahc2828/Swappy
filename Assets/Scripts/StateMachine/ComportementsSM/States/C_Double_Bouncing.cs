@@ -14,7 +14,7 @@ public class C_Double_Bouncing : ComportementState
         leftValue = 3;
         rightValue = 3;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.noComportementColor);
+        ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.bouncingColor);
 
     }
 

@@ -15,7 +15,7 @@ public class C_Bouncing_Magnet : ComportementState
         leftValue = 3;
         rightValue = 27;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.noComportementColor);
+        ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.magnetColor);
 
     }
 

@@ -14,7 +14,7 @@ public class C_Bouncing_Rocket : ComportementState
         leftValue = 3;
         rightValue = 81;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
+        ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.rocketColor);
 
     }
 
