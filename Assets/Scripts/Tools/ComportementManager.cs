@@ -30,6 +30,11 @@ public class ComportementManager : MonoBehaviour
     [Header("Rocket")]
     public float rocketForce = 20f;
     
+    [Header("Magnet")]
+    public float magnetForce;
+    public float magnetRange = 10f;
+    public bool magnetGradiantForce;
+
     private void Awake()
     {
         if (Instance != null)

@@ -187,4 +187,16 @@ public class ComportementsStateMachine : StateMachine
                 break;
         }
     }
+    
+    void OnDrawGizmos()
+    {
+        if (comportementManager != null)
+        {
+            if (initialState == FirstState.SoloMagnet)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireSphere(transform.position, comportementManager.magnetRange);            
+            }
+        }
+    }
 }

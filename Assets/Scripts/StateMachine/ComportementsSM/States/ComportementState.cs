@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ComportementState : State
 {
-    public int baseStateValue;
     public int stateValue;
     public int leftValue;
     public int rightValue;
