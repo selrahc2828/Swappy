@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6156703577998449374}
-  - component: {fileID: 1860026093973826406}
   - component: {fileID: 2413593469913706812}
   - component: {fileID: 5823848060800816550}
+  - component: {fileID: 4121251643802725029}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Movable
@@ -35,23 +35,6 @@ Transform:
   - {fileID: 161940555272950204}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1860026093973826406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 447375944755427264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e80fcab10b832b44bac79e82f5d7dcdb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  typeComp: 1
-  stealable: 1
-  originalOwner: {fileID: 0}
-  rocketForce: 20
 --- !u!54 &2413593469913706812
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -102,6 +85,33 @@ CapsuleCollider:
   m_Height: 1.4605904
   m_Direction: 1
   m_Center: {x: 0.0047637224, y: 0.1445483, z: 0}
+--- !u!114 &4121251643802725029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 447375944755427264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be0876c2ba0e33140b6f510489fd944c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  comportementManager: {fileID: 0}
+  bounce: {fileID: 0}
+  rocket: {fileID: 0}
+  immuable: {fileID: 0}
+  rien: {fileID: 0}
+  impulse: {fileID: 0}
+  magnet: {fileID: 0}
+  rend: {fileID: 0}
+  player: {fileID: 0}
+  isPlayer: 0
+  rb: {fileID: 0}
+  collider: {fileID: 0}
+  displayComportementName: 
+  initialState: 81
 --- !u!1001 &411496001056765527
 PrefabInstance:
   m_ObjectHideFlags: 0

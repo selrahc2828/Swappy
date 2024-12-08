@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3481719898643093788}
   - component: {fileID: 2755400554396945657}
-  - component: {fileID: 8350600149568402072}
   - component: {fileID: 2499376217662764087}
+  - component: {fileID: 1030383207053547449}
   m_Layer: 0
   m_Name: Repulse
   m_TagString: Movable
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 9.3, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 2.5692499, y: 2.5692499, z: 2.5692499}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5727383639757718564}
@@ -43,30 +43,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3779238124936448411}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &8350600149568402072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3779238124936448411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2c116a485cf5f34195ff47976c1a537, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  rb: {fileID: 0}
-  typeComp: 0
-  stealable: 1
-  repulserTime: 5
-  repulserTimer: 0
-  repulserRange: 0
-  repulserForce: 0
-  destroyOnUse: 0
-  impulseGradiantForce: 0
-  feedback: {fileID: 0}
-  applyOnMe: 0
 --- !u!135 &2499376217662764087
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -88,6 +64,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1030383207053547449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3779238124936448411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be0876c2ba0e33140b6f510489fd944c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  comportementManager: {fileID: 0}
+  bounce: {fileID: 0}
+  rocket: {fileID: 0}
+  immuable: {fileID: 0}
+  rien: {fileID: 0}
+  impulse: {fileID: 0}
+  magnet: {fileID: 0}
+  rend: {fileID: 0}
+  player: {fileID: 0}
+  isPlayer: 0
+  rb: {fileID: 0}
+  collider: {fileID: 0}
+  displayComportementName: 
+  initialState: 1
 --- !u!1001 &5256114654808761295
 PrefabInstance:
   m_ObjectHideFlags: 0

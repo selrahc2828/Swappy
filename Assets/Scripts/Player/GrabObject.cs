@@ -14,7 +14,7 @@ public class GrabObject : MonoBehaviour
     public Transform handlerPosition;
     public Transform interractorZonePos;//centre zone de detection
     // private Collider playerCollider;
-    public Collider[] playerCollider; // on a 2 colliders
+    [HideInInspector] public Collider[] playerCollider; // on a 2 colliders
     public TextMeshProUGUI interactText;
     
     [HideInInspector] public bool isCarrying;

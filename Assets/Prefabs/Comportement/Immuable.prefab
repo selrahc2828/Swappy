@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7403547470160395742}
   - component: {fileID: 6201280249379911867}
   - component: {fileID: 3771572199299144831}
+  - component: {fileID: 8761818279739889660}
   m_Layer: 3
   m_Name: Immuable
   m_TagString: Untagged
@@ -28,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6738534128018200895}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.72, y: 5.31, z: -11.7376}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4.068958, y: 1, z: 5.8815303}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 544225895860419367}
@@ -109,6 +110,33 @@ MonoBehaviour:
   rb: {fileID: 0}
   startTimer: 1
   respawnTime: 20
+--- !u!114 &8761818279739889660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6738534128018200895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be0876c2ba0e33140b6f510489fd944c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  comportementManager: {fileID: 0}
+  bounce: {fileID: 0}
+  rocket: {fileID: 0}
+  immuable: {fileID: 0}
+  rien: {fileID: 0}
+  impulse: {fileID: 0}
+  magnet: {fileID: 0}
+  rend: {fileID: 0}
+  player: {fileID: 0}
+  isPlayer: 0
+  rb: {fileID: 0}
+  collider: {fileID: 0}
+  displayComportementName: 
+  initialState: 9
 --- !u!1001 &2185746956508364
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -174,6 +202,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 1ed4036c5e9f6844ca54c9cf27c56419, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9a3c6969002f61e4c83567aaaa265f8d, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 1ed4036c5e9f6844ca54c9cf27c56419, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 3684ad1a10b5ef04780ad6edf118f2ba, type: 2}
@@ -206,7 +238,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920610353801617821}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4926597b7a9069241b8cd4273a4371fe, type: 3}
   m_Name: 
