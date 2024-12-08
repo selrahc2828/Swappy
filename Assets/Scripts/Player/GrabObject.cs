@@ -38,11 +38,7 @@ public class GrabObject : MonoBehaviour
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         interractorZonePos = GameObject.FindGameObjectWithTag("InterractorZone").transform;
         handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
-        
-        // set la position du "vraie" handler qui est dans la camera, à la position qu'on a set dans le player
-        // on le met dans la camera (---OBSOLETE---)
-        // ChangeParent(handlerPosition);
-        // playerCollider = GetComponent<Collider>();
+        playerCollider = GetComponentsInChildren<Collider>();
     }
 
     // Update is called once per frame
@@ -161,12 +157,7 @@ public class GrabObject : MonoBehaviour
             carriedObject.transform.localPosition = Vector3.zero;
         }
     }
-
-    public void ChangeParent(Transform pos)
-    {
-        handlerPosition = pos;
-    }
-
+    
     private void OnDrawGizmos()
     {
         if (mainCam == null) return;
