@@ -118,5 +118,24 @@ public class ComportementState : State
         }
     }
 
+    public void ColorShaderOutline(Color colorSlot1, Color colorSlot2)
+    {
+        if (colorSlot1 == null)
+        {
+            colorSlot1 = _sm.comportementManager.noComportementColor;
+        }
+        if (colorSlot2 == null)
+        {
+            colorSlot2 = _sm.comportementManager.noComportementColor;
+        }
+
+        // Debug.Log($"Change color {_sm.name} into slot 1: {colorSlot1} and slot2: {colorSlot2}");
+        if (_sm.rend.materials.Length >1)//verif si on a plus de 2 materials
+        {
+            // on part du principe que le mat index 1 est le shader outline
+            _sm.rend.materials[1].SetColor("_Color2", colorSlot1);
+            _sm.rend.materials[1].SetColor("_Color3", colorSlot2);
+        }
+    }
 
 }

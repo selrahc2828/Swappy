@@ -14,6 +14,8 @@ public class C_Magnet_Rocket : ComportementState
         leftValue = 27;
         rightValue = 81;
         base.Enter();
+        ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.rocketColor);
+
     }
 
     public override void TickLogic()

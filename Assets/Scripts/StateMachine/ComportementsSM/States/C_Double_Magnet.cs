@@ -14,6 +14,8 @@ public class C_Double_Magnet : ComportementState
         leftValue = 27;
         rightValue = 27;
         base.Enter();
+        ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.magnetColor);
+
     }
 
     public override void TickLogic()

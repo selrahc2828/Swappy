@@ -14,6 +14,8 @@ public class C_Double_Immuable : ComportementState
         leftValue = 9;
         rightValue = 9;
         base.Enter();
+        ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.immuableColor);
+
     }
 
     public override void TickLogic()

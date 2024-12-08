@@ -18,4 +18,4 @@ Dans le script GrabObject du prefab Player renseigner :
 Dans le script ComponentStealer renseigner MainCamera
 
 Bien set les Layer à Ground pour les objets où l'avatar peut marcher/sauter
-
+Les Prefabs et Objets Comportement on 2 materials dans leur Mesh Renderer, le 2e est le shader MATSH_Outline

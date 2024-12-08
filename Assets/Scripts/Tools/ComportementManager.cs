@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ComportementManager : MonoBehaviour
 {
     public static ComportementManager Instance;
 
+    [Header("Comportement colors")]
+    public Color impulseColor;
+    public Color bouncingColor;
+    public Color rocketColor;
+    public Color magnetColor;
+    public Color immuableColor;
+    public Color noComportementColor;
     
     [Header("Repulse")]
     public float repulserTime = 5f;

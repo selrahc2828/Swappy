@@ -14,6 +14,8 @@ public class C_Impulse_Rocket : ComportementState
         leftValue = 1;
         rightValue = 81;
         base.Enter();
+        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.rocketColor);
+
     }
 
     public override void TickLogic()

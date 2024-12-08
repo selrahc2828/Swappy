@@ -16,6 +16,8 @@ public class C_Solo_Magnet : ComportementState
         rightValue = 0;
         base.Enter();
         _sm.rend.material = _sm.magnet;
+        ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.noComportementColor);
+
     }
 
     public override void TickLogic()

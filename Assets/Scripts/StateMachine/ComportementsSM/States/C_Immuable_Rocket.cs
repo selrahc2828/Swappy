@@ -14,6 +14,8 @@ public class C_Immuable_Rocket : ComportementState
         leftValue = 9;
         rightValue = 81;
         base.Enter();
+        ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.rocketColor);
+
     }
 
     public override void TickLogic()

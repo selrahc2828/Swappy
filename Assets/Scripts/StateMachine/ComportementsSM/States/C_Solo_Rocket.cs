@@ -14,7 +14,9 @@ public class C_Solo_Rocket : ComportementState
         leftValue = 81;
         rightValue = 0;
         base.Enter();
-        _sm.rend.material = _sm.rocket;
+        // _sm.rend.material = _sm.rocket;
+        ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
+
     }
 
     public override void TickLogic()

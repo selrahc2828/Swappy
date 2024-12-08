@@ -126,7 +126,7 @@ public class ComportementsStateMachine : StateMachine
                 currentState = solo_Bouncing_State_3;
                 break;
             case 4:
-                currentState = impulse_Bouncing_State_4         ;
+                currentState = impulse_Bouncing_State_4;
                 break;
             case 6:
                 currentState = double_Bouncing_State_6;

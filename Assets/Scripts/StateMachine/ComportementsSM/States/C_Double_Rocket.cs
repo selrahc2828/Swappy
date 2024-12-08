@@ -14,6 +14,8 @@ public class C_Double_Rocket : ComportementState
         leftValue = 81;
         rightValue = 81;
         base.Enter();
+        ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.rocketColor);
+
     }
 
     public override void TickLogic()

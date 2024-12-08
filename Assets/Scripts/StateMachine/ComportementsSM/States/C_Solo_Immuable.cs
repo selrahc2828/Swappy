@@ -15,7 +15,9 @@ public class C_Solo_Immuable : ComportementState
         rightValue = 0;
         base.Enter();
         Debug.Log("Solo Immuable");
-        _sm.rend.material = _sm.immuable;
+        // _sm.rend.material = _sm.immuable;
+        ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.noComportementColor);
+
     }
 
     public override void TickLogic()

@@ -14,6 +14,8 @@ public class C_Immuable_Magnet : ComportementState
         leftValue = 9;
         rightValue = 27;
         base.Enter();
+        ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.magnetColor);
+
     }
 
     public override void TickLogic()

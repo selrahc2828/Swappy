@@ -14,6 +14,8 @@ public class C_Impulse_Bouncing : ComportementState
         leftValue = 1;
         rightValue = 3;
         base.Enter();
+        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.bouncingColor);
+
     }
 
     public override void TickLogic()

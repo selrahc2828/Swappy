@@ -14,6 +14,8 @@ public class C_Impulse_Magnet : ComportementState
         leftValue = 1;
         rightValue = 27;
         base.Enter();
+        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.magnetColor);
+
     }
 
     public override void TickLogic()

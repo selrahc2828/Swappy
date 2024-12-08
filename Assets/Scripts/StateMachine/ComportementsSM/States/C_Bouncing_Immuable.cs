@@ -14,6 +14,8 @@ public class C_Bouncing_Immuable : ComportementState
         leftValue = 3;
         rightValue = 9;
         base.Enter();
+        ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.noComportementColor);
+
     }
 
     public override void TickLogic()
