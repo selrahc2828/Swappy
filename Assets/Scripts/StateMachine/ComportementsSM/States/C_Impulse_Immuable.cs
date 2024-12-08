@@ -18,7 +18,7 @@ public class C_Impulse_Immuable : ComportementState
 
     public override void TickLogic()
     {
-        Debug.Log("BaseState");
+        base.TickLogic();
     }
 
     public override void TickPhysics()

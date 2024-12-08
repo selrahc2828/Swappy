@@ -19,7 +19,7 @@ public class C_Solo_Rocket : ComportementState
 
     public override void TickLogic()
     {
-        
+        base.TickLogic();
     }
 
     public override void TickPhysics()

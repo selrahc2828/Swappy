@@ -20,6 +20,7 @@ public class C_Solo_Immuable : ComportementState
 
     public override void TickLogic()
     {
+        base.TickLogic();
     }
 
     public override void TickPhysics()

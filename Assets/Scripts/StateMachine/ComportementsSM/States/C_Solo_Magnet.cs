@@ -10,6 +10,7 @@ public class C_Solo_Magnet : ComportementState
 
     public override void Enter()
     {
+        baseStateValue = 27;
         stateValue = 27;
         leftValue = 27;
         rightValue = 0;
@@ -19,7 +20,11 @@ public class C_Solo_Magnet : ComportementState
 
     public override void TickLogic()
     {
-        
+        if (baseStateValue != stateValue)
+        {
+            CalculateNewtState(stateValue);
+        }
+
     }
 
     public override void TickPhysics()

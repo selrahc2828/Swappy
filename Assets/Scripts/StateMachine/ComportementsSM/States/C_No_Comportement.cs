@@ -20,7 +20,7 @@ public class C_No_Comportement : ComportementState
 
     public override void TickLogic()
     {
-        
+        base.TickLogic();
     }
 
     public override void TickPhysics()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,8 +21,7 @@ public class ComportementStealer_proto : MonoBehaviour
     public ComportementsStateMachine originSlot2;
 
     [Header("Properties")]
-    public ComportementsStateMachine stateStolen;
-    public ComportementState state;
+    private ComportementsStateMachine _stateStolen;
 
     // Start is called before the first frame update
     void Start()
@@ -64,10 +64,10 @@ public class ComportementStealer_proto : MonoBehaviour
                     //On verifie si slot1 est superieur � 0, s'il l'est, on cherche alors � donner un comportement � l'objet vis�, sinon on cherche � pr�lever un comportement � l'objet vis�
                     if (slot1 == 0)
                     {
-                        stateStolen = stateMachine; // Stocker la r�f�rence
-                        if (stateStolen.currentState is ComportementState)
+                        _stateStolen = stateMachine; // Stocker la r�f�rence
+                        if (_stateStolen.currentState is ComportementState)
                         {
-                            ComportementState currentObjectState = (ComportementState)stateStolen.currentState;
+                            ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
                             Debug.Log("Right Value: " + currentObjectState.rightValue);
                             //On v�rifie que la stateValue de l'objet vis� est superieur � 0, on ne peut pr�lever un comportement que si c'est le cas.
                             if(currentObjectState.stateValue != 0)
@@ -79,7 +79,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     int futurState = currentObjectState.stateValue - currentObjectState.leftValue;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot1 = currentObjectState.leftValue;
-                                    originSlot1 = stateStolen;
+                                    originSlot1 = _stateStolen;
                                 }
                                 else
                                 {
@@ -94,10 +94,10 @@ public class ComportementStealer_proto : MonoBehaviour
                     }
                     else
                     {
-                        stateStolen = stateMachine; // Stocker la r�f�rence
-                        if (stateStolen.currentState is ComportementState)
+                        _stateStolen = stateMachine; // Stocker la r�f�rence
+                        if (_stateStolen.currentState is ComportementState)
                         {
-                            ComportementState currentObjectState = (ComportementState)stateStolen.currentState;
+                            ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
                             Debug.Log("Right Value: " + currentObjectState.stateValue);
                             //On verifie si l'objet vis� est vide, si c'est le cas on lui donne directement un comp�rtement avec leftValue, sinon on va v�rifier si sa rightValue est vide
                             if(currentObjectState.stateValue != 0)
@@ -150,10 +150,10 @@ public class ComportementStealer_proto : MonoBehaviour
                     //On verifie si slot2 est superieur � 0, s'il l'est, on cherche alors � donner un comportement � l'objet vis�, sinon on cherche � pr�lever un comportement � l'objet vis�
                     if (slot2 == 0)
                     {
-                        stateStolen = stateMachine; // Stocker la r�f�rence
-                        if (stateStolen.currentState is ComportementState)
+                        _stateStolen = stateMachine; // Stocker la r�f�rence
+                        if (_stateStolen.currentState is ComportementState)
                         {
-                            ComportementState currentObjectState = (ComportementState)stateStolen.currentState;
+                            ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
                             //On verifie si l'objet vis� contiens une stateValue, si la stateValue est superieur a 0, l'objet a un comportement
                             if (currentObjectState.stateValue != 0)
                             {
@@ -165,7 +165,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     int futurState = currentObjectState.stateValue - currentObjectState.rightValue;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.rightValue;
-                                    originSlot2 = stateStolen;
+                                    originSlot2 = _stateStolen;
                                 }
                                 else
                                 {
@@ -173,7 +173,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     int futurState = currentObjectState.stateValue - currentObjectState.leftValue;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.leftValue;
-                                    originSlot2 = stateStolen;
+                                    originSlot2 = _stateStolen;
                                 }
                             }
                             else
@@ -184,10 +184,10 @@ public class ComportementStealer_proto : MonoBehaviour
                     }
                     else
                     {
-                        stateStolen = stateMachine; // Stocker la r�f�rence
-                        if (stateStolen.currentState is ComportementState)
+                        _stateStolen = stateMachine; // Stocker la r�f�rence
+                        if (_stateStolen.currentState is ComportementState)
                         {
-                            ComportementState currentObjectState = (ComportementState)stateStolen.currentState;
+                            ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
                             //On test si l'objet vis� est vide ou non, s'il est vide, on lui ajoute directement le comportement, sinon on verifie s'il a une place libre
                             if(currentObjectState.stateValue != 0)
                             {
