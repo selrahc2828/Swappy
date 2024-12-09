@@ -28,6 +28,7 @@ public enum FirstState
     MagnetRocket = 108
 }
 
+[RequireComponent(typeof(Rigidbody))] 
 public class ComportementsStateMachine : StateMachine
 {
     public C_No_Comportement no_Comportement_state_0;
