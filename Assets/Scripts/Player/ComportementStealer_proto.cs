@@ -48,12 +48,6 @@ public class ComportementStealer_proto : MonoBehaviour
         originSlot2 = null;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnDisable()
     {
         controls.Player.ActionSlot1.performed -= ActionSlot1;
