@@ -37,6 +37,9 @@ public class ComportementManager : MonoBehaviour
 
     [Header("Bouncing")]
     public PhysicMaterial bouncyMaterial;
+    [Header("DoubleBounce")]
+    public PhysicMaterial doubleBouncyMaterial;
+
 
     private void Awake()
     {

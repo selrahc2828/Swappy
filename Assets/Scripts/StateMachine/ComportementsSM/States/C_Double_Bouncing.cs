@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class C_Double_Bouncing : ComportementState
 {
+    public PhysicMaterial doubleBouncyMaterial;
     public C_Double_Bouncing(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -14,7 +15,12 @@ public class C_Double_Bouncing : ComportementState
         leftValue = 3;
         rightValue = 3;
         base.Enter();
+        
+        doubleBouncyMaterial = _sm.comportementManager.doubleBouncyMaterial;
+        
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.bouncingColor);
+        
+        _sm.collider.material = doubleBouncyMaterial;
 
     }
 
@@ -31,5 +37,7 @@ public class C_Double_Bouncing : ComportementState
     public override void Exit()
     {
         base.Exit();
+        _sm.collider.material = null;
+
     }
 }
