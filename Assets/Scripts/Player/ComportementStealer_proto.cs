@@ -37,11 +37,11 @@ public class ComportementStealer_proto : MonoBehaviour
         gameManager = FindAnyObjectByType<GameManager>();
         controls = GameManager.controls;
 
-        controls.Player.ActionSlot1.performed += ActionSlot1;
-        controls.Player.ActionSlot2.performed += ActionSlot2;
-        controls.Player.SwitchSlotsValue.performed += SwitchSlotsValue;
-        controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;
-        controls.Player.ViderSlots.performed += ViderSlots;
+        controls.Player.ActionSlot1.performed += ActionSlot1;//clic gauche
+        controls.Player.ActionSlot2.performed += ActionSlot2;//clic droit
+        controls.Player.SwitchSlotsValue.performed += SwitchSlotsValue;//T
+        controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;//F
+        controls.Player.ViderSlots.performed += ViderSlots;//G
         slot1 = 0;
         slot2 = 0;
         originSlot1 = null;
