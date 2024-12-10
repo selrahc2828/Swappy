@@ -135,6 +135,10 @@ public class GrabObject : MonoBehaviour
                 {
                     if (!FSM_ObjectState.isGrabbed)
                     {
+                        if (carriedObject.GetComponent<Rigidbody>().isKinematic)
+                        {
+                            carriedObject.GetComponent<Rigidbody>().isKinematic = false;
+                        }
                         FSM_ObjectState.GetThrown(handlerPosition.forward * launchForce);
                         //carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
                     }
