@@ -41,6 +41,7 @@ public class ComportementStealer_proto : MonoBehaviour
         controls.Player.ActionSlot2.performed += ActionSlot2;//clic droit
         controls.Player.SwitchSlotsValue.performed += SwitchSlotsValue;//T
         controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;//F
+        controls.Player.ViderComportementSurPlayer.performed += ViderComportementSurPlayer;//E
         controls.Player.ViderSlots.performed += ViderSlots;//G
         slot1 = 0;
         slot2 = 0;
@@ -58,6 +59,7 @@ public class ComportementStealer_proto : MonoBehaviour
         controls.Player.ActionSlot2.performed -= ActionSlot2;
         controls.Player.SwitchSlotsValue.performed -= SwitchSlotsValue;
         controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;
+        controls.Player.ViderComportementSurPlayer.performed += ViderComportementSurPlayer;//E
         controls.Player.ViderSlots.performed -= ViderSlots;
     }
 
@@ -260,7 +262,7 @@ public class ComportementStealer_proto : MonoBehaviour
         {
             if(slot1 != 0 || slot2 != 0)
             {
-                _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>(); ; // Stocker la r�f�rence
+                _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>(); // Stocker la r�f�rence
                 if (_stateStolen.currentState is ComportementState)
                 {
                     ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
@@ -339,6 +341,18 @@ public class ComportementStealer_proto : MonoBehaviour
         }
     }
 
+    void ViderComportementSurPlayer(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            #region Ce code est nul et temporaire, il faudra le refaire pour renvoyer les comportement dans les propriétaires
+            _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>();
+            ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
+            playerObjectState.CalculateNewtState(0);
+            #endregion
+        }
+    }
+    
     void ViderSlots(InputAction.CallbackContext context)
     {
         if (context.performed)

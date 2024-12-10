@@ -144,7 +144,6 @@ public class GrabObject : MonoBehaviour
                     }
                 }
             }
-
             //reset
             carriedObject = null;
             isCarrying = false;
