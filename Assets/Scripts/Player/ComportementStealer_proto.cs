@@ -295,7 +295,23 @@ public class ComportementStealer_proto : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogWarning("Celui qui arrive a m'afficher cette erreur je lui dois 10 balles");
+                            //L'objet vis� � une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
+                            if (playerObjectState.rightValue == 0)
+                            {
+                                Debug.Log("Addition de " + slot2 + " et " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                                int futurState = playerObjectState.stateValue + slot2 +slot1;
+                                playerObjectState.CalculateNewtState(futurState);
+                                slot1 = 0;
+                                slot2 = 0;
+                                originSlot1 = null;
+                                originSlot2 = null;
+                                slot1Text.text = "";
+                                slot2Text.text = "";
+                            }
+                            else
+                            {
+                                Debug.LogWarning("Le Player contiens déjà au moins un comportement et vous essayez de lui en ajouter 2 ");
+                            }
                         }
                     }
                     else

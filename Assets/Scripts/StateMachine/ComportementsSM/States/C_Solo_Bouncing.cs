@@ -22,7 +22,7 @@ public class C_Solo_Bouncing : ComportementState
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.noComportementColor);
 
         
-        _sm.collider.material = bouncyMaterial;
+        _sm.GetComponent<Collider>().material = bouncyMaterial;
     }
 
     public override void TickLogic()
@@ -39,7 +39,7 @@ public class C_Solo_Bouncing : ComportementState
     {
         base.Exit();
         
-        _sm.collider.material = null;
+        _sm.GetComponent<Collider>().material = null;
 
     }
 }

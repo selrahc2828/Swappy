@@ -31,7 +31,7 @@ public class C_Solo_Impulse : ComportementState
         repulserRange = _sm.comportementManager.repulserRange;
 
         // trueRepulserRange = repulserRange;
-        trueRepulserRange = _sm.collider.bounds.extents.magnitude + repulserRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
+        trueRepulserRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + repulserRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
         // pb si obj n'a pas de collider direct (ax Player)
         repulserForce = _sm.comportementManager.repulserForce;
         destroyOnUse = _sm.comportementManager.destroyOnUse;

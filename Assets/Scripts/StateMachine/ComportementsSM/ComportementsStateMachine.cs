@@ -74,7 +74,7 @@ public class ComportementsStateMachine : StateMachine
     [HideInInspector] public GameObject player;
     public bool isPlayer = false;
     [HideInInspector] public Rigidbody rb;
-    [HideInInspector] public Collider collider;
+    [HideInInspector] public Collider objectCollider;
     
     public string displayComportementName;
 
@@ -116,7 +116,7 @@ public class ComportementsStateMachine : StateMachine
         player = gameManager.player;
         rb = GetComponent<Rigidbody>();
         //surtout pour Player ui en a 2 en enfant 
-        collider = GetComponentInChildren<Collider>();
+        objectCollider = GetComponentInChildren<Collider>();
         currentState.Enter();
     }
     
@@ -202,10 +202,10 @@ public class ComportementsStateMachine : StateMachine
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireSphere(transform.position, comportementManager.magnetRange);            
             }
-            if (initialState == FirstState.SoloImpulse && collider != null)
+            if (initialState == FirstState.SoloImpulse && GetComponent<Collider>() != null)
             {
                 Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(transform.position, collider.bounds.extents.magnitude + comportementManager.repulserRange);          
+                Gizmos.DrawWireSphere(transform.position, GetComponent<Collider>().bounds.extents.magnitude + comportementManager.repulserRange);          
             }
 
         }

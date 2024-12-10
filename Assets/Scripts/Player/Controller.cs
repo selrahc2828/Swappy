@@ -64,7 +64,7 @@ public class Controller : MonoBehaviour
         controls.Player.ApplicationDeComportementSurPlayer.performed += PasteAtMe;
         controls.Player.Jump.performed += Jump;
         controls.Player.GrabDrop.performed += GrabAndDrop;
-        controls.Player.ResetListComportement.performed += ResetListeComp;
+        controls.Player.ViderComportementSurPlayer.performed += ResetListeComp;
         controls.Player.Projection.performed += Projection;
         
         Cursor.lockState = CursorLockMode.Locked;
@@ -84,7 +84,7 @@ public class Controller : MonoBehaviour
         controls.Player.ApplicationDeComportementSurPlayer.performed -= PasteAtMe;
         controls.Player.Jump.performed -= Jump;
         controls.Player.GrabDrop.performed -= GrabAndDrop;
-        controls.Player.ResetListComportement.performed -= ResetListeComp;
+        controls.Player.ViderComportementSurPlayer.performed -= ResetListeComp;
         controls.Player.Projection.performed -= Projection;
     }
 
