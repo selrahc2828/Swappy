@@ -98,12 +98,10 @@ public class GrabObject : MonoBehaviour
 
             if (carriedObject.GetComponent<Rigidbody>())
             {
-                carriedObject.GetComponent<Rigidbody>().isKinematic = true;
                 foreach (Collider collider in playerCollider)
                 {
                     Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), true);
                 }
-                // Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), true);
                 //dire a l'objet qu'il est grab au niveau FSM
                 var FSM_OfObject = carriedObject.GetComponent<ComportementsStateMachine>();
                 ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
@@ -129,9 +127,6 @@ public class GrabObject : MonoBehaviour
                 ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
                 FSM_ObjectState.isGrabbed = false;
 
-                carriedObject.GetComponent<Rigidbody>().isKinematic = false; //certains objet en kinematic de base (ou immuable, on ne veut pas les changer)
-                // Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), false);
-
                 foreach (Collider collider in playerCollider)
                 {
                     Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), false);
@@ -140,7 +135,8 @@ public class GrabObject : MonoBehaviour
                 {
                     if (!FSM_ObjectState.isGrabbed)
                     {
-                        carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
+                        FSM_ObjectState.GetThrown(handlerPosition.forward * launchForce);
+                        //carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
                     }
                 }
             }

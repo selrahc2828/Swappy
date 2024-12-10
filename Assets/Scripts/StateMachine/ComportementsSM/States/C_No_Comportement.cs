@@ -11,6 +11,7 @@ public class C_No_Comportement : ComportementState
 
     public override void Enter()
     {
+        isKinematic = false;
         stateValue = 0;
         leftValue = 0;
         rightValue = 0;
@@ -26,7 +27,7 @@ public class C_No_Comportement : ComportementState
 
     public override void TickPhysics()
     {
-        
+        base.TickPhysics();
     }
 
     public override void Exit()
