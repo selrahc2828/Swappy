@@ -15,14 +15,19 @@ public class C_Solo_Bouncing : ComportementState
         stateValue = 3;
         leftValue = 3;
         rightValue = 0;
+        isKinematic = true;
         base.Enter();
 
         bouncyMaterial = _sm.comportementManager.bouncyMaterial;
         // _sm.rend.material = _sm.bounce;
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.noComportementColor);
-
         
         _sm.GetComponent<Collider>().material = bouncyMaterial;
+        
+        if (_sm.isPlayer)
+        {
+            _sm.comportementManager.playerBouncingCollider.material = bouncyMaterial;
+        }
     }
 
     public override void TickLogic()

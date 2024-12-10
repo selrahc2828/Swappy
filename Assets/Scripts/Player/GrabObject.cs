@@ -23,8 +23,8 @@ public class GrabObject : MonoBehaviour
     public GameObject carriedObject;
     private Transform _originParent;
     private GameObject _closestObj;
-    [Header("Variation")]
-    public bool isLaunchable;
+    [FormerlySerializedAs("isLaunchable")] [Header("Variation")]
+    public bool canThrow;
     public float launchForce;
     public Vector3 detectionSize;
     void Start()
@@ -136,9 +136,12 @@ public class GrabObject : MonoBehaviour
                 {
                     Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), false);
                 }
-                if (isLaunchable || dropRepulse)//lance que si on actve le lancé ou si impulse quand porté
+                if (canThrow || dropRepulse)//lance que si on actve le lancé ou si impulse quand porté
                 {
-                    carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
+                    if (!FSM_ObjectState.isGrabbed)
+                    {
+                        carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
+                    }
                 }
             }
 

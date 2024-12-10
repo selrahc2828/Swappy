@@ -36,6 +36,7 @@ public class ComportementManager : MonoBehaviour
     public bool magnetGradiantForce;
 
     [Header("Bouncing")]
+    public Collider playerBouncingCollider;
     public PhysicMaterial bouncyMaterial;
     [Header("DoubleBounce")]
     public PhysicMaterial doubleBouncyMaterial;
