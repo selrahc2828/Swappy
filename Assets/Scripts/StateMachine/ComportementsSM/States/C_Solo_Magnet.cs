@@ -14,6 +14,7 @@ public class C_Solo_Magnet : ComportementState
 
     public override void Enter()
     {
+        isKinematic = false;
         stateValue = 27;
         leftValue = 27;
         rightValue = 0;
@@ -30,12 +31,15 @@ public class C_Solo_Magnet : ComportementState
 
     public override void TickLogic()
     {
-        Attract();
+        base.TickLogic();
+
+        Attract();//même comportement sur player et pas sur player
     }
 
     public override void TickPhysics()
     {
-        
+        base.TickPhysics();
+
     }
 
     public override void Exit()
@@ -50,23 +54,14 @@ public class C_Solo_Magnet : ComportementState
         {
             foreach (Collider objectInRange in objectsInRange)
             {
-                if (objectInRange.gameObject.tag == "Player")
+                if (!objectInRange.gameObject.CompareTag("Player"))
                 {
-                    if (!objectInRange.gameObject.GetComponentInParent<Rigidbody>())
+                    if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
-                        return;
+                        ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+
                     }
-                    //collider et rigid body pas au même endroit pour lui
-                    GameObject objectAffected = objectInRange.gameObject.GetComponentInParent<Rigidbody>().gameObject;
-                    
-                    // pb pour appliquer la force à cause du drag sur le rigidbody
-                    ApplyForce(objectAffected.GetComponent<Rigidbody>(), objectAffected,magnetForce);
                 }
-                else if (objectInRange.GetComponent<Rigidbody>() != null)
-                {
-                    ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-                    
-                }  
             }
         }
     }
