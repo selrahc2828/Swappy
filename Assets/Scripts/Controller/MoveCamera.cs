@@ -13,6 +13,7 @@ public class MoveCamera : MonoBehaviour
 
     private void Start()
     {
+        cameraPosition = GameObject.FindGameObjectWithTag("CameraPosition").transform;
         ChangeFocusTarget();
     }
 

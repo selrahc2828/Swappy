@@ -9,7 +9,6 @@ public class GrabObject : MonoBehaviour
 {
     // var position / parent ou mettre obj
     // taille max qu'on peut porter + offset moiti� largeur du player
-    // isPickUp pour check si on a un objet ou non
     public Camera mainCam;
     public Transform handlerPosition;
     public Transform interractorZonePos;//centre zone de detection
@@ -30,12 +29,13 @@ public class GrabObject : MonoBehaviour
     public Vector3 detectionSize;
     void Start()
     {
+        interactText = GameObject.FindGameObjectWithTag("TextInteract").GetComponent<TextMeshProUGUI>();
         if (interactText)
         {
             interactText.gameObject.SetActive(false);
         }
         
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        mainCam = GameManager.Instance.mainCamera;
         interractorZonePos = GameObject.FindGameObjectWithTag("InterractorZone").transform;
         handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
         playerCollider = GetComponentsInChildren<Collider>();
@@ -129,14 +129,14 @@ public class GrabObject : MonoBehaviour
                 ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
                 FSM_ObjectState.isGrabbed = false;
 
-                carriedObject.GetComponent<Rigidbody>().isKinematic = false;
+                carriedObject.GetComponent<Rigidbody>().isKinematic = false; //certains objet en kinematic de base (ou immuable, on ne veut pas les changer)
                 // Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), false);
 
                 foreach (Collider collider in playerCollider)
                 {
                     Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), false);
                 }
-                if (isLaunchable && !dropRepulse)
+                if (isLaunchable || dropRepulse)//lance que si on actve le lancé ou si impulse quand porté
                 {
                     carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
                 }

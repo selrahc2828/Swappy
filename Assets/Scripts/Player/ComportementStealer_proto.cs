@@ -16,7 +16,7 @@ public class ComportementStealer_proto : MonoBehaviour
     [Header("Raycast")]
     public LayerMask hitLayer;
     private Ray _ray;
-    public Camera mainCam;
+    [HideInInspector] public Camera mainCam;
 
     [Header("Comportement stoqu�")]
     public int slot1 = 0;
@@ -37,15 +37,19 @@ public class ComportementStealer_proto : MonoBehaviour
         gameManager = FindAnyObjectByType<GameManager>();
         controls = GameManager.controls;
 
-        controls.Player.ActionSlot1.performed += ActionSlot1;
-        controls.Player.ActionSlot2.performed += ActionSlot2;
-        controls.Player.SwitchSlotsValue.performed += SwitchSlotsValue;
-        controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;
-        controls.Player.ViderSlots.performed += ViderSlots;
+        controls.Player.ActionSlot1.performed += ActionSlot1;//clic gauche
+        controls.Player.ActionSlot2.performed += ActionSlot2;//clic droit
+        controls.Player.SwitchSlotsValue.performed += SwitchSlotsValue;//T
+        controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;//F
+        controls.Player.ViderSlots.performed += ViderSlots;//G
         slot1 = 0;
         slot2 = 0;
         originSlot1 = null;
         originSlot2 = null;
+
+        mainCam = GameManager.Instance.mainCamera;
+        slot1Text = GameObject.FindGameObjectWithTag("TextSlot1").GetComponent<TextMeshProUGUI>();
+        slot2Text = GameObject.FindGameObjectWithTag("TextSlot2").GetComponent<TextMeshProUGUI>();
     }
 
     private void OnDisable()
@@ -63,7 +67,7 @@ public class ComportementStealer_proto : MonoBehaviour
         {
             RaycastHit _hit;
 
-            _ray = mainCam.ScreenPointToRay(Input.mousePosition);
+            _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
             {
                 if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
@@ -152,7 +156,7 @@ public class ComportementStealer_proto : MonoBehaviour
         {
             RaycastHit _hit;
 
-            _ray = mainCam.ScreenPointToRay(Input.mousePosition);
+            _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
             {
                 if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))

@@ -27,6 +27,17 @@ public class ComportementState : State
     public override void TickLogic()
     {
         Debug.Log(_sm.currentState + " logic uppdate");
+        
+        // if (isGrabbed)
+        // {
+        //     _sm.rb.isKinematic = true;
+        // }
+        // else
+        // {
+        //     _sm.rb.isKinematic = false;
+        // }
+        
+        //addforce pas recup ici, il se fait dans grabObject pendant qu'il est kinematic
     }
 
     public override void TickPhysics()
