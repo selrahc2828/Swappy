@@ -133,7 +133,7 @@ public class GrabObject : MonoBehaviour
                 }
                 if (canThrow || dropRepulse)//lance que si on actve le lancé ou si impulse quand porté
                 {
-                    if (!FSM_ObjectState.isGrabbed)
+                    if (!FSM_ObjectState.isGrabbed && !FSM_ObjectState.isKinematic)
                     {
                         if (carriedObject.GetComponent<Rigidbody>().isKinematic)
                         {
