@@ -58,7 +58,7 @@ public class ComportementStealer_proto : MonoBehaviour
         controls.Player.ActionSlot1.performed -= ActionSlot1;
         controls.Player.ActionSlot2.performed -= ActionSlot2;
         controls.Player.SwitchSlotsValue.performed -= SwitchSlotsValue;
-        controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;
+        controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;//F
         controls.Player.ViderComportementSurPlayer.performed += ViderComportementSurPlayer;//E
         controls.Player.ViderSlots.performed -= ViderSlots;
     }
