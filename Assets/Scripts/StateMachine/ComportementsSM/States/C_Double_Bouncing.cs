@@ -20,7 +20,7 @@ public class C_Double_Bouncing : ComportementState
         
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.bouncingColor);
         
-        _sm.collider.material = doubleBouncyMaterial;
+        _sm.objectCollider.material = doubleBouncyMaterial;
 
     }
 
@@ -37,7 +37,7 @@ public class C_Double_Bouncing : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.collider.material = null;
+        _sm.objectCollider.material = null;
 
     }
 }
