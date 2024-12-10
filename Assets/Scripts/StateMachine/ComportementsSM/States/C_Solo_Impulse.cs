@@ -21,6 +21,7 @@ public class C_Solo_Impulse : ComportementState
 
     public override void Enter()
     {
+        isKinematic = false;
         stateValue = 1;
         leftValue = 1;
         rightValue = 0;
@@ -57,7 +58,7 @@ public class C_Solo_Impulse : ComportementState
 
     public override void TickPhysics()
     {
-        
+        base.TickPhysics();
     }
 
     public override void Exit()

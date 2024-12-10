@@ -48,7 +48,6 @@ public class ComportementState : State
 
     public void GetThrown(Vector3 thrownDirection)
     {
-        Debug.LogWarning(_sm.rb.isKinematic);
         _sm.rb.AddForce(thrownDirection, ForceMode.Impulse);
     }
 
