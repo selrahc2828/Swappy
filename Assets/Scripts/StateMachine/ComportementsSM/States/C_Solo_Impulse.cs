@@ -91,7 +91,7 @@ public class C_Solo_Impulse : ComportementState
                     ApplyForce(objectAffected.GetComponent<Rigidbody>(), objectAffected,repulserForce);
                     
                     // player relache l'objet repulse
-                    if (objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject) //juste isGrabbed ?
+                    if (isGrabbed) //juste isGrabbed ? objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject
                     {
                         objectAffected.GetComponent<GrabObject>().Drop(true);
                     }

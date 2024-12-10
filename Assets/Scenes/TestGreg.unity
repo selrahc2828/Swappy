@@ -2945,7 +2945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 178470489595495102, guid: d63782a5a1b50044d8670005e17cee9b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 76.8
+      value: 18.800001
       objectReference: {fileID: 0}
     - target: {fileID: 178470489595495102, guid: d63782a5a1b50044d8670005e17cee9b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8942,8 +8942,8 @@ GameObject:
   - component: {fileID: 1586753351}
   - component: {fileID: 1586753355}
   - component: {fileID: 1586753354}
-  - component: {fileID: 1586753353}
   - component: {fileID: 1586753352}
+  - component: {fileID: 1586753356}
   m_Layer: 3
   m_Name: Repulse (1)
   m_TagString: Movable
@@ -8994,30 +8994,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1586753353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1586753350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2c116a485cf5f34195ff47976c1a537, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  typeComp: 0
-  stealable: 1
-  originalOwner: {fileID: 0}
-  repulserTime: 3
-  repulserTimer: 0
-  repulserRange: 15
-  repulserForce: 40
-  destroyOnUse: 0
-  impulseGradiantForce: 0
-  feedback: {fileID: 5997281712086689970, guid: d7e7b2fb81b45414cbff7f19ab5a5b62, type: 3}
-  applyOnMe: 1
 --- !u!65 &1586753354
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9047,6 +9023,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1586753350}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1586753356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586753350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be0876c2ba0e33140b6f510489fd944c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  comportementManager: {fileID: 0}
+  bounce: {fileID: 0}
+  rocket: {fileID: 0}
+  immuable: {fileID: 0}
+  rien: {fileID: 0}
+  impulse: {fileID: 0}
+  magnet: {fileID: 0}
+  rend: {fileID: 0}
+  player: {fileID: 0}
+  isPlayer: 0
+  rb: {fileID: 0}
+  collider: {fileID: 0}
+  displayComportementName: 
+  initialState: 1
 --- !u!1 &1623006401
 GameObject:
   m_ObjectHideFlags: 0

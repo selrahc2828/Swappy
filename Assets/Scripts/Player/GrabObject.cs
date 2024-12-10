@@ -129,14 +129,14 @@ public class GrabObject : MonoBehaviour
                 ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
                 FSM_ObjectState.isGrabbed = false;
 
-                carriedObject.GetComponent<Rigidbody>().isKinematic = false;
+                carriedObject.GetComponent<Rigidbody>().isKinematic = false; //certains objet en kinematic de base (ou immuable, on ne veut pas les changer)
                 // Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), false);
 
                 foreach (Collider collider in playerCollider)
                 {
                     Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), false);
                 }
-                if (isLaunchable && !dropRepulse)
+                if (isLaunchable || dropRepulse)//lance que si on actve le lancé ou si impulse quand porté
                 {
                     carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
                 }
