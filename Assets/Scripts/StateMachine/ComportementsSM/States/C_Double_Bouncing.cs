@@ -5,12 +5,15 @@ using UnityEngine;
 public class C_Double_Bouncing : ComportementState
 {
     public PhysicMaterial doubleBouncyMaterial;
+    public PhysicMaterial basePlayerMaterial;
+    public PhysicMaterial basePlayerSlideMaterial;
     public C_Double_Bouncing(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
+        isKinematic = false;
         stateValue = 6;
         leftValue = 3;
         rightValue = 3;
@@ -19,8 +22,17 @@ public class C_Double_Bouncing : ComportementState
         doubleBouncyMaterial = _sm.comportementManager.doubleBouncyMaterial;
         
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.bouncingColor);
-        
-        _sm.objectCollider.material = doubleBouncyMaterial;
+        if (_sm.isPlayer)
+        {
+            basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
+            basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
+            _sm.comportementManager.playerBouncingCollider.material = doubleBouncyMaterial;
+            _sm.comportementManager.playerSlidingCollider.material = doubleBouncyMaterial;
+        }
+        else
+        {
+            _sm.objectCollider.material = doubleBouncyMaterial;
+        }
 
     }
 
@@ -37,7 +49,15 @@ public class C_Double_Bouncing : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.objectCollider.material = null;
+        if (_sm.isPlayer)
+        {
+            _sm.comportementManager.playerBouncingCollider.material = basePlayerMaterial;
+            _sm.comportementManager.playerSlidingCollider.material = basePlayerSlideMaterial;
+        }
+        else
+        {
+            _sm.GetComponent<Collider>().material = null;
+        }
 
     }
 }
