@@ -38,7 +38,7 @@ public class SoundManager : MonoBehaviour
         _giveComp = RuntimeManager.CreateInstance("event:/Player/Comp/giveComp");
         _projectionEnter = RuntimeManager.CreateInstance("event:/Player/Projection/projectionEnter");
         _projectionStay = RuntimeManager.CreateInstance("event:/Player/Projection/projectionStay");
-        _projectionExit = RuntimeManager.CreateInstance("event:/Player¨/Projection/projectionExit");
+        _projectionExit = RuntimeManager.CreateInstance("event:/Player/Projection/projectionExit");
     }
 #endregion
 
@@ -62,11 +62,12 @@ public class SoundManager : MonoBehaviour
     //
     //      Annotez quand les sons sont ajouté au code. (nom du script + line)
 
-    public void PlayPlayerSound(SoundPlayer soundPlayer)
+    public void PlayPlayerSound(SoundPlayer soundPlayer, Vector3 position=default)
     {
         switch (soundPlayer)
         {
             case SoundPlayer.slowTime:
+                _slowTime.set3DAttributes(RuntimeUtils.To3DAttributes(position));
                 _slowTime.start();          //RuntimeManager.PlayOneShot("event:/Player/Time/slowTime");                    DEBUG
                 break;
             case SoundPlayer.unslowTime:
