@@ -11,4 +11,3 @@ Les Prefabs et Objets Comportement ont 2 materials dans leur Mesh Renderer, le 2
 Optionnel: pour voir Gizmo de la box de detection du grab
 Dans le script GrabObject du prefab Player renseigner :
     - la mainCamera, ainsi que HandlerPosition et InterractorZone qui se trouve en enfant de MainCamera > Interractor (juste pour voir la box à l'écran, sinon ils sont récupéré au runtime)
-
