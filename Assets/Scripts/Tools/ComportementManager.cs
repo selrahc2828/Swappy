@@ -6,7 +6,8 @@ using UnityEngine.Serialization;
 public class ComportementManager : MonoBehaviour
 {
     public static ComportementManager Instance;
-
+    public GameManager gm;
+    
     [Header("Comportement colors")]
     public Color impulseColor;
     public Color bouncingColor;
@@ -37,6 +38,7 @@ public class ComportementManager : MonoBehaviour
 
     [Header("Bouncing")]
     public Collider playerBouncingCollider;
+    public Collider playerSlidingCollider;
     public PhysicMaterial bouncyMaterial;
     [Header("DoubleBounce")]
     public PhysicMaterial doubleBouncyMaterial;
@@ -55,6 +57,19 @@ public class ComportementManager : MonoBehaviour
     void Start()
     {
         repulserTimer = 0;
+        var colliders = GameManager.Instance.player.GetComponentsInChildren<CapsuleCollider>();
+        foreach (var collider in colliders)
+        {
+            if (collider.height == 2f)
+            {
+                playerBouncingCollider = collider;
+            }
+
+            if (collider.height == 1.9f)
+            {
+                playerSlidingCollider = collider;
+            }
+        }
     }
 
     // Update is called once per frame

@@ -53,6 +53,12 @@ public class ComportementState : State
         Debug.Log(_sm.currentState + " exit");
     }
 
+    public void GetThrown(Vector3 thrownDirection)
+    {
+        Debug.LogWarning(_sm.rb.isKinematic);
+        _sm.rb.AddForce(thrownDirection, ForceMode.Impulse);
+    }
+
     public void CalculateNewtState(int newValue)
     {
         switch (newValue)
