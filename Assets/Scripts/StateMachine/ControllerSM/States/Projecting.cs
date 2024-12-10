@@ -21,7 +21,7 @@ public class Projecting : MouvementState
         // tous les controle sont ici plutot que dans l'input de projection car les variable ne sont pas save et on doit tout refaire ici
         
         _cameraRaycastProjection = _sm.gameManager.playerCamScript.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(_cameraRaycastProjection, out _cameraHitProjection, _sm.gameManager.range, _sm.gameManager.hitLayer);
+        Physics.Raycast(_cameraRaycastProjection, out _cameraHitProjection, _sm.gameManager.projectionRange, _sm.gameManager.hitLayer);
 
         if (_cameraHitProjection.collider != null && _sm.gameManager.projectionTimer > 0)
         {

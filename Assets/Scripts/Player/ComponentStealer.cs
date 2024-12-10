@@ -48,9 +48,9 @@ public class ComponentStealer : MonoBehaviour
     private void OnDisable()
     {
         controls.Player.ActionSlot1.performed -= VolDeComportement;
-        controls.Player.ActionSlot2.performed += ApplicationDeComportementSurObjet;
-        controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;
-        controls.Player.ViderSlots.performed += ViderComportementDuPlayer;
+        controls.Player.ActionSlot2.performed -= ApplicationDeComportementSurObjet;
+        controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;
+        controls.Player.ViderSlots.performed -= ViderComportementDuPlayer;
     }
 
     void Update()

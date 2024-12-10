@@ -51,8 +51,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector]public Color Uncomportemented_color;
     
     [Header("Player")]
-    public GameObject player;
-
+    public GameObject player; //dans Steler proto et ComportementStateMachine(pas sûr qu'il soit utilisé dedans)
+    public Camera mainCamera;
+    
     [Header("Player Movement Parameters")]
     public float walkSpeed;
     public float sprintSpeed;
@@ -81,7 +82,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public float projectionTimer;
     public float coeffRefill = 0.75f;
-    public float range;
+    public float projectionRange;
     public float coeffReducDistance;
     public bool activeGizmoRange;
     
@@ -104,6 +105,12 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
+        
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        if (mainCamera == null)
+        {
+            Debug.LogWarning("Il n'y a pas de MainCamera dans la scène");
+        }
     }
 
     // Start is called before the first frame update
@@ -114,61 +121,66 @@ public class GameManager : MonoBehaviour
         etatIsProjected = false;
         projectionTimer = projectionTimeDuration;
 
+        timerProjectionText = GameObject.FindWithTag("TextTimerProjecting").GetComponent<TextMeshProUGUI>();
         if (!timerProjectionText)
         {
             Debug.Log("Il n'y a pas de text Timer Projection");
         }
+        
+        timerSlowText = GameObject.FindWithTag("TextTimerSlow").GetComponent<TextMeshProUGUI>();
         if (!timerSlowText)
         {
             Debug.Log("Il n'y a pas de text Timer Slow");
         }
         
-        //à virer quand player gre supprimé
+        //à virer quand player greg supprimé
         camControllerScript = FindObjectOfType<CameraController>();
         if (camControllerScript == null)
         {
             //Debug.LogWarning("Il n'y a pas de CameraController dans la scène");
         }
+        //
+
         playerCamScript = FindObjectOfType<PlayerCam>();
         if (playerCamScript == null)
         {
             Debug.LogWarning("Il n'y a pas de PlayerCam dans la scène");
         }
+        
         moveCamScript = FindObjectOfType<MoveCamera>();
         if (moveCamScript == null)
         {
             Debug.LogWarning("Il n'y a pas de MoveCamera dans la scène");
         }
+        
+        orientation = GameObject.FindGameObjectWithTag("Orientation").transform;
+        
         grabScript = FindObjectOfType<GrabObject>();
         if (grabScript == null)
         {
             Debug.LogWarning("Il n'y a pas de grabScript dans la scène");
         }
 
-        //player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectsWithTag("Player")[1];// 0: playerObject / 1: player
         if (player == null)
         {
             Debug.LogWarning("GameManager Player non renseigné");
         }
+        
         controls.Player.Enable();
-
         controls.Player.ReloadScene.performed += ReloadScene;
         controls.Player.StopTime.performed += SlowMotionInput;
-
-
     }
 
     private void OnDisable()
     {
         controls.Player.ReloadScene.performed -= ReloadScene;
         controls.Player.StopTime.performed -= SlowMotionInput;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
         SlowTime();
         ProjectionTimer();
 

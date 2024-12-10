@@ -9,7 +9,6 @@ public class GrabObject : MonoBehaviour
 {
     // var position / parent ou mettre obj
     // taille max qu'on peut porter + offset moiti� largeur du player
-    // isPickUp pour check si on a un objet ou non
     public Camera mainCam;
     public Transform handlerPosition;
     public Transform interractorZonePos;//centre zone de detection
@@ -30,12 +29,13 @@ public class GrabObject : MonoBehaviour
     public Vector3 detectionSize;
     void Start()
     {
+        interactText = GameObject.FindGameObjectWithTag("TextInteract").GetComponent<TextMeshProUGUI>();
         if (interactText)
         {
             interactText.gameObject.SetActive(false);
         }
         
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        mainCam = GameManager.Instance.mainCamera;
         interractorZonePos = GameObject.FindGameObjectWithTag("InterractorZone").transform;
         handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
         playerCollider = GetComponentsInChildren<Collider>();
