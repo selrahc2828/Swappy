@@ -37,14 +37,7 @@ public class ComportementState : State
         
         if (!isKinematic)
         {
-            if (isGrabbed)
-            {
-                _sm.rb.isKinematic = true;
-            }
-            else
-            {
-                _sm.rb.isKinematic = false;
-            }
+            _sm.rb.isKinematic = isGrabbed;
         }
     }
 
