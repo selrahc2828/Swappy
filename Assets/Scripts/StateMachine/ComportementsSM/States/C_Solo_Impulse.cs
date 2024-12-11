@@ -66,6 +66,14 @@ public class C_Solo_Impulse : ComportementState
         base.Exit();
     }
     
+    public override void DisplayGizmos()
+    {
+        base.DisplayGizmos();
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(_sm.transform.position, trueRepulserRange);  
+
+    }    
+ 
     public void Expulse()
     {
         if (feedback)

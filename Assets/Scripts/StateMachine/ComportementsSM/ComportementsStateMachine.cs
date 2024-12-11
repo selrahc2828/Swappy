@@ -193,21 +193,4 @@ public class ComportementsStateMachine : StateMachine
         }
     }
     
-    void OnDrawGizmos()
-    {
-        if (comportementManager != null)
-        {
-            if (initialState == FirstState.SoloMagnet)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawWireSphere(transform.position, comportementManager.magnetRange);            
-            }
-            if (initialState == FirstState.SoloImpulse && GetComponent<Collider>() != null)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(transform.position, GetComponent<Collider>().bounds.extents.magnitude + comportementManager.repulserRange);          
-            }
-
-        }
-    }
 }
