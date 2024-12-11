@@ -8,18 +8,8 @@ using FMOD.Studio;
 public class SoundManager : MonoBehaviour
 {
 
-#region InitPlayer
-    public enum SoundPlayer
-        {
-            slowTime,
-            unslowTime,
-            stealComp,
-            giveComp,
-            projectionEnter,
-            projectionStay,
-            projectionExit
-        }
-
+#region Init Player
+    public enum SoundPlayer {slowTime,   unslowTime,   stealComp,   giveComp,   projectionEnter,   projectionStay,   projectionExit}
     private EventInstance _slowTime;
     private EventInstance _unslowTime;
     private EventInstance _stealComp;
@@ -27,6 +17,9 @@ public class SoundManager : MonoBehaviour
     private EventInstance _projectionEnter;
     private EventInstance _projectionStay;
     private EventInstance _projectionExit;
+    #endregion
+#region Init Debug
+    private RESULT testPlayer;
 #endregion
 
 #region Start()
@@ -62,35 +55,39 @@ public class SoundManager : MonoBehaviour
     //
     //      Annotez quand les sons sont ajouté au code. (nom du script + line)
 
-    public void PlayPlayerSound(SoundPlayer soundPlayer, Vector3 position=default)
+    public void PlayPlayerSound(SoundPlayer soundPlayer)
     {
+        
         switch (soundPlayer)
         {
             case SoundPlayer.slowTime:
-                _slowTime.set3DAttributes(RuntimeUtils.To3DAttributes(position));
-                _slowTime.start();          //RuntimeManager.PlayOneShot("event:/Player/Time/slowTime");                    DEBUG
+                testPlayer = _slowTime.start();          //RuntimeManager.PlayOneShot("event:/Player/Time/slowTime");                    DEBUG
                 break;
             case SoundPlayer.unslowTime:
-                _unslowTime.start();        //RuntimeManager.PlayOneShot("event:/Player/Time/unslowTime");                  DEBUG
+                testPlayer = _unslowTime.start();        //RuntimeManager.PlayOneShot("event:/Player/Time/unslowTime");                  DEBUG
                 break;
             case SoundPlayer.stealComp:
-                _stealComp.start();         //RuntimeManager.PlayOneShot("event:/Player/Comp/stealComp");                   DEBUG
+                testPlayer = _stealComp.start();         //RuntimeManager.PlayOneShot("event:/Player/Comp/stealComp");                   DEBUG
                 break;
             case SoundPlayer.giveComp:
-                _giveComp.start();          //RuntimeManager.PlayOneShot("event:/Player/Comp/giveComp");                    DEBUG
+                testPlayer = _giveComp.start();          //RuntimeManager.PlayOneShot("event:/Player/Comp/giveComp");                    DEBUG
                 break;
             case SoundPlayer.projectionEnter:
-                _projectionEnter.start();   //RuntimeManager.PlayOneShot("event:/Player/Projection/projectionEnter");       DEBUG
+                testPlayer = _projectionEnter.start();   //RuntimeManager.PlayOneShot("event:/Player/Projection/projectionEnter");       DEBUG
                 break;
             case SoundPlayer.projectionStay:
-                _projectionStay.start();    //RuntimeManager.PlayOneShot("event:/Player/Projection/projectionStay");        DEBUG
+                testPlayer = _projectionStay.start();    //RuntimeManager.PlayOneShot("event:/Player/Projection/projectionStay");        DEBUG
                 break;
             case SoundPlayer.projectionExit:
-                _projectionExit.start();    //RuntimeManager.PlayOneShot("event:/Player¨/Projection/projectionExit");       DEBUG
+                testPlayer = _projectionExit.start();    //RuntimeManager.PlayOneShot("event:/Player¨/Projection/projectionExit");       DEBUG
                 break;
             default:
                 UnityEngine.Debug.LogError("PlayPlayerSound, Argument manquant : Checkez la liste");
                 break;
+        }
+        if (testPlayer != RESULT.OK)
+        {
+            UnityEngine.Debug.LogError("PlayPlayerSound Error: Son non joué/manquant. ( Vous ne devriez au grand jamais voir cette erreur donc chill, mais dans le doute elle est là)");
         }
     }
     #endregion
@@ -119,25 +116,25 @@ public class SoundManager : MonoBehaviour
             switch (soundPlayer)
             {
                 case SoundPlayer.slowTime:
-                    _slowTime.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                    testPlayer = _slowTime.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                     break;
                 case SoundPlayer.unslowTime:
-                    _unslowTime.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                    testPlayer = _unslowTime.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                     break;
                 case SoundPlayer.stealComp:
-                    _stealComp.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                    testPlayer = _stealComp.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                     break;
                 case SoundPlayer.giveComp:
-                    _giveComp.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                    testPlayer = _giveComp.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                     break;
                 case SoundPlayer.projectionEnter:
-                    _projectionEnter.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                    testPlayer = _projectionEnter.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                     break;
                 case SoundPlayer.projectionStay:
-                    _projectionStay.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                    testPlayer = _projectionStay.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                     break;
                 case SoundPlayer.projectionExit:
-                    _projectionExit.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                    testPlayer = _projectionExit.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
                     break;
                 default:
                     UnityEngine.Debug.LogError("PlayPlayerSound, Argument manquant : Checkez la liste");
@@ -149,30 +146,34 @@ public class SoundManager : MonoBehaviour
             switch (soundPlayer)
             {
                 case SoundPlayer.slowTime:
-                    _slowTime.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                    testPlayer = _slowTime.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                     break;
                 case SoundPlayer.unslowTime:
-                    _unslowTime.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                    testPlayer = _unslowTime.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                     break;
                 case SoundPlayer.stealComp:
-                    _stealComp.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                    testPlayer = _stealComp.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                     break;
                 case SoundPlayer.giveComp:
-                    _giveComp.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                    testPlayer = _giveComp.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                     break;
                 case SoundPlayer.projectionEnter:
-                    _projectionEnter.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                    testPlayer = _projectionEnter.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                     break;
                 case SoundPlayer.projectionStay:
-                    _projectionStay.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                    testPlayer = _projectionStay.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                     break;
                 case SoundPlayer.projectionExit:
-                    _projectionExit.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                    testPlayer = _projectionExit.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                     break;
                 default:
                     UnityEngine.Debug.LogError("PlayPlayerSound, Argument manquant : Checkez la liste");
                     break;
             }
+        }
+        if (testPlayer != RESULT.OK)
+        {
+            UnityEngine.Debug.LogError("StopPlayerSound: Je sais pas comment vous avez pour afficher ça, mais dans le doute allez chercher un thé, faites autre chose, et prevenez moi que c'est la merde à ce point, mais en vrai si vous avez ça et que vous m'avez pas appelé vous etes courageux de fou donc bravo.");
         }
     }
 #endregion
