@@ -43,6 +43,8 @@ public class ComportementManager : MonoBehaviour
     [Header("DoubleBounce")]
     public PhysicMaterial doubleBouncyMaterial;
 
+    [Header("Magnet Bounce")]
+    public float magnetForceMultiplier;
 
     private void Awake()
     {
