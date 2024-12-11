@@ -33,7 +33,7 @@ public class C_Solo_Magnet : ComportementState
     {
         base.TickLogic();
 
-        Attract();//même comportement sur player et pas sur player
+        Attract();//même comportement sur player et sur objet
     }
 
     public override void TickPhysics()
@@ -47,6 +47,13 @@ public class C_Solo_Magnet : ComportementState
         base.Exit();
     }
 
+    public override void DisplayGizmos()
+    {
+        base.DisplayGizmos();
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(_sm.transform.position, trueMagnetRange);   
+    }
+
     public void Attract()
     {
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, magnetRange);
@@ -54,7 +61,7 @@ public class C_Solo_Magnet : ComportementState
         {
             foreach (Collider objectInRange in objectsInRange)
             {
-                if (!objectInRange.gameObject.CompareTag("Player"))
+                if (!objectInRange.gameObject.CompareTag("Player") && objectInRange.gameObject != _sm.gameObject) // applique pas sur player et lui même
                 {
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
@@ -70,7 +77,7 @@ public class C_Solo_Magnet : ComportementState
     {
         if (magnetGradiantForce)
         {
-            objToApply.GetComponent<Rigidbody>().AddExplosionForce(-magnetForce, _sm.transform.position, trueMagnetRange);
+            objToApply.GetComponent<Rigidbody>().AddExplosionForce(-force, _sm.transform.position, trueMagnetRange);
         }
         else
         {
