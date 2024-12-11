@@ -9,29 +9,21 @@ public class SoundManager : MonoBehaviour
 {
 
 #region Init Player
-    public enum SoundPlayer {slowTime,   unslowTime,   stealComp,   giveComp,   projectionEnter,   projectionStay,   projectionExit}
-    private EventInstance _slowTime;
-    private EventInstance _unslowTime;
-    private EventInstance _stealComp;
-    private EventInstance _giveComp;
-    private EventInstance _projectionEnter;
-    private EventInstance _projectionStay;
-    private EventInstance _projectionExit;
-    #endregion
-#region Init Debug
+    private EventInstance sonPlayer;
     private RESULT testPlayer;
-#endregion
+    public enum SoundPlayer {slowTime,   unslowTime,   stealComp,   giveComp,   projectionEnter,   projectionStay,   projectionExit}
+    private string _slowTime = "event:/Player/Time/slowTime";
+    private string _unslowTime = "event:/Player/Time/unslowTime";
+    private string _stealComp = "event:/Player/Comp/stealComp";
+    private string _giveComp = "event:/Player/Comp/giveComp";
+    private string _projectionEnter = "event:/Player/Projection/projectionEnter";
+    private string _projectionStay = "event:/Player/Projection/projectionStay";
+    private string _projectionExit = "event:/Player/Projection/projectionExit";
+    #endregion
 
 #region Start()
     void Start()
     {
-        _slowTime = RuntimeManager.CreateInstance("event:/Player/Time/slowTime");
-        _unslowTime = RuntimeManager.CreateInstance("event:/Player/Time/unslowTime");
-        _stealComp = RuntimeManager.CreateInstance("event:/Player/Comp/stealComp");
-        _giveComp = RuntimeManager.CreateInstance("event:/Player/Comp/giveComp");
-        _projectionEnter = RuntimeManager.CreateInstance("event:/Player/Projection/projectionEnter");
-        _projectionStay = RuntimeManager.CreateInstance("event:/Player/Projection/projectionStay");
-        _projectionExit = RuntimeManager.CreateInstance("event:/Player/Projection/projectionExit");
     }
 #endregion
 
@@ -42,7 +34,6 @@ public class SoundManager : MonoBehaviour
     //  Tout les sons à appeler ici sont des sons finis, donc il ne doivent pas se joué en boucle.
     //  Si c'est le cas, aller voir dans la parti debug, plus bas.
     //
-    //  Si certain sont ne se lance pas essayez d'utiliser les RuntimeManager.PlayOneShot().    (pensez, dans ce cas à retirer les DEBUG et à me le dire.)
     //
     //  Sons disponible à ajouter dans le code:
     //  -   slowTime            : PlayPlayerSound(SoundPlayer.slowTime)                 ()
@@ -61,122 +52,39 @@ public class SoundManager : MonoBehaviour
         switch (soundPlayer)
         {
             case SoundPlayer.slowTime:
-                testPlayer = _slowTime.start();          //RuntimeManager.PlayOneShot("event:/Player/Time/slowTime");                    DEBUG
+                sonPlayer = RuntimeManager.CreateInstance(_slowTime);
                 break;
             case SoundPlayer.unslowTime:
-                testPlayer = _unslowTime.start();        //RuntimeManager.PlayOneShot("event:/Player/Time/unslowTime");                  DEBUG
+                sonPlayer = RuntimeManager.CreateInstance(_unslowTime);
                 break;
             case SoundPlayer.stealComp:
-                testPlayer = _stealComp.start();         //RuntimeManager.PlayOneShot("event:/Player/Comp/stealComp");                   DEBUG
+                sonPlayer = RuntimeManager.CreateInstance(_stealComp);
                 break;
             case SoundPlayer.giveComp:
-                testPlayer = _giveComp.start();          //RuntimeManager.PlayOneShot("event:/Player/Comp/giveComp");                    DEBUG
+                sonPlayer = RuntimeManager.CreateInstance(_giveComp);
                 break;
             case SoundPlayer.projectionEnter:
-                testPlayer = _projectionEnter.start();   //RuntimeManager.PlayOneShot("event:/Player/Projection/projectionEnter");       DEBUG
+                sonPlayer = RuntimeManager.CreateInstance(_projectionEnter);
                 break;
             case SoundPlayer.projectionStay:
-                testPlayer = _projectionStay.start();    //RuntimeManager.PlayOneShot("event:/Player/Projection/projectionStay");        DEBUG
+                sonPlayer = RuntimeManager.CreateInstance(_projectionStay);
                 break;
             case SoundPlayer.projectionExit:
-                testPlayer = _projectionExit.start();    //RuntimeManager.PlayOneShot("event:/Player¨/Projection/projectionExit");       DEBUG
+                sonPlayer = RuntimeManager.CreateInstance(_projectionExit);
                 break;
             default:
                 UnityEngine.Debug.LogError("PlayPlayerSound, Argument manquant : Checkez la liste");
                 break;
         }
+        testPlayer = sonPlayer.start();
         if (testPlayer != RESULT.OK)
         {
             UnityEngine.Debug.LogError("PlayPlayerSound Error: Son non joué/manquant. ( Vous ne devriez au grand jamais voir cette erreur donc chill, mais dans le doute elle est là)");
         }
+        sonPlayer.release();
     }
     #endregion
-#region Son Player      Debug 
 
-    //  StopPlayerSound() n'est pas à utiliser dans les script, si il est necessaire pour que ça marche c'est que ya un problème.
-    // 
-    //  La fonction peut s'appeler avec une surchager bool, pour determiner si le son doit s'arreter d'un coup (true) ou plus lentement(false), par default c'est false.
-    //  Si vous avez besoin de ça dites le moi, parceque vous ne devriez pas.
-    //
-    //  Sons disponible à ajouter dans le code, si necessaire:
-    //  -   slowTime            : StopPlayerSound(SoundPlayer.slowTime)                 ()
-    //  -   unslowTime          : StopPlayerSound(SoundPlayer.unslowTime)               ()
-    //  -   stealComp           : StopPlayerSound(SoundPlayer.stealComp)                ()
-    //  -   giveComp            : StopPlayerSound(SoundPlayer.giveComp)                 ()
-    //  -   projectionEnter     : StopPlayerSound(SoundPlayer.projectionEnter)          ()
-    //  -   projectionStay      : StopPlayerSound(SoundPlayer.projectionStay)           ()
-    //  -   projectionExit      : StopPlayerSound(SoundPlayer.projectionExit)           ()
-    //
-    //      Annotez si les sons sont ajouté au code. (nom du script + line)
-
-    public void StopPlayerSound(SoundPlayer soundPlayer,bool stopMode = false)
-    {
-        if (stopMode)
-        {
-            switch (soundPlayer)
-            {
-                case SoundPlayer.slowTime:
-                    testPlayer = _slowTime.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                    break;
-                case SoundPlayer.unslowTime:
-                    testPlayer = _unslowTime.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                    break;
-                case SoundPlayer.stealComp:
-                    testPlayer = _stealComp.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                    break;
-                case SoundPlayer.giveComp:
-                    testPlayer = _giveComp.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                    break;
-                case SoundPlayer.projectionEnter:
-                    testPlayer = _projectionEnter.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                    break;
-                case SoundPlayer.projectionStay:
-                    testPlayer = _projectionStay.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                    break;
-                case SoundPlayer.projectionExit:
-                    testPlayer = _projectionExit.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                    break;
-                default:
-                    UnityEngine.Debug.LogError("PlayPlayerSound, Argument manquant : Checkez la liste");
-                    break;
-            }
-        }
-        else
-        {
-            switch (soundPlayer)
-            {
-                case SoundPlayer.slowTime:
-                    testPlayer = _slowTime.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                    break;
-                case SoundPlayer.unslowTime:
-                    testPlayer = _unslowTime.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                    break;
-                case SoundPlayer.stealComp:
-                    testPlayer = _stealComp.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                    break;
-                case SoundPlayer.giveComp:
-                    testPlayer = _giveComp.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                    break;
-                case SoundPlayer.projectionEnter:
-                    testPlayer = _projectionEnter.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                    break;
-                case SoundPlayer.projectionStay:
-                    testPlayer = _projectionStay.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                    break;
-                case SoundPlayer.projectionExit:
-                    testPlayer = _projectionExit.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                    break;
-                default:
-                    UnityEngine.Debug.LogError("PlayPlayerSound, Argument manquant : Checkez la liste");
-                    break;
-            }
-        }
-        if (testPlayer != RESULT.OK)
-        {
-            UnityEngine.Debug.LogError("StopPlayerSound: Je sais pas comment vous avez pour afficher ça, mais dans le doute allez chercher un thé, faites autre chose, et prevenez moi que c'est la merde à ce point, mais en vrai si vous avez ça et que vous m'avez pas appelé vous etes courageux de fou donc bravo.");
-        }
-    }
-#endregion
 
 
 }
