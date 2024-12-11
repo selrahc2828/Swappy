@@ -46,6 +46,23 @@ public class ComportementState : State
         Debug.Log(_sm.currentState + " exit");
     }
 
+    public override void CollisionStart(Collision other)
+    { 
+        // Debug.Log($"{_sm.name } collision start/enter with {other.collider.name}");
+    }
+
+    public override void CollisionDuring(Collision other)
+    {
+    }
+
+    public override void CollisionEnd(Collision other)
+    {
+    }
+
+    public override void DisplayGizmos()
+    {
+    }
+
     public void GetThrown(Vector3 thrownDirection)
     {
         _sm.rb.AddForce(thrownDirection, ForceMode.Impulse);

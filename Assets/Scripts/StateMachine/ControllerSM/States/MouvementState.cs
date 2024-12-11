@@ -96,6 +96,22 @@ public class MouvementState : State
         controls.Player.Projection.performed -= Projection;
         controls.Player.GrabDrop.performed -= GrabAndDrop;
     }
+
+    public override void CollisionStart(Collision other)
+    {
+    }
+
+    public override void CollisionDuring(Collision other)
+    {
+    }
+
+    public override void CollisionEnd(Collision other)
+    {
+    }
+
+    public override void DisplayGizmos()
+    {
+    }
     
     private void MovePlayer()
     {

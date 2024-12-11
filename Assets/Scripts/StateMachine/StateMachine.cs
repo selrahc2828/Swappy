@@ -50,4 +50,22 @@ public abstract class StateMachine : MonoBehaviour
             currentState.Enter();
         }
     }
+
+    public void OnCollisionEnter(Collision other)
+    {
+        currentState?.CollisionStart(other);
+    }
+    public void OnCollisionStay(Collision other)
+    {
+        currentState?.CollisionDuring(other);
+    }
+    public void OnCollisionExit(Collision other)
+    {
+        currentState?.CollisionEnd(other);
+    }
+
+    void OnDrawGizmos()
+    {
+        currentState?.DisplayGizmos();
+    }
 }
