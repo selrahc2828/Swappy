@@ -11,7 +11,9 @@ public class SoundManager : MonoBehaviour
     #region Init Player
     public enum SoundPlayer { slowTime, unslowTime, stealComp, giveComp, projectionEnter, projectionStay, projectionExit }
     private EventInstance _sonPlayer;
+    private EventInstance _sonPlayerFootstep;  
     private RESULT _testPlayer;
+    private RESULT _testPlayerFootstep;
     private string _slowTime = "event:/Player/Time/slowTime";
     private string _unslowTime = "event:/Player/Time/unslowTime";
     private string _stealComp = "event:/Player/Comp/stealComp";
@@ -19,6 +21,8 @@ public class SoundManager : MonoBehaviour
     private string _projectionEnter = "event:/Player/Projection/projectionEnter";
     private string _projectionStay = "event:/Player/Projection/projectionStay";
     private string _projectionExit = "event:/Player/Projection/projectionExit";
+    private string _REFplayerFootstep = "event:/Player/Moving/Footstep";
+
 #endregion
     #region Init Comportement
     public enum SoundCompPlace { repulsePlace, immuablePlace, bouncePlace, propelerPlace, aimantPlace }
@@ -107,6 +111,22 @@ public class SoundManager : MonoBehaviour
             UnityEngine.Debug.LogError("PlayPlayerSound Error: Son non joué/manquant. ( Vous ne devriez au grand jamais voir cette erreur donc chill, mais dans le doute elle est là)");
         }
         _sonPlayer.release();
+    }
+    
+    //  PlayPlayerFootstep() est à utiliser dans les animations lorsque le pieds touche le sol.
+    //
+    //  Son finit donc pas de boucle, en théorie
+    //
+    //      Annotez l'endroit où footstep player est appelé                             ()
+    public void PlayPlayerFootstep()
+    {
+        _sonPlayerFootstep = RuntimeManager.CreateInstance(_REFplayerFootstep);
+        _testPlayerFootstep = _sonPlayerFootstep.start();
+        if ( _testPlayerFootstep != RESULT.OK)
+        {
+            UnityEngine.Debug.LogError("PlayPlayerFootstep, Ya pas de son de pas askip");
+        }
+        _sonPlayerFootstep.release();
     }
     #endregion
     #region Son Componenet Collectif 
@@ -296,10 +316,20 @@ public class SoundManager : MonoBehaviour
     }
     #endregion
     #region Son Collison
-    public void PLayCollisionSound(Vector3 position = default)
+    //  Son de collision de tout les objets, à appelé lorsqu'il y a une collision.
+    //  Argument nécessaire :  Position (Vector3) + est-ce que l'objet est magik/à un comportement spéciale (bool)  
+    public void PLayCollisionSound(Vector3 position = default, bool isMagik = false)
     {
         _sonCollision = RuntimeManager.CreateInstance(_collision);
         _sonCollision.set3DAttributes(RuntimeUtils.To3DAttributes(position));
+        if (isMagik)
+        {
+            _sonCollision.setParameterByName("Type", 1);
+        }
+        else
+        {
+            _sonCollision.setParameterByName("Type", 0);
+        }
         _testCollisionSound = _sonCollision.start();
         if ( _testCollisionSound != RESULT.OK)
         {
