@@ -21,7 +21,14 @@ public class C_Solo_Magnet : ComportementState
         base.Enter();
 
         magnetRange = _sm.comportementManager.magnetRange;
-        trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
+        if (_sm.isPlayer)
+        {
+            trueMagnetRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + magnetRange;
+        }
+        else
+        {
+            trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;
+        }
         magnetForce = _sm.comportementManager.magnetForce;
         magnetGradiantForce = _sm.comportementManager.magnetGradiantForce;
         

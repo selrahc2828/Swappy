@@ -32,7 +32,14 @@ public class C_Solo_Impulse : ComportementState
         repulserRange = _sm.comportementManager.repulserRange;
 
         // trueRepulserRange = repulserRange;
-        trueRepulserRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + repulserRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
+        if (_sm.isPlayer)
+        {
+            trueRepulserRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + repulserRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
+        }
+        else
+        {
+            trueRepulserRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + repulserRange;
+        }
         // pb si obj n'a pas de collider direct (ax Player)
         repulserForce = _sm.comportementManager.repulserForce;
         destroyOnUse = _sm.comportementManager.destroyOnUse;
@@ -40,7 +47,7 @@ public class C_Solo_Impulse : ComportementState
         applyOnMe= _sm.comportementManager.applyOnMe;
         feedback = _sm.comportementManager.feedback;
         
-        Debug.Log("Solo impulse");
+        // Debug.Log("Solo impulse enter");
         //_sm.rend.material = _sm.impulse;
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.noComportementColor);
     }
