@@ -75,14 +75,16 @@ public class C_Bouncing_Magnet : ComportementState
     {
         base.DisplayGizmos();
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(_sm.transform.position, trueMagnetRange);   
+        Gizmos.DrawWireSphere(_sm.transform.position, trueMagnetRange);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(_sm.transform.position, _sm.GetComponent<Collider>().bounds.extents.magnitude); 
     }
     
     public override void CollisionStart(Collision other)
     {
         bounceMagnitude = _sm.rb.velocity.magnitude;
         trueMagnetForce = magnetForce + bounceMagnitude * magnetForceMultiplier;
-        Attract();
+        Attract(true);
         // truemagnet Force = force * magnetForceMultiplier
         // voir comment remmetre force de base
     }
@@ -94,9 +96,9 @@ public class C_Bouncing_Magnet : ComportementState
 
     }
     
-    public void Attract()
+    public void Attract(bool isCollide = false)
     {
-        Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, magnetRange);
+        Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueMagnetRange);
         if (objectsInRange.Length > 0)
         {
             foreach (Collider objectInRange in objectsInRange)
@@ -105,14 +107,22 @@ public class C_Bouncing_Magnet : ComportementState
                 {
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
-                        ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, trueMagnetForce);
+                        if (isCollide) // collision
+                        {
+                            ApplyForce(false,objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, trueMagnetForce);
+
+                        }
+                        else
+                        {
+                            ApplyForce(magnetGradiantForce,objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, trueMagnetForce);
+                        }
                     }
                 }
             }
         }
     }
     
-    public void ApplyForce(Rigidbody rbObj,GameObject objToApply, float force)
+    public void ApplyForce(bool isGradient, Rigidbody rbObj,GameObject objToApply, float force)
     {
         // Debug.LogWarning($"APPLYFORCE magnet force: {force}");
 

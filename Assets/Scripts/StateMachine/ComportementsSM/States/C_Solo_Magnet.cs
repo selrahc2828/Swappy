@@ -56,7 +56,7 @@ public class C_Solo_Magnet : ComportementState
 
     public void Attract()
     {
-        Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, magnetRange);
+        Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueMagnetRange);
         if (objectsInRange.Length > 0)
         {
             foreach (Collider objectInRange in objectsInRange)
