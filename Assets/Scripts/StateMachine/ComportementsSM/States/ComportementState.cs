@@ -20,30 +20,41 @@ public class ComportementState : State
 
     public override void Enter()
     {
-        Debug.Log(_sm.currentState + " enter " + stateValue);
+        // Debug.Log(_sm.currentState + " enter " + stateValue);
         //_sm.text.text = stateValue.ToString();
         _sm.displayComportementName = _sm.currentState.ToString();
     }
 
     public override void TickLogic()
     {
-        Debug.Log(_sm.currentState + " logic uppdate");
+        // Debug.Log(_sm.currentState + " logic uppdate");
         //addforce pas recup ici, il se fait dans grabObject pendant qu'il est kinematic
     }
 
     public override void TickPhysics()
     {
-        Debug.Log(_sm.currentState + " physic update");
+        // Debug.Log(_sm.currentState + " physic update");
         
         if (!isKinematic)
         {
             _sm.rb.isKinematic = isGrabbed;
         }
+
+        // if (isGrabbed)
+        // {
+        //     _sm.transform.localPosition = Vector3.zero;//dans parent HandlerPosition
+        //     _sm.transform.localRotation = Quaternion.identity;//dans parent HandlerPosition
+        //     _sm.GetComponent<Rigidbody>().useGravity = false;
+        // }
+        // else
+        // {
+        //     _sm.GetComponent<Rigidbody>().useGravity = true;
+        // }
     }
 
     public override void Exit()
     {
-        Debug.Log(_sm.currentState + " exit");
+        // Debug.Log(_sm.currentState + " exit");
     }
 
     public override void CollisionStart(Collision other)

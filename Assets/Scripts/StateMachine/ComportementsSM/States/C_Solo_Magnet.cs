@@ -89,7 +89,7 @@ public class C_Solo_Magnet : ComportementState
         else
         {
             Vector3 dir = (_sm.transform.position - objToApply.transform.position).normalized; // obj vers magnet
-            rbObj.AddForce(dir * force, ForceMode.Impulse);
+            rbObj.AddForce(dir * force, ForceMode.Force);
         }
     }
 }

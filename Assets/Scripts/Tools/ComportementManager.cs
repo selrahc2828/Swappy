@@ -8,6 +8,10 @@ public class ComportementManager : MonoBehaviour
     public static ComportementManager Instance;
     public GameManager gm;
     
+    [Header("Player")]
+    public Collider playerBouncingCollider;
+    public Collider playerSlidingCollider;
+    
     [Header("Comportement colors")]
     public Color impulseColor;
     public Color bouncingColor;
@@ -34,17 +38,15 @@ public class ComportementManager : MonoBehaviour
     [Header("Magnet")]
     public float magnetRange = 10f;
     public float magnetForce;
-    public bool magnetGradiantForce;
+    [HideInInspector] public bool magnetGradiantForce;
 
     [Header("Bouncing")]
-    public Collider playerBouncingCollider;
-    public Collider playerSlidingCollider;
     public PhysicMaterial bouncyMaterial;
     [Header("DoubleBounce")]
     public PhysicMaterial doubleBouncyMaterial;
 
     [Header("Magnet Bounce")]
-    public float magnetForceMultiplier;
+    public float magnetForceVelocityMultiplier;
 
     private void Awake()
     {

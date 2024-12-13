@@ -31,7 +31,8 @@ public class C_Bouncing_Magnet : ComportementState
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.magnetColor);
 
         bouncyMaterial = _sm.comportementManager.bouncyMaterial;
-            
+        magnetRange = _sm.comportementManager.magnetRange;
+
         if (_sm.isPlayer)
         {
             //pb State se fait avent set dans manager
@@ -39,15 +40,18 @@ public class C_Bouncing_Magnet : ComportementState
             basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
             _sm.comportementManager.playerBouncingCollider.material = bouncyMaterial;
             _sm.comportementManager.playerSlidingCollider.material = bouncyMaterial;
+            
+            trueMagnetRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + magnetRange;//toujours des pb de range trop grande mais mieux
+
         }
         else
         {
             _sm.GetComponent<Collider>().material = bouncyMaterial;
+            trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;//toujours des pb de range trop grande mais mieux
+
         }
         
-        magnetForceMultiplier = _sm.comportementManager.magnetForceMultiplier;
-        magnetRange = _sm.comportementManager.magnetRange;
-        trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;//toujours des pb de range trop grande mais mieux
+        magnetForceMultiplier = _sm.comportementManager.magnetForceVelocityMultiplier;
         magnetForce = _sm.comportementManager.magnetForce;
         trueMagnetForce = magnetForce;
         magnetGradiantForce = _sm.comportementManager.magnetGradiantForce;
@@ -82,9 +86,21 @@ public class C_Bouncing_Magnet : ComportementState
     
     public override void CollisionStart(Collision other)
     {
-        bounceMagnitude = _sm.rb.velocity.magnitude;
-        trueMagnetForce = magnetForce + bounceMagnitude * magnetForceMultiplier;
-        Attract(true);
+        if (!other.gameObject.GetComponent<StateMachine>())
+        {
+            if (isGrabbed)
+            {
+                Debug.LogWarning($"Grab Collider {other.gameObject.name}");
+            }
+            else
+            {
+                bounceMagnitude = _sm.rb.velocity.magnitude;
+                trueMagnetForce = magnetForce + bounceMagnitude * magnetForceMultiplier;
+                Attract(true);                      
+            }
+        }
+
+
         // truemagnet Force = force * magnetForceMultiplier
         // voir comment remmetre force de base
     }
@@ -110,7 +126,6 @@ public class C_Bouncing_Magnet : ComportementState
                         if (isCollide) // collision
                         {
                             ApplyForce(false,objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, trueMagnetForce);
-
                         }
                         else
                         {
@@ -126,14 +141,14 @@ public class C_Bouncing_Magnet : ComportementState
     {
         // Debug.LogWarning($"APPLYFORCE magnet force: {force}");
 
-        if (magnetGradiantForce)
+        if (isGradient)
         {
             objToApply.GetComponent<Rigidbody>().AddExplosionForce(-force, _sm.transform.position, trueMagnetRange);
         }
         else
         {
             Vector3 dir = (_sm.transform.position - objToApply.transform.position).normalized; // obj vers magnet
-            rbObj.AddForce(dir * force, ForceMode.Impulse);
+            rbObj.AddForce(dir * force, ForceMode.Force);
         }
     }
 
