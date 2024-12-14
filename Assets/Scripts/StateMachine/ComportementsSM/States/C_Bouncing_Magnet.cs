@@ -11,12 +11,21 @@ public class C_Bouncing_Magnet : ComportementState
     
     public float magnetRange;
     public float trueMagnetRange;
+    public float saveMagnetRange;//pour changer au moment d'une collision si grab
     public float magnetForce;
     public float trueMagnetForce;
     public bool magnetGradiantForce;
     
     public float magnetForceMultiplier;
     public float bounceMagnitude;
+
+    [Range(1,3)]
+    public float magnetUpScaleMultiplier;
+    // avec mat bounce, rebond direct quand grab et touche surface, collisionEnter/exit s'enchaine trop vite pour range upsacle
+    public float delayScale;
+    public float timeSinceCollisionStrat;
+    private bool collisionStart = false;//pour pas appeler plusieurs en même temps
+
     public C_Bouncing_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -42,7 +51,6 @@ public class C_Bouncing_Magnet : ComportementState
             _sm.comportementManager.playerSlidingCollider.material = bouncyMaterial;
             
             trueMagnetRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + magnetRange;//toujours des pb de range trop grande mais mieux
-
         }
         else
         {
@@ -50,11 +58,16 @@ public class C_Bouncing_Magnet : ComportementState
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;//toujours des pb de range trop grande mais mieux
 
         }
+        saveMagnetRange = trueMagnetRange;
         
         magnetForceMultiplier = _sm.comportementManager.magnetForceVelocityMultiplier;
+        magnetUpScaleMultiplier = _sm.comportementManager.magnetScaleMultiplier;
+        
         magnetForce = _sm.comportementManager.magnetForce;
         trueMagnetForce = magnetForce;
         magnetGradiantForce = _sm.comportementManager.magnetGradiantForce;
+        
+        delayScale = _sm.comportementManager.delayScale;
     }
 
     public override void TickLogic()
@@ -62,6 +75,19 @@ public class C_Bouncing_Magnet : ComportementState
         base.TickLogic();
         Attract();//même comportement sur player et sur objet
 
+        
+        if (collisionStart)
+        {
+            timeSinceCollisionStrat += Time.deltaTime; // Incrémente le timer
+
+            if (timeSinceCollisionStrat >= delayScale) // Vérifie si le délai est écoulé
+            {
+                timeSinceCollisionStrat = 0f;
+                trueMagnetRange = saveMagnetRange; // reset range
+                trueMagnetForce = magnetForce;
+                collisionStart = false; // on peut à nouveau faire le upScale avec collision
+            }
+        }
     }
 
     public override void TickPhysics()
@@ -90,7 +116,13 @@ public class C_Bouncing_Magnet : ComportementState
         {
             if (isGrabbed)
             {
-                //Debug.LogWarning($"Grab Collider {other.gameObject.name}");
+                if (!collisionStart)//si unScale est lancé, on le refait pas
+                {
+                    trueMagnetRange *= magnetUpScaleMultiplier;
+                
+                    collisionStart = true; // start rescale magnet
+                    //timeSinceCollisionEnd = 0f;//reset "scale timer"
+                }
             }
             else
             {
@@ -99,19 +131,22 @@ public class C_Bouncing_Magnet : ComportementState
                 Attract(true);                      
             }
         }
-
-
-        // truemagnet Force = force * magnetForceMultiplier
-        // voir comment remmetre force de base
     }
 
     public override void CollisionEnd(Collision other)
     {
-        trueMagnetForce = magnetForce;
+        if (isGrabbed)
+        {
+            // trueMagnetRange = saveMagnetRange;//revient à la range de base
+            // on fait un delay pour le UpScale, le reset de la range est fait dedans, pour le moment
+        }
+        else
+        {
+            trueMagnetForce = magnetForce;//reset de la force de base, si pas en main
+        }
         // Debug.LogWarning($"collision END magnet force {trueMagnetForce}");
-
     }
-    
+
     public void Attract(bool isCollide = false)
     {
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueMagnetRange);

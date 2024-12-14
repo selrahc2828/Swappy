@@ -110,6 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gm: {fileID: 0}
+  playerBouncingCollider: {fileID: 0}
+  playerSlidingCollider: {fileID: 0}
   impulseColor: {r: 0, g: 1, b: 0.16061544, a: 0}
   bouncingColor: {r: 0.495283, g: 1, b: 0.9062318, a: 0}
   rocketColor: {r: 1, g: 0.42984715, b: 0, a: 0}
@@ -125,11 +127,11 @@ MonoBehaviour:
   feedback: {fileID: 5997281712086689970, guid: d7e7b2fb81b45414cbff7f19ab5a5b62, type: 3}
   applyOnMe: 0
   rocketForce: 20
-  magnetRange: 10
-  magnetForce: 30
-  magnetGradiantForce: 1
-  playerBouncingCollider: {fileID: 0}
-  playerSlidingCollider: {fileID: 0}
+  magnetRange: 8
+  magnetForce: 5
+  magnetGradiantForce: 0
   bouncyMaterial: {fileID: 13400000, guid: 621a7ce6cc196df46ad286df13701f02, type: 2}
   doubleBouncyMaterial: {fileID: 13400000, guid: 16a76e54968c6cc48a861c0ace231bcd, type: 2}
-  magnetForceMultiplier: 2
+  magnetForceVelocityMultiplier: 0.1
+  magnetScaleMultiplier: 2
+  delayScale: 0.3

@@ -46,7 +46,12 @@ public class ComportementManager : MonoBehaviour
     public PhysicMaterial doubleBouncyMaterial;
 
     [Header("Magnet Bounce")]
+    [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à magnet Force")]
     public float magnetForceVelocityMultiplier;
+    [Range(1,5)]
+    public float magnetScaleMultiplier;
+    [Tooltip("delay pour scale magnet range collision quand grab, sinon trop court avec les rebond qui s'enchaine")]
+    public float delayScale = .5f;
 
     private void Awake()
     {
