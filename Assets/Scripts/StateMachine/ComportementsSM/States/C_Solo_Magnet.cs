@@ -72,17 +72,16 @@ public class C_Solo_Magnet : ComportementState
                 {
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
-                        ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-
+                        ApplyForce(magnetGradiantForce, objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
                     }
                 }
             }
         }
     }
     
-    public void ApplyForce(Rigidbody rbObj,GameObject objToApply, float force)
+    public void ApplyForce(bool isGradient, Rigidbody rbObj,GameObject objToApply, float force)
     {
-        if (magnetGradiantForce)
+        if (isGradient)
         {
             objToApply.GetComponent<Rigidbody>().AddExplosionForce(-force, _sm.transform.position, trueMagnetRange);
         }
