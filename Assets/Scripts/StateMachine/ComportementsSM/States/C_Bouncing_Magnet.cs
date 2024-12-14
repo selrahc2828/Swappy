@@ -90,7 +90,7 @@ public class C_Bouncing_Magnet : ComportementState
         {
             if (isGrabbed)
             {
-                Debug.LogWarning($"Grab Collider {other.gameObject.name}");
+                //Debug.LogWarning($"Grab Collider {other.gameObject.name}");
             }
             else
             {

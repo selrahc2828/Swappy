@@ -28,27 +28,15 @@ public class ComportementState : State
     public override void TickLogic()
     {
         // Debug.Log(_sm.currentState + " logic uppdate");
-        //addforce pas recup ici, il se fait dans grabObject pendant qu'il est kinematic
     }
 
     public override void TickPhysics()
     {
         // Debug.Log(_sm.currentState + " physic update");
         
-        if (!isKinematic)
-        {
-            _sm.rb.isKinematic = isGrabbed;
-        }
-
-        // if (isGrabbed)
+        // if (!isKinematic)
         // {
-        //     _sm.transform.localPosition = Vector3.zero;//dans parent HandlerPosition
-        //     _sm.transform.localRotation = Quaternion.identity;//dans parent HandlerPosition
-        //     _sm.GetComponent<Rigidbody>().useGravity = false;
-        // }
-        // else
-        // {
-        //     _sm.GetComponent<Rigidbody>().useGravity = true;
+        //     _sm.rb.isKinematic = isGrabbed;
         // }
     }
 
