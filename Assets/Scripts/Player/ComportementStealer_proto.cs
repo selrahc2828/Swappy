@@ -67,6 +67,11 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
+            if (GameManager.Instance.grabScript.isCarrying)//on ne peut pas voler/attribuer si on porte un objet
+            {
+                return;
+            }
+            
             RaycastHit _hit;
 
             _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -156,6 +161,11 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
+            if (GameManager.Instance.grabScript.isCarrying)//on ne peut pas voler/attribuer si on porte un objet
+            {
+                return;
+            }
+            
             RaycastHit _hit;
 
             _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
