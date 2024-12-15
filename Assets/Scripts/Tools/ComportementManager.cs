@@ -52,7 +52,12 @@ public class ComportementManager : MonoBehaviour
     public float magnetScaleMultiplier;
     [Tooltip("delay pour scale magnet range collision quand grab, sinon trop court avec les rebond qui s'enchaine")]
     public float delayScale = .5f;
-
+    
+    [Header("Impulse Magnet")]
+    public float zoneImpulseRange;
+    public float zoneImpulseForce;
+    public GameObject feedbackImpulseMagnet;
+    
     private void Awake()
     {
         if (Instance != null)
@@ -87,13 +92,14 @@ public class ComportementManager : MonoBehaviour
         
     }
 
-    public GameObject InstantiateFeedback(GameObject feedbackPrefab, Vector3 position, Quaternion rotation)
+    public GameObject InstantiateFeedback(GameObject feedbackPrefab, Vector3 position, Quaternion rotation, Transform parent  = null)
     {
-        return Instantiate(feedbackPrefab, position, rotation);
+        return Instantiate(feedbackPrefab, position, rotation, parent);
     }
 
     public void DestroyObj(GameObject obj)
     {
+        Debug.LogWarning($"Destroy {obj.name}");
         Destroy(obj);
     }
 }

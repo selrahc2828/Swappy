@@ -58,7 +58,7 @@ public class C_Solo_Impulse : ComportementState
         repulserTimer += Time.deltaTime;
         if (repulserTimer >= repulserTime)
         {
-            Expulse();
+            Repulse();
             repulserTimer = 0;
         }
     }
@@ -81,7 +81,7 @@ public class C_Solo_Impulse : ComportementState
 
     }    
  
-    public void Expulse()
+    public void Repulse()
     {
         if (feedback)
         {

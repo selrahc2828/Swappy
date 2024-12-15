@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 1651969279565804415}
   - component: {fileID: 3432434050935538667}
   - component: {fileID: 1234092066778563106}
-  - component: {fileID: -6118783830530869520}
+  - component: {fileID: 2149398672243428002}
+  - component: {fileID: 1064784042077058089}
   m_Layer: 2
-  m_Name: Souffle
+  m_Name: RepulseZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 59865937ef4f2bd4f8fa00f54b8faf37, type: 2}
+  - {fileID: 2100000, guid: e4365c364153f1f4e9941e1e49c431b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,7 +85,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-6118783830530869520
+--- !u!135 &2149398672243428002
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5997281712086689970}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.49999997
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1064784042077058089
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,8 +115,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5997281712086689970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9adee708d8e0ae4abcc70887a458f1e, type: 3}
+  m_Script: {fileID: 11500000, guid: f4266f1c6a077ad4f921f00906dc1c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetRadius: 5
-  durationScaling: 0.2
+  force: 10
