@@ -115,9 +115,8 @@ public class ComportementsStateMachine : StateMachine
         rend = GetComponentInChildren<MeshRenderer>();//cherche dans lui même et enfant, les prefabs de comportement on le mesh en enfant
         player = gameManager.player;
         rb = GetComponent<Rigidbody>();
-        //surtout pour Player ui en a 2 en enfant 
+        //surtout pour Player qui a 2 collider en enfant 
         objectCollider = GetComponentInChildren<Collider>();
-        currentState.Enter();
     }
     
     public void GoToInitialState(FirstState newValue)

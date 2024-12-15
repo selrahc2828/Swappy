@@ -25,7 +25,6 @@ public class PlayerMouvementStateMachine : StateMachine
         currentState = walkingState;
         rb = GetComponent<Rigidbody>();
         gameManager = FindAnyObjectByType<GameManager>();
-        currentState.Enter();
     }
     
     void OnDrawGizmos()
