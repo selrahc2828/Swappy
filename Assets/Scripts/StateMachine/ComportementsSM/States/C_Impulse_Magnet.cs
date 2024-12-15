@@ -36,7 +36,7 @@ public class C_Impulse_Magnet : ComportementState
         }
         
         zoneImpulseForce = _sm.comportementManager.zoneImpulseForce;
-        feedback = _sm.comportementManager.feedbackImpulseMagnet;
+        feedback = _sm.comportementManager.prefabImpulseMagnet;
         
         //zone qui repousse constamment
         ConstantRepulse();
@@ -50,6 +50,8 @@ public class C_Impulse_Magnet : ComportementState
         if (zone != null)
         {
             zone.GetComponent<ImpulseMagnetZone>().followTransform = _sm.transform;
+            zone.GetComponent<ImpulseMagnetZone>().isGrabbed = isGrabbed;
+
         }
 
 
@@ -64,8 +66,10 @@ public class C_Impulse_Magnet : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.comportementManager.DestroyObj(zone);
-        
+        if (zone != null)
+        {
+            _sm.comportementManager.DestroyObj(zone);
+        }
     }
 
     public override void DisplayGizmos()
@@ -79,43 +83,11 @@ public class C_Impulse_Magnet : ComportementState
     {
         if (feedback)
         {
-            Debug.LogWarning($"create");
             zone = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);//, _sm.transform //parent
             zone.transform.localScale = new Vector3(trueZoneImpulseRange * 2, trueZoneImpulseRange * 2, trueZoneImpulseRange * 2); //* 2 pour appliquer le diametre pas le rayon
             zone.GetComponent<ImpulseMagnetZone>().force = zoneImpulseForce;
             zone.GetComponent<ImpulseMagnetZone>().range = trueZoneImpulseRange;
         }
-        //
-        // Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueRepulserRange);
-        // if (objectsInRange.Length > 0)
-        // {
-        //     foreach (Collider objectInRange in objectsInRange)
-        //     {
-        //         if (objectInRange.gameObject.tag == "Player")
-        //         {
-        //             if (!objectInRange.gameObject.GetComponentInParent<Rigidbody>())
-        //             {
-        //                 return;
-        //             }
-        //             //collider et rigid body pas au même endroit pour lui
-        //             GameObject objectAffected = objectInRange.gameObject.GetComponentInParent<Rigidbody>().gameObject;
-        //             
-        //             // pb pour appliquer la force à cause du drag sur le rigidbody
-        //             ApplyForce(objectAffected.GetComponent<Rigidbody>(), objectAffected,repulserForce);
-        //             
-        //             // player relache l'objet repulse
-        //             if (isGrabbed) //juste isGrabbed ? objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject
-        //             {
-        //                 objectAffected.GetComponent<GrabObject>().Drop(true);
-        //             }
-        //         }
-        //         else if (objectInRange.GetComponent<Rigidbody>() != null)
-        //         {
-        //             ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, repulserForce);
-        //         }  
-        //     }
-        // }
-        
     }
     
 }
