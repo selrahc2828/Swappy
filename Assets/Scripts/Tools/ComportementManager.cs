@@ -46,6 +46,7 @@ public class ComportementManager : MonoBehaviour
     public PhysicMaterial doubleBouncyMaterial;
 
     [Header("Magnet Bounce")]
+    public float magnetBounceRange = 10f;
     [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à magnet Force")]
     public float magnetForceVelocityMultiplier;
     [Range(1,5)]
@@ -56,7 +57,7 @@ public class ComportementManager : MonoBehaviour
     [Header("Impulse Magnet")]
     public float zoneImpulseRange;
     public float zoneImpulseForce;
-    public GameObject feedbackImpulseMagnet;
+    public GameObject prefabImpulseMagnet;
     
     private void Awake()
     {
