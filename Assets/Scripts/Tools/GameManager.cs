@@ -51,7 +51,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector]public Color Uncomportemented_color;
     
     [Header("Player")]
-    public GameObject player; //dans Steler proto et ComportementStateMachine(pas sûr qu'il soit utilisé dedans)
+    public GameObject[] players; //dans Steler proto et ComportementStateMachine(pas sûr qu'il soit utilisé dedans)
+    public GameObject player;
     public Camera mainCamera;
     
     [Header("Player Movement Parameters")]
@@ -111,11 +112,15 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("Il n'y a pas de MainCamera dans la scène");
         }
-        //ici, sinon recup pas les material dans comportement manager
-        player = GameObject.FindGameObjectsWithTag("Player")[1];// 0: playerObject / 1: player
-        if (player == null)
+        
+        players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject playerObj in players)
         {
-            Debug.LogWarning("GameManager Player non renseigné");
+            if (playerObj.GetComponent<Rigidbody>())
+            {
+                Debug.LogWarning("GameManager Player non renseigné");
+                return;
+            }
         }
     }
 
@@ -166,6 +171,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("Il n'y a pas de grabScript dans la scène");
         }
+
+        
         
         controls.Player.Enable();
         controls.Player.ReloadScene.performed += ReloadScene;
