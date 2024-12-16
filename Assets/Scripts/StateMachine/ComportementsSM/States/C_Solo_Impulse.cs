@@ -45,7 +45,7 @@ public class C_Solo_Impulse : ComportementState
         destroyOnUse = _sm.comportementManager.destroyOnUse;
         impulseGradiantForce = _sm.comportementManager.impulseGradiantForce;
         applyOnMe= _sm.comportementManager.applyOnMe;
-        feedback = _sm.comportementManager.feedback;
+        feedback = _sm.comportementManager.impulseFeedback;
         
         // Debug.Log("Solo impulse enter");
         //_sm.rend.material = _sm.impulse;

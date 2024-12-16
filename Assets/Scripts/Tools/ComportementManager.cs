@@ -28,7 +28,7 @@ public class ComportementManager : MonoBehaviour
     public float repulserForce;
     public bool destroyOnUse = false;
     public bool impulseGradiantForce = false;
-    public GameObject feedback;
+    public GameObject impulseFeedback;
     [Tooltip("Si Rigidbody sur lui")]
     public bool applyOnMe = false;
     
@@ -46,6 +46,7 @@ public class ComportementManager : MonoBehaviour
     public PhysicMaterial doubleBouncyMaterial;
 
     [Header("Magnet Bounce")]
+    public float magnetBounceForce;
     public float magnetBounceRange = 10f;
     [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à magnet Force")]
     public float magnetForceVelocityMultiplier;
@@ -58,6 +59,13 @@ public class ComportementManager : MonoBehaviour
     public float zoneImpulseRange;
     public float zoneImpulseForce;
     public GameObject prefabImpulseMagnet;
+
+    [Header("Impulse Bounce")]
+    public float impulseBounceForce;
+    public float impulseBounceRange;
+    public float impulseBounceTimer;
+    [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à impulse bounce Force")]
+    public float impulseForceMultiplier;
     
     private void Awake()
     {
