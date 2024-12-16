@@ -114,10 +114,11 @@ public class GameManager : MonoBehaviour
         }
         
         players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject playerObj in players)
+        foreach (GameObject playerGO in players)
         {
-            if (playerObj.GetComponent<Rigidbody>())
+            if (playerGO.GetComponent<Rigidbody>())
             {
+                player = playerGO;
                 Debug.LogWarning("GameManager Player non renseigné");
                 return;
             }
