@@ -59,7 +59,7 @@ public class ComportementStealer_proto : MonoBehaviour
         controls.Player.ActionSlot2.performed -= ActionSlot2;
         controls.Player.SwitchSlotsValue.performed -= SwitchSlotsValue;
         controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;//F
-        controls.Player.ViderComportementSurPlayer.performed += ViderComportementSurPlayer;//E
+        controls.Player.ViderComportementSurPlayer.performed -= ViderComportementSurPlayer;//E
         controls.Player.ViderSlots.performed -= ViderSlots;
     }
 
@@ -270,6 +270,7 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
+            Debug.Log("ok");
             if(slot1 != 0 || slot2 != 0)
             {
                 _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>(); // Stocker la r�f�rence
@@ -355,6 +356,7 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
+            Debug.Log("ok");
             #region Ce code est nul et temporaire, il faudra le refaire pour renvoyer les comportement dans les propriétaires
             _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>();
             ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
