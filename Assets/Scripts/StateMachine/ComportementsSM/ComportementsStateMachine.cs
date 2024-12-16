@@ -110,12 +110,12 @@ public class ComportementsStateMachine : StateMachine
         magnet_Rocket_State_108 = new C_Magnet_Rocket(this);
 
         GoToInitialState(initialState);
-        gameManager = FindAnyObjectByType<GameManager>();
-        comportementManager = FindAnyObjectByType<ComportementManager>();
+        gameManager = GameManager.Instance;
+        comportementManager = ComportementManager.Instance;
         rend = GetComponentInChildren<MeshRenderer>();//cherche dans lui même et enfant, les prefabs de comportement on le mesh en enfant
         player = gameManager.player;
         rb = GetComponent<Rigidbody>();
-        //surtout pour Player qui a 2 collider en enfant 
+        //surtout pour Player qui a 2 collider en enfant
         objectCollider = GetComponentInChildren<Collider>();
     }
     

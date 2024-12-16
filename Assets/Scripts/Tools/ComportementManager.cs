@@ -6,7 +6,6 @@ using UnityEngine.Serialization;
 public class ComportementManager : MonoBehaviour
 {
     public static ComportementManager Instance;
-    public GameManager gm;
     
     [Header("Player")]
     public Collider playerBouncingCollider;
