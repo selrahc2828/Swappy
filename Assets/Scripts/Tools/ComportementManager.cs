@@ -80,8 +80,18 @@ public class ComportementManager : MonoBehaviour
     void Start()
     {
         repulserTimer = 0;
-        var colliders = GameManager.Instance.player.GetComponentsInChildren<CapsuleCollider>();
-        foreach (var collider in colliders)
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    
+    public void InitPlayerCollider(CapsuleCollider[] colliderplayer)
+    {
+        //init sinon se fait pas dans le bon ordre dans le start et créer erreur nullRef
+        foreach (CapsuleCollider collider in colliderplayer)
         {
             if (collider.height == 2f)
             {
@@ -94,13 +104,7 @@ public class ComportementManager : MonoBehaviour
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     public GameObject InstantiateFeedback(GameObject feedbackPrefab, Vector3 position, Quaternion rotation, Transform parent  = null)
     {
         return Instantiate(feedbackPrefab, position, rotation, parent);

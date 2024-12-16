@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
             if (playerGO.GetComponent<Rigidbody>())
             {
                 player = playerGO;
+                ComportementManager.Instance.InitPlayerCollider(player.GetComponentsInChildren<CapsuleCollider>());
                 return;
             }
         }
