@@ -111,6 +111,12 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("Il n'y a pas de MainCamera dans la scène");
         }
+        //ici, sinon recup pas les material dans comportement manager
+        player = GameObject.FindGameObjectsWithTag("Player")[1];// 0: playerObject / 1: player
+        if (player == null)
+        {
+            Debug.LogWarning("GameManager Player non renseigné");
+        }
     }
 
     // Start is called before the first frame update
@@ -159,12 +165,6 @@ public class GameManager : MonoBehaviour
         if (grabScript == null)
         {
             Debug.LogWarning("Il n'y a pas de grabScript dans la scène");
-        }
-
-        player = GameObject.FindGameObjectsWithTag("Player")[1];// 0: playerObject / 1: player
-        if (player == null)
-        {
-            Debug.LogWarning("GameManager Player non renseigné");
         }
         
         controls.Player.Enable();
