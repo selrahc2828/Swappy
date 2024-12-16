@@ -60,11 +60,12 @@ public class C_Bouncing_Magnet : ComportementState
         }
         saveMagnetRange = trueMagnetRange;
         
+        magnetForce = _sm.comportementManager.magnetBounceForce;
+        trueMagnetForce = magnetForce;
+
         magnetForceMultiplier = _sm.comportementManager.magnetForceVelocityMultiplier;
         magnetUpScaleMultiplier = _sm.comportementManager.magnetScaleMultiplier;
         
-        magnetForce = _sm.comportementManager.magnetForce;
-        trueMagnetForce = magnetForce;
         magnetGradiantForce = _sm.comportementManager.magnetGradiantForce;
         
         delayScale = _sm.comportementManager.delayScale;
@@ -98,7 +99,7 @@ public class C_Bouncing_Magnet : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.GetComponent<Collider>().material = null;
+        _sm.GetComponentInChildren<Collider>().material = null;
     }
     
     public override void DisplayGizmos()
@@ -107,12 +108,12 @@ public class C_Bouncing_Magnet : ComportementState
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(_sm.transform.position, trueMagnetRange);
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(_sm.transform.position, _sm.GetComponent<Collider>().bounds.extents.magnitude); 
+        Gizmos.DrawWireSphere(_sm.transform.position, _sm.GetComponentInChildren<Collider>().bounds.extents.magnitude); 
     }
     
     public override void CollisionStart(Collision other)
     {
-        if (!other.gameObject.GetComponent<StateMachine>())
+        if (other!= null)
         {
             if (isGrabbed)
             {
