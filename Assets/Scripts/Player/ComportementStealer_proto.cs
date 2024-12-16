@@ -10,8 +10,8 @@ using UnityEngine.InputSystem;
 
 public class ComportementStealer_proto : MonoBehaviour
 {
-    private Controls controls;
-    private GameManager gameManager;
+    private Controls _controls;
+    private GameManager _gameManager;
 
     [Header("Raycast")]
     public LayerMask hitLayer;
@@ -34,15 +34,15 @@ public class ComportementStealer_proto : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = FindAnyObjectByType<GameManager>();
-        controls = GameManager.controls;
+        _gameManager = GameManager.Instance;
+        _controls = GameManager.controls;
 
-        controls.Player.ActionSlot1.performed += ActionSlot1;//clic gauche
-        controls.Player.ActionSlot2.performed += ActionSlot2;//clic droit
-        controls.Player.SwitchSlotsValue.performed += SwitchSlotsValue;//T
-        controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;//F
-        controls.Player.ViderComportementSurPlayer.performed += ViderComportementSurPlayer;//E
-        controls.Player.ViderSlots.performed += ViderSlots;//G
+        _controls.Player.ActionSlot1.performed += ActionSlot1;//clic gauche
+        _controls.Player.ActionSlot2.performed += ActionSlot2;//clic droit
+        _controls.Player.SwitchSlotsValue.performed += SwitchSlotsValue;//T
+        _controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;//F
+        _controls.Player.ViderComportementSurPlayer.performed += ViderComportementSurPlayer;//E
+        _controls.Player.ViderSlots.performed += ViderSlots;//G
         slot1 = 0;
         slot2 = 0;
         originSlot1 = null;
@@ -55,12 +55,12 @@ public class ComportementStealer_proto : MonoBehaviour
 
     private void OnDisable()
     {
-        controls.Player.ActionSlot1.performed -= ActionSlot1;
-        controls.Player.ActionSlot2.performed -= ActionSlot2;
-        controls.Player.SwitchSlotsValue.performed -= SwitchSlotsValue;
-        controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;//F
-        controls.Player.ViderComportementSurPlayer.performed += ViderComportementSurPlayer;//E
-        controls.Player.ViderSlots.performed -= ViderSlots;
+        _controls.Player.ActionSlot1.performed -= ActionSlot1;
+        _controls.Player.ActionSlot2.performed -= ActionSlot2;
+        _controls.Player.SwitchSlotsValue.performed -= SwitchSlotsValue;
+        _controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;//F
+        _controls.Player.ViderComportementSurPlayer.performed -= ViderComportementSurPlayer;//E
+        _controls.Player.ViderSlots.performed -= ViderSlots;
     }
 
     void ActionSlot1(InputAction.CallbackContext context)
@@ -197,6 +197,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.rightValue;
                                     originSlot2 = _stateStolen;
+                                    slot2Text.text = ((FirstState)slot2).ToString();
                                 }
                                 else
                                 {
@@ -268,11 +269,12 @@ public class ComportementStealer_proto : MonoBehaviour
 
     void ApplicationDeComportementSurPlayer(InputAction.CallbackContext context)
     {
+        
         if (context.performed)
         {
             if(slot1 != 0 || slot2 != 0)
             {
-                _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>(); // Stocker la r�f�rence
+                _stateStolen = _gameManager.player.GetComponent<ComportementsStateMachine>(); // Stocker la r�f�rence
                 if (_stateStolen.currentState is ComportementState)
                 {
                     ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
@@ -284,10 +286,10 @@ public class ComportementStealer_proto : MonoBehaviour
                             //L'objet vis� � une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
                             if (playerObjectState.rightValue == 0)
                             {
-
+                
                                 if (slot1 != 0)
                                 {
-                                    Debug.Log("Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
+                                    Debug.Log("Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + _gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
                                     int futurState = playerObjectState.stateValue + slot1;
                                     playerObjectState.CalculateNewtState(futurState);
                                     slot1 = 0;
@@ -296,7 +298,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.Log("Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
+                                    Debug.Log("Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + _gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
                                     int futurState = playerObjectState.stateValue + slot2;
                                     playerObjectState.CalculateNewtState(futurState);
                                     slot2 = 0;
@@ -314,7 +316,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             //L'objet vis� � une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
                             if (playerObjectState.rightValue == 0)
                             {
-                                Debug.Log("Addition de " + slot2 + " et " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                                Debug.Log("Addition de " + slot2 + " et " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + _gameManager.player.gameObject.name);
                                 int futurState = playerObjectState.stateValue + slot2 +slot1;
                                 playerObjectState.CalculateNewtState(futurState);
                                 slot1 = 0;
@@ -332,7 +334,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Addition de " + slot2 + " et " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                        Debug.Log("Addition de " + slot2 + " et " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + _gameManager.player.gameObject.name);
                         int futurState = playerObjectState.stateValue + slot2 +slot1;
                         playerObjectState.CalculateNewtState(futurState);
                         slot1 = 0;
@@ -356,7 +358,7 @@ public class ComportementStealer_proto : MonoBehaviour
         if (context.performed)
         {
             #region Ce code est nul et temporaire, il faudra le refaire pour renvoyer les comportement dans les propriétaires
-            _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>();
+            _stateStolen = _gameManager.player.GetComponent<ComportementsStateMachine>();
             ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
             playerObjectState.CalculateNewtState(0);
             #endregion
