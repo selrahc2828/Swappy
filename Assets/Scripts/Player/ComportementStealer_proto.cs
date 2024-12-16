@@ -34,7 +34,7 @@ public class ComportementStealer_proto : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = FindAnyObjectByType<GameManager>();
+        gameManager = GameManager.Instance;
         controls = GameManager.controls;
 
         controls.Player.ActionSlot1.performed += ActionSlot1;//clic gauche
@@ -270,7 +270,6 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log("ok");
             if(slot1 != 0 || slot2 != 0)
             {
                 _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>(); // Stocker la r�f�rence
@@ -356,10 +355,12 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log("ok");
             #region Ce code est nul et temporaire, il faudra le refaire pour renvoyer les comportement dans les propriétaires
             _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>();
+            Debug.Log(_stateStolen);
+            Debug.Log(_stateStolen.currentState);
             ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
+            Debug.Log(playerObjectState);
             playerObjectState.CalculateNewtState(0);
             #endregion
         }

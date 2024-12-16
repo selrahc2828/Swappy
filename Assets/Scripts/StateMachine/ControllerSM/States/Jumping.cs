@@ -26,7 +26,6 @@ public class Jumping : MouvementState
         //reset y velocity
         _sm.rb.velocity = new Vector3(_sm.rb.velocity.x, 0f, _sm.rb.velocity.z);
         _sm.rb.AddForce(_sm.transform.up * jumpForce, ForceMode.Impulse);
-        Debug.Log(jumpForce);
 
         jumped = true;
         jumpTimer = jumpCooldown;
