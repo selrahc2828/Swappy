@@ -119,9 +119,13 @@ public class GameManager : MonoBehaviour
             if (playerGO.GetComponent<Rigidbody>())
             {
                 player = playerGO;
-                Debug.LogWarning("GameManager Player non renseigné");
                 return;
             }
+        }
+
+        if (player == null)
+        {
+            Debug.LogWarning("GameManager Player non renseigné");
         }
     }
 
