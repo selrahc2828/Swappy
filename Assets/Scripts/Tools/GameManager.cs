@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [Header("Rendu Lotha")]
     public string scene1;
     public string scene2;
+    public string scene3;
     public KeyCode keyForScene1 = KeyCode.Alpha1;
     public KeyCode keyForScene2 = KeyCode.Alpha2;
     public KeyCode keyForScene3 = KeyCode.Alpha3;
@@ -120,10 +121,9 @@ public class GameManager : MonoBehaviour
             {
                 player = playerGO;
                 ComportementManager.Instance.InitPlayerCollider(player.GetComponentsInChildren<CapsuleCollider>());
-                return;
             }
         }
-
+        
         if (player == null)
         {
             Debug.LogWarning("GameManager Player non renseigné");
@@ -206,6 +206,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(keyForScene2))
         {
             ChangeScene(scene2);
+        }
+        
+        // Vérifier si la touche pour la scène 2 est pressée.
+        if (Input.GetKeyDown(keyForScene3))
+        {
+            ChangeScene(scene3);
         }
 
     }
