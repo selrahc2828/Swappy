@@ -7,21 +7,12 @@ using FMOD.Studio;
 
 public class SoundManager : MonoBehaviour
 {
+    private SoundRef _SoundRef;
 
     #region Init Player
-    public enum SoundPlayer { slowTime, unslowTime, stealComp, giveComp, projectionEnter, projectionStay, projectionExit }
-    private EventInstance _sonPlayer;
-    private EventInstance _sonPlayerFootstep;  
-    private RESULT _testPlayer;
-    private RESULT _testPlayerFootstep;
-    private string _slowTime = "event:/Player/Time/slowTime";
-    private string _unslowTime = "event:/Player/Time/unslowTime";
-    private string _stealComp = "event:/Player/Comp/stealComp";
-    private string _giveComp = "event:/Player/Comp/giveComp";
-    private string _projectionEnter = "event:/Player/Projection/projectionEnter";
-    private string _projectionStay = "event:/Player/Projection/projectionStay";
-    private string _projectionExit = "event:/Player/Projection/projectionExit";
-    private string _REFplayerFootstep = "event:/Player/Moving/Footstep";
+    public enum SoundPlayer { slowTime, unslowTime, steal, give, projectionEnter, projectionStay, projectionExit }
+
+    private RESULT _debug;
 
 #endregion
     #region Init Comportement
@@ -57,13 +48,19 @@ public class SoundManager : MonoBehaviour
     private string _collision = "event:/System/Collision";
     #endregion
 
+    private void Start()
+    {
+        _SoundRef = GetComponent<SoundRef>();
+    }
 
     #region Son Player
 
+    //                                                                              In Code
+    //
+    //
     //  PlayPlayerSound() est à utiliser lorsqu'un des son du joueur doit etre joué.
     //
-    //  Tout les sons à appeler ici sont des sons finis, donc il ne doivent pas se joué en boucle.
-    //
+    //  Tout les sons à appelé ici sont des sons finis, donc il ne doivent pas se joué en boucle.
     //
     //
     //  Sons disponible à ajouter dans le code:
@@ -76,58 +73,78 @@ public class SoundManager : MonoBehaviour
     //  -   projectionExit      : PlayPlayerSound(SoundPlayer.projectionExit)           ()
     //
     //      Annotez quand les sons sont ajouté au code. (nom du script + line)
-    public void PlayPlayerSound(SoundPlayer soundPlayer)
+    public void PlaySoundPlayer(SoundPlayer soundPlayer = default)
     {
         switch (soundPlayer)
         {
             case SoundPlayer.slowTime:
-                _sonPlayer = RuntimeManager.CreateInstance(_slowTime);
+                RuntimeManager.PlayOneShot(_SoundRef.slowTime);
                 break;
             case SoundPlayer.unslowTime:
-                _sonPlayer = RuntimeManager.CreateInstance(_unslowTime);
+                RuntimeManager.PlayOneShot(_SoundRef.unslowTime);
                 break;
-            case SoundPlayer.stealComp:
-                _sonPlayer = RuntimeManager.CreateInstance(_stealComp);
+            case SoundPlayer.steal:
+                RuntimeManager.PlayOneShot(_SoundRef.steal);
                 break;
-            case SoundPlayer.giveComp:
-                _sonPlayer = RuntimeManager.CreateInstance(_giveComp);
+            case SoundPlayer.give:
+                RuntimeManager.PlayOneShot(_SoundRef.give);
                 break;
             case SoundPlayer.projectionEnter:
-                _sonPlayer = RuntimeManager.CreateInstance(_projectionEnter);
+                RuntimeManager.PlayOneShot(_SoundRef.projectionEnter);
                 break;
             case SoundPlayer.projectionStay:
-                _sonPlayer = RuntimeManager.CreateInstance(_projectionStay);
+                RuntimeManager.PlayOneShot(_SoundRef.projectionStay);
                 break;
             case SoundPlayer.projectionExit:
-                _sonPlayer = RuntimeManager.CreateInstance(_projectionExit);
+                RuntimeManager.PlayOneShot(_SoundRef.projectionExit);
                 break;
             default:
-                UnityEngine.Debug.LogError("PlayPlayerSound, Argument manquant : Checkez la liste");
+                UnityEngine.Debug.LogError("SoundManager, ligne 73, PlaySoundPlayer(), Argument manquant : Checkez l'enum");
                 break;
         }
-        _testPlayer = _sonPlayer.start();
-        if (_testPlayer != RESULT.OK)
-        {
-            UnityEngine.Debug.LogError("PlayPlayerSound Error: Son non joué/manquant. ( Vous ne devriez au grand jamais voir cette erreur donc chill, mais dans le doute elle est là)");
-        }
-        _sonPlayer.release();
+
     }
-    
-    //  PlayPlayerFootstep() est à utiliser dans les animations lorsque le pieds touche le sol.
+
+
+
+    //                                                                              In Animation
     //
-    //  Son finit donc pas de boucle, en théorie
+    //
+    //  PlaySoundFootstep() est à utiliser dans les animations de marche lorsque le pieds touche le sol.
+    //
+    //  Son finit, donc pas de boucle, en théorie
     //
     //      Annotez l'endroit où footstep player est appelé                             ()
-    public void PlayPlayerFootstep()
+    public void PlaySoundFootstep()
     {
-        _sonPlayerFootstep = RuntimeManager.CreateInstance(_REFplayerFootstep);
-        _testPlayerFootstep = _sonPlayerFootstep.start();
-        if ( _testPlayerFootstep != RESULT.OK)
-        {
-            UnityEngine.Debug.LogError("PlayPlayerFootstep, Ya pas de son de pas askip");
-        }
-        _sonPlayerFootstep.release();
+        RuntimeManager.PlayOneShot(_SoundRef.footstep);
     }
+
+
+    //  PlayPlayerJump() est à utiliser dans les animations de saut lorsque les pieds quitte le sol.
+    //
+    //  Son finit, donc pas de boucle, en théorie
+    //
+    //      Annotez l'endroit où footstep player est appelé                             ()
+    public void PlayPlayerJump()
+    {
+        RuntimeManager.PlayOneShot(_SoundRef.jump);
+    }
+
+
+    //  PlayPlayerLand() est à utiliser dans les animations de saut lorsque les pieds touche le sol.
+    //
+    //  Son finit, donc pas de boucle, en théorie
+    //
+    //      Annotez l'endroit où footstep player est appelé                             ()
+    public void PlayPlayerLand() 
+    {
+        RuntimeManager.PlayOneShot(_SoundRef.land);
+    }
+
+
+
+
     #endregion
     #region Son Componenet Collectif 
     //  PlayComponentPlace() est à utiliser lorsqu'un des comportement est posé sur un objet, le player ou sur un objet grab.
