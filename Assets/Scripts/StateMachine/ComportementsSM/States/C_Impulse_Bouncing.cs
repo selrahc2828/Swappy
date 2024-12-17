@@ -84,7 +84,7 @@ public class C_Impulse_Bouncing : ComportementState
         if (other!= null && canBounce)
         {
             trueImpulseBounceForce = impulseBounceForce + _sm.rb.velocity.magnitude * impulseForceMultiplier;
-            Debug.LogWarning($"dans enter: {trueImpulseBounceForce}");
+            // Debug.LogWarning($"dans enter: {trueImpulseBounceForce}");
             Repulse();
             canBounce = false;
         }
@@ -113,7 +113,7 @@ public class C_Impulse_Bouncing : ComportementState
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(impulseBounceFeedback, _sm.transform.position, Quaternion.identity);
             shockWave.GetComponent<GrowToRadius>().targetRadius = trueImpulseBounceRange;
         }
-        Debug.LogWarning($"dans repulse: {trueImpulseBounceForce}");
+        // Debug.LogWarning($"dans repulse: {trueImpulseBounceForce}");
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueImpulseBounceRange);
         if (objectsInRange.Length > 0)
         {

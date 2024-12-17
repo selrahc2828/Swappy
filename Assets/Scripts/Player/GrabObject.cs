@@ -10,7 +10,9 @@ public class GrabObject : MonoBehaviour
 {
     public Camera mainCam;
     public Transform handlerPosition;
-    public Transform interractorZonePos;//centre zone de detection (qu'on recalcule plus tard)
+    public Transform interactorZonePos;//centre zone de detection (qu'on recalcule plus tard)
+
+    [HideInInspector]public Transform interactor;
     // private Collider playerCollider;
     [HideInInspector] public Collider[] playerCollider; // on a 2 colliders
     [HideInInspector] public TextMeshProUGUI interactText;
@@ -19,12 +21,17 @@ public class GrabObject : MonoBehaviour
     public LayerMask hitLayer;
     private Transform _originParent;//pour replacer l'objet une fois lâché
     private GameObject _closestObj;
+    //box
+    public Vector3 detectionSize;
+    public Transform pivotParent;
+    private Vector3 _boxCenter;
+    private Quaternion _boxRotation;    
+    
     [Header("Variation")]
     public bool canThrow;
     public float launchForce;
-    public Vector3 detectionSize;
-
     public float grabForce;
+    [Tooltip("différence accepté entre position obj grab et où il doit être en main (lache sinon)")]
     public float toleranceRange;// différence accepté entre position obj grab et où il doit être en main (lache sinon)
     void Start()
     {
@@ -32,7 +39,9 @@ public class GrabObject : MonoBehaviour
         interactText?.gameObject.SetActive(false);
         
         mainCam = GameManager.Instance.mainCamera;
-        interractorZonePos = GameObject.FindGameObjectWithTag("InterractorZone").transform;
+        interactor = GameObject.FindGameObjectWithTag("Interactor").transform;
+
+        interactorZonePos = GameObject.FindGameObjectWithTag("InterractorZone").transform;
         handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
         playerCollider = GetComponentsInChildren<Collider>();
     }
@@ -43,12 +52,19 @@ public class GrabObject : MonoBehaviour
         // Calcul nouvelle position du centre pour que le bord reste collé au joueur
         // On décale le centre de la moitié de la profondeur (axe Z) de la boite vers l'avant
         // mainCam pour tourner la box vers où on regarde
-        Vector3 boxCenter = interractorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
+        _boxCenter = interactorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
 
-        Quaternion boxRotation = mainCam.transform.rotation;
+        _boxRotation = mainCam.transform.rotation;
+        if (interactor != null)
+        {
+            // Appliquer rotation camera sur le pivot
+            pivotParent.rotation = mainCam.transform.rotation;
+            // change rotation zone d'interaction par rapport au pivot
+            interactor.rotation = pivotParent.rotation;
+        }
 
         // on part du principe que seul les objets qu'on peut porter auront le tag et on trie la liste
-        Collider[] hitColliders = Physics.OverlapBox(boxCenter, detectionSize / 2, boxRotation, hitLayer)
+        Collider[] hitColliders = Physics.OverlapBox(_boxCenter, detectionSize / 2, _boxRotation, hitLayer)
             .Where(collider => collider.CompareTag("Movable"))
             .ToArray();
         
@@ -214,10 +230,10 @@ public class GrabObject : MonoBehaviour
         // affiche box d'interaction
         
         Gizmos.color = Color.blue;
-        if (interractorZonePos != null && mainCam!= null)
+        if (interactorZonePos != null && mainCam!= null)
         {
             // Meme calcul pour le gizmo de la box de detection
-            Vector3 boxCenter = interractorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
+            Vector3 boxCenter = interactorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
             Quaternion boxRotation = mainCam.transform.rotation;
 
             // Pour dessiner la boite dans la scene avec Gizmos (comme avec Physics.OverlapBox)

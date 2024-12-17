@@ -36,9 +36,10 @@ public class PlayerCam : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        //rotate cam and orientation
+        //rotate cam, orientation and Avatar fbx
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         GameManager.Instance.orientation.transform.rotation = Quaternion.Euler(0, yRotation, 0);
+        GameManager.Instance.playerFBX.transform.rotation = Quaternion.Euler(0, yRotation, 0);
 
         LineRenderer();
     }

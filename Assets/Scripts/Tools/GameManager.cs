@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
     [Header("Player")]
     public GameObject[] players; //dans Steler proto et ComportementStateMachine(pas sûr qu'il soit utilisé dedans)
     public GameObject player;
+    public GameObject playerFBX;
     public Camera mainCamera;
     
     [Header("Player Movement Parameters")]
@@ -120,13 +121,21 @@ public class GameManager : MonoBehaviour
             {
                 player = playerGO;
                 ComportementManager.Instance.InitPlayerCollider(player.GetComponentsInChildren<CapsuleCollider>());
-                return;
+                // return;
+            }
+            else
+            {
+                playerFBX = playerGO;
             }
         }
 
         if (player == null)
         {
             Debug.LogWarning("GameManager Player non renseigné");
+        }
+        if (playerFBX == null)
+        {
+            Debug.LogWarning("GameManager PlayerFBX non renseigné");
         }
     }
 
