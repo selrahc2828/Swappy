@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class C_Solo_Bouncing : ComportementState
 {
-    public PhysicMaterial bouncyMaterial;
-    public PhysicMaterial basePlayerMaterial;
-    public PhysicMaterial basePlayerSlideMaterial;
+    private PhysicMaterial _bouncyMaterial;
+    private PhysicMaterial _basePlayerMaterial;
+    private PhysicMaterial _basePlayerSlideMaterial;
 
     public C_Solo_Bouncing(StateMachine stateMachine) : base(stateMachine)
     {
@@ -20,21 +20,21 @@ public class C_Solo_Bouncing : ComportementState
         rightValue = 0;
         base.Enter();
 
-        bouncyMaterial = _sm.comportementManager.bouncyMaterial;
+        _bouncyMaterial = _sm.comportementManager.bouncyMaterial;
         // _sm.rend.material = _sm.bounce;
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.noComportementColor);
         
         
         if (_sm.isPlayer)
         {
-            basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
-            basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
-            _sm.comportementManager.playerBouncingCollider.material = bouncyMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = bouncyMaterial;
+            _basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
+            _basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
+            _sm.comportementManager.playerBouncingCollider.material = _bouncyMaterial;
+            _sm.comportementManager.playerSlidingCollider.material = _bouncyMaterial;
         }
         else
         {
-            _sm.GetComponent<Collider>().material = bouncyMaterial;
+            _sm.GetComponent<Collider>().material = _bouncyMaterial;
         }
     }
 
@@ -54,8 +54,8 @@ public class C_Solo_Bouncing : ComportementState
         
         if (_sm.isPlayer)
         {
-            _sm.comportementManager.playerBouncingCollider.material = basePlayerMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = basePlayerSlideMaterial;
+            _sm.comportementManager.playerBouncingCollider.material = _basePlayerMaterial;
+            _sm.comportementManager.playerSlidingCollider.material = _basePlayerSlideMaterial;
         }
         else
         {

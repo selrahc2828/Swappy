@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class C_Solo_Immuable : ComportementState
 {
-    public Vector3 baseVelocity;
-    public Vector3 baseAngularVelocity;
+    private Vector3 _baseVelocity;
+    private Vector3 _baseAngularVelocity;
     
     public C_Solo_Immuable(StateMachine stateMachine) : base(stateMachine)
     {
@@ -21,8 +21,8 @@ public class C_Solo_Immuable : ComportementState
         
         ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.noComportementColor);
 
-        baseVelocity = _sm.rb.velocity;
-        baseAngularVelocity = _sm.rb.angularVelocity;
+        _baseVelocity = _sm.rb.velocity;
+        _baseAngularVelocity = _sm.rb.angularVelocity;
         _sm.rb.isKinematic = true;
     }
 
@@ -40,7 +40,7 @@ public class C_Solo_Immuable : ComportementState
     {
         base.Exit();
         _sm.rb.isKinematic = false;
-        _sm.rb.velocity = baseVelocity;
-        _sm.rb.angularVelocity = baseAngularVelocity;
+        _sm.rb.velocity = _baseVelocity;
+        _sm.rb.angularVelocity = _baseAngularVelocity;
     }
 }
