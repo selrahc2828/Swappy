@@ -100,6 +100,8 @@ MonoBehaviour:
   originSlot1: {fileID: 0}
   slot2: 0
   originSlot2: {fileID: 0}
+  slot1Text: {fileID: 0}
+  slot2Text: {fileID: 0}
 --- !u!114 &368593988133447694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,7 +126,7 @@ MonoBehaviour:
   player: {fileID: 0}
   isPlayer: 1
   rb: {fileID: 0}
-  collider: {fileID: 0}
+  objectCollider: {fileID: 0}
   displayComportementName: 
   initialState: 0
 --- !u!114 &2249551179768967199
@@ -145,13 +147,15 @@ MonoBehaviour:
   playerCollider: []
   interactText: {fileID: 0}
   isCarrying: 0
+  carriedObject: {fileID: 0}
   hitLayer:
     serializedVersion: 2
     m_Bits: 9
-  carriedObject: {fileID: 0}
-  isLaunchable: 1
-  launchForce: 30
-  detectionSize: {x: 1, y: 1, z: 3.5}
+  canThrow: 1
+  launchForce: 20
+  detectionSize: {x: 1, y: 1, z: 2.8}
+  grabForce: 150
+  toleranceRange: 2
 --- !u!1 &709902461892241047
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +167,7 @@ GameObject:
   - component: {fileID: 8242482544930831946}
   m_Layer: 0
   m_Name: CameraPos
-  m_TagString: Untagged
+  m_TagString: CameraPosition
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -325,7 +329,7 @@ GameObject:
   - component: {fileID: 8526656148825370485}
   m_Layer: 0
   m_Name: Orientation
-  m_TagString: Untagged
+  m_TagString: Orientation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

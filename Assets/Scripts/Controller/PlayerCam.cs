@@ -8,8 +8,6 @@ public class PlayerCam : MonoBehaviour
     public float sensX;
     public float sensY;
     
-    public Transform orientatiaon;
-
     float xRotation;
     float yRotation;
 
@@ -23,7 +21,6 @@ public class PlayerCam : MonoBehaviour
         Cursor.visible = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         //get mouse input
@@ -41,7 +38,7 @@ public class PlayerCam : MonoBehaviour
 
         //rotate cam and orientation
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientatiaon.rotation = Quaternion.Euler(0, yRotation, 0);
+        GameManager.Instance.orientation.transform.rotation = Quaternion.Euler(0, yRotation, 0);
 
         LineRenderer();
     }

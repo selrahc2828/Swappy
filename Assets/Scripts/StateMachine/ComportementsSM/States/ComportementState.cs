@@ -9,6 +9,7 @@ public class ComportementState : State
     public int leftValue;
     public int rightValue;
     public bool isGrabbed = false;
+    public bool isKinematic = false;
 
     protected ComportementsStateMachine _sm;
 
@@ -19,24 +20,51 @@ public class ComportementState : State
 
     public override void Enter()
     {
-        Debug.Log(_sm.currentState + " enter " + stateValue);
+        // Debug.Log(_sm.currentState + " enter " + stateValue);
         //_sm.text.text = stateValue.ToString();
         _sm.displayComportementName = _sm.currentState.ToString();
     }
 
     public override void TickLogic()
     {
-        Debug.Log(_sm.currentState + " logic uppdate");
+        // Debug.Log(_sm.currentState + " logic uppdate");
     }
 
     public override void TickPhysics()
     {
-        Debug.Log(_sm.currentState + " physic update");
+        // Debug.Log(_sm.currentState + " physic update");
+        
+        // if (!isKinematic)
+        // {
+        //     _sm.rb.isKinematic = isGrabbed;
+        // }
     }
 
     public override void Exit()
     {
-        Debug.Log(_sm.currentState + " exit");
+        // Debug.Log(_sm.currentState + " exit");
+    }
+
+    public override void CollisionStart(Collision other)
+    { 
+        // Debug.Log($"{_sm.name } collision start/enter with {other.collider.name}");
+    }
+
+    public override void CollisionDuring(Collision other)
+    {
+    }
+
+    public override void CollisionEnd(Collision other)
+    {
+    }
+
+    public override void DisplayGizmos()
+    {
+    }
+
+    public void GetThrown(Vector3 thrownDirection)
+    {
+        _sm.rb.AddForce(thrownDirection, ForceMode.Impulse);
     }
 
     public void CalculateNewtState(int newValue)

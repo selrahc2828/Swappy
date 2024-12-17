@@ -70,7 +70,9 @@ MonoBehaviour:
   aimant_color: {r: 0.754717, g: 0.50907797, b: 0.50907797, a: 0}
   immuable_color: {r: 0.5471698, g: 0.2710039, b: 0.2710039, a: 0}
   Uncomportemented_color: {r: 0.8018868, g: 0.13995194, b: 0.13995194, a: 0}
+  players: []
   player: {fileID: 0}
+  mainCamera: {fileID: 0}
   walkSpeed: 7
   sprintSpeed: 10
   groundDrag: 5
@@ -91,7 +93,7 @@ MonoBehaviour:
   projectionTimeDuration: 20
   projectionTimer: 0
   coeffRefill: 1.5
-  range: 150
+  projectionRange: 150
   coeffReducDistance: 0.1
   activeGizmoRange: 1
   etatIsProjected: 0
@@ -108,6 +110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95c7ac6fb0269514a846e47417010ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBouncingCollider: {fileID: 0}
+  playerSlidingCollider: {fileID: 0}
   impulseColor: {r: 0, g: 1, b: 0.16061544, a: 0}
   bouncingColor: {r: 0.495283, g: 1, b: 0.9062318, a: 0}
   rocketColor: {r: 1, g: 0.42984715, b: 0, a: 0}
@@ -120,10 +124,23 @@ MonoBehaviour:
   repulserForce: 30
   destroyOnUse: 0
   impulseGradiantForce: 1
-  feedback: {fileID: 5997281712086689970, guid: d7e7b2fb81b45414cbff7f19ab5a5b62, type: 3}
+  impulseFeedback: {fileID: 5997281712086689970, guid: d7e7b2fb81b45414cbff7f19ab5a5b62, type: 3}
   applyOnMe: 0
   rocketForce: 20
-  magnetRange: 10
-  magnetForce: 30
-  magnetGradiantForce: 1
+  magnetRange: 8
+  magnetForce: 5
+  magnetGradiantForce: 0
   bouncyMaterial: {fileID: 13400000, guid: 621a7ce6cc196df46ad286df13701f02, type: 2}
+  doubleBouncyMaterial: {fileID: 13400000, guid: 16a76e54968c6cc48a861c0ace231bcd, type: 2}
+  magnetBounceForce: 6
+  magnetBounceRange: 8
+  magnetForceVelocityMultiplier: 1.5
+  magnetScaleMultiplier: 2
+  delayScale: 0.3
+  zoneImpulseRange: 8
+  zoneImpulseForce: 5.5
+  prefabImpulseMagnet: {fileID: 5997281712086689970, guid: 59fbb35a551b97d4597283825cbd8cf7, type: 3}
+  impulseBounceForce: 8
+  impulseBounceRange: 10
+  impulseBounceTimer: 0.3
+  impulseForceMultiplier: 3

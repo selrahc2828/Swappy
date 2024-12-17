@@ -6,7 +6,11 @@ using UnityEngine.Serialization;
 public class ComportementManager : MonoBehaviour
 {
     public static ComportementManager Instance;
-
+    
+    [Header("Player")]
+    public Collider playerBouncingCollider;
+    public Collider playerSlidingCollider;
+    
     [Header("Comportement colors")]
     public Color impulseColor;
     public Color bouncingColor;
@@ -23,7 +27,7 @@ public class ComportementManager : MonoBehaviour
     public float repulserForce;
     public bool destroyOnUse = false;
     public bool impulseGradiantForce = false;
-    public GameObject feedback;
+    public GameObject impulseFeedback;
     [Tooltip("Si Rigidbody sur lui")]
     public bool applyOnMe = false;
     
@@ -33,11 +37,35 @@ public class ComportementManager : MonoBehaviour
     [Header("Magnet")]
     public float magnetRange = 10f;
     public float magnetForce;
-    public bool magnetGradiantForce;
+    [HideInInspector] public bool magnetGradiantForce;
 
     [Header("Bouncing")]
     public PhysicMaterial bouncyMaterial;
+    [Header("DoubleBounce")]
+    public PhysicMaterial doubleBouncyMaterial;
 
+    [Header("Magnet Bounce")]
+    public float magnetBounceForce;
+    public float magnetBounceRange = 10f;
+    [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à magnet Force")]
+    public float magnetForceVelocityMultiplier;
+    [Range(1,5)]
+    public float magnetScaleMultiplier;
+    [Tooltip("delay pour scale magnet range collision quand grab, sinon trop court avec les rebond qui s'enchaine")]
+    public float delayScale = .5f;
+    
+    [Header("Impulse Magnet")]
+    public float zoneImpulseRange;
+    public float zoneImpulseForce;
+    public GameObject prefabImpulseMagnet;
+
+    [Header("Impulse Bounce")]
+    public float impulseBounceForce;
+    public float impulseBounceRange;
+    public float impulseBounceTimer;
+    [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à impulse bounce Force")]
+    public float impulseForceMultiplier;
+    
     private void Awake()
     {
         if (Instance != null)
@@ -58,14 +86,32 @@ public class ComportementManager : MonoBehaviour
     {
         
     }
-
-    public GameObject InstantiateFeedback(GameObject feedbackPrefab, Vector3 position, Quaternion rotation)
+    
+    public void InitPlayerCollider(CapsuleCollider[] colliderplayer)
     {
-        return Instantiate(feedbackPrefab, position, rotation);
+        //init sinon se fait pas dans le bon ordre dans le start et créer erreur nullRef
+        foreach (CapsuleCollider collider in colliderplayer)
+        {
+            if (collider.height == 2f)
+            {
+                playerBouncingCollider = collider;
+            }
+
+            if (collider.height == 1.9f)
+            {
+                playerSlidingCollider = collider;
+            }
+        }
+    }
+    
+    public GameObject InstantiateFeedback(GameObject feedbackPrefab, Vector3 position, Quaternion rotation, Transform parent  = null)
+    {
+        return Instantiate(feedbackPrefab, position, rotation, parent);
     }
 
     public void DestroyObj(GameObject obj)
     {
+        Debug.LogWarning($"Destroy {obj.name}");
         Destroy(obj);
     }
 }

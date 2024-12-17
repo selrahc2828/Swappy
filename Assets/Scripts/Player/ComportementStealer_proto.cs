@@ -16,7 +16,7 @@ public class ComportementStealer_proto : MonoBehaviour
     [Header("Raycast")]
     public LayerMask hitLayer;
     private Ray _ray;
-    public Camera mainCam;
+    [HideInInspector] public Camera mainCam;
 
     [Header("Comportement stoqu�")]
     public int slot1 = 0;
@@ -34,24 +34,23 @@ public class ComportementStealer_proto : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = FindAnyObjectByType<GameManager>();
+        gameManager = GameManager.Instance;
         controls = GameManager.controls;
 
-        controls.Player.ActionSlot1.performed += ActionSlot1;
-        controls.Player.ActionSlot2.performed += ActionSlot2;
-        controls.Player.SwitchSlotsValue.performed += SwitchSlotsValue;
-        controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;
-        controls.Player.ViderSlots.performed += ViderSlots;
+        controls.Player.ActionSlot1.performed += ActionSlot1;//clic gauche
+        controls.Player.ActionSlot2.performed += ActionSlot2;//clic droit
+        controls.Player.SwitchSlotsValue.performed += SwitchSlotsValue;//T
+        controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;//F
+        controls.Player.ViderComportementSurPlayer.performed += ViderComportementSurPlayer;//E
+        controls.Player.ViderSlots.performed += ViderSlots;//G
         slot1 = 0;
         slot2 = 0;
         originSlot1 = null;
         originSlot2 = null;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        mainCam = GameManager.Instance.mainCamera;
+        slot1Text = GameObject.FindGameObjectWithTag("TextSlot1").GetComponent<TextMeshProUGUI>();
+        slot2Text = GameObject.FindGameObjectWithTag("TextSlot2").GetComponent<TextMeshProUGUI>();
     }
 
     private void OnDisable()
@@ -59,7 +58,8 @@ public class ComportementStealer_proto : MonoBehaviour
         controls.Player.ActionSlot1.performed -= ActionSlot1;
         controls.Player.ActionSlot2.performed -= ActionSlot2;
         controls.Player.SwitchSlotsValue.performed -= SwitchSlotsValue;
-        controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;
+        controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;//F
+        controls.Player.ViderComportementSurPlayer.performed -= ViderComportementSurPlayer;//E
         controls.Player.ViderSlots.performed -= ViderSlots;
     }
 
@@ -67,9 +67,14 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
+            if (GameManager.Instance.grabScript.isCarrying)//on ne peut pas voler/attribuer si on porte un objet
+            {
+                return;
+            }
+            
             RaycastHit _hit;
 
-            _ray = mainCam.ScreenPointToRay(Input.mousePosition);
+            _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
             {
                 if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
@@ -156,9 +161,14 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
+            if (GameManager.Instance.grabScript.isCarrying)//on ne peut pas voler/attribuer si on porte un objet
+            {
+                return;
+            }
+            
             RaycastHit _hit;
 
-            _ray = mainCam.ScreenPointToRay(Input.mousePosition);
+            _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
             {
                 if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
@@ -262,7 +272,7 @@ public class ComportementStealer_proto : MonoBehaviour
         {
             if(slot1 != 0 || slot2 != 0)
             {
-                _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>(); ; // Stocker la r�f�rence
+                _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>(); // Stocker la r�f�rence
                 if (_stateStolen.currentState is ComportementState)
                 {
                     ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
@@ -301,7 +311,23 @@ public class ComportementStealer_proto : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogWarning("Celui qui arrive a m'afficher cette erreur je lui dois 10 balles");
+                            //L'objet vis� � une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
+                            if (playerObjectState.rightValue == 0)
+                            {
+                                Debug.Log("Addition de " + slot2 + " et " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                                int futurState = playerObjectState.stateValue + slot2 +slot1;
+                                playerObjectState.CalculateNewtState(futurState);
+                                slot1 = 0;
+                                slot2 = 0;
+                                originSlot1 = null;
+                                originSlot2 = null;
+                                slot1Text.text = "";
+                                slot2Text.text = "";
+                            }
+                            else
+                            {
+                                Debug.LogWarning("Le Player contiens déjà au moins un comportement et vous essayez de lui en ajouter 2 ");
+                            }
                         }
                     }
                     else
@@ -325,6 +351,21 @@ public class ComportementStealer_proto : MonoBehaviour
         }
     }
 
+    void ViderComportementSurPlayer(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            #region Ce code est nul et temporaire, il faudra le refaire pour renvoyer les comportement dans les propriétaires
+            _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>();
+            Debug.Log(_stateStolen);
+            Debug.Log(_stateStolen.currentState);
+            ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
+            Debug.Log(playerObjectState);
+            playerObjectState.CalculateNewtState(0);
+            #endregion
+        }
+    }
+    
     void ViderSlots(InputAction.CallbackContext context)
     {
         if (context.performed)

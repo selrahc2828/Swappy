@@ -82,7 +82,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ResetListComportement"",
+                    ""name"": ""ViderComportementSurPlayer"",
                     ""type"": ""Button"",
                     ""id"": ""e417ad69-67cb-479e-b115-5aea522daf60"",
                     ""expectedControlType"": """",
@@ -352,7 +352,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ResetListComportement"",
+                    ""action"": ""ViderComportementSurPlayer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -468,7 +468,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_ActionSlot2 = m_Player.FindAction("ActionSlot2", throwIfNotFound: true);
         m_Player_StopTime = m_Player.FindAction("StopTime", throwIfNotFound: true);
         m_Player_ApplicationDeComportementSurPlayer = m_Player.FindAction("ApplicationDeComportementSurPlayer", throwIfNotFound: true);
-        m_Player_ResetListComportement = m_Player.FindAction("ResetListComportement", throwIfNotFound: true);
+        m_Player_ViderComportementSurPlayer = m_Player.FindAction("ViderComportementSurPlayer", throwIfNotFound: true);
         m_Player_ReloadScene = m_Player.FindAction("ReloadScene", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SwitchCam = m_Player.FindAction("SwitchCam", throwIfNotFound: true);
@@ -552,7 +552,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ActionSlot2;
     private readonly InputAction m_Player_StopTime;
     private readonly InputAction m_Player_ApplicationDeComportementSurPlayer;
-    private readonly InputAction m_Player_ResetListComportement;
+    private readonly InputAction m_Player_ViderComportementSurPlayer;
     private readonly InputAction m_Player_ReloadScene;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SwitchCam;
@@ -574,7 +574,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @ActionSlot2 => m_Wrapper.m_Player_ActionSlot2;
         public InputAction @StopTime => m_Wrapper.m_Player_StopTime;
         public InputAction @ApplicationDeComportementSurPlayer => m_Wrapper.m_Player_ApplicationDeComportementSurPlayer;
-        public InputAction @ResetListComportement => m_Wrapper.m_Player_ResetListComportement;
+        public InputAction @ViderComportementSurPlayer => m_Wrapper.m_Player_ViderComportementSurPlayer;
         public InputAction @ReloadScene => m_Wrapper.m_Player_ReloadScene;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @SwitchCam => m_Wrapper.m_Player_SwitchCam;
@@ -613,9 +613,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ApplicationDeComportementSurPlayer.started += instance.OnApplicationDeComportementSurPlayer;
             @ApplicationDeComportementSurPlayer.performed += instance.OnApplicationDeComportementSurPlayer;
             @ApplicationDeComportementSurPlayer.canceled += instance.OnApplicationDeComportementSurPlayer;
-            @ResetListComportement.started += instance.OnResetListComportement;
-            @ResetListComportement.performed += instance.OnResetListComportement;
-            @ResetListComportement.canceled += instance.OnResetListComportement;
+            @ViderComportementSurPlayer.started += instance.OnViderComportementSurPlayer;
+            @ViderComportementSurPlayer.performed += instance.OnViderComportementSurPlayer;
+            @ViderComportementSurPlayer.canceled += instance.OnViderComportementSurPlayer;
             @ReloadScene.started += instance.OnReloadScene;
             @ReloadScene.performed += instance.OnReloadScene;
             @ReloadScene.canceled += instance.OnReloadScene;
@@ -671,9 +671,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ApplicationDeComportementSurPlayer.started -= instance.OnApplicationDeComportementSurPlayer;
             @ApplicationDeComportementSurPlayer.performed -= instance.OnApplicationDeComportementSurPlayer;
             @ApplicationDeComportementSurPlayer.canceled -= instance.OnApplicationDeComportementSurPlayer;
-            @ResetListComportement.started -= instance.OnResetListComportement;
-            @ResetListComportement.performed -= instance.OnResetListComportement;
-            @ResetListComportement.canceled -= instance.OnResetListComportement;
+            @ViderComportementSurPlayer.started -= instance.OnViderComportementSurPlayer;
+            @ViderComportementSurPlayer.performed -= instance.OnViderComportementSurPlayer;
+            @ViderComportementSurPlayer.canceled -= instance.OnViderComportementSurPlayer;
             @ReloadScene.started -= instance.OnReloadScene;
             @ReloadScene.performed -= instance.OnReloadScene;
             @ReloadScene.canceled -= instance.OnReloadScene;
@@ -750,7 +750,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnActionSlot2(InputAction.CallbackContext context);
         void OnStopTime(InputAction.CallbackContext context);
         void OnApplicationDeComportementSurPlayer(InputAction.CallbackContext context);
-        void OnResetListComportement(InputAction.CallbackContext context);
+        void OnViderComportementSurPlayer(InputAction.CallbackContext context);
         void OnReloadScene(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSwitchCam(InputAction.CallbackContext context);

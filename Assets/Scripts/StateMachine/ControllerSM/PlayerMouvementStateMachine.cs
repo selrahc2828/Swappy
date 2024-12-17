@@ -11,8 +11,8 @@ public class PlayerMouvementStateMachine : StateMachine
     public static Projecting projectingState;
     public static Falling fallingState;
 
-    public Rigidbody rb;
-    public GameManager gameManager;
+    [HideInInspector] public Rigidbody rb;
+    [HideInInspector] public GameManager gameManager;
     public override void Initialize()
     {
         //DontDestroyOnLoad(this);
@@ -25,7 +25,6 @@ public class PlayerMouvementStateMachine : StateMachine
         currentState = walkingState;
         rb = GetComponent<Rigidbody>();
         gameManager = FindAnyObjectByType<GameManager>();
-        currentState.Enter();
     }
     
     void OnDrawGizmos()
@@ -35,7 +34,7 @@ public class PlayerMouvementStateMachine : StateMachine
             if (gameManager.activeGizmoRange) // range projection
             {
                 Gizmos.color = Color.green;
-                Gizmos.DrawWireSphere(transform.position, gameManager.range);            
+                Gizmos.DrawWireSphere(transform.position, gameManager.projectionRange);            
             }
         }
     }

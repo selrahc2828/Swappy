@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,35 +8,30 @@ using UnityEngine.Serialization;
 
 public class GrabObject : MonoBehaviour
 {
-    // var position / parent ou mettre obj
-    // taille max qu'on peut porter + offset moiti� largeur du player
-    // isPickUp pour check si on a un objet ou non
     public Camera mainCam;
     public Transform handlerPosition;
-    public Transform interractorZonePos;//centre zone de detection
+    public Transform interractorZonePos;//centre zone de detection (qu'on recalcule plus tard)
     // private Collider playerCollider;
     [HideInInspector] public Collider[] playerCollider; // on a 2 colliders
-    public TextMeshProUGUI interactText;
-    
+    [HideInInspector] public TextMeshProUGUI interactText;
     [HideInInspector] public bool isCarrying;
-
-    public LayerMask hitLayer;    
-    [HideInInspector]
-    public GameObject carriedObject;
-    private Transform _originParent;
+    [HideInInspector] public GameObject carriedObject;
+    public LayerMask hitLayer;
+    private Transform _originParent;//pour replacer l'objet une fois lâché
     private GameObject _closestObj;
     [Header("Variation")]
-    public bool isLaunchable;
+    public bool canThrow;
     public float launchForce;
     public Vector3 detectionSize;
+
+    public float grabForce;
+    public float toleranceRange;// différence accepté entre position obj grab et où il doit être en main (lache sinon)
     void Start()
     {
-        if (interactText)
-        {
-            interactText.gameObject.SetActive(false);
-        }
+        interactText = GameObject.FindGameObjectWithTag("TextInteract").GetComponent<TextMeshProUGUI>(); 
+        interactText?.gameObject.SetActive(false);
         
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        mainCam = GameManager.Instance.mainCamera;
         interractorZonePos = GameObject.FindGameObjectWithTag("InterractorZone").transform;
         handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
         playerCollider = GetComponentsInChildren<Collider>();
@@ -44,120 +40,173 @@ public class GrabObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Calcul de la nouvelle position du centre pour que le bord reste collé au joueur
+        // Calcul nouvelle position du centre pour que le bord reste collé au joueur
         // On décale le centre de la moitié de la profondeur (axe Z) de la boite vers l'avant
         // mainCam pour tourner la box vers où on regarde
         Vector3 boxCenter = interractorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
 
         Quaternion boxRotation = mainCam.transform.rotation;
 
-        // on part du principe que seul les objets qu'on peut porter auront le tag
+        // on part du principe que seul les objets qu'on peut porter auront le tag et on trie la liste
         Collider[] hitColliders = Physics.OverlapBox(boxCenter, detectionSize / 2, boxRotation, hitLayer)
             .Where(collider => collider.CompareTag("Movable"))
             .ToArray();
-        //on recupère un tableau trié en amont avec juste les objets qu'on peut bouger
+        
         if (hitColliders.Length > 0 && !isCarrying)
         {
-            float closestDist = Mathf.Infinity;
+            float closestDist = Mathf.Infinity;//distance plus proche par défaut
             // voir ajouter compare tag NotInteract ?
             foreach (Collider item in hitColliders)
             {
-                float distanceToObject = Vector3.Distance(transform.position, item.transform.position);
+                Vector3 playerToObject = item.transform.position - transform.position;//objet - player
+                Debug.DrawRay(transform.position, playerToObject, Color.red);
 
-                if (distanceToObject < closestDist) // && item.CompareTag("Movable")
+                // vérifie obstacle entre player et objet
+                RaycastHit _areObstacle;
+                Physics.Raycast(transform.position, playerToObject, out _areObstacle);//range = objectToPlayer.magnitude
+                // verif tag touché joueur vers objet, si pas un Movable, un obstacle est devant
+                if (!_areObstacle.collider.CompareTag("Movable"))
                 {
-                    closestDist = distanceToObject;
+                    return;//ou continue ? 
+                }
+
+                if (playerToObject.magnitude < closestDist) // && item.CompareTag("Movable")
+                {
+                    closestDist = playerToObject.magnitude;
                     _closestObj = item.gameObject;
-                    if (interactText)
+                    if (interactText && _closestObj.GetComponent<Rigidbody>())
                     {
                         interactText.gameObject.SetActive(true);
                     }
-                    //Debug.Log("closestObj : " + closestObj.name);
                 }
             }
         }
         else
-        {
-            if (interactText)
-            {
-                interactText.gameObject.SetActive(false);
-            }
+        { 
+            interactText?.gameObject.SetActive(false);
             _closestObj = null;
+        }
+
+        // suivi de l'objet dans les bras et lache si bloque trops
+        if (carriedObject != null)
+        {
+            //pose des pb: quand je grab il arrive que je sois trop loin et je drop directement
+            if (Vector3.Distance(carriedObject.transform.position,handlerPosition.position) > toleranceRange)
+            {
+                Drop(false, true);//pas faire le addforce du drop
+            }
+            else
+            {
+                MoveObject();
+            }
         }
     }
 
+    public void MoveObject()
+    {
+        Vector3 dir = handlerPosition.position - carriedObject.transform.position;
+        carriedObject.GetComponent<Rigidbody>().AddForce(dir * grabForce);
+    }
+    
     public void Carrying()
     {
-        if (_closestObj != null && !isCarrying) 
+        if (_closestObj != null && !isCarrying && _closestObj.GetComponent<Rigidbody>()) 
         {
             carriedObject = _closestObj;
             _originParent = carriedObject.transform.parent;
+            // Debug.LogWarning($" dist grab {Vector3.Distance(carriedObject.transform.position,handlerPosition.position)}");
 
-            // deplace obj
-            ResetCarryPos();
-
-            if (carriedObject.GetComponent<Rigidbody>())
+            //dire a l'objet qu'il est grab au niveau FSM
+            var FSM_OfObject = carriedObject.GetComponent<ComportementsStateMachine>();
+            ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
+            FSM_ObjectState.isGrabbed = true;
+            
+            //desactive la kinematic pour avoir les collisions
+            if (FSM_ObjectState.isKinematic)
             {
-                carriedObject.GetComponent<Rigidbody>().isKinematic = true;
-                foreach (Collider collider in playerCollider)
-                {
-                    Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), true);
-                }
-                // Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), true);
-                //dire a l'objet qu'il est grab au niveau FSM
-                var FSM_OfObject = carriedObject.GetComponent<ComportementsStateMachine>();
-                ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
-                FSM_ObjectState.isGrabbed = true;
+                carriedObject.GetComponent<Rigidbody>().isKinematic = false;
             }
-
+            
+            // deplace obj
+            SetCarringPosition(carriedObject, true);
+            
+            // ignore collision entre player et obj porté
+            foreach (Collider collider in playerCollider)
+            {
+                Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), true);
+            }
+            
             isCarrying = true;
-            _closestObj = null;
-            //Debug.Log("Grab : " + carriedObject.name);
-
+            _closestObj = null;//on ne detecte plus les obj proche car on en porte déjà un
         }
     }
 
-    public void Drop(bool dropRepulse = false)//à voir pour modif dans FSM repulse
+    // ReSharper disable Unity.PerformanceAnalysis
+    public void Drop(bool dropRepulse = false, bool stuckInHand = false)//à voir pour modif dans FSM repulse
     {
         if (isCarrying)
         {
             carriedObject.transform.SetParent(_originParent);
             if (carriedObject.GetComponent<Rigidbody>()) {
-
+                
                 //dire a l'objet qu'il est grab au niveau FSM
                 var FSM_OfObject = carriedObject.GetComponent<ComportementsStateMachine>();
                 ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
                 FSM_ObjectState.isGrabbed = false;
+                
+                // réactive le kinematic des immuables
+                if (FSM_ObjectState.isKinematic)
+                {
+                    carriedObject.GetComponent<Rigidbody>().isKinematic = true;
+                }
+                
+                SetCarringPosition(carriedObject, false);
 
-                carriedObject.GetComponent<Rigidbody>().isKinematic = false;
-                // Physics.IgnoreCollision(playerCollider, carriedObject.GetComponent<Collider>(), false);
-
+                
                 foreach (Collider collider in playerCollider)
                 {
                     Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), false);
                 }
-                if (isLaunchable && !dropRepulse)
+                //lance que si on lancé actif ET rien en main ou si impulse quand porté                
+                if ((canThrow && !stuckInHand) || dropRepulse)
                 {
-                    carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
+                    if (!FSM_ObjectState.isGrabbed && !FSM_ObjectState.isKinematic)
+                    {
+                        FSM_ObjectState.GetThrown(handlerPosition.forward * launchForce);
+                        //carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
+                    }
                 }
             }
-
             //reset
             carriedObject = null;
             isCarrying = false;
         }
     }
-    public void ResetCarryPos()
+    
+    public void SetCarringPosition(GameObject objetGrab, Boolean inHand)
     {
-        if (carriedObject != null)
+        Rigidbody rb = objetGrab.GetComponent<Rigidbody>();
+        if (inHand)
         {
-            carriedObject.transform.SetParent(handlerPosition);
-            carriedObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-            carriedObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            carriedObject.transform.localPosition = Vector3.zero;
+            rb.useGravity = false;
+            rb.drag = 10f;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            //marche moyen
+            objetGrab.transform.rotation = Quaternion.Euler(0, 0, 0);
+            objetGrab.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            
+            objetGrab.transform.SetParent(handlerPosition);
+        }
+        else
+        {
+            rb.useGravity = true;
+            rb.drag = 0f;
+            rb.constraints = RigidbodyConstraints.None;
+            
+            objetGrab.transform.SetParent(_originParent);
+
         }
     }
-    
     private void OnDrawGizmos()
     {
         if (mainCam == null) return;

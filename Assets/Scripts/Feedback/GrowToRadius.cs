@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GrowToRadius : MonoBehaviour
 {
-    // à fournit à l'instantiate
+    // ï¿½ fournit ï¿½ l'instantiate
     [HideInInspector]
     public float targetRadius;
 

@@ -15,4 +15,8 @@ public abstract class State
     public abstract void TickLogic();
     public abstract void TickPhysics();
     public abstract void Exit();
+    public abstract void CollisionStart(Collision other);
+    public abstract void CollisionDuring(Collision other);
+    public abstract void CollisionEnd(Collision other);
+    public abstract void DisplayGizmos();
 }

@@ -21,6 +21,7 @@ public class C_Solo_Impulse : ComportementState
 
     public override void Enter()
     {
+        isKinematic = false;
         stateValue = 1;
         leftValue = 1;
         rightValue = 0;
@@ -31,15 +32,22 @@ public class C_Solo_Impulse : ComportementState
         repulserRange = _sm.comportementManager.repulserRange;
 
         // trueRepulserRange = repulserRange;
-        trueRepulserRange = _sm.collider.bounds.extents.magnitude + repulserRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
+        if (_sm.isPlayer)
+        {
+            trueRepulserRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + repulserRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
+        }
+        else
+        {
+            trueRepulserRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + repulserRange;
+        }
         // pb si obj n'a pas de collider direct (ax Player)
         repulserForce = _sm.comportementManager.repulserForce;
         destroyOnUse = _sm.comportementManager.destroyOnUse;
         impulseGradiantForce = _sm.comportementManager.impulseGradiantForce;
         applyOnMe= _sm.comportementManager.applyOnMe;
-        feedback = _sm.comportementManager.feedback;
+        feedback = _sm.comportementManager.impulseFeedback;
         
-        Debug.Log("Solo impulse");
+        // Debug.Log("Solo impulse enter");
         //_sm.rend.material = _sm.impulse;
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.noComportementColor);
     }
@@ -50,14 +58,14 @@ public class C_Solo_Impulse : ComportementState
         repulserTimer += Time.deltaTime;
         if (repulserTimer >= repulserTime)
         {
-            Expulse();
+            Repulse();
             repulserTimer = 0;
         }
     }
 
     public override void TickPhysics()
     {
-        
+        base.TickPhysics();
     }
 
     public override void Exit()
@@ -65,7 +73,15 @@ public class C_Solo_Impulse : ComportementState
         base.Exit();
     }
     
-    public void Expulse()
+    public override void DisplayGizmos()
+    {
+        base.DisplayGizmos();
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(_sm.transform.position, trueRepulserRange);  
+
+    }    
+ 
+    public void Repulse()
     {
         if (feedback)
         {
@@ -91,7 +107,7 @@ public class C_Solo_Impulse : ComportementState
                     ApplyForce(objectAffected.GetComponent<Rigidbody>(), objectAffected,repulserForce);
                     
                     // player relache l'objet repulse
-                    if (objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject) //juste isGrabbed ?
+                    if (isGrabbed) //juste isGrabbed ? objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject
                     {
                         objectAffected.GetComponent<GrabObject>().Drop(true);
                     }

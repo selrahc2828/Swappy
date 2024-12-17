@@ -28,6 +28,7 @@ public enum FirstState
     MagnetRocket = 108
 }
 
+[RequireComponent(typeof(Rigidbody))] 
 public class ComportementsStateMachine : StateMachine
 {
     public C_No_Comportement no_Comportement_state_0;
@@ -73,7 +74,7 @@ public class ComportementsStateMachine : StateMachine
     [HideInInspector] public GameObject player;
     public bool isPlayer = false;
     [HideInInspector] public Rigidbody rb;
-    [HideInInspector] public Collider collider;
+    [HideInInspector] public Collider objectCollider;
     
     public string displayComportementName;
 
@@ -109,14 +110,13 @@ public class ComportementsStateMachine : StateMachine
         magnet_Rocket_State_108 = new C_Magnet_Rocket(this);
 
         GoToInitialState(initialState);
-        gameManager = FindAnyObjectByType<GameManager>();
-        comportementManager = FindAnyObjectByType<ComportementManager>();
+        gameManager = GameManager.Instance;
+        comportementManager = ComportementManager.Instance;
         rend = GetComponentInChildren<MeshRenderer>();//cherche dans lui même et enfant, les prefabs de comportement on le mesh en enfant
         player = gameManager.player;
         rb = GetComponent<Rigidbody>();
-        //surtout pour Player ui en a 2 en enfant 
-        collider = GetComponentInChildren<Collider>();
-        currentState.Enter();
+        //surtout pour Player qui a 2 collider en enfant
+        objectCollider = GetComponentInChildren<Collider>();
     }
     
     public void GoToInitialState(FirstState newValue)
@@ -192,21 +192,4 @@ public class ComportementsStateMachine : StateMachine
         }
     }
     
-    void OnDrawGizmos()
-    {
-        if (comportementManager != null)
-        {
-            if (initialState == FirstState.SoloMagnet)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawWireSphere(transform.position, comportementManager.magnetRange);            
-            }
-            if (initialState == FirstState.SoloImpulse && collider != null)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(transform.position, collider.bounds.extents.magnitude + comportementManager.repulserRange);          
-            }
-
-        }
-    }
 }
