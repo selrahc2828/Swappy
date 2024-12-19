@@ -24,7 +24,7 @@ public class PlayerMouvementStateMachine : StateMachine
         fallingState = new Falling(this);
         currentState = walkingState;
         rb = GetComponent<Rigidbody>();
-        gameManager = FindAnyObjectByType<GameManager>();
+        gameManager = GameManager.Instance;
     }
     
     void OnDrawGizmos()
