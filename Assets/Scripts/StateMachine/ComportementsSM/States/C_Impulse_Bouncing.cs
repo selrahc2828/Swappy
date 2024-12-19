@@ -133,14 +133,14 @@ public class C_Impulse_Bouncing : ComportementState
                     direction = (objectAffected.GetComponent<Rigidbody>().transform.position - _sm.transform.position).normalized;
                     objectAffected.GetComponent<Rigidbody>().AddForce( direction * trueImpulseBounceForce, ForceMode.Impulse);
 
-                    // pb pour appliquer la force à cause du drag sur le rigidbody
+                    // pb pour appliquer la force à cause du drag sur le rigidbody ?
                     //ApplyForce(objectAffected.GetComponent<Rigidbody>(), objectAffected,repulserForce);
                     
-                    // // player relache l'objet repulse
-                    // if (isGrabbed) //juste isGrabbed ? objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject
-                    // {
-                    //     objectAffected.GetComponent<GrabObject>().Drop(true);
-                    // }
+                    // player relache l'objet repulse
+                    if (isGrabbed) //juste isGrabbed ? objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject
+                    {
+                        objectAffected.GetComponent<GrabObject>().Drop(true);
+                    }
                 }
                 else
                 {
