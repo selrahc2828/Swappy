@@ -19,7 +19,7 @@ public class TestSD : MonoBehaviour
         Vector3 pos = transform.position;
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            _soundManager.PlayPlayerSound(SoundManager.SoundPlayer.slowTime,pos);
+
         }
         
     }
