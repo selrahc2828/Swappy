@@ -20,7 +20,7 @@ public class SoundRef : MonoBehaviour
     #endregion
     #region System
     public string collision { get; private set; } = "event:/System/Collision";
-    public string place { get; private set; } = "event:/System/PLace";
+    public string placeComp { get; private set; } = "event:/System/PLace";
     public string repulseTimer { get; private set; } = "event:/System/Componenent/RepulseTimer";
     public string repulseBoom { get; private set; } = "event:/System/Componenent/RepulseBoom";
     public string immuableHit { get; private set; } = "event:/System/Componenent/ImmuableHit";

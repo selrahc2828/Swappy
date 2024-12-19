@@ -15,7 +15,12 @@ public class SoundManager : MonoBehaviour
     #region Init System
     public enum PlaceParamType { repulse, immuable, bounce, propeler, aimant }
     public enum PlaceParamOnWhatType  { onObject, onPlayer, onGrab }
-    public enum SoundComp { repulseBoom,  immuableHit, bounceHit, propelerStart, aimantStart,repulseTimer, }
+    public enum SoundComp { repulseTimer, repulseBoom,  immuableHit, bounceHit, propelerStart, aimantStart }
+    [SerializeField]
+    private GameObject prefabSonPropeler;
+    [SerializeField]
+    private GameObject prefabSonAimant;
+
     #endregion
 
     private void Start()
@@ -105,19 +110,27 @@ public class SoundManager : MonoBehaviour
 
     #endregion
     #region Son System
-    
-    //  PlayComponentPlace() est à utiliser lorsqu'un des comportement est posé sur un objet, le player ou sur un objet grab.
+    //  PlaySoundCollision() est à utiliser lorsqu'il y a une collision.
+    //  Lors de l'appel de la fonction, vous devez ajouter en argement l'object de la collision pour que le son soit bien émis au bons endroits.
+    //
+    //      Annotez quand les sons sont ajouté au code. (nom du script + line)
+    public void PlaySoundCollision(GameObject gameObjet)
+    {
+        RuntimeManager.PlayOneShotAttached(_SoundRef.collision, gameObject);
+    }
+
+    //  PlaySoundComponentPlace() est à utiliser lorsqu'un des comportement est posé sur un objet, le player ou sur un objet grab.
     //  Lors de l'appel de la fonction, vous pouvez ajouter un argement en plus pour choisir l'endroit où est placé le comportement, entre onObject, onPlayer et onGrab (default = onObject)
     //
     //  Tout les sons à appeler ici sont des sons finis, donc il ne doivent pas se joué en boucle.
     //
     //      Annotez quand les sons sont ajouté au code. (nom du script + line)
-    public void PlayComponentPlaceSound(GameObject gameObjet,PlaceParamType soundCompPlace = PlaceParamType.repulse, PlaceParamOnWhatType onWhatItPlace = PlaceParamOnWhatType.onObject)
+    public void PlaySoundComponentPlace(GameObject gameObjet,PlaceParamType soundCompPlace = PlaceParamType.repulse, PlaceParamOnWhatType onWhatItPlace = PlaceParamOnWhatType.onObject)
     {
-        RuntimeManager.PlayOneShotAttached(_SoundRef.place, gameObject);
+        RuntimeManager.PlayOneShotAttached(_SoundRef.placeComp, gameObject);
     }
 
-    //  PlayComponent() est à utiliser lorsqu'un des son de comportement simple doit etre joué.
+    //  PlaySoundComponent() est à utiliser lorsqu'un des son de comportement simple doit etre joué.
     //  Lors de l'appel de la fonction, vous pouvez ajouter un argement en plus pour determiner l'endroit d'où vient le son, (default = Vector3(0,0,0))
     //
     //  Tout les sons à appeler ici sont des sons finis, donc il ne doivent pas se joué en boucle.
@@ -128,9 +141,11 @@ public class SoundManager : MonoBehaviour
     //  -   repulseTimer        : PlayComponenentSound(SoundCompPlace.repulseTimer)             ()
     //  -   immuableHit         : PlayComponenentSound(SoundCompPlace.immuableHit)              ()
     //  -   bounceHit           : PlayComponenentSound(SoundCompPlace.bounceHit)                ()
+    //  -   propelerStart       : PlayComponenentSound(SoundCompPlace.propelerStart)            ()
+    //  -   aimantStart         : PlayComponenentSound(SoundCompPlace.aimantStart)              ()
     //
     //      Annotez quand les sons sont ajouté au code. (nom du script + line)
-    public void PlayComponenentSound(SoundComp soundComp, GameObject gameObject)
+    public void PlaySoundComponenent(SoundComp soundComp, GameObject gameObject)
     {
         switch (soundComp)
         {
@@ -146,7 +161,14 @@ public class SoundManager : MonoBehaviour
             case SoundComp.bounceHit:
                 RuntimeManager.PlayOneShotAttached(_SoundRef.bounceHit, gameObject);
                 break;
+            case SoundComp.propelerStart:
+                Instantiate(prefabSonPropeler, gameObject.transform);
+                break;
+            case SoundComp.aimantStart:
+                Instantiate(prefabSonAimant, gameObject.transform);
+                break;
         }
     }
+
     #endregion
 }
