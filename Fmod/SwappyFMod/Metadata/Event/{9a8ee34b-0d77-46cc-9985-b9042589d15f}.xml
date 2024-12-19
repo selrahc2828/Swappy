@@ -72,10 +72,13 @@
 	</object>
 	<object class="Timeline" id="{5e958709-dc98-4abe-862d-cdd9003161e0}">
 		<relationship name="markers">
-			<destination>{7ba187da-3fa5-45ca-ab06-aedd139bd922}</destination>
+			<destination>{ff579e75-e64d-4d4e-b65a-e7f3cecd10ab}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{9a7b12ee-874c-4b45-89a9-d74045e0c12a}">
+		<property name="color">
+			<value>Yellow</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{c6c74a0c-38d6-4436-8125-ff47a7f8e07a}</destination>
 		</relationship>
@@ -93,8 +96,11 @@
 	</object>
 	<object class="MixerBusPanner" id="{b4f57eb1-e2d1-4fdc-acd4-7a119765c4c0}" />
 	<object class="EventMixerGroup" id="{5d5ee5e9-8ef4-40d7-a21d-ae302002b63c}">
+		<property name="color">
+			<value>Yellow Light 2</value>
+		</property>
 		<property name="name">
-			<value>Audio 1</value>
+			<value>PropelerLoop</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{bc04e9f7-cfa9-4740-8cc8-4ab836b784ec}</destination>
@@ -106,12 +112,12 @@
 			<destination>{9a7b12ee-874c-4b45-89a9-d74045e0c12a}</destination>
 		</relationship>
 	</object>
-	<object class="LoopRegion" id="{7ba187da-3fa5-45ca-ab06-aedd139bd922}">
+	<object class="LoopRegion" id="{ff579e75-e64d-4d4e-b65a-e7f3cecd10ab}">
 		<property name="position">
 			<value>0</value>
 		</property>
 		<property name="length">
-			<value>10</value>
+			<value>20</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{5e958709-dc98-4abe-862d-cdd9003161e0}</destination>
