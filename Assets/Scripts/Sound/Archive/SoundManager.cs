@@ -30,8 +30,8 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         _SoundRef = GetComponent<SoundRef>();
-        _busPlayer = RuntimeManager.GetBus(_SoundRef.busPlayer);
-        _busSystem = RuntimeManager.GetBus(_SoundRef.busSystem);
+        //_busPlayer = RuntimeManager.GetBus(_SoundRef.busPlayer);
+        //_busSystem = RuntimeManager.GetBus(_SoundRef.busSystem);
     }
     #endregion
 

@@ -30,7 +30,7 @@ public class SoundRef : MonoBehaviour
     #endregion
     #region Bus
     public string busPlayer { get; private set; } = "bus:/Player";
-    public string busSystem { get; private set; } = "bus:/System";
+    public string busSystem { get; private set; } = "bank:/System";
     #endregion
 
 
