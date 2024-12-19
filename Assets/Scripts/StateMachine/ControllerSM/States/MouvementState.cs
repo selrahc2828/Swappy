@@ -209,6 +209,10 @@ public class MouvementState : State
     {
         if (context.performed)
         {
+            if (!_sm.gameManager.canProjectWhenCarryingObject && _sm.gameManager.grabScript.isCarrying)// empeche projection sur objet grab
+            {
+                return;
+            }
             if (_sm.currentState == PlayerMouvementStateMachine.projectingState)//sort de projection si on l'est déjà
             {
                 _sm.ChangeState(PlayerMouvementStateMachine.walkingState);
@@ -224,8 +228,14 @@ public class MouvementState : State
     {
         if (context.performed)
         {
+
             if (_sm.gameManager.grabScript)
             {
+                if (_sm.gameManager.etatIsProjected)//si on est en etat projection, on ne peut pas grab
+                {
+                    return;
+                }
+                
                 if (_sm.gameManager.grabScript.isCarrying)
                 {
                     _sm.gameManager.grabScript.Drop();

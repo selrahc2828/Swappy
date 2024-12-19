@@ -25,7 +25,7 @@ public class GrabObject : MonoBehaviour
     public Vector3 detectionSize;
     public Transform pivotParent;
     private Vector3 _boxCenter;
-    private Quaternion _boxRotation;    
+    private Quaternion _boxRotation;
     
     [Header("Variation")]
     public bool canThrow;

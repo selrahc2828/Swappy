@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public GameObject playerFBX;
     public Camera mainCamera;
+    public bool canProjectWhenCarryingObject = false;
     
     [Header("Player Movement Parameters")]
     public float walkSpeed;
