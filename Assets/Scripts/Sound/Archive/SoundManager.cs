@@ -7,8 +7,11 @@ using FMOD.Studio;
 
 public class SoundManager : MonoBehaviour
 {
-    private SoundRef _SoundRef;
 
+    #region Init Gestion Son
+    private Bus _busPlayer ;
+    private Bus _busSystem ;
+    #endregion
     #region Init Player
     public enum SoundPlayer { slowTime, unslowTime, steal, give, projectionEnter, projectionStay, projectionExit }
 #endregion
@@ -22,11 +25,15 @@ public class SoundManager : MonoBehaviour
     private GameObject prefabSonAimant;
 
     #endregion
-
+    #region InitRef
+    private SoundRef _SoundRef;
     private void Start()
     {
         _SoundRef = GetComponent<SoundRef>();
+        _busPlayer = RuntimeManager.GetBus(_SoundRef.busPlayer);
+        _busSystem = RuntimeManager.GetBus(_SoundRef.busSystem);
     }
+    #endregion
 
     #region Son Player
     //                                                                              In Code
@@ -170,5 +177,10 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    #endregion
+    #region Gestion Du Son
+    private void Update()
+    {
+    }
     #endregion
 }

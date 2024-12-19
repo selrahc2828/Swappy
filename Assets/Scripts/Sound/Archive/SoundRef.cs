@@ -28,7 +28,10 @@ public class SoundRef : MonoBehaviour
     public string propelerStart { get; private set; } = "event:/System/Componenent/PropelerStart";
     public string aimantStart { get; private set; } = "event:/System/Componenent/AimantStart";
     #endregion
-
+    #region Bus
+    public string busPlayer { get; private set; } = "bus:/Player";
+    public string busSystem { get; private set; } = "bus:/System";
+    #endregion
 
 
 
