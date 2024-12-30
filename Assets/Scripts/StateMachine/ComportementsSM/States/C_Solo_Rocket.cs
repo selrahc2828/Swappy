@@ -5,6 +5,11 @@ using UnityEngine;
 public class C_Solo_Rocket : ComportementState
 {
     public float rocketForce = 20;
+    public float rocketForceOnPlayer = 20;
+    public float rocketForceWhenGrab= 20;
+    public float OnOffCouldown;
+    public float timer;
+    public bool rocketOn;
 
     public C_Solo_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -12,16 +17,22 @@ public class C_Solo_Rocket : ComportementState
 
     public override void Enter()
     {
+        isKinematic = false;
         stateValue = 81;
         leftValue = 81;
         rightValue = 0;
         base.Enter();
-        
+
+        timer = 0f;
+        rocketOn = false;
         rocketForce = _sm.comportementManager.rocketForce;
+        rocketForceOnPlayer = _sm.comportementManager.rocketForceOnPlayer;
+        rocketForceWhenGrab = _sm.comportementManager.rocketForceWhenGrab;
+        OnOffCouldown = _sm.comportementManager.rocketOnOffCouldown;
         
         // _sm.rend.material = _sm.rocket;
         ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
-
+        
     }
 
     public override void TickLogic()
@@ -31,12 +42,27 @@ public class C_Solo_Rocket : ComportementState
 
     public override void TickPhysics()
     {
-        if (_sm.rb)
+        timer += Time.deltaTime;
+        if (timer > OnOffCouldown)
         {
-            _sm.rb.AddForce(Vector3.up * rocketForce, ForceMode.Force);
-            // passer en local avec _sm.transform.up, mais avec les modèle qu'on a c'est chiant
+            rocketOn = !rocketOn;
+            timer = 0f;
         }
-
+        if (rocketOn)
+        {
+            if (_sm.isPlayer)
+            {
+                _sm.rb.AddForce(Vector3.up * rocketForceOnPlayer, ForceMode.Force);
+            }
+            else if(isGrabbed)
+            {
+                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(Vector3.up * rocketForceWhenGrab, ForceMode.Force);
+            }
+            else
+            {
+                _sm.rb.AddForce(Vector3.up * rocketForce, ForceMode.Force);
+            }
+        }
     }
 
     public override void Exit()
