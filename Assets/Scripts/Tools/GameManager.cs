@@ -108,6 +108,15 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        slowMotion = false;
+        slowTimer = 0f;
+        etatIsProjected = false;
+        projectionTimer = projectionTimeDuration;
         
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         if (mainCamera == null)
@@ -138,16 +147,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("GameManager PlayerFBX non renseigné");
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        slowMotion = false;
-        slowTimer = 0f;
-        etatIsProjected = false;
-        projectionTimer = projectionTimeDuration;
-
+        
         timerProjectionText = GameObject.FindWithTag("TextTimerProjecting").GetComponent<TextMeshProUGUI>();
         if (!timerProjectionText)
         {
