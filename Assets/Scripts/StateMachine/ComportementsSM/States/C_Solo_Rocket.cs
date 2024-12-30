@@ -42,6 +42,7 @@ public class C_Solo_Rocket : ComportementState
 
     public override void TickPhysics()
     {
+        base.TickPhysics();
         timer += Time.deltaTime;
         if (timer > OnOffCouldown)
         {
