@@ -37,6 +37,12 @@ public class ComportementManager : MonoBehaviour
     public float rocketForceWhenGrab = 20f;
     public float rocketOnOffCouldown = 4f;
     
+    [Header("DoubleRocket")]
+    public float rocketDoubleForce = 20f;
+    public float rocketDoubleForceOnPlayer = 20f;
+    public float rocketDoubleForceWhenGrab = 20f;
+    public float rocketDoubleCouldown = 4f;
+    
     [Header("Magnet")]
     public float magnetRange = 10f;
     public float magnetForce;
