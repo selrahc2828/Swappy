@@ -36,7 +36,11 @@ public class ComportementManager : MonoBehaviour
     public float rocketForceOnPlayer = 20f;
     public float rocketForceWhenGrab = 20f;
     public float rocketOnOffCouldown = 4f;
-    
+
+    [Header("Rocket Immuable")]
+    public float rocketReleaseForce = 10f;
+    public float chargeTimeMax = 6f;
+
     [Header("Magnet")]
     public float magnetRange = 10f;
     public float magnetForce;
