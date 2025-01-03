@@ -47,6 +47,13 @@ public class ComportementManager : MonoBehaviour
     public float rocketReleaseForce = 10f;
     public float chargeTimeMax = 6f;
 
+    [Header("Magnet Rocket")]
+    public GameObject prefabMagnetTrail;
+    public float rocketMagnetForce = 20f;
+    public float magnetTrailDuration = 1f;
+    public GameObject prefabMagnetRocketForcefield;
+    public float magnetRocketDistanceBetweenPoint = 2f;
+    
     [Header("Magnet")]
     public float magnetRange = 10f;
     public float magnetForce;
@@ -122,9 +129,9 @@ public class ComportementManager : MonoBehaviour
         return Instantiate(feedbackPrefab, position, rotation, parent);
     }
 
-    public void DestroyObj(GameObject obj)
+    public void DestroyObj(GameObject obj, float time = 0)
     {
         Debug.LogWarning($"Destroy {obj.name}");
-        Destroy(obj);
+        Destroy(obj, time);
     }
 }
