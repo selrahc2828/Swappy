@@ -8,7 +8,8 @@ using UnityEngine.UIElements;
 
 public class SoundManager : MonoBehaviour
 {
-
+    public static SoundManager Instance;
+        
     #region Init Gestion Son
     private Bus _busPlayer ;
     private Bus _busSystem ;
@@ -183,20 +184,15 @@ public class SoundManager : MonoBehaviour
 
     #endregion
     #region Gestion Du Son
-    private void Update()
+    
+    private void Awake()
     {
-        
-        
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Instance != null)
         {
-            RuntimeManager.PlayOneShot("event:/Player/Moving/Footstep");
+            UnityEngine.Debug.LogWarning("Il y a plus d'une instance de SoundManager dans la scène");
+            return;
         }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            RuntimeManager.PlayOneShot("event:/Player/Time/SlowTime");
-        }
-
-
+        Instance = this;
     }
     #endregion
 }

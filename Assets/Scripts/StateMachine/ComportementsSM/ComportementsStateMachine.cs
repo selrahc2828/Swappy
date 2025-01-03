@@ -61,6 +61,7 @@ public class ComportementsStateMachine : StateMachine
 
     [HideInInspector] public GameManager gameManager;
     [HideInInspector] public ComportementManager comportementManager;
+    [HideInInspector] public SoundManager soundManager;
 
     //� voir si on garde �a
     [HideInInspector] public Material bounce;
@@ -112,6 +113,7 @@ public class ComportementsStateMachine : StateMachine
         GoToInitialState(initialState);
         gameManager = GameManager.Instance;
         comportementManager = ComportementManager.Instance;
+        soundManager = SoundManager.Instance;
         rend = GetComponentInChildren<MeshRenderer>();//cherche dans lui même et enfant, les prefabs de comportement on le mesh en enfant
         player = gameManager.player;
         rb = GetComponent<Rigidbody>();

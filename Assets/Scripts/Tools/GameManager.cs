@@ -187,9 +187,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("Il n'y a pas de grabScript dans la scène");
         }
-
-        
-        
         controls.Player.Enable();
         controls.Player.ReloadScene.performed += ReloadScene;
         controls.Player.StopTime.performed += SlowMotionInput;
@@ -247,12 +244,14 @@ public class GameManager : MonoBehaviour
             // unity utilise fixedDeltaTime (intervalle fixe) pour calculer la physique qui n'est pas affecté par le timescale ce qui produit donne un aspect saccadé car les 2 ne sont plus synchro
             // on synchronise dont le fixedDeltaTime par rapport au timescale
             Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
+            SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.slowTime);
         }
         else
         {
             // valeurs par défaut de Unity
             Time.timeScale = 1f;
             Time.fixedDeltaTime = 0.02f;
+            SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.unslowTime);
         }
     }
 

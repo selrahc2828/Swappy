@@ -13,6 +13,7 @@ public class PlayerMouvementStateMachine : StateMachine
 
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public GameManager gameManager;
+    [HideInInspector] public SoundManager soundManager;
     public override void Initialize()
     {
         //DontDestroyOnLoad(this);
@@ -25,6 +26,7 @@ public class PlayerMouvementStateMachine : StateMachine
         currentState = walkingState;
         rb = GetComponent<Rigidbody>();
         gameManager = GameManager.Instance;
+        soundManager = SoundManager.Instance;
     }
     
     void OnDrawGizmos()
