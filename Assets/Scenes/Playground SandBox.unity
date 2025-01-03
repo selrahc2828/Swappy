@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!95 &14742567 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4324554328754551695, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
+  m_PrefabInstance: {fileID: 1979156732}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &20673920
 Mesh:
   m_ObjectHideFlags: 0
@@ -9397,6 +9402,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 581293795}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &583584295 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2428291566536677944, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
+  m_PrefabInstance: {fileID: 1979156732}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &606462698
 GameObject:
   m_ObjectHideFlags: 0
@@ -41823,11 +41833,11 @@ PrefabInstance:
     - target: {fileID: 2249551179768967199, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: handlerPosition
       value: 
-      objectReference: {fileID: 1979156735}
+      objectReference: {fileID: 0}
     - target: {fileID: 2249551179768967199, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: interractorZonePos
       value: 
-      objectReference: {fileID: 1979156734}
+      objectReference: {fileID: 0}
     - target: {fileID: 3738601696558851606, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: mainCam
       value: 
@@ -44989,16 +44999,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6272381234065470780, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
   m_PrefabInstance: {fileID: 1979156732}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1979156734 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5611023027397521065, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-  m_PrefabInstance: {fileID: 1979156732}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1979156735 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3382465618901252190, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-  m_PrefabInstance: {fileID: 1979156732}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &1979156736 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 360774916830245804, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
@@ -46401,6 +46401,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 545196944}
     m_Modifications:
+    - target: {fileID: 877786246134460342, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: Left_Arm_Animator
+      value: 
+      objectReference: {fileID: 583584295}
+    - target: {fileID: 877786246134460342, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: Right_Arm_Animator
+      value: 
+      objectReference: {fileID: 14742567}
     - target: {fileID: 1573964937435694765, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: m_Name
       value: ----Manager----
