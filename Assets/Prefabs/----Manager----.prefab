@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2555637526324700904}
   - component: {fileID: 1767383280669085481}
   - component: {fileID: 5247813342975329975}
+  - component: {fileID: 877786246134460342}
   m_Layer: 0
   m_Name: ----Manager----
   m_TagString: Untagged
@@ -129,6 +130,20 @@ MonoBehaviour:
   impulseFeedback: {fileID: 5997281712086689970, guid: d7e7b2fb81b45414cbff7f19ab5a5b62, type: 3}
   applyOnMe: 0
   rocketForce: 20
+  rocketForceOnPlayer: 20
+  rocketForceWhenGrab: 20
+  rocketOnOffCouldown: 4
+  rocketDoubleForce: 20
+  rocketDoubleForceOnPlayer: 20
+  rocketDoubleForceWhenGrab: 20
+  rocketDoubleCouldown: 4
+  rocketReleaseForce: 10
+  chargeTimeMax: 6
+  prefabMagnetTrail: {fileID: 5549965940541011332, guid: d6652b4f793cf274d8eddff1bd73cc1b, type: 3}
+  rocketMagnetForce: 20
+  magnetTrailDuration: 1
+  prefabMagnetRocketForcefield: {fileID: 7410193036753820761, guid: b9fbb057f1c335e42b1c4956f62c15db, type: 3}
+  magnetRocketDistanceBetweenPoint: 1
   magnetRange: 8
   magnetForce: 5
   magnetGradiantForce: 0
@@ -146,3 +161,17 @@ MonoBehaviour:
   impulseBounceRange: 10
   impulseBounceTimer: 0.3
   impulseForceMultiplier: 3
+--- !u!114 &877786246134460342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573964937435694765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17d48fe97e983394dbd2d554558717f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Left_Arm_Animator: {fileID: 0}
+  Right_Arm_Animator: {fileID: 0}
