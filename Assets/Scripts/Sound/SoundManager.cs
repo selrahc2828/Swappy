@@ -42,9 +42,9 @@ public class SoundManager : MonoBehaviour
     #region Son Player
     //                                                                              In Code
     //
-    //  PlayPlayerSound() est à utiliser lorsqu'un des son du joueur doit etre joué.
+    //  PlayPlayerSound() est ï¿½ utiliser lorsqu'un des son du joueur doit etre jouï¿½.
     //
-    //  Sons disponible à ajouter dans le code:
+    //  Sons disponible ï¿½ ajouter dans le code:
     //  -   slowTime            : PlayPlayerSound(SoundPlayer.slowTime)                 ()
     //  -   unslowTime          : PlayPlayerSound(SoundPlayer.unslowTime)               ()
     //  -   stealComp           : PlayPlayerSound(SoundPlayer.stealComp)                ()
@@ -53,7 +53,7 @@ public class SoundManager : MonoBehaviour
     //  -   projectionStay      : PlayPlayerSound(SoundPlayer.projectionStay)           ()
     //  -   projectionExit      : PlayPlayerSound(SoundPlayer.projectionExit)           ()
     //
-    //      Annotez quand les sons sont ajouté au code. (nom du script + line)
+    //      Annotez quand les sons sont ajoutï¿½ au code. (nom du script + line)
     public void PlaySoundPlayer(SoundPlayer soundPlayer = default)
     {
         switch (soundPlayer)
@@ -90,27 +90,27 @@ public class SoundManager : MonoBehaviour
 
     //                                                                              In Animation
     //
-    //  PlaySoundFootstep() est à utiliser dans les animations de marche lorsque le pieds touche le sol.
+    //  PlaySoundFootstep() est ï¿½ utiliser dans les animations de marche lorsque le pieds touche le sol.
     //
-    //      Annotez l'endroit où footstep player est appelé                             ()
+    //      Annotez l'endroit oï¿½ footstep player est appelï¿½                             ()
     public void PlaySoundFootstep()
     {
         RuntimeManager.PlayOneShot("event:/Player/Moving/Footstep");
     }
 
 
-    //  PlayPlayerJump() est à utiliser dans les animations de saut lorsque les pieds quitte le sol.
+    //  PlayPlayerJump() est ï¿½ utiliser dans les animations de saut lorsque les pieds quitte le sol.
     //
-    //      Annotez l'endroit où footstep player est appelé                             ()
+    //      Annotez l'endroit oï¿½ footstep player est appelï¿½                             ()
     public void PlaySoundJump()
     {
         RuntimeManager.PlayOneShot("event:/Player/Moving/Jump");
     }
 
 
-    //  PlayPlayerLand() est à utiliser dans les animations de saut lorsque les pieds touche le sol.
+    //  PlayPlayerLand() est ï¿½ utiliser dans les animations de saut lorsque les pieds touche le sol.
     //
-    //      Annotez l'endroit où footstep player est appelé                             ()
+    //      Annotez l'endroit oï¿½ footstep player est appelï¿½                             ()
     public void PlaySoundLand() 
     {
         RuntimeManager.PlayOneShot("event:/Player/Moving/Land");
@@ -121,33 +121,33 @@ public class SoundManager : MonoBehaviour
 
     #endregion
     #region Son System
-    //  PlaySoundCollision() est à utiliser lorsqu'il y a une collision.
-    //  Lors de l'appel de la fonction, vous devez ajouter en argement l'object de la collision pour que le son soit bien émis au bons endroits.
+    //  PlaySoundCollision() est ï¿½ utiliser lorsqu'il y a une collision.
+    //  Lors de l'appel de la fonction, vous devez ajouter en argement l'object de la collision pour que le son soit bien ï¿½mis au bons endroits.
     //
-    //      Annotez quand les sons sont ajouté au code. (nom du script + line)
+    //      Annotez quand les sons sont ajoutï¿½ au code. (nom du script + line)
     public void PlaySoundCollision(GameObject gameObjet)
     {
         RuntimeManager.PlayOneShotAttached("event:/System/Collision", gameObject);
     }
 
-    //  PlaySoundComponentPlace() est à utiliser lorsqu'un des comportement est posé sur un objet, le player ou sur un objet grab.
-    //  Lors de l'appel de la fonction, vous pouvez ajouter un argement en plus pour choisir l'endroit où est placé le comportement, entre onObject, onPlayer et onGrab (default = onObject)
+    //  PlaySoundComponentPlace() est ï¿½ utiliser lorsqu'un des comportement est posï¿½ sur un objet, le player ou sur un objet grab.
+    //  Lors de l'appel de la fonction, vous pouvez ajouter un argement en plus pour choisir l'endroit oï¿½ est placï¿½ le comportement, entre onObject, onPlayer et onGrab (default = onObject)
     //
-    //  Tout les sons à appeler ici sont des sons finis, donc il ne doivent pas se joué en boucle.
+    //  Tout les sons ï¿½ appeler ici sont des sons finis, donc il ne doivent pas se jouï¿½ en boucle.
     //
-    //      Annotez quand les sons sont ajouté au code. (nom du script + line)
+    //      Annotez quand les sons sont ajoutï¿½ au code. (nom du script + line)
     public void PlaySoundComponentPlace(GameObject gameObjet,PlaceParamType soundCompPlace = PlaceParamType.repulse, PlaceParamOnWhatType onWhatItPlace = PlaceParamOnWhatType.onObject)
     {
         RuntimeManager.PlayOneShotAttached("event:/System/PLace", gameObject);
     }
 
-    //  PlaySoundComponent() est à utiliser lorsqu'un des son de comportement simple doit etre joué.
-    //  Lors de l'appel de la fonction, vous pouvez ajouter un argement en plus pour determiner l'endroit d'où vient le son, (default = Vector3(0,0,0))
+    //  PlaySoundComponent() est ï¿½ utiliser lorsqu'un des son de comportement simple doit etre jouï¿½.
+    //  Lors de l'appel de la fonction, vous pouvez ajouter un argement en plus pour determiner l'endroit d'oï¿½ vient le son, (default = Vector3(0,0,0))
     //
-    //  Tout les sons à appeler ici sont des sons finis, donc il ne doivent pas se joué en boucle.
+    //  Tout les sons ï¿½ appeler ici sont des sons finis, donc il ne doivent pas se jouï¿½ en boucle.
     //
     //
-    //  Sons disponible à ajouter dans le code:
+    //  Sons disponible ï¿½ ajouter dans le code:
     //  -   repulseBoom         : PlayComponenentSound(SoundCompPlace.repulseBoom)              ()
     //  -   repulseTimer        : PlayComponenentSound(SoundCompPlace.repulseTimer)             ()
     //  -   immuableHit         : PlayComponenentSound(SoundCompPlace.immuableHit)              ()
@@ -155,7 +155,7 @@ public class SoundManager : MonoBehaviour
     //  -   propelerStart       : PlayComponenentSound(SoundCompPlace.propelerStart)            ()
     //  -   aimantStart         : PlayComponenentSound(SoundCompPlace.aimantStart)              ()
     //
-    //      Annotez quand les sons sont ajouté au code. (nom du script + line)
+    //      Annotez quand les sons sont ajoutï¿½ au code. (nom du script + line)
     public void PlaySoundComponenent(SoundComp soundComp, GameObject gameObject)
     {
         switch (soundComp)
@@ -189,11 +189,11 @@ public class SoundManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.A))
         {
-            RuntimeManager.PlayOneShot("event:/Player/Time/SlowTime");
+            RuntimeManager.PlayOneShot("event:/Player/Moving/Footstep");
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            RuntimeManager.PlayOneShot("event:/Player/Time/UnslowTime");
+            RuntimeManager.PlayOneShot("event:/Player/Time/SlowTime");
         }
 
 

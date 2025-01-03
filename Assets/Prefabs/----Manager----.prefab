@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1767383280669085481}
   - component: {fileID: 5247813342975329975}
   - component: {fileID: 877786246134460342}
+  - component: {fileID: 1092291460780340661}
   m_Layer: 0
   m_Name: ----Manager----
   m_TagString: Untagged
@@ -129,7 +130,7 @@ MonoBehaviour:
   impulseGradiantForce: 1
   impulseFeedback: {fileID: 5997281712086689970, guid: d7e7b2fb81b45414cbff7f19ab5a5b62, type: 3}
   applyOnMe: 0
-  rocketForce: 20
+  rocketForce: 10
   rocketForceOnPlayer: 20
   rocketForceWhenGrab: 20
   rocketOnOffCouldown: 4
@@ -175,3 +176,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Left_Arm_Animator: {fileID: 0}
   Right_Arm_Animator: {fileID: 0}
+--- !u!114 &1092291460780340661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573964937435694765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c410ac5a757e845a60b810050dcc38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabSonPropeler: {fileID: 3538058560678950787, guid: 701075dd470b81f4fb76d44a880aaf80, type: 3}
+  prefabSonAimant: {fileID: 2007812604757634318, guid: b648a5bd73fb41449bc9393c665a7b97, type: 3}
