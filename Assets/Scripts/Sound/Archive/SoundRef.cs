@@ -7,7 +7,7 @@ using FMODUnity;
 public class SoundRef : MonoBehaviour
 {
     #region Player
-    public string slowTime {  get; private set; } = "event:/Player/Time/SlowTime";
+    public string slowTime = "event:/Player/Time/SlowTime";
     public string unslowTime { get; private set; } = "event:/Player/Time/UnslowTime";
     public string steal { get; private set; } = "event:/Player/Comp/StealComp";
     public string give { get; private set; } = "event:/Player/Comp/GiveComp";
@@ -24,13 +24,12 @@ public class SoundRef : MonoBehaviour
     public string repulseTimer { get; private set; } = "event:/System/Componenent/RepulseTimer";
     public string repulseBoom { get; private set; } = "event:/System/Componenent/RepulseBoom";
     public string immuableHit { get; private set; } = "event:/System/Componenent/ImmuableHit";
-    public string bounceHit { get; private set; } = "event:/System/Componenent/ImmuableHit";
+    public string bounceHit { get; private set; } = "event:/System/Componenent/BounceHit";
     public string propelerStart { get; private set; } = "event:/System/Componenent/PropelerStart";
     public string aimantStart { get; private set; } = "event:/System/Componenent/AimantStart";
     #endregion
-    #region Bus
-    public string busPlayer { get; private set; } = "bus:/Player";
-    public string busSystem { get; private set; } = "bank:/System";
+    #region Music
+    public string song { get; private set; } = "event:/Music/Sample Ref Sound";
     #endregion
 
 

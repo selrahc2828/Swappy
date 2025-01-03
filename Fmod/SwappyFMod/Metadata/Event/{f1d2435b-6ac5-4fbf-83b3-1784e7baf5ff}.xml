@@ -98,6 +98,9 @@
 		<property name="timelockedOffset">
 			<value>0.92000000000000048</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{dec3e6ea-5311-44a3-899d-4f846b79ea1f}</destination>
+		</relationship>
 		<relationship name="fadeInCurve">
 			<destination>{d7976a03-be50-41bb-bb58-682645876a98}</destination>
 		</relationship>
@@ -129,6 +132,14 @@
 	</object>
 	<object class="MixerBusPanner" id="{3973b1c5-223a-48a6-a362-c000529b110b}" />
 	<object class="MixerBusFader" id="{254c7b5f-de3b-4622-a505-b4fb5e195ed0}" />
+	<object class="RandomizerModulator" id="{dec3e6ea-5311-44a3-899d-4f846b79ea1f}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>6.25</value>
+		</property>
+	</object>
 	<object class="FadeCurve" id="{d7976a03-be50-41bb-bb58-682645876a98}">
 		<relationship name="startPoint">
 			<destination>{9dd7026e-c0a0-49f0-8785-150a745faf6a}</destination>
@@ -160,7 +171,7 @@
 			<value>0</value>
 		</property>
 		<property name="curveShape">
-			<value>-0.2547189</value>
+			<value>-0.46382758</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{c5cce380-d793-4bba-9d6c-54ad16144102}">
