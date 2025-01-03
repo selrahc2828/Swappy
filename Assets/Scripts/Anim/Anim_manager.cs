@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class Anim_manager : MonoBehaviour
 {
-
     public Animator Left_Arm_Animator;
     public Animator Right_Arm_Animator;
-    
-    
-    // Start is called before the first frame update
+
     void Start()
     {
-        
+        Left_Arm_Animator = GameObject.FindGameObjectWithTag("leftArm").GetComponent<Animator>();
+        Right_Arm_Animator = GameObject.FindGameObjectWithTag("rightArm").GetComponent<Animator>();
     }
-
     
     #region IDLE 
     //Pour l'instant inutil mais au cas ou pour plus tard
