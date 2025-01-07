@@ -39,7 +39,15 @@ public class C_Magnet_Rocket : ComportementState
         prefabForceField = _sm.comportementManager.prefabMagnetRocketForcefield;
         lastPos = _sm.transform.position;
         
-        Debug.LogWarning($"lastPos of {_sm.name} : {lastPos}");
+        // spawn de la zone de magnet
+        Vector3 magnetPos = _sm.transform.position;
+        magnetPos.y -= _sm.GetComponent<Collider>().bounds.extents.magnitude;
+       GameObject magnetField = _sm.comportementManager.InstantiateFeedback(prefabForceField,magnetPos, Quaternion.identity, _sm.transform);
+
+       RocketMagnetEffect effect = magnetField.GetComponent<RocketMagnetEffect>();
+       effect.targetObject = _sm.gameObject.transform;
+       effect.delay = _sm.comportementManager.magnetTrailDuration;//life time
+
     }
 
     public override void TickLogic()
@@ -50,19 +58,7 @@ public class C_Magnet_Rocket : ComportementState
          * orientation présédente pos - pos actuelle
          * => forcefield apply force sur son transform.up (en théorie il sera orienté vers direction de la rocket
          */
-        Debug.LogWarning($"lastPos.position : {lastPos}\n" +
-                         $"transform : {_sm.transform.position}");
-        if (Vector3.Distance(lastPos, _sm.transform.position) > distanceBetweenPoint)
-        {
-            //lastPos = _sm.transform;
-            GameObject forcefiled = _sm.comportementManager?.InstantiateFeedback(prefabForceField,_sm.transform.position, Quaternion.identity);
-            //on scale le chanmp par rapport à la largeur et longueur de l'objet qui le fait spawn, pass de sa hauteur
-            forcefiled.transform.localScale = new Vector3(_sm.GetComponent<Collider>().bounds.extents.x, 1, _sm.GetComponent<Collider>().bounds.extents.z);
-            
-            _sm.comportementManager.DestroyObj(forcefiled, _sm.comportementManager.magnetTrailDuration);
-
-            lastPos = _sm.transform.position;
-        }
+        
         
     }
 
