@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector]public Color immuable_color;
     [HideInInspector]public Color Uncomportemented_color;
     
+    [Header("UI")]
+    public GameObject ui;
+    
     [Header("Player")]
     public GameObject[] players; //dans Steler proto et ComportementStateMachine(pas sûr qu'il soit utilisé dedans)
     public GameObject player;
@@ -98,6 +101,7 @@ public class GameManager : MonoBehaviour
         {
             controls = new Controls();
         }
+        ui.SetActive(true);
     }
 
     private void Awake()
