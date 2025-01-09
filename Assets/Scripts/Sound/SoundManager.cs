@@ -20,7 +20,7 @@ public class SoundManager : MonoBehaviour
     private EventInstance _unslowTime;
     #region Init Player
     public enum SoundPlayer { slowTime, unslowTime, steal, give, projectionEnter, projectionStay, projectionExit }
-#endregion
+    #endregion
     #region Init System
     public enum PlaceParamType { repulse, immuable, bounce, propeler, aimant }
     public enum PlaceParamOnWhatType  { onObject, onPlayer, onGrab }

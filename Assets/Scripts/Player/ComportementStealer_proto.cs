@@ -103,7 +103,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot1 = currentObjectState.leftValue;
                                     originSlot1 = _stateStolen;
                                     slot1Text.text = ((FirstState)slot1).ToString();
-                                    // SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
+                                    SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                 }
                                 else
                                 {
@@ -135,7 +135,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot1 = 0;
                                     originSlot1 = null;
                                     slot1Text.text = "";
-                                    // SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
+                                    SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                 }
                                 else
                                 {
@@ -150,7 +150,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 slot1 = 0;
                                 originSlot1 = null;
                                 slot1Text.text = "";
-                                // SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
+                                SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                             }
                         }
                     }
@@ -199,7 +199,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.rightValue;
                                     originSlot2 = _stateStolen;
-                                    // SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
+                                    SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                 }
                                 else
                                 {
@@ -209,7 +209,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2 = currentObjectState.leftValue;
                                     originSlot2 = _stateStolen;
                                     slot2Text.text = ((FirstState)slot2).ToString();
-                                    // SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
+                                    SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                 }
                             }
                             else
@@ -236,7 +236,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2 = 0;
                                     originSlot2 = null;
                                     slot2Text.text = "";
-                                    // SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
+                                    SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                 }
                                 else
                                 {
@@ -251,7 +251,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 slot2 = 0;
                                 originSlot2 = null;
                                 slot2Text.text = "";
-                                // SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
+                                SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                             }
                         }
                     }
