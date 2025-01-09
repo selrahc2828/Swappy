@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class C_Solo_Rocket : ComportementState
 {
+    //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart, _sm.gameObject);
     public float rocketForce = 20;
     public float rocketForceOnPlayer = 20;
     public float rocketForceWhenGrab= 20;

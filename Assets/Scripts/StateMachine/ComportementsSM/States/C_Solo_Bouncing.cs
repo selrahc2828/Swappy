@@ -64,4 +64,9 @@ public class C_Solo_Bouncing : ComportementState
         }
 
     }
+
+    public override void CollisionStart(Collision other)
+    {
+        //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit, _sm.gameObject);
+    }
 }

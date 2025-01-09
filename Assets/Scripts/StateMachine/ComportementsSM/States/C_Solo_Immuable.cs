@@ -43,4 +43,9 @@ public class C_Solo_Immuable : ComportementState
         _sm.rb.velocity = _baseVelocity;
         _sm.rb.angularVelocity = _baseAngularVelocity;
     }
+
+    public override void CollisionStart(Collision other)
+    {
+        //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit, _sm.gameObject);
+    }
 }
