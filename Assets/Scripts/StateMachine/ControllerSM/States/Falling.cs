@@ -25,6 +25,7 @@ public class Falling : MouvementState
         
         if (grounded)
         {
+            SoundManager.Instance.PlaySoundLand();
             _sm.ChangeState(PlayerMouvementStateMachine.walkingState);
         }
     }

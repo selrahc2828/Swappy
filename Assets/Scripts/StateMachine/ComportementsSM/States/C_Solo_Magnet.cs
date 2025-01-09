@@ -8,12 +8,15 @@ public class C_Solo_Magnet : ComportementState
     public float trueMagnetRange;
     public float magnetForce;
     public bool magnetGradiantForce;
+
+
     public C_Solo_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
+        //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart, _sm.gameObject);
         isKinematic = false;
         stateValue = 27;
         leftValue = 27;
@@ -51,6 +54,7 @@ public class C_Solo_Magnet : ComportementState
 
     public override void Exit()
     {
+        
         base.Exit();
     }
 
