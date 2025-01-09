@@ -16,8 +16,6 @@ public class SoundManager : MonoBehaviour
     #endregion
 
 
-    private EventInstance _slowTime;
-    private EventInstance _unslowTime;
     #region Init Player
     public enum SoundPlayer { slowTime, unslowTime, steal, give, projectionEnter, projectionStay, projectionExit }
     #endregion
@@ -29,7 +27,18 @@ public class SoundManager : MonoBehaviour
     private GameObject prefabSonPropeler;
     [SerializeField]
     private GameObject prefabSonAimant;
+    [SerializeField]
+    private GameObject prefabSonImmuable;
+    [SerializeField]
+    private GameObject prefabSonBouncing;
+    [SerializeField]
+    private GameObject prefabSonRepulseTimer;
+    [SerializeField]
+    private GameObject prefabSonRepulseBoomer;
 
+    #endregion
+    #region Init Zic
+    private bool isMusicPlay = false;
     #endregion
     #region InitRef
 
@@ -162,16 +171,16 @@ public class SoundManager : MonoBehaviour
         switch (soundComp)
         {
             case SoundComp.repulseTimer:
-                RuntimeManager.PlayOneShotAttached("event:/System/Componenent/RepulseTimer", gameObject);
+                Instantiate(prefabSonRepulseTimer, gameObject.transform);
                 break;
             case SoundComp.repulseBoom:
-                RuntimeManager.PlayOneShotAttached("event:/System/Componenent/RepulseBoom", gameObject);
+                Instantiate(prefabSonRepulseBoomer, gameObject.transform);
                 break;
             case SoundComp.immuableHit:
-                RuntimeManager.PlayOneShotAttached("event:/System/Componenent/ImmuableHit", gameObject);
+                Instantiate(prefabSonImmuable, gameObject.transform);
                 break;
             case SoundComp.bounceHit:
-                RuntimeManager.PlayOneShotAttached("event:/System/Componenent/BounceHit", gameObject);
+                Instantiate(prefabSonBouncing, gameObject.transform);
                 break;
             case SoundComp.propelerStart:
                 Instantiate(prefabSonPropeler, gameObject.transform);
@@ -183,8 +192,19 @@ public class SoundManager : MonoBehaviour
     }
 
     #endregion
+    #region Zic
+    private void Update()
+    {
+        if (!isMusicPlay)
+        {
+            RuntimeManager.PlayOneShot("event:/Music/Sample Ref Sound");
+            isMusicPlay = true;
+        }
+        
+    }
+    #endregion
     #region Gestion Du Son
-    
+
     private void Awake()
     {
         if (Instance != null)

@@ -23,6 +23,7 @@ public class C_Solo_Bouncing : ComportementState
         _bouncyMaterial = _sm.comportementManager.bouncyMaterial;
         // _sm.rend.material = _sm.bounce;
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.noComportementColor);
+
         
         
         if (_sm.isPlayer)
