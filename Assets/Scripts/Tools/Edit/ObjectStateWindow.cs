@@ -33,7 +33,10 @@ public class ObjectStateWindow : EditorWindow
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Reset Current State"))
                 {
-                    
+                    if (stateMachineScript != null && stateMachineScript.currentState is ComportementState comportementState)
+                    {
+                        comportementState.CalculateNewtState(comportementState.stateValue);
+                    }
                 }
                 EditorGUILayout.EndHorizontal();
                 
@@ -41,10 +44,12 @@ public class ObjectStateWindow : EditorWindow
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("Reset To Initial State"))
                 {
-                    
+                    if (stateMachineScript != null && stateMachineScript.currentState is ComportementState comportementState)
+                    {
+                        comportementState.CalculateNewtState((int)stateMachineScript.initialState);
+                    }
                 }
                 EditorGUILayout.EndHorizontal();
-                
                 
                 // Menu déroulant pour selectionner un etat
                 EditorGUILayout.Space();
@@ -97,16 +102,24 @@ public class ObjectStateWindow : EditorWindow
             //stateNames = enumValues.Select(v => v.ToString()).ToArray();
             stateNames = enumValues.Select(v => AddSpacesBeforeUpperCase(v.ToString())).ToArray();
             stateValues = enumValues.Select(v => (int)v).ToArray();
-
-            if (stateNames.Length > 0)
+            
+            // Synchroniser l'index avec l'état actuel
+            if (stateMachineScript.currentState is ComportementState comportementState)
             {
-                selectedStateIndex = 0;
+                var currentStateValue = comportementState.stateValue;
+                selectedStateIndex = Array.IndexOf(stateValues, currentStateValue);
+            }
+            
+            if (selectedStateIndex < 0)
+            {
+                selectedStateIndex = 0; // Si l'état initial n'est pas trouvé, sélectionner le premier
             }
         }
         else
         {
             stateNames = Array.Empty<string>();
             stateValues = Array.Empty<int>();
+            selectedStateIndex = 0;
         }
     }
     private string AddSpacesBeforeUpperCase(string input)
