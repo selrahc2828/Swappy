@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class C_Solo_Rocket : ComportementState
 {
-    //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart, _sm.gameObject);
+    
+    
     public float rocketForce = 20;
     public float rocketForceOnPlayer = 20;
     public float rocketForceWhenGrab= 20;
     public float OnOffCouldown;
     public float timer;
     public bool rocketOn;
+    private GameObject SonDeCon;
 
     public C_Solo_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -18,6 +20,9 @@ public class C_Solo_Rocket : ComportementState
 
     public override void Enter()
     {
+
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart, _sm.gameObject);
+        SonDeCon = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
         isKinematic = false;
         stateValue = 81;
         leftValue = 81;
@@ -70,5 +75,6 @@ public class C_Solo_Rocket : ComportementState
     public override void Exit()
     {
         base.Exit();
+        _sm.comportementManager.DestroyObj(SonDeCon);
     }
 }

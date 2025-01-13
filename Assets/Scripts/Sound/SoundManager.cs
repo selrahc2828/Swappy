@@ -15,7 +15,6 @@ public class SoundManager : MonoBehaviour
     private Bus _busSystem ;
     #endregion
 
-
     #region Init Player
     public enum SoundPlayer { slowTime, unslowTime, steal, give, projectionEnter, projectionStay, projectionExit }
     #endregion
