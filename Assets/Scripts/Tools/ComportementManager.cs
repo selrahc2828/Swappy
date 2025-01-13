@@ -21,8 +21,8 @@ public class ComportementManager : MonoBehaviour
     
     [Header("Impulse")]
     public float repulserTime = 5f;
+    public float doubleImpulseTime = 6f;
     [HideInInspector]
-    public float repulserTimer;
     public float repulserRange;
     public float repulserForce;
     public bool destroyOnUse = false;
@@ -94,11 +94,6 @@ public class ComportementManager : MonoBehaviour
             return;
         }
         Instance = this;
-    }
-    
-    void Start()
-    {
-        repulserTimer = 0;
     }
 
     // Update is called once per frame

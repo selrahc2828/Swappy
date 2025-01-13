@@ -28,7 +28,7 @@ public class C_Solo_Impulse : ComportementState
         base.Enter();
         
         repulserTime = _sm.comportementManager.repulserTime;
-        repulserTimer = _sm.comportementManager.repulserTimer;
+        repulserTimer = 0f;
         repulserRange = _sm.comportementManager.repulserRange;
 
         // trueRepulserRange = repulserRange;
@@ -94,7 +94,7 @@ public class C_Solo_Impulse : ComportementState
         {
             foreach (Collider objectInRange in objectsInRange)
             {
-                if (objectInRange.gameObject.tag == "Player")
+                if (objectInRange.gameObject.CompareTag("Player"))
                 {
                     if (!objectInRange.gameObject.GetComponentInParent<Rigidbody>())
                     {
