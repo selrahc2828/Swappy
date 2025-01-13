@@ -75,33 +75,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7131914307775674874}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
 --- !u!4 &5887030397478436726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
   m_PrefabInstance: {fileID: 6212811935522330781}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6555339281317012940 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
-  m_PrefabInstance: {fileID: 6212811935522330781}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7131914307775674874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6555339281317012940}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4926597b7a9069241b8cd4273a4371fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6611070868854676770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -124,15 +104,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.550001
+      value: 45.97
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.58
+      value: 19.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15.919998
+      value: -139.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       propertyPath: m_LocalRotation.w
@@ -144,11 +124,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 2.3283064e-10
+      value: -2.3283064e-10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 2.3283064e-10
+      value: -2.3283064e-10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -180,6 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -7511558181221131132, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
+    - {fileID: -5754084199372789682, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
@@ -230,7 +211,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6304569146231824499}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -263,6 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   comportementManager: {fileID: 0}
+  soundManager: {fileID: 0}
   bounce: {fileID: 2100000, guid: 91000070d7519764cb026b60431260a5, type: 2}
   rocket: {fileID: 2100000, guid: c8ee28777e556cd43a9538424d740be1, type: 2}
   immuable: {fileID: 2100000, guid: 9a3c6969002f61e4c83567aaaa265f8d, type: 2}
@@ -273,7 +255,7 @@ MonoBehaviour:
   player: {fileID: 0}
   isPlayer: 0
   rb: {fileID: 0}
-  collider: {fileID: 0}
+  objectCollider: {fileID: 0}
   displayComportementName: 
   initialState: 0
 --- !u!4 &6644362582985112265 stripped
