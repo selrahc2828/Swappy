@@ -131,7 +131,7 @@ public class ComportementManager : MonoBehaviour
 
     public void DestroyObj(GameObject obj, float time = 0)
     {
-        Debug.LogWarning($"Destroy {obj.name}");
+        //Debug.LogWarning($"Destroy {obj.name}");
         Destroy(obj, time);
     }
 }
