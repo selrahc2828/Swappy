@@ -53,6 +53,5 @@ public class C_Immuable_Rocket : ComportementState
         _sm.rb.isKinematic = false;
         float effectiveReleaseForce = rocketReleaseForce * (chargeTime / chargeTimeMax);
         _sm.rb.AddForce(Vector3.up * effectiveReleaseForce, ForceMode.Impulse);
-        Debug.Log(effectiveReleaseForce);
     }
 }
