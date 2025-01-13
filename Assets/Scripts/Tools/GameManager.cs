@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Sound;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -248,14 +249,14 @@ public class GameManager : MonoBehaviour
             // unity utilise fixedDeltaTime (intervalle fixe) pour calculer la physique qui n'est pas affecté par le timescale ce qui produit donne un aspect saccadé car les 2 ne sont plus synchro
             // on synchronise dont le fixedDeltaTime par rapport au timescale
             Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
-            SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.slowTime);
+            SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.SlowTime);
         }
         else
         {
             // valeurs par défaut de Unity
             Time.timeScale = 1f;
             Time.fixedDeltaTime = 0.02f;
-            SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.unslowTime);
+            SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.UnslowTime);
         }
     }
 

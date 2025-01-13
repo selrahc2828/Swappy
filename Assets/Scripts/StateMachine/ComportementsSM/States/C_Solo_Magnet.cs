@@ -1,6 +1,7 @@
 using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
+using Sound;
 using UnityEngine;
 
 public class C_Solo_Magnet : ComportementState
@@ -19,7 +20,7 @@ public class C_Solo_Magnet : ComportementState
     public override void Enter()
     {
         
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart, _sm.gameObject);
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.AimantStart, _sm.gameObject);
         SonDeCon = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
         isKinematic = false;
         stateValue = 27;

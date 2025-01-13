@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sound;
 using UnityEngine;
 
 public class C_Solo_Bouncing : ComportementState
@@ -67,6 +68,6 @@ public class C_Solo_Bouncing : ComportementState
 
     public override void CollisionStart(Collision other)
     {
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit, _sm.gameObject);
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.BounceHit, _sm.gameObject);
     }
 }
