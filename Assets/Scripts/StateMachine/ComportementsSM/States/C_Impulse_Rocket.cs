@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class C_Impulse_Rocket : ComportementState
 {
+   
+    
     public C_Impulse_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -15,6 +17,8 @@ public class C_Impulse_Rocket : ComportementState
         rightValue = 81;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.rocketColor);
+        
+        
 
     }
 
@@ -30,6 +34,7 @@ public class C_Impulse_Rocket : ComportementState
 
     public override void Exit()
     {
+        
         base.Exit();
     }
 }

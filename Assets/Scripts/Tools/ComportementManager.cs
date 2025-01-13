@@ -19,6 +19,14 @@ public class ComportementManager : MonoBehaviour
     public Color immuableColor;
     public Color noComportementColor;
     
+    [FormerlySerializedAs("FeedBack_Impulse")] [Header("Comportement Feedbacks")]
+    public GameObject feedBack_Impulse;
+    public GameObject feedBack_Bouncing;
+    public GameObject feedBack_Rocket;
+    public GameObject feedBack_Magnet;
+    public GameObject feedBack_Immuable;
+    
+    
     [Header("Impulse")]
     public float repulserTime = 5f;
     [HideInInspector]
