@@ -30,6 +30,9 @@ public class ComportementStealer_proto : MonoBehaviour
     public TextMeshProUGUI slot1Text;
     public TextMeshProUGUI slot2Text;
 
+    [Header("Animation")] 
+    public Anim_manager playeranim;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -66,6 +69,7 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
+            
             if (GameManager.Instance.grabScript.isCarrying)//on ne peut pas voler/attribuer si on porte un objet
             {
                 return;
@@ -104,6 +108,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     originSlot1 = _stateStolen;
                                     slot1Text.text = ((FirstState)slot1).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
+                                    playeranim.Left_Aspiration();
                                 }
                                 else
                                 {
@@ -136,6 +141,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     originSlot1 = null;
                                     slot1Text.text = "";
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
+                                    playeranim.Left_Attribution();
                                 }
                                 else
                                 {
@@ -151,6 +157,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 originSlot1 = null;
                                 slot1Text.text = "";
                                 SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
+                                playeranim.Left_Attribution();
                             }
                         }
                     }
@@ -163,6 +170,7 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
+            
             if (GameManager.Instance.grabScript.isCarrying)//on ne peut pas voler/attribuer si on porte un objet
             {
                 return;
@@ -200,6 +208,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2 = currentObjectState.rightValue;
                                     originSlot2 = _stateStolen;
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
+                                    playeranim.Right_Aspiration();
                                 }
                                 else
                                 {
@@ -210,6 +219,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     originSlot2 = _stateStolen;
                                     slot2Text.text = ((FirstState)slot2).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
+                                    playeranim.Right_Aspiration();
                                 }
                             }
                             else
@@ -237,6 +247,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     originSlot2 = null;
                                     slot2Text.text = "";
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
+                                    playeranim.Right_Attribution();
                                 }
                                 else
                                 {
@@ -252,6 +263,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 originSlot2 = null;
                                 slot2Text.text = "";
                                 SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
+                                playeranim.Right_Attribution();
                             }
                         }
                     }
