@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Sound;
 using UnityEngine;
 
 public class C_Solo_Rocket : ComportementState
@@ -22,7 +21,7 @@ public class C_Solo_Rocket : ComportementState
     public override void Enter()
     {
 
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.PropelerStart, _sm.gameObject);
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart, _sm.gameObject);
         SonDeCon = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
         isKinematic = false;
         stateValue = 81;

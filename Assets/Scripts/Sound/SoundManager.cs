@@ -2,8 +2,6 @@ using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 
-namespace Sound
-{
     public class SoundManager : MonoBehaviour
     {
         public static SoundManager Instance;
@@ -14,12 +12,12 @@ namespace Sound
         #endregion
 
         #region Init Player
-        public enum SoundPlayer { SlowTime, UnslowTime, Steal, Give, ProjectionEnter, ProjectionStay, ProjectionExit }
+        public enum SoundPlayer { slowTime, unslowTime, steal, give, projectionEnter, projectionStay, projectionExit }
         #endregion
         #region Init System
-        public enum PlaceParamType { Repulse, Immuable, Bounce, Propeler, Aimant }
-        public enum PlaceParamOnWhatType  { OnObject, OnPlayer, OnGrab }
-        public enum SoundComp { RepulseTimer, RepulseBoom,  ImmuableHit, BounceHit, PropelerStart, AimantStart }
+        public enum PlaceParamType { repulse, immuable, bounce, propeler, aimant }
+        public enum PlaceParamOnWhatType  { onObject, onPlayer, onGrab }
+        public enum SoundComp { repulseTimer, repulseBoom,  immuableHit, bounceHit, propelerStart, aimantStart }
         [SerializeField]
         private GameObject prefabSonPropeler;
         [SerializeField]
@@ -65,25 +63,25 @@ namespace Sound
         {
             switch (soundPlayer)
             {
-                case SoundPlayer.SlowTime:
+                case SoundPlayer.slowTime:
                     RuntimeManager.PlayOneShot("event:/Player/Time/SlowTime");
                     break;
-                case SoundPlayer.UnslowTime:
+                case SoundPlayer.unslowTime:
                     RuntimeManager.PlayOneShot("event:/Player/Time/UnslowTime");
                     break;
-                case SoundPlayer.Steal:
+                case SoundPlayer.steal:
                     RuntimeManager.PlayOneShot("event:/Player/Comp/StealComp");
                     break;
-                case SoundPlayer.Give:
+                case SoundPlayer.give:
                     RuntimeManager.PlayOneShot("event:/Player/Comp/GiveComp");
                     break;
-                case SoundPlayer.ProjectionEnter:
+                case SoundPlayer.projectionEnter:
                     RuntimeManager.PlayOneShot("event:/Player/Projection/projectionEnter");
                     break;
-                case SoundPlayer.ProjectionStay:
+                case SoundPlayer.projectionStay:
                     RuntimeManager.PlayOneShot("event:/Player/Projection/projectionStay");
                     break;
-                case SoundPlayer.ProjectionExit:
+                case SoundPlayer.projectionExit:
                     RuntimeManager.PlayOneShot("event:/Player/Projection/projectionExit");
                     break;
                 default:
@@ -143,7 +141,7 @@ namespace Sound
         //  Tous les sons � appeler ici sont des sons finis, donc ils ne doivent pas se jou� en boucle.
         //
         //      Annotez quand les sons sont ajout� au code. (nom du script + line)
-        public void PlaySoundComponentPlace(GameObject gameObjet,PlaceParamType soundCompPlace = PlaceParamType.Repulse, PlaceParamOnWhatType onWhatItPlace = PlaceParamOnWhatType.OnObject)
+        public void PlaySoundComponentPlace(GameObject gameObjet,PlaceParamType soundCompPlace = PlaceParamType.repulse, PlaceParamOnWhatType onWhatItPlace = PlaceParamOnWhatType.onObject)
         {
             RuntimeManager.PlayOneShotAttached("event:/System/PLace", gameObject);
         }
@@ -167,22 +165,22 @@ namespace Sound
         {
             switch (soundComp)
             {
-                case SoundComp.RepulseTimer:
+                case SoundComp.repulseTimer:
                     Instantiate(prefabSonRepulseTimer, obj.transform);
                     break;
-                case SoundComp.RepulseBoom:
+                case SoundComp.repulseBoom:
                     Instantiate(prefabSonRepulseBoomer, obj.transform);
                     break;
-                case SoundComp.ImmuableHit:
+                case SoundComp.immuableHit:
                     RuntimeManager.PlayOneShotAttached("event:/System/Componenent/BounceHit", obj);
                     break;
-                case SoundComp.BounceHit:
+                case SoundComp.bounceHit:
                     RuntimeManager.PlayOneShotAttached("event:/System/Componenent/BounceHit",obj);
                     break;
-                case SoundComp.PropelerStart:
+                case SoundComp.propelerStart:
                     Instantiate(prefabSonPropeler, obj.transform);
                     break;
-                case SoundComp.AimantStart:
+                case SoundComp.aimantStart:
                     Instantiate(prefabSonAimant, obj.transform);
                     break;
             }
@@ -213,4 +211,4 @@ namespace Sound
         }
         #endregion
     }
-}
+

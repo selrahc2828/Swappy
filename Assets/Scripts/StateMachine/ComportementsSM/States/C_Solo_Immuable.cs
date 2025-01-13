@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Sound;
+
 using UnityEngine;
 
 public class C_Solo_Immuable : ComportementState
@@ -47,6 +47,6 @@ public class C_Solo_Immuable : ComportementState
 
     public override void CollisionStart(Collision other)
     {
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.ImmuableHit, _sm.gameObject);
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit, _sm.gameObject);
     }
 }
