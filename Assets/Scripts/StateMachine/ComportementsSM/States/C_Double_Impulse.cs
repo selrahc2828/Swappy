@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ public class C_Double_Impulse : ComportementState
         leftValue = 1;
         rightValue = 1;
         base.Enter();
+        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.impulseColor);
         
         impulseTime = _sm.comportementManager.doubleImpulseTime;
         impulseTimer = 0f;
