@@ -21,8 +21,7 @@ public class ComportementManager : MonoBehaviour
     
     [Header("Impulse")]
     public float repulserTime = 5f;
-    [HideInInspector]
-    public float repulserTimer;
+    public float doubleImpulseTime = 6f;
     public float repulserRange;
     public float repulserForce;
     public bool destroyOnUse = false;
@@ -87,6 +86,15 @@ public class ComportementManager : MonoBehaviour
     [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à impulse bounce Force")]
     public float impulseForceMultiplier;
     
+    [Header("Impulse Rocket")]
+    public float impulseRocketExplosionForce;
+    public float impulseRocketExplosionRange;
+    public float impulseRocketFlyForce;
+    public float impulseRocketFlyForceOnPlayer;
+    public float impulseRocketFlyTime;
+    public float timeBetweenImpulses;
+    
+    
     private void Awake()
     {
         if (Instance != null)
@@ -95,11 +103,6 @@ public class ComportementManager : MonoBehaviour
             return;
         }
         Instance = this;
-    }
-    
-    void Start()
-    {
-        repulserTimer = 0;
     }
 
     // Update is called once per frame
@@ -132,7 +135,7 @@ public class ComportementManager : MonoBehaviour
 
     public void DestroyObj(GameObject obj, float time = 0)
     {
-        Debug.LogWarning($"Destroy {obj.name}");
+        //Debug.LogWarning($"Destroy {obj.name}");
         Destroy(obj, time);
     }
 }

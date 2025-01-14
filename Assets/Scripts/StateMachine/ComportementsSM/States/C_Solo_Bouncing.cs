@@ -23,6 +23,7 @@ public class C_Solo_Bouncing : ComportementState
         _bouncyMaterial = _sm.comportementManager.bouncyMaterial;
         // _sm.rend.material = _sm.bounce;
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.noComportementColor);
+
         
         
         if (_sm.isPlayer)
@@ -62,5 +63,10 @@ public class C_Solo_Bouncing : ComportementState
             _sm.GetComponent<Collider>().material = null;
         }
 
+    }
+
+    public override void CollisionStart(Collision other)
+    {
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit, _sm.gameObject);
     }
 }

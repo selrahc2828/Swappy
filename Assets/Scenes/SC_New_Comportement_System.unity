@@ -127,7 +127,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8242482544930831946, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
   m_PrefabInstance: {fileID: 1428324524}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &118647869
+--- !u!20 &151643819 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 360774916830245804, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
+  m_PrefabInstance: {fileID: 1176931274}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &165710329 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3635396009840511949, guid: 08dda7507e1cfd6459009f2b2cea5af7, type: 3}
+  m_PrefabInstance: {fileID: 1772772266}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &738285221
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -137,8 +153,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1573964937435694765, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: m_Name
-      value: ----Manager---- (1)
+      value: ----Manager----
       objectReference: {fileID: 0}
+    - target: {fileID: 1767383280669085481, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 1089902405}
+    - target: {fileID: 1767383280669085481, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: orientation
+      value: 
+      objectReference: {fileID: 1428324525}
     - target: {fileID: 2555637526324700904, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: m_LocalPosition.x
       value: -71.20703
@@ -180,30 +204,34 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketReleaseForce
-      value: 20
+      propertyPath: timeBetweenImpulses
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: impulseRocketFlyTime
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: impulseRocketFlyForce
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: impulseRocketExplosionForce
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: impulseRocketExplosionRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: impulseRocketFlyForceOnPlayer
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
---- !u!20 &151643819 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 360774916830245804, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-  m_PrefabInstance: {fileID: 1176931274}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &165710329 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3635396009840511949, guid: 08dda7507e1cfd6459009f2b2cea5af7, type: 3}
-  m_PrefabInstance: {fileID: 1772772266}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &759424375 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4905455801296310121, guid: 08dda7507e1cfd6459009f2b2cea5af7, type: 3}
@@ -321,6 +349,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1089902405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9048636664700776878, guid: 08dda7507e1cfd6459009f2b2cea5af7, type: 3}
+  m_PrefabInstance: {fileID: 1772772266}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1176931274
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -530,6 +563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   comportementManager: {fileID: 0}
+  soundManager: {fileID: 0}
   bounce: {fileID: 2100000, guid: 445d9bc0aae168c40be4a826a26ae7df, type: 2}
   rocket: {fileID: 2100000, guid: 7e4e4bc4cb627b54dbb822951f94e3ad, type: 2}
   immuable: {fileID: 2100000, guid: af510e3b223ffe748a4a4c8d98e5db86, type: 2}
@@ -542,7 +576,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   objectCollider: {fileID: 0}
   displayComportementName: 
-  initialState: 0
+  initialState: 82
 --- !u!54 &1298273805
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -551,7 +585,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1298273803}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -676,6 +710,10 @@ PrefabInstance:
     - target: {fileID: 709902461892241047, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946511582474088869, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
+      propertyPath: m_Mass
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2249551179768967199, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: mainCam
@@ -865,7 +903,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9048636664700776878, guid: 08dda7507e1cfd6459009f2b2cea5af7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -1074,7 +1112,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089681528}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1107,6 +1145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   comportementManager: {fileID: 0}
+  soundManager: {fileID: 0}
   bounce: {fileID: 2100000, guid: 445d9bc0aae168c40be4a826a26ae7df, type: 2}
   rocket: {fileID: 2100000, guid: 7e4e4bc4cb627b54dbb822951f94e3ad, type: 2}
   immuable: {fileID: 2100000, guid: af510e3b223ffe748a4a4c8d98e5db86, type: 2}
@@ -1119,7 +1158,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   objectCollider: {fileID: 0}
   displayComportementName: 
-  initialState: 90
+  initialState: 1
 --- !u!65 &2089681531
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1382,8 +1421,8 @@ RectTransform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 118647869}
   - {fileID: 1263989146}
+  - {fileID: 738285221}
   - {fileID: 1088781567}
   - {fileID: 1428324524}
   - {fileID: 1176931274}
