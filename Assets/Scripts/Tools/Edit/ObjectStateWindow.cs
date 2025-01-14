@@ -16,7 +16,7 @@ public class ObjectStateWindow : EditorWindow
     [MenuItem("Tools/Object State Window")]
     public static void ShowWindow()
     {
-        GetWindow<ObjectStateWindow>("Object Picker");
+        GetWindow<ObjectStateWindow>("Object State Window");
     }
 
     private void OnGUI()
