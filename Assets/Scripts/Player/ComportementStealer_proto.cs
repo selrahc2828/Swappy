@@ -146,7 +146,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             }
                             else
                             {
-                                Debug.Log("Addition de " + slot1 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot1.gameObject.name);
+                                Debug.Log("Addition de " + slot1 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot1?.gameObject.name);
                                 int futurState = currentObjectState.stateValue + slot1;
                                 currentObjectState.CalculateNewtState(futurState);
                                 slot1 = 0;
