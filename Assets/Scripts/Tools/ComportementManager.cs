@@ -22,7 +22,6 @@ public class ComportementManager : MonoBehaviour
     [Header("Impulse")]
     public float repulserTime = 5f;
     public float doubleImpulseTime = 6f;
-    [HideInInspector]
     public float repulserRange;
     public float repulserForce;
     public bool destroyOnUse = false;
@@ -85,6 +84,15 @@ public class ComportementManager : MonoBehaviour
     public float impulseBounceTimer;
     [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à impulse bounce Force")]
     public float impulseForceMultiplier;
+    
+    [Header("Impulse Rocket")]
+    public float impulseRocketExplosionForce;
+    public float impulseRocketExplosionRange;
+    public float impulseRocketFlyForce;
+    public float impulseRocketFlyForceOnPlayer;
+    public float impulseRocketFlyTime;
+    public float timeBetweenImpulses;
+    
     
     private void Awake()
     {

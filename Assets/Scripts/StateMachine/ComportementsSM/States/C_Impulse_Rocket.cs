@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class C_Impulse_Rocket : ComportementState
 {
+    public float explosionForce;
+    public float explosionRange;
+    public float explosionTrueRange;
+    public float rocketFlyForce;
+    public float rocketFlyForceOnPlayer;
+    public float flyTime;
+    public float flyTimer;
+    public float impulseTimer;
+    public float timeBetweenImpulses;
+    public bool rocketOn;
+    private GameObject feedback;
+    
     public C_Impulse_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -14,6 +26,29 @@ public class C_Impulse_Rocket : ComportementState
         leftValue = 1;
         rightValue = 81;
         base.Enter();
+        
+        explosionForce = _sm.comportementManager.impulseRocketExplosionForce;
+        rocketFlyForceOnPlayer = _sm.comportementManager.impulseRocketFlyForceOnPlayer;
+        explosionRange = _sm.comportementManager.impulseRocketExplosionRange;
+        feedback = _sm.comportementManager.impulseFeedback;
+
+        // trueRepulserRange = repulserRange;
+        if (_sm.isPlayer)
+        {
+            explosionTrueRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + explosionRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
+        }
+        else
+        {
+            explosionTrueRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + explosionRange;
+        }
+        // pb si obj n'a pas de collider direct (ax Player)
+        rocketFlyForce = _sm.comportementManager.impulseRocketFlyForce;
+        flyTime = _sm.comportementManager.impulseRocketFlyTime;
+        timeBetweenImpulses = _sm.comportementManager.timeBetweenImpulses;
+        flyTimer = 0f;
+        impulseTimer = 0f;
+        rocketOn = false;
+        
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.rocketColor);
 
     }
@@ -26,10 +61,91 @@ public class C_Impulse_Rocket : ComportementState
     public override void TickPhysics()
     {
         base.TickPhysics();
+        flyTimer += Time.fixedDeltaTime;
+        if (flyTimer > flyTime)
+        {
+            rocketOn = !rocketOn;
+            flyTimer = 0f;
+        }
+        if (rocketOn)
+        {
+            impulseTimer += Time.fixedDeltaTime;
+            if (impulseTimer > timeBetweenImpulses)
+            {
+                Repulse();
+                impulseTimer = 0f;
+            }
+            
+            if (_sm.isPlayer)
+            {
+                _sm.rb.AddForce(Vector3.up * rocketFlyForceOnPlayer , ForceMode.Force);
+            }
+            else if(isGrabbed)
+            {
+                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(Vector3.up * rocketFlyForceOnPlayer, ForceMode.Force);
+            }
+            else
+            {
+                _sm.rb.AddForce(Vector3.up * rocketFlyForce, ForceMode.Force);
+            }
+        }
     }
 
     public override void Exit()
     {
         base.Exit();
+    }
+    
+    public override void DisplayGizmos()
+    {
+        base.DisplayGizmos();
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(_sm.transform.position, explosionTrueRange);  
+
+    }    
+ 
+    public void Repulse()
+    {
+        if (feedback)
+        {
+            GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
+            shockWave.GetComponent<GrowToRadius>().targetRadius = explosionTrueRange;
+        }
+
+        Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, explosionTrueRange);
+        if (objectsInRange.Length > 0)
+        {
+            foreach (Collider objectInRange in objectsInRange)
+            {
+                if (objectInRange.gameObject.CompareTag("Player"))
+                {
+                    if (!objectInRange.gameObject.GetComponentInParent<Rigidbody>())
+                    {
+                        return;
+                    }
+                    //collider et rigid body pas au même endroit pour lui
+                    GameObject objectAffected = objectInRange.gameObject.GetComponentInParent<Rigidbody>().gameObject;
+                    
+                    // pb pour appliquer la force à cause du drag sur le rigidbody
+                    ApplyForce(objectAffected.GetComponent<Rigidbody>(), objectAffected,explosionForce);
+                    
+                    // player relache l'objet repulse
+                    if (isGrabbed) //juste isGrabbed ? objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject
+                    {
+                        objectAffected.GetComponent<GrabObject>().Drop(true);
+                    }
+                }
+                else if (objectInRange.GetComponent<Rigidbody>() != null)
+                {
+                    ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, explosionForce);
+                }  
+            }
+        }
+    }
+
+    public void ApplyForce(Rigidbody rbObj,GameObject objToApply, float force)
+    {
+        Vector3 direction = (objToApply.transform.position - _sm.transform.position).normalized;
+        rbObj.AddForce( direction * force, ForceMode.Impulse);
     }
 }
