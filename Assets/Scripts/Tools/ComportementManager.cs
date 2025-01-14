@@ -50,9 +50,10 @@ public class ComportementManager : MonoBehaviour
     [Header("Magnet Rocket")]
     public GameObject prefabMagnetTrail;
     public float rocketMagnetForce = 20f;
+    public float rocketMagnetForceOnPlayer = 20f;
+    public float rocketMagnetForceWhenGrab = 20f;
     public float magnetTrailDuration = 1f;
     public GameObject prefabMagnetRocketForcefield;
-    public float magnetRocketDistanceBetweenPoint = 2f;
     
     [Header("Magnet")]
     public float magnetRange = 10f;

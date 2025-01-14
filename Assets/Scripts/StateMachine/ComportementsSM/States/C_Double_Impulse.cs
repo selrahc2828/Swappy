@@ -14,7 +14,6 @@ public class C_Double_Impulse : ComportementState
         leftValue = 1;
         rightValue = 1;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.impulseColor);
 
     }
 

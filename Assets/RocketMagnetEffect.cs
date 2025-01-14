@@ -1,61 +1,93 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RocketMagnetEffect : MonoBehaviour
 {
-    public Transform targetObject; // L'objet que la zone suit
+    public Transform rocketObject; // L'objet que la zone suit, le magnet rocket
     public float delay = 1f;       // Délai en secondes pour le PointB
 
-    private Transform _pointA; // PointA attaché directement à l'objet
-    private Transform _pointB; // PointB qui suit avec un délai
+    public Transform pointA; // PointA attaché directement à l'objet
+    public Transform pointB; // PointB qui suit avec un délai
     private Vector3 _pointBPosition; // Position interpolée de PointB
     
-    [SerializeField] private BoxCollider _boxCollider;
-
+    // test rescale
+    public Transform trailMagnetObject; // L'objet à scaler
+    public float divReplaceCenter = 2f;
+    
     void Start()
     {
-        if (targetObject == null)
+        if (rocketObject == null)
         {
-            Debug.LogError("Aucun objet cible assigné !");
+            Debug.LogError("Aucun objet cible assigné");
         }
-
-        _pointA = new GameObject("PointA").transform;
-        _pointB = new GameObject("PointB").transform;
         
-        _pointA.position = targetObject.position;
+        Vector3 positionStart = new Vector3(
+            rocketObject.position.x,
+            rocketObject.position.y - GetComponentInParent<Collider>().bounds.extents.magnitude,
+            rocketObject.position.z
+            );
+        
+        pointA.position = positionStart;
         // Initialise PointB à la position actuelle du targetObject
-        _pointBPosition = targetObject.position;
-        _pointB.position = _pointBPosition;
-
-        _boxCollider = GetComponent<BoxCollider>();
+        _pointBPosition = pointA.position;
+        pointB.position = _pointBPosition;
     }
 
     void Update()
     {
-        if (targetObject != null)
+        if (rocketObject != null && pointA != null && pointB != null)
         {
-            // Point A suit instantanément la position du targetObject
-            transform.Find("PointA").position = targetObject.position;
-
-            // Point B suit avec un délai
-            _pointBPosition = Vector3.Lerp(_pointBPosition, targetObject.position, Time.deltaTime / delay);
-            transform.Find("PointB").position = _pointBPosition;
-        }
+            if (rocketObject != null)
+            {
+                // Point A suit instantanément la position du targetObject
+                Vector3 positionMove = new Vector3(
+                    rocketObject.position.x,
+                    rocketObject.position.y - GetComponentInParent<Collider>().bounds.extents.magnitude,
+                    rocketObject.position.z
+                );
         
-        // Calcul de la position centrale entre PointA et PointB
-        Vector3 centerPosition = (_pointA.position + _pointB.position) / 2;
-        transform.position = centerPosition;
+                pointA.position = positionMove;
+            }
 
-        // Calcul de la distance entre PointA et PointB
-        float distance = Vector3.Distance(_pointA.position, _pointB.position);
-
-        if (_boxCollider is BoxCollider boxCollider)
-        {
-            // Ajustement du BoxCollider
-            //boxCollider.size = new Vector3(colliderWidth, colliderWidth, distance);
-            boxCollider.center = Vector3.zero; // Garde le collider centré
-            transform.LookAt(_pointB.position); // Oriente le collider
+            // si pas de target mettre rien
+            // target B doit êre point A
+            
+        
+            // Point B suit avec un délai
+            _pointBPosition = Vector3.Lerp(_pointBPosition, pointA.position, Time.deltaTime / delay);
+            pointB.position = _pointBPosition;
+            
+            RescalePoints();
         }
-       
+    }
+
+    private void RescalePoints()
+    {
+        // Calcul de la distance entre PointA et PointB
+        Vector3 direction = pointB.position - pointA.position;
+        float distance = direction.magnitude;
+        
+        //rescale du mesh
+        Renderer renderer = trailMagnetObject.GetComponent<Renderer>();
+        Vector3 objectSize = renderer.bounds.size; // Taille actuelle de l'objet
+        Vector3 scaleFactor = trailMagnetObject.transform.localScale; // Facteur d'échelle actuel
+        if (distance <= 0)
+            distance = .1f;
+        
+        float scaleFactorY = Math.Clamp(scaleFactor.y * (distance / objectSize.y), .1f, 1000f);// clamp scale si on a 0
+        
+        // Calcul de l'échelle proportionnelle
+        Vector3 newScale = new Vector3(
+            scaleFactor.x ,
+            scaleFactorY,
+            scaleFactor.z 
+        );
+        
+        // Appliquer la nouvelle échelle
+        trailMagnetObject.transform.localScale = newScale;
+
+        // Positionner l'objet pour qu'il soit centré entre les points
+        trailMagnetObject.transform.position = (pointA.position + pointB.position) / 2;
     }
 }
