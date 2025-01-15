@@ -78,7 +78,6 @@ public class C_Solo_Impulse : ComportementState
         base.DisplayGizmos();
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_sm.transform.position, trueRepulserRange);  
-
     }    
  
     public void Repulse()
