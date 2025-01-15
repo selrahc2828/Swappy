@@ -241,7 +241,6 @@ public class GameManager : MonoBehaviour
 
     public void SlowMotion(bool etat, float slow = 0f) //float slow = 0f => si pas renseigné, par defaut = 0
     {
-        Debug.Log(Time.fixedDeltaTime);
         if (etat)
         {
             Time.timeScale = slow;

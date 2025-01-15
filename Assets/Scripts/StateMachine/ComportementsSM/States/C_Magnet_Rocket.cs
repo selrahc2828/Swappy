@@ -1,22 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Timers;
 using UnityEngine;
 
 public class C_Magnet_Rocket : ComportementState
 {
-    public GameObject prefabMagnetTrail;
+    public float magnetRocketFlyTime = 4f;
     public float rocketMagnetForce = 20f;
     public float rocketMagnetForceOnPlayer = 20f;
     public float rocketMagnetForceWhenGrab = 20f;
-    public float magnetTrailDuration = 1f;
+    public float magnetTrailSpeedLerp = 1f;
+    public float magnetTrailTimeBeforeMove = 3f;
     private float _timer = 0f;
     private bool _rocketOn = true;
 
     public GameObject prefabForceField;
     private GameObject magnetFieldObject;
-    
-    public TrailRenderer magnetTrail;
     
     public Vector3 magnetPos;
     
@@ -32,19 +30,13 @@ public class C_Magnet_Rocket : ComportementState
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.rocketColor);
 
+        magnetRocketFlyTime = _sm.comportementManager.magnetRocketFlyTime;
         rocketMagnetForce = _sm.comportementManager.rocketMagnetForce;
         rocketMagnetForceOnPlayer = _sm.comportementManager.rocketMagnetForceOnPlayer;
         rocketMagnetForceWhenGrab = _sm.comportementManager.rocketMagnetForceWhenGrab;
         
-        magnetTrailDuration = _sm.comportementManager.magnetTrailDuration;
-        
-        // prefabMagnetTrail = _sm.comportementManager.prefabMagnetTrail;
-        // magnetTrail = _sm.comportementManager?.InstantiateFeedback(prefabMagnetTrail,_sm.transform.position, Quaternion.identity, _sm.transform).GetComponent<TrailRenderer>();
-        // if (magnetTrail != null)
-        // {
-        //     magnetTrail.time = _sm.comportementManager.magnetTrailDuration;//temps de vie du trail (on l'utilise aussi pour les forcefield)
-        // }
-
+        magnetTrailSpeedLerp = _sm.comportementManager.magnetTrailLerp;
+        magnetTrailTimeBeforeMove = _sm.comportementManager.magnetTrailTimeBeforeMove;
         prefabForceField = _sm.comportementManager.prefabMagnetRocketForcefield;
         
         // spawn de la zone de magnet
@@ -59,27 +51,37 @@ public class C_Magnet_Rocket : ComportementState
     {
         base.TickLogic();
         /*
-         * toutes les X seconde fait spawn prefab "forcefield"
-         * orientation présédente pos - pos actuelle
-         * => forcefield apply force sur son transform.up (en théorie il sera orienté vers direction de la rocket
+         * toutes les X seconde fait spawn prefab "forcefield" OU on le detache (la rocket se stop mais sa trainée perdure
+         * vu qu'on en a plusieurs généré par 1 seul comportement, les addForce sont géré dans RocketMagnetEffect
+         * dans RocketMagnetEffect, on récupère les force (normal, onPlayer et whenGrab)
+         * on doit géré 
          */
-    }
-
-    public override void TickPhysics()
-    {
-        base.TickPhysics();
+        
+        
         _timer += Time.fixedDeltaTime;
-        if (_timer >= magnetTrailDuration)
+        if (_timer >= magnetRocketFlyTime)
         {
             _rocketOn = !_rocketOn;
             _timer = 0f;
-            Debug.Log($"destroy magnetFieldObject");
-            _sm.comportementManager.DestroyObj(magnetFieldObject);
+            // _sm.comportementManager.DestroyObj(magnetFieldObject);
+            //
             
+            // gestion de la zone qui applique la force
             if (_rocketOn)
             {
-                Debug.Log($"spawn magnetFieldObject");
                 SpawnForceField();
+            }
+            else
+            {
+                // on met atDetachAndDestroy sur true
+                if (magnetFieldObject != null)
+                {
+                    RocketMagnetEffect effect = magnetFieldObject.GetComponent<RocketMagnetEffect>();
+                    if (effect != null)
+                    {
+                        effect.atDetachAndDestroy = true; // Passe le booléen à true, il sort du parent et sera détruit quand les 2 extrémités seront proche
+                    }
+                }
             }
         }
         
@@ -87,6 +89,12 @@ public class C_Magnet_Rocket : ComportementState
         {
             ApplyForce();
         }
+    }
+
+    public override void TickPhysics()
+    {
+        base.TickPhysics();
+        
     }
 
     public override void Exit()
@@ -112,9 +120,13 @@ public class C_Magnet_Rocket : ComportementState
 
     public void SpawnForceField()
     {
-        magnetFieldObject = _sm.comportementManager.InstantiateFeedback(prefabForceField,magnetPos, Quaternion.identity, _sm.transform);
+        magnetFieldObject = _sm.comportementManager.InstantiateFeedback(prefabForceField,magnetPos, Quaternion.identity);//, _sm.transform => parent mais pose des pb
         RocketMagnetEffect effect = magnetFieldObject.GetComponent<RocketMagnetEffect>();
         effect.rocketObject = _sm.gameObject.transform;
-        effect.delay = _sm.comportementManager.magnetTrailDuration;//life time
+        effect.delay = magnetTrailSpeedLerp;//delay
+        effect.timeBeforeMove = magnetTrailTimeBeforeMove;
+        effect.effectForce = rocketMagnetForce;
+        effect.effectForceOnPlayer = rocketMagnetForceOnPlayer;
+        effect.effectForceWhenGrab = rocketMagnetForceWhenGrab;
     }
 }

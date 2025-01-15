@@ -47,12 +47,13 @@ public class ComportementManager : MonoBehaviour
     public float chargeTimeMax = 6f;
 
     [Header("Magnet Rocket")]
-    public GameObject prefabMagnetTrail;
+    public GameObject prefabMagnetRocketForcefield;
+    public float magnetRocketFlyTime = 4f;
     public float rocketMagnetForce = 20f;
     public float rocketMagnetForceOnPlayer = 20f;
     public float rocketMagnetForceWhenGrab = 20f;
-    public float magnetTrailDuration = 1f;
-    public GameObject prefabMagnetRocketForcefield;
+    public float magnetTrailLerp = 1f;
+    public float magnetTrailTimeBeforeMove = 3f;
     
     [Header("Magnet")]
     public float magnetRange = 10f;
