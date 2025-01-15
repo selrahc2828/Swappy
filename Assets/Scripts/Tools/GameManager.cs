@@ -101,7 +101,6 @@ public class GameManager : MonoBehaviour
         {
             controls = new Controls();
         }
-        ui.SetActive(true);
     }
 
     private void Awake()
@@ -152,17 +151,17 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("GameManager PlayerFBX non renseigné");
         }
         
-        timerProjectionText = GameObject.FindWithTag("TextTimerProjecting").GetComponent<TextMeshProUGUI>();
-        if (!timerProjectionText)
-        {
-            Debug.Log("Il n'y a pas de text Timer Projection");
-        }
-        
-        timerSlowText = GameObject.FindWithTag("TextTimerSlow").GetComponent<TextMeshProUGUI>();
-        if (!timerSlowText)
-        {
-            Debug.Log("Il n'y a pas de text Timer Slow");
-        }
+        // timerProjectionText = GameObject.FindWithTag("TextTimerProjecting").GetComponent<TextMeshProUGUI>();
+        // if (!timerProjectionText)
+        // {
+        //     Debug.Log("Il n'y a pas de text Timer Projection");
+        // }
+        //
+        // timerSlowText = GameObject.FindWithTag("TextTimerSlow").GetComponent<TextMeshProUGUI>();
+        // if (!timerSlowText)
+        // {
+        //     Debug.Log("Il n'y a pas de text Timer Slow");
+        // }
         
         //à virer quand player greg supprimé
         camControllerScript = FindObjectOfType<CameraController>();

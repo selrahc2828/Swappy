@@ -94,7 +94,7 @@ public class C_Impulse_Bouncing : ComportementState
     {
         base.CollisionEnd(other);
         trueImpulseBounceForce = saveImpulseForce;
-        Debug.LogWarning($"dans exit: {trueImpulseBounceForce}");
+        // Debug.LogWarning($"dans exit: {trueImpulseBounceForce}");
 
     }
 
