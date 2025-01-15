@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
-using AmplifyShaderEditor;
 using UnityEngine;
 
 public class C_Magnet_Rocket : ComportementState
