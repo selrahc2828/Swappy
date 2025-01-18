@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class C_Immuable_Rocket : ComportementState
 {
-    public float chargeTimeMax;
-    public float chargeTime;
-    public float rocketReleaseForce;
+    private float chargeTimeMax;
+    private float chargeTime;
+    private float rocketReleaseForce;
 
     public C_Immuable_Rocket(StateMachine stateMachine) : base(stateMachine)
     {

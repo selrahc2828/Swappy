@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class C_Solo_Rocket : ComportementState
 {
-    
-    
-    public float rocketForce = 20;
-    public float rocketForceOnPlayer = 20;
-    public float rocketForceWhenGrab= 20;
-    public float OnOffCouldown;
-    public float timer;
-    public bool rocketOn;
+    private float rocketForce = 20;
+    private float rocketForceOnPlayer = 20;
+    private float rocketForceWhenGrab= 20;
+    private float OnOffCouldown;
+    private float timer;
+    private float maxSpeed;
+    private bool rocketOn;
     private GameObject SonDeCon;
 
     public C_Solo_Rocket(StateMachine stateMachine) : base(stateMachine)
@@ -31,6 +30,7 @@ public class C_Solo_Rocket : ComportementState
 
         timer = 0f;
         rocketOn = false;
+        maxSpeed = _sm.comportementManager.rocketMaxSpeed;
         rocketForce = _sm.comportementManager.rocketForce;
         rocketForceOnPlayer = _sm.comportementManager.rocketForceOnPlayer;
         rocketForceWhenGrab = _sm.comportementManager.rocketForceWhenGrab;
@@ -55,6 +55,12 @@ public class C_Solo_Rocket : ComportementState
             rocketOn = !rocketOn;
             timer = 0f;
         }
+        
+        if (_sm.rb.velocity.magnitude > maxSpeed)
+        {
+            _sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
+        }
+        
         if (rocketOn)
         {
             if (_sm.isPlayer)

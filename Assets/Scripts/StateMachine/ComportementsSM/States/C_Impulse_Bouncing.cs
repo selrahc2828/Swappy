@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class C_Impulse_Bouncing : ComportementState
 {
-    public float impulseBounceForce;
-    public float trueImpulseBounceForce;
-    public float saveImpulseForce;//pour changer au moment d'une collision si grab
-    public float impulseBounceRange;
-    public float trueImpulseBounceRange;
-    public float impulseBounceTimer;
-    public float impulseBounceCooldown;
-    public GameObject impulseBounceFeedback;
+    private float impulseBounceForce;
+    private float trueImpulseBounceForce;
+    private float saveImpulseForce;//pour changer au moment d'une collision si grab
+    private float impulseBounceRange;
+    private float trueImpulseBounceRange;
+    private float impulseBounceTimer;
+    private float impulseBounceCooldown;
+    private GameObject impulseBounceFeedback;
     
-    public float impulseForceMultiplier;//coeff de conservation de la velocité lors de la collision
+    private float impulseForceMultiplier;//coeff de conservation de la velocité lors de la collision
     
     private bool canBounce = true; // verif si on peut faire l'impulse
 
