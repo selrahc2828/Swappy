@@ -130,19 +130,28 @@ public class RocketMagnetEffect : MonoBehaviour
             pointA.position = positionMove;
         }
         
+        // le but dans le proto est que la zone soit toujours sous rocketObject, sans prendre en compte les angles
+        // X et Z doivent toujours être update du coup
+        _pointBPosition.x = pointA.position.x;
+        _pointBPosition.z = pointA.position.z;
+        
         // Point B suit avec un délai
         
         if (_timer >= timeBeforeMove)
         {
             // pointB.parent = transform;
-            _pointBPosition = Vector3.Lerp(_pointBPosition, pointA.position, Time.deltaTime / delay);
-            pointB.position = _pointBPosition;
+            // _pointBPosition = Vector3.Lerp(_pointBPosition, pointA.position, Time.deltaTime / delay);
+            _pointBPosition.y = Mathf.Lerp(_pointBPosition.y, pointA.position.y, Time.deltaTime / delay);
+
+            // pointB.position = _pointBPosition;
         }
         else
         {
             _timer += Time.deltaTime;
         }
 
+        pointB.position = _pointBPosition;
+        
     }
     
     private void RescalePoints()
