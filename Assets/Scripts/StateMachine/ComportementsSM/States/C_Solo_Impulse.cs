@@ -58,6 +58,7 @@ public class C_Solo_Impulse : ComportementState
         repulserTimer += Time.deltaTime;
         if (repulserTimer >= repulserTime)
         {
+            SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom, _sm.gameObject);
             Repulse();
             repulserTimer = 0;
         }
@@ -83,12 +84,13 @@ public class C_Solo_Impulse : ComportementState
  
     public void Repulse()
     {
+        
         if (feedback)
         {
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
             shockWave.GetComponent<GrowToRadius>().targetRadius = trueRepulserRange;
         }
-
+        
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueRepulserRange);
         if (objectsInRange.Length > 0)
         {

@@ -96,9 +96,6 @@
 		<property name="color">
 			<value>Cyan</value>
 		</property>
-		<property name="volume">
-			<value>-15.5</value>
-		</property>
 		<relationship name="effectChain">
 			<destination>{87341170-5a53-4990-ac54-233a708685e7}</destination>
 		</relationship>
@@ -171,7 +168,7 @@
 			<value>Cyan Light 2</value>
 		</property>
 		<property name="volume">
-			<value>-7</value>
+			<value>-32</value>
 		</property>
 		<property name="name">
 			<value>AimantLoop</value>
@@ -236,6 +233,7 @@
 	<object class="MixerBusEffectChain" id="{b55f0d4c-95d1-4fdb-85ef-aa98be07e1e6}">
 		<relationship name="effects">
 			<destination>{0ee79648-d84e-4f50-afe2-ea4528b29539}</destination>
+			<destination>{cd9021a8-66f3-48d2-bfab-1d374645fc20}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{0af47280-441f-4567-a7e4-1048df2d3bf2}" />
@@ -291,4 +289,12 @@
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{0ee79648-d84e-4f50-afe2-ea4528b29539}" />
+	<object class="TremoloEffect" id="{cd9021a8-66f3-48d2-bfab-1d374645fc20}">
+		<property name="frequency">
+			<value>1.5</value>
+		</property>
+		<property name="duty">
+			<value>0.704999983</value>
+		</property>
+	</object>
 </objects>

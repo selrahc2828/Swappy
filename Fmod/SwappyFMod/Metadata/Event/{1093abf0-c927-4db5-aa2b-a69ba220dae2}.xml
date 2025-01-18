@@ -71,7 +71,6 @@
 	<object class="GroupTrack" id="{77757175-c20e-42c4-b924-5948bacd4bbc}">
 		<relationship name="modules">
 			<destination>{ca448076-c13d-41e4-9e79-75cc3e993a62}</destination>
-			<destination>{be52b594-1fae-4abf-af42-ed6f22a3db46}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{5a506e0b-7877-42fc-8caf-f97ba2c28a98}</destination>
@@ -80,15 +79,11 @@
 	<object class="Timeline" id="{4b5392c6-6991-407c-b47e-4a32f73d2c87}">
 		<relationship name="modules">
 			<destination>{ca448076-c13d-41e4-9e79-75cc3e993a62}</destination>
-			<destination>{be52b594-1fae-4abf-af42-ed6f22a3db46}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{6cf85c3c-e7f8-4ae6-bcf4-334caecb0622}">
 		<property name="color">
 			<value>Red</value>
-		</property>
-		<property name="volume">
-			<value>-15.5</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{07760c09-a028-4d08-bdf9-d2871bd78b22}</destination>
@@ -117,20 +112,12 @@
 			<destination>{c34ca95c-1061-4449-ae36-ea749117cf9c}</destination>
 		</relationship>
 	</object>
-	<object class="CommandSound" id="{be52b594-1fae-4abf-af42-ed6f22a3db46}">
-		<property name="start">
-			<value>0.65034482758620693</value>
-		</property>
-		<property name="length">
-			<value>0</value>
-		</property>
-		<relationship name="commandTarget">
-			<destination>{c48bb2a9-f754-4816-9551-430c0f00d4e1}</destination>
-		</relationship>
-	</object>
 	<object class="EventMixerGroup" id="{5a506e0b-7877-42fc-8caf-f97ba2c28a98}">
 		<property name="color">
 			<value>Red Light 2</value>
+		</property>
+		<property name="volume">
+			<value>-19</value>
 		</property>
 		<property name="name">
 			<value>RepulseBoom</value>

@@ -169,10 +169,10 @@ using UnityEngine;
                     Instantiate(prefabSonRepulseTimer, obj.transform);
                     break;
                 case SoundComp.repulseBoom:
-                    Instantiate(prefabSonRepulseBoomer, obj.transform);
+                    RuntimeManager.PlayOneShotAttached("event:/System/Componenent/RepulseBoom", obj);
                     break;
                 case SoundComp.immuableHit:
-                    RuntimeManager.PlayOneShotAttached("event:/System/Componenent/BounceHit", obj);
+                    RuntimeManager.PlayOneShotAttached("event:/System/Componenent/ImmuableHit", obj);
                     break;
                 case SoundComp.bounceHit:
                     RuntimeManager.PlayOneShotAttached("event:/System/Componenent/BounceHit",obj);
