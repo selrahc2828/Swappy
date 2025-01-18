@@ -21,8 +21,7 @@ public class ComportementManager : MonoBehaviour
     
     [Header("Impulse")]
     public float repulserTime = 5f;
-    [HideInInspector]
-    public float repulserTimer;
+    public float doubleImpulseTime = 6f;
     public float repulserRange;
     public float repulserForce;
     public bool destroyOnUse = false;
@@ -36,6 +35,7 @@ public class ComportementManager : MonoBehaviour
     public float rocketForceOnPlayer = 20f;
     public float rocketForceWhenGrab = 20f;
     public float rocketOnOffCouldown = 4f;
+    public float rocketMaxSpeed = 20f;
     
     [Header("DoubleRocket")]
     public float rocketDoubleForce = 20f;
@@ -48,11 +48,13 @@ public class ComportementManager : MonoBehaviour
     public float chargeTimeMax = 6f;
 
     [Header("Magnet Rocket")]
-    public GameObject prefabMagnetTrail;
-    public float rocketMagnetForce = 20f;
-    public float magnetTrailDuration = 1f;
     public GameObject prefabMagnetRocketForcefield;
-    public float magnetRocketDistanceBetweenPoint = 2f;
+    public float magnetRocketFlyTime = 4f;
+    public float rocketMagnetForce = 20f;
+    public float rocketMagnetForceOnPlayer = 20f;
+    public float rocketMagnetForceWhenGrab = 20f;
+    public float magnetTrailLerp = 1f;
+    public float magnetTrailTimeBeforeMove = 3f;
     
     [Header("Magnet")]
     public float magnetRange = 10f;
@@ -86,6 +88,15 @@ public class ComportementManager : MonoBehaviour
     [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à impulse bounce Force")]
     public float impulseForceMultiplier;
     
+    [Header("Impulse Rocket")]
+    public float impulseRocketExplosionForce;
+    public float impulseRocketExplosionRange;
+    public float impulseRocketFlyForce;
+    public float impulseRocketFlyForceOnPlayer;
+    public float impulseRocketFlyTime;
+    public float timeBetweenImpulses;
+    
+    
     private void Awake()
     {
         if (Instance != null)
@@ -94,11 +105,6 @@ public class ComportementManager : MonoBehaviour
             return;
         }
         Instance = this;
-    }
-    
-    void Start()
-    {
-        repulserTimer = 0;
     }
 
     // Update is called once per frame

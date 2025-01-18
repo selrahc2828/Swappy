@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class C_Double_Rocket : ComportementState
 {
-    public float rocketForce = 20;
-    public float rocketForceOnPlayer = 20;
-    public float rocketForceWhenGrab= 20;
-    public float onOffCouldown;
-    public float timer;
+    private float rocketForce = 20;
+    private float rocketForceOnPlayer = 20;
+    private float rocketForceWhenGrab= 20;
+    private float onOffCouldown;
+    private float timer;
     
     public C_Double_Rocket(StateMachine stateMachine) : base(stateMachine)
     {

@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class C_Solo_Magnet : ComportementState
 {
-    public float magnetRange;
-    public float trueMagnetRange;
-    public float magnetForce;
-    public bool magnetGradiantForce;
+    private float magnetRange;
+    private float trueMagnetRange;
+    private float magnetForce;
+    private bool magnetGradiantForce;
     private GameObject SonDeCon;
 
 

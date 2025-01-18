@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class C_Double_Bouncing : ComportementState
 {
-    public PhysicMaterial doubleBouncyMaterial;
-    public PhysicMaterial basePlayerMaterial;
-    public PhysicMaterial basePlayerSlideMaterial;
+    private PhysicMaterial doubleBouncyMaterial;
+    private PhysicMaterial basePlayerMaterial;
+    private PhysicMaterial basePlayerSlideMaterial;
     public C_Double_Bouncing(StateMachine stateMachine) : base(stateMachine)
     {
     }

@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class C_Solo_Impulse : ComportementState
 {
-    public float repulserTime = 5f;
-    public float repulserTimer;
-    public float repulserRange;
-    public float trueRepulserRange;
-    public float repulserForce;
-    public bool destroyOnUse = false;
-    public bool impulseGradiantForce = false;
+    private float repulserTime = 5f;
+    private float repulserTimer;
+    private float repulserRange;
+    private float trueRepulserRange;
+    private float repulserForce;
+    private bool destroyOnUse = false;
+    private bool impulseGradiantForce = false;
     [Tooltip("Si Rigidbody sur lui")]
-    public bool applyOnMe = false;
-    public GameObject feedback;
+    private bool applyOnMe = false;
+    private GameObject feedback;
     
     public C_Solo_Impulse(StateMachine stateMachine) : base(stateMachine)
     {
@@ -28,7 +28,7 @@ public class C_Solo_Impulse : ComportementState
         base.Enter();
         
         repulserTime = _sm.comportementManager.repulserTime;
-        repulserTimer = _sm.comportementManager.repulserTimer;
+        repulserTimer = 0f;
         repulserRange = _sm.comportementManager.repulserRange;
 
         // trueRepulserRange = repulserRange;
@@ -79,7 +79,6 @@ public class C_Solo_Impulse : ComportementState
         base.DisplayGizmos();
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_sm.transform.position, trueRepulserRange);  
-
     }    
  
     public void Repulse()
@@ -96,7 +95,7 @@ public class C_Solo_Impulse : ComportementState
         {
             foreach (Collider objectInRange in objectsInRange)
             {
-                if (objectInRange.gameObject.tag == "Player")
+                if (objectInRange.gameObject.CompareTag("Player"))
                 {
                     if (!objectInRange.gameObject.GetComponentInParent<Rigidbody>())
                     {
