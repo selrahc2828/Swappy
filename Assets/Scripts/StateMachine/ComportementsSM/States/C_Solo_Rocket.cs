@@ -11,7 +11,7 @@ public class C_Solo_Rocket : ComportementState
     private float timer;
     private float maxSpeed;
     private bool rocketOn;
-    private GameObject SonDeCon;
+    private bool isSoundPlay;
 
     public C_Solo_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -20,8 +20,8 @@ public class C_Solo_Rocket : ComportementState
     public override void Enter()
     {
 
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart, _sm.gameObject);
-        SonDeCon = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
+        
+
         isKinematic = false;
         stateValue = 81;
         leftValue = 81;
@@ -52,6 +52,7 @@ public class C_Solo_Rocket : ComportementState
         timer += Time.fixedDeltaTime;
         if (timer > OnOffCouldown)
         {
+            isSoundPlay = false;
             rocketOn = !rocketOn;
             timer = 0f;
         }
@@ -63,6 +64,11 @@ public class C_Solo_Rocket : ComportementState
         
         if (rocketOn)
         {
+            if (!isSoundPlay)
+            {
+                SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart, _sm.gameObject);
+                isSoundPlay = true;
+            }
             if (_sm.isPlayer)
             {
                 _sm.rb.AddForce(Vector3.up * rocketForceOnPlayer, ForceMode.Force);
@@ -81,6 +87,6 @@ public class C_Solo_Rocket : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.comportementManager.DestroyObj(SonDeCon);
+
     }
 }
