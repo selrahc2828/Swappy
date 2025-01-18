@@ -1,8 +1,10 @@
+using FMOD;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
-    public class SoundManager : MonoBehaviour
+public class SoundManager : MonoBehaviour
     {
         public static SoundManager Instance;
         
@@ -178,7 +180,7 @@ using UnityEngine;
                     RuntimeManager.PlayOneShotAttached("event:/System/Componenent/BounceHit",obj);
                     break;
                 case SoundComp.propelerStart:
-                    Instantiate(prefabSonPropeler, obj.transform);
+                    RuntimeManager.PlayOneShotAttached("event:/System/Componenent/PropelerStart", obj);
                     break;
                 case SoundComp.aimantStart:
                     Instantiate(prefabSonAimant, obj.transform);
