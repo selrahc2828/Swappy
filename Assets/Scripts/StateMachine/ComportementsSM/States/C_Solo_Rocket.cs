@@ -7,7 +7,7 @@ public class C_Solo_Rocket : ComportementState
     private float rocketForce = 20;
     private float rocketForceOnPlayer = 20;
     private float rocketForceWhenGrab= 20;
-    private float OnOffCouldown;
+    private float onOffCooldown;
     private float timer;
     private float maxSpeed;
     private bool rocketOn;
@@ -34,7 +34,7 @@ public class C_Solo_Rocket : ComportementState
         rocketForce = _sm.comportementManager.rocketForce;
         rocketForceOnPlayer = _sm.comportementManager.rocketForceOnPlayer;
         rocketForceWhenGrab = _sm.comportementManager.rocketForceWhenGrab;
-        OnOffCouldown = _sm.comportementManager.rocketOnOffCouldown;
+        onOffCooldown = _sm.comportementManager.rocketOnOffCouldown;
         
         // _sm.rend.material = _sm.rocket;
         ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
@@ -50,7 +50,7 @@ public class C_Solo_Rocket : ComportementState
     {
         base.TickPhysics();
         timer += Time.fixedDeltaTime;
-        if (timer > OnOffCouldown)
+        if (timer > onOffCooldown)
         {
             rocketOn = !rocketOn;
             timer = 0f;
