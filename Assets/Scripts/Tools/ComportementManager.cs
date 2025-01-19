@@ -26,6 +26,12 @@ public class ComportementManager : MonoBehaviour
     public GameObject feedBack_Magnet;
     public GameObject feedBack_Immuable;
     
+    [Header("Hand Slots Feedbacks")]
+    public GameObject hand_Slot_Impulse;
+    public GameObject hand_Slot_Bouncing;
+    public GameObject hand_Slot_Rocket;
+    public GameObject hand_Slot_Magnet;
+    public GameObject hand_Slot_Immuable;
     
     [Header("Impulse")]
     public float repulserTime = 5f;
