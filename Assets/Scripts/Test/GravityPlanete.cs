@@ -1,37 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using System;
 using UnityEngine;
 
 public class GravityPlanete : MonoBehaviour
 {
     public GameObject player;
     public Rigidbody playerRB;
+    public Rigidbody rb;
     public Vector3 offsetRotation;
 
-    // Start is called before the first frame update
+    public float gravityConstant = 9.81f;
+
     void Start()
     {
         playerRB = player.GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+        playerRB.useGravity = false;
     }
-
-    // Update is called once per frame
+    
     void FixedUpdate()
     {
+        // Calculer la direction de la plan√®te par rapport au joueur
+        Vector3 directionToPlanet = (transform.position - player.transform.position).normalized;
 
-        // Calculer la direction entre la capsule et la sphËre
-        Vector3 directionToSphere = (transform.position - player.transform.position).normalized;
+        // Appliquer une force gravitationnelle r√©aliste
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+        float gravitationalForceMagnitude = gravityConstant * rb.mass / Mathf.Pow(distance, 2); // F = G * M / r^2
+        Vector3 gravitationalForce = directionToPlanet * gravitationalForceMagnitude;
 
-        // Conserver la rotation actuelle de la capsule
-        Quaternion currentRotation = player.transform.rotation;
+        // Appliquer la force au Rigidbody du joueur
+        playerRB.AddForce(gravitationalForce, ForceMode.Acceleration);
 
-        // Calculer la rotation cible pour que le bas de la capsule (-Y) pointe vers la sphËre
-        Quaternion targetRotation = Quaternion.FromToRotation(player.transform.up, -directionToSphere) * currentRotation;
+        // Calculer la rotation cible pour que le joueur "colle" √† la plan√®te
+        Quaternion targetRotation = Quaternion.FromToRotation(-player.transform.up, directionToPlanet) * player.transform.rotation;
 
-        // Ajouter une rotation d'offset si nÈcessaire
+        // Appliquer un offset si n√©cessaire
         targetRotation *= Quaternion.Euler(offsetRotation);
 
-        // Appliquer la rotation au Rigidbody de la capsule
+        // Appliquer la rotation au joueur
         playerRB.MoveRotation(targetRotation);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (player != null)
+        {
+            Vector3 directionToPlanet = (transform.position - player.transform.position).normalized;
+            float distance = Vector3.Distance(transform.position, player.transform.position);
+            float gravitationalForceMagnitude = gravityConstant * rb.mass / Mathf.Pow(distance, 2);
+            Vector3 gravitationalForce = directionToPlanet * gravitationalForceMagnitude;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(player.transform.position, player.transform.position + gravitationalForce);
+        }
     }
 }
