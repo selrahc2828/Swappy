@@ -93,7 +93,7 @@ public class RocketMagnetEffect : MonoBehaviour
         MagnetTrailForce();
     }
 
-    void MagnetTrailForce()
+    void MagnetTrailForce() // pas de on collision Stay car le mesh du trail/collision est ailleur
     {
         
         Vector3 boxCenter = (pointA.position + pointB.position) / 2;
@@ -116,7 +116,6 @@ public class RocketMagnetEffect : MonoBehaviour
                 {
                     return;
                 }
-                Debug.Log($"name : {objectInRange.gameObject.name}");
                 
                 if (objectInRange.gameObject.CompareTag("Player"))
                 {
