@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class C_Solo_Rocket : ComportementState
 {
-    
-    
-    public float rocketForce = 20;
-    public float rocketForceOnPlayer = 20;
-    public float rocketForceWhenGrab= 20;
-    public float OnOffCouldown;
-    public float timer;
-    public bool rocketOn;
-    private GameObject SonDeCon;
+    private float rocketForce = 20;
+    private float rocketForceOnPlayer = 20;
+    private float rocketForceWhenGrab= 20;
+    private float onOffCooldown;
+    private float timer;
+    private float maxSpeed;
+    private bool rocketOn;
+    private bool isSoundPlay;
 
     public C_Solo_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -21,8 +20,8 @@ public class C_Solo_Rocket : ComportementState
     public override void Enter()
     {
 
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart, _sm.gameObject);
-        SonDeCon = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
+        
+
         isKinematic = false;
         stateValue = 81;
         leftValue = 81;
@@ -31,10 +30,11 @@ public class C_Solo_Rocket : ComportementState
 
         timer = 0f;
         rocketOn = false;
+        maxSpeed = _sm.comportementManager.rocketMaxSpeed;
         rocketForce = _sm.comportementManager.rocketForce;
         rocketForceOnPlayer = _sm.comportementManager.rocketForceOnPlayer;
         rocketForceWhenGrab = _sm.comportementManager.rocketForceWhenGrab;
-        OnOffCouldown = _sm.comportementManager.rocketOnOffCouldown;
+        onOffCooldown = _sm.comportementManager.rocketOnOffCouldown;
         
         // _sm.rend.material = _sm.rocket;
         ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
@@ -50,13 +50,25 @@ public class C_Solo_Rocket : ComportementState
     {
         base.TickPhysics();
         timer += Time.fixedDeltaTime;
-        if (timer > OnOffCouldown)
+        if (timer > onOffCooldown)
         {
+            isSoundPlay = false;
             rocketOn = !rocketOn;
             timer = 0f;
         }
+        
+        if (_sm.rb.velocity.magnitude > maxSpeed)
+        {
+            _sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
+        }
+        
         if (rocketOn)
         {
+            if (!isSoundPlay)
+            {
+                SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart, _sm.gameObject);
+                isSoundPlay = true;
+            }
             if (_sm.isPlayer)
             {
                 _sm.rb.AddForce(Vector3.up * rocketForceOnPlayer, ForceMode.Force);
@@ -75,6 +87,6 @@ public class C_Solo_Rocket : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.comportementManager.DestroyObj(SonDeCon);
+
     }
 }

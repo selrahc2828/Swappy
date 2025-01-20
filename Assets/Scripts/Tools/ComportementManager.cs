@@ -35,6 +35,7 @@ public class ComportementManager : MonoBehaviour
     public float rocketForceOnPlayer = 20f;
     public float rocketForceWhenGrab = 20f;
     public float rocketOnOffCouldown = 4f;
+    public float rocketMaxSpeed = 20f;
     
     [Header("DoubleRocket")]
     public float rocketDoubleForce = 20f;

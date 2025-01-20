@@ -5,25 +5,25 @@ using UnityEngine;
 public class C_Bouncing_Magnet : ComportementState
 {
     //même que C_Solo_Bouncing
-    public PhysicMaterial bouncyMaterial;
-    public PhysicMaterial basePlayerMaterial;
-    public PhysicMaterial basePlayerSlideMaterial;
+    private PhysicMaterial bouncyMaterial;
+    private PhysicMaterial basePlayerMaterial;
+    private PhysicMaterial basePlayerSlideMaterial;
     
-    public float magnetRange;
-    public float trueMagnetRange;
-    public float saveMagnetRange;//pour changer au moment d'une collision si grab
-    public float magnetForce;
-    public float trueMagnetForce;
-    public bool magnetGradiantForce;
+    private float magnetRange;
+    private float trueMagnetRange;
+    private float saveMagnetRange;//pour changer au moment d'une collision si grab
+    private float magnetForce;
+    private float trueMagnetForce;
+    private bool magnetGradiantForce;
     
-    public float magnetForceMultiplier;
-    public float bounceMagnitude;
+    private float magnetForceMultiplier;
+    private float bounceMagnitude;
 
     [Range(1,3)]
-    public float magnetUpScaleMultiplier;
+    private float magnetUpScaleMultiplier;
     // avec mat bounce, rebond direct quand grab et touche surface, collisionEnter/exit s'enchaine trop vite pour range upsacle
-    public float delayScale;
-    public float timeSinceCollisionStrat;
+    private float delayScale;
+    private float timeSinceCollisionStrat;
     private bool collisionStart = false;//pour pas appeler plusieurs en même temps
 
     public C_Bouncing_Magnet(StateMachine stateMachine) : base(stateMachine)
