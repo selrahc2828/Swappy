@@ -9,6 +9,7 @@ public class C_Double_Rocket : ComportementState
     private float rocketForceWhenGrab= 20;
     private float onOffCouldown;
     private float timer;
+    private bool isSonOn;
     
     public C_Double_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -37,7 +38,10 @@ public class C_Double_Rocket : ComportementState
         timer += Time.deltaTime;
         if (timer > onOffCouldown)
         {
+
             timer = 0f;
+            SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
+            SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
             if (_sm.isPlayer)
             {
                 _sm.rb.AddForce(Vector3.up * rocketForceOnPlayer, ForceMode.Impulse);

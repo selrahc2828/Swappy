@@ -16,6 +16,7 @@ public class C_Impulse_Rocket : ComportementState
     private float maxSpeed;
     private bool rocketOn;
     private GameObject feedback;
+    private bool isSonOn;
     
     public C_Impulse_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -67,10 +68,19 @@ public class C_Impulse_Rocket : ComportementState
         if (flyTimer > flyTime)
         {
             rocketOn = !rocketOn;
+            if (!rocketOn)
+            {
+                isSonOn = false;
+            }
             flyTimer = 0f;
         }
         if (rocketOn)
         {
+            if (!isSonOn)
+            {
+                SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
+                isSonOn = true;
+            }
             impulseTimer += Time.fixedDeltaTime;
             if (impulseTimer > timeBetweenImpulses)
             {
@@ -118,7 +128,7 @@ public class C_Impulse_Rocket : ComportementState
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
             shockWave.GetComponent<GrowToRadius>().targetRadius = explosionTrueRange;
         }
-
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, explosionTrueRange);
         if (objectsInRange.Length > 0)
         {

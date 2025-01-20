@@ -43,4 +43,10 @@ public class C_Double_Immuable : ComportementState
         }
         _sm.rb.isKinematic = false;
     }
+
+    public override void CollisionStart(Collision other)
+    {
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit,_sm.gameObject);
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit,_sm.gameObject);
+    }
 }
