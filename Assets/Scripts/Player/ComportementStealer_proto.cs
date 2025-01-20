@@ -98,7 +98,9 @@ public class ComportementStealer_proto : MonoBehaviour
                         if (_stateStolen.currentState is ComportementState)
                         {
                             ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
-                            Debug.Log("Right Value: " + currentObjectState.rightValue);
+                            
+                            //Debug.Log("Right Value: " + currentObjectState.rightValue);
+                            
                             //On v�rifie que la stateValue de l'objet vis� est superieur � 0, on ne peut pr�lever un comportement que si c'est le cas.
                             if(currentObjectState.stateValue != 0)
                             {

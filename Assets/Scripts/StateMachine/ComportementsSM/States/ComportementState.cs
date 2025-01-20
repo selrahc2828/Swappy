@@ -69,7 +69,7 @@ public class ComportementState : State
     {
         // Debug.Log($"{_sm.name } collision start/enter with {other.collider.name}");
 
-        //SoundManager.Instance.PlaySoundCollision(_sm.gameObject);
+        SoundManager.Instance.PlaySoundCollision(_sm.gameObject);
     }
 
     public override void CollisionDuring(Collision other)

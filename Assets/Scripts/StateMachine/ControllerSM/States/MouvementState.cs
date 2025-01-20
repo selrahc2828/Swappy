@@ -36,8 +36,10 @@ public class MouvementState : State
     private Vector3 slopeGravity;
 
     protected Vector3 moveDirection;
-    private float _footStepsSoundValue = 0f;
-    private float _footstepsMaxValue = 100f;
+    private float _footStepsSoundValue;
+    private float _footstepsMaxValue;
+    private float _footstepsSlowValue = 250f;
+    private float _footstepsBaseValue = 100f;
 
     protected PlayerMouvementStateMachine _sm;
 
@@ -123,6 +125,14 @@ public class MouvementState : State
         //on slope
         if (OnSlope() && !exitingSlope)
         {
+            if (GameManager.Instance.slowMotion)
+            {
+                _footstepsMaxValue = _footstepsSlowValue;
+            }
+            else
+            {
+                _footstepsMaxValue = _footstepsBaseValue;
+            }
             _footStepsSoundValue += 1 * _sm.rb.velocity.magnitude;
             if (_footStepsSoundValue>_footstepsMaxValue )
             {
@@ -140,6 +150,14 @@ public class MouvementState : State
         //on Flat Ground
         else if (grounded)
         {
+            if (GameManager.Instance.slowMotion)
+            {
+                _footstepsMaxValue = _footstepsSlowValue;
+            }
+            else
+            {
+                _footstepsMaxValue = _footstepsBaseValue;
+            }
             _footStepsSoundValue += 1 * _sm.rb.velocity.magnitude;
             if (_footStepsSoundValue > _footstepsMaxValue)
             {

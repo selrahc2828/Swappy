@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class C_Impulse_Magnet : ComportementState
 {
-    public float zoneImpulseRange;
-    public float trueZoneImpulseRange;
+    private float zoneImpulseRange;
+    private float trueZoneImpulseRange;
 
-    public float zoneImpulseForce;
+    private float zoneImpulseForce;
     
-    public GameObject feedback;
-    public GameObject zone;
+    private GameObject feedback;
+    private GameObject zone;
     
     public C_Impulse_Magnet(StateMachine stateMachine) : base(stateMachine)
     {

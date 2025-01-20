@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using AmplifyShaderEditor;
 using UnityEngine;
 
 public class C_Magnet_Rocket : ComportementState
 {
-    public GameObject prefabMagnetTrail;
-    public float rocketMagnetForce = 20f;
-    public GameObject prefabForceField;
-    public float distanceBetweenPoint = 2f;
+    private float magnetRocketFlyTime = 4f;
+    private float rocketMagnetForce = 20f;
+    private float rocketMagnetForceOnPlayer = 20f;
+    private float rocketMagnetForceWhenGrab = 20f;
+    private float magnetTrailSpeedLerp = 1f;
+    private float magnetTrailTimeBeforeMove = 3f;
+    private float _timer = 0f;
+    private bool _rocketOn = true;
+
+    private GameObject prefabForceField;
+    private GameObject magnetFieldObject;
     
-    public TrailRenderer magnetTrail;
-    
-    public Vector3 lastPos;
+    private Vector3 magnetPos;
     
     public C_Magnet_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -26,27 +30,20 @@ public class C_Magnet_Rocket : ComportementState
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.rocketColor);
 
+        magnetRocketFlyTime = _sm.comportementManager.magnetRocketFlyTime;
         rocketMagnetForce = _sm.comportementManager.rocketMagnetForce;
-        prefabMagnetTrail = _sm.comportementManager.prefabMagnetTrail;
+        rocketMagnetForceOnPlayer = _sm.comportementManager.rocketMagnetForceOnPlayer;
+        rocketMagnetForceWhenGrab = _sm.comportementManager.rocketMagnetForceWhenGrab;
         
-        magnetTrail = _sm.comportementManager?.InstantiateFeedback(prefabMagnetTrail,_sm.transform.position, Quaternion.identity, _sm.transform).GetComponent<TrailRenderer>();
-        if (magnetTrail != null)
-        {
-            magnetTrail.time = _sm.comportementManager.magnetTrailDuration;//temps de vie du trail (on l'utilise aussi pour les forcefield)
-        }
-
-        distanceBetweenPoint = _sm.comportementManager.magnetRocketDistanceBetweenPoint;
+        magnetTrailSpeedLerp = _sm.comportementManager.magnetTrailLerp;
+        magnetTrailTimeBeforeMove = _sm.comportementManager.magnetTrailTimeBeforeMove;
         prefabForceField = _sm.comportementManager.prefabMagnetRocketForcefield;
-        lastPos = _sm.transform.position;
         
         // spawn de la zone de magnet
-        Vector3 magnetPos = _sm.transform.position;
-        magnetPos.y -= _sm.GetComponent<Collider>().bounds.extents.magnitude;
-       GameObject magnetField = _sm.comportementManager.InstantiateFeedback(prefabForceField,magnetPos, Quaternion.identity, _sm.transform);
-
-       RocketMagnetEffect effect = magnetField.GetComponent<RocketMagnetEffect>();
-       effect.targetObject = _sm.gameObject.transform;
-       effect.delay = _sm.comportementManager.magnetTrailDuration;//life time
+        magnetPos = _sm.transform.position;
+        magnetPos.y -= _sm.GetComponent<Collider>().bounds.extents.magnitude; 
+        
+        SpawnForceField();
 
     }
 
@@ -54,21 +51,82 @@ public class C_Magnet_Rocket : ComportementState
     {
         base.TickLogic();
         /*
-         * toutes les X seconde fait spawn prefab "forcefield"
-         * orientation présédente pos - pos actuelle
-         * => forcefield apply force sur son transform.up (en théorie il sera orienté vers direction de la rocket
+         * toutes les X seconde fait spawn prefab "forcefield" OU on le detache (la rocket se stop mais sa trainée perdure
+         * vu qu'on en a plusieurs généré par 1 seul comportement, les addForce sont géré dans RocketMagnetEffect
+         * dans RocketMagnetEffect, on récupère les force (normal, onPlayer et whenGrab)
+         * on doit géré 
          */
         
         
+        _timer += Time.fixedDeltaTime;
+        if (_timer >= magnetRocketFlyTime)
+        {
+            _rocketOn = !_rocketOn;
+            _timer = 0f;
+            // _sm.comportementManager.DestroyObj(magnetFieldObject);
+            //
+            
+            // gestion de la zone qui applique la force
+            if (_rocketOn)
+            {
+                SpawnForceField();
+            }
+            else
+            {
+                // on met atDetachAndDestroy sur true
+                if (magnetFieldObject != null)
+                {
+                    RocketMagnetEffect effect = magnetFieldObject.GetComponent<RocketMagnetEffect>();
+                    if (effect != null)
+                    {
+                        effect.atDetachAndDestroy = true; // Passe le booléen à true, il sort du parent et sera détruit quand les 2 extrémités seront proche
+                    }
+                }
+            }
+        }
+        
+        if (_rocketOn)
+        {
+            ApplyForce();
+        }
     }
 
     public override void TickPhysics()
     {
         base.TickPhysics();
+        
     }
 
     public override void Exit()
     {
         base.Exit();
+    }
+
+    public void ApplyForce()
+    {
+        if (_sm.isPlayer)
+        {
+            _sm.rb.AddForce(Vector3.up * rocketMagnetForceOnPlayer, ForceMode.Force);
+        }
+        else if(isGrabbed)
+        {
+            _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(Vector3.up * rocketMagnetForceWhenGrab, ForceMode.Force);
+        }
+        else
+        {
+            _sm.rb.AddForce(Vector3.up * rocketMagnetForce, ForceMode.Force);
+        }
+    }
+
+    public void SpawnForceField()
+    {
+        magnetFieldObject = _sm.comportementManager.InstantiateFeedback(prefabForceField,magnetPos, Quaternion.identity);//, _sm.transform => parent mais pose des pb
+        RocketMagnetEffect effect = magnetFieldObject.GetComponent<RocketMagnetEffect>();
+        effect.rocketObject = _sm.gameObject.transform;
+        effect.delay = magnetTrailSpeedLerp;//delay
+        effect.timeBeforeMove = magnetTrailTimeBeforeMove;
+        effect.effectForce = rocketMagnetForce;
+        effect.effectForceOnPlayer = rocketMagnetForceOnPlayer;
+        effect.effectForceWhenGrab = rocketMagnetForceWhenGrab;
     }
 }
