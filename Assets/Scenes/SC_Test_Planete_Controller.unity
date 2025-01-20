@@ -151,7 +151,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197665136}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -252,7 +252,7 @@ Transform:
   m_GameObject: {fileID: 197665136}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.7, y: 1000, z: 5.4}
+  m_LocalPosition: {x: -40, y: 1000, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197665136}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16543dbc1a95ab3419a9da7c8b9e6773, type: 3}
   m_Name: 
@@ -381,6 +381,7 @@ GameObject:
   - component: {fileID: 877924322}
   - component: {fileID: 877924321}
   - component: {fileID: 877924325}
+  - component: {fileID: 877924326}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -468,7 +469,7 @@ Transform:
   m_GameObject: {fileID: 877924320}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.31, y: 996.08, z: 5.52}
+  m_LocalPosition: {x: -40, y: 996.08, z: 5}
   m_LocalScale: {x: 4.2435, y: 4.2435, z: 4.2435}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -488,7 +489,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 197665136}
   playerRB: {fileID: 0}
+  rb: {fileID: 0}
   offsetRotation: {x: 0, y: 0, z: 0}
+  gravityConstant: 9.81
+--- !u!54 &877924326
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877924320}
+  serializedVersion: 4
+  m_Mass: 2
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1150276645 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1ab575704ee7c2f4c82458a7130cb11a, type: 3}
