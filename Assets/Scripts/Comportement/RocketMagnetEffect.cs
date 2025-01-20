@@ -1,13 +1,17 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RocketMagnetEffect : MonoBehaviour
 {
     public Transform rocketObject; // L'objet que la zone suit, le magnet rocket
-    public float delay = 1f;       // délais de B vers A, "temps de vie" du dernier point qui va suivre
+    public bool isPlayer;
+    public float offSetPosition;  //déclage sur Y, mis en variable pour transmettre depuis le state car vari en fonction du collider
+    public float offSetDiffPoint = .2f; // décalage entre point A et B, pout pas qu'ils soient ==
+    public float delay = 1f;      // délais de B vers A, "temps de vie" du dernier point qui va suivre
     
-    public Transform pointA; // PointA attaché directement à l'objet
-    public Transform pointB; // PointB qui suit A avec un délai
+    public Transform pointA;      // PointA attaché directement à l'objet
+    public Transform pointB;      // PointB qui suit A avec un délai
     private Vector3 _pointBPosition; // Position interpolée de PointB
     
     public Transform trailMagnetObject; // L'objet à scaler
@@ -27,14 +31,30 @@ public class RocketMagnetEffect : MonoBehaviour
             Debug.LogError("Aucun objet cible assigné");
             return;
         }
+
+        if (isPlayer)
+        {
+            foreach (var collider in rocketObject.GetComponentsInChildren<CapsuleCollider>())
+            {
+                if (collider.height == 2f)
+                {
+                    offSetPosition = collider.bounds.extents.magnitude;
+                }
+            }
+        }
+        else
+        {
+            offSetPosition = rocketObject.GetComponent<Collider>().bounds.extents.magnitude;
+        }
+        
         Vector3 positionStart = pointA.position;
         if (!atDetachAndDestroy)
         {
             positionStart = new Vector3(
                 rocketObject.position.x,
-                rocketObject.position.y - rocketObject.GetComponent<Collider>().bounds.extents.magnitude,
+                rocketObject.position.y - offSetPosition - offSetDiffPoint,
                 rocketObject.position.z
-                );            
+                );
         }
         
         pointA.position = positionStart;
@@ -45,6 +65,7 @@ public class RocketMagnetEffect : MonoBehaviour
         // on retire pointB du parent temporairement,
         // sinon il suis la position de rocketObject alors que le timer pour le faire commencer à bougé n'est pas atteint
         // pointB.parent = null;
+
     }
 
     void Update()
@@ -72,7 +93,7 @@ public class RocketMagnetEffect : MonoBehaviour
         MagnetTrailForce();
     }
 
-    void MagnetTrailForce()
+    void MagnetTrailForce() // pas de on collision Stay car le mesh du trail/collision est ailleur
     {
         
         Vector3 boxCenter = (pointA.position + pointB.position) / 2;
@@ -90,13 +111,16 @@ public class RocketMagnetEffect : MonoBehaviour
         {
             foreach (Collider objectInRange in objectsInRange)
             {
-
+                //si encore attaché à la rocket, on ne l'affecte pas
+                if (objectInRange.gameObject == rocketObject.gameObject && !atDetachAndDestroy)
+                {
+                    return;
+                }
+                
                 if (objectInRange.gameObject.CompareTag("Player"))
                 {
                     //collider et rigid body pas au même endroit pour lui
                     Rigidbody objectAffected = objectInRange.gameObject.GetComponentInParent<Rigidbody>();
-                    
-                    // pb pour appliquer la force à cause du drag sur le rigidbody
                     ApplyForce(objectAffected,effectForce);
                 }
                 else if (objectInRange.GetComponent<Rigidbody>() != null)
@@ -122,7 +146,7 @@ public class RocketMagnetEffect : MonoBehaviour
             {
                 positionMove = new Vector3(
                     rocketObject.position.x,
-                    rocketObject.position.y - rocketObject.GetComponent<Collider>().bounds.extents.magnitude,
+                    rocketObject.position.y - offSetPosition,
                     rocketObject.position.z
                 );
             }
@@ -130,19 +154,26 @@ public class RocketMagnetEffect : MonoBehaviour
             pointA.position = positionMove;
         }
         
+        // le but dans le proto est que la zone soit toujours sous rocketObject, sans prendre en compte les angles
+        // X et Z doivent toujours être update du coup
+        _pointBPosition.x = pointA.position.x;
+        _pointBPosition.z = pointA.position.z;
+        
         // Point B suit avec un délai
         
         if (_timer >= timeBeforeMove)
         {
             // pointB.parent = transform;
-            _pointBPosition = Vector3.Lerp(_pointBPosition, pointA.position, Time.deltaTime / delay);
-            pointB.position = _pointBPosition;
+            // _pointBPosition = Vector3.Lerp(_pointBPosition, pointA.position, Time.deltaTime / delay);
+            _pointBPosition.y = Mathf.Lerp(_pointBPosition.y, pointA.position.y - offSetDiffPoint, Time.deltaTime / delay);
+
+            // pointB.position = _pointBPosition;
         }
         else
         {
             _timer += Time.deltaTime;
         }
-
+        pointB.position = _pointBPosition;
     }
     
     private void RescalePoints()
@@ -176,16 +207,16 @@ public class RocketMagnetEffect : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-
-        // Meme calcul pour le gizmo de la box de detection
-        Vector3 boxCenter = (pointA.position + pointB.position) / 2;
-        // Quaternion boxRotation = .transform.rotation;
-
-        // Pour dessiner la boite dans la scene avec Gizmos (comme avec Physics.OverlapBox)
-        // Matrix4x4.TRS permet de dessiner, position, rotation et echelle, juste DrawWireCube ne suffit pas 
-        Gizmos.matrix = Matrix4x4.TRS(boxCenter, Quaternion.identity, Vector3.one);
-        Gizmos.DrawWireCube(Vector3.zero, trailMagnetObject.localScale);            
+        // Gizmos.color = Color.blue;
+        //
+        // // Meme calcul pour le gizmo de la box de detection
+        // Vector3 boxCenter = (pointA.position + pointB.position) / 2;
+        // // Quaternion boxRotation = .transform.rotation;
+        //
+        // // Pour dessiner la boite dans la scene avec Gizmos (comme avec Physics.OverlapBox)
+        // // Matrix4x4.TRS permet de dessiner, position, rotation et echelle, juste DrawWireCube ne suffit pas 
+        // Gizmos.matrix = Matrix4x4.TRS(boxCenter, Quaternion.identity, Vector3.one);
+        // Gizmos.DrawWireCube(Vector3.zero, trailMagnetObject.localScale);            
             
     }
 }

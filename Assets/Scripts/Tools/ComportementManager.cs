@@ -53,6 +53,7 @@ public class ComportementManager : MonoBehaviour
     public float rocketMagnetForce = 20f;
     public float rocketMagnetForceOnPlayer = 20f;
     public float rocketMagnetForceWhenGrab = 20f;
+    public float magnetTrailForce = 10f;
     public float magnetTrailLerp = 1f;
     public float magnetTrailTimeBeforeMove = 3f;
     

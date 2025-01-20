@@ -138,6 +138,10 @@ PrefabInstance:
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 713574159}
+    - target: {fileID: 3738601696558851606, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
+      propertyPath: playeranim
+      value: 
+      objectReference: {fileID: 140360467}
     - target: {fileID: 5073832175352828605, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: m_LocalPosition.x
       value: -64
@@ -1156,6 +1160,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137168387}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &140360467 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 877786246134460342, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+  m_PrefabInstance: {fileID: 1452506542}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17d48fe97e983394dbd2d554558717f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &142222384
 GameObject:
   m_ObjectHideFlags: 0
@@ -8560,8 +8575,12 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: magnetTrailForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: rocketMagnetForce
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: magnetTrailDuration
@@ -8577,11 +8596,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: rocketMagnetForceOnPlayer
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: rocketMagnetForceWhenGrab
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12323,7 +12342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4121251643802725029, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
       propertyPath: initialState
-      value: 108
+      value: 81
       objectReference: {fileID: 0}
     - target: {fileID: 6156703577998449374, guid: 204b382742ae56446b0651a7bd8af17f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14159,7 +14178,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8761818279739889660, guid: 52211e4730a0feb46a4f27dd1b326d74, type: 3}
       propertyPath: initialState
-      value: 108
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
