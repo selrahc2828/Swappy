@@ -87,6 +87,9 @@
 		<property name="color">
 			<value>Cyan</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{84930e03-b246-48b3-a7e8-9d3cf3adbdb6}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{87341170-5a53-4990-ac54-233a708685e7}</destination>
 		</relationship>
@@ -150,6 +153,23 @@
 		<relationship name="output">
 			<destination>{1c7f82cb-6fb0-484c-828f-2b8ee0f586c9}</destination>
 		</relationship>
+	</object>
+	<object class="ADSRModulator" id="{84930e03-b246-48b3-a7e8-9d3cf3adbdb6}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="attackTime">
+			<value>0</value>
+		</property>
+		<property name="releaseTime">
+			<value>480</value>
+		</property>
+		<property name="releaseShape">
+			<value>0.594073474</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{87341170-5a53-4990-ac54-233a708685e7}">
 		<relationship name="effects">
