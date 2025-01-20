@@ -83,6 +83,7 @@ public class C_Impulse_Bouncing : ComportementState
         base.CollisionStart(other);
         if (other!= null && canBounce)
         {
+            SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit,_sm.gameObject);
             trueImpulseBounceForce = impulseBounceForce + _sm.rb.velocity.magnitude * impulseForceMultiplier;
             // Debug.LogWarning($"dans enter: {trueImpulseBounceForce}");
             Repulse();
@@ -115,6 +116,7 @@ public class C_Impulse_Bouncing : ComportementState
         }
         // Debug.LogWarning($"dans repulse: {trueImpulseBounceForce}");
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueImpulseBounceRange);
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit,_sm.gameObject);
         if (objectsInRange.Length > 0)
         {
             foreach (Collider objectInRange in objectsInRange)
