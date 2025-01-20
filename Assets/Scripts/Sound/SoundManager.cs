@@ -183,7 +183,7 @@ public class SoundManager : MonoBehaviour
                     RuntimeManager.PlayOneShotAttached("event:/System/Componenent/PropelerStart", obj);
                     break;
                 case SoundComp.aimantStart:
-                    //Instantiate(prefabSonAimant, obj.transform);
+                    Instantiate(prefabSonAimant, obj.transform);
                     break;
             }
         }
