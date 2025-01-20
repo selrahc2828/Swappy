@@ -1,16 +1,17 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RocketMagnetEffect : MonoBehaviour
 {
     public Transform rocketObject; // L'objet que la zone suit, le magnet rocket
     public bool isPlayer;
-    public float offsetPosition; //déclage sur Y, mis en variable pour transmettre depuis le state car vari en fonction du collider
+    public float offSetPosition;  //déclage sur Y, mis en variable pour transmettre depuis le state car vari en fonction du collider
+    public float offSetDiffPoint = .2f; // décalage entre point A et B, pout pas qu'ils soient ==
+    public float delay = 1f;      // délais de B vers A, "temps de vie" du dernier point qui va suivre
     
-    public float delay = 1f;       // délais de B vers A, "temps de vie" du dernier point qui va suivre
-    
-    public Transform pointA; // PointA attaché directement à l'objet
-    public Transform pointB; // PointB qui suit A avec un délai
+    public Transform pointA;      // PointA attaché directement à l'objet
+    public Transform pointB;      // PointB qui suit A avec un délai
     private Vector3 _pointBPosition; // Position interpolée de PointB
     
     public Transform trailMagnetObject; // L'objet à scaler
@@ -37,13 +38,13 @@ public class RocketMagnetEffect : MonoBehaviour
             {
                 if (collider.height == 2f)
                 {
-                    offsetPosition = collider.bounds.extents.magnitude;
+                    offSetPosition = collider.bounds.extents.magnitude;
                 }
             }
         }
         else
         {
-            offsetPosition = rocketObject.GetComponent<Collider>().bounds.extents.magnitude;
+            offSetPosition = rocketObject.GetComponent<Collider>().bounds.extents.magnitude;
         }
         
         Vector3 positionStart = pointA.position;
@@ -51,7 +52,7 @@ public class RocketMagnetEffect : MonoBehaviour
         {
             positionStart = new Vector3(
                 rocketObject.position.x,
-                rocketObject.position.y - offsetPosition,
+                rocketObject.position.y - offSetPosition - offSetDiffPoint,
                 rocketObject.position.z
                 );
         }
@@ -146,7 +147,7 @@ public class RocketMagnetEffect : MonoBehaviour
             {
                 positionMove = new Vector3(
                     rocketObject.position.x,
-                    rocketObject.position.y - offsetPosition,
+                    rocketObject.position.y - offSetPosition,
                     rocketObject.position.z
                 );
             }
@@ -165,7 +166,7 @@ public class RocketMagnetEffect : MonoBehaviour
         {
             // pointB.parent = transform;
             // _pointBPosition = Vector3.Lerp(_pointBPosition, pointA.position, Time.deltaTime / delay);
-            _pointBPosition.y = Mathf.Lerp(_pointBPosition.y, pointA.position.y, Time.deltaTime / delay);
+            _pointBPosition.y = Mathf.Lerp(_pointBPosition.y, pointA.position.y - offSetDiffPoint, Time.deltaTime / delay);
 
             // pointB.position = _pointBPosition;
         }
