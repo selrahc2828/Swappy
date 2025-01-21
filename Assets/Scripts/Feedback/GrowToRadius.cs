@@ -12,7 +12,8 @@ public class GrowToRadius : MonoBehaviour
     private float elapsedTime = 0f;
     private Vector3 _initialScale;
     private Vector3 _targetScale;
-    private bool isScaling;
+    private bool _isScaling;
+    public bool atDestroy = true;
 
     // Start is called before the first frame update
     void Start()
@@ -31,13 +32,11 @@ public class GrowToRadius : MonoBehaviour
         if (elapsedTime < durationScaling)
         {
             transform.localScale = Vector3.Lerp(_initialScale, _targetScale, progress);
-
         }
-        else
+        else if (atDestroy)
         {
             Destroy(gameObject);
         }
-
     }
 
 
