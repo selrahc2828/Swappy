@@ -124,10 +124,30 @@ public class SoundManager : MonoBehaviour
         //  PlayPlayerLand() est � utiliser dans les animations de saut lorsque les pieds touchent le sol.
         //
         //      Annotez l'endroit o� footstep player est appel�                             (Falling.cs, ligne 29)
-        public void PlaySoundLand() 
+        public void PlaySoundLand()
         {
             RuntimeManager.PlayOneShot("event:/Player/Moving/Land");
         }
+
+        public EventInstance CreateSoundFalling()
+        {
+            return RuntimeManager.CreateInstance("event:/Player/Moving/Falling");
+        }
+
+        public void PlaySound(EventInstance eventInstance)
+        {
+            eventInstance.start();
+        }
+        public void StopSound(EventInstance eventInstance)
+        {
+            eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+
+        public void SetValueSound(EventInstance eventInstance, float value)
+        {
+            eventInstance.setVolume(value);
+        }
+        
 
 
 
