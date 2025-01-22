@@ -66,8 +66,11 @@
 		<property name="voiceStealing">
 			<value>3</value>
 		</property>
+		<property name="minimumDistance">
+			<value>0</value>
+		</property>
 		<property name="maximumDistance">
-			<value>100</value>
+			<value>2000</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{89717bfb-c9f4-4a59-a61b-5607d7b13710}" />
@@ -112,7 +115,7 @@
 			<value>2.8284271247461894</value>
 		</property>
 		<property name="volume">
-			<value>-35</value>
+			<value>-14</value>
 		</property>
 		<property name="pitch">
 			<value>6</value>
@@ -176,7 +179,20 @@
 	</object>
 	<object class="MixerBusPanner" id="{7b9603a6-3ca3-4002-9aed-768ac2448335}" />
 	<object class="MixerBusFader" id="{0706f0d7-f50a-4beb-8cd7-375cde5a7beb}" />
-	<object class="SpatialiserEffect" id="{042412ab-9f2c-4424-8320-cbe470555228}" />
+	<object class="SpatialiserEffect" id="{042412ab-9f2c-4424-8320-cbe470555228}">
+		<property name="distanceRolloffType">
+			<value>2</value>
+		</property>
+		<property name="minimumDistance">
+			<value>5</value>
+		</property>
+		<property name="maximumDistance">
+			<value>150</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{80cfcabc-a62b-425f-81c8-94a0229fe800}">
 		<property name="position">
 			<value>0</value>
