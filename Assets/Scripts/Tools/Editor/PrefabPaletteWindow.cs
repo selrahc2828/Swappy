@@ -15,6 +15,12 @@ public class PrefabPaletteWindow : EditorWindow
     
     private GameObject selectedPrefab; // prefab selectionné qu'on va ajouter à la scene
     private GameObject parentObject;
+    private Vector2 paletteScrollPos;
+    private int paletteIndex = -1;    // Index de l'élément sélectionné dans la grille
+
+    private float radius;
+    private Vector3? lastPlacedPosition = null; // Dernière position où une prefab a été placée
+    private float placementOffset = 2.0f;      // Distance minimale entre deux placements
     
     [MenuItem("Tools/Prefab Palette")]
     private static void ShowWindow()
@@ -56,7 +62,19 @@ public class PrefabPaletteWindow : EditorWindow
             EditorGUILayout.LabelField(selectedPrefab.gameObject.name, GUILayout.Width(100));
 
         EditorGUILayout.EndHorizontal();
-
+        
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Offset Placement", GUILayout.Width(150));
+        placementOffset = EditorGUILayout.FloatField(placementOffset, GUILayout.Width(50));
+        
+        EditorGUILayout.EndHorizontal();
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Radius brush", GUILayout.Width(150));
+        radius = EditorGUILayout.FloatField(radius, GUILayout.Width(50));
+        EditorGUILayout.EndHorizontal();
+        
         EditorGUILayout.Space();
         
         EditorGUILayout.BeginHorizontal();
@@ -65,55 +83,88 @@ public class PrefabPaletteWindow : EditorWindow
         
         // --- Liste déroulante ---
         
-        EditorGUILayout.BeginHorizontal();
-        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(500), GUILayout.Height(200));
-        int prefabsInRow = 5;
-        int currentIndex = 0;
-        EditorGUILayout.BeginVertical(); // Pour lignes d'affichage des préfabs
+        #region Liste déroulante
         
+        // EditorGUILayout.BeginHorizontal();
+        // scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(500), GUILayout.Height(200));
+        // int prefabsInRow = 5;
+        // int currentIndex = 0;
+        // EditorGUILayout.BeginVertical(); // Pour lignes d'affichage des préfabs
+        //
+        // foreach (GameObject prefab in _prefabsComportements)
+        // {
+        //     // tous les "prefabsInRow" prefabs, on fait une nouvelle ligne
+        //     if (currentIndex % prefabsInRow == 0)
+        //     {
+        //         // nouvelle ligne
+        //         if (currentIndex > 0)
+        //         {
+        //             EditorGUILayout.EndHorizontal();
+        //         }
+        //         EditorGUILayout.BeginHorizontal();
+        //     }
+        //     
+        //     
+        //     // Afficher l'aperçu
+        //     EditorGUILayout.BeginVertical();
+        //     
+        //     Texture2D preview = AssetPreview.GetAssetPreview(prefab);
+        //     if (preview != null)
+        //     {
+        //         if (GUILayout.Button(preview, GUILayout.Width(80), GUILayout.Height(80)))
+        //         {
+        //             Debug.Log($"Prefab clicked: {prefab.name}");
+        //             selectedPrefab = prefab;
+        //         }
+        //         
+        //     }
+        //     GUILayout.Label(prefab.name, GUILayout.Width(80));
+        //     EditorGUILayout.EndVertical();
+        //     
+        //     currentIndex++;
+        // }
+        //
+        // // ligne ouverte, on la ferme, car on a plus rien à afficher
+        // if (currentIndex % prefabsInRow != 0)
+        // {
+        //     EditorGUILayout.EndHorizontal();
+        // }
+        //
+        // EditorGUILayout.EndVertical();
+        // //
+        // EditorGUILayout.EndScrollView();
+        // EditorGUILayout.EndHorizontal();
+        // //
+        //
+        // EditorGUILayout.BeginVertical();
+        
+        #endregion
+        
+        
+        // liste avec Grid
+        List<GUIContent> paletteIcons = new List<GUIContent>();
         foreach (GameObject prefab in _prefabsComportements)
         {
-            // tous les "prefabsInRow" prefabs, on fait une nouvelle ligne
-            if (currentIndex % prefabsInRow == 0)
-            {
-                // nouvelle ligne
-                if (currentIndex > 0)
-                {
-                    EditorGUILayout.EndHorizontal();
-                }
-                EditorGUILayout.BeginHorizontal();
-            }
-            
-            
-            // Afficher l'aperçu
-            EditorGUILayout.BeginVertical();
-            
-            Texture2D preview = AssetPreview.GetAssetPreview(prefab);
-            if (preview != null)
-            {
-                if (GUILayout.Button(preview, GUILayout.Width(80), GUILayout.Height(80)))
-                {
-                    Debug.Log($"Prefab clicked: {prefab.name}");
-                    selectedPrefab = prefab;
-                }
-                
-            }
-            GUILayout.Label(prefab.name, GUILayout.Width(80));
-            EditorGUILayout.EndVertical();
-            
-            currentIndex++;
+            Texture2D texture = AssetPreview.GetAssetPreview(prefab);
+            paletteIcons.Add(new GUIContent(texture, prefab.name));
         }
         
-        // ligne ouverte, on la ferme, car on a plus rien à afficher
-        if (currentIndex % prefabsInRow != 0)
+        // EditorGUILayout.BeginVertical();
+        paletteScrollPos = EditorGUILayout.BeginScrollView(paletteScrollPos, GUILayout.Width(400), GUILayout.Height(200));//GUILayout.ExpandWidth(true)
+        
+        int newPaletteIndex = GUILayout.SelectionGrid(paletteIndex, paletteIcons.ToArray(), 4, GUILayout.Width(400), GUILayout.Height(300));
+        
+        if (newPaletteIndex != paletteIndex)
         {
-            EditorGUILayout.EndHorizontal();
+            paletteIndex = newPaletteIndex;
+            selectedPrefab = _prefabsComportements[paletteIndex]; // selection de la prefab
+            Debug.Log($"Prefab selected: {selectedPrefab.name}");
         }
         
-        EditorGUILayout.EndVertical();
+        EditorGUILayout.EndScrollView(); 
+        
+        // EditorGUILayout.EndVertical();
 
-        EditorGUILayout.EndScrollView();
-        EditorGUILayout.EndHorizontal();
         
     }
     
@@ -124,28 +175,43 @@ public class PrefabPaletteWindow : EditorWindow
         Event e = Event.current;
         
         // verif si clic dans scène
-        if (e.type == EventType.MouseDown && e.button == 0 && !e.alt)
+        
+        if (e.type == EventType.MouseDrag && e.button == 0 && e.control && !e.alt) //control modificateur, pas A
         {
             Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Debug.Log(hit.collider.gameObject.name);
+                Vector3 hitPoint = hit.point;
                 
-                // création instance du prefab à l'emplacement du clic
-                GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(selectedPrefab);
-                // InstantiatePrefab permet de concerver le lien prefab et pas une version indépendante (clone) comme le Instantiate de base
-                instance.transform.up = hit.normal;
-                instance.transform.position = hit.point;
+                //verif si on peut placer la prefabs
+                if (!lastPlacedPosition.HasValue || Vector3.Distance(lastPlacedPosition.Value, hitPoint) >= placementOffset)
+                {
+                   // création instance du prefab à l'emplacement du clic
+                   GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(selectedPrefab);
+                   // InstantiatePrefab permet de concerver le lien prefab et pas une version indépendante (clone) comme le Instantiate de base
+                   instance.transform.up = hit.normal;
+                   instance.transform.position = hit.point;
+                   
+                   // set le parent
+                   if (parentObject)
+                       instance.transform.SetParent(parentObject.transform, true);
+   
+                   Undo.RegisterCreatedObjectUndo(instance, "Place Prefab"); // ctrl Z
+                   Debug.Log($"Prefab placed at: {hit.point}");
+                   
+                   // maj dernière position placée
+                   lastPlacedPosition = hitPoint;
+                }
                 
-                // set le parent
-                if (parentObject)
-                    instance.transform.SetParent(parentObject.transform, true);
-
-                Undo.RegisterCreatedObjectUndo(instance, "Place Prefab"); // ctrl Z
-                Debug.Log($"Prefab placed at: {hit.point}");
+                
             }
         
             e.Use(); // on indique que l'event est utilisé
+        }
+        else if (e.type == EventType.MouseUp && e.button == 0)
+        {
+            // reset dernière position quand on relache la souris
+            lastPlacedPosition = null;
         }
     }
     
@@ -173,5 +239,6 @@ public class PrefabPaletteWindow : EditorWindow
     private void ClearSelection()
     {
         selectedPrefab = null;
+        paletteIndex = -1;
     }
 }
