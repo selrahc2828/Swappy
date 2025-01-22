@@ -48,7 +48,7 @@ public class SoundManager : MonoBehaviour
         busPlayer = RuntimeManager.GetBus("bus:/Player");
         busSystem = RuntimeManager.GetBus("bus:/System");
         busMusic = RuntimeManager.GetBus("bus:/Music");
-        busMenu = RuntimeManager.GetBus("bus:/Menu");
+        //busMenu = RuntimeManager.GetBus("bus:/Menu");
         }
         #endregion
 
