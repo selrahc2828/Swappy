@@ -19,6 +19,9 @@ public class ComportementManager : MonoBehaviour
     public Color immuableColor;
     public Color noComportementColor;
     
+    [Header("PrefabComportementGeneric")]
+    public GameObject magnetGenericPrefab;
+    
     [Header("Impulse")]
     public float repulserTime = 5f;
     public float doubleImpulseTime = 6f;
@@ -70,6 +73,9 @@ public class ComportementManager : MonoBehaviour
     [Header("Magnet Bounce")]
     public float magnetBounceForce;
     public float magnetBounceRange = 10f;
+    public float intervalBetweenBurst = .5f;
+    public Color burstColor;
+    
     [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à magnet Force")]
     public float magnetForceVelocityMultiplier;
     [Range(1,5)]

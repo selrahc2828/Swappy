@@ -8,6 +8,13 @@ public class C_Bouncing_Magnet : ComportementState
     private PhysicMaterial bouncyMaterial;
     private PhysicMaterial basePlayerMaterial;
     private PhysicMaterial basePlayerSlideMaterial;
+
+    private GameObject forceFieldObj;
+    private float magnetForceMultiplier;
+
+    
+    
+    public Vector3 lastVelocity; 
     
     private float magnetRange;
     private float trueMagnetRange;
@@ -16,7 +23,6 @@ public class C_Bouncing_Magnet : ComportementState
     private float trueMagnetForce;
     private bool magnetGradiantForce;
     
-    private float magnetForceMultiplier;
     private float bounceMagnitude;
 
     [Range(1,3)]
@@ -44,7 +50,7 @@ public class C_Bouncing_Magnet : ComportementState
 
         if (_sm.isPlayer)
         {
-            //pb State se fait avent set dans manager
+            //pb State se fait avant set dans manager
             basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
             basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
             _sm.comportementManager.playerBouncingCollider.material = bouncyMaterial;
@@ -56,7 +62,6 @@ public class C_Bouncing_Magnet : ComportementState
         {
             _sm.GetComponent<Collider>().material = bouncyMaterial;
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;//toujours des pb de range trop grande mais mieux
-
         }
         saveMagnetRange = trueMagnetRange;
         
@@ -69,14 +74,23 @@ public class C_Bouncing_Magnet : ComportementState
         magnetGradiantForce = _sm.comportementManager.magnetGradiantForce;
         
         delayScale = _sm.comportementManager.delayScale;
+        
+        // set la prefab qui va appliquer la force
+        forceFieldObj = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.magnetGenericPrefab,_sm.transform.position, Quaternion.identity, _sm.transform);//, _sm.transform => parent mais pose des pb
+        forceFieldObj.GetComponent<MagnetForceField>().force = trueMagnetForce;
+        forceFieldObj.GetComponent<MagnetForceField>().intervalBetweenBurst = _sm.comportementManager.intervalBetweenBurst;
+        forceFieldObj.GetComponent<MagnetForceField>().burstColor = _sm.comportementManager.burstColor;
+        
+        forceFieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
+        forceFieldObj.GetComponent<GrowToRadius>().atDestroy = false;
     }
 
     public override void TickLogic()
     {
         base.TickLogic();
-        Attract();//même comportement sur player et sur objet
+        //Attract();//même comportement sur player et sur objet
+        // lastVelocity = _sm.GetComponent<Rigidbody>().velocity;
 
-        
         if (collisionStart)
         {
             timeSinceCollisionStrat += Time.deltaTime; // Incrémente le timer
@@ -100,6 +114,8 @@ public class C_Bouncing_Magnet : ComportementState
     {
         base.Exit();
         _sm.GetComponentInChildren<Collider>().material = null;
+        
+        _sm.comportementManager.DestroyObj(forceFieldObj);
     }
     
     public override void DisplayGizmos()
@@ -119,17 +135,30 @@ public class C_Bouncing_Magnet : ComportementState
             {
                 if (!collisionStart)//si unScale est lancé, on le refait pas
                 {
-                    trueMagnetRange *= magnetUpScaleMultiplier;
-                
-                    collisionStart = true; // start rescale magnet
-                    //timeSinceCollisionEnd = 0f;//reset "scale timer"
+                    // trueMagnetRange *= magnetUpScaleMultiplier;
+                    // collisionStart = true; // start rescale magnet
+                    // timeSinceCollisionEnd = 0f;//reset "scale timer"
                 }
             }
             else
             {
-                bounceMagnitude = _sm.rb.velocity.magnitude;
-                trueMagnetForce = magnetForce + bounceMagnitude * magnetForceMultiplier;
-                Attract(true);                      
+                
+                Rigidbody rb = _sm.GetComponent<Rigidbody>();
+                float impact = rb.velocity.magnitude;
+
+                // Calculer la force du rebond (différence de vélocité)
+
+                forceFieldObj.GetComponent<MagnetForceField>().burstForce = magnetForce + impact * magnetForceMultiplier;
+
+                forceFieldObj.GetComponent<MagnetForceField>().Bounce();
+
+                // Attract(true);
+                // SetParamPrefabMagnet();
+                // if (!collisionStart)
+                // {
+                //     forceFieldObj.GetComponent<MagnetForceField>().Bounce();
+                // }
+
             }
         }
     }
@@ -143,49 +172,14 @@ public class C_Bouncing_Magnet : ComportementState
         }
         else
         {
-            trueMagnetForce = magnetForce;//reset de la force de base, si pas en main
+            //trueMagnetForce = magnetForce;//reset de la force de base, si pas en main
         }
         // Debug.LogWarning($"collision END magnet force {trueMagnetForce}");
     }
 
-    public void Attract(bool isCollide = false)
-    {
-        Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueMagnetRange);
-        if (objectsInRange.Length > 0)
-        {
-            foreach (Collider objectInRange in objectsInRange)
-            {
-                if (!objectInRange.gameObject.CompareTag("Player") && objectInRange.gameObject != _sm.gameObject)// applique pas sur player et lui même
-                {
-                    if (objectInRange.GetComponent<Rigidbody>() != null)
-                    {
-                        if (isCollide) // collision
-                        {
-                            ApplyForce(false,objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, trueMagnetForce);
-                        }
-                        else
-                        {
-                            ApplyForce(magnetGradiantForce,objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, trueMagnetForce);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    public void ApplyForce(bool isGradient, Rigidbody rbObj,GameObject objToApply, float force)
-    {
-        // Debug.LogWarning($"APPLYFORCE magnet force: {force}");
 
-        if (isGradient)
-        {
-            objToApply.GetComponent<Rigidbody>().AddExplosionForce(-force, _sm.transform.position, trueMagnetRange);
-        }
-        else
-        {
-            Vector3 dir = (_sm.transform.position - objToApply.transform.position).normalized; // obj vers magnet
-            rbObj.AddForce(dir * force, ForceMode.Force);
-        }
+    void SetParamPrefabMagnet()
+    {
+        forceFieldObj.GetComponent<MagnetForceField>().force = trueMagnetForce;
     }
-
 }
