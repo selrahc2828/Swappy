@@ -79,9 +79,9 @@ public class ComportementManager : MonoBehaviour
     [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à magnet Force")]
     public float magnetForceVelocityMultiplier;
     [Range(1,5)]
-    public float magnetScaleMultiplier;
+    public float magnetGrabScaleMultiplier;
     [Tooltip("delay pour scale magnet range collision quand grab, sinon trop court avec les rebond qui s'enchaine")]
-    public float delayScale = .5f;
+    public float delayDisplay = .5f;
     
     [Header("Impulse Magnet")]
     public float zoneImpulseRange;

@@ -11,8 +11,6 @@ public class C_Bouncing_Magnet : ComportementState
 
     private GameObject forceFieldObj;
     private float magnetForceMultiplier;
-
-    
     
     public Vector3 lastVelocity; 
     
@@ -24,9 +22,9 @@ public class C_Bouncing_Magnet : ComportementState
     private bool magnetGradiantForce;
     
     private float bounceMagnitude;
-
+    
     [Range(1,3)]
-    private float magnetUpScaleMultiplier;
+    // private float magnetUpScaleMultiplier;
     // avec mat bounce, rebond direct quand grab et touche surface, collisionEnter/exit s'enchaine trop vite pour range upsacle
     private float delayScale;
     private float timeSinceCollisionStrat;
@@ -69,17 +67,15 @@ public class C_Bouncing_Magnet : ComportementState
         trueMagnetForce = magnetForce;
 
         magnetForceMultiplier = _sm.comportementManager.magnetForceVelocityMultiplier;
-        magnetUpScaleMultiplier = _sm.comportementManager.magnetScaleMultiplier;
-        
-        magnetGradiantForce = _sm.comportementManager.magnetGradiantForce;
-        
-        delayScale = _sm.comportementManager.delayScale;
+        // magnetGradiantForce = _sm.comportementManager.magnetGradiantForce;
+        // delayScale = _sm.comportementManager.delayScale;
         
         // set la prefab qui va appliquer la force
         forceFieldObj = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.magnetGenericPrefab,_sm.transform.position, Quaternion.identity, _sm.transform);//, _sm.transform => parent mais pose des pb
         forceFieldObj.GetComponent<MagnetForceField>().force = trueMagnetForce;
         forceFieldObj.GetComponent<MagnetForceField>().intervalBetweenBurst = _sm.comportementManager.intervalBetweenBurst;
         forceFieldObj.GetComponent<MagnetForceField>().burstColor = _sm.comportementManager.burstColor;
+        forceFieldObj.GetComponent<MagnetForceField>().delayDisplay = _sm.comportementManager.delayDisplay;
         
         forceFieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
         forceFieldObj.GetComponent<GrowToRadius>().atDestroy = false;
@@ -88,7 +84,6 @@ public class C_Bouncing_Magnet : ComportementState
     public override void TickLogic()
     {
         base.TickLogic();
-        //Attract();//même comportement sur player et sur objet
         // lastVelocity = _sm.GetComponent<Rigidbody>().velocity;
 
         if (collisionStart)
@@ -145,41 +140,20 @@ public class C_Bouncing_Magnet : ComportementState
                 
                 Rigidbody rb = _sm.GetComponent<Rigidbody>();
                 float impact = rb.velocity.magnitude;
-
+                
                 // Calculer la force du rebond (différence de vélocité)
 
                 forceFieldObj.GetComponent<MagnetForceField>().burstForce = magnetForce + impact * magnetForceMultiplier;
-
+                // Debug.Log($"velocity impact : {impact} \n " +
+                //           $"force add : {impact * magnetForceMultiplier} \n" +
+                //           $"burst force : {magnetForce + impact * magnetForceMultiplier}");
                 forceFieldObj.GetComponent<MagnetForceField>().Bounce();
-
-                // Attract(true);
-                // SetParamPrefabMagnet();
-                // if (!collisionStart)
-                // {
-                //     forceFieldObj.GetComponent<MagnetForceField>().Bounce();
-                // }
-
             }
         }
     }
 
     public override void CollisionEnd(Collision other)
     {
-        if (isGrabbed)
-        {
-            // trueMagnetRange = saveMagnetRange;//revient à la range de base
-            // on fait un delay pour le UpScale, le reset de la range est fait dedans, pour le moment
-        }
-        else
-        {
-            //trueMagnetForce = magnetForce;//reset de la force de base, si pas en main
-        }
-        // Debug.LogWarning($"collision END magnet force {trueMagnetForce}");
-    }
-
-
-    void SetParamPrefabMagnet()
-    {
-        forceFieldObj.GetComponent<MagnetForceField>().force = trueMagnetForce;
+        forceFieldObj.GetComponent<MagnetForceField>().boolBurst = false;
     }
 }

@@ -9,12 +9,14 @@ public class MagnetForceField : MonoBehaviour
     public float force;
     public float burstForce;
     public float intervalBetweenBurst;
-    private float _timer;
+    private float _timerBurst;
     public bool boolBurst;
     
     public MeshRenderer magnetFeedbackMaterial;
     public Color burstColor;
     public Color normalColor;
+    public float delayDisplay;
+    float _timerDisplay;
 
     private void Start()
     {
@@ -24,10 +26,12 @@ public class MagnetForceField : MonoBehaviour
     private void Update()
     {
         // Réduction du cooldown si nécessaire
-        if (_timer > 0)
+        if (_timerBurst > 0)
         {
-            _timer -= Time.deltaTime;
+            _timerBurst -= Time.deltaTime;
         }
+
+        DisplayColor();
     }
 
     private void OnTriggerStay(Collider other)
@@ -40,13 +44,7 @@ public class MagnetForceField : MonoBehaviour
             if (boolBurst)// magnet bounce
             {
                 ApplyForce(_rb,other.gameObject);
-                // _sm.rend.materials[1].SetColor("_Color2", colorSlot1);
-
-                magnetFeedbackMaterial.material.SetColor("_Color0", burstColor);
-                // delay pour remettre normalColor
-                // magnetFeedbackMaterial.material.SetColor("_Color0", normalColor);
-
-                boolBurst = false;
+                // boolBurst = false;
             }
         }
     }
@@ -68,14 +66,33 @@ public class MagnetForceField : MonoBehaviour
 
     public void Bounce()
     {
-        if (_timer <= 0)
+        if (_timerBurst <= 0)
         {
             boolBurst = true;
-            _timer = intervalBetweenBurst;
+            _timerBurst = intervalBetweenBurst;
         }
         else
         {
             Debug.Log("Burst BounceMagnet en cooldown.");
         }
+    }
+
+    public void DisplayColor()
+    {
+        if (boolBurst)
+        {
+            _timerDisplay = delayDisplay;
+        }
+        if (_timerDisplay >= 0)
+        {
+            _timerDisplay -= Time.deltaTime;
+            magnetFeedbackMaterial.material.SetColor("_Color0", burstColor);
+        }
+        else
+        {
+            magnetFeedbackMaterial.material.SetColor("_Color0", normalColor);
+        }
+        Debug.Log($"timer display: {_timerDisplay}");
+
     }
 }
