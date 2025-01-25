@@ -12,12 +12,12 @@ public class C_Bouncing_Magnet : ComportementState
     private GameObject forceFieldObj;
     private float magnetForceMultiplier;
     
-    public Vector3 lastVelocity; 
-    
     private float magnetRange;
     private float trueMagnetRange;
     private float saveMagnetRange;//pour changer au moment d'une collision si grab
     private float magnetForce;
+    private float magnetForceOnPlayer;
+    private float magnetForceWhenGrab;
     private float trueMagnetForce;
     private bool magnetGradiantForce;
     
@@ -29,6 +29,14 @@ public class C_Bouncing_Magnet : ComportementState
     private float delayScale;
     private float timeSinceCollisionStrat;
     private bool collisionStart = false;//pour pas appeler plusieurs en même temps
+    
+    //grab
+    private bool _rescaleRangeOnce;
+    
+    // gestion de la collision quand grab, pour la range 
+    private bool isCollisionTimerActive;
+    private float collisionTimer = 0f;
+
 
     public C_Bouncing_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
@@ -64,11 +72,11 @@ public class C_Bouncing_Magnet : ComportementState
         saveMagnetRange = trueMagnetRange;
         
         magnetForce = _sm.comportementManager.magnetBounceForce;
+        magnetForceOnPlayer = _sm.comportementManager.magnetBounceForceOnPlayer;
+        magnetForceWhenGrab = _sm.comportementManager.magnetBounceForceWhenGrab;
         trueMagnetForce = magnetForce;
 
         magnetForceMultiplier = _sm.comportementManager.magnetForceVelocityMultiplier;
-        // magnetGradiantForce = _sm.comportementManager.magnetGradiantForce;
-        // delayScale = _sm.comportementManager.delayScale;
         
         // set la prefab qui va appliquer la force
         forceFieldObj = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.magnetGenericPrefab,_sm.transform.position, Quaternion.identity, _sm.transform);//, _sm.transform => parent mais pose des pb
@@ -84,20 +92,30 @@ public class C_Bouncing_Magnet : ComportementState
     public override void TickLogic()
     {
         base.TickLogic();
-        // lastVelocity = _sm.GetComponent<Rigidbody>().velocity;
 
-        if (collisionStart)
+        //delay de reduction de range, lors d'une collision en grab
+        if (isCollisionTimerActive)
         {
-            timeSinceCollisionStrat += Time.deltaTime; // Incrémente le timer
+            collisionTimer += Time.deltaTime;
 
-            if (timeSinceCollisionStrat >= delayScale) // Vérifie si le délai est écoulé
+            if (collisionTimer >= _sm.comportementManager.delayDisplay)
             {
-                timeSinceCollisionStrat = 0f;
-                trueMagnetRange = saveMagnetRange; // reset range
-                trueMagnetForce = magnetForce;
-                collisionStart = false; // on peut à nouveau faire le upScale avec collision
+                // Réduit la range après x seconde après un choc en grab
+                trueMagnetRange = saveMagnetRange / 2;
+                forceFieldObj.GetComponent<GrowToRadius>().SetTargetScale(trueMagnetRange);
+                forceFieldObj.GetComponent<GrowToRadius>().elapsedTime = 0f;
+
+                // Désactive le timer
+                isCollisionTimerActive = false;
+            }
+            else
+            {
+                
+                
             }
         }
+
+        ScaleGrab();
     }
 
     public override void TickPhysics()
@@ -126,34 +144,81 @@ public class C_Bouncing_Magnet : ComportementState
     {
         if (other!= null)
         {
+            Rigidbody rb = _sm.GetComponent<Rigidbody>();
+            float impact = rb.velocity.magnitude;
+            //Debug.LogWarning($"impact velo {impact}");
+
+            // forceFieldObj.GetComponent<MagnetForceField>().Bounce();
+            // Debug.Log($"Collision Start boolburst {forceFieldObj.GetComponent<MagnetForceField>().boolBurst}");
+
+            //il y a des cas où le apply burst passe pas dans grab
+            
             if (isGrabbed)
             {
-                if (!collisionStart)//si unScale est lancé, on le refait pas
+                //boolBurst jamais true ici
+                
+                forceFieldObj.GetComponent<MagnetForceField>().burstForce = magnetForceWhenGrab + impact * magnetForceMultiplier;
+
+                // peut pas utiliser boolBurst de MagnetForceField car il est déjà passé false
+                // et si je mets Bounce au début ça "décale" le moment où l'impulsion est fait
+                if (!isCollisionTimerActive)//si unScale est lancé, on le refait pas
                 {
-                    // trueMagnetRange *= magnetUpScaleMultiplier;
                     // collisionStart = true; // start rescale magnet
                     // timeSinceCollisionEnd = 0f;//reset "scale timer"
+                    
+                    //aggrandi la range
+                    trueMagnetRange = saveMagnetRange;
+                    forceFieldObj.GetComponent<GrowToRadius>().SetTargetScale(saveMagnetRange);
+                    forceFieldObj.GetComponent<GrowToRadius>().elapsedTime = 0f;
+                    
+                    //TEST AVEC DELAY PLUS LONG
+                    // impression que le impulse se fait mais trop vite
+                    
+                    isCollisionTimerActive = true;
+                    collisionTimer = 0f;
                 }
             }
             else
             {
-                
-                Rigidbody rb = _sm.GetComponent<Rigidbody>();
-                float impact = rb.velocity.magnitude;
-                
                 // Calculer la force du rebond (différence de vélocité)
-
-                forceFieldObj.GetComponent<MagnetForceField>().burstForce = magnetForce + impact * magnetForceMultiplier;
-                // Debug.Log($"velocity impact : {impact} \n " +
-                //           $"force add : {impact * magnetForceMultiplier} \n" +
-                //           $"burst force : {magnetForce + impact * magnetForceMultiplier}");
-                forceFieldObj.GetComponent<MagnetForceField>().Bounce();
+                if (_sm.isPlayer)
+                {
+                    forceFieldObj.GetComponent<MagnetForceField>().burstForce = magnetForceOnPlayer + impact * magnetForceMultiplier;
+                }
+                else
+                {
+                    forceFieldObj.GetComponent<MagnetForceField>().burstForce = magnetForce + impact * magnetForceMultiplier;
+                }
             }
+            // ne se fait pas dans MagnetForceField si en cooldown, 
+            forceFieldObj.GetComponent<MagnetForceField>().Bounce();
+            // Debug.Log($"Collision Start boolburst {forceFieldObj.GetComponent<MagnetForceField>().boolBurst} \n" +
+            //           $"timer burst {forceFieldObj.GetComponent<MagnetForceField>()._timerBurst}");
         }
     }
 
     public override void CollisionEnd(Collision other)
     {
         forceFieldObj.GetComponent<MagnetForceField>().boolBurst = false;
+    }
+
+
+    void ScaleGrab()
+    {
+        //scale quand on grab ou relache l'objet
+        if (isGrabbed & !_rescaleRangeOnce)//grab et pas rescale
+        {
+            _rescaleRangeOnce = true;
+            trueMagnetRange = saveMagnetRange / 2;
+            forceFieldObj.GetComponent<GrowToRadius>().SetTargetScale(trueMagnetRange);
+            forceFieldObj.GetComponent<GrowToRadius>().elapsedTime = 0f;
+        }
+        else if(!isGrabbed && _rescaleRangeOnce)//pour remettre la scale de base 
+        {
+            _rescaleRangeOnce = false;
+            trueMagnetRange = saveMagnetRange;
+            forceFieldObj.GetComponent<GrowToRadius>().SetTargetScale(trueMagnetRange);
+            forceFieldObj.GetComponent<GrowToRadius>().elapsedTime = 0f;
+        }
     }
 }

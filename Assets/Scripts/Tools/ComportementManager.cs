@@ -71,7 +71,9 @@ public class ComportementManager : MonoBehaviour
     public PhysicMaterial doubleBouncyMaterial;
 
     [Header("Magnet Bounce")]
-    public float magnetBounceForce;
+    public float magnetBounceForce = 60f;
+    public float magnetBounceForceOnPlayer = 60f;
+    public float magnetBounceForceWhenGrab = 60f;
     public float magnetBounceRange = 10f;
     public float intervalBetweenBurst = .5f;
     public Color burstColor;
