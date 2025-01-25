@@ -11,6 +11,8 @@ public class C_Bouncing_Magnet : ComportementState
 
     private GameObject forceFieldObj;
     private float magnetForceMultiplier;
+    private float magnetForceOnPlayerMultiplier;
+    private float magnetForceWhenGrabMultiplier;
     
     private float magnetRange;
     private float trueMagnetRange;
@@ -76,7 +78,9 @@ public class C_Bouncing_Magnet : ComportementState
         magnetForceWhenGrab = _sm.comportementManager.magnetBounceForceWhenGrab;
         trueMagnetForce = magnetForce;
 
-        magnetForceMultiplier = _sm.comportementManager.magnetForceVelocityMultiplier;
+        magnetForceMultiplier = _sm.comportementManager.magnetForceMultiplier;
+        magnetForceOnPlayerMultiplier = _sm.comportementManager.magnetForceOnPlayerMultiplier;
+        magnetForceWhenGrabMultiplier = _sm.comportementManager.magnetForceWhenGrabMultiplier;
         
         // set la prefab qui va appliquer la force
         forceFieldObj = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.magnetGenericPrefab,_sm.transform.position, Quaternion.identity, _sm.transform);//, _sm.transform => parent mais pose des pb
@@ -157,7 +161,7 @@ public class C_Bouncing_Magnet : ComportementState
             {
                 //boolBurst jamais true ici
                 
-                forceFieldObj.GetComponent<MagnetForceField>().burstForce = magnetForceWhenGrab + impact * magnetForceMultiplier;
+                forceFieldObj.GetComponent<MagnetForceField>().burstForce = magnetForceWhenGrab + impact * magnetForceWhenGrabMultiplier;
 
                 // peut pas utiliser boolBurst de MagnetForceField car il est déjà passé false
                 // et si je mets Bounce au début ça "décale" le moment où l'impulsion est fait
@@ -183,7 +187,7 @@ public class C_Bouncing_Magnet : ComportementState
                 // Calculer la force du rebond (différence de vélocité)
                 if (_sm.isPlayer)
                 {
-                    forceFieldObj.GetComponent<MagnetForceField>().burstForce = magnetForceOnPlayer + impact * magnetForceMultiplier;
+                    forceFieldObj.GetComponent<MagnetForceField>().burstForce = magnetForceOnPlayer + impact * magnetForceOnPlayerMultiplier;
                 }
                 else
                 {
