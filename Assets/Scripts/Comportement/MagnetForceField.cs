@@ -7,12 +7,14 @@ using UnityEngine.Serialization;
 public class MagnetForceField : MonoBehaviour
 {
     public float force;
+    public MeshRenderer magnetFeedbackMaterial;
+    public bool affectedPlayer;
+    
+    [Header("BounceMagnet")]
     public float burstForce;
     public float intervalBetweenBurst;
     public float _timerBurst;
     public bool boolBurst;
-    
-    public MeshRenderer magnetFeedbackMaterial;
     public Color burstColor;
     public Color normalColor;
     public float delayDisplay;
@@ -39,6 +41,16 @@ public class MagnetForceField : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (affectedPlayer)//on va chercher le RB dans le parent pour le player
+        {
+            Rigidbody _rbPlayer = other.GetComponentInParent<Rigidbody>();
+
+            if (_rbPlayer != null)
+            {
+                ApplyForce(_rbPlayer,other.gameObject);
+            }
+        }
+        
         Rigidbody _rb = other.GetComponent<Rigidbody>();
         if (_rb != null)
         {

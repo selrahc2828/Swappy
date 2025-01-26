@@ -65,6 +65,14 @@ public class ComportementManager : MonoBehaviour
     public float magnetForce;
     [HideInInspector] public bool magnetGradiantForce;
 
+    [Header("DoubleMagnet")]
+    public GameObject prefabDoubleMagnetForcefield;
+    public Color justePourDiffSimpleMagnet;
+    public float doubleMagnetRange = 20f;
+    public float doubleMagnetForce = 75f;
+    public float doubleMagnetForceOnPlayer = 75f;
+    public float doubleMagnetForceWhenGrab = 75f;
+    
     [Header("Bouncing")]
     public PhysicMaterial bouncyMaterial;
     [Header("DoubleBounce")]
@@ -84,7 +92,6 @@ public class ComportementManager : MonoBehaviour
     public float magnetBounceRange = 10f;
     public float intervalBetweenBurst = .5f;
     public Color burstColor;
-
     [Tooltip("delay pour scale magnet range collision quand grab, sinon trop court avec les rebond qui s'enchaine")]
     public float delayDisplay = .5f;
     
