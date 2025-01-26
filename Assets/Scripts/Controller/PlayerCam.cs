@@ -23,9 +23,13 @@ public class PlayerCam : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.isPaused)
+        {
+            return;
+        }
         //get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensX; //deltaTime
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensY;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensX * GameManager.sensitivity; //deltaTime
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensY * GameManager.sensitivity;
         //unscaledDeltaTime = temps réel, non affecté par le timescale
         
         // _moveMouseVector = GameManager.controls.Player.Look.ReadValue<Vector2>();
