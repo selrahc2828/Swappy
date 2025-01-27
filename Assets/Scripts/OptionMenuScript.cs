@@ -54,6 +54,7 @@ public class OptionMenuScript : MonoBehaviour
                 Cursor.visible = true;
                 GameManager.Instance.isPaused = true;
                 Time.timeScale = 0f;
+                //ATTENTION - enregistre les input et les faits quand on resume
             }
             else // => resume
             {
