@@ -43,15 +43,12 @@ public class OptionMenuScript : MonoBehaviour
             isOpen = !isOpen;
             optionGroup.SetActive(isOpen);
             
-            Debug.Log($"Option Menu Opened : {isOpen}");
             if (isOpen)
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 GameManager.Instance.isPaused = true;
                 Time.timeScale = 0f;
-                Debug.Log("Option Menu Open");
-
             }
             else
             {
@@ -59,9 +56,6 @@ public class OptionMenuScript : MonoBehaviour
                 Cursor.visible = false;
                 GameManager.Instance.isPaused = false;
                 Time.timeScale = 1f;//verif avec le slowTime
-                Debug.Log("Option Menu Closed");
-
-
             }
         }
     }
