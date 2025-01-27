@@ -82,8 +82,8 @@ public class RocketMagnetEffect : MonoBehaviour
                 {
                     transform.parent = null;
                 }
-                
-                if (Vector3.Distance(pointA.position, pointB.position) <= 0.2f)
+
+                if (Vector3.Distance(pointA.position, pointB.position) <= .2f)
                 {
                     Destroy(gameObject);
                 }
@@ -93,9 +93,8 @@ public class RocketMagnetEffect : MonoBehaviour
         MagnetTrailForce();
     }
 
-    void MagnetTrailForce() // pas de on collision Stay car le mesh du trail/collision est ailleur
+    void MagnetTrailForce() // pas de onCollision Stay car le mesh du trail/collision est ailleurs
     {
-        
         Vector3 boxCenter = (pointA.position + pointB.position) / 2;
         // _boxCenter = interactorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
 

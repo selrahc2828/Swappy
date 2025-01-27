@@ -6,44 +6,82 @@ using Debug = UnityEngine.Debug;
 
 public class SoundManager : MonoBehaviour
     {
+        #region SoundManager.Instance
         public static SoundManager Instance;
-        
-        #region Init Gestion Son
-        private Bus m_busPlayer ;
-        private Bus m_busSystem ;
+        private void Awake()
+        {
+            if (Instance != null)
+            {
+                Debug.LogWarning("Il y a plus d'une instance de SoundManager dans la scène");
+                return;
+            }
+            Instance = this;
+        }
         #endregion
-
+        
+        
         #region Init Player
         public enum SoundPlayer { slowTime, unslowTime, steal, give, projectionEnter, projectionStay, projectionExit }
         #endregion
         #region Init System
         public enum PlaceParamType { repulse, immuable, bounce, propeler, aimant }
         public enum PlaceParamOnWhatType  { onObject, onPlayer, onGrab }
-        public enum SoundComp { repulseTimer, repulseBoom,  immuableHit, bounceHit, propelerStart, aimantStart }
-        [SerializeField]
-        private GameObject prefabSonPropeler;
-        [SerializeField]
-        private GameObject prefabSonAimant;
-        [SerializeField]
-        private GameObject prefabSonImmuable;
-        [SerializeField]
-        private GameObject prefabSonBouncing;
-        [SerializeField]
-        private GameObject prefabSonRepulseTimer;
-        [SerializeField]
-        private GameObject prefabSonRepulseBoomer;
-
+        public enum SoundComp { repulseBoom,  immuableHit, bounceHit, propelerStart, aimantStart }
+        [SerializeField] private GameObject prefabSonAimant;
         #endregion
         #region Init Zic
         private bool isMusicPlay;
         #endregion
-        #region InitRef
+        #region Init Gestion Son {Start}
 
-        //private void Start()
-        //{
-        //_busPlayer = RuntimeManager.GetBus(_SoundRef.busPlayer);
-        //_busSystem = RuntimeManager.GetBus(_SoundRef.busSystem);
-        //}
+        private Bus busMaster;
+        private Bus busPlayer ;
+        private Bus busSystem ;
+        private Bus busMusic;
+        private Bus busMenu;
+        
+        
+        private float volumeSonMaster;
+        private float volumeSonMenu;
+        private float volumeSonMusic;
+        private float volumeSonPlayer;
+        private float volumeSonSystem;
+        
+        public enum BusSound { Master, Player, System, Music, Menu}
+
+        private void Start()
+        {
+            busMaster = RuntimeManager.GetBus("bus:/");
+            busPlayer = RuntimeManager.GetBus("bus:/Player");
+            busSystem = RuntimeManager.GetBus("bus:/System");
+            busMusic = RuntimeManager.GetBus("bus:/Music");
+            //busMenu = RuntimeManager.GetBus("bus:/Menu");
+        }
+
+        
+        // Choisi le bus dont faut changer le volume avec BusSounds et ensuite la valeur du volume qui doit avoir, défault bus Master / default son 0. Fonction sans appèle mute tous les sons
+        public void SetBusVolume(BusSound bus = BusSound.Master, float volume = 0)
+        {
+            switch (bus)
+            {
+                case BusSound.Master:
+                    busMaster.setVolume(volume);
+                    break;
+                case BusSound.Player:
+                    busPlayer.setVolume(volume);
+                    break;
+                case BusSound.System:
+                    busSystem.setVolume(volume);
+                    break;
+                case BusSound.Music:
+                    busMusic.setVolume(volume);
+                    break;
+                case BusSound.Menu:
+                    busMenu.setVolume(volume);
+                    break;
+            }
+        }
+        
         #endregion
 
         #region Son Player
@@ -118,10 +156,30 @@ public class SoundManager : MonoBehaviour
         //  PlayPlayerLand() est � utiliser dans les animations de saut lorsque les pieds touchent le sol.
         //
         //      Annotez l'endroit o� footstep player est appel�                             (Falling.cs, ligne 29)
-        public void PlaySoundLand() 
+        public void PlaySoundLand()
         {
             RuntimeManager.PlayOneShot("event:/Player/Moving/Land");
         }
+
+        public EventInstance CreateSoundFalling()
+        {
+            return RuntimeManager.CreateInstance("event:/Player/Moving/Falling");
+        }
+
+        public void PlaySound(EventInstance eventInstance)
+        {
+            eventInstance.start();
+        }
+        public void StopSound(EventInstance eventInstance)
+        {
+            eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+
+        public void SetValueSound(EventInstance eventInstance, float value)
+        {
+            eventInstance.setVolume(value);
+        }
+        
 
 
 
@@ -167,11 +225,8 @@ public class SoundManager : MonoBehaviour
         {
             switch (soundComp)
             {
-                case SoundComp.repulseTimer:
-                    Instantiate(prefabSonRepulseTimer, obj.transform);
-                    break;
                 case SoundComp.repulseBoom:
-                    RuntimeManager.PlayOneShotAttached("event:/System/Componenent/RepulseBoom", obj);
+                    RuntimeManager.PlayOneShotAttached("event:/System/Componenent/ImpulseBoom", obj);
                     break;
                 case SoundComp.immuableHit:
                     RuntimeManager.PlayOneShotAttached("event:/System/Componenent/ImmuableHit", obj);
@@ -180,7 +235,7 @@ public class SoundManager : MonoBehaviour
                     RuntimeManager.PlayOneShotAttached("event:/System/Componenent/BounceHit",obj);
                     break;
                 case SoundComp.propelerStart:
-                    RuntimeManager.PlayOneShotAttached("event:/System/Componenent/PropelerStart", obj);
+                    RuntimeManager.PlayOneShotAttached("event:/System/Componenent/RocketLaunch", obj);
                     break;
                 case SoundComp.aimantStart:
                     Instantiate(prefabSonAimant, obj.transform);
@@ -189,7 +244,7 @@ public class SoundManager : MonoBehaviour
         }
 
         #endregion
-        #region Zic
+        #region Zic  {Update}
         private void Update()
         {
             if (!isMusicPlay)
@@ -197,21 +252,7 @@ public class SoundManager : MonoBehaviour
                 RuntimeManager.PlayOneShot("event:/Music/Sample Ref Sound");
                 isMusicPlay = true;
             }
-        
+
         }
         #endregion
-        #region Gestion Du Son
-
-        private void Awake()
-        {
-            if (Instance != null)
-            {
-                Debug.LogWarning("Il y a plus d'une instance de SoundManager dans la scène");
-                return;
-            }
-            Instance = this;
-        }
-        #endregion
-
     }
-

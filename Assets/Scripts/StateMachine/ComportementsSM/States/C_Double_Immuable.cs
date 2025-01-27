@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class C_Double_Immuable : ComportementState
 {
+    private string saveTag;
     public C_Double_Immuable(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -18,6 +19,7 @@ public class C_Double_Immuable : ComportementState
 
         if (!_sm.isPlayer)
         {
+            saveTag = _sm.gameObject.tag;
             _sm.gameObject.tag = "Untagged";
         }
         _sm.rb.isKinematic = true;
@@ -39,7 +41,7 @@ public class C_Double_Immuable : ComportementState
         base.Exit();
         if (!_sm.isPlayer)
         {
-            _sm.gameObject.tag = "Movable";
+            _sm.gameObject.tag = saveTag;
         }
         _sm.rb.isKinematic = false;
     }

@@ -11,8 +11,7 @@ public class C_Solo_Magnet : ComportementState
     private float magnetForce;
     private bool magnetGradiantForce;
     private GameObject SonDeCon;
-
-
+    
     public C_Solo_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
     }

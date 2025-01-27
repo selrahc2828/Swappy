@@ -53,6 +53,11 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public GameObject ui;
     
+    [HideInInspector]
+    public static float sensitivity = 1f; // static pour garder en mémoire si on reload
+    [HideInInspector]
+    public bool isPaused = false;
+    
     [Header("Player")]
     public GameObject[] players; //dans Steler proto et ComportementStateMachine(pas sûr qu'il soit utilisé dedans)
     public GameObject player;
@@ -163,13 +168,11 @@ public class GameManager : MonoBehaviour
         //     Debug.Log("Il n'y a pas de text Timer Slow");
         // }
         
-        //à virer quand player greg supprimé
-        camControllerScript = FindObjectOfType<CameraController>();
-        if (camControllerScript == null)
+        ui = GameObject.FindGameObjectWithTag("Canvas");
+        if (ui == null)
         {
-            //Debug.LogWarning("Il n'y a pas de CameraController dans la scène");
+            Debug.LogWarning("Il n'y a pas de Canvas dans la scène");
         }
-        //
 
         playerCamScript = FindObjectOfType<PlayerCam>();
         if (playerCamScript == null)
