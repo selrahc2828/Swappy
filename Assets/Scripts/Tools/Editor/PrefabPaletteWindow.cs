@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
+[InitializeOnLoad] // Cette annotation permet de s'assurer que le code s'exécute dès le démarrage de l'éditeur.
 public class PrefabPaletteWindow : EditorWindow
 {
     private GameObject[] _prefabsComportements;
@@ -18,8 +19,8 @@ public class PrefabPaletteWindow : EditorWindow
     private Vector2 paletteScrollPos;
     private int paletteIndex = -1;    // Index de l'élément sélectionné dans la grille
 
-    private float radius;
-    private Vector3? lastPlacedPosition = null; // Dernière position où une prefab a été placée
+    private float radius = 2f;
+    private static Vector3? lastPlacedPosition = null; // Dernière position où une prefab a été placée
     private float placementOffset = 2.0f;      // Distance minimale entre deux placements
     
     [MenuItem("Tools/Prefab Palette")]
@@ -65,14 +66,11 @@ public class PrefabPaletteWindow : EditorWindow
         
         
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Offset Placement", GUILayout.Width(150));
-        placementOffset = EditorGUILayout.FloatField(placementOffset, GUILayout.Width(50));
-        
+        placementOffset = EditorGUILayout.FloatField("Offset Placement",placementOffset,GUILayout.Width(200));
         EditorGUILayout.EndHorizontal();
         
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Radius brush", GUILayout.Width(150));
-        radius = EditorGUILayout.FloatField(radius, GUILayout.Width(50));
+        radius = EditorGUILayout.FloatField("Radius brush",radius, GUILayout.Width(200));
         EditorGUILayout.EndHorizontal();
         
         EditorGUILayout.Space();
@@ -170,15 +168,50 @@ public class PrefabPaletteWindow : EditorWindow
     
     private void OnSceneGUI(SceneView SceneView)
     {
-        if (selectedPrefab == null) return; // Aucun prefab sélectionné
         
         Event e = Event.current;
+        Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
+
+        #region Visuel de la range
+
+        if (e.type == EventType.MouseMove || e.type == EventType.Repaint) //
+        {
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                Handles.color = Color.red;
+                Handles.DrawWireDisc(hit.point, hit.normal, radius);
+                
+                Handles.color = Color.blue;
+                Handles.DrawLine(hit.point, hit.point + hit.normal * 2);
+                SceneView.RepaintAll();
+            }
+        }
+
+        #endregion
+
+
+        if (e.type == EventType.MouseMove || e.type == EventType.Repaint)
+        {
+
+            // Afficher un rayon à partir de la caméra vers la souris dans la scène
+            Handles.color = Color.red; // Choisir la couleur du rayon
+            Handles.DrawLine(ray.origin, ray.origin + ray.direction * Mathf.Infinity); // Dessine une ligne de longueur 10 à partir du rayon
+        }
+        
+        
+        // Vérification si la touche Control est enfoncée
+        if (e.type == EventType.MouseMove && e.control)
+        {
+            
+        }
+        
+        //EventType.MouseDown
+        
+        if (selectedPrefab == null) return; // Aucun prefab sélectionné
         
         // verif si clic dans scène
-        
         if (e.type == EventType.MouseDrag && e.button == 0 && e.control && !e.alt) //control modificateur, pas A
         {
-            Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 Vector3 hitPoint = hit.point;
@@ -186,18 +219,22 @@ public class PrefabPaletteWindow : EditorWindow
                 //verif si on peut placer la prefabs
                 if (!lastPlacedPosition.HasValue || Vector3.Distance(lastPlacedPosition.Value, hitPoint) >= placementOffset)
                 {
+                    // Set une position aleatoire autour de hitPoint
+                    Vector2 randomOffset = UnityEngine.Random.insideUnitCircle * radius;
+                    Vector3 randomPosition = hitPoint + new Vector3(randomOffset.x, 0, randomOffset.y);
+                    
                    // création instance du prefab à l'emplacement du clic
                    GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(selectedPrefab);
                    // InstantiatePrefab permet de concerver le lien prefab et pas une version indépendante (clone) comme le Instantiate de base
                    instance.transform.up = hit.normal;
-                   instance.transform.position = hit.point;
+                   instance.transform.position = randomPosition; // Place à la position aléatoire
                    
                    // set le parent
                    if (parentObject)
                        instance.transform.SetParent(parentObject.transform, true);
    
                    Undo.RegisterCreatedObjectUndo(instance, "Place Prefab"); // ctrl Z
-                   Debug.Log($"Prefab placed at: {hit.point}");
+                   Debug.Log($"Prefab placed at: {hitPoint}");
                    
                    // maj dernière position placée
                    lastPlacedPosition = hitPoint;
@@ -241,4 +278,6 @@ public class PrefabPaletteWindow : EditorWindow
         selectedPrefab = null;
         paletteIndex = -1;
     }
+
+
 }
