@@ -209,6 +209,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.rightValue;
                                     originSlot2 = _stateStolen;
+                                    slot2Text.text = ((FirstState)slot2).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                     playeranim.Right_Aspiration();
                                 }
