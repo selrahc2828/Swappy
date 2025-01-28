@@ -54,7 +54,9 @@ public class GameManager : MonoBehaviour
     public GameObject ui;
     
     [HideInInspector]
-    public static float sensitivity = 1f; // static pour garder en mémoire si on reload
+    public static float sensitivity = 1f;
+
+    public SystemData parameters;// static pour garder en mémoire si on reload
     [HideInInspector]
     public bool isPaused = false;
     

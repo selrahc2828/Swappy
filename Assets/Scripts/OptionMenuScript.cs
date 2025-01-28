@@ -21,7 +21,7 @@ public class OptionMenuScript : MonoBehaviour
     void Start()
     {
         optionGroup.SetActive(false);
-        mouseSensitivitySlider.value = GameManager.sensitivity;
+        mouseSensitivitySlider.value = GameManager.Instance.parameters.sensitivity;
         textSensiDisplay.text = mouseSensitivitySlider.value.ToString("F2");
     }
 
@@ -67,7 +67,7 @@ public class OptionMenuScript : MonoBehaviour
     }
     public void SetSensitivity()
     {
-        GameManager.sensitivity = mouseSensitivitySlider.value;
+        GameManager.Instance.parameters.sensitivity = mouseSensitivitySlider.value;
         textSensiDisplay.text = mouseSensitivitySlider.value.ToString("F2");
     }
 
