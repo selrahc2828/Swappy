@@ -77,6 +77,19 @@ public class PrefabPaletteWindow : EditorWindow
         brushToolData.radius = EditorGUILayout.FloatField("Radius brush",brushToolData.radius, GUILayout.Width(200));
         EditorGUILayout.EndHorizontal();
         
+        
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Random scale : ", GUILayout.Width(100));
+        
+        EditorGUILayout.BeginVertical(GUILayout.Width(350));
+        brushToolData.minScale = EditorGUILayout.Slider("Min Scale", brushToolData.minScale, 0.1f, brushToolData.maxScale);
+        brushToolData.maxScale = EditorGUILayout.Slider("Max Scale", brushToolData.maxScale, brushToolData.minScale, 10f);
+        EditorGUILayout.EndVertical();
+
+        EditorGUILayout.EndHorizontal();
+
+        
+        
         // EditorGUILayout.BeginHorizontal();
         // hitLayer = EditorGUILayout.LayerField("Hit Mask", hitLayer);
         // EditorGUILayout.EndHorizontal();
@@ -231,6 +244,10 @@ public class PrefabPaletteWindow : EditorWindow
                         instance.transform.up = placementHit.normal;
                         instance.transform.position = placementHit.point;
                
+                        // scale aléatoire
+                        float randomScale = Random.Range(brushToolData.minScale, brushToolData.maxScale);
+                        instance.transform.localScale = Vector3.one * randomScale;
+                        
                         // set le parent
                         if (parentObject)
                             instance.transform.SetParent(parentObject.transform, true);
