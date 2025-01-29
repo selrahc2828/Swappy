@@ -20,9 +20,9 @@ public class PrefabPaletteWindow : EditorWindow
     private Vector2 paletteScrollPos;
     private int paletteIndex = -1;    // Index de l'élément sélectionné dans la grille
 
-    private float radius = 2f;
+    
+    private BrushToolData brushToolData;
     private static Vector3? lastPlacedPosition = null; // Dernière position où une prefab a été placée
-    private float placementOffset = 2.0f;      // Distance minimale entre deux placements
     
     private LayerMask hitLayer;
     
@@ -36,6 +36,7 @@ public class PrefabPaletteWindow : EditorWindow
 
     private void OnEnable()
     {
+        LoadBrushToolData();
         LoadAllAssetsOfType(out _prefabsComportements, "Assets/Prefabs/Comportement");
         
         SceneView.duringSceneGui += OnSceneGUI;
@@ -69,11 +70,11 @@ public class PrefabPaletteWindow : EditorWindow
         
         
         EditorGUILayout.BeginHorizontal();
-        placementOffset = EditorGUILayout.FloatField("Offset Placement",placementOffset,GUILayout.Width(200));
+        brushToolData.placementOffset = EditorGUILayout.FloatField("Offset Placement",brushToolData.placementOffset,GUILayout.Width(200));
         EditorGUILayout.EndHorizontal();
         
         EditorGUILayout.BeginHorizontal();
-        radius = EditorGUILayout.FloatField("Radius brush",radius, GUILayout.Width(200));
+        brushToolData.radius = EditorGUILayout.FloatField("Radius brush",brushToolData.radius, GUILayout.Width(200));
         EditorGUILayout.EndHorizontal();
         
         // EditorGUILayout.BeginHorizontal();
@@ -145,7 +146,6 @@ public class PrefabPaletteWindow : EditorWindow
         
         #endregion
         
-        
         // liste avec Grid
         List<GUIContent> paletteIcons = new List<GUIContent>();
         foreach (GameObject prefab in _prefabsComportements)
@@ -169,75 +169,11 @@ public class PrefabPaletteWindow : EditorWindow
         EditorGUILayout.EndScrollView(); 
         
     }
-    private void RaycastWithAngle(Event e, float angleOffset)
-    {
-        Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
-        Quaternion rotation = Quaternion.Euler(angleOffset, angleOffset, angleOffset);
-        Vector3 customDirection = rotation * ray.direction;
-        Ray customRay = new Ray(ray.origin, customDirection);
-        
-        Handles.DrawWireCube(customRay.origin, Vector3.one);
-        
-        if (Physics.Raycast(customRay, out RaycastHit hit, Mathf.Infinity))
-        {
-            Handles.color = Color.red;
-            Handles.DrawWireCube(hit.point, Vector3.one * 5f);
-            Handles.color = Color.green;
-            Handles.DrawLine(customRay.origin, hit.point); // Affiche la ligne dans la scène
-        }
-    }
-
-    private Vector3 GetRandomDirection3D(float radius)
-    {
-        // Générer une direction aléatoire dans une sphère unitaire
-        Vector3 randomDirection = Random.onUnitSphere;
-
-        // Multiplier par le rayon pour ajuster la longueur
-        return randomDirection * radius;
-    }
-
-    private void RaycastWithRandomAngle(Event e, float radius)
-    {
-        // Tirer un raycast avec la position de la souris
-        Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            // Le point d'impact où la souris a touché l'objet
-            Vector3 hitPoint = hit.point;
-            Vector3 normal = hit.normal; // La normale à la surface
-
-            // Dessiner un cercle autour du point d'impact pour visualiser le rayon
-            Handles.color = Color.yellow;
-            Handles.DrawWireDisc(hitPoint, normal, radius);
-
-            // Tirer des raycasts autour du hitpoint
-            for (int i = 0; i < 5; i++)
-            {
-                // Générer un offset aléatoire dans toutes les directions (sphère de rayon donné)
-                Vector3 randomOffset = Random.onUnitSphere * radius;
-
-                // Créer une position modifiée en tenant compte de la normale
-                Vector3 randomPosition = hitPoint + randomOffset;
-
-                // Créer un raycast qui part du hitpoint mais à la position décalée
-                RaycastHit randomHit;
-                if (Physics.Raycast(randomPosition, normal, out randomHit))
-                {
-                    // Afficher les raycasts supplémentaires (à ajuster selon les besoins)
-                    Debug.DrawLine(randomPosition, randomHit.point, Color.red, 1.0f);
-                }
-            }
-
-            // Forcer la scène à se rafraîchir
-            SceneView.RepaintAll();
-        }
-    }
-
     
     private void OnSceneGUI(SceneView SceneView)
     {
+        float radius = brushToolData.radius;
+        float placementOffset = brushToolData.placementOffset;
         
         Event e = Event.current;
         
@@ -260,14 +196,6 @@ public class PrefabPaletteWindow : EditorWindow
         }
 
         #endregion
-
-
-        if (e.type == EventType.MouseMove || e.type == EventType.Repaint)
-        {
-            // Afficher un rayon à partir de la caméra vers la souris dans la scène
-            Handles.color = Color.red; // Choisir la couleur du rayon
-            Handles.DrawLine(ray.origin, ray.origin + ray.direction * Mathf.Infinity); // Dessine une ligne de longueur 10 à partir du rayon
-        }
         
         //EventType.MouseDown
         
@@ -279,14 +207,11 @@ public class PrefabPaletteWindow : EditorWindow
             if (Physics.Raycast(ray, out hit,Mathf.Infinity))
             {
                 Vector3 hitPoint = hit.point;
-                Vector3 normal = hit.normal;  // Normale de la surface
                 
-                // Générer un offset aléatoire basé sur le rayon pour avoir une variation dans le placement
-                Vector2 randomOffset = UnityEngine.Random.insideUnitCircle * radius;  // Génère un vecteur dans un cercle
-                Vector3 randomPosition = hitPoint + new Vector3(randomOffset.x, 0, randomOffset.y);  // Ajoute l'offset à la position
+                // offset aléatoire en fonction du radius (par rapport à l'écran donc vecteur 2D)
+                Vector2 randomOffset = Random.insideUnitCircle * radius;  // Génère un vecteur dans un cercle
                 Vector3 offsetPosition = new Vector3(randomOffset.x, 0, randomOffset.y); // Position offset en X et Z
-
-                // Ray placementRay = new Ray(hitPoint + new Vector3(randomOffset.x, 0, randomOffset.y), normal);  // Créer le rayon avec l'offset
+                
                 Ray placementRay = new Ray(ray.origin+offsetPosition, ray.direction);  // Créer le rayon avec l'offset
 
                 RaycastHit placementHit;
@@ -296,7 +221,6 @@ public class PrefabPaletteWindow : EditorWindow
                     //verif si on peut placer la prefabs
                     if (!lastPlacedPosition.HasValue || Vector3.Distance(lastPlacedPosition.Value, placementHit.point) >= placementOffset)
                     {
-                    
                         #region Placement Prefab
                         // Set une position aleatoire autour de hitPoint
 
@@ -331,6 +255,22 @@ public class PrefabPaletteWindow : EditorWindow
         {
             // reset dernière position quand on relache la souris
             lastPlacedPosition = null;
+        }
+    }
+    
+    private void LoadBrushToolData()
+    {
+        string path = "Assets/ScriptableDatas/Tool/BrushToolData.asset";//dossier à changer
+        
+        brushToolData = AssetDatabase.LoadAssetAtPath<BrushToolData>(path);
+
+        if (brushToolData == null)
+        {
+            // si existe pas, on en créer un nouveau
+            brushToolData = CreateInstance<BrushToolData>();
+            AssetDatabase.CreateAsset(brushToolData, path);
+            AssetDatabase.SaveAssets();
+            Debug.Log("BrushToolData créé et sauvegardé à : " + path);
         }
     }
     
