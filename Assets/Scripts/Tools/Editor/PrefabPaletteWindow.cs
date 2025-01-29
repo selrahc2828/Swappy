@@ -169,7 +169,7 @@ public class PrefabPaletteWindow : EditorWindow
         EditorGUILayout.EndScrollView(); 
         
     }
-    private void CustomRaycastWithAngle(Event e, float angleOffset)
+    private void RaycastWithAngle(Event e, float angleOffset)
     {
         Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
         Quaternion rotation = Quaternion.Euler(angleOffset, angleOffset, angleOffset);
@@ -196,7 +196,7 @@ public class PrefabPaletteWindow : EditorWindow
         return randomDirection * radius;
     }
 
-    private void CustomRaycastWithRandomAngle(Event e, float radius)
+    private void RaycastWithRandomAngle(Event e, float radius)
     {
         // Tirer un raycast avec la position de la souris
         Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
