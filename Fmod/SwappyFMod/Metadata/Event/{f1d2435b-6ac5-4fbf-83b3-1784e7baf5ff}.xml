@@ -133,7 +133,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{5a0a8222-e655-41f0-bbb8-fe8df736e086}">
 		<property name="volume">
-			<value>-22</value>
+			<value>-25.5</value>
 		</property>
 		<property name="name">
 			<value>Spirit</value>
@@ -160,14 +160,14 @@
 		<relationship name="automators">
 			<destination>{638e778b-f37d-4675-b329-6760095a9e9f}</destination>
 		</relationship>
+		<relationship name="modulators">
+			<destination>{5c4bf5a6-2620-462e-a51d-a295864593bb}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{da41e98a-7693-48a5-9478-f68b437b8134}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{b717e732-e8e8-45b6-85e1-b78afc52ad3a}">
-		<property name="volume">
-			<value>-5.5</value>
-		</property>
 		<property name="name">
 			<value>Steal</value>
 		</property>
@@ -225,6 +225,14 @@
 		<relationship name="automationCurves">
 			<destination>{9d415854-41e8-40bc-8c9d-6f8252c68551}</destination>
 		</relationship>
+	</object>
+	<object class="RandomizerModulator" id="{5c4bf5a6-2620-462e-a51d-a295864593bb}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>8.5</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{90777a23-be54-461e-8980-170df223658f}">
 		<relationship name="effects">
@@ -287,10 +295,10 @@
 			<value>0</value>
 		</property>
 		<property name="value">
-			<value>24</value>
+			<value>0</value>
 		</property>
 		<property name="curveShape">
-			<value>-0.597648025</value>
+			<value>0.312058657</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{758c2bc1-0577-44e0-855d-c2d6584c6be8}">

@@ -33,23 +33,55 @@ public class SoundManager : MonoBehaviour
         private bool isMusicPlay;
         #endregion
         #region Init Gestion Son {Start}
+
+        private Bus busMaster;
         private Bus busPlayer ;
         private Bus busSystem ;
         private Bus busMusic;
         private Bus busMenu;
-
+        
+        
+        private float volumeSonMaster;
         private float volumeSonMenu;
         private float volumeSonMusic;
         private float volumeSonPlayer;
         private float volumeSonSystem;
+        
+        public enum BusSound { Master, Player, System, Music, Menu}
 
         private void Start()
         {
-        busPlayer = RuntimeManager.GetBus("bus:/Player");
-        busSystem = RuntimeManager.GetBus("bus:/System");
-        busMusic = RuntimeManager.GetBus("bus:/Music");
-        //busMenu = RuntimeManager.GetBus("bus:/Menu");
+            busMaster = RuntimeManager.GetBus("bus:/");
+            busPlayer = RuntimeManager.GetBus("bus:/Player");
+            busSystem = RuntimeManager.GetBus("bus:/System");
+            busMusic = RuntimeManager.GetBus("bus:/Music");
+            //busMenu = RuntimeManager.GetBus("bus:/Menu");
         }
+
+        
+        // Choisi le bus dont faut changer le volume avec BusSounds et ensuite la valeur du volume qui doit avoir, défault bus Master / default son 0. Fonction sans appèle mute tous les sons
+        public void SetBusVolume(BusSound bus = BusSound.Master, float volume = 0)
+        {
+            switch (bus)
+            {
+                case BusSound.Master:
+                    busMaster.setVolume(volume);
+                    break;
+                case BusSound.Player:
+                    busPlayer.setVolume(volume);
+                    break;
+                case BusSound.System:
+                    busSystem.setVolume(volume);
+                    break;
+                case BusSound.Music:
+                    busMusic.setVolume(volume);
+                    break;
+                case BusSound.Menu:
+                    busMenu.setVolume(volume);
+                    break;
+            }
+        }
+        
         #endregion
 
         #region Son Player
@@ -129,11 +161,15 @@ public class SoundManager : MonoBehaviour
             RuntimeManager.PlayOneShot("event:/Player/Moving/Land");
         }
 
+        public void PlaySoundCompOnPlayer()
+        {
+            RuntimeManager.PlayOneShot("event:/Player/Notes/OnPlayer");
+        }
         public EventInstance CreateSoundFalling()
         {
             return RuntimeManager.CreateInstance("event:/Player/Moving/Falling");
         }
-
+        
         public void PlaySound(EventInstance eventInstance)
         {
             eventInstance.start();
@@ -211,20 +247,20 @@ public class SoundManager : MonoBehaviour
             }
         }
 
+        public void PlaysoundCompAimaint(GameObject obj)
+        {
+            RuntimeManager.PlayOneShotAttached("event:/System/Componenent/MagnetEnter", obj);
+        }
         #endregion
-        #region Zic + Gestion du Son {Update}
+        #region Zic  {Update}
         private void Update()
         {
-            if (!isMusicPlay)
-            {
-                RuntimeManager.PlayOneShot("event:/Music/Sample Ref Sound");
-                isMusicPlay = true;
-            }
-
-            // busMenu.setVolume(volumeSonMenu);
-            // busMusic.setVolume(volumeSonMusic);
-            // busPlayer.setVolume(volumeSonPlayer);
-            // busSystem.setVolume(volumeSonSystem);
+            RuntimeManager.PlayOneShot("event:/Music/Sample Ref Sound");
+            // if (!isMusicPlay)
+            // {
+            //     RuntimeManager.PlayOneShot("event:/Music/Sample Ref Sound");
+            //     isMusicPlay = true;
+            // }
 
         }
         #endregion

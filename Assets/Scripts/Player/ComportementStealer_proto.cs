@@ -209,6 +209,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.rightValue;
                                     originSlot2 = _stateStolen;
+                                    slot2Text.text = ((FirstState)slot2).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                     playeranim.Right_Aspiration();
                                 }
@@ -313,6 +314,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot1 = 0;
                                     originSlot1 = null;
                                     slot1Text.text = "";
+                                    
                                 }
                                 else
                                 {
@@ -322,6 +324,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2 = 0;
                                     originSlot2 = null;
                                     slot2Text.text = "";
+                                    
                                 }
                             }
                             else

@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{004f5074-fab7-46e7-8e59-95ecc43c6f9b}">
 		<property name="color">
-			<value>Red Light 2</value>
+			<value>Red Light 1</value>
 		</property>
 		<property name="name">
 			<value>ImmuableHit</value>
@@ -63,11 +63,11 @@
 		<property name="maxVoices">
 			<value>5</value>
 		</property>
-		<property name="minimumDistance">
-			<value>0</value>
-		</property>
 		<property name="maximumDistance">
-			<value>2000</value>
+			<value>200</value>
+		</property>
+		<property name="triggerCooldown">
+			<value>80</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{129286b1-2ebd-48af-af9b-5d302fe341b5}" />
@@ -91,6 +91,9 @@
 		<property name="volume">
 			<value>-0.5</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{52be2497-9f56-4730-bcde-3b1c30d15cd0}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{b748ae60-28f3-4e08-a658-ae251664ac84}</destination>
 		</relationship>
@@ -122,9 +125,6 @@
 		<property name="color">
 			<value>Purple Light 2</value>
 		</property>
-		<property name="volume">
-			<value>-3.5</value>
-		</property>
 		<property name="name">
 			<value>ImmuableHit</value>
 		</property>
@@ -137,6 +137,17 @@
 		<relationship name="output">
 			<destination>{46e159a4-923b-4cba-9bc5-0b82ffacc310}</destination>
 		</relationship>
+	</object>
+	<object class="ADSRModulator" id="{52be2497-9f56-4730-bcde-3b1c30d15cd0}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{b748ae60-28f3-4e08-a658-ae251664ac84}">
 		<relationship name="effects">
@@ -162,20 +173,7 @@
 	</object>
 	<object class="MixerBusPanner" id="{f6546946-f5e2-410e-958a-8fcf8c14b849}" />
 	<object class="MixerBusFader" id="{4bc3c2ab-faa6-430f-855d-e18c735fd184}" />
-	<object class="SpatialiserEffect" id="{01aad6d3-c715-4fc6-b27a-247f01df20ec}">
-		<property name="distanceRolloffType">
-			<value>2</value>
-		</property>
-		<property name="minimumDistance">
-			<value>5</value>
-		</property>
-		<property name="maximumDistance">
-			<value>150</value>
-		</property>
-		<property name="overrideRange">
-			<value>true</value>
-		</property>
-	</object>
+	<object class="SpatialiserEffect" id="{01aad6d3-c715-4fc6-b27a-247f01df20ec}" />
 	<object class="MixerBusFader" id="{73800afd-49df-4bbb-a2f9-61f217e58965}" />
 	<object class="MultibandEqEffect" id="{420a0534-0e8f-46c3-b46b-d4d24394ba8f}">
 		<property name="frequencyA">

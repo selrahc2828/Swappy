@@ -188,6 +188,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""0ea54ff0-aa39-4e1c-acbe-6eef7ed46546"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -443,6 +452,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""SwitchSlotsValue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96883a78-2dec-4338-9004-268aebc342b8"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76e47fbd-fbf9-42ea-8f1a-dd86b0ddb213"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -480,6 +511,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_StopSprint = m_Player.FindAction("StopSprint", throwIfNotFound: true);
         m_Player_ViderSlots = m_Player.FindAction("ViderSlots", throwIfNotFound: true);
         m_Player_SwitchSlotsValue = m_Player.FindAction("SwitchSlotsValue", throwIfNotFound: true);
+        m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -564,6 +596,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_StopSprint;
     private readonly InputAction m_Player_ViderSlots;
     private readonly InputAction m_Player_SwitchSlotsValue;
+    private readonly InputAction m_Player_PauseMenu;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -586,6 +619,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @StopSprint => m_Wrapper.m_Player_StopSprint;
         public InputAction @ViderSlots => m_Wrapper.m_Player_ViderSlots;
         public InputAction @SwitchSlotsValue => m_Wrapper.m_Player_SwitchSlotsValue;
+        public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -649,6 +683,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @SwitchSlotsValue.started += instance.OnSwitchSlotsValue;
             @SwitchSlotsValue.performed += instance.OnSwitchSlotsValue;
             @SwitchSlotsValue.canceled += instance.OnSwitchSlotsValue;
+            @PauseMenu.started += instance.OnPauseMenu;
+            @PauseMenu.performed += instance.OnPauseMenu;
+            @PauseMenu.canceled += instance.OnPauseMenu;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -707,6 +744,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @SwitchSlotsValue.started -= instance.OnSwitchSlotsValue;
             @SwitchSlotsValue.performed -= instance.OnSwitchSlotsValue;
             @SwitchSlotsValue.canceled -= instance.OnSwitchSlotsValue;
+            @PauseMenu.started -= instance.OnPauseMenu;
+            @PauseMenu.performed -= instance.OnPauseMenu;
+            @PauseMenu.canceled -= instance.OnPauseMenu;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -762,5 +802,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnStopSprint(InputAction.CallbackContext context);
         void OnViderSlots(InputAction.CallbackContext context);
         void OnSwitchSlotsValue(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
     }
 }
