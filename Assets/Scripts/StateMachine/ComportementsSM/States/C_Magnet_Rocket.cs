@@ -67,7 +67,7 @@ public class C_Magnet_Rocket : ComportementState
          */
         
         
-        _timer += Time.fixedDeltaTime;
+        _timer += Time.deltaTime;
         if (_timer >= magnetRocketFlyTime)
         {
             _rocketOn = !_rocketOn;
@@ -86,7 +86,8 @@ public class C_Magnet_Rocket : ComportementState
                     RocketMagnetEffect effect = magnetFieldObject.GetComponent<RocketMagnetEffect>();
                     if (effect != null)
                     {
-                        effect.atDetachAndDestroy = true; // Passe le booléen à true, il sort du parent et sera détruit quand les 2 extrémités seront proche
+                        effect.atDetachAndDestroy = true; 
+                        // Passe le booléen à true, il sort du parent et sera détruit quand les 2 extrémités seront proche
                     }
                 }
             }
@@ -107,15 +108,16 @@ public class C_Magnet_Rocket : ComportementState
     public override void Exit()
     {
         base.Exit();
-        
         if (magnetFieldObject)
         {
             RocketMagnetEffect effect = magnetFieldObject?.GetComponent<RocketMagnetEffect>();
             if (effect != null)
             {
-                effect.atDetachAndDestroy = true; // Passe le booléen à true, il sort du parent et sera détruit quand les 2 extrémités seront proche
+                effect.atDetachAndDestroy = true; 
+                // Passe le booléen à true, il sort du parent et sera détruit quand les 2 extrémités seront proche
             }
         }
+      
     }
 
     public void ApplyForce()
@@ -136,6 +138,12 @@ public class C_Magnet_Rocket : ComportementState
 
     public void SpawnForceField()
     {
+        if (magnetFieldObject)//si on en avait déjà instancié un, on dit de le retirer du parent et de le détruire
+        {
+            magnetFieldObject.GetComponent<RocketMagnetEffect>().atDetachAndDestroy = true;
+            magnetFieldObject = null;
+        }
+        
         magnetFieldObject = _sm.comportementManager.InstantiateFeedback(prefabForceField,magnetPos, Quaternion.identity);//, _sm.transform => parent mais pose des pb
         RocketMagnetEffect effect = magnetFieldObject.GetComponent<RocketMagnetEffect>();
         effect.rocketObject = _sm.gameObject.transform;
