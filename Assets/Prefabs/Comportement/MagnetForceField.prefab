@@ -69,13 +69,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 75
+  magnetFeedbackMaterial: {fileID: 5037763687538936876}
+  affectedPlayer: 0
   burstForce: 0
   intervalBetweenBurst: 0
-  boolBurstDisplay: 0
-  magnetFeedbackMaterial: {fileID: 5037763687538936876}
+  _timerBurst: 0
+  boolBurst: 0
   burstColor: {r: 0, g: 0, b: 0, a: 0}
   normalColor: {r: 0, g: 0, b: 0, a: 0}
   delayDisplay: 0
+  _timerDisplay: 0
 --- !u!114 &8956182627367923584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetRadius: 0
-  durationScaling: 0.2
+  durationScaling: 0.1
   elapsedTime: 0
   atDestroy: 1
 --- !u!1001 &7734028381484565600
