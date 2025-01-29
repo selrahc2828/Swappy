@@ -314,6 +314,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot1 = 0;
                                     originSlot1 = null;
                                     slot1Text.text = "";
+                                    
                                 }
                                 else
                                 {
@@ -323,6 +324,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2 = 0;
                                     originSlot2 = null;
                                     slot2Text.text = "";
+                                    
                                 }
                             }
                             else

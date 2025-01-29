@@ -28,8 +28,9 @@ public class C_No_Comportement : ComportementState
     public override void TickPhysics()
     {
         base.TickPhysics();
+        
     }
-
+    
     public override void Exit()
     {
         base.Exit();
