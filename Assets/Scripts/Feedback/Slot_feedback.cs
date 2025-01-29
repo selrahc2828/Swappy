@@ -11,6 +11,8 @@ public class Slot_feedback : MonoBehaviour
     private ComportementManager comportementManager;
     public ComportementStealer_proto comp_steler_proto;
     private GameObject feedback_Act;
+    
+    //public Transform Arm_transform;    c'est ce qui servira a faire que le feedback suive la main 
 
     private void Start()
     {
