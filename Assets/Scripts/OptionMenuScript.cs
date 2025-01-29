@@ -21,8 +21,14 @@ public class OptionMenuScript : MonoBehaviour
     void Start()
     {
         optionGroup.SetActive(false);
-        mouseSensitivitySlider.value = GameManager.sensitivity;
+        mouseSensitivitySlider.value = GameManager.Instance.parameters.sensitivity;
         textSensiDisplay.text = mouseSensitivitySlider.value.ToString("F2");
+
+        volumeSliderMaster.value = GameManager.Instance.parameters.volumeMaster;
+        volumeSliderPlayer.value = GameManager.Instance.parameters.volumePlayer; // que player
+        volumeSliderSystem.value = GameManager.Instance.parameters.volumeSystem; // que pas du player
+        volumeSliderMusic.value = GameManager.Instance.parameters.volumeMusic;   // ambiance 
+        volumeSliderMenu.value = GameManager.Instance.parameters.volumeMenu;
     }
 
     void OnEnable()
@@ -67,33 +73,38 @@ public class OptionMenuScript : MonoBehaviour
     }
     public void SetSensitivity()
     {
-        GameManager.sensitivity = mouseSensitivitySlider.value;
+        GameManager.Instance.parameters.sensitivity = mouseSensitivitySlider.value;
         textSensiDisplay.text = mouseSensitivitySlider.value.ToString("F2");
     }
 
     #region SetVolumeS
     public void SetVolumeMaster()
     {
+        GameManager.Instance.parameters.volumeMaster = volumeSliderMaster.value;
         SoundManager.Instance?.SetBusVolume(SoundManager.BusSound.Master, volumeSliderMaster.value);
     }
 
     public void SetVolumePlayer()
     {
+        GameManager.Instance.parameters.volumePlayer = volumeSliderPlayer.value;
         SoundManager.Instance?.SetBusVolume(SoundManager.BusSound.Player, volumeSliderPlayer.value);
     }
 
     public void SetVolumeSystem()
     {
+        GameManager.Instance.parameters.volumeSystem = volumeSliderSystem.value;
         SoundManager.Instance?.SetBusVolume(SoundManager.BusSound.System, volumeSliderSystem.value);
     }
 
     public void SetVolumeMusic()
     {
+        GameManager.Instance.parameters.volumeMusic = volumeSliderMusic.value;
         SoundManager.Instance?.SetBusVolume(SoundManager.BusSound.Music, volumeSliderMusic.value);
     }
 
     public void SetVolumeMenu()
     {
+        GameManager.Instance.parameters.volumeMenu = volumeSliderMenu.value;
         SoundManager.Instance?.SetBusVolume(SoundManager.BusSound.Menu, volumeSliderMenu.value);
     }
     

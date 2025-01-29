@@ -28,8 +28,8 @@ public class PlayerCam : MonoBehaviour
             return;
         }
         //get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensX * GameManager.sensitivity; //deltaTime
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensY * GameManager.sensitivity;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensX * GameManager.Instance.parameters.sensitivity; //deltaTime
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensY * GameManager.Instance.parameters.sensitivity;
         //unscaledDeltaTime = temps réel, non affecté par le timescale
         
         // _moveMouseVector = GameManager.controls.Player.Look.ReadValue<Vector2>();

@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static Controls controls;
-    
+    public SystemData parameters;// scriptable object où on mets des parametre à sauvegarder
+
     [Header("Rendu Lotha")]
     public string scene1;
     public string scene2;
@@ -53,8 +54,6 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public GameObject ui;
     
-    [HideInInspector]
-    public static float sensitivity = 1f; // static pour garder en mémoire si on reload
     [HideInInspector]
     public bool isPaused = false;
     
