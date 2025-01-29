@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{9a8ee34b-0d77-46cc-9985-b9042589d15f}">
 		<property name="color">
-			<value>Magenta Light 2</value>
+			<value>Purple Light 2</value>
 		</property>
 		<property name="name">
 			<value>RocketLaunch</value>
@@ -88,6 +88,9 @@
 		<property name="color">
 			<value>Yellow</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{f2e4a261-7100-4cee-8616-4b5e7add3b2c}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{c6c74a0c-38d6-4436-8125-ff47a7f8e07a}</destination>
 		</relationship>
@@ -143,6 +146,23 @@
 		<relationship name="output">
 			<destination>{9a7b12ee-874c-4b45-89a9-d74045e0c12a}</destination>
 		</relationship>
+	</object>
+	<object class="ADSRModulator" id="{f2e4a261-7100-4cee-8616-4b5e7add3b2c}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="attackTime">
+			<value>0</value>
+		</property>
+		<property name="releaseTime">
+			<value>80</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{c6c74a0c-38d6-4436-8125-ff47a7f8e07a}">
 		<relationship name="effects">

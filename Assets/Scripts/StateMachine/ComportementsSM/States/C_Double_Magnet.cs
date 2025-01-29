@@ -13,12 +13,17 @@ public class C_Double_Magnet : ComportementState
 
     private Color color;
 
+    private GameObject sonMagnet;
+
     public C_Double_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart,_sm.gameObject);
+        sonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
+
         stateValue = 54;
         leftValue = 27;
         rightValue = 27;
@@ -83,6 +88,7 @@ public class C_Double_Magnet : ComportementState
     {
         base.Exit();
         _sm.comportementManager.DestroyObj(forceFieldObj);
+        _sm.comportementManager.DestroyObj(sonMagnet);
 
     }
 }

@@ -35,4 +35,9 @@ public class C_No_Comportement : ComportementState
     {
         base.Exit();
     }
+
+    public void CollisionStart()
+    {
+        SoundManager.Instance.PlaySoundCollision(_sm.gameObject);
+    }
 }

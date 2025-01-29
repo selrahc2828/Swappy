@@ -247,6 +247,10 @@ public class SoundManager : MonoBehaviour
             }
         }
 
+        public void PlaysoundCompAimaint(GameObject obj)
+        {
+            RuntimeManager.PlayOneShotAttached("event:/System/Componenent/MagnetEnter", obj);
+        }
         #endregion
         #region Zic  {Update}
         private void Update()
