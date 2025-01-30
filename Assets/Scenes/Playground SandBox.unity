@@ -42436,9 +42436,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3738601696558851606, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
+      propertyPath: LeftArm
+      value: 
+      objectReference: {fileID: 1979156738}
+    - target: {fileID: 3738601696558851606, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 1979156736}
+    - target: {fileID: 3738601696558851606, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
+      propertyPath: RightArm
+      value: 
+      objectReference: {fileID: 1979156737}
     - target: {fileID: 3738601696558851606, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: slot1Text
       value: 
@@ -42515,6 +42523,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 55948801783339615, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
   m_PrefabInstance: {fileID: 1818676026}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1818676030 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3738601696558851606, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
+  m_PrefabInstance: {fileID: 1818676026}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818676029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f17da78dade749479393c58a3229875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1834224158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45691,11 +45710,27 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8942172111824444152, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1979156738}
+    - targetCorrespondingSourceObject: {fileID: 4556348638202998691, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1979156737}
   m_SourcePrefab: {fileID: 100100000, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
 --- !u!4 &1979156733 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6272381234065470780, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
+  m_PrefabInstance: {fileID: 1979156732}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1979156734 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4556348638202998691, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
+  m_PrefabInstance: {fileID: 1979156732}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1979156735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8942172111824444152, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
   m_PrefabInstance: {fileID: 1979156732}
   m_PrefabAsset: {fileID: 0}
 --- !u!20 &1979156736 stripped
@@ -45703,6 +45738,34 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 360774916830245804, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
   m_PrefabInstance: {fileID: 1979156732}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1979156737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979156734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb783c3fe07d764e96df16399a06b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  left_Arm: 0
+  comp_steler_proto: {fileID: 1818676030}
+--- !u!114 &1979156738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979156735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb783c3fe07d764e96df16399a06b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  left_Arm: 1
+  comp_steler_proto: {fileID: 1818676030}
 --- !u!1 &1992007107
 GameObject:
   m_ObjectHideFlags: 0
@@ -47323,6 +47386,14 @@ PrefabInstance:
       value: 0.5647059
       objectReference: {fileID: 0}
     - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: feedBack_Magnet
+      value: 
+      objectReference: {fileID: 6171115788307145931, guid: 8c98c09c2ee466743ac06041b568ead8, type: 3}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: feedBack_Rocket
+      value: 
+      objectReference: {fileID: 7314418752963487225, guid: 084074985ced6f74baf880cb96bbf23e, type: 3}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: immuableColor.b
       value: 0.9607844
       objectReference: {fileID: 0}
@@ -47335,13 +47406,45 @@ PrefabInstance:
       value: 0.7960785
       objectReference: {fileID: 0}
     - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: feedBack_Impulse
+      value: 
+      objectReference: {fileID: 1838528298772245979, guid: 7062a1bbabe855741b3ad50f34e91064, type: 3}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: hand_Slot_Magnet
+      value: 
+      objectReference: {fileID: 8209579322262373504, guid: bddf0b34d88914149bd8adb4d2196a67, type: 3}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: hand_Slot_Rocket
+      value: 
+      objectReference: {fileID: 8209579322262373504, guid: b8747906a8b88d84c86a7630682566bb, type: 3}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: zoneImpulseForce
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: feedBack_Bouncing
+      value: 
+      objectReference: {fileID: 7521130485353488716, guid: 72c3313dcb76fbd4db0cf9480d39a220, type: 3}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: feedBack_Immuable
+      value: 
+      objectReference: {fileID: 7115355853760126403, guid: 5a3c0080d6d694d42803fd7e288648df, type: 3}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: hand_Slot_Impulse
+      value: 
+      objectReference: {fileID: 8209579322262373504, guid: 56762d298871c3a4d9460734fb3be35e, type: 3}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: rocketDoubleForce
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: hand_Slot_Bouncing
+      value: 
+      objectReference: {fileID: 8209579322262373504, guid: cd2458d4f8fcdf74ebf529761f5e683a, type: 3}
+    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
+      propertyPath: hand_Slot_Immuable
+      value: 
+      objectReference: {fileID: 8209579322262373504, guid: 72dfd1e84bd5385499279a2af3d931c7, type: 3}
     - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: impulseBounceForce
       value: 80

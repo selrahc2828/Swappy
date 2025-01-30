@@ -33,6 +33,10 @@ public class ComportementStealer_proto : MonoBehaviour
     [Header("Animation")] 
     public Anim_manager playeranim;
     
+    [Header("FeedBacks")] 
+    public Slot_feedback LeftArm;
+    public Slot_feedback RightArm;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -111,6 +115,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot1Text.text = ((FirstState)slot1).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                     playeranim.Left_Aspiration();
+                                    LeftArm.Feedback_Slot_Changed();
                                 }
                                 else
                                 {
@@ -144,6 +149,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot1Text.text = "";
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                     playeranim.Left_Attribution();
+                                    LeftArm.Feedback_Slot_Changed();
                                 }
                                 else
                                 {
@@ -160,6 +166,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 slot1Text.text = "";
                                 SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                 playeranim.Left_Attribution();
+                                LeftArm.Feedback_Slot_Changed();
                             }
                         }
                     }
@@ -212,6 +219,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2Text.text = ((FirstState)slot2).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                     playeranim.Right_Aspiration();
+                                    RightArm.Feedback_Slot_Changed();
                                 }
                                 else
                                 {
@@ -223,6 +231,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2Text.text = ((FirstState)slot2).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                     playeranim.Right_Aspiration();
+                                    RightArm.Feedback_Slot_Changed();
                                 }
                             }
                             else
@@ -251,6 +260,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2Text.text = "";
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                     playeranim.Right_Attribution();
+                                    RightArm.Feedback_Slot_Changed();
                                 }
                                 else
                                 {
@@ -267,6 +277,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 slot2Text.text = "";
                                 SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                 playeranim.Right_Attribution();
+                                RightArm.Feedback_Slot_Changed();
                             }
                         }
                     }

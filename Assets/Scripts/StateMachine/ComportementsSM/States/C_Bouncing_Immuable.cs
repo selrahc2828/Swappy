@@ -10,6 +10,9 @@ public class C_Bouncing_Immuable : ComportementState
     
     private Vector3 _baseVelocity;
     private Vector3 _baseAngularVelocity;
+    
+   
+    
     public C_Bouncing_Immuable(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -23,6 +26,7 @@ public class C_Bouncing_Immuable : ComportementState
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.immuableColor);
         
+       
         _bouncyMaterial = _sm.comportementManager.bouncyMaterial;
 
         if (_sm.isPlayer)
@@ -56,6 +60,8 @@ public class C_Bouncing_Immuable : ComportementState
     public override void Exit()
     {
         base.Exit();
+        
+        
         
         if (_sm.isPlayer)
         {
