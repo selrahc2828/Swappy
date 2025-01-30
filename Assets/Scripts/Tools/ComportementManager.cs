@@ -19,7 +19,7 @@ public class ComportementManager : MonoBehaviour
     public Color immuableColor;
     public Color noComportementColor;
     
-    [FormerlySerializedAs("FeedBack_Impulse")] [Header("Comportement Feedbacks")]
+    [Header("Comportement Feedbacks")]
     public GameObject feedBack_Impulse;
     public GameObject feedBack_Bouncing;
     public GameObject feedBack_Rocket;

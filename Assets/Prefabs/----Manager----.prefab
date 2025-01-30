@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a5e80d09521a44fad5dca4490a1e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 0b6353e928f889a48b9cab55823e8f8a, type: 2}
   scene1: Playground SandBox
   scene2: TestGreg
   keyForScene1: 49
@@ -73,21 +74,20 @@ MonoBehaviour:
   immuable_color: {r: 0.5471698, g: 0.2710039, b: 0.2710039, a: 0}
   Uncomportemented_color: {r: 0.8018868, g: 0.13995194, b: 0.13995194, a: 0}
   ui: {fileID: 0}
-  parameters: {fileID: 11400000, guid: 0b6353e928f889a48b9cab55823e8f8a, type: 2}
   isPaused: 0
   players: []
   player: {fileID: 0}
   playerFBX: {fileID: 0}
   mainCamera: {fileID: 0}
   canProjectWhenCarryingObject: 0
-  walkSpeed: 7
-  sprintSpeed: 10
+  walkSpeed: 35
+  sprintSpeed: 50
   groundDrag: 5
   orientation: {fileID: 0}
-  jumpForce: 8
+  jumpForce: 35
   jumpCooldown: 0.25
   airMultiplier: 0.4
-  crouchSpeed: 3.5
+  crouchSpeed: 20
   crouchYScale: 0.5
   playerHeight: 2
   whatIsGround:
@@ -125,6 +125,16 @@ MonoBehaviour:
   magnetColor: {r: 0.9008031, g: 1, b: 0, a: 0}
   immuableColor: {r: 0.42779493, g: 0, b: 1, a: 0}
   noComportementColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 0}
+  feedBack_Impulse: {fileID: 0}
+  feedBack_Bouncing: {fileID: 0}
+  feedBack_Rocket: {fileID: 0}
+  feedBack_Magnet: {fileID: 0}
+  feedBack_Immuable: {fileID: 0}
+  hand_Slot_Impulse: {fileID: 0}
+  hand_Slot_Bouncing: {fileID: 0}
+  hand_Slot_Rocket: {fileID: 0}
+  hand_Slot_Magnet: {fileID: 0}
+  hand_Slot_Immuable: {fileID: 0}
   magnetGenericPrefab: {fileID: 724591926826760339, guid: 9dff620a99e95a0489ddabbe4db1b50d, type: 3}
   repulserTime: 5
   doubleImpulseTime: 6
@@ -161,7 +171,7 @@ MonoBehaviour:
   doubleMagnetRange: 8
   doubleMagnetForce: 80
   doubleMagnetForceOnPlayer: 80
-  doubleMagnetForceWhenGrab: 2000
+  doubleMagnetForceWhenGrab: 80
   bouncyMaterial: {fileID: 13400000, guid: 621a7ce6cc196df46ad286df13701f02, type: 2}
   doubleBouncyMaterial: {fileID: 13400000, guid: 16a76e54968c6cc48a861c0ace231bcd, type: 2}
   magnetBounceForce: 60
