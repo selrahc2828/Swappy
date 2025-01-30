@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class C_Impulse_Magnet : ComportementState
 {
-    public float zoneImpulseRange;
-    public float trueZoneImpulseRange;
+    private float zoneImpulseRange;
+    private float trueZoneImpulseRange;
 
-    public float zoneImpulseForce;
+    private float zoneImpulseForce;
     
-    public GameObject feedback;
-    public GameObject zone;
+    private GameObject feedback;
+    private GameObject zone;
+
+    private GameObject prefabSonMagnet;
     
     public C_Impulse_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
@@ -18,6 +20,9 @@ public class C_Impulse_Magnet : ComportementState
 
     public override void Enter()
     {
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart,_sm.gameObject);
+        prefabSonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
         stateValue = 28;
         leftValue = 1;
         rightValue = 27;
@@ -66,6 +71,7 @@ public class C_Impulse_Magnet : ComportementState
     public override void Exit()
     {
         base.Exit();
+        _sm.comportementManager.DestroyObj(prefabSonMagnet);
         if (zone != null)
         {
             _sm.comportementManager.DestroyObj(zone);

@@ -79,7 +79,8 @@ public class C_Impulse_Immuable : ComportementState
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
             shockWave.GetComponent<GrowToRadius>().targetRadius = trueRepulserRange;
         }
-
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit,_sm.gameObject);
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueRepulserRange);
         if (objectsInRange.Length > 0)
         {
@@ -91,10 +92,10 @@ public class C_Impulse_Immuable : ComportementState
                     {
                         return;
                     }
-                    //collider et rigid body pas au même endroit pour lui
+                    //collider et rigid body pas au mï¿½me endroit pour lui
                     GameObject objectAffected = objectInRange.gameObject.GetComponentInParent<Rigidbody>().gameObject;
 
-                    // pb pour appliquer la force à cause du drag sur le rigidbody
+                    // pb pour appliquer la force ï¿½ cause du drag sur le rigidbody
                     ApplyForce(objectAffected.GetComponent<Rigidbody>(), objectAffected, repulserForce);
 
                     // player relache l'objet repulse

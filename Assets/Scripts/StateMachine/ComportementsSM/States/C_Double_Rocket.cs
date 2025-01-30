@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class C_Double_Rocket : ComportementState
 {
-    public float rocketForce = 20;
-    public float rocketForceOnPlayer = 20;
-    public float rocketForceWhenGrab= 20;
-    public float onOffCouldown;
-    public float timer;
+    private float rocketForce = 20;
+    private float rocketForceOnPlayer = 20;
+    private float rocketForceWhenGrab= 20;
+    private float onOffCouldown;
+    private float timer;
+    private bool isSonOn;
     
     public C_Double_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -37,7 +38,10 @@ public class C_Double_Rocket : ComportementState
         timer += Time.deltaTime;
         if (timer > onOffCouldown)
         {
+
             timer = 0f;
+            SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
+            SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
             if (_sm.isPlayer)
             {
                 _sm.rb.AddForce(Vector3.up * rocketForceOnPlayer, ForceMode.Impulse);

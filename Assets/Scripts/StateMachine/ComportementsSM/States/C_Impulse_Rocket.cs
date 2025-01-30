@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class C_Impulse_Rocket : ComportementState
 {
-    public float explosionForce;
-    public float explosionRange;
-    public float explosionTrueRange;
-    public float rocketFlyForce;
-    public float rocketFlyForceOnPlayer;
-    public float flyTime;
-    public float flyTimer;
-    public float impulseTimer;
-    public float timeBetweenImpulses;
-    public bool rocketOn;
+    private float explosionForce;
+    private float explosionRange;
+    private float explosionTrueRange;
+    private float rocketFlyForce;
+    private float rocketFlyForceOnPlayer;
+    private float flyTime;
+    private float flyTimer;
+    private float impulseTimer;
+    private float timeBetweenImpulses;
+    private float maxSpeed;
+    private bool rocketOn;
     private GameObject feedback;
+    private bool isSonOn;
     
     public C_Impulse_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -27,6 +29,7 @@ public class C_Impulse_Rocket : ComportementState
         rightValue = 81;
         base.Enter();
         
+        maxSpeed = _sm.comportementManager.rocketMaxSpeed;
         explosionForce = _sm.comportementManager.impulseRocketExplosionForce;
         rocketFlyForceOnPlayer = _sm.comportementManager.impulseRocketFlyForceOnPlayer;
         explosionRange = _sm.comportementManager.impulseRocketExplosionRange;
@@ -65,15 +68,29 @@ public class C_Impulse_Rocket : ComportementState
         if (flyTimer > flyTime)
         {
             rocketOn = !rocketOn;
+            if (!rocketOn)
+            {
+                isSonOn = false;
+            }
             flyTimer = 0f;
         }
         if (rocketOn)
         {
+            if (!isSonOn)
+            {
+                SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
+                isSonOn = true;
+            }
             impulseTimer += Time.fixedDeltaTime;
             if (impulseTimer > timeBetweenImpulses)
             {
                 Repulse();
                 impulseTimer = 0f;
+            }
+
+            if (_sm.rb.velocity.magnitude > maxSpeed)
+            {
+                _sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
             }
             
             if (_sm.isPlayer)
@@ -111,7 +128,7 @@ public class C_Impulse_Rocket : ComportementState
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
             shockWave.GetComponent<GrowToRadius>().targetRadius = explosionTrueRange;
         }
-
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, explosionTrueRange);
         if (objectsInRange.Length > 0)
         {

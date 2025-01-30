@@ -2,10 +2,10 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{1093abf0-c927-4db5-aa2b-a69ba220dae2}">
 		<property name="color">
-			<value>Purple Light 2</value>
+			<value>Red Light 2</value>
 		</property>
 		<property name="name">
-			<value>RepulseBoom</value>
+			<value>ImpulseBoom</value>
 		</property>
 		<property name="outputFormat">
 			<value>2</value>
@@ -60,15 +60,20 @@
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{58c37d2a-bd84-4bae-9444-5e4e1e566920}">
+		<property name="maxVoices">
+			<value>5</value>
+		</property>
 		<property name="maximumDistance">
-			<value>100</value>
+			<value>200</value>
+		</property>
+		<property name="triggerCooldown">
+			<value>80</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{83118088-0c0d-4ba4-b332-4501ffda6fda}" />
 	<object class="GroupTrack" id="{77757175-c20e-42c4-b924-5948bacd4bbc}">
 		<relationship name="modules">
 			<destination>{ca448076-c13d-41e4-9e79-75cc3e993a62}</destination>
-			<destination>{be52b594-1fae-4abf-af42-ed6f22a3db46}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{5a506e0b-7877-42fc-8caf-f97ba2c28a98}</destination>
@@ -77,16 +82,15 @@
 	<object class="Timeline" id="{4b5392c6-6991-407c-b47e-4a32f73d2c87}">
 		<relationship name="modules">
 			<destination>{ca448076-c13d-41e4-9e79-75cc3e993a62}</destination>
-			<destination>{be52b594-1fae-4abf-af42-ed6f22a3db46}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{6cf85c3c-e7f8-4ae6-bcf4-334caecb0622}">
 		<property name="color">
 			<value>Red</value>
 		</property>
-		<property name="volume">
-			<value>-15.5</value>
-		</property>
+		<relationship name="modulators">
+			<destination>{b1f61985-98d5-433b-8129-a2010aa6438e}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{07760c09-a028-4d08-bdf9-d2871bd78b22}</destination>
 		</relationship>
@@ -107,22 +111,14 @@
 		<property name="length">
 			<value>0.60000000000000009</value>
 		</property>
+		<property name="pitch">
+			<value>-7</value>
+		</property>
 		<relationship name="fadeOutCurve">
 			<destination>{ca8f81f0-cba3-417a-8670-b535d928b839}</destination>
 		</relationship>
 		<relationship name="audioFile">
 			<destination>{c34ca95c-1061-4449-ae36-ea749117cf9c}</destination>
-		</relationship>
-	</object>
-	<object class="CommandSound" id="{be52b594-1fae-4abf-af42-ed6f22a3db46}">
-		<property name="start">
-			<value>0.65034482758620693</value>
-		</property>
-		<property name="length">
-			<value>0</value>
-		</property>
-		<relationship name="commandTarget">
-			<destination>{c48bb2a9-f754-4816-9551-430c0f00d4e1}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{5a506e0b-7877-42fc-8caf-f97ba2c28a98}">
@@ -141,6 +137,17 @@
 		<relationship name="output">
 			<destination>{6cf85c3c-e7f8-4ae6-bcf4-334caecb0622}</destination>
 		</relationship>
+	</object>
+	<object class="ADSRModulator" id="{b1f61985-98d5-433b-8129-a2010aa6438e}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{07760c09-a028-4d08-bdf9-d2871bd78b22}">
 		<relationship name="effects">
@@ -161,7 +168,7 @@
 	<object class="MixerBusEffectChain" id="{56b5da45-d371-45ef-8a11-0191895c7a83}">
 		<relationship name="effects">
 			<destination>{427bae64-1808-408a-9d3b-350e3b844d6c}</destination>
-			<destination>{204a9a89-e68a-4428-8ce2-9f59d4b1bb3e}</destination>
+			<destination>{89d77208-a8a4-4b24-af92-7bbfa117cceb}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{cc2fb348-758d-4085-911f-f2d169cbcb39}" />
@@ -187,9 +194,9 @@
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{427bae64-1808-408a-9d3b-350e3b844d6c}" />
-	<object class="HighpassEffect" id="{204a9a89-e68a-4428-8ce2-9f59d4b1bb3e}">
+	<object class="LowpassEffect" id="{89d77208-a8a4-4b24-af92-7bbfa117cceb}">
 		<property name="cutoff">
-			<value>400</value>
+			<value>300</value>
 		</property>
 	</object>
 </objects>

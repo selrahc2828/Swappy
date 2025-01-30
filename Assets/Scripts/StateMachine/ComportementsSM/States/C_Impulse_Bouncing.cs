@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class C_Impulse_Bouncing : ComportementState
 {
-    public float impulseBounceForce;
-    public float trueImpulseBounceForce;
-    public float saveImpulseForce;//pour changer au moment d'une collision si grab
-    public float impulseBounceRange;
-    public float trueImpulseBounceRange;
-    public float impulseBounceTimer;
-    public float impulseBounceCooldown;
-    public GameObject impulseBounceFeedback;
+    private float impulseBounceForce;
+    private float trueImpulseBounceForce;
+    private float saveImpulseForce;//pour changer au moment d'une collision si grab
+    private float impulseBounceRange;
+    private float trueImpulseBounceRange;
+    private float impulseBounceTimer;
+    private float impulseBounceCooldown;
+    private GameObject impulseBounceFeedback;
     
-    public float impulseForceMultiplier;//coeff de conservation de la velocité lors de la collision
+    private float impulseForceMultiplier;//coeff de conservation de la velocité lors de la collision
     
     private bool canBounce = true; // verif si on peut faire l'impulse
 
@@ -83,6 +83,7 @@ public class C_Impulse_Bouncing : ComportementState
         base.CollisionStart(other);
         if (other!= null && canBounce)
         {
+            SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit,_sm.gameObject);
             trueImpulseBounceForce = impulseBounceForce + _sm.rb.velocity.magnitude * impulseForceMultiplier;
             // Debug.LogWarning($"dans enter: {trueImpulseBounceForce}");
             Repulse();
@@ -115,6 +116,7 @@ public class C_Impulse_Bouncing : ComportementState
         }
         // Debug.LogWarning($"dans repulse: {trueImpulseBounceForce}");
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueImpulseBounceRange);
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit,_sm.gameObject);
         if (objectsInRange.Length > 0)
         {
             foreach (Collider objectInRange in objectsInRange)

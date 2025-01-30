@@ -19,6 +19,9 @@ public class ComportementManager : MonoBehaviour
     public Color immuableColor;
     public Color noComportementColor;
     
+    [Header("PrefabComportementGeneric")]
+    public GameObject magnetGenericPrefab;
+    
     [Header("Impulse")]
     public float repulserTime = 5f;
     public float doubleImpulseTime = 6f;
@@ -35,6 +38,7 @@ public class ComportementManager : MonoBehaviour
     public float rocketForceOnPlayer = 20f;
     public float rocketForceWhenGrab = 20f;
     public float rocketOnOffCouldown = 4f;
+    public float rocketMaxSpeed = 20f;
     
     [Header("DoubleRocket")]
     public float rocketDoubleForce = 20f;
@@ -52,6 +56,7 @@ public class ComportementManager : MonoBehaviour
     public float rocketMagnetForce = 20f;
     public float rocketMagnetForceOnPlayer = 20f;
     public float rocketMagnetForceWhenGrab = 20f;
+    public float magnetTrailForce = 10f;
     public float magnetTrailLerp = 1f;
     public float magnetTrailTimeBeforeMove = 3f;
     
@@ -60,20 +65,35 @@ public class ComportementManager : MonoBehaviour
     public float magnetForce;
     [HideInInspector] public bool magnetGradiantForce;
 
+    [Header("DoubleMagnet")]
+    public GameObject prefabDoubleMagnetForcefield;
+    public Color justePourDiffSimpleMagnet;
+    public float doubleMagnetRange = 20f;
+    public float doubleMagnetForce = 75f;
+    public float doubleMagnetForceOnPlayer = 75f;
+    public float doubleMagnetForceWhenGrab = 75f;
+    
     [Header("Bouncing")]
     public PhysicMaterial bouncyMaterial;
     [Header("DoubleBounce")]
     public PhysicMaterial doubleBouncyMaterial;
 
     [Header("Magnet Bounce")]
-    public float magnetBounceForce;
-    public float magnetBounceRange = 10f;
+    public float magnetBounceForce = 60f;
     [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à magnet Force")]
-    public float magnetForceVelocityMultiplier;
-    [Range(1,5)]
-    public float magnetScaleMultiplier;
+    public float magnetForceMultiplier = 1.5f;
+    
+    public float magnetBounceForceOnPlayer = 60f;
+    public float magnetForceOnPlayerMultiplier = 1.5f;
+    
+    public float magnetBounceForceWhenGrab = 60f;
+    public float magnetForceWhenGrabMultiplier = 1.5f;
+
+    public float magnetBounceRange = 10f;
+    public float intervalBetweenBurst = .5f;
+    public Color burstColor;
     [Tooltip("delay pour scale magnet range collision quand grab, sinon trop court avec les rebond qui s'enchaine")]
-    public float delayScale = .5f;
+    public float delayDisplay = .5f;
     
     [Header("Impulse Magnet")]
     public float zoneImpulseRange;

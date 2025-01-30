@@ -72,6 +72,9 @@ MonoBehaviour:
   aimant_color: {r: 0.754717, g: 0.50907797, b: 0.50907797, a: 0}
   immuable_color: {r: 0.5471698, g: 0.2710039, b: 0.2710039, a: 0}
   Uncomportemented_color: {r: 0.8018868, g: 0.13995194, b: 0.13995194, a: 0}
+  ui: {fileID: 0}
+  parameters: {fileID: 11400000, guid: 0b6353e928f889a48b9cab55823e8f8a, type: 2}
+  isPaused: 0
   players: []
   player: {fileID: 0}
   playerFBX: {fileID: 0}
@@ -122,8 +125,9 @@ MonoBehaviour:
   magnetColor: {r: 0.9008031, g: 1, b: 0, a: 0}
   immuableColor: {r: 0.42779493, g: 0, b: 1, a: 0}
   noComportementColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 0}
+  magnetGenericPrefab: {fileID: 724591926826760339, guid: 9dff620a99e95a0489ddabbe4db1b50d, type: 3}
   repulserTime: 5
-  repulserTimer: 0
+  doubleImpulseTime: 6
   repulserRange: 10
   repulserForce: 30
   destroyOnUse: 0
@@ -134,27 +138,42 @@ MonoBehaviour:
   rocketForceOnPlayer: 20
   rocketForceWhenGrab: 20
   rocketOnOffCouldown: 4
+  rocketMaxSpeed: 20
   rocketDoubleForce: 20
   rocketDoubleForceOnPlayer: 20
   rocketDoubleForceWhenGrab: 20
   rocketDoubleCouldown: 4
   rocketReleaseForce: 10
   chargeTimeMax: 6
-  prefabMagnetTrail: {fileID: 5549965940541011332, guid: d6652b4f793cf274d8eddff1bd73cc1b, type: 3}
-  rocketMagnetForce: 20
-  magnetTrailDuration: 1
   prefabMagnetRocketForcefield: {fileID: 7410193036753820761, guid: b9fbb057f1c335e42b1c4956f62c15db, type: 3}
-  magnetRocketDistanceBetweenPoint: 1
+  magnetRocketFlyTime: 4
+  rocketMagnetForce: 7
+  rocketMagnetForceOnPlayer: 7
+  rocketMagnetForceWhenGrab: 7
+  magnetTrailForce: 5
+  magnetTrailLerp: 1.5
+  magnetTrailTimeBeforeMove: 5
   magnetRange: 8
-  magnetForce: 5
+  magnetForce: 40
   magnetGradiantForce: 0
+  prefabDoubleMagnetForcefield: {fileID: 724591926826760339, guid: 9dff620a99e95a0489ddabbe4db1b50d, type: 3}
+  justePourDiffSimpleMagnet: {r: 0.764151, g: 0.756226, b: 0.378471, a: 0.7372549}
+  doubleMagnetRange: 8
+  doubleMagnetForce: 80
+  doubleMagnetForceOnPlayer: 80
+  doubleMagnetForceWhenGrab: 2000
   bouncyMaterial: {fileID: 13400000, guid: 621a7ce6cc196df46ad286df13701f02, type: 2}
   doubleBouncyMaterial: {fileID: 13400000, guid: 16a76e54968c6cc48a861c0ace231bcd, type: 2}
-  magnetBounceForce: 6
+  magnetBounceForce: 60
+  magnetForceMultiplier: 1.5
+  magnetBounceForceOnPlayer: 60
+  magnetForceOnPlayerMultiplier: 1.5
+  magnetBounceForceWhenGrab: 60
+  magnetForceWhenGrabMultiplier: 1.5
   magnetBounceRange: 8
-  magnetForceVelocityMultiplier: 1.5
-  magnetScaleMultiplier: 2
-  delayScale: 0.3
+  intervalBetweenBurst: 2
+  burstColor: {r: 0.062745094, g: 0.7647059, b: 0.16748315, a: 0}
+  delayDisplay: 0.2
   zoneImpulseRange: 8
   zoneImpulseForce: 5.5
   prefabImpulseMagnet: {fileID: 5997281712086689970, guid: 59fbb35a551b97d4597283825cbd8cf7, type: 3}
@@ -162,6 +181,12 @@ MonoBehaviour:
   impulseBounceRange: 10
   impulseBounceTimer: 0.3
   impulseForceMultiplier: 3
+  impulseRocketExplosionForce: 0
+  impulseRocketExplosionRange: 0
+  impulseRocketFlyForce: 0
+  impulseRocketFlyForceOnPlayer: 0
+  impulseRocketFlyTime: 0
+  timeBetweenImpulses: 0
 --- !u!114 &877786246134460342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,5 +213,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59c410ac5a757e845a60b810050dcc38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabSonPropeler: {fileID: 3538058560678950787, guid: 701075dd470b81f4fb76d44a880aaf80, type: 3}
   prefabSonAimant: {fileID: 2007812604757634318, guid: b648a5bd73fb41449bc9393c665a7b97, type: 3}

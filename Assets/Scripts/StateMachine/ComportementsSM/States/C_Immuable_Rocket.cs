@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class C_Immuable_Rocket : ComportementState
 {
-    public float chargeTimeMax;
-    public float chargeTime;
-    public float rocketReleaseForce;
+    private float chargeTimeMax;
+    private float chargeTime;
+    private float rocketReleaseForce;
 
     public C_Immuable_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -14,6 +14,7 @@ public class C_Immuable_Rocket : ComportementState
 
     public override void Enter()
     {
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit,_sm.gameObject);
         isKinematic = true;
         stateValue = 90;
         leftValue = 9;
@@ -52,6 +53,7 @@ public class C_Immuable_Rocket : ComportementState
 
         _sm.rb.isKinematic = false;
         float effectiveReleaseForce = rocketReleaseForce * (chargeTime / chargeTimeMax);
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
         _sm.rb.AddForce(Vector3.up * effectiveReleaseForce, ForceMode.Impulse);
     }
 }
