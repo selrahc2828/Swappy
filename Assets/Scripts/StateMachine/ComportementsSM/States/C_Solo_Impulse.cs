@@ -86,7 +86,6 @@ public class C_Solo_Impulse : ComportementState
         
         if (feedback)
         {
-            Debug.Log($"trueRepulserRange {trueRepulserRange}");
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
             shockWave.GetComponent<GrowToRadius>().targetRadius = trueRepulserRange;
         }

@@ -279,9 +279,8 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
-            slot1 = slot1 + slot2;
-            slot2 = slot1 - slot2;
-            slot1 = slot1 - slot2;
+            (slot1, slot2) = (slot2, slot1);
+            (originSlot1, originSlot2) = (originSlot2, originSlot1);
             slot1Text.text = ((FirstState)slot1).ToString();
             slot2Text.text = ((FirstState)slot2).ToString();
         }
