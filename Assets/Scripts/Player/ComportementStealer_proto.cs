@@ -313,7 +313,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot1 = 0;
                                     originSlot1 = null;
                                     slot1Text.text = "";
-                                    
+                                    SoundManager.Instance.PlaySoundComponentPlace(gameObject);
                                 }
                                 else
                                 {
@@ -323,6 +323,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2 = 0;
                                     originSlot2 = null;
                                     slot2Text.text = "";
+                                    SoundManager.Instance.PlaySoundComponentPlace(gameObject);
                                     
                                 }
                             }
@@ -363,6 +364,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         originSlot2 = null;
                         slot1Text.text = "";
                         slot2Text.text = "";
+                        SoundManager.Instance.PlaySoundComponentPlace(gameObject);
                     }
                 }
             }

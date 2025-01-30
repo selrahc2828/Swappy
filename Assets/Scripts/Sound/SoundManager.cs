@@ -196,7 +196,7 @@ public class SoundManager : MonoBehaviour
         //      Annotez quand les sons sont ajout� au code. (ComportementState, ligne 52)
         public void PlaySoundCollision(GameObject gameObjet)
         {
-            RuntimeManager.PlayOneShotAttached("event:/System/Collision", gameObject);
+            RuntimeManager.PlayOneShotAttached("event:/System/Collision", gameObjet);
         }
 
         //  PlaySoundComponentPlace() est � utiliser lorsqu'un des comportements est pos� sur un objet, le player ou sur un objet grab.
@@ -207,7 +207,7 @@ public class SoundManager : MonoBehaviour
         //      Annotez quand les sons sont ajout� au code. (nom du script + line)
         public void PlaySoundComponentPlace(GameObject gameObjet,PlaceParamType soundCompPlace = PlaceParamType.repulse, PlaceParamOnWhatType onWhatItPlace = PlaceParamOnWhatType.onObject)
         {
-            RuntimeManager.PlayOneShotAttached("event:/System/PLace", gameObject);
+            RuntimeManager.PlayOneShotAttached("event:/Player/Notes/OnPlayer", gameObject);
         }
 
         //  PlaySoundComponent() est � utiliser lorsqu'un des sons de comportement simple doit etre jou�.

@@ -82,6 +82,10 @@ public class C_Solo_Rocket : ComportementState
                 _sm.rb.AddForce(Vector3.up * rocketForce, ForceMode.Force);
             }
         }
+        else
+        {
+            isSoundPlay = false;
+        }
     }
 
     public override void Exit()

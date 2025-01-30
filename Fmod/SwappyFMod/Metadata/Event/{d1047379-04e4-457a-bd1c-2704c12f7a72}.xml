@@ -61,7 +61,10 @@
 	</object>
 	<object class="EventAutomatableProperties" id="{0cbb3225-8234-4ce4-b405-f5e53fd4063a}">
 		<property name="maxVoices">
-			<value>5</value>
+			<value>10</value>
+		</property>
+		<property name="voiceStealing">
+			<value>1</value>
 		</property>
 		<property name="maximumDistance">
 			<value>200</value>
@@ -87,6 +90,9 @@
 	<object class="EventMixerMaster" id="{1c7f82cb-6fb0-484c-828f-2b8ee0f586c9}">
 		<property name="color">
 			<value>Cyan</value>
+		</property>
+		<property name="volume">
+			<value>-12</value>
 		</property>
 		<relationship name="modulators">
 			<destination>{84930e03-b246-48b3-a7e8-9d3cf3adbdb6}</destination>
@@ -130,9 +136,6 @@
 	<object class="EventMixerGroup" id="{bf16a5a5-4a4d-492b-bf95-bf4385e4010b}">
 		<property name="color">
 			<value>Cyan Light 2</value>
-		</property>
-		<property name="volume">
-			<value>-7.5</value>
 		</property>
 		<property name="name">
 			<value>AimantLoop</value>
