@@ -207,7 +207,7 @@ public class SoundManager : MonoBehaviour
         //      Annotez quand les sons sont ajout� au code. (nom du script + line)
         public void PlaySoundComponentPlace(GameObject gameObjet,PlaceParamType soundCompPlace = PlaceParamType.repulse, PlaceParamOnWhatType onWhatItPlace = PlaceParamOnWhatType.onObject)
         {
-            RuntimeManager.PlayOneShotAttached("event:/System/PLace", gameObject);
+            RuntimeManager.PlayOneShotAttached("event:/Player/Notes/OnPlayer", gameObject);
         }
 
         //  PlaySoundComponent() est � utiliser lorsqu'un des sons de comportement simple doit etre jou�.
