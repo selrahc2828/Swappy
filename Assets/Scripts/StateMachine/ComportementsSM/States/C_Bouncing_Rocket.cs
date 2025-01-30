@@ -106,5 +106,7 @@ public class C_Bouncing_Rocket : ComportementState
     {
         base.CollisionStart(other);
         rocketDirection = -rocketDirection;
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit,_sm.gameObject);
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
     }
 }

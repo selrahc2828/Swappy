@@ -279,9 +279,8 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
-            slot1 = slot1 + slot2;
-            slot2 = slot1 - slot2;
-            slot1 = slot1 - slot2;
+            (slot1, slot2) = (slot2, slot1);
+            (originSlot1, originSlot2) = (originSlot2, originSlot1);
             slot1Text.text = ((FirstState)slot1).ToString();
             slot2Text.text = ((FirstState)slot2).ToString();
         }
@@ -314,6 +313,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot1 = 0;
                                     originSlot1 = null;
                                     slot1Text.text = "";
+                                    
                                 }
                                 else
                                 {
@@ -323,6 +323,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2 = 0;
                                     originSlot2 = null;
                                     slot2Text.text = "";
+                                    
                                 }
                             }
                             else

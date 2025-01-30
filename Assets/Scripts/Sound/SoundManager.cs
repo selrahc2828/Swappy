@@ -161,11 +161,15 @@ public class SoundManager : MonoBehaviour
             RuntimeManager.PlayOneShot("event:/Player/Moving/Land");
         }
 
+        public void PlaySoundCompOnPlayer()
+        {
+            RuntimeManager.PlayOneShot("event:/Player/Notes/OnPlayer");
+        }
         public EventInstance CreateSoundFalling()
         {
             return RuntimeManager.CreateInstance("event:/Player/Moving/Falling");
         }
-
+        
         public void PlaySound(EventInstance eventInstance)
         {
             eventInstance.start();
@@ -243,15 +247,20 @@ public class SoundManager : MonoBehaviour
             }
         }
 
+        public void PlaysoundCompAimaint(GameObject obj)
+        {
+            RuntimeManager.PlayOneShotAttached("event:/System/Componenent/MagnetEnter", obj);
+        }
         #endregion
         #region Zic  {Update}
         private void Update()
         {
-            if (!isMusicPlay)
-            {
-                RuntimeManager.PlayOneShot("event:/Music/Sample Ref Sound");
-                isMusicPlay = true;
-            }
+            RuntimeManager.PlayOneShot("event:/Music/Sample Ref Sound");
+            // if (!isMusicPlay)
+            // {
+            //     RuntimeManager.PlayOneShot("event:/Music/Sample Ref Sound");
+            //     isMusicPlay = true;
+            // }
 
         }
         #endregion
