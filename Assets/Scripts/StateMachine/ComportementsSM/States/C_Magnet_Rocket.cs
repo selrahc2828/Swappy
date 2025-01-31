@@ -32,6 +32,7 @@ public class C_Magnet_Rocket : ComportementState
         rightValue = 81;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.rocketColor);
+        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
         magnetRocketFlyTime = _sm.comportementManager.magnetRocketFlyTime;
         rocketMagnetForce = _sm.comportementManager.rocketMagnetForce;
@@ -126,6 +127,8 @@ public class C_Magnet_Rocket : ComportementState
                 // Passe le booléen à true, il sort du parent et sera détruit quand les 2 extrémités seront proche
             }
         }
+        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
+
       
     }
 
