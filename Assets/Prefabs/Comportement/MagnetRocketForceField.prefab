@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 5881284943088886016}
   - component: {fileID: 335057952278951139}
   - component: {fileID: 2896420238710682745}
-  - component: {fileID: -1581933421584559480}
+  - component: {fileID: 3288954399718405383}
   - component: {fileID: 678676846122855634}
   m_Layer: 3
   m_Name: MagnetRocketForceField
@@ -172,12 +172,12 @@ MonoBehaviour:
   pointB: {fileID: 8213354459514939877}
   trailMagnetObject: {fileID: 5298772771984074756}
   atDetachAndDestroy: 0
-  effectForce: 20
-  effectForceOnPlayer: 20
-  effectForceWhenGrab: 20
+  effectForce: 40
+  effectForceOnPlayer: 40
+  effectForceWhenGrab: 40
   timeBeforeMove: 3
---- !u!135 &-1581933421584559480
-SphereCollider:
+--- !u!65 &3288954399718405383
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -191,11 +191,11 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 4
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &678676846122855634
 MonoBehaviour:
