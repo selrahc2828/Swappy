@@ -23,6 +23,7 @@ public class C_Double_Rocket : ComportementState
         rightValue = 81;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.rocketColor);
+        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
         timer = 0f;
         rocketForce = _sm.comportementManager.rocketDoubleForce;
@@ -65,5 +66,7 @@ public class C_Double_Rocket : ComportementState
     public override void Exit()
     {
         base.Exit();
+        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
+
     }
 }

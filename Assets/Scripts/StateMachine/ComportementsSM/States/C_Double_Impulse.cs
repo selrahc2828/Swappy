@@ -70,8 +70,7 @@ public class C_Double_Impulse : ComportementState
     {
         base.DisplayGizmos();
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_sm.transform.position, trueImpulseRange);  
-
+        Gizmos.DrawWireSphere(_sm.transform.position, trueImpulseRange);
     }  
     
     public void Impulse()
