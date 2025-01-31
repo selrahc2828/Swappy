@@ -8,10 +8,12 @@ public class SetUpFeedbackUi : MonoBehaviour
     public LayerMask hitLayer;
     private Ray _ray;
     
+    [Header("Player")]
     public GameObject vignetteParent;
     public Image vignetteLeft;
     public Image vignetteRight;
     
+    [Header("Objet")]
     public GameObject knobIndicationParent;
     public Image knobIndicationLeft;
     public Image knobIndicationRight;
@@ -25,9 +27,9 @@ public class SetUpFeedbackUi : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         CheckComp();
 
+        CheckCompOnPlayer();
     }
 
     public void CheckComp()
@@ -70,6 +72,22 @@ public class SetUpFeedbackUi : MonoBehaviour
         {
             ParentIndicationActive();
         }  
+    }
+
+    public void CheckCompOnPlayer()
+    {
+        var stateMachine = GameManager.Instance?.player.gameObject.GetComponent<ComportementsStateMachine>();
+        if (stateMachine == null)
+        {
+            return;
+        }
+
+        if (stateMachine.currentState is ComportementState)
+        {
+            ComportementState currentPlayertate = (ComportementState)stateMachine.currentState;
+            ColorFeedback(vignetteLeft, currentPlayertate.leftValue);
+            ColorFeedback(vignetteRight, currentPlayertate.rightValue);
+        }
     }
     
     public void ParentIndicationActive(bool isActive = false)
