@@ -41,7 +41,6 @@ public class SetUpFeedbackUi : MonoBehaviour
         {
             if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
             {
-                Debug.Log("Not Interact cache");
                 ParentIndicationActive();
                 return;
             }

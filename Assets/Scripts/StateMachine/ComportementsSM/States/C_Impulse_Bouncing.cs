@@ -17,6 +17,9 @@ public class C_Impulse_Bouncing : ComportementState
     
     private bool canBounce = true; // verif si on peut faire l'impulse
 
+    private PhysicMaterial _bouncyMaterial;
+    private PhysicMaterial _basePlayerMaterial;
+    private PhysicMaterial _basePlayerSlideMaterial;
     
     public float velocityMagnitude;
     
@@ -31,19 +34,27 @@ public class C_Impulse_Bouncing : ComportementState
         rightValue = 3;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.bouncingColor);
-
+        
         impulseBounceTimer = _sm.comportementManager.impulseBounceTimer;
         impulseBounceCooldown = impulseBounceTimer;
         impulseBounceRange = _sm.comportementManager.impulseBounceRange;
 
-        // trueRepulserRange = repulserRange;
+        _bouncyMaterial = _sm.comportementManager.bouncyMaterial;
         if (_sm.isPlayer)
         {
             trueImpulseBounceRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + impulseBounceRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
+            
+            _basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
+            _basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
+            _sm.comportementManager.playerBouncingCollider.material = _bouncyMaterial;
+            _sm.comportementManager.playerSlidingCollider.material = _bouncyMaterial;
         }
         else
         {
             trueImpulseBounceRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + impulseBounceRange;
+            
+            _sm.GetComponent<Collider>().material = _bouncyMaterial;
+
         }
         
         impulseBounceForce = _sm.comportementManager.impulseBounceForce;
@@ -80,6 +91,16 @@ public class C_Impulse_Bouncing : ComportementState
     {
         base.Exit();
         _sm.comportementManager.DestroyObj(feedBack_GO_Right);
+        
+        if (_sm.isPlayer)
+        {
+            _sm.comportementManager.playerBouncingCollider.material = _basePlayerMaterial;
+            _sm.comportementManager.playerSlidingCollider.material = _basePlayerSlideMaterial;
+        }
+        else
+        {
+            _sm.GetComponent<Collider>().material = null;
+        }
 
     }
 
@@ -94,6 +115,7 @@ public class C_Impulse_Bouncing : ComportementState
             Repulse();
             canBounce = false;
         }
+        
     }
 
     public override void CollisionEnd(Collision other)
