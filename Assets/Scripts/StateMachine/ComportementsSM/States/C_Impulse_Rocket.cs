@@ -53,6 +53,7 @@ public class C_Impulse_Rocket : ComportementState
         rocketOn = false;
         
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.rocketColor);
+        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
     }
 
@@ -111,6 +112,7 @@ public class C_Impulse_Rocket : ComportementState
     public override void Exit()
     {
         base.Exit();
+        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
     }
     
     public override void DisplayGizmos()

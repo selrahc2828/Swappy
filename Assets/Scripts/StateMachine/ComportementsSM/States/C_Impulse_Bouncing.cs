@@ -52,6 +52,9 @@ public class C_Impulse_Bouncing : ComportementState
         impulseForceMultiplier = _sm.comportementManager.impulseForceMultiplier;
         
         impulseBounceFeedback = _sm.comportementManager.impulseFeedback;
+        
+        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+
     }
 
     public override void TickLogic()
@@ -76,6 +79,8 @@ public class C_Impulse_Bouncing : ComportementState
     public override void Exit()
     {
         base.Exit();
+        _sm.comportementManager.DestroyObj(feedBack_GO_Right);
+
     }
 
     public override void CollisionStart(Collision other)
