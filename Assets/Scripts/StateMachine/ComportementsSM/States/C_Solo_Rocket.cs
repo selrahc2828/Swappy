@@ -19,9 +19,6 @@ public class C_Solo_Rocket : ComportementState
 
     public override void Enter()
     {
-
-        
-
         isKinematic = false;
         stateValue = 81;
         leftValue = 81;
@@ -38,7 +35,8 @@ public class C_Solo_Rocket : ComportementState
         
         // _sm.rend.material = _sm.rocket;
         ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
-        
+        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+
     }
 
     public override void TickLogic()
@@ -91,6 +89,6 @@ public class C_Solo_Rocket : ComportementState
     public override void Exit()
     {
         base.Exit();
-
+        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
     }
 }

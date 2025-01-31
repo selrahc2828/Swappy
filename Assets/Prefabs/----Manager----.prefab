@@ -124,7 +124,7 @@ MonoBehaviour:
   rocketColor: {r: 0.9921569, g: 0.90196085, b: 0.5568628, a: 1}
   magnetColor: {r: 0.69411767, g: 0.86274517, b: 0.9921569, a: 1}
   immuableColor: {r: 0.7960785, g: 0.7137255, b: 0.9607844, a: 1}
-  noComportementColor: {r: 0.37647063, g: 0.37647063, b: 0.37647063, a: 1}
+  noComportementColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
   feedBack_Impulse: {fileID: 1838528298772245979, guid: 7062a1bbabe855741b3ad50f34e91064, type: 3}
   feedBack_Bouncing: {fileID: 7521130485353488716, guid: 72c3313dcb76fbd4db0cf9480d39a220, type: 3}
   feedBack_Rocket: {fileID: 7314418752963487225, guid: 084074985ced6f74baf880cb96bbf23e, type: 3}
@@ -139,21 +139,21 @@ MonoBehaviour:
   repulserTime: 5
   doubleImpulseTime: 6
   repulserRange: 10
-  repulserForce: 30
+  repulserForce: 90
   destroyOnUse: 0
   impulseGradiantForce: 1
   impulseFeedback: {fileID: 5997281712086689970, guid: d7e7b2fb81b45414cbff7f19ab5a5b62, type: 3}
   applyOnMe: 0
-  rocketForce: 10
-  rocketForceOnPlayer: 20
-  rocketForceWhenGrab: 20
-  rocketOnOffCouldown: 4
-  rocketMaxSpeed: 20
-  rocketDoubleForce: 20
-  rocketDoubleForceOnPlayer: 20
-  rocketDoubleForceWhenGrab: 20
-  rocketDoubleCouldown: 4
-  rocketReleaseForce: 10
+  rocketForce: 75
+  rocketForceOnPlayer: 75
+  rocketForceWhenGrab: 75
+  rocketOnOffCouldown: 5
+  rocketMaxSpeed: 15
+  rocketDoubleForce: 150
+  rocketDoubleForceOnPlayer: 150
+  rocketDoubleForceWhenGrab: 150
+  rocketDoubleCouldown: 10
+  rocketReleaseForce: 75
   chargeTimeMax: 6
   prefabMagnetRocketForcefield: {fileID: 7410193036753820761, guid: b9fbb057f1c335e42b1c4956f62c15db, type: 3}
   magnetRocketFlyTime: 4
@@ -164,7 +164,7 @@ MonoBehaviour:
   magnetTrailLerp: 1.5
   magnetTrailTimeBeforeMove: 5
   magnetRange: 8
-  magnetForce: 40
+  magnetForce: 8
   magnetGradiantForce: 0
   prefabDoubleMagnetForcefield: {fileID: 724591926826760339, guid: 9dff620a99e95a0489ddabbe4db1b50d, type: 3}
   justePourDiffSimpleMagnet: {r: 0.764151, g: 0.756226, b: 0.378471, a: 0.7372549}
@@ -185,18 +185,18 @@ MonoBehaviour:
   burstColor: {r: 0.062745094, g: 0.7647059, b: 0.16748315, a: 0}
   delayDisplay: 0.2
   zoneImpulseRange: 8
-  zoneImpulseForce: 5.5
+  zoneImpulseForce: 25
   prefabImpulseMagnet: {fileID: 5997281712086689970, guid: 59fbb35a551b97d4597283825cbd8cf7, type: 3}
-  impulseBounceForce: 8
+  impulseBounceForce: 80
   impulseBounceRange: 10
   impulseBounceTimer: 0.3
   impulseForceMultiplier: 3
   impulseRocketExplosionForce: 0
   impulseRocketExplosionRange: 0
-  impulseRocketFlyForce: 0
-  impulseRocketFlyForceOnPlayer: 0
-  impulseRocketFlyTime: 0
-  timeBetweenImpulses: 0
+  impulseRocketFlyForce: 75
+  impulseRocketFlyForceOnPlayer: 75
+  impulseRocketFlyTime: 5
+  timeBetweenImpulses: 0.5
 --- !u!114 &877786246134460342
 MonoBehaviour:
   m_ObjectHideFlags: 0

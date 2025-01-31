@@ -325,68 +325,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a19b5fa0e6333e49a0e1cea0a83bcb5, type: 3}
---- !u!21 &88527417
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Override
-  m_Shader: {fileID: 4800000, guid: a3a3bc8785681554d9558e2ea68f100e, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _Banner: 1
-    - _DirectionalCat: 1
-    - _DirectionalFalloff: 2
-    - _DirectionalIntensity: 1
-    - _FogAxisMode: 1
-    - _FogCat: 1
-    - _FogColorDuo: 1
-    - _FogDistanceEnd: 200
-    - _FogDistanceFalloff: 2
-    - _FogDistanceStart: -200
-    - _FogHeightEnd: 200
-    - _FogHeightFalloff: 2
-    - _FogHeightStart: 0
-    - _FogIntensity: 1
-    - _FogLayersMode: 0
-    - _IsHeightFogPreset: 1
-    - _IsHeightFogShader: 1
-    - _NoiseCat: 1
-    - _NoiseDistanceEnd: 50
-    - _NoiseIntensity: 1
-    - _NoiseModeBlend: 1
-    - _NoiseScale: 30
-    - _SkyboxCat: 1
-    - _SkyboxFogBottom: 0
-    - _SkyboxFogFalloff: 1
-    - _SkyboxFogFill: 1
-    - _SkyboxFogHeight: 1
-    - _SkyboxFogIntensity: 1
-    - _SkyboxFogOffset: 0
-    m_Colors:
-    - _DirectionalColor: {r: 1, g: 0.7793103, b: 0.5, a: 1}
-    - _DirectionalDir: {r: 0, g: 0, b: 0, a: 0}
-    - _FogAxisOption: {r: 0, g: 0, b: 0, a: 0}
-    - _FogColorEnd: {r: 0.8862745, g: 1.443137, b: 2, a: 1}
-    - _FogColorStart: {r: 0.4411765, g: 0.722515, b: 1, a: 1}
-    - _NoiseSpeed: {r: 0.5, g: 0, b: 0.5, a: 0}
-  m_BuildTextureStacks: []
 --- !u!1 &94987669
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,6 +596,42 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!21 &99974599
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Height Fog Global
+  m_Shader: {fileID: 4800000, guid: 3a7ef1b66bafb7a448a880ef76d2e6e6, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3001
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _AdvancedCat: 1
+    - _Banner: 1
+    - _DirectionalCat: 1
+    - _FogAxisMode: 1
+    - _FogCat: 1
+    - _HeightFogGlobal: 1
+    - _IsHeightFogShader: 1
+    - _NoiseCat: 1
+    - _SkyboxCat: 1
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1 &102365677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1521,42 +1495,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 61.742, y: 149.538, z: -20.312}
---- !u!21 &208409808
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Height Fog Global
-  m_Shader: {fileID: 4800000, guid: 3a7ef1b66bafb7a448a880ef76d2e6e6, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3001
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _AdvancedCat: 1
-    - _Banner: 1
-    - _DirectionalCat: 1
-    - _FogAxisMode: 1
-    - _FogCat: 1
-    - _HeightFogGlobal: 1
-    - _IsHeightFogShader: 1
-    - _NoiseCat: 1
-    - _SkyboxCat: 1
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!43 &226051200
 Mesh:
   m_ObjectHideFlags: 0
@@ -6265,6 +6203,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &680769434
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Override
+  m_Shader: {fileID: 4800000, guid: a3a3bc8785681554d9558e2ea68f100e, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _Banner: 1
+    - _DirectionalCat: 1
+    - _DirectionalFalloff: 2
+    - _DirectionalIntensity: 1
+    - _FogAxisMode: 1
+    - _FogCat: 1
+    - _FogColorDuo: 1
+    - _FogDistanceEnd: 200
+    - _FogDistanceFalloff: 2
+    - _FogDistanceStart: -200
+    - _FogHeightEnd: 200
+    - _FogHeightFalloff: 2
+    - _FogHeightStart: 0
+    - _FogIntensity: 1
+    - _FogLayersMode: 0
+    - _IsHeightFogPreset: 1
+    - _IsHeightFogShader: 1
+    - _NoiseCat: 1
+    - _NoiseDistanceEnd: 50
+    - _NoiseIntensity: 1
+    - _NoiseModeBlend: 1
+    - _NoiseScale: 30
+    - _SkyboxCat: 1
+    - _SkyboxFogBottom: 0
+    - _SkyboxFogFalloff: 1
+    - _SkyboxFogFill: 1
+    - _SkyboxFogHeight: 1
+    - _SkyboxFogIntensity: 1
+    - _SkyboxFogOffset: 0
+    m_Colors:
+    - _DirectionalColor: {r: 1, g: 0.7793103, b: 0.5, a: 1}
+    - _DirectionalDir: {r: 0, g: 0, b: 0, a: 0}
+    - _FogAxisOption: {r: 0, g: 0, b: 0, a: 0}
+    - _FogColorEnd: {r: 0.8862745, g: 1.443137, b: 2, a: 1}
+    - _FogColorStart: {r: 0.4411765, g: 0.722515, b: 1, a: 1}
+    - _NoiseSpeed: {r: 0.5, g: 0, b: 0.5, a: 0}
+  m_BuildTextureStacks: []
 --- !u!43 &695251588
 Mesh:
   m_ObjectHideFlags: 0
@@ -13976,11 +13976,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a557a4b3a12367742b9ee1c0f44ecfb1, type: 3}
---- !u!1 &1582926850 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8942172111824444152, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-  m_PrefabInstance: {fileID: 1979156732}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1603348957
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16979,7 +16974,7 @@ MonoBehaviour:
   manualPositionAndScale: 0
   renderPriority: 1
   styledSpace0: 0
-  overrideMaterial: {fileID: 88527417}
+  overrideMaterial: {fileID: 680769434}
   overrideCamToVolumeDistance: 1
   overrideVolumeDistanceFade: 0
   version: 0
@@ -17011,7 +17006,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 208409808}
+  - {fileID: 99974599}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18894,11 +18889,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a19b5fa0e6333e49a0e1cea0a83bcb5, type: 3}
---- !u!1 &1964074208 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4556348638202998691, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-  m_PrefabInstance: {fileID: 1979156732}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1975016224
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19004,26 +18994,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 545196944}
     m_Modifications:
-    - target: {fileID: 360774916830245804, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-      propertyPath: field of view
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 360774916830245804, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-      propertyPath: far clip plane
-      value: 3000
-      objectReference: {fileID: 0}
     - target: {fileID: 2110565856000457164, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a644baf67e694834d80a53933915c645, type: 2}
-    - target: {fileID: 2428291566536677944, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2577625820591050571, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 821ffcf7bc03e424c95155d753c9fc81, type: 2}
+    - target: {fileID: 2611795556630657419, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
+      propertyPath: comp_steler_proto
+      value: 
+      objectReference: {fileID: 1818676030}
     - target: {fileID: 3812184408860948157, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
       propertyPath: m_Name
       value: CameraHolder
@@ -19032,6 +19014,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 821ffcf7bc03e424c95155d753c9fc81, type: 2}
+    - target: {fileID: 5037200663135496975, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
+      propertyPath: comp_steler_proto
+      value: 
+      objectReference: {fileID: 1818676030}
     - target: {fileID: 6272381234065470780, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 45.784195
@@ -19072,14 +19058,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6665456295526574528, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-      propertyPath: sensX
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 6665456295526574528, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-      propertyPath: sensY
-      value: 300
-      objectReference: {fileID: 0}
     - target: {fileID: 8101958145364833583, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
       propertyPath: cameraPosition
       value: 
@@ -19091,12 +19069,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6865014841614730721, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1979156739}
-    - targetCorrespondingSourceObject: {fileID: 8942172111824444152, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1979156748}
-    - targetCorrespondingSourceObject: {fileID: 4556348638202998691, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1979156742}
   m_SourcePrefab: {fileID: 100100000, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
 --- !u!4 &1979156733 stripped
 Transform:
@@ -19168,39 +19140,33 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!114 &1979156742
+--- !u!114 &1979156742 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2611795556630657419, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
+  m_PrefabInstance: {fileID: 1979156732}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1964074208}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8bb783c3fe07d764e96df16399a06b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  left_Arm: 0
-  comp_steler_proto: {fileID: 1818676030}
 --- !u!4 &1979156743 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5429963047836183062, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
   m_PrefabInstance: {fileID: 1979156732}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1979156748
+--- !u!114 &1979156748 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 5037200663135496975, guid: a5bdc276ad875994c9ad2b49b137c56f, type: 3}
+  m_PrefabInstance: {fileID: 1979156732}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1582926850}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8bb783c3fe07d764e96df16399a06b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  left_Arm: 1
-  comp_steler_proto: {fileID: 1818676030}
 --- !u!1001 &1984615478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19858,14 +19824,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 545196944}
     m_Modifications:
-    - target: {fileID: 877786246134460342, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: Left_Arm_Animator
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 877786246134460342, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: Right_Arm_Animator
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1573964937435694765, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: m_Name
       value: ----Manager----
@@ -19879,25 +19837,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1818676029}
     - target: {fileID: 1767383280669085481, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: jumpForce
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 1767383280669085481, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: walkSpeed
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 1767383280669085481, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: crouchSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1767383280669085481, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: orientation
       value: 
       objectReference: {fileID: 1818676028}
-    - target: {fileID: 1767383280669085481, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: sprintSpeed
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 1767383280669085481, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: timerSlowText
       value: 
@@ -19945,190 +19887,6 @@ PrefabInstance:
     - target: {fileID: 2555637526324700904, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: magnetForce
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketForce
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: magnetColor.b
-      value: 0.9921569
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: magnetColor.g
-      value: 0.86274517
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: magnetColor.r
-      value: 0.69411767
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: repulserForce
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketColor.b
-      value: 0.5568628
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketColor.g
-      value: 0.90196085
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketColor.r
-      value: 0.9921569
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: impulseColor.b
-      value: 0.56078434
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: impulseColor.g
-      value: 0.56078434
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: impulseColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketMaxSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: bouncingColor.b
-      value: 0.5686275
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: bouncingColor.g
-      value: 0.8078432
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: bouncingColor.r
-      value: 0.5647059
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: feedBack_Magnet
-      value: 
-      objectReference: {fileID: 6171115788307145931, guid: 8c98c09c2ee466743ac06041b568ead8, type: 3}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: feedBack_Rocket
-      value: 
-      objectReference: {fileID: 7314418752963487225, guid: 084074985ced6f74baf880cb96bbf23e, type: 3}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: immuableColor.b
-      value: 0.9607844
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: immuableColor.g
-      value: 0.7137255
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: immuableColor.r
-      value: 0.7960785
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: feedBack_Impulse
-      value: 
-      objectReference: {fileID: 1838528298772245979, guid: 7062a1bbabe855741b3ad50f34e91064, type: 3}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: hand_Slot_Magnet
-      value: 
-      objectReference: {fileID: 4878487311690120462, guid: b670b4f2fc6ad094da706b1ce5b6b957, type: 3}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: hand_Slot_Rocket
-      value: 
-      objectReference: {fileID: 4878487311690120462, guid: e17e9852bd8872644a693d6d12e89257, type: 3}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: zoneImpulseForce
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: feedBack_Bouncing
-      value: 
-      objectReference: {fileID: 7521130485353488716, guid: 72c3313dcb76fbd4db0cf9480d39a220, type: 3}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: feedBack_Immuable
-      value: 
-      objectReference: {fileID: 7115355853760126403, guid: 5a3c0080d6d694d42803fd7e288648df, type: 3}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: hand_Slot_Impulse
-      value: 
-      objectReference: {fileID: 4878487311690120462, guid: 6485e4717f7b549449c8c4d414f42d4a, type: 3}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketDoubleForce
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: hand_Slot_Bouncing
-      value: 
-      objectReference: {fileID: 4878487311690120462, guid: b236f6386dfd64140b735fc43f834bed, type: 3}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: hand_Slot_Immuable
-      value: 
-      objectReference: {fileID: 4878487311690120462, guid: ba4cd94bb1c70634ab71c83ae13161ae, type: 3}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: impulseBounceForce
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketReleaseForce
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketForceOnPlayer
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketForceWhenGrab
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketOnOffCouldown
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: timeBetweenImpulses
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: impulseRocketFlyTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketDoubleCouldown
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: impulseRocketFlyForce
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: noComportementColor.b
-      value: 0.3773585
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: noComportementColor.g
-      value: 0.3773585
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: noComportementColor.r
-      value: 0.3773585
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketDoubleForceOnPlayer
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: rocketDoubleForceWhenGrab
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 5247813342975329975, guid: e8d62406916450042bb38f2b5d46e867, type: 3}
-      propertyPath: impulseRocketFlyForceOnPlayer
-      value: 75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

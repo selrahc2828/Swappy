@@ -21,7 +21,8 @@ public class C_Solo_Immuable : ComportementState
         base.Enter();
         
         ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.noComportementColor);
-
+        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+        
         _baseVelocity = _sm.rb.velocity;
         _baseAngularVelocity = _sm.rb.angularVelocity;
         _sm.rb.isKinematic = true;
@@ -43,6 +44,8 @@ public class C_Solo_Immuable : ComportementState
         _sm.rb.isKinematic = false;
         _sm.rb.velocity = _baseVelocity;
         _sm.rb.angularVelocity = _baseAngularVelocity;
+        
+        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
     }
 
     public override void CollisionStart(Collision other)

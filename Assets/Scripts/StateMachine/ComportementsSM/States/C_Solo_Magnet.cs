@@ -41,6 +41,10 @@ public class C_Solo_Magnet : ComportementState
         
         // _sm.rend.material = _sm.magnet;
         ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.noComportementColor);
+
+        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+        feedBack_GO_Left.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
+        feedBack_GO_Left.GetComponent<GrowToRadius>().atDestroy = false;
     }
 
     public override void TickLogic()
@@ -58,9 +62,9 @@ public class C_Solo_Magnet : ComportementState
 
     public override void Exit()
     {
-        
         base.Exit();
         _sm.comportementManager.DestroyObj(SonDeCon);
+        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
 
     }
 

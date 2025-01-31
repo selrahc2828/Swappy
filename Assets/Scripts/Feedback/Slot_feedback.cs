@@ -17,6 +17,7 @@ public class Slot_feedback : MonoBehaviour
     private void Start()
     {
         comportementManager = ComportementManager.Instance;
+        //comp_steler_proto = GameObject.FindGameObjectWithTag("Player").GetComponent<ComportementStealer_proto>();
     }
 
     // Update is called once per frame

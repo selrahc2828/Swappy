@@ -27,10 +27,8 @@ public class ComportementState : State
         //_sm.text.text = stateValue.ToString();
         _sm.displayComportementName = _sm.currentState.ToString();
 
-        feedBack_GO_Left = SetFeedbackComportement(leftValue);
-        feedBack_GO_Right = SetFeedbackComportement(rightValue);
-
-
+        // feedBack_GO_Left = SetFeedbackComportement(leftValue);
+        // feedBack_GO_Right = SetFeedbackComportement(rightValue);
 
     }
 
@@ -54,15 +52,15 @@ public class ComportementState : State
     {
         // Debug.Log(_sm.currentState + " exit");
 
-        if (feedBack_GO_Left != null)
-        {
-            _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-        }
-
-        if (feedBack_GO_Right != null)
-        {
-            _sm.comportementManager.DestroyObj(feedBack_GO_Right);
-        }
+        // if (feedBack_GO_Left != null)
+        // {
+        //     _sm.comportementManager.DestroyObj(feedBack_GO_Left);
+        // }
+        //
+        // if (feedBack_GO_Right != null)
+        // {
+        //     _sm.comportementManager.DestroyObj(feedBack_GO_Right);
+        // }
     }
 
     public override void CollisionStart(Collision other)

@@ -8,7 +8,7 @@ public class GrowToRadius : MonoBehaviour
     [HideInInspector]
     public float targetRadius;
 
-    public float durationScaling;
+    public float durationScaling = .2f;
     public float elapsedTime = 0f;
     private Vector3 _initialScale;
     private Vector3 _targetScale;

@@ -57,6 +57,10 @@ public class ComportementStealer_proto : MonoBehaviour
         mainCam = GameManager.Instance.mainCamera;
         slot1Text = GameObject.FindGameObjectWithTag("TextSlot1").GetComponent<TextMeshProUGUI>();
         slot2Text = GameObject.FindGameObjectWithTag("TextSlot2").GetComponent<TextMeshProUGUI>();
+        
+        LeftArm = GameObject.FindGameObjectWithTag("leftArm").GetComponent<Slot_feedback>();
+        RightArm = GameObject.FindGameObjectWithTag("rightArm").GetComponent<Slot_feedback>();
+
     }
 
     private void OnDisable()

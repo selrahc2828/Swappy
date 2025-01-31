@@ -69,13 +69,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 75
+  magnetFeedbackMaterial: {fileID: 5037763687538936876}
+  affectedPlayer: 0
   burstForce: 0
   intervalBetweenBurst: 0
-  boolBurstDisplay: 0
-  magnetFeedbackMaterial: {fileID: 5037763687538936876}
+  _timerBurst: 0
+  boolBurst: 0
   burstColor: {r: 0, g: 0, b: 0, a: 0}
   normalColor: {r: 0, g: 0, b: 0, a: 0}
   delayDisplay: 0
+  _timerDisplay: 0
 --- !u!114 &8956182627367923584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,6 +103,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3614926499975221606}
     m_Modifications:
+    - target: {fileID: 1876588039198728778, guid: 8c98c09c2ee466743ac06041b568ead8, type: 3}
+      propertyPath: durationScaling
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2599503724365076475, guid: 8c98c09c2ee466743ac06041b568ead8, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -160,7 +167,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1876588039198728778, guid: 8c98c09c2ee466743ac06041b568ead8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
