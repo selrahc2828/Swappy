@@ -20,11 +20,13 @@ public class C_Immuable_Magnet : ComportementState
     {
         SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart,_sm.gameObject);
         sonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
+        isKinematic = true;
         stateValue = 36;
         leftValue = 9;
         rightValue = 27;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.magnetColor);
+        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
         baseVelocity = _sm.rb.velocity;
         baseAngularVelocity = _sm.rb.angularVelocity;
@@ -41,6 +43,11 @@ public class C_Immuable_Magnet : ComportementState
         }
         magnetForce = _sm.comportementManager.magnetForce;
         magnetGradiantForce = _sm.comportementManager.magnetGradiantForce;
+        
+        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+        feedBack_GO_Right.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
+        feedBack_GO_Right.GetComponent<GrowToRadius>().atDestroy = false;
     }
 
     public override void TickLogic()
@@ -61,6 +68,9 @@ public class C_Immuable_Magnet : ComportementState
         _sm.rb.velocity = baseVelocity;
         _sm.rb.angularVelocity = baseAngularVelocity;
         _sm.comportementManager.DestroyObj(sonMagnet);
+        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
+        _sm.comportementManager.DestroyObj(feedBack_GO_Right);
+
     }
 
     public void OncollisionEnter(Collision collision)
