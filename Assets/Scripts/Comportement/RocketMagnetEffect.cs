@@ -206,16 +206,16 @@ public class RocketMagnetEffect : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // Gizmos.color = Color.blue;
-        //
-        // // Meme calcul pour le gizmo de la box de detection
-        // Vector3 boxCenter = (pointA.position + pointB.position) / 2;
-        // // Quaternion boxRotation = .transform.rotation;
-        //
-        // // Pour dessiner la boite dans la scene avec Gizmos (comme avec Physics.OverlapBox)
-        // // Matrix4x4.TRS permet de dessiner, position, rotation et echelle, juste DrawWireCube ne suffit pas 
-        // Gizmos.matrix = Matrix4x4.TRS(boxCenter, Quaternion.identity, Vector3.one);
-        // Gizmos.DrawWireCube(Vector3.zero, trailMagnetObject.localScale);            
+        Gizmos.color = Color.blue;
+        
+        // Meme calcul pour le gizmo de la box de detection
+        Vector3 boxCenter = (pointA.position + pointB.position) / 2;
+        // Quaternion boxRotation = .transform.rotation;
+        
+        // Pour dessiner la boite dans la scene avec Gizmos (comme avec Physics.OverlapBox)
+        // Matrix4x4.TRS permet de dessiner, position, rotation et echelle, juste DrawWireCube ne suffit pas 
+        Gizmos.matrix = Matrix4x4.TRS(boxCenter, Quaternion.identity, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, trailMagnetObject.localScale);            
             
     }
 }
