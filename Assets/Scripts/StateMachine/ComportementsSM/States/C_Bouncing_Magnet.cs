@@ -94,7 +94,7 @@ public class C_Bouncing_Magnet : ComportementState
         forceFieldObj.GetComponent<MagnetForceField>().burstColor = _sm.comportementManager.burstColor;
         forceFieldObj.GetComponent<MagnetForceField>().delayDisplay = _sm.comportementManager.delayDisplay;
         
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
         forceFieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
         forceFieldObj.GetComponent<GrowToRadius>().atDestroy = false;
     }
