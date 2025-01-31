@@ -38,8 +38,8 @@ public class MouvementState : State
     protected Vector3 moveDirection;
     private float _footStepsSoundValue;
     private float _footstepsMaxValue;
-    private float _footstepsSlowValue = 250f;
-    private float _footstepsBaseValue = 100f;
+    private float _footstepsSlowValue = 350f;
+    private float _footstepsBaseValue = 200f;
 
     protected PlayerMouvementStateMachine _sm;
 
