@@ -26,12 +26,12 @@ public class ComportementManager : MonoBehaviour
     public GameObject feedBack_Magnet;
     public GameObject feedBack_Immuable;
     
-    [Header("Hand Slots Feedbacks")]
-    public GameObject hand_Slot_Impulse;
-    public GameObject hand_Slot_Bouncing;
-    public GameObject hand_Slot_Rocket;
-    public GameObject hand_Slot_Magnet;
-    public GameObject hand_Slot_Immuable;
+    [FormerlySerializedAs("hand_Slot_Impulse")] [Header("Flare Slots Feedbacks")]
+    public GameObject flareSlotImpulse;
+    [FormerlySerializedAs("hand_Slot_Bouncing")] public GameObject flareSlotImpulseBouncing;
+    [FormerlySerializedAs("hand_Slot_Rocket")] public GameObject flareSlotRocket;
+    [FormerlySerializedAs("hand_Slot_Magnet")] public GameObject flareSlotMagnet;
+    [FormerlySerializedAs("hand_Slot_Immuable")] public GameObject flareSlotImmuable;
     
     [Header("PrefabComportementGeneric")]
     public GameObject magnetGenericPrefab;

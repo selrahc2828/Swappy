@@ -7,7 +7,8 @@ public class Slot_feedback : MonoBehaviour
 {
 
     public bool left_Arm = false;
-
+    public Transform positionFB;
+    
     private ComportementManager comportementManager;
     public ComportementStealer_proto comp_steler_proto;
     private GameObject feedback_Act;
@@ -24,166 +25,58 @@ public class Slot_feedback : MonoBehaviour
     public void Feedback_Slot_Changed(Transform spawnPosition = null, Transform targetPosition = null)
     {
         if (spawnPosition == null)// cas où on donne le comp
-            spawnPosition = transform;
+            spawnPosition = positionFB;
         
         if (targetPosition == null)// cas où on vole le comp
-            targetPosition = transform;
+            targetPosition = positionFB;
         
-        if (left_Arm)
-        {
-            switch (comp_steler_proto.slot1)
+        int slot = left_Arm ? comp_steler_proto.slot1 : comp_steler_proto.slot2;
+
+        switch (slot)
             {
                 case 0:
                     if (feedback_Act != null)
                     {
-                        Destroy(feedback_Act);
-                        
+                        // Destroy(feedback_Act);
+                        feedback_Act.GetComponent<FlareMoveTarget>().isAttribute = true;
                     }
                     break;
                 case 1:
-                    if (feedback_Act != null)
-                    {
-                        Destroy(feedback_Act);
-                    }
-                    if (feedback_Act == null)
-                    {
-                        // feedback_Act = Instantiate(comportementManager.hand_Slot_Impulse, transform);
-                        feedback_Act = SpawnFlare(comportementManager.hand_Slot_Impulse, spawnPosition, targetPosition);
-                    }
-                    
+                    feedback_Act = SpawnFlare(comportementManager.flareSlotImpulse, spawnPosition, targetPosition);
                     break;
+
                 case 3:
-                    if (feedback_Act != null)
-                    {
-                        Destroy(feedback_Act);
-                    }
-                    if (feedback_Act == null)
-                    {
-                        // feedback_Act = Instantiate(comportementManager.hand_Slot_Bouncing, transform);
-                        feedback_Act = SpawnFlare(comportementManager.hand_Slot_Bouncing, spawnPosition, targetPosition);
-
-                    }
-                   
+                    feedback_Act = SpawnFlare(comportementManager.flareSlotImpulseBouncing, spawnPosition, targetPosition);
                     break;
+
                 case 9:
-                    if (feedback_Act != null)
-                    {
-                        Destroy(feedback_Act);
-                    }
-                    if (feedback_Act == null)
-                    {
-                        // feedback_Act = Instantiate(comportementManager.hand_Slot_Immuable, transform);
-                        feedback_Act = SpawnFlare(comportementManager.hand_Slot_Immuable, spawnPosition, targetPosition);
-
-                    }
-                    
+                    feedback_Act = SpawnFlare(comportementManager.flareSlotImmuable, spawnPosition, targetPosition);
                     break;
+
                 case 27:
-                    if (feedback_Act != null)
-                    {
-                        Destroy(feedback_Act);
-                    }
-                    if (feedback_Act == null)
-                    {
-                        // feedback_Act = Instantiate(comportementManager.hand_Slot_Magnet, transform);
-                        feedback_Act = SpawnFlare(comportementManager.hand_Slot_Magnet, spawnPosition, targetPosition);
+                    feedback_Act = SpawnFlare(comportementManager.flareSlotMagnet, spawnPosition, targetPosition);
+                    break;
 
-                    }
-                    
-                    break;
                 case 81:
-                    if (feedback_Act != null)
-                    {
-                        Destroy(feedback_Act);
-                    }
-                    if (feedback_Act == null)
-                    {
-                        // feedback_Act = Instantiate(comportementManager.hand_Slot_Rocket, transform);
-                        feedback_Act = SpawnFlare(comportementManager.hand_Slot_Rocket, spawnPosition, targetPosition);
+                    feedback_Act = SpawnFlare(comportementManager.flareSlotRocket, spawnPosition, targetPosition);
+                    break;
 
-                    }
-                    
-                    break;
             }
-            
-            
-        }
-        else
-        {
-            switch (comp_steler_proto.slot2)
-            {
-                case 0:
-                    if (feedback_Act != null)
-                    {
-                        Destroy(feedback_Act);
-                        
-                    }
-                    break;
-                case 1:
-                    if (feedback_Act != null)
-                    {
-                        Destroy(feedback_Act);
-                    }
-                    if (feedback_Act == null)
-                    {
-                        // feedback_Act = Instantiate(comportementManager.hand_Slot_Impulse, transform);
-                        feedback_Act = SpawnFlare(comportementManager.hand_Slot_Impulse, spawnPosition, targetPosition);
-                    }
-                    
-                    break;
-                case 3:
-                    if (feedback_Act != null)
-                    {
-                        Destroy(feedback_Act);
-                    }
-                    if (feedback_Act == null)
-                    {
-                        feedback_Act = Instantiate(comportementManager.hand_Slot_Bouncing, transform);
-                    }
-                   
-                    break;
-                case 9:
-                    if (feedback_Act != null)
-                    {
-                        Destroy(feedback_Act);
-                    }
-                    if (feedback_Act == null)
-                    {
-                        feedback_Act = Instantiate(comportementManager.hand_Slot_Immuable, transform);
-                    }
-                    
-                    break;
-                case 27:
-                    if (feedback_Act != null)
-                    {
-                        Destroy(feedback_Act);
-                    }
-                    if (feedback_Act == null)
-                    {
-                        feedback_Act = Instantiate(comportementManager.hand_Slot_Magnet, transform);
-                    }
-                    
-                    break;
-                case 81:
-                    if (feedback_Act != null)
-                    {
-                        Destroy(feedback_Act);
-                    }
-                    if (feedback_Act == null)
-                    {
-                        feedback_Act = Instantiate(comportementManager.hand_Slot_Rocket, transform);
-                    }
-                    
-                    break;
-            }
-        }
     }
 
     public GameObject SpawnFlare(GameObject prefabFlare, Transform startPosition, Transform targetPosition)
     {
-        GameObject flareObj = Instantiate(prefabFlare, startPosition);
+        if (feedback_Act)
+        {
+            Destroy(feedback_Act);
+        }
+        Debug.Log($"startPosition = {startPosition.gameObject.name} \n" +
+                  $"targetPosition = {targetPosition.gameObject.name}");
+        
+        GameObject flareObj = Instantiate(prefabFlare, startPosition.position, Quaternion.identity);
+        // flareObj.GetComponent<FlareMoveTarget>().spawnPosition = startPosition;
         flareObj.GetComponent<FlareMoveTarget>().target = targetPosition;
-        flareObj.GetComponent<FlareMoveTarget>().target = targetPosition;
+        flareObj.GetComponent<FlareMoveTarget>().SetJourneyLenght();
         
         return flareObj;
     }
