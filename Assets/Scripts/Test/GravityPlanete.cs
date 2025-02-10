@@ -20,10 +20,10 @@ public class GravityPlanete : MonoBehaviour
     void FixedUpdate()
     {
         // Calculer la direction de la planète par rapport au joueur
-        Vector3 directionToPlanet = (transform.position - player.transform.position).normalized;
+        Vector3 directionToPlanet = (/*transform.position*/Vector3.zero - player.transform.position).normalized;
 
         // Appliquer une force gravitationnelle réaliste
-        float distance = Vector3.Distance(transform.position, player.transform.position);
+        float distance = Vector3.Distance(/*transform.position*/Vector3.zero, player.transform.position);
         float gravitationalForceMagnitude = gravityConstant * rb.mass / Mathf.Pow(distance, 2); // F = G * M / r^2
         Vector3 gravitationalForce = directionToPlanet * gravitationalForceMagnitude;
 

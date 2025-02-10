@@ -48,7 +48,7 @@ public class ControllerPlanete : MonoBehaviour
 
     private void Update()
     {
-        throw new NotImplementedException();
+        
     }
 
     void FixedUpdate()
@@ -82,7 +82,7 @@ public class ControllerPlanete : MonoBehaviour
     {
         if (context.performed && grounded)
         {
-            rb.AddForce(transform.up * 10f, ForceMode.VelocityChange);
+            rb.AddForce(transform.up * 5f, ForceMode.VelocityChange);
         }
     }
 }
