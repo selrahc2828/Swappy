@@ -48,8 +48,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   speed: 100
-  flare: {fileID: 0}
-  spawnPosition: {fileID: 0}
+  speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.3113098
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.32111913
+      value: 0.99943256
+      inSlope: -0.014282214
+      outSlope: -0.014282214
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.18472302
+    - serializedVersion: 3
+      time: 0.5162307
+      value: 0.8044434
+      inSlope: 0.013947568
+      outSlope: 0.013947568
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.32017797
+    - serializedVersion: 3
+      time: 0.8137355
+      value: 0.78666264
+      inSlope: -0.12232123
+      outSlope: -0.12232123
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.35353822
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.29952836
+      inSlope: -2.342062
+      outSlope: -2.342062
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.0775401
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  duration: 2
+  isAttribute: 0
+  progress: 0
 --- !u!1 &7526777478847865934
 GameObject:
   m_ObjectHideFlags: 0

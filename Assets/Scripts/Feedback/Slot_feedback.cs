@@ -70,13 +70,11 @@ public class Slot_feedback : MonoBehaviour
         {
             Destroy(feedback_Act);
         }
-        Debug.Log($"startPosition = {startPosition.gameObject.name} \n" +
-                  $"targetPosition = {targetPosition.gameObject.name}");
-        
+
         GameObject flareObj = Instantiate(prefabFlare, startPosition.position, Quaternion.identity);
         // flareObj.GetComponent<FlareMoveTarget>().spawnPosition = startPosition;
         flareObj.GetComponent<FlareMoveTarget>().target = targetPosition;
-        flareObj.GetComponent<FlareMoveTarget>().SetJourneyLenght();
+        flareObj.GetComponent<FlareMoveTarget>().SetDistance();
         
         return flareObj;
     }

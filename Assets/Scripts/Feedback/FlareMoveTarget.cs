@@ -5,17 +5,23 @@ using UnityEngine.Serialization;
 
 public class FlareMoveTarget : MonoBehaviour
 {
+    private Vector3 startPosition;
     public Transform target; // Point d'arrivée
     public float speed = 2f; // Vitesse de déplacement
     private ParticleSystem flare;
+
+    public AnimationCurve speedCurve;
     
     // public Transform spawnPosition;
     
-    private Vector3 startPosition;
-    private float startTime;
-    private float journeyLength;
-
+    //private float startTime;
+    private float distance;
+    public float duration;
+    private float elapsedTime;
     public bool isAttribute;
+
+    public float progress = 0f;
+    
     void Start()
     {
         flare = GetComponentInChildren<ParticleSystem>();
@@ -26,24 +32,22 @@ public class FlareMoveTarget : MonoBehaviour
             return;
         }
         startPosition = transform.position;
-        SetJourneyLenght();
-        Debug.Log($"journeyLength : {journeyLength}");
-        startTime = Time.time;
+        SetDistance();
+
+        //startTime = Time.time;
     }
 
     void Update()
     {
         
         if (target == null) return;
-
-        float distCovered = (Time.time - startTime) * speed;
-        float fractionOfJourney = distCovered / journeyLength;
-        transform.position = Vector3.Lerp(startPosition, target.position, fractionOfJourney);
-
-        Vector3 dist = target.position - transform.position;
-        if (dist.magnitude < 0.05f)
+        
+        // Vector3 dist = target.position - transform.position;
+        if (Vector3.Distance(transform.position, target.position) < .2f)
         {
             flare?.gameObject.SetActive(false);
+            transform.position = target.position;
+
             if (isAttribute)
             {
                 Destroy(gameObject);
@@ -52,11 +56,31 @@ public class FlareMoveTarget : MonoBehaviour
         else
         {
             flare?.gameObject.SetActive(true);
+            
+            // On évalue la courbe en fonction de la progression actuelle.
+            // La courbe peut, par exemple, donner une valeur élevée (vitesse maximale)
+            // lorsque progress est faible (objet loin de la cible) et décroître à l'approche.
+            float speedMultiplier = speedCurve.Evaluate(progress);
+            float currentSpeed = speed * speedMultiplier;
+
+            // On incrémente la progression en fonction de la vitesse actuelle.
+            // nomalise le déplacement pour que progress atteigne 1 à l'arrivée.
+            progress += (currentSpeed * Time.deltaTime) / distance;
+            progress = Mathf.Clamp01(progress);
+
+            // On met à jour la position en interpolant entre la position de départ et la cible
+            transform.position = Vector3.Lerp(startPosition, target.position, progress);
+
+            // Debug.Log($"Progression : {progress:F2} \n" +
+            //           $"speedMultiplier : {speedMultiplier}" +
+            //           $"Distance restante : {Vector3.Distance(transform.position, target.position):F2} \n" +
+            //           $"Coefficient de vitesse : {speedMultiplier:F2} \n" +
+            //           $"Vitesse actuelle : {currentSpeed:F2}");
         }
     }
 
-    public void SetJourneyLenght()
+    public void SetDistance()
     {
-        journeyLength = Vector3.Distance(startPosition, target.position);
+        distance = Vector3.Distance(startPosition, target.position);
     }
 }
