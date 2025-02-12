@@ -125,16 +125,75 @@ MonoBehaviour:
   magnetColor: {r: 0.69411767, g: 0.86274517, b: 0.9921569, a: 1}
   immuableColor: {r: 0.7960785, g: 0.7137255, b: 0.9607844, a: 1}
   noComportementColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
+  flareData:
+    prefabFlareSlotHand: {fileID: 4878487311690120462, guid: 0e1144ef4b1116640b434fd8aad2ddca, type: 3}
+    speed: 150
+    speedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.49057007
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.32111913
+        value: 0.99943256
+        inSlope: -0.014282214
+        outSlope: -0.014282214
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.18472302
+      - serializedVersion: 3
+        time: 0.5162307
+        value: 0.8044434
+        inSlope: 0.013947568
+        outSlope: 0.013947568
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.32017797
+      - serializedVersion: 3
+        time: 0.8137355
+        value: 0.78666264
+        inSlope: -0.12232123
+        outSlope: -0.12232123
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.35353822
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.096708536
+        inSlope: -2.342062
+        outSlope: -2.342062
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.0775401
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    matFlareImpulse: {fileID: 2100000, guid: 4e96bcd7fe631434f9adf302c3cf5245, type: 2}
+    particleFlareColorImpulse: {r: 0.8784314, g: 0.15686275, b: 0.14509805, a: 1}
+    matFlareBounce: {fileID: 2100000, guid: 944edcf9dce1fbb40b28482c23dae3a9, type: 2}
+    particleFlareColorBounce: {r: 0.14509805, g: 0.8784314, b: 0.18039216, a: 1}
+    matFlareImmuable: {fileID: 2100000, guid: 920dfde4a9c09c04580af7426987ed04, type: 2}
+    particleFlareColorImmuable: {r: 0.7372549, g: 0.14509805, b: 0.8784314, a: 1}
+    matFlareMagnet: {fileID: 2100000, guid: b7019ea9112d62a4eaeae3c626fa0a37, type: 2}
+    particleFlareColorMagnet: {r: 0.14509805, g: 0.36862746, b: 0.8784314, a: 1}
+    matFlareRocket: {fileID: 2100000, guid: e5746f8cfaef4ed49a55234f9963186b, type: 2}
+    particleFlareColorRocket: {r: 0.8784314, g: 0.76862746, b: 0.14509805, a: 1}
   feedBack_Impulse: {fileID: 1838528298772245979, guid: 7062a1bbabe855741b3ad50f34e91064, type: 3}
   feedBack_Bouncing: {fileID: 7521130485353488716, guid: 72c3313dcb76fbd4db0cf9480d39a220, type: 3}
   feedBack_Rocket: {fileID: 7314418752963487225, guid: 084074985ced6f74baf880cb96bbf23e, type: 3}
   feedBack_Magnet: {fileID: 6171115788307145931, guid: 8c98c09c2ee466743ac06041b568ead8, type: 3}
   feedBack_Immuable: {fileID: 7115355853760126403, guid: 5a3c0080d6d694d42803fd7e288648df, type: 3}
-  hand_Slot_Impulse: {fileID: 4878487311690120462, guid: 6485e4717f7b549449c8c4d414f42d4a, type: 3}
-  hand_Slot_Bouncing: {fileID: 4878487311690120462, guid: b236f6386dfd64140b735fc43f834bed, type: 3}
-  hand_Slot_Rocket: {fileID: 4878487311690120462, guid: e17e9852bd8872644a693d6d12e89257, type: 3}
-  hand_Slot_Magnet: {fileID: 4878487311690120462, guid: b670b4f2fc6ad094da706b1ce5b6b957, type: 3}
-  hand_Slot_Immuable: {fileID: 4878487311690120462, guid: ba4cd94bb1c70634ab71c83ae13161ae, type: 3}
   magnetGenericPrefab: {fileID: 724591926826760339, guid: 9dff620a99e95a0489ddabbe4db1b50d, type: 3}
   repulserTime: 5
   doubleImpulseTime: 6

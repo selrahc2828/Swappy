@@ -119,7 +119,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot1Text.text = ((FirstState)slot1).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                     playeranim.Left_Aspiration();
-                                    LeftArm.Feedback_Slot_Changed();
+                                    LeftArm.Feedback_Slot_Changed(_hit.transform);
                                 }
                                 else
                                 {
@@ -153,7 +153,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot1Text.text = "";
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                     playeranim.Left_Attribution();
-                                    LeftArm.Feedback_Slot_Changed();
+                                    LeftArm.Feedback_Slot_Changed(null,_hit.transform);
                                 }
                                 else
                                 {
@@ -170,7 +170,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 slot1Text.text = "";
                                 SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                 playeranim.Left_Attribution();
-                                LeftArm.Feedback_Slot_Changed();
+                                LeftArm.Feedback_Slot_Changed(null,_hit.transform);
                             }
                         }
                     }
@@ -223,7 +223,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2Text.text = ((FirstState)slot2).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                     playeranim.Right_Aspiration();
-                                    RightArm.Feedback_Slot_Changed();
+                                    RightArm.Feedback_Slot_Changed(_hit.transform);
                                 }
                                 else
                                 {
@@ -235,7 +235,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2Text.text = ((FirstState)slot2).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                     playeranim.Right_Aspiration();
-                                    RightArm.Feedback_Slot_Changed();
+                                    RightArm.Feedback_Slot_Changed(_hit.transform);
                                 }
                             }
                             else
@@ -264,7 +264,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2Text.text = "";
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                     playeranim.Right_Attribution();
-                                    RightArm.Feedback_Slot_Changed();
+                                    RightArm.Feedback_Slot_Changed(null,_hit.transform);
                                 }
                                 else
                                 {
@@ -281,7 +281,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 slot2Text.text = "";
                                 SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                 playeranim.Right_Attribution();
-                                RightArm.Feedback_Slot_Changed();
+                                RightArm.Feedback_Slot_Changed(null,_hit.transform);
                             }
                         }
                     }
@@ -298,6 +298,10 @@ public class ComportementStealer_proto : MonoBehaviour
             (originSlot1, originSlot2) = (originSlot2, originSlot1);
             slot1Text.text = ((FirstState)slot1).ToString();
             slot2Text.text = ((FirstState)slot2).ToString();
+            
+            // change Feedback orbe/flare juste un swap color
+            RightArm.Feedback_Slot_Changed();
+            LeftArm.Feedback_Slot_Changed();
         }
     }
 
@@ -330,7 +334,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot1Text.text = "";
                                     SoundManager.Instance.PlaySoundComponentPlace(gameObject);
                                     playeranim.Left_Attribution();
-                                    LeftArm.Feedback_Slot_Changed();
+                                    LeftArm.Feedback_Slot_Changed(null,null, true);//player à gérer
                                 }
                                 else
                                 {
@@ -342,8 +346,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     slot2Text.text = "";
                                     SoundManager.Instance.PlaySoundComponentPlace(gameObject);
                                     playeranim.Right_Attribution();
-                                    RightArm.Feedback_Slot_Changed();
-
+                                    RightArm.Feedback_Slot_Changed(null, null, true);//player
                                 }
                             }
                             else
@@ -385,12 +388,12 @@ public class ComportementStealer_proto : MonoBehaviour
                         if (slot1 != 0)
                         {
                             playeranim.Left_Attribution();
-                            LeftArm.Feedback_Slot_Changed();
+                            LeftArm.Feedback_Slot_Changed(null, null, true);//player 
                         }
                         if (slot2 != 0)
                         {
                             playeranim.Right_Attribution();
-                            RightArm.Feedback_Slot_Changed(); 
+                            RightArm.Feedback_Slot_Changed(null, null, true); // player
                         }
                         
                         slot1 = 0;
@@ -401,9 +404,9 @@ public class ComportementStealer_proto : MonoBehaviour
                         slot2Text.text = "";
                         SoundManager.Instance.PlaySoundComponentPlace(gameObject);
                         // playeranim.Left_Attribution();
-                        // LeftArm.Feedback_Slot_Changed();
+                        // LeftArm.Feedback_Slot_Changed(null, null, true);
                         // // playeranim.Right_Attribution();
-                        // // RightArm.Feedback_Slot_Changed();
+                        // // RightArm.Feedback_Slot_Changed(null, null, true);
                     }
                 }
             }
@@ -467,6 +470,8 @@ public class ComportementStealer_proto : MonoBehaviour
                         slot1Text.text = "";
 
                     }
+                    //suppression des Feedback orbe/flare comportement sur les bras
+                    LeftArm.Feedback_Slot_Changed(null, null, true);
                 }
             }
 
@@ -503,6 +508,8 @@ public class ComportementStealer_proto : MonoBehaviour
                         originSlot2 = null;
                         slot2Text.text = "";
                     }
+                    //suppression des Feedback orbe/flare comportement sur les bras
+                    RightArm.Feedback_Slot_Changed(null, null, true);
                 }
             }
         }

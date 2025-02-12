@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class ComportementManager : MonoBehaviour
+public partial class ComportementManager : MonoBehaviour
 {
     public static ComportementManager Instance;
     
@@ -20,19 +20,15 @@ public class ComportementManager : MonoBehaviour
     public Color noComportementColor;
     
     [Header("Comportement Feedbacks")]
+    [SerializeField] public FlareData flareData;
+    
+    [Header("A instancier pour chaque objet comportement")]
     public GameObject feedBack_Impulse;
     public GameObject feedBack_Bouncing;
     public GameObject feedBack_Rocket;
     public GameObject feedBack_Magnet;
     public GameObject feedBack_Immuable;
-    
-    [Header("Hand Slots Feedbacks")]
-    public GameObject hand_Slot_Impulse;
-    public GameObject hand_Slot_Bouncing;
-    public GameObject hand_Slot_Rocket;
-    public GameObject hand_Slot_Magnet;
-    public GameObject hand_Slot_Immuable;
-    
+
     [Header("PrefabComportementGeneric")]
     public GameObject magnetGenericPrefab;
     

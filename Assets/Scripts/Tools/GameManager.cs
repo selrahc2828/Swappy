@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
     
     [HideInInspector] public bool etatIsProjected;
     public TextMeshProUGUI timerProjectionText;
-
+    
     private void OnEnable()
     {
         if (controls == null)
