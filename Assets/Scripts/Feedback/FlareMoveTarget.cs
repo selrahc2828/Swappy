@@ -16,7 +16,6 @@ public class FlareMoveTarget : MonoBehaviour
     
     //private float startTime;
     private float distance;
-    public float duration;
     private float elapsedTime;
     public bool isAttribute;
 
