@@ -33,17 +33,17 @@ public class Slot_feedback : MonoBehaviour
         int slot = left_Arm ? comp_steler_proto.slot1 : comp_steler_proto.slot2;
 
         // mettre isAttribute en param de fonction pour le faire destroy dans FlareMove
-        
+        // paramet isPlayer => true destroy feedback et return
         switch (slot)
             {
                 case 0:
                     if (feedback_Act != null)
                     {
-                        // Destroy(feedback_Act);
                         feedback_Act.GetComponent<FlareMoveTarget>().startPosition = spawnPosition.position;
                         feedback_Act.GetComponent<FlareMoveTarget>().target = targetPosition;
-
-                        feedback_Act.GetComponent<FlareMoveTarget>().isAttribute = true;
+                        feedback_Act.GetComponent<FlareMoveTarget>().SetDistance();
+                        
+                        feedback_Act.GetComponent<FlareMoveTarget>().attributeToObject = true;
                     }
                     break;
                 case 1:
