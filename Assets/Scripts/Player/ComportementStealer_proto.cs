@@ -298,6 +298,10 @@ public class ComportementStealer_proto : MonoBehaviour
             (originSlot1, originSlot2) = (originSlot2, originSlot1);
             slot1Text.text = ((FirstState)slot1).ToString();
             slot2Text.text = ((FirstState)slot2).ToString();
+            
+            // change Feedback orbe/flare juste un swap color
+            RightArm.Feedback_Slot_Changed();
+            LeftArm.Feedback_Slot_Changed();
         }
     }
 

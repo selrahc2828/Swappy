@@ -39,9 +39,8 @@ public class FlareMoveTarget : MonoBehaviour
         if (target == null) return;
         
         // Vector3 dist = target.position - transform.position;
-        if (Vector3.Distance(transform.position, target.position) < .2f)
+        if (Vector3.Distance(transform.position, target.position) < .5f)
         {
-            Debug.Log($"Stop FlareMoveTarget");
             flare?.gameObject.SetActive(false);
             transform.position = target.position;
 
