@@ -5,10 +5,11 @@ using UnityEngine.Serialization;
 
 public class FlareMoveTarget : MonoBehaviour
 {
-    private Vector3 startPosition;
+    [HideInInspector] public Vector3 startPosition;
     public Transform target; // Point d'arrivée
     public float speed = 2f; // Vitesse de déplacement
-    private ParticleSystem flare;
+    public ParticleSystem flare;
+    public Renderer flareRenderer;
 
     public AnimationCurve speedCurve;
     
@@ -19,11 +20,12 @@ public class FlareMoveTarget : MonoBehaviour
     private float elapsedTime;
     public bool isAttribute;
 
-    public float progress = 0f;
+    private float progress = 0f;
     
     void Start()
     {
         flare = GetComponentInChildren<ParticleSystem>();
+        flareRenderer = GetComponentInChildren<MeshRenderer>();
         
         if (target == null)
         {

@@ -32,33 +32,58 @@ public class Slot_feedback : MonoBehaviour
         
         int slot = left_Arm ? comp_steler_proto.slot1 : comp_steler_proto.slot2;
 
+        // mettre isAttribute en param de fonction pour le faire destroy dans FlareMove
+        
         switch (slot)
             {
                 case 0:
                     if (feedback_Act != null)
                     {
                         // Destroy(feedback_Act);
+                        feedback_Act.GetComponent<FlareMoveTarget>().startPosition = spawnPosition.position;
+                        feedback_Act.GetComponent<FlareMoveTarget>().target = targetPosition;
+
                         feedback_Act.GetComponent<FlareMoveTarget>().isAttribute = true;
                     }
                     break;
                 case 1:
-                    feedback_Act = SpawnFlare(comportementManager.flareSlotImpulse, spawnPosition, targetPosition);
+                    feedback_Act = SpawnFlare(comportementManager.flareData.prefabFlareSlotHand, spawnPosition, targetPosition);
+                    feedback_Act.GetComponent<FlareMoveTarget>().flareRenderer.material = comportementManager.flareData.matFlareImpulse;
+                    
+                    ParticleSystem.MainModule main = feedback_Act.GetComponent<FlareMoveTarget>().flare.main;
+                    main.startColor = comportementManager.flareData.particleFlareColorImpulse;
                     break;
 
                 case 3:
-                    feedback_Act = SpawnFlare(comportementManager.flareSlotImpulseBouncing, spawnPosition, targetPosition);
+                    feedback_Act = SpawnFlare(comportementManager.flareData.prefabFlareSlotHand, spawnPosition, targetPosition);
+                    feedback_Act.GetComponent<FlareMoveTarget>().flareRenderer.material = comportementManager.flareData.matFlareBounce;
+                    
+                    ParticleSystem.MainModule main2 = feedback_Act.GetComponent<FlareMoveTarget>().flare.main;
+                    main2.startColor = comportementManager.flareData.particleFlareColorBounce;
                     break;
 
                 case 9:
-                    feedback_Act = SpawnFlare(comportementManager.flareSlotImmuable, spawnPosition, targetPosition);
+                    feedback_Act = SpawnFlare(comportementManager.flareData.prefabFlareSlotHand, spawnPosition, targetPosition);
+                    feedback_Act.GetComponent<FlareMoveTarget>().flareRenderer.material = comportementManager.flareData.matFlareImmuable;
+
+                    ParticleSystem.MainModule main3 = feedback_Act.GetComponent<FlareMoveTarget>().flare.main;
+                    main3.startColor = comportementManager.flareData.particleFlareColorImmuable;
                     break;
 
                 case 27:
-                    feedback_Act = SpawnFlare(comportementManager.flareSlotMagnet, spawnPosition, targetPosition);
+                    feedback_Act = SpawnFlare(comportementManager.flareData.prefabFlareSlotHand, spawnPosition, targetPosition);
+                    feedback_Act.GetComponent<FlareMoveTarget>().flareRenderer.material = comportementManager.flareData.matFlareMagnet;
+
+                    ParticleSystem.MainModule main4 = feedback_Act.GetComponent<FlareMoveTarget>().flare.main;
+                    main4.startColor = comportementManager.flareData.particleFlareColorMagnet;
                     break;
 
                 case 81:
-                    feedback_Act = SpawnFlare(comportementManager.flareSlotRocket, spawnPosition, targetPosition);
+                    feedback_Act = SpawnFlare(comportementManager.flareData.prefabFlareSlotHand, spawnPosition, targetPosition);
+                    feedback_Act.GetComponent<FlareMoveTarget>().flareRenderer.material = comportementManager.flareData.matFlareRocket;
+
+                    ParticleSystem.MainModule main5 = feedback_Act.GetComponent<FlareMoveTarget>().flare.main;
+                    main5.startColor = comportementManager.flareData.particleFlareColorRocket;
                     break;
 
             }
@@ -72,9 +97,10 @@ public class Slot_feedback : MonoBehaviour
         }
 
         GameObject flareObj = Instantiate(prefabFlare, startPosition.position, Quaternion.identity);
-        // flareObj.GetComponent<FlareMoveTarget>().spawnPosition = startPosition;
         flareObj.GetComponent<FlareMoveTarget>().target = targetPosition;
         flareObj.GetComponent<FlareMoveTarget>().SetDistance();
+        flareObj.GetComponent<FlareMoveTarget>().speedCurve = comportementManager.flareData.speedCurve;
+        flareObj.GetComponent<FlareMoveTarget>().speed = comportementManager.flareData.speed;
         
         return flareObj;
     }
