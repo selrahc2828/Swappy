@@ -21,9 +21,15 @@ public class Slot_feedback : MonoBehaviour
         //comp_steler_proto = GameObject.FindGameObjectWithTag("Player").GetComponent<ComportementStealer_proto>();
     }
 
-    // Update is called once per frame
-    public void Feedback_Slot_Changed(Transform spawnPosition = null, Transform targetPosition = null)
+    public void Feedback_Slot_Changed(Transform spawnPosition = null, Transform targetPosition = null, bool destroy = false)
     {
+        if (destroy)
+        {
+            // apply sur player ou slot vidé
+            Destroy(feedback_Act);
+            return;
+        }
+        
         if (spawnPosition == null)// cas où on donne le comp
             spawnPosition = positionFB;
         
@@ -31,9 +37,7 @@ public class Slot_feedback : MonoBehaviour
             targetPosition = positionFB;
         
         int slot = left_Arm ? comp_steler_proto.slot1 : comp_steler_proto.slot2;
-
-        // mettre isAttribute en param de fonction pour le faire destroy dans FlareMove
-        // paramet isPlayer => true destroy feedback et return
+        
         switch (slot)
             {
                 case 0:
