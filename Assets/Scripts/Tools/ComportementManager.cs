@@ -45,15 +45,7 @@ public partial class ComportementManager : MonoBehaviour
     public MagnetBounceData magnetBounceData;
     public ImpulseMagnetData impulseMagnetData;
     public ImpulseBounceData impulseBounceData;
-    
-    [Header("Impulse Rocket")]
-    public float impulseRocketExplosionForce;
-    public float impulseRocketExplosionRange;
-    public float impulseRocketFlyForce;
-    public float impulseRocketFlyForceOnPlayer;
-    public float impulseRocketFlyTime;
-    public float timeBetweenImpulses;
-    
+    public ImpulseRocketData impulseRocketData;
     
     private void Awake()
     {

@@ -30,9 +30,9 @@ public class C_Impulse_Rocket : ComportementState
         base.Enter();
         
         maxSpeed = _sm.comportementManager.rocketData.rocketMaxSpeed;
-        explosionForce = _sm.comportementManager.impulseRocketExplosionForce;
-        rocketFlyForceOnPlayer = _sm.comportementManager.impulseRocketFlyForceOnPlayer;
-        explosionRange = _sm.comportementManager.impulseRocketExplosionRange;
+        explosionForce = _sm.comportementManager.impulseRocketData.impulseRocketExplosionForce;
+        rocketFlyForceOnPlayer = _sm.comportementManager.impulseRocketData.impulseRocketFlyForceOnPlayer;
+        explosionRange = _sm.comportementManager.impulseRocketData.impulseRocketExplosionRange;
         feedback = _sm.comportementManager.impulseData.impulseFeedback;
 
         // trueRepulserRange = repulserRange;
@@ -45,9 +45,9 @@ public class C_Impulse_Rocket : ComportementState
             explosionTrueRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + explosionRange;
         }
         // pb si obj n'a pas de collider direct (ax Player)
-        rocketFlyForce = _sm.comportementManager.impulseRocketFlyForce;
-        flyTime = _sm.comportementManager.impulseRocketFlyTime;
-        timeBetweenImpulses = _sm.comportementManager.timeBetweenImpulses;
+        rocketFlyForce = _sm.comportementManager.impulseRocketData.impulseRocketFlyForce;
+        flyTime = _sm.comportementManager.impulseRocketData.impulseRocketFlyTime;
+        timeBetweenImpulses = _sm.comportementManager.impulseRocketData.timeBetweenImpulses;
         flyTimer = 0f;
         impulseTimer = 0f;
         rocketOn = false;
