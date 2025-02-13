@@ -59,7 +59,7 @@ public class C_Bouncing_Magnet : ComportementState
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.magnetColor);
 
         bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
-        magnetRange = _sm.comportementManager.magnetBounceRange;
+        magnetRange = _sm.comportementManager.magnetBounceData.magnetBounceRange;
 
         if (_sm.isPlayer)
         {
@@ -78,21 +78,21 @@ public class C_Bouncing_Magnet : ComportementState
         }
         saveMagnetRange = trueMagnetRange;
         
-        magnetForce = _sm.comportementManager.magnetBounceForce;
-        magnetForceOnPlayer = _sm.comportementManager.magnetBounceForceOnPlayer;
-        magnetForceWhenGrab = _sm.comportementManager.magnetBounceForceWhenGrab;
+        magnetForce = _sm.comportementManager.magnetBounceData.magnetBounceForce;
+        magnetForceOnPlayer = _sm.comportementManager.magnetBounceData.magnetBounceForceOnPlayer;
+        magnetForceWhenGrab = _sm.comportementManager.magnetBounceData.magnetBounceForceWhenGrab;
         trueMagnetForce = magnetForce;
 
-        magnetForceMultiplier = _sm.comportementManager.magnetForceMultiplier;
-        magnetForceOnPlayerMultiplier = _sm.comportementManager.magnetForceOnPlayerMultiplier;
-        magnetForceWhenGrabMultiplier = _sm.comportementManager.magnetForceWhenGrabMultiplier;
+        magnetForceMultiplier = _sm.comportementManager.magnetBounceData.magnetForceMultiplier;
+        magnetForceOnPlayerMultiplier = _sm.comportementManager.magnetBounceData.magnetForceOnPlayerMultiplier;
+        magnetForceWhenGrabMultiplier = _sm.comportementManager.magnetBounceData.magnetForceWhenGrabMultiplier;
         
         // set la prefab qui va appliquer la force
         forceFieldObj = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.magnetGenericPrefab,_sm.transform.position, Quaternion.identity, _sm.transform);//, _sm.transform => parent mais pose des pb
         forceFieldObj.GetComponent<MagnetForceField>().force = trueMagnetForce;
-        forceFieldObj.GetComponent<MagnetForceField>().intervalBetweenBurst = _sm.comportementManager.intervalBetweenBurst;
-        forceFieldObj.GetComponent<MagnetForceField>().burstColor = _sm.comportementManager.burstColor;
-        forceFieldObj.GetComponent<MagnetForceField>().delayDisplay = _sm.comportementManager.delayDisplay;
+        forceFieldObj.GetComponent<MagnetForceField>().intervalBetweenBurst = _sm.comportementManager.magnetBounceData.intervalBetweenBurst;
+        forceFieldObj.GetComponent<MagnetForceField>().burstColor = _sm.comportementManager.magnetBounceData.burstColor;
+        forceFieldObj.GetComponent<MagnetForceField>().delayDisplay = _sm.comportementManager.magnetBounceData.delayDisplay;
         
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
         forceFieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
@@ -108,7 +108,7 @@ public class C_Bouncing_Magnet : ComportementState
         {
             collisionTimer += Time.deltaTime;
 
-            if (collisionTimer >= _sm.comportementManager.delayDisplay)
+            if (collisionTimer >= _sm.comportementManager.magnetBounceData.delayDisplay)
             {
                 // Réduit la range après x seconde après un choc en grab
                 trueMagnetRange = saveMagnetRange / 2;

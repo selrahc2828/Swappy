@@ -42,24 +42,8 @@ public partial class ComportementManager : MonoBehaviour
     public DoubleMagnetData doubleMagnetData;
     public BounceData bounceData;
     public DoubleBounceData doubleBounceData;
-
-    [Header("Magnet Bounce")]
-    public float magnetBounceForce = 60f;
-    [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à magnet Force")]
-    public float magnetForceMultiplier = 1.5f;
-    
-    public float magnetBounceForceOnPlayer = 60f;
-    public float magnetForceOnPlayerMultiplier = 1.5f;
-    
-    public float magnetBounceForceWhenGrab = 60f;
-    public float magnetForceWhenGrabMultiplier = 1.5f;
-
-    public float magnetBounceRange = 10f;
-    public float intervalBetweenBurst = .5f;
-    public Color burstColor;
-    [Tooltip("delay pour scale magnet range collision quand grab, sinon trop court avec les rebond qui s'enchaine")]
-    public float delayDisplay = .5f;
-    
+    public MagnetBounceData magnetBounceData;
+  
     [Header("Impulse Magnet")]
     public float zoneImpulseRange;
     public float zoneImpulseForce;
