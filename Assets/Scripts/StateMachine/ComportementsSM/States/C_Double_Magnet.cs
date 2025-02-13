@@ -30,7 +30,7 @@ public class C_Double_Magnet : ComportementState
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.magnetColor);
 
-        magnetRange = _sm.comportementManager.doubleMagnetRange;
+        magnetRange = _sm.comportementManager.doubleMagnetData.doubleMagnetRange;
         if (_sm.isPlayer)
         {
             trueMagnetRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + magnetRange;
@@ -40,16 +40,16 @@ public class C_Double_Magnet : ComportementState
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;
         }
         
-        magnetForce = _sm.comportementManager.doubleMagnetForce;
-        magnetForceOnPlayer = _sm.comportementManager.doubleMagnetForceOnPlayer;
-        magnetForceWhenGrab = _sm.comportementManager.doubleMagnetForceWhenGrab;
+        magnetForce = _sm.comportementManager.doubleMagnetData.doubleMagnetForce;
+        magnetForceOnPlayer = _sm.comportementManager.doubleMagnetData.doubleMagnetForceOnPlayer;
+        magnetForceWhenGrab = _sm.comportementManager.doubleMagnetData.doubleMagnetForceWhenGrab;
         
         // set la prefab qui va appliquer la force
-        forceFieldObj = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.prefabDoubleMagnetForcefield,_sm.transform.position, Quaternion.identity, _sm.transform);//, _sm.transform => parent mais pose des pb
+        forceFieldObj = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.doubleMagnetData.prefabDoubleMagnetForcefield,_sm.transform.position, Quaternion.identity, _sm.transform);//, _sm.transform => parent mais pose des pb
         forceFieldObj.GetComponent<MagnetForceField>().force = magnetForce;
         forceFieldObj.GetComponent<MagnetForceField>().affectedPlayer = true;
         
-        forceFieldObj.GetComponent<MagnetForceField>().magnetFeedbackMaterial.material.SetColor("_Color0", _sm.comportementManager.justePourDiffSimpleMagnet);
+        forceFieldObj.GetComponent<MagnetForceField>().magnetFeedbackMaterial.material.SetColor("_Color0", _sm.comportementManager.doubleMagnetData.justePourDiffSimpleMagnet);
         
         forceFieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
         forceFieldObj.GetComponent<GrowToRadius>().atDestroy = false;

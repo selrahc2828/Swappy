@@ -39,14 +39,7 @@ public partial class ComportementManager : MonoBehaviour
     public ImmuableRocketData immuableRocketData;
     public MagnetRocketData magnetRocketData;
     public MagnetData magnetData;
-
-    [Header("DoubleMagnet")]
-    public GameObject prefabDoubleMagnetForcefield;
-    public Color justePourDiffSimpleMagnet;
-    public float doubleMagnetRange = 20f;
-    public float doubleMagnetForce = 75f;
-    public float doubleMagnetForceOnPlayer = 75f;
-    public float doubleMagnetForceWhenGrab = 75f;
+    public DoubleMagnetData doubleMagnetData;
     
     [Header("Bouncing")]
     public PhysicMaterial bouncyMaterial;
