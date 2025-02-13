@@ -23,8 +23,8 @@ public class C_Immuable_Rocket : ComportementState
         ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.rocketColor);
         _sm.rb.isKinematic = true;
 
-        rocketReleaseForce = _sm.comportementManager.rocketReleaseForce;
-        chargeTimeMax = _sm.comportementManager.chargeTimeMax;
+        rocketReleaseForce = _sm.comportementManager.immuableRocketData.rocketReleaseForce;
+        chargeTimeMax = _sm.comportementManager.immuableRocketData.chargeTimeMax;
         chargeTime = 0;
         
         feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
