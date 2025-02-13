@@ -36,20 +36,13 @@ public partial class ComportementManager : MonoBehaviour
     [Header("DATAS")]
     public ImpulseData impulseData;
     public RocketData rocketData;
-
-    
-    [Header("Rocket")]
-    // public float rocketForce = 20f;
-    // public float rocketForceOnPlayer = 20f;
-    // public float rocketForceWhenGrab = 20f;
-    // public float rocketOnOffCouldown = 4f;
-    // public float rocketMaxSpeed = 20f;
+    public DoubleRocketData doubleRocketData;
     
     [Header("DoubleRocket")]
-    public float rocketDoubleForce = 20f;
-    public float rocketDoubleForceOnPlayer = 20f;
-    public float rocketDoubleForceWhenGrab = 20f;
-    public float rocketDoubleCouldown = 4f;
+    // public float rocketDoubleForce = 20f;
+    // public float rocketDoubleForceOnPlayer = 20f;
+    // public float rocketDoubleForceWhenGrab = 20f;
+    // public float rocketDoubleCouldown = 4f;
     
     [Header("Rocket Immuable")]
     public float rocketReleaseForce = 10f;

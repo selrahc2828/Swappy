@@ -26,10 +26,10 @@ public class C_Double_Rocket : ComportementState
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
         timer = 0f;
-        rocketForce = _sm.comportementManager.rocketDoubleForce;
-        rocketForceOnPlayer = _sm.comportementManager.rocketDoubleForceOnPlayer;
-        rocketForceWhenGrab = _sm.comportementManager.rocketDoubleForceWhenGrab;
-        onOffCouldown = _sm.comportementManager.rocketDoubleCouldown;
+        rocketForce = _sm.comportementManager.doubleRocketData.rocketDoubleForce;
+        rocketForceOnPlayer = _sm.comportementManager.doubleRocketData.rocketDoubleForceOnPlayer;
+        rocketForceWhenGrab = _sm.comportementManager.doubleRocketData.rocketDoubleForceWhenGrab;
+        onOffCouldown = _sm.comportementManager.doubleRocketData.rocketDoubleCouldown;
     }
 
     public override void TickLogic()
