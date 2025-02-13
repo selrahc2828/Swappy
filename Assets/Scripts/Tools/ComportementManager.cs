@@ -40,9 +40,9 @@ public partial class ComportementManager : MonoBehaviour
     public MagnetRocketData magnetRocketData;
     public MagnetData magnetData;
     public DoubleMagnetData doubleMagnetData;
-    
-    [Header("Bouncing")]
-    public PhysicMaterial bouncyMaterial;
+    public BounceData bounceData;
+    public DoubleBounceData doubleBounceData;
+
     [Header("DoubleBounce")]
     public PhysicMaterial doubleBouncyMaterial;
 

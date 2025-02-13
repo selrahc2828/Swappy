@@ -58,7 +58,7 @@ public class C_Bouncing_Magnet : ComportementState
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.magnetColor);
 
-        bouncyMaterial = _sm.comportementManager.bouncyMaterial;
+        bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
         magnetRange = _sm.comportementManager.magnetBounceRange;
 
         if (_sm.isPlayer)

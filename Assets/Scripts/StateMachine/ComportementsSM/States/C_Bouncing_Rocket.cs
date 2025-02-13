@@ -38,7 +38,7 @@ public class C_Bouncing_Rocket : ComportementState
         rocketForceWhenGrab = _sm.comportementManager.rocketData.rocketForceWhenGrab;
         onOffCooldown = _sm.comportementManager.rocketData.rocketOnOffCouldown;
         
-        bouncyMaterial = _sm.comportementManager.bouncyMaterial;
+        bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
         if (_sm.isPlayer)
         {
             basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;

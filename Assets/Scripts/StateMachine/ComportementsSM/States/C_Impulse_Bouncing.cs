@@ -39,7 +39,7 @@ public class C_Impulse_Bouncing : ComportementState
         impulseBounceCooldown = impulseBounceTimer;
         impulseBounceRange = _sm.comportementManager.impulseBounceRange;
 
-        _bouncyMaterial = _sm.comportementManager.bouncyMaterial;
+        _bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
         if (_sm.isPlayer)
         {
             trueImpulseBounceRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + impulseBounceRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux

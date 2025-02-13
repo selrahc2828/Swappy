@@ -20,7 +20,7 @@ public class C_Solo_Bouncing : ComportementState
         rightValue = 0;
         base.Enter();
 
-        _bouncyMaterial = _sm.comportementManager.bouncyMaterial;
+        _bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
         // _sm.rend.material = _sm.bounce;
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.noComportementColor);
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);

@@ -29,7 +29,7 @@ public class C_Bouncing_Immuable : ComportementState
         feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
        
-        _bouncyMaterial = _sm.comportementManager.bouncyMaterial;
+        _bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
 
         if (_sm.isPlayer)
         {
