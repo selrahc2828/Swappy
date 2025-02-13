@@ -32,11 +32,11 @@ public class C_Bouncing_Rocket : ComportementState
         timer = 0f;
         rocketOn = false;
         rocketDirection = Vector3.up;
-        maxSpeed = _sm.comportementManager.rocketMaxSpeed;
-        rocketForce = _sm.comportementManager.rocketForce;
-        rocketForceOnPlayer = _sm.comportementManager.rocketForceOnPlayer;
-        rocketForceWhenGrab = _sm.comportementManager.rocketForceWhenGrab;
-        onOffCooldown = _sm.comportementManager.rocketOnOffCouldown;
+        maxSpeed = _sm.comportementManager.rocketData.rocketMaxSpeed;
+        rocketForce = _sm.comportementManager.rocketData.rocketForce;
+        rocketForceOnPlayer = _sm.comportementManager.rocketData.rocketForceOnPlayer;
+        rocketForceWhenGrab = _sm.comportementManager.rocketData.rocketForceWhenGrab;
+        onOffCooldown = _sm.comportementManager.rocketData.rocketOnOffCouldown;
         
         bouncyMaterial = _sm.comportementManager.bouncyMaterial;
         if (_sm.isPlayer)

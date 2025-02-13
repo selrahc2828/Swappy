@@ -29,7 +29,7 @@ public class C_Impulse_Rocket : ComportementState
         rightValue = 81;
         base.Enter();
         
-        maxSpeed = _sm.comportementManager.rocketMaxSpeed;
+        maxSpeed = _sm.comportementManager.rocketData.rocketMaxSpeed;
         explosionForce = _sm.comportementManager.impulseRocketExplosionForce;
         rocketFlyForceOnPlayer = _sm.comportementManager.impulseRocketFlyForceOnPlayer;
         explosionRange = _sm.comportementManager.impulseRocketExplosionRange;

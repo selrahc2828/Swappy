@@ -33,24 +33,17 @@ public partial class ComportementManager : MonoBehaviour
     public GameObject magnetGenericPrefab;
 
 
-    [Header("Impulse")]
+    [Header("DATAS")]
     public ImpulseData impulseData;
-    // public float repulserTime = 5f;
-    // public float doubleImpulseTime = 6f;
-    // public float repulserRange;
-    // public float repulserForce;
-    // public bool destroyOnUse = false;
-    // public bool impulseGradiantForce = false;
-    // public GameObject impulseFeedback;
-    // [Tooltip("Si Rigidbody sur lui")]
-    // public bool applyOnMe = false;
+    public RocketData rocketData;
+
     
     [Header("Rocket")]
-    public float rocketForce = 20f;
-    public float rocketForceOnPlayer = 20f;
-    public float rocketForceWhenGrab = 20f;
-    public float rocketOnOffCouldown = 4f;
-    public float rocketMaxSpeed = 20f;
+    // public float rocketForce = 20f;
+    // public float rocketForceOnPlayer = 20f;
+    // public float rocketForceWhenGrab = 20f;
+    // public float rocketOnOffCouldown = 4f;
+    // public float rocketMaxSpeed = 20f;
     
     [Header("DoubleRocket")]
     public float rocketDoubleForce = 20f;

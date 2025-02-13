@@ -27,11 +27,11 @@ public class C_Solo_Rocket : ComportementState
 
         timer = 0f;
         rocketOn = false;
-        maxSpeed = _sm.comportementManager.rocketMaxSpeed;
-        rocketForce = _sm.comportementManager.rocketForce;
-        rocketForceOnPlayer = _sm.comportementManager.rocketForceOnPlayer;
-        rocketForceWhenGrab = _sm.comportementManager.rocketForceWhenGrab;
-        onOffCooldown = _sm.comportementManager.rocketOnOffCouldown;
+        maxSpeed = _sm.comportementManager.rocketData.rocketMaxSpeed;
+        rocketForce = _sm.comportementManager.rocketData.rocketForce;
+        rocketForceOnPlayer = _sm.comportementManager.rocketData.rocketForceOnPlayer;
+        rocketForceWhenGrab = _sm.comportementManager.rocketData.rocketForceWhenGrab;
+        onOffCooldown = _sm.comportementManager.rocketData.rocketOnOffCouldown;
         
         // _sm.rend.material = _sm.rocket;
         ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
