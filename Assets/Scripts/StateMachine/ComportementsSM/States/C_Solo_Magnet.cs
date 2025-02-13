@@ -27,7 +27,7 @@ public class C_Solo_Magnet : ComportementState
         rightValue = 0;
         base.Enter();
 
-        magnetRange = _sm.comportementManager.magnetRange;
+        magnetRange = _sm.comportementManager.magnetData.magnetRange;
         if (_sm.isPlayer)
         {
             trueMagnetRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + magnetRange;
@@ -36,8 +36,8 @@ public class C_Solo_Magnet : ComportementState
         {
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;
         }
-        magnetForce = _sm.comportementManager.magnetForce;
-        magnetGradiantForce = _sm.comportementManager.magnetGradiantForce;
+        magnetForce = _sm.comportementManager.magnetData.magnetForce;
+        magnetGradiantForce = _sm.comportementManager.magnetData.magnetGradiantForce;
         
         // _sm.rend.material = _sm.magnet;
         ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.noComportementColor);

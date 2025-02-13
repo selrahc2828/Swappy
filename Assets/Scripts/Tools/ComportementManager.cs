@@ -38,11 +38,7 @@ public partial class ComportementManager : MonoBehaviour
     public DoubleRocketData doubleRocketData;
     public ImmuableRocketData immuableRocketData;
     public MagnetRocketData magnetRocketData;
-    
-    [Header("Magnet")]
-    public float magnetRange = 10f;
-    public float magnetForce;
-    [HideInInspector] public bool magnetGradiantForce;
+    public MagnetData magnetData;
 
     [Header("DoubleMagnet")]
     public GameObject prefabDoubleMagnetForcefield;
