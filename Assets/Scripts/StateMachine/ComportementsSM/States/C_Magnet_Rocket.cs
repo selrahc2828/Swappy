@@ -34,15 +34,15 @@ public class C_Magnet_Rocket : ComportementState
         ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.rocketColor);
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
-        magnetRocketFlyTime = _sm.comportementManager.magnetRocketFlyTime;
-        rocketMagnetForce = _sm.comportementManager.rocketMagnetForce;
-        rocketMagnetForceOnPlayer = _sm.comportementManager.rocketMagnetForceOnPlayer;
-        rocketMagnetForceWhenGrab = _sm.comportementManager.rocketMagnetForceWhenGrab;
-        magnetTrailForce = _sm.comportementManager.magnetTrailForce; 
+        magnetRocketFlyTime = _sm.comportementManager.magnetRocketData.magnetRocketFlyTime;
+        rocketMagnetForce = _sm.comportementManager.magnetRocketData.rocketMagnetForce;
+        rocketMagnetForceOnPlayer = _sm.comportementManager.magnetRocketData.rocketMagnetForceOnPlayer;
+        rocketMagnetForceWhenGrab = _sm.comportementManager.magnetRocketData.rocketMagnetForceWhenGrab;
+        magnetTrailForce = _sm.comportementManager.magnetRocketData.magnetTrailForce; 
             
-        magnetTrailSpeedLerp = _sm.comportementManager.magnetTrailLerp;
-        magnetTrailTimeBeforeMove = _sm.comportementManager.magnetTrailTimeBeforeMove;
-        prefabForceField = _sm.comportementManager.prefabMagnetRocketForcefield;
+        magnetTrailSpeedLerp = _sm.comportementManager.magnetRocketData.magnetTrailLerp;
+        magnetTrailTimeBeforeMove = _sm.comportementManager.magnetRocketData.magnetTrailTimeBeforeMove;
+        prefabForceField = _sm.comportementManager.magnetRocketData.prefabMagnetRocketForcefield;
         
         // spawn de la zone de magnet
         magnetPos = _sm.transform.position;

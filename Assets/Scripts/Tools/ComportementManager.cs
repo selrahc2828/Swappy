@@ -37,21 +37,7 @@ public partial class ComportementManager : MonoBehaviour
     public RocketData rocketData;
     public DoubleRocketData doubleRocketData;
     public ImmuableRocketData immuableRocketData;
-
-    
-    [Header("Rocket Immuable")]
-    // public float rocketReleaseForce = 10f;
-    // public float chargeTimeMax = 6f;
-
-    [Header("Magnet Rocket")]
-    public GameObject prefabMagnetRocketForcefield;
-    public float magnetRocketFlyTime = 4f;
-    public float rocketMagnetForce = 20f;
-    public float rocketMagnetForceOnPlayer = 20f;
-    public float rocketMagnetForceWhenGrab = 20f;
-    public float magnetTrailForce = 10f;
-    public float magnetTrailLerp = 1f;
-    public float magnetTrailTimeBeforeMove = 3f;
+    public MagnetRocketData magnetRocketData;
     
     [Header("Magnet")]
     public float magnetRange = 10f;
