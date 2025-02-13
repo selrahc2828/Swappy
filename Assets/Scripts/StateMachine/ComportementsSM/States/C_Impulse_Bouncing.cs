@@ -35,9 +35,9 @@ public class C_Impulse_Bouncing : ComportementState
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.bouncingColor);
         
-        impulseBounceTimer = _sm.comportementManager.impulseBounceTimer;
+        impulseBounceTimer = _sm.comportementManager.impulseBounceData.impulseBounceTimer;
         impulseBounceCooldown = impulseBounceTimer;
-        impulseBounceRange = _sm.comportementManager.impulseBounceRange;
+        impulseBounceRange = _sm.comportementManager.impulseBounceData.impulseBounceRange;
 
         _bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
         if (_sm.isPlayer)
@@ -57,10 +57,10 @@ public class C_Impulse_Bouncing : ComportementState
 
         }
         
-        impulseBounceForce = _sm.comportementManager.impulseBounceForce;
+        impulseBounceForce = _sm.comportementManager.impulseBounceData.impulseBounceForce;
         saveImpulseForce = impulseBounceForce;
         trueImpulseBounceForce = impulseBounceForce;
-        impulseForceMultiplier = _sm.comportementManager.impulseForceMultiplier;
+        impulseForceMultiplier = _sm.comportementManager.impulseBounceData.impulseForceMultiplier;
         
         impulseBounceFeedback = _sm.comportementManager.impulseData.impulseFeedback;
         

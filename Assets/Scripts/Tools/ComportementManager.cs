@@ -44,13 +44,7 @@ public partial class ComportementManager : MonoBehaviour
     public DoubleBounceData doubleBounceData;
     public MagnetBounceData magnetBounceData;
     public ImpulseMagnetData impulseMagnetData;
-
-    [Header("Impulse Bounce")]
-    public float impulseBounceForce;
-    public float impulseBounceRange;
-    public float impulseBounceTimer;
-    [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à impulse bounce Force")]
-    public float impulseForceMultiplier;
+    public ImpulseBounceData impulseBounceData;
     
     [Header("Impulse Rocket")]
     public float impulseRocketExplosionForce;
