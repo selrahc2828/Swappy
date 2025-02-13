@@ -20,7 +20,7 @@ public partial class ComportementManager : MonoBehaviour
     public Color noComportementColor;
     
     [Header("Comportement Feedbacks")]
-    [SerializeField] public FlareData flareData;
+    public FlareData flareData;
     
     [Header("A instancier pour chaque objet comportement")]
     public GameObject feedBack_Impulse;
@@ -31,17 +31,19 @@ public partial class ComportementManager : MonoBehaviour
 
     [Header("PrefabComportementGeneric")]
     public GameObject magnetGenericPrefab;
-    
+
+
     [Header("Impulse")]
-    public float repulserTime = 5f;
-    public float doubleImpulseTime = 6f;
-    public float repulserRange;
-    public float repulserForce;
-    public bool destroyOnUse = false;
-    public bool impulseGradiantForce = false;
-    public GameObject impulseFeedback;
-    [Tooltip("Si Rigidbody sur lui")]
-    public bool applyOnMe = false;
+    public ImpulseData impulseData;
+    // public float repulserTime = 5f;
+    // public float doubleImpulseTime = 6f;
+    // public float repulserRange;
+    // public float repulserForce;
+    // public bool destroyOnUse = false;
+    // public bool impulseGradiantForce = false;
+    // public GameObject impulseFeedback;
+    // [Tooltip("Si Rigidbody sur lui")]
+    // public bool applyOnMe = false;
     
     [Header("Rocket")]
     public float rocketForce = 20f;

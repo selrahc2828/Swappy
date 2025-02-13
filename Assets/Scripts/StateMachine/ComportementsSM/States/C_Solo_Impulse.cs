@@ -27,9 +27,9 @@ public class C_Solo_Impulse : ComportementState
         rightValue = 0;
         base.Enter();
         
-        repulserTime = _sm.comportementManager.repulserTime;
+        repulserTime = _sm.comportementManager.impulseData.impulseTime;
         repulserTimer = 0f;
-        repulserRange = _sm.comportementManager.repulserRange;
+        repulserRange = _sm.comportementManager.impulseData.impulseRange;
 
         // trueRepulserRange = repulserRange;
         if (_sm.isPlayer)
@@ -41,11 +41,11 @@ public class C_Solo_Impulse : ComportementState
             trueRepulserRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + repulserRange;
         }
         // pb si obj n'a pas de collider direct (ax Player)
-        repulserForce = _sm.comportementManager.repulserForce;
-        destroyOnUse = _sm.comportementManager.destroyOnUse;
-        impulseGradiantForce = _sm.comportementManager.impulseGradiantForce;
-        applyOnMe= _sm.comportementManager.applyOnMe;
-        feedback = _sm.comportementManager.impulseFeedback;
+        repulserForce = _sm.comportementManager.impulseData.impulseForce;
+        destroyOnUse = _sm.comportementManager.impulseData.destroyOnUse;
+        impulseGradiantForce = _sm.comportementManager.impulseData.impulseGradiantForce;
+        applyOnMe= _sm.comportementManager.impulseData.applyOnMe;
+        feedback = _sm.comportementManager.impulseData.impulseFeedback;
         
         // Debug.Log("Solo impulse enter");
         //_sm.rend.material = _sm.impulse;

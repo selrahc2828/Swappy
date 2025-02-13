@@ -62,7 +62,7 @@ public class C_Impulse_Bouncing : ComportementState
         trueImpulseBounceForce = impulseBounceForce;
         impulseForceMultiplier = _sm.comportementManager.impulseForceMultiplier;
         
-        impulseBounceFeedback = _sm.comportementManager.impulseFeedback;
+        impulseBounceFeedback = _sm.comportementManager.impulseData.impulseFeedback;
         
         feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 

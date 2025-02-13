@@ -33,7 +33,7 @@ public class C_Impulse_Rocket : ComportementState
         explosionForce = _sm.comportementManager.impulseRocketExplosionForce;
         rocketFlyForceOnPlayer = _sm.comportementManager.impulseRocketFlyForceOnPlayer;
         explosionRange = _sm.comportementManager.impulseRocketExplosionRange;
-        feedback = _sm.comportementManager.impulseFeedback;
+        feedback = _sm.comportementManager.impulseData.impulseFeedback;
 
         // trueRepulserRange = repulserRange;
         if (_sm.isPlayer)
