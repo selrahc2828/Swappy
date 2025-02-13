@@ -43,11 +43,7 @@ public partial class ComportementManager : MonoBehaviour
     public BounceData bounceData;
     public DoubleBounceData doubleBounceData;
     public MagnetBounceData magnetBounceData;
-  
-    [Header("Impulse Magnet")]
-    public float zoneImpulseRange;
-    public float zoneImpulseForce;
-    public GameObject prefabImpulseMagnet;
+    public ImpulseMagnetData impulseMagnetData;
 
     [Header("Impulse Bounce")]
     public float impulseBounceForce;

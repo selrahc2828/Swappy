@@ -29,7 +29,7 @@ public class C_Impulse_Magnet : ComportementState
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.magnetColor);
         
-        zoneImpulseRange = _sm.comportementManager.zoneImpulseRange;
+        zoneImpulseRange = _sm.comportementManager.impulseMagnetData.zoneImpulseRange;
 
         if (_sm.isPlayer)
         {
@@ -40,8 +40,8 @@ public class C_Impulse_Magnet : ComportementState
             trueZoneImpulseRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + zoneImpulseRange;
         }
         
-        zoneImpulseForce = _sm.comportementManager.zoneImpulseForce;
-        feedback = _sm.comportementManager.prefabImpulseMagnet;
+        zoneImpulseForce = _sm.comportementManager.impulseMagnetData.zoneImpulseForce;
+        feedback = _sm.comportementManager.impulseMagnetData.prefabImpulseMagnet;
         
         //zone qui repousse constamment
         ConstantRepulse();

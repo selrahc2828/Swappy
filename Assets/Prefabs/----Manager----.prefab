@@ -195,57 +195,68 @@ MonoBehaviour:
   feedBack_Magnet: {fileID: 6171115788307145931, guid: 8c98c09c2ee466743ac06041b568ead8, type: 3}
   feedBack_Immuable: {fileID: 7115355853760126403, guid: 5a3c0080d6d694d42803fd7e288648df, type: 3}
   magnetGenericPrefab: {fileID: 724591926826760339, guid: 9dff620a99e95a0489ddabbe4db1b50d, type: 3}
-  repulserTime: 5
-  doubleImpulseTime: 6
-  repulserRange: 10
-  repulserForce: 90
-  destroyOnUse: 0
-  impulseGradiantForce: 1
-  impulseFeedback: {fileID: 5997281712086689970, guid: d7e7b2fb81b45414cbff7f19ab5a5b62, type: 3}
-  applyOnMe: 0
-  rocketForce: 75
-  rocketForceOnPlayer: 75
-  rocketForceWhenGrab: 75
-  rocketOnOffCouldown: 5
-  rocketMaxSpeed: 15
-  rocketDoubleForce: 150
-  rocketDoubleForceOnPlayer: 150
-  rocketDoubleForceWhenGrab: 150
-  rocketDoubleCouldown: 10
-  rocketReleaseForce: 75
-  chargeTimeMax: 6
-  prefabMagnetRocketForcefield: {fileID: 7410193036753820761, guid: b9fbb057f1c335e42b1c4956f62c15db, type: 3}
-  magnetRocketFlyTime: 4
-  rocketMagnetForce: 7
-  rocketMagnetForceOnPlayer: 7
-  rocketMagnetForceWhenGrab: 7
-  magnetTrailForce: 5
-  magnetTrailLerp: 1.5
-  magnetTrailTimeBeforeMove: 5
-  magnetRange: 8
-  magnetForce: 8
-  magnetGradiantForce: 0
-  prefabDoubleMagnetForcefield: {fileID: 724591926826760339, guid: 9dff620a99e95a0489ddabbe4db1b50d, type: 3}
-  justePourDiffSimpleMagnet: {r: 0.30113026, g: 0.66985506, b: 0.9528302, a: 1}
-  doubleMagnetRange: 8
-  doubleMagnetForce: 80
-  doubleMagnetForceOnPlayer: 80
-  doubleMagnetForceWhenGrab: 80
-  bouncyMaterial: {fileID: 13400000, guid: 621a7ce6cc196df46ad286df13701f02, type: 2}
-  doubleBouncyMaterial: {fileID: 13400000, guid: 16a76e54968c6cc48a861c0ace231bcd, type: 2}
-  magnetBounceForce: 60
-  magnetForceMultiplier: 1.5
-  magnetBounceForceOnPlayer: 60
-  magnetForceOnPlayerMultiplier: 1.5
-  magnetBounceForceWhenGrab: 60
-  magnetForceWhenGrabMultiplier: 1.5
-  magnetBounceRange: 8
-  intervalBetweenBurst: 2
-  burstColor: {r: 0.5647059, g: 0.80784315, b: 0.5686275, a: 1}
-  delayDisplay: 0.2
-  zoneImpulseRange: 8
-  zoneImpulseForce: 25
-  prefabImpulseMagnet: {fileID: 5997281712086689970, guid: 59fbb35a551b97d4597283825cbd8cf7, type: 3}
+  impulseData:
+    impulseTime: 5
+    doubleImpulseTime: 6
+    impulseRange: 10
+    impulseForce: 90
+    destroyOnUse: 0
+    impulseGradiantForce: 1
+    impulseFeedback: {fileID: 5997281712086689970, guid: d7e7b2fb81b45414cbff7f19ab5a5b62, type: 3}
+    applyOnMe: 0
+  rocketData:
+    rocketForce: 75
+    rocketForceOnPlayer: 75
+    rocketForceWhenGrab: 75
+    rocketOnOffCouldown: 5
+    rocketMaxSpeed: 15
+  doubleRocketData:
+    rocketDoubleForce: 150
+    rocketDoubleForceOnPlayer: 150
+    rocketDoubleForceWhenGrab: 150
+    rocketDoubleCouldown: 10
+  immuableRocketData:
+    rocketReleaseForce: 75
+    chargeTimeMax: 6
+  magnetRocketData:
+    prefabMagnetRocketForcefield: {fileID: 7410193036753820761, guid: b9fbb057f1c335e42b1c4956f62c15db, type: 3}
+    magnetRocketFlyTime: 4
+    rocketMagnetForce: 7
+    rocketMagnetForceOnPlayer: 7
+    rocketMagnetForceWhenGrab: 7
+    magnetTrailForce: 5
+    magnetTrailLerp: 1.5
+    magnetTrailTimeBeforeMove: 5
+  magnetData:
+    magnetRange: 8
+    magnetForce: 8
+    magnetGradiantForce: 0
+  doubleMagnetData:
+    prefabDoubleMagnetForcefield: {fileID: 724591926826760339, guid: 9dff620a99e95a0489ddabbe4db1b50d, type: 3}
+    justePourDiffSimpleMagnet: {r: 0.3019608, g: 0.67058825, b: 0.9529412, a: 1}
+    doubleMagnetRange: 8
+    doubleMagnetForce: 80
+    doubleMagnetForceOnPlayer: 80
+    doubleMagnetForceWhenGrab: 80
+  bounceData:
+    bouncyMaterial: {fileID: 13400000, guid: 621a7ce6cc196df46ad286df13701f02, type: 2}
+  doubleBounceData:
+    doubleBouncyMaterial: {fileID: 13400000, guid: 16a76e54968c6cc48a861c0ace231bcd, type: 2}
+  magnetBounceData:
+    magnetBounceForce: 60
+    magnetForceMultiplier: 1.5
+    magnetBounceForceOnPlayer: 60
+    magnetForceOnPlayerMultiplier: 1.5
+    magnetBounceForceWhenGrab: 60
+    magnetForceWhenGrabMultiplier: 1.5
+    magnetBounceRange: 8
+    intervalBetweenBurst: 2
+    burstColor: {r: 0.5647059, g: 0.80784315, b: 0.5686275, a: 1}
+    delayDisplay: 0.2
+  impulseMagnetData:
+    zoneImpulseRange: 8
+    zoneImpulseForce: 25
+    prefabImpulseMagnet: {fileID: 5997281712086689970, guid: 59fbb35a551b97d4597283825cbd8cf7, type: 3}
   impulseBounceForce: 80
   impulseBounceRange: 10
   impulseBounceTimer: 0.3
