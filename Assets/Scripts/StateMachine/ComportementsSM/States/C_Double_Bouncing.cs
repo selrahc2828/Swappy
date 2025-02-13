@@ -19,7 +19,7 @@ public class C_Double_Bouncing : ComportementState
         rightValue = 3;
         base.Enter();
         
-        doubleBouncyMaterial = _sm.comportementManager.doubleBouncyMaterial;
+        doubleBouncyMaterial = _sm.comportementManager.doubleBounceData.doubleBouncyMaterial;
         
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.bouncingColor);
         if (_sm.isPlayer)
@@ -35,8 +35,6 @@ public class C_Double_Bouncing : ComportementState
         }
 
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-
-        
     }
 
     public override void TickLogic()

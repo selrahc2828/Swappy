@@ -43,9 +43,6 @@ public partial class ComportementManager : MonoBehaviour
     public BounceData bounceData;
     public DoubleBounceData doubleBounceData;
 
-    [Header("DoubleBounce")]
-    public PhysicMaterial doubleBouncyMaterial;
-
     [Header("Magnet Bounce")]
     public float magnetBounceForce = 60f;
     [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à magnet Force")]
