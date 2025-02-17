@@ -59,6 +59,11 @@ public class GameManager : MonoBehaviour
     public GameObject playerFBX;
     public Camera mainCamera;
     public bool canProjectWhenCarryingObject = false;
+
+    [Header("Planete")]
+    public GameObject planeteCore;
+    public float constanteGravitationelle;
+    public float massePlanete;
     
     [Header("Player Movement Parameters")]
     public float walkSpeed;

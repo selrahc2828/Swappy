@@ -61,9 +61,31 @@ public class ControllerPlanete : MonoBehaviour
         //calculate movement direction
         moveDirection = transform.forward * moveInputVector.y + transform.right * moveInputVector.x;
         
+        //rb.velocity = rb.velocity + moveDirection;
         rb.AddForce(moveDirection * 10f, ForceMode.Acceleration);
+
+        
+
+        // Convertit la vélocité globale en vélocité locale
+        Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
+
+        // Vérifie si l'objet a une vélocité significative sur X ou Z en local
+        bool hasVelocityOnXZ = Mathf.Abs(localVelocity.x) > 0.01f || Mathf.Abs(localVelocity.z) > 0.01f;
+
+        if (!hasVelocityOnXZ)
+        {
+            localVelocity.x = 0f;
+            localVelocity.z = 0f;
+        }
+
+        // Reconvertit la vélocité locale modifiée en espace global
+        rb.velocity = transform.TransformDirection(localVelocity);
+
+        // Affiche le résultat dans la console
+        //Debug.Log($"Local Velocity: {localVelocity} - Has Velocity on XZ: {hasVelocityOnXZ}");
+
     }
-    
+
     private void StartSprint(InputAction.CallbackContext context)
     {
         if (context.performed)
