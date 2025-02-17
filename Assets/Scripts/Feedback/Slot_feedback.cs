@@ -10,7 +10,7 @@ public class Slot_feedback : MonoBehaviour
     public Transform positionFB;
     
     private ComportementManager comportementManager;
-    public ComportementStealer_proto comp_steler_proto;
+    private ComportementStealer_proto comp_steler_proto;
     private GameObject feedback_Act;
     
     //public Transform Arm_transform;    c'est ce qui servira a faire que le feedback suive la main 
@@ -18,7 +18,7 @@ public class Slot_feedback : MonoBehaviour
     private void Start()
     {
         comportementManager = ComportementManager.Instance;
-        //comp_steler_proto = GameObject.FindGameObjectWithTag("Player").GetComponent<ComportementStealer_proto>();
+        comp_steler_proto = GameManager.Instance.player.GetComponent<ComportementStealer_proto>();
     }
 
     public void Feedback_Slot_Changed(Transform spawnPosition = null, Transform targetPosition = null, bool destroy = false)
