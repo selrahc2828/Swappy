@@ -53,9 +53,37 @@ public class SetUpFeedbackUi : MonoBehaviour
                     ParentIndicationActive(true);
                     ComportementState currentObjectState = (ComportementState)stateMachine.currentState;
                     
-                    ColorFeedback(knobIndicationLeft, currentObjectState.leftValue);
-                    ColorFeedback(knobIndicationRight, currentObjectState.rightValue);
-
+                    ComportementStealer_proto stealerProto = GameManager.Instance.player.GetComponent<ComportementStealer_proto>();
+                    if (stealerProto == null)
+                    {
+                        return;
+                    }
+                    
+                    if (currentObjectState.rightValue == 0)
+                    {
+                        if (stealerProto.slot1 != 0)
+                        {
+                            ColorFeedback(knobIndicationLeft, currentObjectState.rightValue);
+                            ColorFeedback(knobIndicationRight, currentObjectState.leftValue);
+                        }
+                        else
+                        {
+                            ColorFeedback(knobIndicationLeft, currentObjectState.leftValue);
+                            ColorFeedback(knobIndicationRight, currentObjectState.rightValue);
+                            
+                        }
+                    }
+                    else
+                    {
+                        ColorFeedback(knobIndicationLeft, currentObjectState.leftValue);
+                        ColorFeedback(knobIndicationRight, currentObjectState.rightValue);  
+                    }
+                    
+                    // objet right est vide
+                    // objet left a quelque chose
+                    // main gauche a quelque chose
+                    // main droite est vide
+                    
                 }
                 else
                 {
