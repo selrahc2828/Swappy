@@ -18,13 +18,32 @@ public class ControllerPlanete : MonoBehaviour
     public bool grounded;
     public GameObject planete;
     public float playerHeight;
+
+    public float maxSpeed;
+    public bool isSprinting;
+    public bool isStopping;
+
+    public AnimationCurve moveSpeedCurveAttackWalk;
+    public AnimationCurve moveSpeedCurveAttackRun;
+    public AnimationCurve moveSpeedCurveSustainWalk;
+    public AnimationCurve moveSpeedCurveSustainRun;
+    public AnimationCurve moveSpeedCurveReleaseWalk;
+    public AnimationCurve moveSpeedCurveReleaseRun;
+    private float mouvementAttackTime;
+    public float mouvementAttackDuration;
+    private float mouvementSustainTime;
+    private float mouvementReleaseTime;
+    private float mouvementReleaseDuration;
+
     private LayerMask whatIsGround;
 
     private void OnEnable()
     {
         gameManager = GameManager.Instance;
         controls = GameManager.controls;
-        
+
+        controls.Player.Movement.performed += MouvementAttack;
+        controls.Player.Movement.canceled += MouvementAttack;
         controls.Player.Jump.performed += Jump;
         controls.Player.StartSprint.performed += StartSprint;
         controls.Player.StopSprint.performed += StopSprint;
@@ -35,6 +54,8 @@ public class ControllerPlanete : MonoBehaviour
 
     private void OnDisable()
     {
+        controls.Player.Movement.performed -= MouvementAttack;
+        controls.Player.Movement.canceled -= MouvementAttack;
         controls.Player.Jump.performed -= Jump;
         controls.Player.StartSprint.performed -= StartSprint;
         controls.Player.StopSprint.performed -= StopSprint;
@@ -43,31 +64,64 @@ public class ControllerPlanete : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isStopping = true;
+        mouvementAttackTime = 0f; 
+        mouvementSustainTime = 0f;
+        mouvementReleaseTime = 0f;
+        mouvementAttackDuration = 0.5f;
+        mouvementReleaseDuration = 0.5f;
         rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        
+        moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
+
+        //calculate movement direction
+        moveDirection = (transform.forward * moveInputVector.y + transform.right * moveInputVector.x).normalized;
     }
 
     void FixedUpdate()
     {
-        Vector3 groundDirection = planete.transform.position - transform.position;
-        //ground check
-        grounded = Physics.Raycast(transform.position, groundDirection, playerHeight * 0.5f + 0.3f, whatIsGround);
-        
-        moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
-        //calculate movement direction
-        moveDirection = transform.forward * moveInputVector.y + transform.right * moveInputVector.x;
-        
-        //rb.velocity = rb.velocity + moveDirection;
-        rb.AddForce(moveDirection * 10f, ForceMode.Acceleration);
+        GroundCheck();
 
-        
+        float targetVelocity = 0;
+        Vector3 movement = moveDirection;
+
+        if(isSprinting)
+        {
+
+        }
+        else
+        {
+            if(isStopping)
+            {
+                float curveTime = Mathf.Clamp01((Time.time - mouvementReleaseTime) / (mouvementReleaseDuration));
+                if (curveTime < 1)
+                {
+                    targetVelocity = moveSpeedCurveAttackWalk.Evaluate(curveTime);
+                }
+                else
+                {
+                    targetVelocity = moveSpeedCurveSustainWalk.Evaluate(curveTime);
+                }
+            }
+            else
+            {
+                float curveTime = Mathf.Clamp01((Time.time - mouvementAttackTime) / (mouvementSustainTime - mouvementAttackTime)); 
+                if (curveTime < 1)
+                {
+                    targetVelocity = moveSpeedCurveAttackWalk.Evaluate(curveTime);
+                }
+                else
+                {
+                    targetVelocity = moveSpeedCurveSustainWalk.Evaluate(curveTime);
+                }
+            }
+        }
 
         // Convertit la vélocité globale en vélocité locale
-        Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
+        Vector3 localVelocity = transform.InverseTransformDirection(movement);
 
         // Vérifie si l'objet a une vélocité significative sur X ou Z en local
         bool hasVelocityOnXZ = Mathf.Abs(localVelocity.x) > 0.01f || Mathf.Abs(localVelocity.z) > 0.01f;
@@ -79,25 +133,48 @@ public class ControllerPlanete : MonoBehaviour
         }
 
         // Reconvertit la vélocité locale modifiée en espace global
-        rb.velocity = transform.TransformDirection(localVelocity);
+        movement = transform.TransformDirection(localVelocity);
 
-        // Affiche le résultat dans la console
-        //Debug.Log($"Local Velocity: {localVelocity} - Has Velocity on XZ: {hasVelocityOnXZ}");
+        
+        movement *= targetVelocity * maxSpeed;
+        rb.velocity = movement;
+        Debug.Log(rb.velocity.magnitude);
+    }
 
+    void GroundCheck()
+    {
+        Vector3 groundDirection = planete.transform.position - transform.position;
+        //ground check
+        grounded = Physics.Raycast(transform.position, groundDirection, playerHeight * 0.5f + 0.3f, whatIsGround);
+    }
+
+    private void MouvementAttack(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            mouvementAttackTime = Time.time;
+            mouvementSustainTime = mouvementAttackTime + mouvementAttackDuration;
+            isStopping = false;
+        }
+        if(context.canceled)
+        {
+            mouvementReleaseTime = Time.time;
+            isStopping = true;
+        }
     }
 
     private void StartSprint(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            
+            isSprinting = true;
         }
     }
     private void StopSprint(InputAction.CallbackContext context)
     {
         if (context.performed && grounded)
         {
-            
+            isSprinting = false;
         }
     }
     private void Jump(InputAction.CallbackContext context)

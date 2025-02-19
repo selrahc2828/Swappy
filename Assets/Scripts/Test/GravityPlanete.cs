@@ -32,6 +32,7 @@ public class GravityPlanete : MonoBehaviour
         }
     }
 
+
     void applyGravity(Vector3 _directionToPlanet)
     {
 

@@ -750,6 +750,163 @@ MonoBehaviour:
   grounded: 0
   planete: {fileID: 1150276645}
   playerHeight: 0
+  maxSpeed: 5
+  isSprinting: 0
+  isStopping: 0
+  moveSpeedCurveAttackWalk:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 24.510355
+      outSlope: 557.07654
+      tangentMode: 1
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 0.0023603141
+    - serializedVersion: 3
+      time: 0.7600703
+      value: 1
+      inSlope: 0.0036503375
+      outSlope: 0
+      tangentMode: 1
+      weightedMode: 1
+      inWeight: 0.9973016
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  moveSpeedCurveAttackRun:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 4.9064984
+      outSlope: 155.37534
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0.64317113
+      outWeight: 0.006421425
+    - serializedVersion: 3
+      time: 1
+      value: 1.5
+      inSlope: 0.0031014802
+      outSlope: 0.0031014802
+      tangentMode: 0
+      weightedMode: 1
+      inWeight: 1
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  moveSpeedCurveSustainWalk:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 4
+  moveSpeedCurveSustainRun:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 4
+  moveSpeedCurveReleaseWalk:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -2.264376
+      outSlope: -1285.9408
+      tangentMode: 1
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 0.0007770007
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.0015119181
+      outSlope: -0.0015119181
+      tangentMode: 0
+      weightedMode: 1
+      inWeight: 0.9992503
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  moveSpeedCurveReleaseRun:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.5
+      inSlope: -2.264376
+      outSlope: -744.18604
+      tangentMode: 1
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 0.0013342298
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.0015119181
+      outSlope: -0.0015119181
+      tangentMode: 0
+      weightedMode: 1
+      inWeight: 0.9992503
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  mouvementAttackDuration: 0
 --- !u!114 &1662820577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,7 +914,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662820565}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b7a6870f499b3a41b76b84d1c8f626c, type: 3}
   m_Name: 
