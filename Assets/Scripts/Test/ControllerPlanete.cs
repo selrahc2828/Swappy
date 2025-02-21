@@ -130,9 +130,8 @@ public class ControllerPlanete : MonoBehaviour
         movement *= targetVelocity * maxSpeed;
 
         Vector3 localVerticalVelocity = Vector3.Project(rb.velocity, transform.up);
-        //Debug.Log(localVerticalVelocity.magnitude);
+
         rb.velocity = localVerticalVelocity + movement;
-        //Debug.Log(rb.velocity.magnitude);
     }
 
     void GroundCheck()
