@@ -491,7 +491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7a6870f499b3a41b76b84d1c8f626c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planeteRB: {fileID: 0}
+  planeteRB: {fileID: 1150276650}
   rb: {fileID: 0}
   offsetRotation: {x: 0, y: 0, z: 0}
   gravityConstant: 9.81
@@ -587,7 +587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5073832175352828605, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 507.18
+      value: 519
       objectReference: {fileID: 0}
     - target: {fileID: 5073832175352828605, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: m_LocalPosition.z
@@ -750,7 +750,7 @@ MonoBehaviour:
   grounded: 0
   planete: {fileID: 1150276645}
   playerHeight: 0
-  maxSpeed: 5
+  maxSpeed: 25
   isSprinting: 0
   isStopping: 0
   moveSpeedCurveAttackWalk:
@@ -906,7 +906,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  mouvementAttackDuration: 0
+  mouvementAttackDuration: 0.5
+  mouvementReleaseDuration: 0.5
 --- !u!114 &1662820577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -914,7 +915,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662820565}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b7a6870f499b3a41b76b84d1c8f626c, type: 3}
   m_Name: 

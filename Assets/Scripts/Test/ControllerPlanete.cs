@@ -33,7 +33,7 @@ public class ControllerPlanete : MonoBehaviour
     public float mouvementAttackDuration;
     private float mouvementSustainTime;
     private float mouvementReleaseTime;
-    private float mouvementReleaseDuration;
+    public float mouvementReleaseDuration;
 
     private LayerMask whatIsGround;
 
@@ -68,8 +68,6 @@ public class ControllerPlanete : MonoBehaviour
         mouvementAttackTime = 0f; 
         mouvementSustainTime = 0f;
         mouvementReleaseTime = 0f;
-        mouvementAttackDuration = 0.5f;
-        mouvementReleaseDuration = 0.5f;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -97,14 +95,7 @@ public class ControllerPlanete : MonoBehaviour
             if(isStopping)
             {
                 float curveTime = Mathf.Clamp01((Time.time - mouvementReleaseTime) / (mouvementReleaseDuration));
-                if (curveTime < 1)
-                {
-                    targetVelocity = moveSpeedCurveAttackWalk.Evaluate(curveTime);
-                }
-                else
-                {
-                    targetVelocity = moveSpeedCurveSustainWalk.Evaluate(curveTime);
-                }
+                targetVelocity = moveSpeedCurveReleaseWalk.Evaluate(curveTime);
             }
             else
             {
@@ -137,8 +128,11 @@ public class ControllerPlanete : MonoBehaviour
 
         
         movement *= targetVelocity * maxSpeed;
-        rb.velocity = movement;
-        Debug.Log(rb.velocity.magnitude);
+
+        Vector3 localVerticalVelocity = Vector3.Project(rb.velocity, transform.up);
+        //Debug.Log(localVerticalVelocity.magnitude);
+        rb.velocity = localVerticalVelocity + movement;
+        //Debug.Log(rb.velocity.magnitude);
     }
 
     void GroundCheck()
