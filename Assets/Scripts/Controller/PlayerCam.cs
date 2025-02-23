@@ -14,9 +14,11 @@ public class PlayerCam : MonoBehaviour
     public LineRenderer line;
     private Ray _ray;
     public LayerMask hitLayer;
+    private Transform orientation;
 
     void Start()
     {
+        orientation = GameManager.Instance.orientation.transform;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -24,22 +26,17 @@ public class PlayerCam : MonoBehaviour
     void Update()
     {
         //get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensX; //deltaTime
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensY;
-        //unscaledDeltaTime = temps réel, non affecté par le timescale
         
-        // _moveMouseVector = GameManager.controls.Player.Look.ReadValue<Vector2>();
-        // possible vector look de input system mais pas du tout la meme sensi
         
         yRotation += mouseX;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        //rotate cam, orientation and Avatar fbx
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        GameManager.Instance.orientation.transform.rotation = Quaternion.Euler(0, yRotation, 0);
-        //GameManager.Instance.playerFBX.transform.rotation = Quaternion.Euler(0, yRotation, 0);
+        transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
+        orientation.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
 
         LineRenderer();
     }
