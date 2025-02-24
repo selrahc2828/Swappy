@@ -88,7 +88,23 @@ public class ControllerPlanete : MonoBehaviour
 
         if(isSprinting)
         {
-
+            if(isStopping)
+            {
+                float curveTime = Mathf.Clamp01((Time.time - mouvementReleaseTime) / (mouvementReleaseDuration));
+                targetVelocity = moveSpeedCurveReleaseRun.Evaluate(curveTime);
+            }
+            else
+            {
+                float curveTime = Mathf.Clamp01((Time.time - mouvementAttackTime) / (mouvementSustainTime - mouvementAttackTime)); 
+                if (curveTime < 1)
+                {
+                    targetVelocity = moveSpeedCurveAttackRun.Evaluate(curveTime);
+                }
+                else
+                {
+                    targetVelocity = moveSpeedCurveSustainRun.Evaluate(curveTime);
+                }
+            }
         }
         else
         {
