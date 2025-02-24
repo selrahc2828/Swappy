@@ -76,7 +76,7 @@ public class ControllerPlanete : MonoBehaviour
         moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
 
         //calculate movement direction
-        moveDirection = (transform.forward * moveInputVector.y + transform.right * moveInputVector.x).normalized;
+        moveDirection = (GameManager.Instance.orientation.transform.forward * moveInputVector.y + GameManager.Instance.orientation.transform.right * moveInputVector.x).normalized;
     }
 
     void FixedUpdate()
@@ -111,10 +111,10 @@ public class ControllerPlanete : MonoBehaviour
             }
         }
 
-        // Convertit la vélocité globale en vélocité locale
+        // Convertit la vï¿½locitï¿½ globale en vï¿½locitï¿½ locale
         Vector3 localVelocity = transform.InverseTransformDirection(movement);
 
-        // Vérifie si l'objet a une vélocité significative sur X ou Z en local
+        // Vï¿½rifie si l'objet a une vï¿½locitï¿½ significative sur X ou Z en local
         bool hasVelocityOnXZ = Mathf.Abs(localVelocity.x) > 0.01f || Mathf.Abs(localVelocity.z) > 0.01f;
 
         if (!hasVelocityOnXZ)
@@ -123,9 +123,8 @@ public class ControllerPlanete : MonoBehaviour
             localVelocity.z = 0f;
         }
 
-        // Reconvertit la vélocité locale modifiée en espace global
+        // Reconvertit la vï¿½locitï¿½ locale modifiï¿½e en espace global
         movement = transform.TransformDirection(localVelocity);
-
         
         movement *= targetVelocity * maxSpeed;
 
