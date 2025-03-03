@@ -10,8 +10,11 @@ public class GravityPlanete : MonoBehaviour
     [SerializeField] private float gravityConstant = 9.81f;
     [SerializeField] private float massePlanete;
 
+    private float marche;
+
     void Start()
     {
+        marche = 8;
         planeteRB = GameManager.Instance.planeteCore.GetComponent<Rigidbody>();
         gravityConstant = GameManager.Instance.constanteGravitationelle;
         massePlanete = GameManager.Instance.massePlanete;
@@ -60,12 +63,15 @@ public class GravityPlanete : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Vector3 directionToPlanet = (transform.position - transform.position).normalized;
-        float distance = Vector3.Distance(transform.position, transform.position);
-        float gravitationalForceMagnitude = gravityConstant * planeteRB.mass / Mathf.Pow(distance, 2);
-        Vector3 gravitationalForce = directionToPlanet * gravitationalForceMagnitude;
+        if(planeteRB != null)
+        {
+            Vector3 directionToPlanet = (transform.position - transform.position).normalized;
+            float distance = Vector3.Distance(transform.position, transform.position);
+            float gravitationalForceMagnitude = gravityConstant * planeteRB.mass / Mathf.Pow(distance, 2);
+            Vector3 gravitationalForce = directionToPlanet * gravitationalForceMagnitude;
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + gravitationalForce);
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + gravitationalForce);
+        }
     }
 }

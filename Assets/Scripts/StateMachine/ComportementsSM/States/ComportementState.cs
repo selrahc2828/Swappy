@@ -186,24 +186,16 @@ public class ComportementState : State
         {
             case 1:
                 return _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Impulse, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-                break;
             case 3:
                 return _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-                break;
             case 9:
                 return _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-                break;
             case 27:
                 return _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-                break;
             case 81:
-                return _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-                break;
-            
+                return _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);            
             default:
                 return null;
-                break;
         }
     }
-
 }

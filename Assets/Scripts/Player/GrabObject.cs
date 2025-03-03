@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 public class GrabObject : MonoBehaviour
 {
+    
+    public Controls controls;
     public Camera mainCam;
     public Transform handlerPosition;
     public Transform interactorZonePos;//centre zone de detection (qu'on recalcule plus tard)
@@ -38,12 +41,20 @@ public class GrabObject : MonoBehaviour
         interactText = GameObject.FindGameObjectWithTag("TextInteract").GetComponent<TextMeshProUGUI>(); 
         interactText?.gameObject.SetActive(false);
         
+        controls = GameManager.controls;
+        
+        controls.Player.GrabDrop.performed += GrabAction;
         mainCam = GameManager.Instance.mainCamera;
         interactor = GameObject.FindGameObjectWithTag("Interactor").transform;
 
         interactorZonePos = GameObject.FindGameObjectWithTag("InterractorZone").transform;
         handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
         playerCollider = GetComponentsInChildren<Collider>();
+    }
+
+    private void OnDisable()
+    {
+        controls.Player.GrabDrop.performed += GrabAction;
     }
 
     // Update is called once per frame
@@ -114,6 +125,21 @@ public class GrabObject : MonoBehaviour
             else
             {
                 MoveObject();
+            }
+        }
+    }
+
+    private void GrabAction(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (isCarrying)
+            {
+                Drop();
+            }
+            else
+            {
+                Carrying();
             }
         }
     }

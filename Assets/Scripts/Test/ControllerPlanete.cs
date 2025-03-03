@@ -41,7 +41,7 @@ public class ControllerPlanete : MonoBehaviour
     {
         gameManager = GameManager.Instance;
         controls = GameManager.controls;
-
+        
         controls.Player.Movement.performed += MouvementAttack;
         controls.Player.Movement.canceled += MouvementAttack;
         controls.Player.Jump.performed += Jump;
