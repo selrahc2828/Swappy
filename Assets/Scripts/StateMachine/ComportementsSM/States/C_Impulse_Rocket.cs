@@ -96,15 +96,15 @@ public class C_Impulse_Rocket : ComportementState
             
             if (_sm.isPlayer)
             {
-                _sm.rb.AddForce(Vector3.up * rocketFlyForceOnPlayer , ForceMode.Force);
+                _sm.rb.AddForce(_sm.transform.up * rocketFlyForceOnPlayer , ForceMode.Force);
             }
             else if(isGrabbed)
             {
-                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(Vector3.up * rocketFlyForceOnPlayer, ForceMode.Force);
+                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketFlyForceOnPlayer, ForceMode.Force);
             }
             else
             {
-                _sm.rb.AddForce(Vector3.up * rocketFlyForce, ForceMode.Force);
+                _sm.rb.AddForce(_sm.transform.up * rocketFlyForce, ForceMode.Force);
             }
         }
     }

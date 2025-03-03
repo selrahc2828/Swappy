@@ -140,11 +140,11 @@ public class C_Magnet_Rocket : ComportementState
         }
         else if(isGrabbed)
         {
-            _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(Vector3.up * rocketMagnetForceWhenGrab, ForceMode.Force);
+            _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketMagnetForceWhenGrab, ForceMode.Force);
         }
         else
         {
-            _sm.rb.AddForce(Vector3.up * rocketMagnetForce, ForceMode.Force);
+            _sm.rb.AddForce(_sm.transform.up * rocketMagnetForce, ForceMode.Force);
         }
     }
 

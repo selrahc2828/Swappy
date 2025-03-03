@@ -45,15 +45,15 @@ public class C_Double_Rocket : ComportementState
             SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
             if (_sm.isPlayer)
             {
-                _sm.rb.AddForce(Vector3.up * rocketForceOnPlayer, ForceMode.Impulse);
+                _sm.rb.AddForce(_sm.transform.up * rocketForceOnPlayer, ForceMode.Impulse);
             }
             else if(isGrabbed)
             {
-                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(Vector3.up * rocketForceWhenGrab, ForceMode.Impulse);
+                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketForceWhenGrab, ForceMode.Impulse);
             }
             else
             {
-                _sm.rb.AddForce(Vector3.up * rocketForce, ForceMode.Impulse);
+                _sm.rb.AddForce(_sm.transform.up * rocketForce, ForceMode.Impulse);
             }
         }
     }
