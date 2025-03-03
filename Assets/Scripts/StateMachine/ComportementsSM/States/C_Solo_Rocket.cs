@@ -69,15 +69,15 @@ public class C_Solo_Rocket : ComportementState
             }
             if (_sm.isPlayer)
             {
-                _sm.rb.AddForce(Vector3.up * rocketForceOnPlayer, ForceMode.Force);
+                _sm.rb.AddForce(_sm.transform.up * rocketForceOnPlayer, ForceMode.Force);
             }
             else if(isGrabbed)
             {
-                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(Vector3.up * rocketForceWhenGrab, ForceMode.Force);
+                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketForceWhenGrab, ForceMode.Force);
             }
             else
             {
-                _sm.rb.AddForce(Vector3.up * rocketForce, ForceMode.Force);
+                _sm.rb.AddForce(_sm.transform.up * rocketForce, ForceMode.Force);
             }
         }
         else
