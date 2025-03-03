@@ -39,7 +39,6 @@ public class C_Double_Rocket : ComportementState
         timer += Time.deltaTime;
         if (timer > onOffCouldown)
         {
-
             timer = 0f;
             SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
             SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
