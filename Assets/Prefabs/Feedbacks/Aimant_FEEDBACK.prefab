@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2837032369680100304}
   - component: {fileID: 1002854445085458052}
   - component: {fileID: 3383075312677349559}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4841,8 +4841,7 @@ GameObject:
   - component: {fileID: 3467513760542848152}
   - component: {fileID: 215100111452241710}
   - component: {fileID: 3367974230593603660}
-  - component: {fileID: 589850862101116063}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4859,8 +4858,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4337106872213780854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4914,27 +4913,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &589850862101116063
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6038760098315990686}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6171115788307145931
 GameObject:
   m_ObjectHideFlags: 0
@@ -4944,7 +4922,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4337106872213780854}
-  m_Layer: 0
+  - component: {fileID: 1876588039198728778}
+  m_Layer: 2
   m_Name: Aimant_FEEDBACK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4968,3 +4947,19 @@ Transform:
   - {fileID: 2837032369680100304}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1876588039198728778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6171115788307145931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9adee708d8e0ae4abcc70887a458f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRadius: 0
+  durationScaling: 0.2
+  elapsedTime: 0
+  atDestroy: 1

@@ -193,5 +193,8 @@ public class ComportementsStateMachine : StateMachine
                 break;
         }
     }
-    
+    public void ChangeState(FirstState newState)
+    {
+        GoToInitialState(newState);
+    }
 }

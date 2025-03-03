@@ -11,8 +11,7 @@ public class C_Solo_Magnet : ComportementState
     private float magnetForce;
     private bool magnetGradiantForce;
     private GameObject SonDeCon;
-
-
+    
     public C_Solo_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -28,7 +27,7 @@ public class C_Solo_Magnet : ComportementState
         rightValue = 0;
         base.Enter();
 
-        magnetRange = _sm.comportementManager.magnetRange;
+        magnetRange = _sm.comportementManager.magnetData.magnetRange;
         if (_sm.isPlayer)
         {
             trueMagnetRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + magnetRange;
@@ -37,11 +36,15 @@ public class C_Solo_Magnet : ComportementState
         {
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;
         }
-        magnetForce = _sm.comportementManager.magnetForce;
-        magnetGradiantForce = _sm.comportementManager.magnetGradiantForce;
+        magnetForce = _sm.comportementManager.magnetData.magnetForce;
+        magnetGradiantForce = _sm.comportementManager.magnetData.magnetGradiantForce;
         
         // _sm.rend.material = _sm.magnet;
         ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.noComportementColor);
+
+        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+        feedBack_GO_Left.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
+        feedBack_GO_Left.GetComponent<GrowToRadius>().atDestroy = false;
     }
 
     public override void TickLogic()
@@ -59,9 +62,9 @@ public class C_Solo_Magnet : ComportementState
 
     public override void Exit()
     {
-        
         base.Exit();
         _sm.comportementManager.DestroyObj(SonDeCon);
+        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
 
     }
 

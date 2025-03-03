@@ -9,7 +9,11 @@ public class ImmuableAutoMesh : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        meshFilter.mesh = GetComponentInParent<MeshFilter>().mesh;
+        if (GetComponentInParent<Transform>().GetComponentInChildren<MeshFilter>().tag == "Untagged")
+        {
+            meshFilter.mesh = GetComponentInParent<GameObject>().GetComponentInChildren<MeshFilter>().mesh;
+        }
+        
     }
 
     // Update is called once per frame

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class ComportementManager : MonoBehaviour
+public partial class ComportementManager : MonoBehaviour
 {
     public static ComportementManager Instance;
     
@@ -19,83 +19,33 @@ public class ComportementManager : MonoBehaviour
     public Color immuableColor;
     public Color noComportementColor;
     
-    [Header("Impulse")]
-    public float repulserTime = 5f;
-    public float doubleImpulseTime = 6f;
-    public float repulserRange;
-    public float repulserForce;
-    public bool destroyOnUse = false;
-    public bool impulseGradiantForce = false;
-    public GameObject impulseFeedback;
-    [Tooltip("Si Rigidbody sur lui")]
-    public bool applyOnMe = false;
+    [Header("Comportement Feedbacks")]
+    public FlareData flareData;
     
-    [Header("Rocket")]
-    public float rocketForce = 20f;
-    public float rocketForceOnPlayer = 20f;
-    public float rocketForceWhenGrab = 20f;
-    public float rocketOnOffCouldown = 4f;
-    public float rocketMaxSpeed = 20f;
-    
-    [Header("DoubleRocket")]
-    public float rocketDoubleForce = 20f;
-    public float rocketDoubleForceOnPlayer = 20f;
-    public float rocketDoubleForceWhenGrab = 20f;
-    public float rocketDoubleCouldown = 4f;
-    
-    [Header("Rocket Immuable")]
-    public float rocketReleaseForce = 10f;
-    public float chargeTimeMax = 6f;
+    [Header("A instancier pour chaque objet comportement")]
+    public GameObject feedBack_Impulse;
+    public GameObject feedBack_Bouncing;
+    public GameObject feedBack_Rocket;
+    public GameObject feedBack_Magnet;
+    public GameObject feedBack_Immuable;
 
-    [Header("Magnet Rocket")]
-    public GameObject prefabMagnetRocketForcefield;
-    public float magnetRocketFlyTime = 4f;
-    public float rocketMagnetForce = 20f;
-    public float rocketMagnetForceOnPlayer = 20f;
-    public float rocketMagnetForceWhenGrab = 20f;
-    public float magnetTrailLerp = 1f;
-    public float magnetTrailTimeBeforeMove = 3f;
+    [Header("PrefabComportementGeneric")]
+    public GameObject magnetGenericPrefab;
     
-    [Header("Magnet")]
-    public float magnetRange = 10f;
-    public float magnetForce;
-    [HideInInspector] public bool magnetGradiantForce;
-
-    [Header("Bouncing")]
-    public PhysicMaterial bouncyMaterial;
-    [Header("DoubleBounce")]
-    public PhysicMaterial doubleBouncyMaterial;
-
-    [Header("Magnet Bounce")]
-    public float magnetBounceForce;
-    public float magnetBounceRange = 10f;
-    [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à magnet Force")]
-    public float magnetForceVelocityMultiplier;
-    [Range(1,5)]
-    public float magnetScaleMultiplier;
-    [Tooltip("delay pour scale magnet range collision quand grab, sinon trop court avec les rebond qui s'enchaine")]
-    public float delayScale = .5f;
-    
-    [Header("Impulse Magnet")]
-    public float zoneImpulseRange;
-    public float zoneImpulseForce;
-    public GameObject prefabImpulseMagnet;
-
-    [Header("Impulse Bounce")]
-    public float impulseBounceForce;
-    public float impulseBounceRange;
-    public float impulseBounceTimer;
-    [Tooltip("Ajoute x% de la velocité au moment de la collision et l'ajoute à impulse bounce Force")]
-    public float impulseForceMultiplier;
-    
-    [Header("Impulse Rocket")]
-    public float impulseRocketExplosionForce;
-    public float impulseRocketExplosionRange;
-    public float impulseRocketFlyForce;
-    public float impulseRocketFlyForceOnPlayer;
-    public float impulseRocketFlyTime;
-    public float timeBetweenImpulses;
-    
+    [Header("DATAS")]
+    public ImpulseData impulseData;
+    public RocketData rocketData;
+    public DoubleRocketData doubleRocketData;
+    public ImmuableRocketData immuableRocketData;
+    public MagnetRocketData magnetRocketData;
+    public MagnetData magnetData;
+    public DoubleMagnetData doubleMagnetData;
+    public BounceData bounceData;
+    public DoubleBounceData doubleBounceData;
+    public MagnetBounceData magnetBounceData;
+    public ImpulseMagnetData impulseMagnetData;
+    public ImpulseBounceData impulseBounceData;
+    public ImpulseRocketData impulseRocketData;
     
     private void Awake()
     {

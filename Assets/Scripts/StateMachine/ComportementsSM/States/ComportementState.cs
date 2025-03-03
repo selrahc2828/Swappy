@@ -11,6 +11,9 @@ public class ComportementState : State
     public bool isGrabbed = false;
     public bool isKinematic = false;
 
+    public GameObject feedBack_GO_Left;
+    public GameObject feedBack_GO_Right;
+
     protected ComportementsStateMachine _sm;
 
     public ComportementState(StateMachine stateMachine) : base(stateMachine)
@@ -23,11 +26,16 @@ public class ComportementState : State
         // Debug.Log(_sm.currentState + " enter " + stateValue);
         //_sm.text.text = stateValue.ToString();
         _sm.displayComportementName = _sm.currentState.ToString();
+
+        // feedBack_GO_Left = SetFeedbackComportement(leftValue);
+        // feedBack_GO_Right = SetFeedbackComportement(rightValue);
+
     }
 
     public override void TickLogic()
     {
         // Debug.Log(_sm.currentState + " logic uppdate");
+        
     }
 
     public override void TickPhysics()
@@ -43,6 +51,16 @@ public class ComportementState : State
     public override void Exit()
     {
         // Debug.Log(_sm.currentState + " exit");
+
+        // if (feedBack_GO_Left != null)
+        // {
+        //     _sm.comportementManager.DestroyObj(feedBack_GO_Left);
+        // }
+        //
+        // if (feedBack_GO_Right != null)
+        // {
+        //     _sm.comportementManager.DestroyObj(feedBack_GO_Right);
+        // }
     }
 
     public override void CollisionStart(Collision other)
@@ -159,6 +177,32 @@ public class ComportementState : State
             // on part du principe que le mat index 1 est le shader outline
             _sm.rend.materials[1].SetColor("_Color2", colorSlot1);
             _sm.rend.materials[1].SetColor("_Color3", colorSlot2);
+        }
+    }
+
+    public GameObject SetFeedbackComportement(int intSlot)
+    {
+        switch (intSlot)
+        {
+            case 1:
+                return _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Impulse, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+                break;
+            case 3:
+                return _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+                break;
+            case 9:
+                return _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+                break;
+            case 27:
+                return _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+                break;
+            case 81:
+                return _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+                break;
+            
+            default:
+                return null;
+                break;
         }
     }
 

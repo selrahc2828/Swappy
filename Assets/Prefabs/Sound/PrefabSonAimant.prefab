@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6041173006455921320}
   - component: {fileID: 8548718904308624459}
   - component: {fileID: 9173028484328289873}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PrefabSonAimant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,25 +45,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionTag: 
+  CollisionTag: Untagged
   EventReference:
     Guid:
       Data1: -788237447
       Data2: 1165624548
       Data3: 69672125
       Data4: 1920610241
-    Path: event:/System/Componenent/AimantStart
+    Path: event:/System/Componenent/MagnetEnter
   Event: 
   PlayEvent: 3
-  StopEvent: 0
+  StopEvent: 4
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
   NonRigidbodyVelocity: 0
   Params: []
   OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 100
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 2000
 --- !u!135 &9173028484328289873
 SphereCollider:
   m_ObjectHideFlags: 0

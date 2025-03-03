@@ -19,9 +19,6 @@ public class C_Solo_Rocket : ComportementState
 
     public override void Enter()
     {
-
-        
-
         isKinematic = false;
         stateValue = 81;
         leftValue = 81;
@@ -30,15 +27,16 @@ public class C_Solo_Rocket : ComportementState
 
         timer = 0f;
         rocketOn = false;
-        maxSpeed = _sm.comportementManager.rocketMaxSpeed;
-        rocketForce = _sm.comportementManager.rocketForce;
-        rocketForceOnPlayer = _sm.comportementManager.rocketForceOnPlayer;
-        rocketForceWhenGrab = _sm.comportementManager.rocketForceWhenGrab;
-        onOffCooldown = _sm.comportementManager.rocketOnOffCouldown;
+        maxSpeed = _sm.comportementManager.rocketData.rocketMaxSpeed;
+        rocketForce = _sm.comportementManager.rocketData.rocketForce;
+        rocketForceOnPlayer = _sm.comportementManager.rocketData.rocketForceOnPlayer;
+        rocketForceWhenGrab = _sm.comportementManager.rocketData.rocketForceWhenGrab;
+        onOffCooldown = _sm.comportementManager.rocketData.rocketOnOffCouldown;
         
         // _sm.rend.material = _sm.rocket;
         ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
-        
+        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+
     }
 
     public override void TickLogic()
@@ -82,11 +80,15 @@ public class C_Solo_Rocket : ComportementState
                 _sm.rb.AddForce(Vector3.up * rocketForce, ForceMode.Force);
             }
         }
+        else
+        {
+            isSoundPlay = false;
+        }
     }
 
     public override void Exit()
     {
         base.Exit();
-
+        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
     }
 }

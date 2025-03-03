@@ -25,9 +25,9 @@ public class C_Double_Impulse : ComportementState
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.impulseColor);
         
-        impulseTime = _sm.comportementManager.doubleImpulseTime;
+        impulseTime = _sm.comportementManager.impulseData.doubleImpulseTime;
         impulseTimer = 0f;
-        impulseRange = 2.5f * _sm.comportementManager.repulserRange;
+        impulseRange = 2.5f * _sm.comportementManager.impulseData.impulseRange;
 
         if (_sm.isPlayer)
         {
@@ -39,9 +39,9 @@ public class C_Double_Impulse : ComportementState
         }
         
         // pb si obj n'a pas de collider direct (ax Player)
-        impulseForce = 2.5f * _sm.comportementManager.repulserForce;
-        destroyOnUse = _sm.comportementManager.destroyOnUse;
-        feedback = _sm.comportementManager.impulseFeedback;
+        impulseForce = 2.5f * _sm.comportementManager.impulseData.impulseForce;
+        destroyOnUse = _sm.comportementManager.impulseData.destroyOnUse;
+        feedback = _sm.comportementManager.impulseData.impulseFeedback;
     }
 
     public override void TickLogic()
@@ -70,8 +70,7 @@ public class C_Double_Impulse : ComportementState
     {
         base.DisplayGizmos();
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_sm.transform.position, trueImpulseRange);  
-
+        Gizmos.DrawWireSphere(_sm.transform.position, trueImpulseRange);
     }  
     
     public void Impulse()
@@ -81,7 +80,9 @@ public class C_Double_Impulse : ComportementState
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
             shockWave.GetComponent<GrowToRadius>().targetRadius = trueImpulseRange;
         }
-
+        
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueImpulseRange);
         if (objectsInRange.Length > 0)
         {

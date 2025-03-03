@@ -16,6 +16,7 @@ public class C_Impulse_Rocket : ComportementState
     private float maxSpeed;
     private bool rocketOn;
     private GameObject feedback;
+    private bool isSonOn;
     
     public C_Impulse_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -28,11 +29,11 @@ public class C_Impulse_Rocket : ComportementState
         rightValue = 81;
         base.Enter();
         
-        maxSpeed = _sm.comportementManager.rocketMaxSpeed;
-        explosionForce = _sm.comportementManager.impulseRocketExplosionForce;
-        rocketFlyForceOnPlayer = _sm.comportementManager.impulseRocketFlyForceOnPlayer;
-        explosionRange = _sm.comportementManager.impulseRocketExplosionRange;
-        feedback = _sm.comportementManager.impulseFeedback;
+        maxSpeed = _sm.comportementManager.rocketData.rocketMaxSpeed;
+        explosionForce = _sm.comportementManager.impulseRocketData.impulseRocketExplosionForce;
+        rocketFlyForceOnPlayer = _sm.comportementManager.impulseRocketData.impulseRocketFlyForceOnPlayer;
+        explosionRange = _sm.comportementManager.impulseRocketData.impulseRocketExplosionRange;
+        feedback = _sm.comportementManager.impulseData.impulseFeedback;
 
         // trueRepulserRange = repulserRange;
         if (_sm.isPlayer)
@@ -44,14 +45,15 @@ public class C_Impulse_Rocket : ComportementState
             explosionTrueRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + explosionRange;
         }
         // pb si obj n'a pas de collider direct (ax Player)
-        rocketFlyForce = _sm.comportementManager.impulseRocketFlyForce;
-        flyTime = _sm.comportementManager.impulseRocketFlyTime;
-        timeBetweenImpulses = _sm.comportementManager.timeBetweenImpulses;
+        rocketFlyForce = _sm.comportementManager.impulseRocketData.impulseRocketFlyForce;
+        flyTime = _sm.comportementManager.impulseRocketData.impulseRocketFlyTime;
+        timeBetweenImpulses = _sm.comportementManager.impulseRocketData.timeBetweenImpulses;
         flyTimer = 0f;
         impulseTimer = 0f;
         rocketOn = false;
         
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.rocketColor);
+        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
     }
 
@@ -67,10 +69,19 @@ public class C_Impulse_Rocket : ComportementState
         if (flyTimer > flyTime)
         {
             rocketOn = !rocketOn;
+            if (!rocketOn)
+            {
+                isSonOn = false;
+            }
             flyTimer = 0f;
         }
         if (rocketOn)
         {
+            if (!isSonOn)
+            {
+                SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
+                isSonOn = true;
+            }
             impulseTimer += Time.fixedDeltaTime;
             if (impulseTimer > timeBetweenImpulses)
             {
@@ -101,6 +112,7 @@ public class C_Impulse_Rocket : ComportementState
     public override void Exit()
     {
         base.Exit();
+        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
     }
     
     public override void DisplayGizmos()
@@ -118,7 +130,7 @@ public class C_Impulse_Rocket : ComportementState
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
             shockWave.GetComponent<GrowToRadius>().targetRadius = explosionTrueRange;
         }
-
+        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, explosionTrueRange);
         if (objectsInRange.Length > 0)
         {

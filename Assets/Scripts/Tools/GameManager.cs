@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static Controls controls;
-    
+    public SystemData parameters;// scriptable object où on mets des parametre à sauvegarder
+
     [Header("Rendu Lotha")]
     public string scene1;
     public string scene2;
@@ -52,6 +53,9 @@ public class GameManager : MonoBehaviour
     
     [Header("UI")]
     public GameObject ui;
+    
+    [HideInInspector]
+    public bool isPaused = false;
     
     [Header("Player")]
     public GameObject[] players; //dans Steler proto et ComportementStateMachine(pas sûr qu'il soit utilisé dedans)
@@ -99,7 +103,7 @@ public class GameManager : MonoBehaviour
     
     [HideInInspector] public bool etatIsProjected;
     public TextMeshProUGUI timerProjectionText;
-
+    
     private void OnEnable()
     {
         if (controls == null)
@@ -168,13 +172,11 @@ public class GameManager : MonoBehaviour
         //     Debug.Log("Il n'y a pas de text Timer Slow");
         // }
         
-        //à virer quand player greg supprimé
-        camControllerScript = FindObjectOfType<CameraController>();
-        if (camControllerScript == null)
+        ui = GameObject.FindGameObjectWithTag("Canvas");
+        if (ui == null)
         {
-            //Debug.LogWarning("Il n'y a pas de CameraController dans la scène");
+            Debug.LogWarning("Il n'y a pas de Canvas dans la scène");
         }
-        //
 
         playerCamScript = FindObjectOfType<PlayerCam>();
         if (playerCamScript == null)
