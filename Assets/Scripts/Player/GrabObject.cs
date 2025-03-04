@@ -44,17 +44,17 @@ public class GrabObject : MonoBehaviour
         controls = GameManager.controls;
         
         controls.Player.GrabDrop.performed += GrabAction;
-        mainCam = GameManager.Instance.mainCamera;
-        interactor = GameObject.FindGameObjectWithTag("Interactor").transform;
-
-        interactorZonePos = GameObject.FindGameObjectWithTag("InterractorZone").transform;
+        // mainCam = GameManager.Instance.mainCamera;
+        // interactor = GameObject.FindGameObjectWithTag("Interactor").transform;
+        //
+        // interactorZonePos = GameObject.FindGameObjectWithTag("InterractorZone").transform;
         handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
         playerCollider = GetComponentsInChildren<Collider>();
     }
 
     private void OnDisable()
     {
-        controls.Player.GrabDrop.performed += GrabAction;
+        controls.Player.GrabDrop.performed -= GrabAction;
     }
 
     // Update is called once per frame
@@ -129,6 +129,11 @@ public class GrabObject : MonoBehaviour
         }
     }
 
+    public void BoxDetection()
+    {
+        
+    }
+    
     private void GrabAction(InputAction.CallbackContext context)
     {
         if (context.performed)
