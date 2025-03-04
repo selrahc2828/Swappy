@@ -40,6 +40,8 @@ public class ControllerPlanete : MonoBehaviour
     private LayerMask whatIsGround;
     public GravityPlanete gravityComponent;
     public bool touchingInclinedSurface;
+    public Vector3 touchingInclinedSurfaceDirection;
+    public Vector3 touchingInclinedSurfaceDirectionOnPlanet;
 
     private void OnEnable()
     {
@@ -82,9 +84,6 @@ public class ControllerPlanete : MonoBehaviour
     {
         moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
 
-        //calculate movement direction OLD
-        //moveDirection = (GameManager.Instance.orientation.transform.forward * moveInputVector.y + GameManager.Instance.orientation.transform.right * moveInputVector.x).normalized;
-
         // Calculate movement direction using GravityPlanete
         if (gravityComponent != null)
         {
@@ -97,11 +96,7 @@ public class ControllerPlanete : MonoBehaviour
 
         if (touchingInclinedSurface)
         {
-            antiStickMaterial.dynamicFriction = 1;
-        }
-        else
-        {
-            antiStickMaterial.dynamicFriction = antiStickBaseValue;
+            moveDirection = Vector3.ProjectOnPlane(moveDirection, touchingInclinedSurfaceDirection).normalized;
         }
     }
 
@@ -158,16 +153,12 @@ public class ControllerPlanete : MonoBehaviour
         Vector3 localVerticalVelocity = Vector3.Project(rb.velocity, transform.up);
         
         movement = Vector3.ProjectOnPlane(movement, gravityComponent.transform.up);
+        if(touchingInclinedSurface)
+        {
+            movement = Vector3.ProjectOnPlane(moveDirection, touchingInclinedSurfaceDirection);
+        }
         rb.velocity = localVerticalVelocity + movement;
     }
-
-    /*
-    void GroundCheck()
-    {
-        Vector3 groundDirection = planete.transform.position - transform.position;
-        grounded = Physics.Raycast(transform.position, groundDirection, playerHeight * 0.5f + 0.3f, whatIsGround);
-    }
-    */
 
     void GroundCheck()
     {
@@ -186,18 +177,16 @@ public class ControllerPlanete : MonoBehaviour
     }
     private void OnCollisionStay(Collision collision)
     {
-        Debug.Log(collision.GetContact(0).thisCollider.tag);
         if (collision.GetContact(0).thisCollider.CompareTag("AntiStick"))
         {
-            Debug.Log("ok");
             foreach (ContactPoint contact in collision.contacts)
             {
                 float slopeAngle = Vector3.Angle(contact.normal, -gravityComponent.transform.up);
-                Debug.Log(slopeAngle);
-                //if (slopeAngle > 20f && slopeAngle < 75f) // Surface inclinée détectée
+                //Debug.Log(slopeAngle);
                 if (slopeAngle > 90f && slopeAngle < 125f) // Surface inclinée détectée
                 {
                     touchingInclinedSurface = true;
+                    touchingInclinedSurfaceDirection = contact.normal;
                 }
             }
         }
