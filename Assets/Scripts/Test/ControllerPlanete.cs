@@ -18,6 +18,8 @@ public class ControllerPlanete : MonoBehaviour
     public bool grounded;
     public GameObject planete;
     public float playerHeight;
+    public float antiStickBaseValue;
+    public PhysicMaterial antiStickMaterial;
 
     public float maxSpeed;
     public bool isSprinting;
@@ -36,6 +38,8 @@ public class ControllerPlanete : MonoBehaviour
     public float mouvementReleaseDuration;
 
     private LayerMask whatIsGround;
+    public GravityPlanete gravityComponent;
+    public bool touchingInclinedSurface;
 
     private void OnEnable()
     {
@@ -50,6 +54,8 @@ public class ControllerPlanete : MonoBehaviour
         
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
+        antiStickBaseValue = gameManager.playerAntiStick.dynamicFriction;
+        antiStickMaterial = gameManager.playerAntiStick;
     }
 
     private void OnDisable()
@@ -69,14 +75,34 @@ public class ControllerPlanete : MonoBehaviour
         mouvementSustainTime = 0f;
         mouvementReleaseTime = 0f;
         rb = GetComponent<Rigidbody>();
+        gravityComponent = GetComponent<GravityPlanete>();
     }
 
     private void Update()
     {
         moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
 
-        //calculate movement direction
-        moveDirection = (GameManager.Instance.orientation.transform.forward * moveInputVector.y + GameManager.Instance.orientation.transform.right * moveInputVector.x).normalized;
+        //calculate movement direction OLD
+        //moveDirection = (GameManager.Instance.orientation.transform.forward * moveInputVector.y + GameManager.Instance.orientation.transform.right * moveInputVector.x).normalized;
+
+        // Calculate movement direction using GravityPlanete
+        if (gravityComponent != null)
+        {
+            moveDirection = Vector3.ProjectOnPlane(
+                GameManager.Instance.orientation.transform.forward * moveInputVector.y +
+                GameManager.Instance.orientation.transform.right * moveInputVector.x,
+                gravityComponent.transform.up
+            ).normalized;
+        }
+
+        if (touchingInclinedSurface)
+        {
+            antiStickMaterial.dynamicFriction = 1;
+        }
+        else
+        {
+            antiStickMaterial.dynamicFriction = antiStickBaseValue;
+        }
     }
 
     void FixedUpdate()
@@ -126,34 +152,55 @@ public class ControllerPlanete : MonoBehaviour
                 }
             }
         }
-
-        // Convertit la vï¿½locitï¿½ globale en vï¿½locitï¿½ locale
-        Vector3 localVelocity = transform.InverseTransformDirection(movement);
-
-        // Vï¿½rifie si l'objet a une vï¿½locitï¿½ significative sur X ou Z en local
-        bool hasVelocityOnXZ = Mathf.Abs(localVelocity.x) > 0.01f || Mathf.Abs(localVelocity.z) > 0.01f;
-
-        if (!hasVelocityOnXZ)
-        {
-            localVelocity.x = 0f;
-            localVelocity.z = 0f;
-        }
-
-        // Reconvertit la vï¿½locitï¿½ locale modifiï¿½e en espace global
-        movement = transform.TransformDirection(localVelocity);
         
         movement *= targetVelocity * maxSpeed;
 
         Vector3 localVerticalVelocity = Vector3.Project(rb.velocity, transform.up);
-
+        
+        movement = Vector3.ProjectOnPlane(movement, gravityComponent.transform.up);
         rb.velocity = localVerticalVelocity + movement;
     }
 
+    /*
     void GroundCheck()
     {
         Vector3 groundDirection = planete.transform.position - transform.position;
-        //ground check
         grounded = Physics.Raycast(transform.position, groundDirection, playerHeight * 0.5f + 0.3f, whatIsGround);
+    }
+    */
+
+    void GroundCheck()
+    {
+        Vector3 groundDirection = -gravityComponent.transform.up;
+        grounded = false;
+        touchingInclinedSurface = false;
+
+        if (Physics.Raycast(transform.position, groundDirection, out RaycastHit hit, playerHeight * 0.5f + 0.3f, whatIsGround))
+        {
+            float slopeAngle = Vector3.Angle(hit.normal, -groundDirection);
+            if (slopeAngle < 75f) // Seulement considéré comme sol si l'angle est faible
+            {
+                grounded = true;
+            }
+        }
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        Debug.Log(collision.GetContact(0).thisCollider.tag);
+        if (collision.GetContact(0).thisCollider.CompareTag("AntiStick"))
+        {
+            Debug.Log("ok");
+            foreach (ContactPoint contact in collision.contacts)
+            {
+                float slopeAngle = Vector3.Angle(contact.normal, -gravityComponent.transform.up);
+                Debug.Log(slopeAngle);
+                //if (slopeAngle > 20f && slopeAngle < 75f) // Surface inclinée détectée
+                if (slopeAngle > 90f && slopeAngle < 125f) // Surface inclinée détectée
+                {
+                    touchingInclinedSurface = true;
+                }
+            }
+        }
     }
 
     private void MouvementAttack(InputAction.CallbackContext context)
@@ -180,7 +227,7 @@ public class ControllerPlanete : MonoBehaviour
     }
     private void StopSprint(InputAction.CallbackContext context)
     {
-        if (context.performed && grounded)
+        if (context.performed)
         {
             isSprinting = false;
         }
