@@ -20,6 +20,8 @@ public class BoxInteraction : MonoBehaviour
     
     [SerializeField] private GameObject _closestObj;
 
+    [SerializeField] private GrabObject _grabScript;
+    
     [Header("Textes")]
     public string textGrab = "Press C to grab";
     public string textInteraction = "Press C to interact";
@@ -33,8 +35,10 @@ public class BoxInteraction : MonoBehaviour
         // handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
         
         
-        // interactText = GameObject.FindGameObjectWithTag("TextInteract").GetComponent<TextMeshProUGUI>(); 
-        // interactText?.gameObject.SetActive(false);
+        interactText = GameObject.FindGameObjectWithTag("TextInteract").GetComponent<TextMeshProUGUI>(); 
+        interactText?.gameObject.SetActive(false);
+        
+        _grabScript = GetComponent<GrabObject>();
     }
 
     private void Update()
@@ -98,25 +102,52 @@ public class BoxInteraction : MonoBehaviour
                 {
                     closestDist = playerToObject.magnitude;
                     _closestObj = item.gameObject;
-                    if (interactText && _closestObj.GetComponent<Rigidbody>())
-                    {
-                        interactText.gameObject.SetActive(true);
-                    }
                 }
             }
         }
         else
         { 
-            //interactText?.gameObject.SetActive(false);
             _closestObj = null;
         }
     }
 
     void CheckInteraction()
     {
-        switch (_closestObj)
+        switch (_closestObj?.tag)
         {
+            case null:
+                interactText?.gameObject.SetActive(false);
+                _grabScript.objToCarry = null;
+                break;
             
+            case "Movable":
+                if (!_grabScript.isCarrying)
+                {
+                    interactText?.gameObject.SetActive(true);
+                    interactText.text = textGrab;
+
+                    if (_closestObj.GetComponent<Rigidbody>())
+                    {
+                        //set obj que l'on peut grab
+                        _grabScript.objToCarry = _closestObj;
+                    }
+                    else
+                    {
+                        //cache le texte    
+                    }                    
+                }
+                
+                break;
+            
+            case "Interact":
+                interactText?.gameObject.SetActive(true);
+
+                interactText.text = textInteraction;
+                
+                break;
+            
+            default:
+                break;
         }
     }
     

@@ -23,7 +23,13 @@ public class GrabObject : MonoBehaviour
     [HideInInspector] public GameObject carriedObject;
     public LayerMask hitLayer;
     private Transform _originParent;//pour replacer l'objet une fois lâché
-    private GameObject _closestObj;
+    private GameObject _objToCarry;
+    public GameObject objToCarry
+    {
+        get { return _objToCarry; }
+        set { _objToCarry = value; }
+    }
+    
     //box
     public Vector3 detectionSize;
     public Transform pivotParent;
@@ -38,16 +44,11 @@ public class GrabObject : MonoBehaviour
     public float toleranceRange;// différence accepté entre position obj grab et où il doit être en main (lache sinon)
     void Start()
     {
-        interactText = GameObject.FindGameObjectWithTag("TextInteract").GetComponent<TextMeshProUGUI>(); 
-        interactText?.gameObject.SetActive(false);
         
         controls = GameManager.controls;
         
         controls.Player.GrabDrop.performed += GrabAction;
-        // mainCam = GameManager.Instance.mainCamera;
-        // interactor = GameObject.FindGameObjectWithTag("Interactor").transform;
-        //
-        // interactorZonePos = GameObject.FindGameObjectWithTag("InterractorZone").transform;
+
         handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
         playerCollider = GetComponentsInChildren<Collider>();
     }
@@ -60,59 +61,6 @@ public class GrabObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Calcul nouvelle position du centre pour que le bord reste collé au joueur
-        // On décale le centre de la moitié de la profondeur (axe Z) de la boite vers l'avant
-        // mainCam pour tourner la box vers où on regarde
-        _boxCenter = interactorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
-
-        _boxRotation = mainCam.transform.rotation;
-        if (interactor != null)
-        {
-            // Appliquer rotation camera sur le pivot
-            pivotParent.rotation = mainCam.transform.rotation;
-            // change rotation zone d'interaction par rapport au pivot
-            interactor.rotation = pivotParent.rotation;
-        }
-
-        // on part du principe que seul les objets qu'on peut porter auront le tag et on trie la liste
-        Collider[] hitColliders = Physics.OverlapBox(_boxCenter, detectionSize / 2, _boxRotation, hitLayer)
-            .Where(collider => collider.CompareTag("Movable"))
-            .ToArray();
-        
-        if (hitColliders.Length > 0 && !isCarrying)
-        {
-            float closestDist = Mathf.Infinity;//distance plus proche par défaut
-            // voir ajouter compare tag NotInteract ?
-            foreach (Collider item in hitColliders)
-            {
-                Vector3 playerToObject = item.transform.position - transform.position;//objet - player
-                Debug.DrawRay(transform.position, playerToObject, Color.red);
-
-                // vérifie obstacle entre player et objet
-                RaycastHit _areObstacle;
-                Physics.Raycast(transform.position, playerToObject, out _areObstacle);//range = objectToPlayer.magnitude
-                // verif tag touché joueur vers objet, si pas un Movable, un obstacle est devant
-                if (!_areObstacle.collider.CompareTag("Movable"))
-                {
-                    return;//ou continue ? 
-                }
-
-                if (playerToObject.magnitude < closestDist) // && item.CompareTag("Movable")
-                {
-                    closestDist = playerToObject.magnitude;
-                    _closestObj = item.gameObject;
-                    if (interactText && _closestObj.GetComponent<Rigidbody>())
-                    {
-                        interactText.gameObject.SetActive(true);
-                    }
-                }
-            }
-        }
-        else
-        { 
-            interactText?.gameObject.SetActive(false);
-            _closestObj = null;
-        }
 
         // suivi de l'objet dans les bras et lache si bloque trops
         if (carriedObject != null)
@@ -127,11 +75,6 @@ public class GrabObject : MonoBehaviour
                 MoveObject();
             }
         }
-    }
-
-    public void BoxDetection()
-    {
-        
     }
     
     private void GrabAction(InputAction.CallbackContext context)
@@ -157,9 +100,9 @@ public class GrabObject : MonoBehaviour
     
     public void Carrying()
     {
-        if (_closestObj != null && !isCarrying && _closestObj.GetComponent<Rigidbody>()) 
+        if (_objToCarry != null && !isCarrying && _objToCarry.GetComponent<Rigidbody>()) 
         {
-            carriedObject = _closestObj;
+            carriedObject = _objToCarry;
             _originParent = carriedObject.transform.parent;
             // Debug.LogWarning($" dist grab {Vector3.Distance(carriedObject.transform.position,handlerPosition.position)}");
 
@@ -184,7 +127,7 @@ public class GrabObject : MonoBehaviour
             }
             
             isCarrying = true;
-            _closestObj = null;//on ne detecte plus les obj proche car on en porte déjà un
+            _objToCarry = null;//on ne detecte plus les obj proche car on en porte déjà un
         }
     }
 
