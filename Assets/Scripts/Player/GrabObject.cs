@@ -37,20 +37,23 @@ public class GrabObject : MonoBehaviour
     {
         
         controls = GameManager.controls;
+        controls.Player.GrabAction.performed += GrabAction;
+        controls.Player.LaunchAction.performed += ActionLancer;//clic gauche
+        controls.Player.DropAction.performed += ActionLacher;//clic droit
         
-        controls.Player.GrabDrop.performed += GrabAction;
-
         handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
         playerCollider = GetComponentsInChildren<Collider>();
         
         grabUI = GameObject.FindGameObjectWithTag("GrabUI"); 
-        grabUI?.gameObject.SetActive(false);
+        grabUI?.SetActive(false);
         
     }
 
     private void OnDisable()
     {
-        controls.Player.GrabDrop.performed -= GrabAction;
+        controls.Player.GrabAction.performed -= GrabAction;
+        controls.Player.LaunchAction.performed -= ActionLancer;
+        controls.Player.DropAction.performed -= ActionLacher;
     }
 
     // Update is called once per frame
@@ -82,6 +85,27 @@ public class GrabObject : MonoBehaviour
                 Carry();
             }
             //else Release
+        }
+    }
+
+    void ActionLancer(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (isCarrying)
+            {
+                Release(true);
+            }
+        }
+    }
+    void ActionLacher(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (isCarrying)
+            {
+                Release(false);
+            }
         }
     }
 
@@ -119,7 +143,7 @@ public class GrabObject : MonoBehaviour
                 Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), true);
             }
             
-            grabUI?.gameObject.SetActive(true);
+            grabUI?.SetActive(true);
             isCarrying = true;
             _objToCarry = null;//on ne detecte plus les obj proche car on en porte déjà un
         }
@@ -161,7 +185,7 @@ public class GrabObject : MonoBehaviour
                 }
             }
             //reset
-            grabUI?.gameObject.SetActive(false);
+            grabUI?.SetActive(false);
             carriedObject = null;
             isCarrying = false;
         }
