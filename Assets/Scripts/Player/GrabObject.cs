@@ -196,6 +196,8 @@ public class GrabObject : MonoBehaviour
         Rigidbody rb = objetGrab.GetComponent<Rigidbody>();
         if (inHand)
         {
+            objetGrab.transform.SetParent(handlerPosition);
+
             rb.useGravity = false;
             rb.drag = 10f;
             rb.constraints = RigidbodyConstraints.FreezeRotation;
@@ -203,15 +205,15 @@ public class GrabObject : MonoBehaviour
             objetGrab.transform.rotation = Quaternion.Euler(0, 0, 0);
             objetGrab.transform.localRotation = Quaternion.Euler(0, 0, 0);
             
-            objetGrab.transform.SetParent(handlerPosition);
         }
         else
         {
+            objetGrab.transform.SetParent(_originParent);
+
             rb.useGravity = true;
             rb.drag = 0f;
             rb.constraints = RigidbodyConstraints.None;
             
-            objetGrab.transform.SetParent(_originParent);
 
         }
     }
