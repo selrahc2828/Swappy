@@ -37,8 +37,8 @@ public class BoxInteraction : MonoBehaviour
         
         interactText = GameObject.FindGameObjectWithTag("TextInteract").GetComponent<TextMeshProUGUI>(); 
         interactText?.gameObject.SetActive(false);
-        
-        _grabScript = GetComponent<GrabObject>();
+
+        _grabScript = GameManager.Instance.grabScript;
     }
 
     private void Update()
