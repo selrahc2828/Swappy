@@ -133,7 +133,7 @@ public class BoxInteraction : MonoBehaviour
                     }
                     else
                     {
-                        //cache le texte    
+                        interactText?.gameObject.SetActive(false);
                     }                    
                 }
                 

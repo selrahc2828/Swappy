@@ -24,9 +24,10 @@ public class GrabObject : MonoBehaviour
         get { return _objToCarry; }
         set { _objToCarry = value; }
     }
+
+    private GameObject grabUI;
     
     [Header("Variation")]
-    public bool canThrow;
     public float launchForce;
     public float grabForce;
     [Tooltip("différence accepté entre position obj grab et où il doit être en main (lache sinon)")]
@@ -41,6 +42,10 @@ public class GrabObject : MonoBehaviour
 
         handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
         playerCollider = GetComponentsInChildren<Collider>();
+        
+        grabUI = GameObject.FindGameObjectWithTag("GrabUI"); 
+        grabUI?.gameObject.SetActive(false);
+        
     }
 
     private void OnDisable()
@@ -58,7 +63,7 @@ public class GrabObject : MonoBehaviour
             //pose des pb: quand je grab il arrive que je sois trop loin et je drop directement
             if (Vector3.Distance(carriedObject.transform.position,handlerPosition.position) > toleranceRange)
             {
-                Drop(false, true);//pas faire le addforce du drop
+                Release(false);//on le lache si bloque
             }
             else
             {
@@ -67,18 +72,16 @@ public class GrabObject : MonoBehaviour
         }
     }
     
+    // si fait interaction autre que grab, a deplacer dans BoxInteraction
     private void GrabAction(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            if (isCarrying)
-            {
-                Drop();
-            }
-            else
+            if (!isCarrying)
             {
                 Carry();
             }
+            //else Release
         }
     }
 
@@ -116,13 +119,14 @@ public class GrabObject : MonoBehaviour
                 Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), true);
             }
             
+            grabUI?.gameObject.SetActive(true);
             isCarrying = true;
             _objToCarry = null;//on ne detecte plus les obj proche car on en porte déjà un
         }
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
-    public void Drop(bool dropRepulse = false, bool stuckInHand = false)//à voir pour modif dans FSM repulse
+    public void Release(bool isLaunched = true)//à voir pour modif dans FSM repulse
     {
         if (isCarrying)
         {
@@ -141,14 +145,13 @@ public class GrabObject : MonoBehaviour
                 }
                 
                 SetCarringPosition(carriedObject, false);
-
                 
                 foreach (Collider collider in playerCollider)
                 {
                     Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), false);
                 }
-                //lance que si lance actif ET rien en main ou si impulse quand porte
-                if ((canThrow && !stuckInHand) || dropRepulse)
+                //si action lance sinon on lache a ses pieds
+                if (isLaunched)
                 {
                     if (!FSM_ObjectState.isGrabbed && !FSM_ObjectState.isKinematic)
                     {
@@ -158,6 +161,7 @@ public class GrabObject : MonoBehaviour
                 }
             }
             //reset
+            grabUI?.gameObject.SetActive(false);
             carriedObject = null;
             isCarrying = false;
         }

@@ -77,9 +77,11 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
-            
+            Debug.Log("ActionSlot1");
             if (GameManager.Instance.grabScript.isCarrying)//on ne peut pas voler/attribuer si on porte un objet
             {
+                //on lache l'objet porte
+                GameManager.Instance.grabScript.Release(true);
                 return;
             }
             
@@ -186,6 +188,8 @@ public class ComportementStealer_proto : MonoBehaviour
             
             if (GameManager.Instance.grabScript.isCarrying)//on ne peut pas voler/attribuer si on porte un objet
             {
+                //on lance l'objet porte
+                GameManager.Instance.grabScript.Release(false);
                 return;
             }
             

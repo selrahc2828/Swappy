@@ -168,7 +168,7 @@ public class C_Impulse_Bouncing : ComportementState
                     // player relache l'objet repulse
                     if (isGrabbed) //juste isGrabbed ? objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject
                     {
-                        objectAffected.GetComponent<GrabObject>().Drop(true);
+                        objectAffected.GetComponent<GrabObject>().Release(true);
                     }
                 }
                 else
