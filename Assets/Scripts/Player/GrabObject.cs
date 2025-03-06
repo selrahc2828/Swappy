@@ -9,20 +9,15 @@ using UnityEngine.Serialization;
 
 public class GrabObject : MonoBehaviour
 {
-    
     public Controls controls;
-    public Camera mainCam;
     public Transform handlerPosition;
-    public Transform interactorZonePos;//centre zone de detection (qu'on recalcule plus tard)
 
-    [HideInInspector]public Transform interactor;
     // private Collider playerCollider;
     [HideInInspector] public Collider[] playerCollider; // on a 2 colliders
-    [HideInInspector] public TextMeshProUGUI interactText;
     [HideInInspector] public bool isCarrying;
     [HideInInspector] public GameObject carriedObject;
-    public LayerMask hitLayer;
     private Transform _originParent;//pour replacer l'objet une fois lâché
+    
     private GameObject _objToCarry;
     public GameObject objToCarry
     {
@@ -30,18 +25,13 @@ public class GrabObject : MonoBehaviour
         set { _objToCarry = value; }
     }
     
-    //box
-    public Vector3 detectionSize;
-    public Transform pivotParent;
-    private Vector3 _boxCenter;
-    private Quaternion _boxRotation;
-    
     [Header("Variation")]
     public bool canThrow;
     public float launchForce;
     public float grabForce;
     [Tooltip("différence accepté entre position obj grab et où il doit être en main (lache sinon)")]
     public float toleranceRange;// différence accepté entre position obj grab et où il doit être en main (lache sinon)
+    
     void Start()
     {
         
@@ -87,7 +77,7 @@ public class GrabObject : MonoBehaviour
             }
             else
             {
-                Carrying();
+                Carry();
             }
         }
     }
@@ -98,13 +88,13 @@ public class GrabObject : MonoBehaviour
         carriedObject.GetComponent<Rigidbody>().AddForce(dir * grabForce);
     }
     
-    public void Carrying()
+    public void Carry()
     {
-        if (_objToCarry != null && !isCarrying && _objToCarry.GetComponent<Rigidbody>()) 
+        if (_objToCarry != null && !isCarrying ) // rb déjà controle dans BoxInteraction
         {
             carriedObject = _objToCarry;
+            // on save le parent car on va déplacer l'objet en enfant de handlerPosition
             _originParent = carriedObject.transform.parent;
-            // Debug.LogWarning($" dist grab {Vector3.Distance(carriedObject.transform.position,handlerPosition.position)}");
 
             //dire a l'objet qu'il est grab au niveau FSM
             var FSM_OfObject = carriedObject.GetComponent<ComportementsStateMachine>();
@@ -157,7 +147,7 @@ public class GrabObject : MonoBehaviour
                 {
                     Physics.IgnoreCollision(collider, carriedObject.GetComponent<Collider>(), false);
                 }
-                //lance que si on lancé actif ET rien en main ou si impulse quand porté                
+                //lance que si lance actif ET rien en main ou si impulse quand porte
                 if ((canThrow && !stuckInHand) || dropRepulse)
                 {
                     if (!FSM_ObjectState.isGrabbed && !FSM_ObjectState.isKinematic)
@@ -197,25 +187,4 @@ public class GrabObject : MonoBehaviour
 
         }
     }
-    private void OnDrawGizmos()
-    {
-        if (mainCam == null) return;
-
-        // affiche box d'interaction
-        
-        Gizmos.color = Color.blue;
-        if (interactorZonePos != null && mainCam!= null)
-        {
-            // Meme calcul pour le gizmo de la box de detection
-            Vector3 boxCenter = interactorZonePos.position + mainCam.transform.forward * (detectionSize.z / 2);
-            Quaternion boxRotation = mainCam.transform.rotation;
-
-            // Pour dessiner la boite dans la scene avec Gizmos (comme avec Physics.OverlapBox)
-            // Matrix4x4.TRS permet de dessiner, position, rotation et echelle, juste DrawWireCube ne suffit pas 
-            Gizmos.matrix = Matrix4x4.TRS(boxCenter, boxRotation, Vector3.one);
-            Gizmos.DrawWireCube(Vector3.zero, detectionSize);            
-        }
-
-    }
-
 }

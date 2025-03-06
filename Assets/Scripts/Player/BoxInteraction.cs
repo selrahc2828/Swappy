@@ -44,7 +44,7 @@ public class BoxInteraction : MonoBehaviour
     private void Update()
     {
         CreateBox();
-        Detection();
+        NearObject();
         CheckInteraction();
 
     }
@@ -66,7 +66,7 @@ public class BoxInteraction : MonoBehaviour
         }
     }
 
-    void Detection()
+    void NearObject()
     {
         // on part du principe que seul les objets qu'on peut porter ou interagir auront les tag et on trie la liste
         Collider[] hitColliders = Physics.OverlapBox(_boxCenter, detectionSize / 2, _boxRotation, hitLayer)
@@ -121,7 +121,7 @@ public class BoxInteraction : MonoBehaviour
                 break;
             
             case "Movable":
-                if (!_grabScript.isCarrying)
+                if (!_grabScript.isCarrying)//check a mettre dans NearObject ? 
                 {
                     interactText?.gameObject.SetActive(true);
                     interactText.text = textGrab;
