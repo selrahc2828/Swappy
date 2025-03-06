@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3738601696558851606}
   - component: {fileID: 368593988133447694}
   - component: {fileID: 2249551179768967199}
+  - component: {fileID: 7736433207440124267}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -147,23 +148,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8873ab43ffa99a4ba740530311ce530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCam: {fileID: 0}
   handlerPosition: {fileID: 0}
-  interactorZonePos: {fileID: 8094592149934650403}
-  interactor: {fileID: 4384931224921952375}
   playerCollider: []
-  interactText: {fileID: 0}
   isCarrying: 0
   carriedObject: {fileID: 0}
+  launchForce: 80
+  grabForce: 450
+  toleranceRange: 2
+--- !u!114 &7736433207440124267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55948801783339615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80c229bab19e417c9a06a742e055cff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCam: {fileID: 0}
+  detectionSize: {x: 1, y: 1, z: 2.8}
+  pivotParent: {fileID: 4912590514323664437}
+  interactorZonePos: {fileID: 8094592149934650403}
+  interactor: {fileID: 0}
+  interactText: {fileID: 0}
   hitLayer:
     serializedVersion: 2
     m_Bits: 9
-  detectionSize: {x: 1, y: 1, z: 2.8}
-  pivotParent: {fileID: 4912590514323664437}
-  canThrow: 1
-  launchForce: 80
-  grabForce: 150
-  toleranceRange: 2
+  _closestObj: {fileID: 0}
+  _grabScript: {fileID: 0}
+  textGrab: Press C to grab
+  textInteraction: Press C to interact
 --- !u!1 &688393288675030706
 GameObject:
   m_ObjectHideFlags: 0

@@ -134,22 +134,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2249551179768967199, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
-      propertyPath: mainCam
-      value: 
-      objectReference: {fileID: 713574159}
-    - target: {fileID: 2249551179768967199, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
-      propertyPath: grabForce
-      value: 450
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249551179768967199, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2249551179768967199, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
-      propertyPath: launchForce
-      value: 80
-      objectReference: {fileID: 0}
     - target: {fileID: 3738601696558851606, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
       propertyPath: LeftArm
       value: 
@@ -202,54 +186,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7736433207440124267, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
+      propertyPath: mainCam
+      value: 
+      objectReference: {fileID: 713574159}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 55948801783339615, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4384660}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
---- !u!1 &4384657 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 55948801783339615, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
-  m_PrefabInstance: {fileID: 4384656}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &4384658 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4912590514323664437, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
-  m_PrefabInstance: {fileID: 4384656}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &4384659 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8094592149934650403, guid: 564f572ccfb3cfa48bfc29e172ade057, type: 3}
-  m_PrefabInstance: {fileID: 4384656}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4384660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4384657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80c229bab19e417c9a06a742e055cff2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCam: {fileID: 713574159}
-  detectionSize: {x: 1, y: 1, z: 2.8}
-  pivotParent: {fileID: 4384658}
-  interactorZonePos: {fileID: 4384659}
-  interactor: {fileID: 0}
-  interactText: {fileID: 0}
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 9
-  _closestObj: {fileID: 0}
-  _grabScript: {fileID: 0}
-  textGrab: Press C to grab
-  textInteraction: Press C to interact
 --- !u!1001 &9264776
 PrefabInstance:
   m_ObjectHideFlags: 0
