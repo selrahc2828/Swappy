@@ -69,9 +69,13 @@ public class BoxInteraction : MonoBehaviour
     void NearObject()
     {
         // on part du principe que seul les objets qu'on peut porter ou interagir auront les tag et on trie la liste
+        // on ne prend pas en compte les Movable si on en a déjà un en main
         Collider[] hitColliders = Physics.OverlapBox(_boxCenter, detectionSize / 2, _boxRotation, hitLayer)
-            .Where(collider => collider.CompareTag("Movable") || collider.CompareTag("Interact"))
+            .Where(collider => 
+                (collider.CompareTag("Movable") && !_grabScript.isCarrying) 
+                || collider.CompareTag("Interact"))
             .ToArray();
+        
         
         if (hitColliders.Length > 0) // && !isCarrying
         {
