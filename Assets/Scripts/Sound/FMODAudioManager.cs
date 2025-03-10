@@ -15,8 +15,7 @@ public class FMODEventManager : MonoBehaviour
     public FMODSnapshotEvents FMODSnapshots;
 
     private List<EventInstance> eventPlaylist = new List<EventInstance>();
-
-    private Bus bus;
+    
     private void Awake()
     {
         if (instance != null)
@@ -92,6 +91,29 @@ public class FMODEventManager : MonoBehaviour
     public float GetPlaylistEventSize()
     {
         return eventPlaylist.Count;
+    }
+    #endregion
+    #region Param Bus
+    public void Mute(string busRef)
+    {
+        Bus bus = RuntimeManager.GetBus(busRef);
+        bus.getMute(out bool busMuteState);
+        if (busMuteState)
+        { 
+            Debug.LogWarning(bus + "Unmute");
+            bus.setMute(false);
+        }
+        else
+        {
+            Debug.LogWarning(bus + "Mute");
+            bus.setMute(true);
+        }
+    }
+
+    public void ChangeVolume(string busRef,float volume)
+    {
+        Bus bus = RuntimeManager.GetBus(busRef);
+        bus.setVolume(volume);
     }
     #endregion
     #region On destroy
