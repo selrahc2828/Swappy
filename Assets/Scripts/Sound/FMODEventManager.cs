@@ -46,12 +46,12 @@ public class FMODEventManager : MonoBehaviour
         return eventInstance;
     }
 
-    public void StartEventInstance(EventInstance eventInstance)
+    public void PlayEventInstance(EventInstance eventInstance)
     {
         eventInstance.start();
     }
     
-    public void StartEventInstance3D(EventInstance eventInstance, GameObject gameObject, Rigidbody rigidbody)
+    public void PlayEventInstance3D(EventInstance eventInstance, GameObject gameObject, Rigidbody rigidbody)
     {
         RuntimeManager.AttachInstanceToGameObject(eventInstance,gameObject.transform,rigidbody);
         eventInstance.start();
