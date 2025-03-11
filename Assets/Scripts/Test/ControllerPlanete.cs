@@ -22,6 +22,7 @@ public class ControllerPlanete : MonoBehaviour
     public PhysicMaterial antiStickMaterial;
 
     public float maxSpeed;
+    public float jumpForce;
     public bool isSprinting;
     public bool isStopping;
 
@@ -169,7 +170,7 @@ public class ControllerPlanete : MonoBehaviour
         if (Physics.Raycast(transform.position, groundDirection, out RaycastHit hit, playerHeight * 0.5f + 0.3f, whatIsGround))
         {
             float slopeAngle = Vector3.Angle(hit.normal, -groundDirection);
-            if (slopeAngle < 75f) // Seulement considéré comme sol si l'angle est faible
+            if (slopeAngle < 75f) // Seulement considï¿½rï¿½ comme sol si l'angle est faible
             {
                 grounded = true;
             }
@@ -183,7 +184,7 @@ public class ControllerPlanete : MonoBehaviour
             {
                 float slopeAngle = Vector3.Angle(contact.normal, -gravityComponent.transform.up);
                 //Debug.Log(slopeAngle);
-                if (slopeAngle > 90f && slopeAngle < 125f) // Surface inclinée détectée
+                if (slopeAngle > 90f && slopeAngle < 125f) // Surface inclinï¿½e dï¿½tectï¿½e
                 {
                     touchingInclinedSurface = true;
                     touchingInclinedSurfaceDirection = contact.normal;
@@ -225,7 +226,7 @@ public class ControllerPlanete : MonoBehaviour
     {
         if (context.performed && grounded)
         {
-            rb.AddForce(transform.up * 5f, ForceMode.VelocityChange);
+            rb.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
         }
     }
 }
