@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] players; //dans Steler proto et ComportementStateMachine(pas sûr qu'il soit utilisé dedans)
     public GameObject player;
     public GameObject playerFBX;
+    public PhysicMaterial playerAntiStick;
     public Camera mainCamera;
     public bool canProjectWhenCarryingObject = false;
 
