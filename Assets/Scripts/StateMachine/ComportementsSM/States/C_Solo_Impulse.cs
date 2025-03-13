@@ -58,7 +58,7 @@ public class C_Solo_Impulse : ComportementState
         repulserTimer += Time.deltaTime;
         if (repulserTimer >= repulserTime)
         {
-            SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom, _sm.gameObject);
+            FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.ImpulseBoom, _sm.transform.position);
             Repulse();
             repulserTimer = 0;
         }

@@ -26,7 +26,7 @@ public class C_Bouncing_Magnet : ComportementState
     
     private float bounceMagnitude;
 
-    private GameObject sonMagnet;
+    //private GameObject sonMagnet;
     
     [Range(1,3)]
     // private float magnetUpScaleMultiplier;
@@ -49,8 +49,8 @@ public class C_Bouncing_Magnet : ComportementState
 
     public override void Enter()
     {
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart,_sm.gameObject);
-        sonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
+        //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart,_sm.gameObject);
+        //sonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
         isKinematic = false;
         stateValue = 30;
         leftValue = 3;
@@ -137,7 +137,7 @@ public class C_Bouncing_Magnet : ComportementState
     {
         
         base.Exit();
-        _sm.comportementManager.DestroyObj(sonMagnet);
+        //_sm.comportementManager.DestroyObj(sonMagnet);
         _sm.GetComponentInChildren<Collider>().material = null;
         
         _sm.comportementManager.DestroyObj(forceFieldObj);
@@ -166,8 +166,8 @@ public class C_Bouncing_Magnet : ComportementState
             // Debug.Log($"Collision Start boolburst {forceFieldObj.GetComponent<MagnetForceField>().boolBurst}");
 
             //il y a des cas où le apply burst passe pas dans grab
-            SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit,_sm.gameObject);
-            SoundManager.Instance.PlaysoundCompAimaint(_sm.gameObject);
+            // SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit,_sm.gameObject);
+            // SoundManager.Instance.PlaysoundCompAimaint(_sm.gameObject);
             if (isGrabbed)
             {
                 //boolBurst jamais true ici
