@@ -26,8 +26,18 @@ public class C_Solo_Magnet : ComportementState
         
         isKinematic = false;
         stateValue = 27;
-        leftValue = 27;
-        rightValue = 0;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            rightValue = 27;
+            leftValue = 0;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 27;
+            rightValue = 0;
+        }
+        // leftValue = 27;
+        // rightValue = 0;
         base.Enter();
 
         magnetRange = _sm.comportementManager.magnetData.magnetRange;

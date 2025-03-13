@@ -17,8 +17,18 @@ public class C_Immuable_Rocket : ComportementState
         //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit,_sm.gameObject);
         isKinematic = true;
         stateValue = 90;
-        leftValue = 9;
-        rightValue = 81;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            rightValue = 81;
+            leftValue = 9;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 9;
+            rightValue = 81;
+        }
+        // leftValue = 9;
+        // rightValue = 81;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.rocketColor);
         _sm.rb.isKinematic = true;

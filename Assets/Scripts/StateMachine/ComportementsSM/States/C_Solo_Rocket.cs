@@ -23,8 +23,18 @@ public class C_Solo_Rocket : ComportementState
     {
         isKinematic = false;
         stateValue = 81;
-        leftValue = 81;
-        rightValue = 0;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            rightValue = 81;
+            leftValue = 0;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 81;
+            rightValue = 0;
+        }
+        // leftValue = 81;
+        // rightValue = 0;
         base.Enter();
 
         timer = 0f;

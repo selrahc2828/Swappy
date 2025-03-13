@@ -17,8 +17,18 @@ public class C_Solo_Bouncing : ComportementState
     {
         isKinematic = false;
         stateValue = 3;
-        leftValue = 3;
-        rightValue = 0;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            rightValue = 3;
+            leftValue = 0;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 3;
+            rightValue = 0;
+        }
+        // leftValue = 3;
+        // rightValue = 0;
         base.Enter();
 
         _bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;

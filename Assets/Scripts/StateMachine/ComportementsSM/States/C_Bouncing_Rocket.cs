@@ -22,8 +22,18 @@ public class C_Bouncing_Rocket : ComportementState
     public override void Enter()
     {
         stateValue = 84;
-        leftValue = 3;
-        rightValue = 81;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            rightValue = 81;
+            leftValue = 3;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 3;
+            rightValue = 81;
+        }
+        // leftValue = 3;
+        // rightValue = 81;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.rocketColor);
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);

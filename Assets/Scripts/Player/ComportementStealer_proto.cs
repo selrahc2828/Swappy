@@ -403,6 +403,9 @@ public class ComportementStealer_proto : MonoBehaviour
                 Debug.Log("Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
                 
                 int futurState = playerObjectState.stateValue + slot2;
+                
+                _stateStolen.updateRight = true; // on inverse les valeurs left et right pour placer le comportement à "droite" du joueur
+                
                 playerObjectState.CalculateNewtState(futurState);
                 slot2 = 0;
                 originSlot2 = null;
@@ -410,15 +413,21 @@ public class ComportementStealer_proto : MonoBehaviour
                 SoundManager.Instance.PlaySoundComponentPlace(gameObject);
                 playeranim.Right_Attribution();
                 RightArm.Feedback_Slot_Changed(null,null, true);
+                
+                _stateStolen.updateRight = false; // reset pour les autre modif
+
             }
-            // si aucun comportement en main gauche et un comportement dans slot gauche du joueur
+            // si aucun comportement en main droite et un comportement dans slot doit du joueur
             else if (slot2 == 0 && playerSlotRight != 0)
             {
-                // transfère player vers slot2 
+                // transfère player vers slot2
                 // origin == player
                 
                 Debug.Log("Soustraction de " + playerSlotRight + " � " + playerObjectState.stateValue + " - Objet d'origine : "+ gameManager.player.gameObject.name);
                 int futurState = playerObjectState.stateValue - playerSlotRight;
+                
+                // verif si playerSlotLeft != 0 ??
+                
                 playerObjectState.CalculateNewtState(futurState);
                 slot2 = playerSlotRight;
                 originSlot2 = _stateStolen;
@@ -426,6 +435,8 @@ public class ComportementStealer_proto : MonoBehaviour
                 SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                 playeranim.Right_Attribution();
                 RightArm.Feedback_Slot_Changed();
+                
+
             }
             else if (slot2 != 0 && playerSlotRight != 0)
             {

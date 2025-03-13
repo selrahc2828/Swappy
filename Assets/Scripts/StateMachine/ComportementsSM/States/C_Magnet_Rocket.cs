@@ -28,8 +28,18 @@ public class C_Magnet_Rocket : ComportementState
     public override void Enter()
     {
         stateValue = 108;
-        leftValue = 27;
-        rightValue = 81;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            rightValue = 81;
+            leftValue = 27;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 27;
+            rightValue = 81;
+        }
+        // leftValue = 27;
+        // rightValue = 81;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.rocketColor);
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);

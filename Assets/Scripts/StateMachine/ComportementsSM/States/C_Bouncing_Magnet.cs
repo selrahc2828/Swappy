@@ -53,8 +53,18 @@ public class C_Bouncing_Magnet : ComportementState
         //sonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
         isKinematic = false;
         stateValue = 30;
-        leftValue = 3;
-        rightValue = 27;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            rightValue = 27;
+            leftValue = 3;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 3;
+            rightValue = 27;
+        }
+        // leftValue = 3;
+        // rightValue = 27;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.magnetColor);
 
