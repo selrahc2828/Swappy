@@ -81,8 +81,8 @@ public class C_Double_Impulse : ComportementState
             shockWave.GetComponent<GrowToRadius>().targetRadius = trueImpulseRange;
         }
         
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
+        //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
+        //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueImpulseRange);
         if (objectsInRange.Length > 0)
         {

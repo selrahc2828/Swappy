@@ -9,12 +9,12 @@ public class GravityPlanete : MonoBehaviour
     [SerializeField] private Vector3 offsetRotation;
     [SerializeField] private float gravityConstant = 9.81f;
     [SerializeField] private float massePlanete;
+    [SerializeField] private float maxAngle = 30f;
 
     private float marche;
 
     void Start()
     {
-        marche = 8;
         planeteRB = GameManager.Instance.planeteCore.GetComponent<Rigidbody>();
         gravityConstant = GameManager.Instance.constanteGravitationelle;
         massePlanete = GameManager.Instance.massePlanete;
@@ -26,9 +26,22 @@ public class GravityPlanete : MonoBehaviour
     void FixedUpdate()
     {
         // Calculer la direction de la planète par rapport au joueur
-        Vector3 directionToPlanet = (Vector3.zero - transform.position).normalized;
+        Vector3 directionToPlanet = (Vector3.zero - transform.position).normalized;////////////////CHANGER VECTOR3.ZERO QUAND ON AURA UN VRAI MODEL
+        Vector3 finalGravityDirection = directionToPlanet;
 
-        applyGravity(directionToPlanet);
+        // Vérifier la normale du sol sous le joueur
+        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 2.5f))
+        {
+            Vector3 groundNormal = hit.normal;
+            float angle = Vector3.Angle(groundNormal, directionToPlanet);
+
+            if (angle < maxAngle)
+            {
+                finalGravityDirection = groundNormal;
+            }
+        }
+
+        applyGravity(finalGravityDirection);
         if (rb.CompareTag("Player"))
         {
             rotatePlayer(directionToPlanet);
@@ -66,7 +79,7 @@ public class GravityPlanete : MonoBehaviour
         if(planeteRB != null)
         {
             Vector3 directionToPlanet = (transform.position - transform.position).normalized;
-            float distance = Vector3.Distance(transform.position, transform.position);
+            float distance = Vector3.Distance(Vector3.zero, transform.position);
             float gravitationalForceMagnitude = gravityConstant * planeteRB.mass / Mathf.Pow(distance, 2);
             Vector3 gravitationalForce = directionToPlanet * gravitationalForceMagnitude;
 
