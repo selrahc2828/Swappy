@@ -19,7 +19,7 @@ public class C_Magnet_Rocket : ComportementState
     
     public Vector3 magnetPos;
 
-    private bool isSoundOn;
+    //private bool isSoundOn;
     
     public C_Magnet_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -79,17 +79,17 @@ public class C_Magnet_Rocket : ComportementState
             // gestion de la zone qui applique la force
             if (_rocketOn)
             {
-                if (!isSoundOn)
-                {
-                    SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
-                    isSoundOn = true;
-                }
+                // if (!isSoundOn)
+                // {
+                //     SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
+                //     isSoundOn = true;
+                // }
                 
                 SpawnForceField();//feebback et apply de force, mis dedans pour être conservé quand se sépare de la rocket
             }
             else
             {
-                isSoundOn = false;
+                //isSoundOn = false;
                 // on met atDetachAndDestroy à true
                 if (magnetFieldObject != null)
                 {

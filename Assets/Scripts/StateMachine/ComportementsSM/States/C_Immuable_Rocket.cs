@@ -14,7 +14,7 @@ public class C_Immuable_Rocket : ComportementState
 
     public override void Enter()
     {
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit,_sm.gameObject);
+        //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit,_sm.gameObject);
         isKinematic = true;
         stateValue = 90;
         leftValue = 9;
@@ -59,7 +59,7 @@ public class C_Immuable_Rocket : ComportementState
 
         _sm.rb.isKinematic = false;
         float effectiveReleaseForce = rocketReleaseForce * (chargeTime / chargeTimeMax);
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
+        //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
         _sm.rb.AddForce(_sm.transform.up * effectiveReleaseForce, ForceMode.Impulse);
     }
 }

@@ -11,15 +11,15 @@ public class C_Immuable_Magnet : ComportementState
     private float magnetForce;
     private bool magnetGradiantForce;
 
-    private GameObject sonMagnet;
+    //private GameObject sonMagnet;
     public C_Immuable_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart,_sm.gameObject);
-        sonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
+        // SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart,_sm.gameObject);
+        // sonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
         isKinematic = true;
         stateValue = 36;
         leftValue = 9;
@@ -67,7 +67,7 @@ public class C_Immuable_Magnet : ComportementState
         _sm.rb.isKinematic = false;
         _sm.rb.velocity = baseVelocity;
         _sm.rb.angularVelocity = baseAngularVelocity;
-        _sm.comportementManager.DestroyObj(sonMagnet);
+        //_sm.comportementManager.DestroyObj(sonMagnet);
         _sm.comportementManager.DestroyObj(feedBack_GO_Left);
         _sm.comportementManager.DestroyObj(feedBack_GO_Right);
 
