@@ -215,6 +215,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SIMAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""9bf668b9-14eb-4173-a526-ad2d9d95b95e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -514,6 +523,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""LaunchAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9611afef-db5c-4976-b666-b3517a6e993f"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""SIMAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -554,6 +574,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
         m_Player_DropAction = m_Player.FindAction("DropAction", throwIfNotFound: true);
         m_Player_LaunchAction = m_Player.FindAction("LaunchAction", throwIfNotFound: true);
+        m_Player_SIMAction = m_Player.FindAction("SIMAction", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -641,6 +662,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PauseMenu;
     private readonly InputAction m_Player_DropAction;
     private readonly InputAction m_Player_LaunchAction;
+    private readonly InputAction m_Player_SIMAction;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -666,6 +688,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
         public InputAction @DropAction => m_Wrapper.m_Player_DropAction;
         public InputAction @LaunchAction => m_Wrapper.m_Player_LaunchAction;
+        public InputAction @SIMAction => m_Wrapper.m_Player_SIMAction;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -738,6 +761,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @LaunchAction.started += instance.OnLaunchAction;
             @LaunchAction.performed += instance.OnLaunchAction;
             @LaunchAction.canceled += instance.OnLaunchAction;
+            @SIMAction.started += instance.OnSIMAction;
+            @SIMAction.performed += instance.OnSIMAction;
+            @SIMAction.canceled += instance.OnSIMAction;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -805,6 +831,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @LaunchAction.started -= instance.OnLaunchAction;
             @LaunchAction.performed -= instance.OnLaunchAction;
             @LaunchAction.canceled -= instance.OnLaunchAction;
+            @SIMAction.started -= instance.OnSIMAction;
+            @SIMAction.performed -= instance.OnSIMAction;
+            @SIMAction.canceled -= instance.OnSIMAction;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -863,5 +892,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnPauseMenu(InputAction.CallbackContext context);
         void OnDropAction(InputAction.CallbackContext context);
         void OnLaunchAction(InputAction.CallbackContext context);
+        void OnSIMAction(InputAction.CallbackContext context);
     }
 }

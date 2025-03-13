@@ -36,7 +36,8 @@ public class ComportementStealer_proto : MonoBehaviour
     [Header("FeedBacks")] 
     public Slot_feedback LeftArm;
     public Slot_feedback RightArm;
-    
+
+    public bool simActive;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +50,8 @@ public class ComportementStealer_proto : MonoBehaviour
         controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;//F
         controls.Player.ViderComportementSurPlayer.performed += ViderComportementSurPlayer;//E
         controls.Player.ViderSlots.performed += ViderSlots;//G
+        controls.Player.SIMAction.performed += SimAction;//Alt press
+        controls.Player.SIMAction.canceled += SimAction;//Alt release
         slot1 = 0;
         slot2 = 0;
         originSlot1 = null;
@@ -71,8 +74,23 @@ public class ComportementStealer_proto : MonoBehaviour
         controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;//F
         controls.Player.ViderComportementSurPlayer.performed -= ViderComportementSurPlayer;//E
         controls.Player.ViderSlots.performed -= ViderSlots;
+        controls.Player.SIMAction.performed -= SimAction;//Alt press
+        controls.Player.SIMAction.canceled -= SimAction;//Alt release
     }
 
+    private void SimAction(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            simActive = true;
+        }
+
+        if (context.canceled)
+        {
+            simActive = false;
+        }
+    }
+    
     void ActionSlot1(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -80,6 +98,12 @@ public class ComportementStealer_proto : MonoBehaviour
             Debug.Log("ActionSlot1");
             if (GameManager.Instance.grabScript.isCarrying)//on ne peut pas voler/attribuer si on porte un objet
             {
+                return;
+            }
+
+            if (simActive)
+            {
+                SimSlot1();
                 return;
             }
             
@@ -290,6 +314,68 @@ public class ComportementStealer_proto : MonoBehaviour
         }
     }
 
+    void SimSlot1() // left
+    {
+
+        int playerSlotLeft = 0;
+        
+        // clamp pour pas avoir de negatif au cas où ? 
+        
+        _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>(); // Stocker la reference
+        
+        if (_stateStolen.currentState is ComportementState)
+        {
+            ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
+            Debug.Log($"SimSlot1 playerObjectState right: {playerObjectState.rightValue} / left: {playerObjectState.leftValue}");
+            playerSlotLeft = playerObjectState.leftValue;
+
+            // s'il y a un comportement en main gauche et rien en slot gauche du joueur
+            if (slot1 != 0 && playerSlotLeft == 0)
+            {
+                Debug.Log("Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
+                
+                int futurState = playerObjectState.stateValue + slot1;
+                playerObjectState.CalculateNewtState(futurState);
+                slot1 = 0;
+                originSlot1 = null;
+                slot1Text.text = "";
+                SoundManager.Instance.PlaySoundComponentPlace(gameObject);
+                playeranim.Left_Attribution();
+                LeftArm.Feedback_Slot_Changed(null,null, true);
+            }
+            // si aucun comportement en main gauche et un comportement dans slot gauche du joueur
+            else if (slot1 == 0 && playerSlotLeft != 0)
+            {
+                // transfère player vers slot1 
+                // origin == player
+                
+                Debug.Log("Soustraction de " + playerSlotLeft + " � " + playerObjectState.stateValue + " - Objet d'origine : "+ gameManager.player.gameObject.name);
+                int futurState = playerObjectState.stateValue - playerObjectState.leftValue;
+                playerObjectState.CalculateNewtState(futurState);
+                slot1 = playerObjectState.leftValue;
+                originSlot1 = _stateStolen;
+                slot1Text.text = ((FirstState)slot1).ToString();
+                SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
+                playeranim.Left_Aspiration();
+                LeftArm.Feedback_Slot_Changed();
+            }
+            else if (slot1 != 0 && playerSlotLeft != 0)
+            {
+                Debug.Log($"Échange des valeurs : slot1 ({slot1}) ⇄ player left({playerObjectState.leftValue})");
+
+                (slot1, playerObjectState.leftValue) = (playerObjectState.leftValue, slot1);
+
+                // Mettre à jour le texte du slot
+                slot1Text.text = ((FirstState)slot1).ToString();
+
+                SoundManager.Instance.PlaySoundComponentPlace(gameObject);
+                playeranim.Left_Attribution();
+                LeftArm.Feedback_Slot_Changed();
+            }
+        }
+        
+    }
+    
     void SwitchSlotsValue(InputAction.CallbackContext context)
     {
         if (context.performed)
