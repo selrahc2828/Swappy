@@ -13,6 +13,7 @@ public class FMODEventManager : MonoBehaviour
     public static FMODEventManager instance { get; private set; }
     public FMODEvents FMODEvents;
     public FMODSnapshotEvents FMODSnapshots;
+    public FMODBus Fmodbus;
 
     private List<EventInstance> eventPlaylist = new List<EventInstance>();
     

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 5247813342975329975}
   - component: {fileID: 877786246134460342}
   - component: {fileID: 1092291460780340661}
+  - component: {fileID: 1315891730027498275}
+  - component: {fileID: 2779393325064255514}
   m_Layer: 0
   m_Name: ----Manager----
   m_TagString: Untagged
@@ -78,8 +80,12 @@ MonoBehaviour:
   players: []
   player: {fileID: 0}
   playerFBX: {fileID: 0}
+  playerAntiStick: {fileID: 0}
   mainCamera: {fileID: 0}
   canProjectWhenCarryingObject: 0
+  planeteCore: {fileID: 0}
+  constanteGravitationelle: 0
+  massePlanete: 0
   walkSpeed: 35
   sprintSpeed: 50
   groundDrag: 5
@@ -296,3 +302,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabSonAimant: {fileID: 2007812604757634318, guid: b648a5bd73fb41449bc9393c665a7b97, type: 3}
+--- !u!114 &1315891730027498275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573964937435694765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e09a80f98898fb48a4f5c2928ec3957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FMODEvents: {fileID: 11400000, guid: d68df694685d05b44ac24ab58b971e85, type: 2}
+  FMODSnapshots: {fileID: 11400000, guid: 0f39827d2f8f14f4884c67cfbe4efe65, type: 2}
+--- !u!114 &2779393325064255514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573964937435694765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60974abae43cf4d42bfd6307decb7b2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FMODMusicEvents: {fileID: 11400000, guid: 3f81f2db90659904082c7dea9f63752b, type: 2}
+  FMODSnapshotEvents: {fileID: 11400000, guid: 0f39827d2f8f14f4884c67cfbe4efe65, type: 2}
