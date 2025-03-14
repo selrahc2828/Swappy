@@ -24,8 +24,8 @@ public class C_Bouncing_Rocket : ComportementState
         stateValue = 84;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 81;
-            leftValue = 3;
+            leftValue = 81;
+            rightValue = 3;
         }
         else  // Par défaut, initialisation pour la main gauche
         {

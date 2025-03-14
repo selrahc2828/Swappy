@@ -30,8 +30,8 @@ public class C_Magnet_Rocket : ComportementState
         stateValue = 108;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 81;
-            leftValue = 27;
+            leftValue = 81;
+            rightValue = 27;
         }
         else  // Par défaut, initialisation pour la main gauche
         {

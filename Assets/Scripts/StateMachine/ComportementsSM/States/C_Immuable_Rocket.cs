@@ -19,8 +19,8 @@ public class C_Immuable_Rocket : ComportementState
         stateValue = 90;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 81;
-            leftValue = 9;
+            leftValue = 81;
+            rightValue = 9;
         }
         else  // Par défaut, initialisation pour la main gauche
         {

@@ -25,8 +25,8 @@ public class C_Solo_Rocket : ComportementState
         stateValue = 81;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 81;
             leftValue = 0;
+            rightValue = 81;
         }
         else  // Par défaut, initialisation pour la main gauche
         {

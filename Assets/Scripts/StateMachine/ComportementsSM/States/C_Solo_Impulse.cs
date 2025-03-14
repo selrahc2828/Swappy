@@ -26,8 +26,8 @@ public class C_Solo_Impulse : ComportementState
         
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 1;
             leftValue = 0;
+            rightValue = 1;
         }
         else  // Par défaut, initialisation pour la main gauche
         {

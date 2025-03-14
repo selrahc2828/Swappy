@@ -23,8 +23,8 @@ public class C_Bouncing_Immuable : ComportementState
         stateValue = 12;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 9;
-            leftValue = 3;
+            leftValue = 9;
+            rightValue = 3;
         }
         else  // Par défaut, initialisation pour la main gauche
         {

@@ -32,8 +32,8 @@ public class C_Impulse_Bouncing : ComportementState
         stateValue = 4;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 3;
-            leftValue = 1;
+            leftValue = 3;
+            rightValue = 1;
         }
         else  // Par défaut, initialisation pour la main gauche
         {

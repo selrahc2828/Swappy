@@ -323,6 +323,8 @@ public class ComportementStealer_proto : MonoBehaviour
     void SimSlot1() // left
     {
 
+        // verif quand passe de player à main, car le comp de droite passe à gauche 
+        
         int playerSlotLeft = 0;
         
         // clamp pour pas avoir de negatif au cas où ? 
@@ -357,6 +359,8 @@ public class ComportementStealer_proto : MonoBehaviour
                 
                 Debug.Log("Soustraction de " + playerSlotLeft + " � " + playerObjectState.stateValue + " - Objet d'origine : "+ gameManager.player.gameObject.name);
                 int futurState = playerObjectState.stateValue - playerSlotLeft;
+                
+                _stateStolen.updateRight = true;
                 playerObjectState.CalculateNewtState(futurState);
                 slot1 = playerSlotLeft;
                 originSlot1 = _stateStolen;
@@ -364,6 +368,8 @@ public class ComportementStealer_proto : MonoBehaviour
                 SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                 playeranim.Left_Aspiration();
                 LeftArm.Feedback_Slot_Changed();
+                
+                _stateStolen.updateRight = false;
             }
             else if (slot1 != 0 && playerSlotLeft != 0)
             {
@@ -384,7 +390,7 @@ public class ComportementStealer_proto : MonoBehaviour
 
     void SimSlot2()//right
     {
-        
+       
         int playerSlotRight = 0;
         
         // clamp pour pas avoir de negatif au cas où ? 
@@ -402,6 +408,7 @@ public class ComportementStealer_proto : MonoBehaviour
             {
                 Debug.Log("Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
                 
+                // si 1 dans droit faire inverse
                 int futurState = playerObjectState.stateValue + slot2;
                 
                 _stateStolen.updateRight = true; // on inverse les valeurs left et right pour placer le comportement à "droite" du joueur

@@ -19,8 +19,8 @@ public class C_Solo_Bouncing : ComportementState
         stateValue = 3;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 3;
             leftValue = 0;
+            rightValue = 3;
         }
         else  // Par défaut, initialisation pour la main gauche
         {

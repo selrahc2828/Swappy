@@ -23,8 +23,8 @@ public class C_Impulse_Immuable : ComportementState
         stateValue = 10;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 9;
-            leftValue = 1;
+            leftValue = 9;
+            rightValue = 1;
         }
         else  // Par défaut, initialisation pour la main gauche
         {

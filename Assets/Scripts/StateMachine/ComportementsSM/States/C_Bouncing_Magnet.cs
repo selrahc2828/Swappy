@@ -55,8 +55,8 @@ public class C_Bouncing_Magnet : ComportementState
         stateValue = 30;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 27;
-            leftValue = 3;
+            leftValue = 27;
+            rightValue = 3;
         }
         else  // Par défaut, initialisation pour la main gauche
         {

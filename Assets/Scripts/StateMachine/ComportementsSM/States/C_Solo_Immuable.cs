@@ -18,8 +18,8 @@ public class C_Solo_Immuable : ComportementState
         stateValue = 9;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 9;
             leftValue = 0;
+            rightValue = 9;
         }
         else  // Par défaut, initialisation pour la main gauche
         {

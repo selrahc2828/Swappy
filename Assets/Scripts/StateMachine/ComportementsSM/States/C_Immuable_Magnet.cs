@@ -24,8 +24,8 @@ public class C_Immuable_Magnet : ComportementState
         stateValue = 36;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 27;
-            leftValue = 9;
+            leftValue = 27;
+            rightValue = 9;
         }
         else  // Par défaut, initialisation pour la main gauche
         {

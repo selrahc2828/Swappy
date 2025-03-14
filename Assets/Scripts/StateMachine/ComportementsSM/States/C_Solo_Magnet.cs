@@ -28,8 +28,8 @@ public class C_Solo_Magnet : ComportementState
         stateValue = 27;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
         {
-            rightValue = 27;
             leftValue = 0;
+            rightValue = 27;
         }
         else  // Par défaut, initialisation pour la main gauche
         {
