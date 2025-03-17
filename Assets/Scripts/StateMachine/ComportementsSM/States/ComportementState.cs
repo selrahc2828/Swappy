@@ -15,6 +15,11 @@ public class ComportementState : State
     public GameObject feedBack_GO_Right;
 
     protected ComportementsStateMachine _sm;
+    public ComportementsStateMachine smGet => _sm; // get
+    // public ComportementsStateMachine smGet
+    // {
+    //     get { return _sm; }
+    // }
 
     public ComportementState(StateMachine stateMachine) : base(stateMachine)
     {
