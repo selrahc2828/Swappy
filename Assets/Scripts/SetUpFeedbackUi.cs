@@ -112,8 +112,18 @@ public class SetUpFeedbackUi : MonoBehaviour
         if (stateMachine.currentState is ComportementState)
         {
             ComportementState currentPlayertate = (ComportementState)stateMachine.currentState;
-            ColorFeedback(vignetteLeft, currentPlayertate.leftValue);
-            ColorFeedback(vignetteRight, currentPlayertate.rightValue);
+            // check currentPlayertate.inversion
+            if (currentPlayertate.smGet.inversion)
+            {
+                ColorFeedback(vignetteLeft, currentPlayertate.rightValue);
+                ColorFeedback(vignetteRight, currentPlayertate.leftValue);
+            }
+            else
+            {
+                ColorFeedback(vignetteLeft, currentPlayertate.leftValue);
+                ColorFeedback(vignetteRight, currentPlayertate.rightValue);              
+            }
+
         }
     }
     
