@@ -43,7 +43,8 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         gameManager = GameManager.Instance;
         controls = GameManager.controls;
-
+        playeranim = FindObjectOfType<Anim_manager>();
+        
         controls.Player.ActionSlot1.performed += ActionSlot1;//clic gauche
         controls.Player.ActionSlot2.performed += ActionSlot2;//clic droit
         controls.Player.SwitchSlotsValue.performed += SwitchSlotsValue;//T
@@ -52,6 +53,9 @@ public class ComportementStealer_proto : MonoBehaviour
         controls.Player.ViderSlots.performed += ViderSlots;//G
         controls.Player.SIMAction.performed += SimAction;//Alt press
         controls.Player.SIMAction.canceled += SimAction;//Alt release
+        
+        // playeranim = GameManager.Instance.
+        
         slot1 = 0;
         slot2 = 0;
         originSlot1 = null;

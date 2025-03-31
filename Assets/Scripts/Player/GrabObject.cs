@@ -37,7 +37,7 @@ public class GrabObject : MonoBehaviour
     {
         
         controls = GameManager.controls;
-        controls.Player.GrabAction.performed += GrabAction;
+        // controls.Player.GrabAction.performed += GrabAction;
         controls.Player.LaunchAction.performed += ActionLancer;//clic gauche
         controls.Player.DropAction.performed += ActionLacher;//clic droit
         
@@ -51,7 +51,7 @@ public class GrabObject : MonoBehaviour
 
     private void OnDisable()
     {
-        controls.Player.GrabAction.performed -= GrabAction;
+        // controls.Player.GrabAction.performed -= GrabAction;
         controls.Player.LaunchAction.performed -= ActionLancer;
         controls.Player.DropAction.performed -= ActionLacher;
     }
@@ -84,7 +84,6 @@ public class GrabObject : MonoBehaviour
             {
                 Carry();
             }
-            //else Release
         }
     }
 

@@ -224,6 +224,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interaction"",
+                    ""type"": ""Button"",
+                    ""id"": ""8d142b99-101e-4c00-a7a0-61442b2d4016"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -372,8 +381,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""91d09956-fb97-4f9c-9c51-f123dfaed870"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""id"": ""e61932b0-c82c-4a7b-ad8a-9c227be0d7fa"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -545,6 +554,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Projection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed965136-1d39-4427-a409-9823cde2f2b9"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -625,6 +645,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_DropAction = m_Player.FindAction("DropAction", throwIfNotFound: true);
         m_Player_LaunchAction = m_Player.FindAction("LaunchAction", throwIfNotFound: true);
         m_Player_SIMAction = m_Player.FindAction("SIMAction", throwIfNotFound: true);
+        m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
         // Pause
         m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
         m_Pause_Resume = m_Pause.FindAction("Resume", throwIfNotFound: true);
@@ -717,6 +738,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_DropAction;
     private readonly InputAction m_Player_LaunchAction;
     private readonly InputAction m_Player_SIMAction;
+    private readonly InputAction m_Player_Interaction;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -743,6 +765,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @DropAction => m_Wrapper.m_Player_DropAction;
         public InputAction @LaunchAction => m_Wrapper.m_Player_LaunchAction;
         public InputAction @SIMAction => m_Wrapper.m_Player_SIMAction;
+        public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -818,6 +841,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @SIMAction.started += instance.OnSIMAction;
             @SIMAction.performed += instance.OnSIMAction;
             @SIMAction.canceled += instance.OnSIMAction;
+            @Interaction.started += instance.OnInteraction;
+            @Interaction.performed += instance.OnInteraction;
+            @Interaction.canceled += instance.OnInteraction;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -888,6 +914,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @SIMAction.started -= instance.OnSIMAction;
             @SIMAction.performed -= instance.OnSIMAction;
             @SIMAction.canceled -= instance.OnSIMAction;
+            @Interaction.started -= instance.OnInteraction;
+            @Interaction.performed -= instance.OnInteraction;
+            @Interaction.canceled -= instance.OnInteraction;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -993,6 +1022,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnDropAction(InputAction.CallbackContext context);
         void OnLaunchAction(InputAction.CallbackContext context);
         void OnSIMAction(InputAction.CallbackContext context);
+        void OnInteraction(InputAction.CallbackContext context);
     }
     public interface IPauseActions
     {

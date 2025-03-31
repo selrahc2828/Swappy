@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BoxInteraction : MonoBehaviour
 {
@@ -49,6 +50,18 @@ public class BoxInteraction : MonoBehaviour
 
     }
 
+
+    private void OnEnable()
+    {
+        GameManager.controls.Player.Interaction.performed += InteractAction;
+    }
+
+    public void OnDisable()
+    {
+        GameManager.controls.Player.Interaction.performed -= InteractAction;
+
+    }
+
     void CreateBox()
     {
         // Calcul nouvelle position du centre pour que le bord reste collé au joueur
@@ -66,7 +79,7 @@ public class BoxInteraction : MonoBehaviour
         }
     }
 
-    void NearObject()
+    void NearObject() // recupère l'object avec lequel on peut interagir le plus proche
     {
         // on part du principe que seul les objets qu'on peut porter ou interagir auront les tag et on trie la liste
         // on ne prend pas en compte les Movable si on en a déjà un en main
@@ -115,6 +128,37 @@ public class BoxInteraction : MonoBehaviour
         }
     }
 
+    public void InteractAction(InputAction.CallbackContext callbackContext)
+    {
+        Debug.Log("Interact");
+        switch (_closestObj?.tag)
+        {
+            // case null:
+            //     interactText?.gameObject.SetActive(false);
+            //     _grabScript.objToCarry = null;
+            //     break;
+
+            case "Movable":
+                if (!_grabScript.isCarrying)
+                {
+                    if (_closestObj.GetComponent<Rigidbody>())
+                    {
+                        //set obj que l'on peut grab
+                        _grabScript.Carry();
+                    }
+                }
+
+                break;
+
+            case "Interact":
+                _closestObj.GetComponent<InteractableObject>().Interact();// voir si moyen de faire avec event ? et/ou heritage
+                break;
+
+            default:
+                break;
+        }
+    }
+    
     void CheckInteraction()
     {
         switch (_closestObj?.tag)
