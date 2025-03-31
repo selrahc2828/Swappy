@@ -8,8 +8,7 @@ public class MainMenuState : GameState
     
     public override void Enter()
     {
-        SceneLoader.Instance.LoadScene("SC_Main_Menu", additive: true);
-        //menuGO.SetActive(true);
+        menuGO.SetActive(true);
     }
     
     //Used by button - single responsibility
@@ -20,6 +19,6 @@ public class MainMenuState : GameState
 
     public override void Exit()
     {
-        //menuGO.SetActive(false);
+        menuGO.SetActive(false);
     }
 }

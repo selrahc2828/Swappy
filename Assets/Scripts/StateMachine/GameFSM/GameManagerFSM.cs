@@ -6,7 +6,8 @@ using Eflatun.SceneReference;
 public class GameManagerFSM : MonoBehaviour
 {
     
-    public SceneReference selectedLevel;
+    public List<SceneReference> selectedLevels;
+    public int sceneID;
     
     private GameState currentState;
     

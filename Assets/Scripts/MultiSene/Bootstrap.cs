@@ -1,9 +1,13 @@
+using Eflatun.SceneReference;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Bootstrap : MonoBehaviour
 {
-    private void Start()
+    public SceneReference mainscene;
+    // Start is called before the first frame update
+    void Awake()
     {
-        SceneLoader.Instance.LoadScene("SC_Main_Menu", additive: true);
+        SceneManager.LoadScene(mainscene.BuildIndex);
     }
 }
