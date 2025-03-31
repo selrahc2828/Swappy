@@ -605,8 +605,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             else
                             {
                                 _stateStolen.inversion = false;
-                            }                            
-                            
+                            }
                             
                             //slot1 = 0;
                             originSlot1 = _stateStolen;
