@@ -21,7 +21,7 @@ public class C_Impulse_Magnet : ComportementState
     public override void Enter()
     {
         //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart,_sm.gameObject);
-        prefabSonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
+       // prefabSonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
         //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
         stateValue = 28;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
