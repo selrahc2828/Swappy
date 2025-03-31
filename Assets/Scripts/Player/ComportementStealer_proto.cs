@@ -493,385 +493,10 @@ public class ComportementStealer_proto : MonoBehaviour
             ComportementState newPlayerObjectState;
             playerSlotLeft = playerObjectState.leftValue;
             playerSlotRight = playerObjectState.rightValue;
-            Debug.Log($"SimSlot1 playerObjectState left: {playerObjectState.leftValue} / right: {playerObjectState.rightValue}");
-#region ancien
-            // if (playerSlotLeft == 0)//aucun comportement*
-            // {
-            //     _stateStolen.inversion = false;
-            //
-            //
-            //     if (slot1 == 0)
-            //     {
-            //         return;
-            //     }
-            //     
-            //     //ajout comportement
-            //     Debug.Log("Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
-            //     
-            //     int futurState = playerObjectState.stateValue + slot1;
-            //     
-            //     playerObjectState.CalculateNewtState(futurState);
-            //     slot1 = 0;
-            //     originSlot1 = null;
-            //     slot1Text.text = "";
-            //     SoundManager.Instance.PlaySoundComponentPlace(gameObject);
-            //     playeranim.Left_Attribution();
-            //     LeftArm.Feedback_Slot_Changed(null,null, true);
-            // }
-            // else if (playerSlotRight == 0) //1 comportement a gauche et rien a droite
-            // {
-            //     if (_stateStolen.inversion)
-            //     {
-            //         
-            //         if (slot1 == 0 ) // soustraction
-            //         {
-            //             _stateStolen.inversion = true;
-            //
-            //             Debug.Log("Soustraction de " + playerSlotLeft + " � " + playerObjectState.stateValue + " - Objet d'origine : "+ gameManager.player.gameObject.name);
-            //             int futurState = playerObjectState.stateValue - playerSlotLeft;
-            //     
-            //             playerObjectState.CalculateNewtState(futurState);
-            //             slot1 = playerSlotLeft;
-            //             originSlot1 = _stateStolen;
-            //             slot1Text.text = ((FirstState)slot1).ToString();
-            //             SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
-            //             playeranim.Left_Aspiration();
-            //             LeftArm.Feedback_Slot_Changed();
-            //         }
-            //         else //addition
-            //         {
-            //             if (slot1 > playerSlotLeft) // si valeur de ma main > à mon bras on inverse/ verif si inférieur pour bras droit
-            //             {
-            //                 _stateStolen.inversion = true;
-            //             }
-            //             else
-            //             {
-            //                 _stateStolen.inversion = false; //_stateStolen.inversion = !_stateStolen.inversion;
-            //             }
-            //             
-            //             //ajout comportement
-            //             Debug.Log("Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
-            //     
-            //             int futurState = playerObjectState.stateValue + slot1;
-            //     
-            //             playerObjectState.CalculateNewtState(futurState);
-            //             slot1 = 0;
-            //             originSlot1 = null;
-            //             slot1Text.text = "";
-            //             SoundManager.Instance.PlaySoundComponentPlace(gameObject);
-            //             playeranim.Left_Attribution();
-            //             LeftArm.Feedback_Slot_Changed(null,null, true); 
-            //         }
-            //         
-            //
-            //     }
-            //     else // pas inverse (donc pas a mettre a droite) et j'ai déjà un comportement à gauche
-            //     {
-            //         _stateStolen.inversion = false;
-            //         //echange comportement
-            //         
-            //         
-            //         if (slot1 == 0 ) // soustraction
-            //         {
-            //             Debug.Log("Soustraction de " + playerSlotLeft + " � " + playerObjectState.stateValue + " - Objet d'origine : "+ gameManager.player.gameObject.name);
-            //             int futurState = playerObjectState.stateValue - playerSlotLeft;
-            //     
-            //             playerObjectState.CalculateNewtState(futurState);
-            //             slot1 = playerSlotLeft;
-            //             originSlot1 = _stateStolen;
-            //             slot1Text.text = ((FirstState)slot1).ToString();
-            //             SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
-            //             playeranim.Left_Aspiration();
-            //             LeftArm.Feedback_Slot_Changed();
-            //         }
-            //         else
-            //         {
-            //             Debug.Log($"Échange des valeurs : slot1 ({slot1}) ⇄ player left({playerSlotLeft})");
-            //
-            //             int futurState = playerObjectState.stateValue - playerSlotLeft + slot1;
-            //             playerObjectState.CalculateNewtState(futurState);
-            //             slot1 = playerSlotLeft;
-            //             originSlot1 = _stateStolen;
-            //             
-            //             //(slot1, playerObjectState.leftValue) = (playerObjectState.leftValue, slot1);
-            //
-            //             // Mettre à jour le texte du slot
-            //             slot1Text.text = ((FirstState)slot1).ToString();
-            //
-            //             SoundManager.Instance.PlaySoundComponentPlace(gameObject);
-            //             playeranim.Left_Attribution();
-            //             LeftArm.Feedback_Slot_Changed();                        
-            //         }
-            //     }
-            // }
-            // else //1 comportement a gauche ET a droite
-            // {
-            //     // if (_stateStolen.inversion)
-            //     // {
-            //         // CAS BRAS DROIT
-            //         //bounce3 G  magnet27 D ||| main = impulse1
-            //         //remplacer magnet par impulse ==> impulse1 bounce3 or on veut bounce3 impulse1 en "visuel"
-            //         
-            //         // CAS BRAS GAUCHE
-            //         // impulse1 immuable9 ||| main = magnet27
-            //         //remplacer impulse1 par magnet27 ==> immuable9 magnet27 or on veut magnet27 immuable9
-            //
-            //         //par defaut, plus petit toujours a gauche, on doit verifier sa valeur de celui que l'on remplace pour echanger en concequence
-            //         // on inverse l'inversion  _stateStolen.inversion = !_stateStolen.inversion;
-            //         bool mainValuePlusGrand = false;
-            //         
-            //         if (slot1 > playerSlotLeft) // si valeur de ma main > à mon bras on inverse/ verif si inférieur pour bras droit
-            //         {
-            //             mainValuePlusGrand = true;
-            //             _stateStolen.inversion = true;
-            //         }
-            //         else
-            //         {
-            //             mainValuePlusGrand = false;
-            //             _stateStolen.inversion = false; //_stateStolen.inversion = !_stateStolen.inversion;
-            //         }
-            //
-            //         //echange
-            //         Debug.Log($"Échange des valeurs : slot1 ({slot1}) ⇄ player left({playerSlotLeft})");
-            //
-            //         (slot1, playerObjectState.leftValue) = (playerObjectState.leftValue, slot1);
-            //
-            //         // Mettre à jour le texte du slot
-            //         slot1Text.text = ((FirstState)slot1).ToString();
-            //
-            //         SoundManager.Instance.PlaySoundComponentPlace(gameObject);
-            //         playeranim.Left_Attribution();
-            //         LeftArm.Feedback_Slot_Changed();
-            //     // }
-            // }
-            #endregion
-            #region ancien2
             
-            // // Si aucun comportement n'est actuellement stocké dans slot1 / le bras gauche
-            // if (slot1 == 0)
-            // {
-            //     if (playerObjectState.stateValue != 0 && playerObjectState.leftValue != 0) // sinon on stock le comp alors qu'il est à droite
-            //     {
-            //         if (playerObjectState.rightValue == 0 && _stateStolen.inversion)
-            //         {
-            //             return;
-            //         }
-            //         
-            //         int valueToSteal;
-            //
-            //         if (_stateStolen.inversion)//pour que le "vole" corresponde à ce que je vois 
-            //         {
-            //             valueToSteal = playerObjectState.rightValue;
-            //         }
-            //         else
-            //         {
-            //             valueToSteal = playerObjectState.leftValue;
-            //         }
-            //         
-            //         Debug.Log("SIM - Soustraction de " + valueToSteal + " a " + playerObjectState.stateValue + " - Objet d'origine : "+ gameManager.player.gameObject.name);
-            //         
-            //         // int valueToSteal = playerObjectState.leftValue;
-            //         int futurState = playerObjectState.stateValue - valueToSteal;
-            //         playerObjectState.CalculateNewtState(futurState);
-            //         slot1 = valueToSteal;
-            //         originSlot1 = _stateStolen;
-            //         slot1Text.text = ((FirstState)slot1).ToString();
-            //
-            //         playerObjectState = (ComportementState)_stateStolen.currentState; //reset du state actuel
-            //
-            //         
-            //         //verif valeur < pour inverser ou non 
-            //         
-            //         //ici on retire à gauche, donc si on a encore un comp ça veut dire qu'on en a 1 sur player droite
-            //         _stateStolen.inversion = playerObjectState.leftValue != 0; 
-            //         // _stateStolen.inversion = (playerObjectState.leftValue < valueToSteal);
-            //
-            //         // Vérification pour inversion : on compare la rightValue avec la valeur volée
-            //         //_stateStolen.inversion = (playerObjectState.rightValue < valueToSteal);
-            //
-            //         SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
-            //         playeranim.Left_Aspiration();
-            //         LeftArm.Feedback_Slot_Changed();
-            //     }
-            //     else
-            //     {
-            //         Debug.Log("Aucun comportement valable à voler (stateValue ou leftValue == 0)");
-            //     }
-            // }
-            // // Sinon, on ajoute le comportement stocké (dans le bras) sur le player
-            // else
-            // {
-            //     Debug.Log($"leftValue : {playerObjectState.leftValue} / right: {playerObjectState.rightValue} / inversion : {_stateStolen.inversion}");
-            //     // Si player possède déjà un comportement à gauche (leftValue non nul)
-            //     // et que slot1 est rempli, on échange les valeurs
-            //
-            //     if (playerObjectState.stateValue !=0 )//left forcément remplis
-            //     {
-            //         
-            //         //addition mais doit verif _stateStolen.inversion
-            //         
-            //         if (_stateStolen.inversion)
-            //         {
-            //             if (playerObjectState.rightValue == 0) 
-            //             {
-            //                 // addition
-            //             }
-            //             else
-            //             {
-            //                 // Echange
-            //             }
-            //         }
-            //         else // si j'ai 1 comp sur bras gauche, et que je ne suis pas inversé, j'ehange le comp bras gauche et le slot1
-            //         {
-            //             //Echange
-            //         }
-            //         
-            //         
-            //     }
-            //     else
-            //     {
-            //         //addition (verif _stateStolen.inversion ?)
-            //         
-            //         Debug.Log("SIM GAUCHE - Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
-            //         
-            //         int valueToAdd = slot1;
-            //         int futurState = playerObjectState.stateValue + valueToAdd;
-            //
-            //         playerObjectState.CalculateNewtState(futurState);
-            //         playerObjectState = (ComportementState)_stateStolen.currentState; //reset du state actuel
-            //         
-            //         // Vérification : inversion est true si rightValue est inférieure à la valeur ajoutée
-            //         // CAS BRAS GAUCHE
-            //         // impulse1 immuable9 ||| main = magnet27
-            //         //remplacer impulse1 par magnet27 ==> immuable9 magnet27 or on veut magnet27 immuable9
-            //         
-            //         // Debug.Log($"after left value: {playerObjectState.leftValue} / valueToAdd : {valueToAdd} / currentState : {_stateStolen.currentState}");
-            //         _stateStolen.inversion = (playerObjectState.leftValue < valueToAdd);
-            //         // Debug.Log($"_stateStolen.inversion addition left: {_stateStolen.inversion}");
-            //
-            //
-            //         slot1 = 0;
-            //         originSlot1 = null;
-            //         slot1Text.text = "";
-            //         SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
-            //         playeranim.Left_Attribution();
-            //         LeftArm.Feedback_Slot_Changed();
-            //     }
-            //     
-            //     
-            //     
-            //     if (playerObjectState.leftValue != 0 || (playerObjectState.rightValue != 0 && _stateStolen.inversion))// !_stateStolen.inversion     /   || (playerObjectState.rightValue != 0 && _stateStolen.inversion)
-            //     {
-            //         
-            //         // playerObjectState.rightValue != 0 && _stateStolen.inversion SERT A RIEN car playerObjectState.leftValue != 0 toujours bon
-            //         // je dois faire en sorte d'aller en addition avec
-            //         
-            //         // if(playerObjectState.stateValue != 0)
-            //         // {
-            //         //     //On v�rifie si le rightValue de l'objet Vis� est vide, si c'est le cas, on lui ajoute le comportement stoqu� dans slot1.
-            //         //     if (playerObjectState.rightValue == 0)
-            //         //
-            //         
-            //         // CAS SI RIGHT > LEFT ET verif !_stateStolen.inversion, on va en addition avec une valeur de state qui existe pas et ça ecrase tout
-            //         
-            //         // si je suis en inversion, addition car on a que 1 comportement
-            //         int valueToApply = slot1;
-            //         int valueToChange;
-            //         Debug.LogError($"before slot1: {slot1} / leftValue: {playerObjectState.leftValue} / rightValue: {playerObjectState.rightValue}");
-            //         Debug.Log($"inversion: {_stateStolen.inversion}");
-            //         // if (_stateStolen.inversion) // pb si inverse et pas de right ? 
-            //         // {
-            //         //     valueToChange = playerObjectState.rightValue;
-            //         //     (slot1, playerObjectState.rightValue) = (playerObjectState.rightValue, slot1);
-            //         // }
-            //         // else
-            //         // {
-            //         //     valueToChange = playerObjectState.leftValue;
-            //         //     (slot1, playerObjectState.leftValue) = (playerObjectState.leftValue, slot1);
-            //         //
-            //         // }
-            //         valueToChange = playerObjectState.leftValue;
-            //         (slot1, playerObjectState.leftValue) = (playerObjectState.leftValue, slot1);
-            //         
-            //         Debug.Log($"after slot1: {slot1} / valueToChange : {valueToChange} / leftValue: {playerObjectState.leftValue} / rightValue: {playerObjectState.rightValue}");
-            //         // cas slot 1 0 et valueToChange 0
-            //         Debug.Log($"SIM - Échange des valeurs : slot1 ({slot1}) ⇄ player left({valueToChange})");
-            //         
-            //         // (slot1, playerObjectState.leftValue) = (playerObjectState.leftValue, slot1);
-            //         playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
-            //         slot1Text.text = ((FirstState)slot1).ToString();
-            //         playerObjectState = (ComportementState)_stateStolen.currentState; //reset du state actuel
-            //
-            //         
-            //         // Vérification après échange : si rightValue < nouvelle valeur stockée, inversion devient true
-            //         if (playerSlotRight != 0)
-            //         {
-            //             // CAS BRAS GAUCHE
-            //             // impulse1 immuable9 ||| main = magnet27
-            //             //remplacer impulse1 par magnet27 ==> immuable9 magnet27 or on veut magnet27 immuable9
-            //             if (!_stateStolen.inversion) // si pas inversé, verif normale
-            //             {
-            //                 if (playerObjectState.leftValue < valueToApply) 
-            //                 {
-            //                     _stateStolen.inversion = true;
-            //
-            //                 }
-            //                 else
-            //                 {
-            //                     _stateStolen.inversion = false;
-            //                 }
-            //             }
-            //             else // sinon verif avec l'autre coté
-            //             {
-            //                 // if (playerObjectState.leftValue < valueToApply)
-            //                 // {
-            //                 //     _stateStolen.inversion = true;
-            //                 // }
-            //             }
-            //
-            //             
-            //             // _stateStolen.inversion = (playerObjectState.leftValue < valueToApply);
-            //         }
-            //         else
-            //         {
-            //             _stateStolen.inversion = false;
-            //         }
-            //
-            //         SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
-            //         playeranim.Left_Attribution();
-            //         LeftArm.Feedback_Slot_Changed();
-            //     }
-            //     // si on a un comportement dans le bras mais pas sur le player
-            //     else
-            //     {
-            //         
-            //         // Debug.Log("SIM - Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
-            //         //
-            //         // int valueToAdd = slot1;
-            //         // int futurState = playerObjectState.stateValue + valueToAdd;
-            //         //
-            //         // playerObjectState.CalculateNewtState(futurState);
-            //         // playerObjectState = (ComportementState)_stateStolen.currentState; //reset du state actuel
-            //         //
-            //         // // Vérification : inversion est true si rightValue est inférieure à la valeur ajoutée
-            //         // // CAS BRAS GAUCHE
-            //         // // impulse1 immuable9 ||| main = magnet27
-            //         // //remplacer impulse1 par magnet27 ==> immuable9 magnet27 or on veut magnet27 immuable9
-            //         //
-            //         // // Debug.Log($"after left value: {playerObjectState.leftValue} / valueToAdd : {valueToAdd} / currentState : {_stateStolen.currentState}");
-            //         // _stateStolen.inversion = (playerObjectState.leftValue < valueToAdd);
-            //         // // Debug.Log($"_stateStolen.inversion addition left: {_stateStolen.inversion}");
-            //         //
-            //         //
-            //         // slot1 = 0;
-            //         // originSlot1 = null;
-            //         // slot1Text.text = "";
-            //         // SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
-            //         // playeranim.Left_Attribution();
-            //         // LeftArm.Feedback_Slot_Changed();
-            //     }
-            // }
-            #endregion
+            int tempValueSlot = slot1;
+
+            Debug.Log($"SimSlot1 playerObjectState left: {playerObjectState.leftValue} / right: {playerObjectState.rightValue}");
 
             if (slot1 == 0)
             {
@@ -899,35 +524,20 @@ public class ComportementStealer_proto : MonoBehaviour
                     int futurState = playerObjectState.stateValue - aRecuperer;
                     playerObjectState.CalculateNewtState(futurState);
                     
+                    newPlayerObjectState = (ComportementState)_stateStolen.currentState; //reset du state actuel
+                    
+                    if (newPlayerObjectState.leftValue != 0)
+                    {
+                        _stateStolen.inversion = true;  // on retire value de gauche, si != 0 alors on avait un comp à droite
+                    }
+                    else
+                    {
+                        _stateStolen.inversion = false;
+                    }
+                    
                     slot1 = aRecuperer;
                     originSlot1 = _stateStolen;
                     slot1Text.text = ((FirstState)slot1).ToString();
-                    
-                    newPlayerObjectState = (ComportementState)_stateStolen.currentState; //reset du state actuel
-                    
-// INVERSE A CHECK
-                    
-                    // verif si je dois inverser
-                    if (!_stateStolen.inversion)
-                    {
-                        if (newPlayerObjectState.leftValue !=0) // j'ai retirer comp de gauche mais il y en a encore 1, donc il était à droite alors j'inverse
-                        {
-                            _stateStolen.inversion = true;
-                        }
-                        
-                        // controle slot 1 et leftValue 
-                    }
-                    
-                    //verif valeur < pour inverser ou non 
-                    
-                    //ici on retire à gauche, donc si on a encore un comp ça veut dire qu'on en a 1 sur player droite
-                    //_stateStolen.inversion = playerObjectState.leftValue != 0; 
-                    //_stateStolen.inversion = (playerObjectState.leftValue < valueToSteal);
-                    
-                    // Vérification pour inversion : on compare la rightValue avec la valeur volée
-                    //_stateStolen.inversion = (playerObjectState.rightValue < valueToSteal);
-                    
-                    
                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                     playeranim.Left_Aspiration();
                     LeftArm.Feedback_Slot_Changed();
@@ -940,11 +550,6 @@ public class ComportementStealer_proto : MonoBehaviour
             }
             else
             {
-                //Debug.Log($"SIM GAUCHE leftValue : {playerObjectState.leftValue} / right: {playerObjectState.rightValue} / inversion : {_stateStolen.inversion}");
-                
-                // Si player possède déjà un comportement à gauche (leftValue non nul)
-                // et que slot1 est rempli, on échange les valeurs
-
                 if (playerObjectState.stateValue !=0 )//left forcément remplis
                 {
                     
@@ -988,10 +593,19 @@ public class ComportementStealer_proto : MonoBehaviour
                             playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
                             newPlayerObjectState = (ComportementState)_stateStolen.currentState; 
                             
-                            
-                            
-//Check INVERSION
-                            
+                            // CAS BRAS GAUCHE (inversion)
+                            //bounce3 D  immuable9 G ||| main = magnet27
+                            //remplacer bounce par magnet ==> immuable9 magnet27 or on veut magnet27 immuable9 en "visuel"
+                            // on doit vérifier si leftValue est < au slot ajouté
+
+                            if (newPlayerObjectState.leftValue < tempValueSlot)
+                            {
+                                _stateStolen.inversion = true;
+                            }
+                            else
+                            {
+                                _stateStolen.inversion = false;
+                            }                            
                             
                             
                             //slot1 = 0;
@@ -1012,7 +626,22 @@ public class ComportementStealer_proto : MonoBehaviour
                         
                         playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
                         newPlayerObjectState = (ComportementState)_stateStolen.currentState;
-
+                        
+                        // CAS BRAS GAUCHE
+                        //bounce3 D  immuable9 G ||| main = magnet27
+                        //remplacer bounce par magnet ==> immuable9 magnet27 or on veut magnet27 immuable9 en "visuel"
+                        // on doit vérifier si leftValue est < au slot ajouté
+                        
+                        // verif inversion left < tempValueSlot => inversion
+                        if (newPlayerObjectState.leftValue < tempValueSlot)
+                        {
+                            _stateStolen.inversion = true;
+                        }
+                        else
+                        {
+                            _stateStolen.inversion = false;
+                        }
+                        
                         
                         //slot1 = 0;
                         originSlot1 = _stateStolen;
@@ -1026,25 +655,16 @@ public class ComportementStealer_proto : MonoBehaviour
                 }
                 else // j'ai un comp en main gauche et rien sur player donc j'additionne
                 {
-                    //addition (verif _stateStolen.inversion ?)
-                    
                     Debug.Log("SIM GAUCHE - Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
                     
                     int valueToAdd = slot1;
                     int futurState = playerObjectState.stateValue + valueToAdd;
 
                     playerObjectState.CalculateNewtState(futurState);
-                    newPlayerObjectState = (ComportementState)_stateStolen.currentState; //reset du state actuel
+                    //newPlayerObjectState = (ComportementState)_stateStolen.currentState; //reset du state actuel
                     
-                    // Vérification : inversion est true si rightValue est inférieure à la valeur ajoutée
-                    // CAS BRAS GAUCHE
-                    // impulse1 immuable9 ||| main = magnet27
-                    //remplacer impulse1 par magnet27 ==> immuable9 magnet27 or on veut magnet27 immuable9
-                    
-                    _stateStolen.inversion = (newPlayerObjectState.leftValue < valueToAdd);
-
-
-                    //_stateStolen.inversion = false; quoi qu'il arrive ici ? 
+                    // ici on a rien sur player, on ajoute forcement à gauche et le visuel est forcement a gauche
+                    _stateStolen.inversion = false;
                     
                     slot1 = 0;
                     originSlot1 = null;
