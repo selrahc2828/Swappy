@@ -63,7 +63,6 @@ public class GameManager : MonoBehaviour
     public GameObject playerFBX;
     public PhysicMaterial playerAntiStick;
     public Camera mainCamera;
-    public bool canProjectWhenCarryingObject = false;
 
     [Header("Planete")]
     public GameObject planeteCore;
@@ -92,19 +91,6 @@ public class GameManager : MonoBehaviour
     [Header("Player Slope Handeling Parameter")]
     public float maxSlopeAngle;
     
-    [Header("Player Projecting Parameter")]
-    public LayerMask hitLayer;
-    public float projectionTimeDuration;
-    [HideInInspector]
-    public float projectionTimer;
-    public float coeffRefill = 0.75f;
-    public float projectionRange;
-    public float coeffReducDistance;
-    public bool activeGizmoRange;
-    
-    [HideInInspector] public bool etatIsProjected;
-    public TextMeshProUGUI timerProjectionText;
-    
     private void OnEnable()
     {
         if (controls == null)
@@ -128,8 +114,6 @@ public class GameManager : MonoBehaviour
     {
         slowMotion = false;
         slowTimer = 0f;
-        etatIsProjected = false;
-        projectionTimer = projectionTimeDuration;
         
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         if (mainCamera == null)
@@ -161,12 +145,6 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("GameManager PlayerFBX non renseigné");
         }
         
-        // timerProjectionText = GameObject.FindWithTag("TextTimerProjecting").GetComponent<TextMeshProUGUI>();
-        // if (!timerProjectionText)
-        // {
-        //     Debug.Log("Il n'y a pas de text Timer Projection");
-        // }
-        //
         // timerSlowText = GameObject.FindWithTag("TextTimerSlow").GetComponent<TextMeshProUGUI>();
         // if (!timerSlowText)
         // {
@@ -213,7 +191,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         SlowTime();
-        ProjectionTimer();
 
         // Vérifier si la touche pour la scène 1 est pressée.
         if (Input.GetKeyDown(keyForScene1))
@@ -296,24 +273,6 @@ public class GameManager : MonoBehaviour
             // if bool == true set false et vice versa
             slowMotion = !slowMotion;
             SlowMotion(slowMotion, slowCoeff);
-        }
-    }
-    
-    void ProjectionTimer()
-    {
-        if (etatIsProjected)
-        {
-            projectionTimer -= Time.deltaTime;
-        }
-        else if (projectionTimer < projectionTimeDuration)
-        {
-            projectionTimer += Time.deltaTime * coeffRefill;
-        }
-        
-        projectionTimer = Mathf.Clamp(projectionTimer, 0, projectionTimeDuration);
-        if (timerProjectionText)
-        {
-            timerProjectionText.text = projectionTimer.ToString("F2");// F2 arrondi à 2 décimal
         }
     }
 }

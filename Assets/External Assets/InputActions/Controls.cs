@@ -127,15 +127,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Projection"",
-                    ""type"": ""Button"",
-                    ""id"": ""f433ada3-f3ab-4214-b1c5-dc617b110973"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""StartCrouch"",
                     ""type"": ""Button"",
                     ""id"": ""776e59f9-10bf-47db-bcb4-368a83d5eea2"",
@@ -546,17 +537,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c7df36fc-08a9-4678-a564-917f2f9e4345"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Projection"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""ed965136-1d39-4427-a409-9823cde2f2b9"",
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
@@ -634,7 +614,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SwitchCam = m_Player.FindAction("SwitchCam", throwIfNotFound: true);
         m_Player_GrabAction = m_Player.FindAction("GrabAction", throwIfNotFound: true);
-        m_Player_Projection = m_Player.FindAction("Projection", throwIfNotFound: true);
         m_Player_StartCrouch = m_Player.FindAction("StartCrouch", throwIfNotFound: true);
         m_Player_StopCrouch = m_Player.FindAction("StopCrouch", throwIfNotFound: true);
         m_Player_StartSprint = m_Player.FindAction("StartSprint", throwIfNotFound: true);
@@ -727,7 +706,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SwitchCam;
     private readonly InputAction m_Player_GrabAction;
-    private readonly InputAction m_Player_Projection;
     private readonly InputAction m_Player_StartCrouch;
     private readonly InputAction m_Player_StopCrouch;
     private readonly InputAction m_Player_StartSprint;
@@ -754,7 +732,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @SwitchCam => m_Wrapper.m_Player_SwitchCam;
         public InputAction @GrabAction => m_Wrapper.m_Player_GrabAction;
-        public InputAction @Projection => m_Wrapper.m_Player_Projection;
         public InputAction @StartCrouch => m_Wrapper.m_Player_StartCrouch;
         public InputAction @StopCrouch => m_Wrapper.m_Player_StopCrouch;
         public InputAction @StartSprint => m_Wrapper.m_Player_StartSprint;
@@ -808,9 +785,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @GrabAction.started += instance.OnGrabAction;
             @GrabAction.performed += instance.OnGrabAction;
             @GrabAction.canceled += instance.OnGrabAction;
-            @Projection.started += instance.OnProjection;
-            @Projection.performed += instance.OnProjection;
-            @Projection.canceled += instance.OnProjection;
             @StartCrouch.started += instance.OnStartCrouch;
             @StartCrouch.performed += instance.OnStartCrouch;
             @StartCrouch.canceled += instance.OnStartCrouch;
@@ -881,9 +855,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @GrabAction.started -= instance.OnGrabAction;
             @GrabAction.performed -= instance.OnGrabAction;
             @GrabAction.canceled -= instance.OnGrabAction;
-            @Projection.started -= instance.OnProjection;
-            @Projection.performed -= instance.OnProjection;
-            @Projection.canceled -= instance.OnProjection;
             @StartCrouch.started -= instance.OnStartCrouch;
             @StartCrouch.performed -= instance.OnStartCrouch;
             @StartCrouch.canceled -= instance.OnStartCrouch;
@@ -1011,7 +982,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSwitchCam(InputAction.CallbackContext context);
         void OnGrabAction(InputAction.CallbackContext context);
-        void OnProjection(InputAction.CallbackContext context);
         void OnStartCrouch(InputAction.CallbackContext context);
         void OnStopCrouch(InputAction.CallbackContext context);
         void OnStartSprint(InputAction.CallbackContext context);

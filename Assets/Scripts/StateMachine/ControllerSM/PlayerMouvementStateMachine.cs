@@ -8,7 +8,6 @@ public class PlayerMouvementStateMachine : StateMachine
     public static Sprinting sprintingState;
     public static Crouching crouchingState;
     public static Jumping jumpingState;
-    public static Projecting projectingState;
     public static Falling fallingState;
 
     [HideInInspector] public Rigidbody rb;
@@ -21,7 +20,6 @@ public class PlayerMouvementStateMachine : StateMachine
         sprintingState = new Sprinting(this);
         crouchingState = new Crouching(this);
         jumpingState = new Jumping(this);
-        projectingState = new Projecting(this);
         fallingState = new Falling(this);
         currentState = walkingState;
         rb = GetComponent<Rigidbody>();
@@ -31,13 +29,5 @@ public class PlayerMouvementStateMachine : StateMachine
     
     void OnDrawGizmos()
     {
-        if (gameManager != null)
-        {
-            if (gameManager.activeGizmoRange) // range projection
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawWireSphere(transform.position, gameManager.projectionRange);            
-            }
-        }
     }
 }
