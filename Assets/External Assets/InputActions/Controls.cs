@@ -118,7 +118,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""GrabDrop"",
+                    ""name"": ""GrabAction"",
                     ""type"": ""Button"",
                     ""id"": ""0e892a30-63d7-4195-9d3e-1c494ec8887b"",
                     ""expectedControlType"": """",
@@ -193,6 +193,42 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": ""PauseMenu"",
                     ""type"": ""Button"",
                     ""id"": ""0ea54ff0-aa39-4e1c-acbe-6eef7ed46546"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DropAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc69142a-e89f-40f2-bbd4-8d111b8a8783"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LaunchAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""351ed7f3-a99b-42a6-ba8b-bd29fd580159"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SIMAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""9bf668b9-14eb-4173-a526-ad2d9d95b95e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interaction"",
+                    ""type"": ""Button"",
+                    ""id"": ""8d142b99-101e-4c00-a7a0-61442b2d4016"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -345,8 +381,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""91d09956-fb97-4f9c-9c51-f123dfaed870"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""id"": ""e61932b0-c82c-4a7b-ad8a-9c227be0d7fa"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -372,18 +408,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""GrabDrop"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2cbb1c73-5801-4c88-9c89-a38649922400"",
-                    ""path"": ""<Keyboard>/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Projection"",
+                    ""action"": ""GrabAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -474,6 +499,111 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""PauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9678dd7e-c271-47ba-be70-f3cde446a35d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""DropAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e031564-4381-4ffa-9b3d-ff212831e525"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""LaunchAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9611afef-db5c-4976-b666-b3517a6e993f"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""SIMAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""57c10635-4385-424e-8f85-1a943bfb55de"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SIMAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7df36fc-08a9-4678-a564-917f2f9e4345"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Projection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed965136-1d39-4427-a409-9823cde2f2b9"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Pause"",
+            ""id"": ""18b50049-7645-4e1c-b839-f727be0c9b25"",
+            ""actions"": [
+                {
+                    ""name"": ""Resume"",
+                    ""type"": ""Button"",
+                    ""id"": ""7bf8c065-bbe5-4f47-9bde-000758012d4c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a01e391a-ffce-4fe0-9971-47e39d541022"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Resume"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""965fdac0-20a2-4973-9b6b-9fb4bf4e62b5"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Resume"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -503,7 +633,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_ReloadScene = m_Player.FindAction("ReloadScene", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SwitchCam = m_Player.FindAction("SwitchCam", throwIfNotFound: true);
-        m_Player_GrabDrop = m_Player.FindAction("GrabDrop", throwIfNotFound: true);
+        m_Player_GrabAction = m_Player.FindAction("GrabAction", throwIfNotFound: true);
         m_Player_Projection = m_Player.FindAction("Projection", throwIfNotFound: true);
         m_Player_StartCrouch = m_Player.FindAction("StartCrouch", throwIfNotFound: true);
         m_Player_StopCrouch = m_Player.FindAction("StopCrouch", throwIfNotFound: true);
@@ -512,11 +642,19 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_ViderSlots = m_Player.FindAction("ViderSlots", throwIfNotFound: true);
         m_Player_SwitchSlotsValue = m_Player.FindAction("SwitchSlotsValue", throwIfNotFound: true);
         m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
+        m_Player_DropAction = m_Player.FindAction("DropAction", throwIfNotFound: true);
+        m_Player_LaunchAction = m_Player.FindAction("LaunchAction", throwIfNotFound: true);
+        m_Player_SIMAction = m_Player.FindAction("SIMAction", throwIfNotFound: true);
+        m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
+        // Pause
+        m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
+        m_Pause_Resume = m_Pause.FindAction("Resume", throwIfNotFound: true);
     }
 
     ~@Controls()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, Controls.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Pause.enabled, "This will cause a leak and performance issues, Controls.Pause.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -588,7 +726,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ReloadScene;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SwitchCam;
-    private readonly InputAction m_Player_GrabDrop;
+    private readonly InputAction m_Player_GrabAction;
     private readonly InputAction m_Player_Projection;
     private readonly InputAction m_Player_StartCrouch;
     private readonly InputAction m_Player_StopCrouch;
@@ -597,6 +735,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ViderSlots;
     private readonly InputAction m_Player_SwitchSlotsValue;
     private readonly InputAction m_Player_PauseMenu;
+    private readonly InputAction m_Player_DropAction;
+    private readonly InputAction m_Player_LaunchAction;
+    private readonly InputAction m_Player_SIMAction;
+    private readonly InputAction m_Player_Interaction;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -611,7 +753,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @ReloadScene => m_Wrapper.m_Player_ReloadScene;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @SwitchCam => m_Wrapper.m_Player_SwitchCam;
-        public InputAction @GrabDrop => m_Wrapper.m_Player_GrabDrop;
+        public InputAction @GrabAction => m_Wrapper.m_Player_GrabAction;
         public InputAction @Projection => m_Wrapper.m_Player_Projection;
         public InputAction @StartCrouch => m_Wrapper.m_Player_StartCrouch;
         public InputAction @StopCrouch => m_Wrapper.m_Player_StopCrouch;
@@ -620,6 +762,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @ViderSlots => m_Wrapper.m_Player_ViderSlots;
         public InputAction @SwitchSlotsValue => m_Wrapper.m_Player_SwitchSlotsValue;
         public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
+        public InputAction @DropAction => m_Wrapper.m_Player_DropAction;
+        public InputAction @LaunchAction => m_Wrapper.m_Player_LaunchAction;
+        public InputAction @SIMAction => m_Wrapper.m_Player_SIMAction;
+        public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -659,9 +805,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @SwitchCam.started += instance.OnSwitchCam;
             @SwitchCam.performed += instance.OnSwitchCam;
             @SwitchCam.canceled += instance.OnSwitchCam;
-            @GrabDrop.started += instance.OnGrabDrop;
-            @GrabDrop.performed += instance.OnGrabDrop;
-            @GrabDrop.canceled += instance.OnGrabDrop;
+            @GrabAction.started += instance.OnGrabAction;
+            @GrabAction.performed += instance.OnGrabAction;
+            @GrabAction.canceled += instance.OnGrabAction;
             @Projection.started += instance.OnProjection;
             @Projection.performed += instance.OnProjection;
             @Projection.canceled += instance.OnProjection;
@@ -686,6 +832,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PauseMenu.started += instance.OnPauseMenu;
             @PauseMenu.performed += instance.OnPauseMenu;
             @PauseMenu.canceled += instance.OnPauseMenu;
+            @DropAction.started += instance.OnDropAction;
+            @DropAction.performed += instance.OnDropAction;
+            @DropAction.canceled += instance.OnDropAction;
+            @LaunchAction.started += instance.OnLaunchAction;
+            @LaunchAction.performed += instance.OnLaunchAction;
+            @LaunchAction.canceled += instance.OnLaunchAction;
+            @SIMAction.started += instance.OnSIMAction;
+            @SIMAction.performed += instance.OnSIMAction;
+            @SIMAction.canceled += instance.OnSIMAction;
+            @Interaction.started += instance.OnInteraction;
+            @Interaction.performed += instance.OnInteraction;
+            @Interaction.canceled += instance.OnInteraction;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -720,9 +878,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @SwitchCam.started -= instance.OnSwitchCam;
             @SwitchCam.performed -= instance.OnSwitchCam;
             @SwitchCam.canceled -= instance.OnSwitchCam;
-            @GrabDrop.started -= instance.OnGrabDrop;
-            @GrabDrop.performed -= instance.OnGrabDrop;
-            @GrabDrop.canceled -= instance.OnGrabDrop;
+            @GrabAction.started -= instance.OnGrabAction;
+            @GrabAction.performed -= instance.OnGrabAction;
+            @GrabAction.canceled -= instance.OnGrabAction;
             @Projection.started -= instance.OnProjection;
             @Projection.performed -= instance.OnProjection;
             @Projection.canceled -= instance.OnProjection;
@@ -747,6 +905,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PauseMenu.started -= instance.OnPauseMenu;
             @PauseMenu.performed -= instance.OnPauseMenu;
             @PauseMenu.canceled -= instance.OnPauseMenu;
+            @DropAction.started -= instance.OnDropAction;
+            @DropAction.performed -= instance.OnDropAction;
+            @DropAction.canceled -= instance.OnDropAction;
+            @LaunchAction.started -= instance.OnLaunchAction;
+            @LaunchAction.performed -= instance.OnLaunchAction;
+            @LaunchAction.canceled -= instance.OnLaunchAction;
+            @SIMAction.started -= instance.OnSIMAction;
+            @SIMAction.performed -= instance.OnSIMAction;
+            @SIMAction.canceled -= instance.OnSIMAction;
+            @Interaction.started -= instance.OnInteraction;
+            @Interaction.performed -= instance.OnInteraction;
+            @Interaction.canceled -= instance.OnInteraction;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -764,6 +934,52 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Pause
+    private readonly InputActionMap m_Pause;
+    private List<IPauseActions> m_PauseActionsCallbackInterfaces = new List<IPauseActions>();
+    private readonly InputAction m_Pause_Resume;
+    public struct PauseActions
+    {
+        private @Controls m_Wrapper;
+        public PauseActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Resume => m_Wrapper.m_Pause_Resume;
+        public InputActionMap Get() { return m_Wrapper.m_Pause; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PauseActions set) { return set.Get(); }
+        public void AddCallbacks(IPauseActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PauseActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PauseActionsCallbackInterfaces.Add(instance);
+            @Resume.started += instance.OnResume;
+            @Resume.performed += instance.OnResume;
+            @Resume.canceled += instance.OnResume;
+        }
+
+        private void UnregisterCallbacks(IPauseActions instance)
+        {
+            @Resume.started -= instance.OnResume;
+            @Resume.performed -= instance.OnResume;
+            @Resume.canceled -= instance.OnResume;
+        }
+
+        public void RemoveCallbacks(IPauseActions instance)
+        {
+            if (m_Wrapper.m_PauseActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPauseActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PauseActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PauseActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PauseActions @Pause => new PauseActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -794,7 +1010,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnReloadScene(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSwitchCam(InputAction.CallbackContext context);
-        void OnGrabDrop(InputAction.CallbackContext context);
+        void OnGrabAction(InputAction.CallbackContext context);
         void OnProjection(InputAction.CallbackContext context);
         void OnStartCrouch(InputAction.CallbackContext context);
         void OnStopCrouch(InputAction.CallbackContext context);
@@ -803,5 +1019,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnViderSlots(InputAction.CallbackContext context);
         void OnSwitchSlotsValue(InputAction.CallbackContext context);
         void OnPauseMenu(InputAction.CallbackContext context);
+        void OnDropAction(InputAction.CallbackContext context);
+        void OnLaunchAction(InputAction.CallbackContext context);
+        void OnSIMAction(InputAction.CallbackContext context);
+        void OnInteraction(InputAction.CallbackContext context);
+    }
+    public interface IPauseActions
+    {
+        void OnResume(InputAction.CallbackContext context);
     }
 }

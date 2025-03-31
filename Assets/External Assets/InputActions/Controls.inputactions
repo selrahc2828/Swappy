@@ -96,7 +96,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "GrabDrop",
+                    "name": "GrabAction",
                     "type": "Button",
                     "id": "0e892a30-63d7-4195-9d3e-1c494ec8887b",
                     "expectedControlType": "",
@@ -171,6 +171,42 @@
                     "name": "PauseMenu",
                     "type": "Button",
                     "id": "0ea54ff0-aa39-4e1c-acbe-6eef7ed46546",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DropAction",
+                    "type": "Button",
+                    "id": "bc69142a-e89f-40f2-bbd4-8d111b8a8783",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LaunchAction",
+                    "type": "Button",
+                    "id": "351ed7f3-a99b-42a6-ba8b-bd29fd580159",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SIMAction",
+                    "type": "Button",
+                    "id": "9bf668b9-14eb-4173-a526-ad2d9d95b95e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interaction",
+                    "type": "Button",
+                    "id": "8d142b99-101e-4c00-a7a0-61442b2d4016",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -323,8 +359,8 @@
                 },
                 {
                     "name": "",
-                    "id": "91d09956-fb97-4f9c-9c51-f123dfaed870",
-                    "path": "<Keyboard>/f",
+                    "id": "e61932b0-c82c-4a7b-ad8a-9c227be0d7fa",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -350,18 +386,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "GrabDrop",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2cbb1c73-5801-4c88-9c89-a38649922400",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Projection",
+                    "action": "GrabAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -450,6 +475,111 @@
                     "processors": "",
                     "groups": "",
                     "action": "PauseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9678dd7e-c271-47ba-be70-f3cde446a35d",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "DropAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e031564-4381-4ffa-9b3d-ff212831e525",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "LaunchAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9611afef-db5c-4976-b666-b3517a6e993f",
+                    "path": "<Keyboard>/alt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "SIMAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "57c10635-4385-424e-8f85-1a943bfb55de",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SIMAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c7df36fc-08a9-4678-a564-917f2f9e4345",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Projection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ed965136-1d39-4427-a409-9823cde2f2b9",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Pause",
+            "id": "18b50049-7645-4e1c-b839-f727be0c9b25",
+            "actions": [
+                {
+                    "name": "Resume",
+                    "type": "Button",
+                    "id": "7bf8c065-bbe5-4f47-9bde-000758012d4c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a01e391a-ffce-4fe0-9971-47e39d541022",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "Resume",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "965fdac0-20a2-4973-9b6b-9fb4bf4e62b5",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "Resume",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

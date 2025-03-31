@@ -23,8 +23,20 @@ public class C_Solo_Impulse : ComportementState
     {
         isKinematic = false;
         stateValue = 1;
-        leftValue = 1;
-        rightValue = 0;
+        
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            leftValue = 0;
+            rightValue = 1;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 1;
+            rightValue = 0;
+        }
+        
+        // leftValue = 1;
+        // rightValue = 0;
         base.Enter();
         
         repulserTime = _sm.comportementManager.impulseData.impulseTime;
@@ -110,7 +122,7 @@ public class C_Solo_Impulse : ComportementState
                     // player relache l'objet repulse
                     if (isGrabbed) //juste isGrabbed ? objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject
                     {
-                        objectAffected.GetComponent<GrabObject>().Drop(true);
+                        objectAffected.GetComponent<GrabObject>().Release(true);
                     }
                 }
                 else if (objectInRange.GetComponent<Rigidbody>() != null)
