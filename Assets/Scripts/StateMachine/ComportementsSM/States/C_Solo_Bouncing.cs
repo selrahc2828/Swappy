@@ -39,9 +39,7 @@ public class C_Solo_Bouncing : ComportementState
         if (_sm.isPlayer)
         {
             _basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
-            _basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
             _sm.comportementManager.playerBouncingCollider.material = _bouncyMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = _bouncyMaterial;
         }
         else
         {
@@ -68,7 +66,6 @@ public class C_Solo_Bouncing : ComportementState
         if (_sm.isPlayer)
         {
             _sm.comportementManager.playerBouncingCollider.material = _basePlayerMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = _basePlayerSlideMaterial;
         }
         else
         {

@@ -55,9 +55,7 @@ public class C_Impulse_Bouncing : ComportementState
             trueImpulseBounceRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + impulseBounceRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
             
             _basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
-            _basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
             _sm.comportementManager.playerBouncingCollider.material = _bouncyMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = _bouncyMaterial;
         }
         else
         {
@@ -105,7 +103,6 @@ public class C_Impulse_Bouncing : ComportementState
         if (_sm.isPlayer)
         {
             _sm.comportementManager.playerBouncingCollider.material = _basePlayerMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = _basePlayerSlideMaterial;
         }
         else
         {

@@ -75,9 +75,7 @@ public class C_Bouncing_Magnet : ComportementState
         {
             //pb State se fait avant set dans manager
             basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
-            basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
             _sm.comportementManager.playerBouncingCollider.material = bouncyMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = bouncyMaterial;
             
             trueMagnetRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + magnetRange;//toujours des pb de range trop grande mais mieux
         }

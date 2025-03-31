@@ -44,9 +44,7 @@ public class C_Bouncing_Immuable : ComportementState
         if (_sm.isPlayer)
         {
             _basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
-            _basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
             _sm.comportementManager.playerBouncingCollider.material = _bouncyMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = _bouncyMaterial;
             
             _baseVelocity = _sm.rb.velocity;
             _baseAngularVelocity = _sm.rb.angularVelocity;
@@ -78,7 +76,6 @@ public class C_Bouncing_Immuable : ComportementState
         if (_sm.isPlayer)
         {
             _sm.comportementManager.playerBouncingCollider.material = _basePlayerMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = _basePlayerSlideMaterial;
             
             _baseVelocity = _sm.rb.velocity;
             _baseAngularVelocity = _sm.rb.angularVelocity;
