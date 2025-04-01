@@ -12,7 +12,7 @@ public class BoxInteraction : MonoBehaviour
     public Transform pivotParent;
     public Transform interactorZonePos;//centre zone de detection (qu'on recalcule plus tard)
     
-    [HideInInspector]public Transform interactor;
+    [HideInInspector] public Transform interactor;
     [HideInInspector] public TextMeshProUGUI interactText;
 
     private Vector3 _boxCenter;
