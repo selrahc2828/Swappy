@@ -11,7 +11,6 @@ public class PlayerCam : MonoBehaviour
     float xRotation;
     float yRotation;
 
-    public LineRenderer line;
     private Ray _ray;
     public LayerMask hitLayer;
     private Transform orientation;
@@ -23,7 +22,7 @@ public class PlayerCam : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //get mouse input
         if (!GameManager.Instance.isPaused)
@@ -41,28 +40,5 @@ public class PlayerCam : MonoBehaviour
             orientation.localRotation = Quaternion.Euler(0, yRotation, 0);
         }
         
-        LineRenderer();
-    }
-
-
-    private void LineRenderer()
-    {
-
-        float maxDistance = 500f;
-        line.SetPosition(0, transform.position - transform.up / 5 + transform.right / 5);  // D�but de la ligne (cam�ra)
-
-        RaycastHit _hit;
-
-        _ray = this.gameObject.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
-        {
-            // Si le raycast touche un objet
-            line.SetPosition(1, _hit.point);  // Fin de la ligne (point touch� par le rayon)
-        }
-        else
-        {
-            line.SetPosition(1,transform.forward * maxDistance);
-        }
     }
 }
