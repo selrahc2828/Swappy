@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using FMOD;
@@ -15,11 +16,15 @@ public class FMODMusicManager : MonoBehaviour
     public FMODMusicEvents FMODMusicEvents;
     public FMODSnapshotEvents FMODSnapshotEvents;
 
-    private EventInstance musicInstance;
+    //private EventInstance musicInstance;
     
     private List<EventInstance> musicPlaylist = new List<EventInstance>();
     
     private PLAYBACK_STATE musicState;
+
+
+    private EventInstance musictest;
+    private bool ismusichere;
     
     private void Awake()
     {
@@ -33,11 +38,11 @@ public class FMODMusicManager : MonoBehaviour
     }
     #endregion
     #region Param Music Instance
-    public void CreateMusicInstance(EventReference musicReference)
+    public EventInstance CreateMusicInstance(EventReference musicReference)
     {
         EventInstance musicInstance = RuntimeManager.CreateInstance(musicReference);
         musicPlaylist.Add(musicInstance);
-        musicInstance.start();
+        return musicInstance;
     }
 
     public void PlayMusicInstance(EventInstance musicInstance)
@@ -53,17 +58,18 @@ public class FMODMusicManager : MonoBehaviour
         }
     }
 
-    public float GetMusicNameParamInstance(EventInstance musicInstance, string name)
+    // public float GetMusicNameParamInstance(EventInstance musicInstance, string paramName)
+    // {
+    //     float result = musicInstance.getParameterByName(paramName, out float value);
+    //     return (float)
+    // }
+
+    public void SetMusicNameParamInstance(EventInstance musicInstance, string paramName, float value, bool seekSpeed)
     {
-        return (float)musicInstance.getParameterByName(name, out float value);
+        musicInstance.setParameterByName(paramName, value, seekSpeed);
     }
 
-    public void SetMusicNameParamInstance(EventInstance musicInstance, string name, float value)
-    {
-        musicInstance.setParameterByName(name, value);
-    }
-
-    public void StopMusic()
+    public void StopMusic(EventInstance musicInstance)
     {
         musicInstance.getPlaybackState(out musicState);
         if (musicState != PLAYBACK_STATE.STOPPED)
@@ -85,6 +91,34 @@ public class FMODMusicManager : MonoBehaviour
     }
 
     #endregion
+    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            musictest = CreateMusicInstance(FMODMusicEvents.TestMusic1);
+            PlayMusicInstance(musictest);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            SetMusicNameParamInstance(musictest, "Layer", 1,false);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            SetMusicNameParamInstance(musictest, "Layer", 2,false);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            SetMusicNameParamInstance(musictest, "Layer", 3,false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad0))
+        {
+            StopMusic(musictest);
+        }
+    }
+    
+
     #region On destroy
     private void CleanUpMusic()
     {
