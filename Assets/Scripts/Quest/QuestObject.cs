@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,8 +17,5 @@ public class QuestObject : MonoBehaviour
     public QuestType QuestType;
     public UnityEvent QuestEvent;
 
-    private void Start()
-    {
-
-    }
+    public List<bool> Conditions = new List<bool>();
 }
