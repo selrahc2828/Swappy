@@ -30,8 +30,18 @@ public class C_Impulse_Bouncing : ComportementState
     public override void Enter()
     {
         stateValue = 4;
-        leftValue = 1;
-        rightValue = 3;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            leftValue = 3;
+            rightValue = 1;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 1;
+            rightValue = 3;
+        }
+        // leftValue = 1;
+        // rightValue = 3;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.bouncingColor);
         
@@ -45,9 +55,7 @@ public class C_Impulse_Bouncing : ComportementState
             trueImpulseBounceRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + impulseBounceRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
             
             _basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
-            _basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
             _sm.comportementManager.playerBouncingCollider.material = _bouncyMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = _bouncyMaterial;
         }
         else
         {
@@ -95,7 +103,6 @@ public class C_Impulse_Bouncing : ComportementState
         if (_sm.isPlayer)
         {
             _sm.comportementManager.playerBouncingCollider.material = _basePlayerMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = _basePlayerSlideMaterial;
         }
         else
         {
@@ -168,7 +175,7 @@ public class C_Impulse_Bouncing : ComportementState
                     // player relache l'objet repulse
                     if (isGrabbed) //juste isGrabbed ? objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject
                     {
-                        objectAffected.GetComponent<GrabObject>().Drop(true);
+                        objectAffected.GetComponent<GrabObject>().Release(true);
                     }
                 }
                 else

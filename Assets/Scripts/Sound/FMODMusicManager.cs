@@ -29,7 +29,7 @@ public class FMODMusicManager : MonoBehaviour
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
     }
     #endregion
     #region Param Music Instance

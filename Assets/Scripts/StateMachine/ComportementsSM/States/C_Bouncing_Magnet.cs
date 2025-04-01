@@ -53,8 +53,18 @@ public class C_Bouncing_Magnet : ComportementState
         //sonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
         isKinematic = false;
         stateValue = 30;
-        leftValue = 3;
-        rightValue = 27;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            leftValue = 27;
+            rightValue = 3;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 3;
+            rightValue = 27;
+        }
+        // leftValue = 3;
+        // rightValue = 27;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.magnetColor);
 
@@ -65,9 +75,7 @@ public class C_Bouncing_Magnet : ComportementState
         {
             //pb State se fait avant set dans manager
             basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
-            basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
             _sm.comportementManager.playerBouncingCollider.material = bouncyMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = bouncyMaterial;
             
             trueMagnetRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + magnetRange;//toujours des pb de range trop grande mais mieux
         }

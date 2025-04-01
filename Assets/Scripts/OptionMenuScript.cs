@@ -34,11 +34,15 @@ public class OptionMenuScript : MonoBehaviour
     void OnEnable()
     {
         GameManager.controls.Player.PauseMenu.performed += PauseMenu;
+        GameManager.controls.Pause.Resume.performed += Resume;
+
     }
     
     void OnDisable()
     {
         GameManager.controls.Player.PauseMenu.performed -= PauseMenu;
+        GameManager.controls.Pause.Resume.performed -= Resume;
+
     }
     
     // Update is called once per frame
@@ -51,26 +55,43 @@ public class OptionMenuScript : MonoBehaviour
     {
         if (context.performed)
         {
-            isOpen = !isOpen;
-            optionGroup.SetActive(isOpen);
-            
-            if (isOpen) // => pause
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                GameManager.Instance.isPaused = true;
-                Time.timeScale = 0f;
-                //ATTENTION - enregistre les input et les faits quand on resume
-            }
-            else // => resume
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                GameManager.Instance.isPaused = false;
-                Time.timeScale = 1f;//verif avec le slowTime
-            }
+            GameManager.controls.Pause.Enable();
+            GameManager.controls.Player.Disable();
+
+            isOpen = true;
+            GameManager.Instance.isPaused = true;
+            optionGroup.SetActive(true);
+            Debug.Log($"Pause ");
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            GameManager.Instance.isPaused = true;
+            Time.timeScale = 0f;
         }
     }
+
+    public void Resume(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            GameManager.controls.Pause.Disable();
+            GameManager.controls.Player.Enable();
+            
+            Debug.Log($"Resume ");
+            
+            GameManager.Instance.isPaused = false;
+            isOpen = false;
+            optionGroup.SetActive(isOpen);
+            
+            
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            GameManager.Instance.isPaused = false;
+            Time.timeScale = 1f;//verif avec le slowTime
+        }
+    }
+    
+    
     public void SetSensitivity()
     {
         GameManager.Instance.parameters.sensitivity = mouseSensitivitySlider.value;

@@ -25,7 +25,7 @@ public class FMODEventManager : MonoBehaviour
            return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
     }
     #endregion
     #region Play Once

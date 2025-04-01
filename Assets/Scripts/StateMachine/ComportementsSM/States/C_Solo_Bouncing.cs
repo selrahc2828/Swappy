@@ -17,8 +17,18 @@ public class C_Solo_Bouncing : ComportementState
     {
         isKinematic = false;
         stateValue = 3;
-        leftValue = 3;
-        rightValue = 0;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            leftValue = 0;
+            rightValue = 3;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 3;
+            rightValue = 0;
+        }
+        // leftValue = 3;
+        // rightValue = 0;
         base.Enter();
 
         _bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
@@ -29,9 +39,7 @@ public class C_Solo_Bouncing : ComportementState
         if (_sm.isPlayer)
         {
             _basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
-            _basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
             _sm.comportementManager.playerBouncingCollider.material = _bouncyMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = _bouncyMaterial;
         }
         else
         {
@@ -58,7 +66,6 @@ public class C_Solo_Bouncing : ComportementState
         if (_sm.isPlayer)
         {
             _sm.comportementManager.playerBouncingCollider.material = _basePlayerMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = _basePlayerSlideMaterial;
         }
         else
         {
