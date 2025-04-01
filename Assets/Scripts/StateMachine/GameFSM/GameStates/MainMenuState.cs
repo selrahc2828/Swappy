@@ -12,8 +12,9 @@ public class MainMenuState : GameState
     }
     
     //Used by button - single responsibility
-    public void TransitionToGame()
+    public void TransitionToGame(int levelIndex)
     {
+        fsm.sceneID = levelIndex;
         fsm.ChangeState(GetComponent<LoadingLevelState>());
     }
 
