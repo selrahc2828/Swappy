@@ -14,13 +14,11 @@ public class PauseState : GameState
         Cursor.visible = true;
     }
 
-    //todo Return to game --> Done
     public void ReturnToGame()
     {
         fsm.ChangeState(GetComponent<PlayingState>());
     }
 
-    //todo Return to menu --> Done
     public void ReturnToMenu()
     {
         fsm.ChangeState(GetComponent<ReturnToMenuState>());

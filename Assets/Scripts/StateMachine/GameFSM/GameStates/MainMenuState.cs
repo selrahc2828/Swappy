@@ -11,7 +11,6 @@ public class MainMenuState : GameState
         menuGO.SetActive(true);
     }
     
-    //Used by button - single responsibility
     public void TransitionToGame(int levelIndex)
     {
         fsm.sceneID = levelIndex;
