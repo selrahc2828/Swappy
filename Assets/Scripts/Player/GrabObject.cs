@@ -59,7 +59,6 @@ public class GrabObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         // suivi de l'objet dans les bras et lache si bloque trops
         if (carriedObject != null)
         {
