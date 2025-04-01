@@ -54,7 +54,9 @@ public class ControllerPlanete : MonoBehaviour
         controls.Player.Jump.performed += Jump;
         controls.Player.StartSprint.performed += StartSprint;
         controls.Player.StopSprint.performed += StopSprint;
-        
+
+        maxSpeed = gameManager.walkSpeed;
+        jumpForce = gameManager.jumpForce;
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
         antiStickBaseValue = gameManager.playerAntiStick.dynamicFriction;
