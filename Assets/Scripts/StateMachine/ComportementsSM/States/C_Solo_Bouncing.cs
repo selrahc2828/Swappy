@@ -76,6 +76,6 @@ public class C_Solo_Bouncing : ComportementState
 
     public override void CollisionStart(Collision other)
     {
-        FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.BounceHit,other.GetContact(0).point);
+        FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.Bounce,other.GetContact(0).point);
     }
 }

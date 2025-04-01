@@ -60,6 +60,6 @@ public class C_Solo_Immuable : ComportementState
 
     public override void CollisionStart(Collision other)
     {
-        FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.ImmuableHit,other.GetContact(0).point);
+        
     }
 }

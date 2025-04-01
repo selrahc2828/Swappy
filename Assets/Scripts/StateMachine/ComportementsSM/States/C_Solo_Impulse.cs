@@ -70,7 +70,7 @@ public class C_Solo_Impulse : ComportementState
         repulserTimer += Time.deltaTime;
         if (repulserTimer >= repulserTime)
         {
-            FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.ImpulseBoom, _sm.transform.position);
+            
             Repulse();
             repulserTimer = 0;
         }
