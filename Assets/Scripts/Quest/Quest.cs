@@ -10,7 +10,7 @@ public enum QuestType
     BlankActivity
 }
 
-public class QuestObject : MonoBehaviour
+public class Quest : MonoBehaviour
 {
     public string QuestName;
     public QuestType QuestType;

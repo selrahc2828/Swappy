@@ -6,7 +6,7 @@ public class QuestCondition : MonoBehaviour
     [Header("Reference")]
 
     [Tooltip("La Quête remplie par cette condition")] 
-    [SerializeField] private QuestObject questScript;
+    [SerializeField] private Quest questScript;
     [Tooltip("En règle générale, laisser l'état de base de la condition à false")] 
     [SerializeField] private bool defaultState = false;
     [Tooltip("Activer UNIQUEMENT si ce script est utilisé comme complément d'une autre condition")]
