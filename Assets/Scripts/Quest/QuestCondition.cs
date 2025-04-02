@@ -3,8 +3,6 @@ using UnityEngine.Events;
 
 public class QuestCondition : MonoBehaviour
 {
-    [Header("Reference")]
-
     [Tooltip("La Quête remplie par cette condition")] 
     [SerializeField] private Quest questScript;
     [Tooltip("En règle générale, laisser l'état de base de la condition à false")] 
