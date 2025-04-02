@@ -97,9 +97,9 @@ public class ControllerPlanete : MonoBehaviour
             ).normalized;
         }
 
-        if (touchingInclinedSurface)
+        if (touchingInclinedSurface && Vector3.Dot(moveDirection, touchingInclinedSurfaceDirection) < 0)
         {
-            moveDirection = Vector3.ProjectOnPlane(moveDirection, touchingInclinedSurfaceDirection).normalized;
+            moveDirection = Vector3.ProjectOnPlane(moveDirection, touchingInclinedSurfaceDirection);
         }
     }
 
@@ -114,7 +114,7 @@ public class ControllerPlanete : MonoBehaviour
         {
             if(isStopping)
             {
-                float curveTime = Mathf.Clamp01((Time.time - mouvementReleaseTime) / (mouvementReleaseDuration));
+                float curveTime = Mathf.Clamp01((Time.time - mouvementReleaseTime) / mouvementReleaseDuration);
                 targetVelocity = moveSpeedCurveReleaseRun.Evaluate(curveTime);
             }
             else
