@@ -17,6 +17,11 @@ public class MainMenuState : GameState
         fsm.ChangeState(GetComponent<LoadingLevelState>());
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     public override void Exit()
     {
         menuGO.SetActive(false);
