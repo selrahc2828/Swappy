@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class TestCondition : QuestCondition
 {
-    public GameObject TestObject;
-
-    private void OnTestObjectDestroy()
+    void OnDestroy()
     {
-        SetConditionBool.Invoke();
+        SetConditionState(true);
     }
 }

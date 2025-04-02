@@ -16,22 +16,25 @@ public class QuestObject : MonoBehaviour
     public QuestType QuestType;
     public UnityEvent QuestEvent;
 
-    private List<bool> _conditions = new List<bool>();
-    public List<bool> Conditions
+    private Dictionary<QuestCondition, bool> ActiveConditions = new Dictionary<QuestCondition, bool>();
+
+    public void ReferenceThisCondition(QuestCondition conditionScript, bool state) //Référence toutes les conditions d'une quête à l'initialisation dans un dictionnaire
     {
-        private get { return _conditions; }
-        set 
-        {
-            _conditions = value;
-            CheckQuestConditions(); 
-        }
-        
+        ActiveConditions.Add(conditionScript, state);
+        Debug.Log("Number of Conditions: " +  ActiveConditions.Count);
     }
-    public void CheckQuestConditions()
+
+    public void ChangeQuestConditions(QuestCondition condition, bool state) //Change le state d'une des condition de la quête
     {
-        foreach (bool condition in Conditions)
+        ActiveConditions[condition] = state;
+        CheckQuestConditions();
+    }
+
+    private void CheckQuestConditions() //Vérifie si la quête est accomplie en parcourant toutes les entrées du dictionnaires et en regardant si l'une d'elle est false
+    {
+        foreach (KeyValuePair<QuestCondition, bool> conditionRef in ActiveConditions)
         {
-            if (condition == false)
+            if (conditionRef.Value == false)
             {
                 Debug.Log("Quest '" + QuestName + "' is false");
                 return;  
