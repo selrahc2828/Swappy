@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,5 +16,31 @@ public class QuestObject : MonoBehaviour
     public QuestType QuestType;
     public UnityEvent QuestEvent;
 
-    public List<bool> Conditions = new List<bool>();
+    private List<bool> _conditions = new List<bool>();
+    public List<bool> Conditions
+    {
+        private get { return _conditions; }
+        set 
+        {
+            _conditions = value;
+            CheckQuestConditions(); 
+        }
+        
+    }
+    public void CheckQuestConditions()
+    {
+        foreach (bool condition in Conditions)
+        {
+            if (condition == false)
+            {
+                Debug.Log("Quest '" + QuestName + "' is false");
+                return;  
+            }
+        }
+
+        Debug.Log("Quest '" + QuestName + "' accomplished");
+        QuestEvent.Invoke();
+    }
 }
+
+
