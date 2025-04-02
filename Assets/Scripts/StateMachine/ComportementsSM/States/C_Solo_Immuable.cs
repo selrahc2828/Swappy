@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using FMOD.Studio;
 using UnityEngine;
 
 public class C_Solo_Immuable : ComportementState
 {
     private Vector3 _baseVelocity;
     private Vector3 _baseAngularVelocity;
+
+    private EventInstance _immuableSoundInstance;
     
     public C_Solo_Immuable(StateMachine stateMachine) : base(stateMachine)
     {
@@ -14,10 +16,21 @@ public class C_Solo_Immuable : ComportementState
 
     public override void Enter()
     {
+        _immuableSoundInstance = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.Immuable);
         isKinematic = true;
         stateValue = 9;
-        leftValue = 9;
-        rightValue = 0;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            leftValue = 0;
+            rightValue = 9;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 9;
+            rightValue = 0;
+        }
+        // leftValue = 9;
+        // rightValue = 0;
         base.Enter();
         
         ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.noComportementColor);
@@ -46,10 +59,11 @@ public class C_Solo_Immuable : ComportementState
         _sm.rb.angularVelocity = _baseAngularVelocity;
         
         _sm.comportementManager.DestroyObj(feedBack_GO_Left);
+        FMODEventManager.instance.ReleaseEventInstance(_immuableSoundInstance);
     }
 
     public override void CollisionStart(Collision other)
     {
-        FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.ImmuableHit,other.GetContact(0).point);
+        FMODEventManager.instance.SetNamedParamEventInstance(_immuableSoundInstance,"Stinger", 1f);
     }
 }

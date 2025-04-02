@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1767383280669085481}
   - component: {fileID: 5247813342975329975}
   - component: {fileID: 877786246134460342}
-  - component: {fileID: 1092291460780340661}
   - component: {fileID: 1315891730027498275}
   - component: {fileID: 2779393325064255514}
   m_Layer: 0
@@ -80,12 +79,11 @@ MonoBehaviour:
   players: []
   player: {fileID: 0}
   playerFBX: {fileID: 0}
-  playerAntiStick: {fileID: 0}
+  playerAntiStick: {fileID: 13400000, guid: 7d0324e019535384a977d1652c3ca988, type: 2}
   mainCamera: {fileID: 0}
-  canProjectWhenCarryingObject: 0
   planeteCore: {fileID: 0}
-  constanteGravitationelle: 0
-  massePlanete: 0
+  constanteGravitationelle: 9.81
+  massePlanete: 100000
   walkSpeed: 35
   sprintSpeed: 50
   groundDrag: 5
@@ -100,17 +98,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   maxSlopeAngle: 45
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 9
-  projectionTimeDuration: 20
-  projectionTimer: 0
-  coeffRefill: 1.5
-  projectionRange: 150
-  coeffReducDistance: 0.1
-  activeGizmoRange: 1
-  etatIsProjected: 0
-  timerProjectionText: {fileID: 0}
 --- !u!114 &5247813342975329975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,7 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBouncingCollider: {fileID: 0}
-  playerSlidingCollider: {fileID: 0}
   impulseColor: {r: 1, g: 0.56078434, b: 0.56078434, a: 1}
   bouncingColor: {r: 0.5647059, g: 0.8078432, b: 0.5686275, a: 1}
   rocketColor: {r: 0.9921569, g: 0.90196085, b: 0.5568628, a: 1}
@@ -289,19 +275,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Left_Arm_Animator: {fileID: 0}
   Right_Arm_Animator: {fileID: 0}
---- !u!114 &1092291460780340661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1573964937435694765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59c410ac5a757e845a60b810050dcc38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabSonAimant: {fileID: 2007812604757634318, guid: b648a5bd73fb41449bc9393c665a7b97, type: 3}
 --- !u!114 &1315891730027498275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,6 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FMODEvents: {fileID: 11400000, guid: d68df694685d05b44ac24ab58b971e85, type: 2}
   FMODSnapshots: {fileID: 11400000, guid: 0f39827d2f8f14f4884c67cfbe4efe65, type: 2}
+  Fmodbus: {fileID: 11400000, guid: e4b70f64014882340bbd322c6e674c39, type: 2}
 --- !u!114 &2779393325064255514
 MonoBehaviour:
   m_ObjectHideFlags: 0

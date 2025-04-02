@@ -11,7 +11,6 @@ public class PlayerCam : MonoBehaviour
     float xRotation;
     float yRotation;
 
-    public LineRenderer line;
     private Ray _ray;
     public LayerMask hitLayer;
     private Transform orientation;
@@ -23,43 +22,23 @@ public class PlayerCam : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensY;
+        if (!GameManager.Instance.isPaused)
+        {
+            float mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensX * GameManager.Instance.parameters.sensitivity;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensY * GameManager.Instance.parameters.sensitivity;
         
         
-        yRotation += mouseX;
+            yRotation += mouseX;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.localRotation = Quaternion.Euler(0, yRotation, 0);
-
-        LineRenderer();
-    }
-
-
-    private void LineRenderer()
-    {
-
-        float maxDistance = 500f;
-        line.SetPosition(0, transform.position - transform.up / 5 + transform.right / 5);  // D�but de la ligne (cam�ra)
-
-        RaycastHit _hit;
-
-        _ray = this.gameObject.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
-        {
-            // Si le raycast touche un objet
-            line.SetPosition(1, _hit.point);  // Fin de la ligne (point touch� par le rayon)
+            transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
+            orientation.localRotation = Quaternion.Euler(0, yRotation, 0);
         }
-        else
-        {
-            line.SetPosition(1,transform.forward * maxDistance);
-        }
+        
     }
 }

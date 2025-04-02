@@ -15,6 +15,11 @@ public class ComportementState : State
     public GameObject feedBack_GO_Right;
 
     protected ComportementsStateMachine _sm;
+    public ComportementsStateMachine smGet => _sm; // get
+    // public ComportementsStateMachine smGet
+    // {
+    //     get { return _sm; }
+    // }
 
     public ComportementState(StateMachine stateMachine) : base(stateMachine)
     {
@@ -66,8 +71,6 @@ public class ComportementState : State
     public override void CollisionStart(Collision other)
     {
         // Debug.Log($"{_sm.name } collision start/enter with {other.collider.name}");
-
-        SoundManager.Instance.PlaySoundCollision(_sm.gameObject);
     }
 
     public override void CollisionDuring(Collision other)

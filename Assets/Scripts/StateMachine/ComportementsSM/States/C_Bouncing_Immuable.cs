@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FMOD.Studio;
 using UnityEngine;
 
 public class C_Bouncing_Immuable : ComportementState
@@ -21,6 +22,16 @@ public class C_Bouncing_Immuable : ComportementState
     {
         isKinematic = false;
         stateValue = 12;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            leftValue = 9;
+            rightValue = 3;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 3;
+            rightValue = 9;
+        }
         leftValue = 3;
         rightValue = 9;
         base.Enter();
@@ -34,9 +45,7 @@ public class C_Bouncing_Immuable : ComportementState
         if (_sm.isPlayer)
         {
             _basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
-            _basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
             _sm.comportementManager.playerBouncingCollider.material = _bouncyMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = _bouncyMaterial;
             
             _baseVelocity = _sm.rb.velocity;
             _baseAngularVelocity = _sm.rb.angularVelocity;
@@ -68,7 +77,6 @@ public class C_Bouncing_Immuable : ComportementState
         if (_sm.isPlayer)
         {
             _sm.comportementManager.playerBouncingCollider.material = _basePlayerMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = _basePlayerSlideMaterial;
             
             _baseVelocity = _sm.rb.velocity;
             _baseAngularVelocity = _sm.rb.angularVelocity;

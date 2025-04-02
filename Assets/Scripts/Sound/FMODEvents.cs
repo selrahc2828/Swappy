@@ -12,12 +12,17 @@ public class FMODEvents : ScriptableObject
     [field: SerializeField] public EventReference PlayerLand { get; private set; }
     [field: SerializeField] public EventReference PlayerStealComp { get; private set; }
     [field: SerializeField] public EventReference PlayerGiveComp { get; private set; }
+    [field: SerializeField] public EventReference PlayerSelfStealComp { get; private set; }
+    [field: SerializeField] public EventReference PlayerSelfGiveComp { get; private set; }
     [field: Header("SFX Comp")]
-    [field: SerializeField] public EventReference ImpulseBoom { get; private set; }
-    [field: SerializeField] public EventReference BounceHit { get; private set; }
-    [field: SerializeField] public EventReference ImmuableHit { get; private set; }
-    [field: SerializeField] public EventReference RocketStart { get; private set; }
-    [field: SerializeField] public EventReference MagnetStart { get; private set; }
+    [field: SerializeField] public EventReference Impulse { get; private set; }
+    [field: SerializeField] public EventReference Bounce { get; private set; }
+    [field: SerializeField] public EventReference Immuable { get; private set; }
+    [field: SerializeField] public EventReference Rocket { get; private set; }
+    [field: SerializeField] public EventReference Magnet { get; private set; }
+    [field: Space]
+    [field: Space]
+    [field: Space]
     [field: Space]
     [field: SerializeField] public EventReference DoubleImpulseBoom { get; private set; }
     [field: SerializeField] public EventReference ImpulseBounceHit { get; private set; }
@@ -44,6 +49,8 @@ public class FMODEvents : ScriptableObject
     [field: Space]
     [field: Space]
     [field: Header("Menu")]
-    [field: SerializeField] public EventReference Exemple2 { get; private set; }
+    [field: SerializeField] public EventReference Hover { get; private set; }
+    [field: SerializeField] public EventReference Validated { get; private set; }
+    [field: SerializeField] public EventReference Back { get; private set; }
 
 }

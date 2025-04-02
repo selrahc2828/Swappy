@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FMOD.Studio;
 using UnityEngine;
 
 public class C_Solo_Impulse : ComportementState
@@ -15,16 +16,32 @@ public class C_Solo_Impulse : ComportementState
     private bool applyOnMe = false;
     private GameObject feedback;
     
+    
+    private EventInstance _impulseSoundInstance;
+    
     public C_Solo_Impulse(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
+        _impulseSoundInstance = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.Impulse);
         isKinematic = false;
         stateValue = 1;
-        leftValue = 1;
-        rightValue = 0;
+        
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            leftValue = 0;
+            rightValue = 1;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 1;
+            rightValue = 0;
+        }
+        
+        // leftValue = 1;
+        // rightValue = 0;
         base.Enter();
         
         repulserTime = _sm.comportementManager.impulseData.impulseTime;
@@ -58,7 +75,7 @@ public class C_Solo_Impulse : ComportementState
         repulserTimer += Time.deltaTime;
         if (repulserTimer >= repulserTime)
         {
-            FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.ImpulseBoom, _sm.transform.position);
+            
             Repulse();
             repulserTimer = 0;
         }
@@ -72,6 +89,7 @@ public class C_Solo_Impulse : ComportementState
     public override void Exit()
     {
         base.Exit();
+        FMODEventManager.instance.ReleaseEventInstance(_impulseSoundInstance);
     }
     
     public override void DisplayGizmos()
@@ -83,6 +101,7 @@ public class C_Solo_Impulse : ComportementState
  
     public void Repulse()
     {
+        FMODEventManager.instance.SetNamedParamEventInstance(_impulseSoundInstance,"Stinger", 1f);
         
         if (feedback)
         {
@@ -110,7 +129,7 @@ public class C_Solo_Impulse : ComportementState
                     // player relache l'objet repulse
                     if (isGrabbed) //juste isGrabbed ? objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject
                     {
-                        objectAffected.GetComponent<GrabObject>().Drop(true);
+                        objectAffected.GetComponent<GrabObject>().Release(true);
                     }
                 }
                 else if (objectInRange.GetComponent<Rigidbody>() != null)

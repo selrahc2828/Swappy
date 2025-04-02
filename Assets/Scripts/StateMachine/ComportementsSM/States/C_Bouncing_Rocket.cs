@@ -22,8 +22,18 @@ public class C_Bouncing_Rocket : ComportementState
     public override void Enter()
     {
         stateValue = 84;
-        leftValue = 3;
-        rightValue = 81;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            leftValue = 81;
+            rightValue = 3;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 3;
+            rightValue = 81;
+        }
+        // leftValue = 3;
+        // rightValue = 81;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.rocketColor);
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
@@ -42,9 +52,7 @@ public class C_Bouncing_Rocket : ComportementState
         if (_sm.isPlayer)
         {
             basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
-            basePlayerSlideMaterial = _sm.comportementManager.playerSlidingCollider.material;
             _sm.comportementManager.playerBouncingCollider.material = bouncyMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = bouncyMaterial;
         }
         else
         {
@@ -96,7 +104,6 @@ public class C_Bouncing_Rocket : ComportementState
         if (_sm.isPlayer)
         {
             _sm.comportementManager.playerBouncingCollider.material = basePlayerMaterial;
-            _sm.comportementManager.playerSlidingCollider.material = basePlayerSlideMaterial;
         }
         else
         {

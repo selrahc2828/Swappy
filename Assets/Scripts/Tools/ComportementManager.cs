@@ -9,7 +9,6 @@ public partial class ComportementManager : MonoBehaviour
     
     [Header("Player")]
     public Collider playerBouncingCollider;
-    public Collider playerSlidingCollider;
     
     [Header("Comportement colors")]
     public Color impulseColor;
@@ -71,11 +70,6 @@ public partial class ComportementManager : MonoBehaviour
             if (collider.height == 2f)
             {
                 playerBouncingCollider = collider;
-            }
-
-            if (collider.height == 1.9f)
-            {
-                playerSlidingCollider = collider;
             }
         }
     }

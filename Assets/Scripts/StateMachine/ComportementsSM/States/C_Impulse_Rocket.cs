@@ -25,8 +25,18 @@ public class C_Impulse_Rocket : ComportementState
     public override void Enter()
     {
         stateValue = 82;
-        leftValue = 1;
-        rightValue = 81;
+        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
+        {
+            leftValue = 81;
+            rightValue = 1;
+        }
+        else  // Par défaut, initialisation pour la main gauche
+        {
+            leftValue = 1;
+            rightValue = 81;
+        }
+        // leftValue = 1;
+        // rightValue = 81;
         base.Enter();
         
         maxSpeed = _sm.comportementManager.rocketData.rocketMaxSpeed;
@@ -151,7 +161,7 @@ public class C_Impulse_Rocket : ComportementState
                     // player relache l'objet repulse
                     if (isGrabbed) //juste isGrabbed ? objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject
                     {
-                        objectAffected.GetComponent<GrabObject>().Drop(true);
+                        objectAffected.GetComponent<GrabObject>().Release(true);
                     }
                 }
                 else if (objectInRange.GetComponent<Rigidbody>() != null)
