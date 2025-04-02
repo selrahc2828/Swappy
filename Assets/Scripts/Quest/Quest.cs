@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
-public enum QuestType
+public enum QuestTypes
 {
     NPCQuest,
     LoreQuest,
@@ -13,10 +12,17 @@ public enum QuestType
 public class Quest : MonoBehaviour
 {
     public string QuestName;
-    public QuestType QuestType;
+    public QuestTypes QuestType;
     public UnityEvent QuestEvent;
 
+    public readonly Dictionary<QuestTypes, Color> QuestColors = new Dictionary<QuestTypes, Color>()
+    {   {QuestTypes.NPCQuest, Color.red},
+        {QuestTypes.LoreQuest, Color.blue},
+        {QuestTypes.Collectible, Color.magenta},
+        {QuestTypes.BlankActivity, Color.green} };
+
     private Dictionary<QuestCondition, bool> ActiveConditions = new Dictionary<QuestCondition, bool>();
+
 
     public void ReferenceThisCondition(QuestCondition conditionScript, bool state) //Référence toutes les conditions d'une quête à l'initialisation dans un dictionnaire
     {
@@ -41,6 +47,16 @@ public class Quest : MonoBehaviour
 
         Debug.Log("Quest '" + QuestName + "' accomplished");
         QuestEvent.Invoke();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (QuestColors.TryGetValue(QuestType, out Color questColor))
+        {
+            Gizmos.color = questColor;
+        }
+
+        Gizmos.DrawSphere(transform.position + Vector3.up * 2, 0.5f);
     }
 }
 

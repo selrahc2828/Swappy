@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class QuestCondition : MonoBehaviour
 {
@@ -30,5 +29,19 @@ public class QuestCondition : MonoBehaviour
         }
 
         questScript.ChangeQuestConditions(this, state);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (questScript != null && isAdditionalCheck == false)
+        {
+            if (questScript.QuestColors.TryGetValue(questScript.QuestType, out Color questColor))
+            {
+                Gizmos.color = questColor;
+            }
+            
+            Gizmos.DrawLine(transform.position, questScript.transform.position + Vector3.up * 2);
+        }
+
     }
 }
