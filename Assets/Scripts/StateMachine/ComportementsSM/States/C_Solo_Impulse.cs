@@ -26,6 +26,7 @@ public class C_Solo_Impulse : ComportementState
     public override void Enter()
     {
         _impulseSoundInstance = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.Impulse);
+        FMODEventManager.instance.PlayEventInstance(_impulseSoundInstance);
         isKinematic = false;
         stateValue = 1;
         

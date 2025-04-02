@@ -17,6 +17,7 @@ public class C_Solo_Immuable : ComportementState
     public override void Enter()
     {
         _immuableSoundInstance = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.Immuable);
+        FMODEventManager.instance.PlayEventInstance(_immuableSoundInstance);
         isKinematic = true;
         stateValue = 9;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite

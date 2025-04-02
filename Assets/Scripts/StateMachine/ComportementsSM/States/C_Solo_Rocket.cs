@@ -24,6 +24,7 @@ public class C_Solo_Rocket : ComportementState
     public override void Enter()
     {
         _rocketSoundEvent = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.Rocket);
+        FMODEventManager.instance.PlayEventInstance(_rocketSoundEvent);
         isKinematic = false;
         stateValue = 81;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite

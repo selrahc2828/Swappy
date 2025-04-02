@@ -19,6 +19,7 @@ public class C_Solo_Bouncing : ComportementState
     public override void Enter()
     {
         _bounceSoundInstane = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.Bounce);
+        FMODEventManager.instance.PlayEventInstance(_bounceSoundInstane);
         isKinematic = false;
         stateValue = 3;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
