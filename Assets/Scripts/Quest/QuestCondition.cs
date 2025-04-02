@@ -27,7 +27,7 @@ public class QuestCondition : MonoBehaviour
     {
         if (isAdditionalCheck)
         {
-            Debug.LogWarning("Cette condition est marquée comme un AdditionalCheck");
+            Debug.LogWarning("Cette condition est marquée comme un AdditionalCheck et ne doit donc pas être reliée à une quête");
             return;
         }
 

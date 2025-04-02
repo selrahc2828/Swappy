@@ -21,7 +21,6 @@ public class Quest : MonoBehaviour
     public void ReferenceThisCondition(QuestCondition conditionScript, bool state) //Référence toutes les conditions d'une quête à l'initialisation dans un dictionnaire
     {
         ActiveConditions.Add(conditionScript, state);
-        Debug.Log("Number of Conditions: " +  ActiveConditions.Count);
     }
 
     public void ChangeQuestConditions(QuestCondition condition, bool state) //Change le state d'une des condition de la quête
@@ -36,7 +35,6 @@ public class Quest : MonoBehaviour
         {
             if (conditionRef.Value == false)
             {
-                Debug.Log("Quest '" + QuestName + "' is false");
                 return;  
             }
         }
