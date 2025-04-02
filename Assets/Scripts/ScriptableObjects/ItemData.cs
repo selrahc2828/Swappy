@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "newItem", menuName = "ScriptableObjects/ItemData")]
+[CreateAssetMenu(fileName = "newItem", menuName = "Scriptable/ItemData", order = 0)]
 public class ItemData : ScriptableObject
 {
     public enum Category
@@ -12,11 +12,10 @@ public class ItemData : ScriptableObject
         Aventure
     }
 
-    public int itemId;
     public string itemName;
-    public Sprite itemSprite;
-
-    public Category itemCategory;
     public string itemDescription;   
-    
+    public Category itemCategory;
+    public Sprite itemSprite;
+    public GameObject itemPrefab;
+
 }
