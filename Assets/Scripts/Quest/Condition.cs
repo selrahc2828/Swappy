@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Condition : MonoBehaviour
@@ -31,7 +32,7 @@ public class Condition : MonoBehaviour
         attachedQuest.ChangeQuestConditions(this, state);
     }
 
-    private void OnDrawGizmos()
+    public void OnDrawGizmos()
     {
         if (attachedQuest != null && isAdditionalCheck == false)
         {
@@ -39,9 +40,14 @@ public class Condition : MonoBehaviour
             {
                 Gizmos.color = questColor;
             }
-            
-            Gizmos.DrawLine(transform.position, attachedQuest.transform.position + Vector3.up * 2);
+
+            Gizmos.DrawLine(GetQuestLineStart(), attachedQuest.transform.position + Vector3.up * 2);
         }
 
+    }
+
+    protected virtual Vector3 GetQuestLineStart()
+    {
+        return transform.position;
     }
 }
