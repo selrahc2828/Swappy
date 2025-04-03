@@ -22,7 +22,7 @@ public class PlayerCam : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         //get mouse input
         if (!GameManager.Instance.isPaused)
