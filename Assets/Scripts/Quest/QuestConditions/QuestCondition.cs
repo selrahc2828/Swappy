@@ -3,11 +3,11 @@ using UnityEngine;
 public class QuestCondition : Condition
 {
     [Space(16)]
-    [SerializeField] private Quest targetQuestScript;
+    [SerializeField] private Quest receivingQuest;
 
     private void Start()
     {
-        targetQuestScript.QuestEvent.AddListener(SetQuestCondition);
+        receivingQuest.QuestEvent.AddListener(SetQuestCondition);
     }
 
     private void SetQuestCondition()
