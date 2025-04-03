@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class OptionMenuScript : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
     public bool isOpen = false;
     public GameObject optionGroup;

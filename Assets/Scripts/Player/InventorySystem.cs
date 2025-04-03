@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,6 +9,12 @@ public class InventorySystem: MonoBehaviour
     // [SerializeField] private IventoryUIMenu ui;
     
     private Dictionary<ItemData, InventorySlot> inventoryItems = new Dictionary<ItemData, InventorySlot>();
+
+    public Dictionary<ItemData, InventorySlot> InventoryItems
+    {
+        get => inventoryItems;
+        //set => inventoryItems = value;
+    }
     // private Dictionary<TapeData, int> tapes = new Dictionary<TapeData, int>();
     
     public void AddItem(ItemData newItem)
