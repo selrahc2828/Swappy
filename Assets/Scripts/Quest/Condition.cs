@@ -41,7 +41,8 @@ public class Condition : MonoBehaviour
                 Gizmos.color = questColor;
             }
 
-            Gizmos.DrawLine(GetQuestLineStart(), attachedQuest.transform.position + Vector3.up * 2);
+            Gizmos.DrawLine(GetQuestLineStart(), attachedQuest.transform.position + Vector3.up * 2.5f);
+            Gizmos.DrawCube(transform.position + Vector3.up, Vector3.one * 0.7f);
         }
 
     }

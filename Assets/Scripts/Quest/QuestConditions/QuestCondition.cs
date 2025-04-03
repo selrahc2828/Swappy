@@ -17,6 +17,6 @@ public class QuestCondition : Condition
 
     protected override Vector3 GetQuestLineStart()
     {
-        return receivingQuest.transform.position + Vector3.up * 2;
+        return receivingQuest.transform.position + Vector3.up * 2.5f;
     }
 }

@@ -56,7 +56,7 @@ public class Quest : MonoBehaviour
             Gizmos.color = questColor;
         }
 
-        Gizmos.DrawSphere(transform.position + Vector3.up * 2, 0.5f);
+        Gizmos.DrawSphere(transform.position + Vector3.up * 2.5f, 0.8f);
     }
 }
 
