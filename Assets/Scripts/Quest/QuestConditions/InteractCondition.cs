@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InteractCondition : QuestCondition
+public class InteractCondition : Condition
 {
 
 }

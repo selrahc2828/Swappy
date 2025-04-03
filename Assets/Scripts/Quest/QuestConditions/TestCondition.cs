@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TestCondition : QuestCondition
+public class TestCondition : Condition
 {
     void OnDestroy()
     {

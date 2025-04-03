@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ObjectCondition : QuestCondition
+public class ObjectCondition : Condition
 {
     
 }

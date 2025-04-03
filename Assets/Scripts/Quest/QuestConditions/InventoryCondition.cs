@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InventoryCondition : QuestCondition
+public class InventoryCondition : Condition
 {
 
 }

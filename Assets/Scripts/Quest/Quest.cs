@@ -21,15 +21,15 @@ public class Quest : MonoBehaviour
         {QuestTypes.Collectible, Color.magenta},
         {QuestTypes.BlankActivity, Color.green} };
 
-    private Dictionary<QuestCondition, bool> ActiveConditions = new Dictionary<QuestCondition, bool>();
+    private Dictionary<Condition, bool> ActiveConditions = new Dictionary<Condition, bool>();
 
 
-    public void ReferenceThisCondition(QuestCondition conditionScript, bool state) //Référence toutes les conditions d'une quête à l'initialisation dans un dictionnaire
+    public void ReferenceThisCondition(Condition conditionScript, bool state) //Référence toutes les conditions d'une quête à l'initialisation dans un dictionnaire
     {
         ActiveConditions.Add(conditionScript, state);
     }
 
-    public void ChangeQuestConditions(QuestCondition condition, bool state) //Change le state d'une des condition de la quête
+    public void ChangeQuestConditions(Condition condition, bool state) //Change le state d'une des condition de la quête
     {
         ActiveConditions[condition] = state;
         CheckQuestConditions();
@@ -37,7 +37,7 @@ public class Quest : MonoBehaviour
 
     private void CheckQuestConditions() //Vérifie si la quête est accomplie en parcourant toutes les entrées du dictionnaires et en regardant si l'une d'elle est false
     {
-        foreach (KeyValuePair<QuestCondition, bool> conditionRef in ActiveConditions)
+        foreach (KeyValuePair<Condition, bool> conditionRef in ActiveConditions)
         {
             if (conditionRef.Value == false)
             {

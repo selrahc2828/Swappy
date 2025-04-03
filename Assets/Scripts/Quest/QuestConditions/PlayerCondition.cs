@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerCondition : QuestCondition
+public class PlayerCondition : Condition
 {
 
 }

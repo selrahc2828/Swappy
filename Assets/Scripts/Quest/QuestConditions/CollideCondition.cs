@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CollideCondition : QuestCondition
+public class CollideCondition : Condition
 {
 
 }

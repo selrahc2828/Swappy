@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AeraCondition : QuestCondition
+public class AeraCondition : Condition
 {
 
 }

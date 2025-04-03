@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class QuestCondition : MonoBehaviour
+public class Condition : MonoBehaviour
 {
     [Tooltip("La Quête remplie par cette condition")] 
     [SerializeField] private Quest questScript;
@@ -13,7 +13,7 @@ public class QuestCondition : MonoBehaviour
     {
         if (questScript == null && isAdditionalCheck == false)
         {
-            Debug.LogError("Il n'y a pas de Gestionnaire de Quête précisé dans cette Condition !");
+            Debug.LogError("Il n'y a pas de script de Quête précisé dans cette Condition !");
             return;
         }
 
