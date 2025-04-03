@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Windows;
 using UnityEngine.InputSystem;
+using Input = UnityEngine.Input;
 
 [RequireComponent(typeof(Rigidbody))]
 public class ControllerPlanete : MonoBehaviour
@@ -22,6 +23,7 @@ public class ControllerPlanete : MonoBehaviour
     public PhysicMaterial antiStickMaterial;
 
     public float maxSpeed;
+    public float moveSpeed;
     public float jumpForce;
     public bool isSprinting;
     public bool isStopping;
@@ -44,6 +46,8 @@ public class ControllerPlanete : MonoBehaviour
     public Vector3 touchingInclinedSurfaceDirection;
     public Vector3 touchingInclinedSurfaceDirectionOnPlanet;
 
+    private Vector3 _externalForce;
+    
     private void OnEnable()
     {
         gameManager = GameManager.Instance;
@@ -55,7 +59,7 @@ public class ControllerPlanete : MonoBehaviour
         controls.Player.StartSprint.performed += StartSprint;
         controls.Player.StopSprint.performed += StopSprint;
 
-        maxSpeed = gameManager.walkSpeed;
+        moveSpeed = gameManager.walkSpeed;
         jumpForce = gameManager.jumpForce;
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
@@ -87,16 +91,27 @@ public class ControllerPlanete : MonoBehaviour
     {
         moveInputVector = controls.Player.Movement.ReadValue<Vector2>().normalized;
 
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            _externalForce += Vector3.up;
+        }
+
+        if (_externalForce.magnitude > 0f)
+        {
+            _externalForce = new Vector3(_externalForce.x, _externalForce.y - Time.deltaTime, _externalForce.z);
+        }
+
         // Calculate movement direction using GravityPlanete
         if (gravityComponent != null)
         {
             moveDirection = Vector3.ProjectOnPlane(
                 GameManager.Instance.orientation.transform.forward * moveInputVector.y +
                 GameManager.Instance.orientation.transform.right * moveInputVector.x,
-                gravityComponent.transform.up
+                transform.up
             ).normalized;
         }
-
+        
+        //est ce que je touche un mur et l'input de mouvement est vers le mur
         if (touchingInclinedSurface && Vector3.Dot(moveDirection, touchingInclinedSurfaceDirection) < 0)
         {
             moveDirection = Vector3.ProjectOnPlane(moveDirection, touchingInclinedSurfaceDirection);
@@ -107,26 +122,51 @@ public class ControllerPlanete : MonoBehaviour
     {
         GroundCheck();
 
-        float targetVelocity = 0;
+        float targetVelocityRatio = 0;
         Vector3 movement = moveDirection;
+        
+        /*
+        Vector3 localHorizontalVelocity = Vector3.ProjectOnPlane(rb.velocity, transform.up);
+        Vector3 localVerticalVelocity = Vector3.Project(rb.velocity, transform.up);
+        
+        if (rb.velocity.magnitude > maxSpeed && Vector3.Dot(movement, localHorizontalVelocity) < 0)
+        {
+            movement = Vector3.ProjectOnPlane(movement, localHorizontalVelocity);
+        }
 
+        if (isStopping && grounded)
+        {
+            rb.velocity = Vector3.Lerp(rb.velocity, localVerticalVelocity, 0.1f);
+            return;
+        }
+        rb.AddForce(movement * moveSpeed, ForceMode.Acceleration);
+
+        #region l'ancienne merde
+
+        if (false)
+        {
+            Debug.Log(moveDirection);
+        }
+        */
+
+        
         if(isSprinting)
         {
             if(isStopping)
             {
                 float curveTime = Mathf.Clamp01((Time.time - mouvementReleaseTime) / mouvementReleaseDuration);
-                targetVelocity = moveSpeedCurveReleaseRun.Evaluate(curveTime);
+                targetVelocityRatio = moveSpeedCurveReleaseRun.Evaluate(curveTime);
             }
             else
             {
                 float curveTime = Mathf.Clamp01((Time.time - mouvementAttackTime) / (mouvementSustainTime - mouvementAttackTime)); 
                 if (curveTime < 1)
                 {
-                    targetVelocity = moveSpeedCurveAttackRun.Evaluate(curveTime);
+                    targetVelocityRatio = moveSpeedCurveAttackRun.Evaluate(curveTime);
                 }
                 else
                 {
-                    targetVelocity = moveSpeedCurveSustainRun.Evaluate(curveTime);
+                    targetVelocityRatio = moveSpeedCurveSustainRun.Evaluate(curveTime);
                 }
             }
         }
@@ -135,37 +175,55 @@ public class ControllerPlanete : MonoBehaviour
             if(isStopping)
             {
                 float curveTime = Mathf.Clamp01((Time.time - mouvementReleaseTime) / (mouvementReleaseDuration));
-                targetVelocity = moveSpeedCurveReleaseWalk.Evaluate(curveTime);
+                targetVelocityRatio = moveSpeedCurveReleaseWalk.Evaluate(curveTime);
             }
             else
             {
                 float curveTime = Mathf.Clamp01((Time.time - mouvementAttackTime) / (mouvementSustainTime - mouvementAttackTime)); 
                 if (curveTime < 1)
                 {
-                    targetVelocity = moveSpeedCurveAttackWalk.Evaluate(curveTime);
+                    targetVelocityRatio = moveSpeedCurveAttackWalk.Evaluate(curveTime);
                 }
                 else
                 {
-                    targetVelocity = moveSpeedCurveSustainWalk.Evaluate(curveTime);
+                    targetVelocityRatio = moveSpeedCurveSustainWalk.Evaluate(curveTime);
                 }
             }
         }
         
-        movement *= targetVelocity * maxSpeed;
+        
+        
+        
+        movement *= targetVelocityRatio * moveSpeed;
 
         Vector3 localVerticalVelocity = Vector3.Project(rb.velocity, transform.up);
+        Vector3 localHorizontalVelocity = Vector3.ProjectOnPlane(rb.velocity, transform.up);
         
-        movement = Vector3.ProjectOnPlane(movement, gravityComponent.transform.up);
+        movement = Vector3.ProjectOnPlane(movement, transform.up);
         if(touchingInclinedSurface)
         {
             movement = Vector3.ProjectOnPlane(moveDirection, touchingInclinedSurfaceDirection);
         }
-        rb.velocity = localVerticalVelocity + movement;
+        
+        //rb.velocity = localVerticalVelocity + movement;
+        //si la vitesse actuelle est superieur a la vitesse max et l'input de mouvement est dans la même direction que le mouvement
+        if (rb.velocity.magnitude > maxSpeed && Vector3.Dot(movement, localHorizontalVelocity) < 0)
+        {
+            movement = Vector3.ProjectOnPlane(movement, localHorizontalVelocity);
+        }
+        
+        rb.velocity = localVerticalVelocity + movement + (_externalForce * 100);
+        Debug.Log(localVerticalVelocity.y + " " + movement.y + " " + _externalForce.y * 100);
+        //rb.AddForce(movement - Vector3.Project(rb.velocity, transform.up), ForceMode.Acceleration);
+
+        
+        
+        
     }
 
     void GroundCheck()
     {
-        Vector3 groundDirection = -gravityComponent.transform.up;
+        Vector3 groundDirection = -transform.up;
         grounded = false;
         touchingInclinedSurface = false;
 
@@ -184,7 +242,7 @@ public class ControllerPlanete : MonoBehaviour
         {
             foreach (ContactPoint contact in collision.contacts)
             {
-                float slopeAngle = Vector3.Angle(contact.normal, -gravityComponent.transform.up);
+                float slopeAngle = Vector3.Angle(contact.normal, -transform.up);
                 //Debug.Log(slopeAngle);
                 if (slopeAngle > 90f && slopeAngle < 125f) // Surface inclin�e d�tect�e
                 {
