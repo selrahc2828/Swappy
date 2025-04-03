@@ -12,7 +12,12 @@ public class Condition : MonoBehaviour
 
     private void Start()
     {
-        if (attachedQuest == null && isAdditionalCheck == false)
+        if (isAdditionalCheck)
+        {
+            return;
+        }
+
+        if (attachedQuest == null)
         {
             Debug.LogError("Il n'y a pas de script de Quête précisé dans cette Condition !");
             return;
@@ -30,6 +35,12 @@ public class Condition : MonoBehaviour
         }
 
         attachedQuest.ChangeQuestConditions(this, state);
+    }
+
+    protected virtual bool CheckObjectParameters(GameObject target)
+    {
+        Debug.LogError("La condition '" + this + "' dans l'objet " + transform.name + " ne peux pas être utilisée comme complément d'une autre condition !");
+        return false;
     }
 
     public void OnDrawGizmos()
