@@ -1,0 +1,114 @@
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
+
+public class InventoryMenu : MonoBehaviour
+{
+
+    public InventorySystem inventorySystem;
+    
+    public Transform inventoryContent;
+    
+    public GameObject inventorySlotPrefab;
+
+    [Header("Info")]
+    public TextMeshProUGUI slotInfoDescription;
+    public TextMeshProUGUI slotInfoName;
+    [HideInInspector] public Image slotInfoImage;
+    [HideInInspector] public RawImage slotInfoImageRaw; // image UI qui utilise un RenderTexture
+
+    [Header("Preview 3D")]
+    public Transform previewSpawnPoint; // empty dans la scène pour instancier le modèle a render
+    private GameObject currentPreviewInstance;
+    
+    
+    //ecoute event
+    
+    void Awake()
+    {
+        inventorySystem = FindObjectOfType<InventorySystem>();
+    }
+    
+    void Start()
+    {
+        //RefreshUI();
+    }
+
+    void OnEnable()
+    {
+        if (inventorySystem != null)
+        {
+            // Abonnement à l'event avec une méthode callback
+            inventorySystem.OnInventoryChanged += RefreshUI;
+        }
+        else
+        {
+            Debug.LogError("Inventory system is null");
+        }
+    }
+
+    void OnDisable()
+    {
+        if (inventorySystem != null)
+        {
+            // Désabonnement de l'event pour éviter les erreurs de références invalides
+            inventorySystem.OnInventoryChanged -= RefreshUI;
+        }
+    } 
+    
+    public void RefreshUI()
+    {
+        // On supprime tous les slots existants
+        foreach (Transform child in inventoryContent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Pour chaque item dans l'inventaire, on crée un nouveau slot et on le configure
+        foreach (KeyValuePair<ItemData, InventorySlot> entry in inventorySystem.InventoryItems)
+        {
+            GameObject slot = Instantiate(inventorySlotPrefab, inventoryContent);
+            
+            InventorySlotUI slotUI = slot.GetComponent<InventorySlotUI>();
+
+            if (slotUI != null)
+            {
+                slotUI.Initialize(entry.Key, entry.Value.quantity, OnItemSlotClicked);
+            }
+        }
+    }
+    
+    private void OnItemSlotClicked(ItemData clickedItem)
+    {
+        // Sprite imagePreview = clickedItem.itemPrefab.GetComponent<Image>().sprite;
+        // slotInfoImage.sprite = imagePreview;
+        slotInfoDescription.text = clickedItem.itemDescription;
+        slotInfoName.text = clickedItem.itemName;
+        
+        Debug.Log($"Item cliqué : {clickedItem.itemName}");
+
+        if (currentPreviewInstance != null) 
+            Destroy(currentPreviewInstance);
+
+        // instancie prefab pour la preview
+        if (clickedItem.itemPrefab != null && previewSpawnPoint != null)
+        {
+            currentPreviewInstance = Instantiate(clickedItem.itemPrefab, previewSpawnPoint.position, Quaternion.identity, previewSpawnPoint);
+
+            //layer que la PreviewCamera voie
+            currentPreviewInstance.layer = LayerMask.NameToLayer("PreviewObject");
+            
+            currentPreviewInstance.transform.localRotation = Quaternion.Euler(0, 180f, 0);
+            currentPreviewInstance.transform.localScale = Vector3.one * 1f;
+        }
+        
+    }
+    
+    public void UpdateInventory()
+    {
+        RefreshUI();
+    }
+    
+}
