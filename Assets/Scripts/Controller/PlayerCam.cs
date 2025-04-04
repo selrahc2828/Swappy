@@ -17,18 +17,18 @@ public class PlayerCam : MonoBehaviour
 
     void Start()
     {
-        orientation = GameManager.Instance.orientation.transform;
+        orientation = GameManager.Instance.player.transform;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         //get mouse input
         if (!GameManager.Instance.isPaused)
         {
-            float mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensX * GameManager.Instance.parameters.sensitivity;
-            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensY * GameManager.Instance.parameters.sensitivity;
+            float mouseX = Input.GetAxisRaw("Mouse X") * GameManager.Instance.parameters.sensitivity;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * GameManager.Instance.parameters.sensitivity;
         
         
             yRotation += mouseX;
@@ -36,7 +36,7 @@ public class PlayerCam : MonoBehaviour
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-            transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
+            transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
             orientation.localRotation = Quaternion.Euler(0, yRotation, 0);
         }
         
