@@ -71,16 +71,27 @@ public class FMODMusicManager : MonoBehaviour
 
     public void StopMusic(EventInstance musicInstance)
     {
-        musicInstance.getPlaybackState(out musicState);
-        if (musicState != PLAYBACK_STATE.STOPPED)
+        if (musicInstance.getPlaybackState(out musicState) != (RESULT)PLAYBACK_STATE.STOPPED)
         {
             musicInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        }
+        else
+        {
+            Debug.LogWarning("No music instance playing");
+        }
+    }
+
+    public void ReleaseMusicInstance(EventInstance musicInstance)
+    {
+        if (musicInstance.getPlaybackState(out musicState) == (RESULT)PLAYBACK_STATE.STOPPED)
+        {
+            //Debug.Log("Music instance released");
             musicInstance.release();
             musicPlaylist.Remove(musicInstance);
         }
         else
         {
-            Debug.LogWarning("No music instance playing");
+            Debug.LogWarning("Music instance not released");
         }
     }
     #endregion
@@ -94,9 +105,13 @@ public class FMODMusicManager : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.KeypadPlus))
         {
             musictest = CreateMusicInstance(FMODMusicEvents.TestMusic1);
+        }
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            
             PlayMusicInstance(musictest);
         }
         if (Input.GetKeyDown(KeyCode.Keypad1))
@@ -118,10 +133,15 @@ public class FMODMusicManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad0))
         {
             StopMusic(musictest);
+           
+        }
+
+        if (Input.GetKeyDown(KeyCode.KeypadPeriod))
+        {
+            ReleaseMusicInstance(musictest);
         }
     }
     
-
     #region On destroy
     private void CleanUpMusic()
     {

@@ -22,6 +22,7 @@ public class C_Solo_Magnet : ComportementState
     public override void Enter()
     {
         _magnetSoundInstance = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.Magnet);
+        FMODEventManager.instance.Set3DparamEventInstance(_magnetSoundInstance,_sm.transform.position);
         FMODEventManager.instance.PlayEventInstance(_magnetSoundInstance);
         
         isKinematic = false;
