@@ -58,11 +58,11 @@ public class FMODMusicManager : MonoBehaviour
         }
     }
 
-    // public float GetMusicNameParamInstance(EventInstance musicInstance, string paramName)
-    // {
-    //     float result = musicInstance.getParameterByName(paramName, out float value);
-    //     return (float)
-    // }
+    public float GetMusicNameParamInstance(EventInstance musicInstance, string paramName)
+    {
+        musicInstance.getParameterByName(paramName, out float value);
+        return (value);
+    }
 
     public void SetMusicNameParamInstance(EventInstance musicInstance, string paramName, float value, bool seekSpeed)
     {
@@ -102,14 +102,17 @@ public class FMODMusicManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             SetMusicNameParamInstance(musictest, "Layer", 1,false);
+            Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
         }
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             SetMusicNameParamInstance(musictest, "Layer", 2,false);
+            Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
         }
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {
             SetMusicNameParamInstance(musictest, "Layer", 3,false);
+            Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
         }
 
         if (Input.GetKeyDown(KeyCode.Keypad0))

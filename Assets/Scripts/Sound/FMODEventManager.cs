@@ -60,7 +60,8 @@ public class FMODEventManager : MonoBehaviour
     
     public float GetNamedParamEventInstance(EventInstance eventInstance, string name)
     {
-        return (float) eventInstance.getParameterByName(name, out float value);
+        eventInstance.getParameterByName(name, out float value);
+        return value;
     }
     
     public void SetNamedParamEventInstance(EventInstance eventInstance, string name, float value)
