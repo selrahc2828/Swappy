@@ -103,49 +103,49 @@ public class FMODMusicManager : MonoBehaviour
 
     #endregion
     #region Param Music Test 
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.KeypadPlus))
-    //     {
-    //         musictest = CreateMusicInstance(FMODMusicEvents.TestMusic1);
-    //     }
-    //     if (Input.GetKeyDown(KeyCode.KeypadEnter))
-    //     {
-    //         
-    //         PlayMusicInstance(musictest);
-    //     }
-    //     if (Input.GetKeyDown(KeyCode.Keypad1))
-    //     {
-    //         SetMusicNameParamInstance(musictest, "Layer", 1,false);
-    //         Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
-    //     }
-    //     if (Input.GetKeyDown(KeyCode.Keypad2))
-    //     {
-    //         SetMusicNameParamInstance(musictest, "Layer", 2,false);
-    //         Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
-    //     }
-    //     if (Input.GetKeyDown(KeyCode.Keypad3))
-    //     {
-    //         SetMusicNameParamInstance(musictest, "Layer", 3,false);
-    //         Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
-    //     }
-    //
-    //     if (Input.GetKeyDown(KeyCode.Keypad0))
-    //     {
-    //         StopMusic(musictest);
-    //        
-    //     }
-    //
-    //     if (Input.GetKeyDown(KeyCode.KeypadPeriod))
-    //     {
-    //         ReleaseMusicInstance(musictest);
-    //     }
-    //
-    //     if (Input.GetKeyDown(KeyCode.KeypadMultiply))
-    //     {
-    //         Debug.Log(GetPlaylistMusicSize());
-    //     }
-    // }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.KeypadPlus))
+        {
+            musictest = CreateMusicInstance(FMODMusicEvents.TestMusic1);
+        }
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            
+            PlayMusicInstance(musictest);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            SetMusicNameParamInstance(musictest, "Layer", 1,false);
+            Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            SetMusicNameParamInstance(musictest, "Layer", 2,false);
+            Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            SetMusicNameParamInstance(musictest, "Layer", 3,false);
+            Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
+        }
+    
+        if (Input.GetKeyDown(KeyCode.Keypad0))
+        {
+            StopMusic(musictest);
+           
+        }
+    
+        if (Input.GetKeyDown(KeyCode.KeypadPeriod))
+        {
+            ReleaseMusicInstance(musictest);
+        }
+    
+        if (Input.GetKeyDown(KeyCode.KeypadMultiply))
+        {
+            Debug.Log(GetPlaylistMusicSize());
+        }
+    }
     #endregion
     #region On destroy
     private void CleanUpMusic()
