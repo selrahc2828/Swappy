@@ -60,7 +60,8 @@ public class FMODEventManager : MonoBehaviour
     
     public float GetNamedParamEventInstance(EventInstance eventInstance, string name)
     {
-        return (float) eventInstance.getParameterByName(name, out float value);
+        eventInstance.getParameterByName(name, out float value);
+        return value;
     }
     
     public void SetNamedParamEventInstance(EventInstance eventInstance, string name, float value)
@@ -75,7 +76,7 @@ public class FMODEventManager : MonoBehaviour
 
     public void StopEventInstance(EventInstance eventInstance)
     {
-        if (eventInstance.getPlaybackState(out PLAYBACK_STATE state) != (RESULT)PLAYBACK_STATE.STOPPED)
+        if (eventInstance.getPlaybackState(out PLAYBACK_STATE eventState) != (RESULT)PLAYBACK_STATE.STOPPED)
         {
             eventInstance.stop(STOP_MODE.ALLOWFADEOUT);
         }
@@ -83,9 +84,18 @@ public class FMODEventManager : MonoBehaviour
     
     public void ReleaseEventInstance(EventInstance eventInstance)
     {
-        StopEventInstance(eventInstance);
-        eventInstance.release();
-        eventPlaylist.Remove(eventInstance);
+        if (eventInstance.getPlaybackState(out PLAYBACK_STATE eventState) == (RESULT)PLAYBACK_STATE.STOPPED || eventState == PLAYBACK_STATE.STOPPING)
+        {
+            eventInstance.release();
+            eventPlaylist.Remove(eventInstance);
+            //Debug.Log("event instance is release");
+        }
+        else
+        {
+            Debug.LogWarning("event instance isn't release");
+        }
+        
+        
     }
     #endregion
     #region Param Playlist

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FMOD.Studio;
 using UnityEngine;
 
 public class C_Solo_Rocket : ComportementState
@@ -11,9 +12,10 @@ public class C_Solo_Rocket : ComportementState
     private float timer;
     private float maxSpeed;
     private bool rocketOn;
-    
-    
-    //private bool isSoundPlay;
+
+
+    private EventInstance _rocketSoundEvent;
+    private bool rocketStingOn;
 
     public C_Solo_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -21,6 +23,9 @@ public class C_Solo_Rocket : ComportementState
 
     public override void Enter()
     {
+        _rocketSoundEvent = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.Rocket);
+        FMODEventManager.instance.Set3DparamEventInstance(_rocketSoundEvent,_sm.transform.position);
+        FMODEventManager.instance.PlayEventInstance(_rocketSoundEvent);
         isKinematic = false;
         stateValue = 81;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
@@ -74,7 +79,11 @@ public class C_Solo_Rocket : ComportementState
         
         if (rocketOn)
         {
-            //FMODEventManager.instance.PlayOneShotAttached(FMODEventManager.instance.FMODEvents.RocketStart,_sm.gameObject);
+            if (!rocketStingOn)
+            {
+                FMODEventManager.instance.SetNamedParamEventInstance(_rocketSoundEvent,"Stinger", 1f);
+                rocketStingOn = true;
+            }
             if (_sm.isPlayer)
             {
                 _sm.rb.AddForce(_sm.transform.up * rocketForceOnPlayer, ForceMode.Force);
@@ -90,7 +99,7 @@ public class C_Solo_Rocket : ComportementState
         }
         else
         {
-            //isSoundPlay = false;
+            rocketStingOn = false;
         }
     }
 
@@ -98,5 +107,6 @@ public class C_Solo_Rocket : ComportementState
     {
         base.Exit();
         _sm.comportementManager.DestroyObj(feedBack_GO_Left);
+        FMODEventManager.instance.ReleaseEventInstance(_rocketSoundEvent);
     }
 }

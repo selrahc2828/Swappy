@@ -253,15 +253,6 @@ public class SoundManager : MonoBehaviour
         }
         #endregion
         #region Zic  {Update}
-        private void Update()
-        {
-            RuntimeManager.PlayOneShot("event:/Music/Sample Ref Sound");
-            // if (!isMusicPlay)
-            // {
-            //     RuntimeManager.PlayOneShot("event:/Music/Sample Ref Sound");
-            //     isMusicPlay = true;
-            // }
 
-        }
         #endregion
     }

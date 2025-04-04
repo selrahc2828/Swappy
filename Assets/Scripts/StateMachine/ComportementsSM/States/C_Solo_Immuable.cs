@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using FMOD.Studio;
 using UnityEngine;
 
 public class C_Solo_Immuable : ComportementState
 {
     private Vector3 _baseVelocity;
     private Vector3 _baseAngularVelocity;
+
+    private EventInstance _immuableSoundInstance;
     
     public C_Solo_Immuable(StateMachine stateMachine) : base(stateMachine)
     {
@@ -14,6 +16,9 @@ public class C_Solo_Immuable : ComportementState
 
     public override void Enter()
     {
+        _immuableSoundInstance = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.Immuable);
+        FMODEventManager.instance.Set3DparamEventInstance(_immuableSoundInstance,_sm.transform.position);
+        FMODEventManager.instance.PlayEventInstance(_immuableSoundInstance);
         isKinematic = true;
         stateValue = 9;
         if (_sm.updateRight)  // Si on veut initialiser pour la main droite
@@ -56,10 +61,11 @@ public class C_Solo_Immuable : ComportementState
         _sm.rb.angularVelocity = _baseAngularVelocity;
         
         _sm.comportementManager.DestroyObj(feedBack_GO_Left);
+        FMODEventManager.instance.ReleaseEventInstance(_immuableSoundInstance);
     }
 
     public override void CollisionStart(Collision other)
     {
-        FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.ImmuableHit,other.GetContact(0).point);
+        FMODEventManager.instance.SetNamedParamEventInstance(_immuableSoundInstance,"Stinger", 1f);
     }
 }

@@ -12,8 +12,8 @@ public class C_Solo_Magnet : ComportementState
     private float magnetForce;
     private bool magnetGradiantForce;
     
-    private EventInstance magnetSoundInstance;
-    //private GameObject magnetSound;
+    private EventInstance _magnetSoundInstance;
+
     
     public C_Solo_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
@@ -21,8 +21,9 @@ public class C_Solo_Magnet : ComportementState
 
     public override void Enter()
     {
-        //magnetSoundInstance = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.MagnetStart);
-        //magnetSound = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
+        _magnetSoundInstance = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.Magnet);
+        FMODEventManager.instance.Set3DparamEventInstance(_magnetSoundInstance,_sm.transform.position);
+        FMODEventManager.instance.PlayEventInstance(_magnetSoundInstance);
         
         isKinematic = false;
         stateValue = 27;
@@ -77,9 +78,7 @@ public class C_Solo_Magnet : ComportementState
     {
         base.Exit();
         _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-
-        //FMODEventManager.instance.ReleaseEventInstance(magnetSoundInstance);
-        //_sm.comportementManager.DestroyObj(magnetSound);
+        FMODEventManager.instance.ReleaseEventInstance(_magnetSoundInstance);
     }
 
     public override void DisplayGizmos()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using FMOD;
@@ -15,11 +16,15 @@ public class FMODMusicManager : MonoBehaviour
     public FMODMusicEvents FMODMusicEvents;
     public FMODSnapshotEvents FMODSnapshotEvents;
 
-    private EventInstance musicInstance;
+    //private EventInstance musicInstance;
     
     private List<EventInstance> musicPlaylist = new List<EventInstance>();
     
     private PLAYBACK_STATE musicState;
+
+
+    private EventInstance musictest;
+    private bool ismusichere;
     
     private void Awake()
     {
@@ -33,11 +38,11 @@ public class FMODMusicManager : MonoBehaviour
     }
     #endregion
     #region Param Music Instance
-    public void CreateMusicInstance(EventReference musicReference)
+    public EventInstance CreateMusicInstance(EventReference musicReference)
     {
         EventInstance musicInstance = RuntimeManager.CreateInstance(musicReference);
         musicPlaylist.Add(musicInstance);
-        musicInstance.start();
+        return musicInstance;
     }
 
     public void PlayMusicInstance(EventInstance musicInstance)
@@ -53,28 +58,40 @@ public class FMODMusicManager : MonoBehaviour
         }
     }
 
-    public float GetMusicNameParamInstance(EventInstance musicInstance, string name)
+    public float GetMusicNameParamInstance(EventInstance musicInstance, string paramName)
     {
-        return (float)musicInstance.getParameterByName(name, out float value);
+        musicInstance.getParameterByName(paramName, out float value);
+        return (value);
     }
 
-    public void SetMusicNameParamInstance(EventInstance musicInstance, string name, float value)
+    public void SetMusicNameParamInstance(EventInstance musicInstance, string paramName, float value, bool seekSpeed)
     {
-        musicInstance.setParameterByName(name, value);
+        musicInstance.setParameterByName(paramName, value, seekSpeed);
     }
 
-    public void StopMusic()
+    public void StopMusic(EventInstance musicInstance)
     {
-        musicInstance.getPlaybackState(out musicState);
-        if (musicState != PLAYBACK_STATE.STOPPED)
+        if (musicInstance.getPlaybackState(out musicState) != (RESULT)PLAYBACK_STATE.STOPPED)
         {
             musicInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        }
+        else
+        {
+            Debug.LogWarning("No music instance playing");
+        }
+    }
+
+    public void ReleaseMusicInstance(EventInstance musicInstance)
+    {
+        if (musicInstance.getPlaybackState(out musicState) == (RESULT)PLAYBACK_STATE.STOPPED)
+        {
+            //Debug.Log("Music instance released");
             musicInstance.release();
             musicPlaylist.Remove(musicInstance);
         }
         else
         {
-            Debug.LogWarning("No music instance playing");
+            Debug.LogWarning("Music instance not released");
         }
     }
     #endregion
@@ -84,6 +101,51 @@ public class FMODMusicManager : MonoBehaviour
         return musicPlaylist.Count;
     }
 
+    #endregion
+    #region Param Music Test 
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.KeypadPlus))
+    //     {
+    //         musictest = CreateMusicInstance(FMODMusicEvents.TestMusic1);
+    //     }
+    //     if (Input.GetKeyDown(KeyCode.KeypadEnter))
+    //     {
+    //         
+    //         PlayMusicInstance(musictest);
+    //     }
+    //     if (Input.GetKeyDown(KeyCode.Keypad1))
+    //     {
+    //         SetMusicNameParamInstance(musictest, "Layer", 1,false);
+    //         Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
+    //     }
+    //     if (Input.GetKeyDown(KeyCode.Keypad2))
+    //     {
+    //         SetMusicNameParamInstance(musictest, "Layer", 2,false);
+    //         Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
+    //     }
+    //     if (Input.GetKeyDown(KeyCode.Keypad3))
+    //     {
+    //         SetMusicNameParamInstance(musictest, "Layer", 3,false);
+    //         Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
+    //     }
+    //
+    //     if (Input.GetKeyDown(KeyCode.Keypad0))
+    //     {
+    //         StopMusic(musictest);
+    //        
+    //     }
+    //
+    //     if (Input.GetKeyDown(KeyCode.KeypadPeriod))
+    //     {
+    //         ReleaseMusicInstance(musictest);
+    //     }
+    //
+    //     if (Input.GetKeyDown(KeyCode.KeypadMultiply))
+    //     {
+    //         Debug.Log(GetPlaylistMusicSize());
+    //     }
+    // }
     #endregion
     #region On destroy
     private void CleanUpMusic()
