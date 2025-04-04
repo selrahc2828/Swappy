@@ -136,11 +136,17 @@
 	</object>
 	<object class="MixerBusPanner" id="{fcbb7284-bb79-4c9c-920a-7141c9dae71a}" />
 	<object class="SoundScatterer" id="{03cfa966-9adc-4b03-8837-a8561e193c32}">
-		<property name="start">
-			<value>1</value>
-		</property>
 		<property name="length">
-			<value>18.999999999999986</value>
+			<value>19.999999999999982</value>
+		</property>
+		<property name="pitch">
+			<value>-24</value>
+		</property>
+		<property name="minimumTimeBetweenSounds">
+			<value>1000</value>
+		</property>
+		<property name="maximumTimeBetweenSounds">
+			<value>10000</value>
 		</property>
 		<relationship name="sound">
 			<destination>{5f10afe6-0ffe-4a7b-b7f9-8c359cb77c96}</destination>
@@ -149,6 +155,9 @@
 	<object class="EventMixerGroup" id="{52b90fb1-24a0-40fe-b7b8-7b981e9f17e2}">
 		<property name="color">
 			<value>Purple</value>
+		</property>
+		<property name="volume">
+			<value>-13</value>
 		</property>
 		<property name="name">
 			<value>Immuable</value>
@@ -271,6 +280,7 @@
 	<object class="MixerBusEffectChain" id="{a7638566-997d-4630-b12e-7ada9eb737f0}">
 		<relationship name="effects">
 			<destination>{b7e5dd2d-0da2-40e5-8957-26fcc90404ac}</destination>
+			<destination>{b86e5b8b-609c-4dac-918e-0902b73bc266}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{bb8ad9c2-556d-45b0-921e-69c7708781ca}" />
@@ -326,6 +336,14 @@
 	<object class="MixerBusFader" id="{cf2f25ab-722a-4368-a8cd-90efb8b44ced}" />
 	<object class="SpatialiserEffect" id="{be7faf86-c536-43ce-9e48-33dd59f76391}" />
 	<object class="MixerBusFader" id="{b7e5dd2d-0da2-40e5-8957-26fcc90404ac}" />
+	<object class="MultibandEqEffect" id="{b86e5b8b-609c-4dac-918e-0902b73bc266}">
+		<property name="frequencyA">
+			<value>113.993225</value>
+		</property>
+		<property name="qualityA">
+			<value>10</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{d9bb5658-eb6c-40f0-b25c-5fa36e24bd9c}" />
 	<object class="MultibandEqEffect" id="{88ce9322-0555-42de-85e1-e45f53ac0965}">
 		<property name="filterTypeA">
