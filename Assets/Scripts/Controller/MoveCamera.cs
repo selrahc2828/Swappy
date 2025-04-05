@@ -13,7 +13,7 @@ public class MoveCamera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         transform.position = cameraPosition.position;
         transform.rotation = GameManager.Instance.player.transform.rotation;
