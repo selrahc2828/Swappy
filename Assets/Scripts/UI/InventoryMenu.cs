@@ -100,7 +100,7 @@ public class InventoryMenu : MonoBehaviour
             //layer que la PreviewCamera voie
             currentPreviewInstance.layer = LayerMask.NameToLayer("PreviewObject");
             
-            currentPreviewInstance.transform.localRotation = Quaternion.Euler(0, 180f, 0);
+            currentPreviewInstance.transform.localRotation = Quaternion.Euler(90f, 0, 0);
             currentPreviewInstance.transform.localScale = Vector3.one * 1f;
         }
         
