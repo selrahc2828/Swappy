@@ -20,12 +20,17 @@ public class BoxInteraction : MonoBehaviour
     public LayerMask hitLayer;
     
     [SerializeField] private GameObject _closestObj;
+    public GameObject closestObj
+    {
+        get { return closestObj; }
+        set { closestObj = value; }
+    }
 
     [SerializeField] private GrabObject _grabScript;
     
-    [Header("Textes")]
-    public string textGrab = "Press C to grab";
-    public string textInteraction = "Press C to interact";
+    [Header("Texte")]
+    public InputActionReference actionReference; // Référence à l'action d'interaction
+    public string textInteraction = "Press";
     
     private void Start()
     {
@@ -34,7 +39,6 @@ public class BoxInteraction : MonoBehaviour
 
         interactorZonePos = GameObject.FindGameObjectWithTag("InterractorZone").transform;
         // handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
-        
         
         interactText = GameObject.FindGameObjectWithTag("TextInteract").GetComponent<TextMeshProUGUI>(); 
         interactText?.gameObject.SetActive(false);
@@ -46,8 +50,7 @@ public class BoxInteraction : MonoBehaviour
     {
         CreateBox();
         NearObject();
-        CheckInteraction();
-
+        // SetTextInteraction();
     }
 
 
@@ -59,7 +62,6 @@ public class BoxInteraction : MonoBehaviour
     public void OnDisable()
     {
         GameManager.controls.Player.Interaction.performed -= InteractAction;
-
     }
 
     void CreateBox()
@@ -81,28 +83,34 @@ public class BoxInteraction : MonoBehaviour
 
     void NearObject() // recupère l'object avec lequel on peut interagir le plus proche
     {
-        // on part du principe que seul les objets qu'on peut porter ou interagir auront les tag et on trie la liste
-        // on ne prend pas en compte les Movable si on en a déjà un en main
+        // on récupère les objets qui ont un script d'inreaction
+        
         Collider[] hitColliders = Physics.OverlapBox(_boxCenter, detectionSize / 2, _boxRotation, hitLayer)
-            .Where(collider => 
-                (collider.CompareTag("Movable") && !_grabScript.isCarrying) 
-                || collider.CompareTag("Interact"))
+            .Where(collider => collider.GetComponent<InteractionSystem>() is not null)
             .ToArray();
         
-        
+            // faire par layer ? 
+
+        if (_grabScript.isCarrying)// on ne peut pas interagir si on porte un objet
+        {
+            _closestObj = null;
+            SetTextInteraction();
+            return;
+        }
+
         if (hitColliders.Length > 0) // && !isCarrying
         {
             // on récupère l'objet le plus proche 
 
-            float closestDist = Mathf.Infinity;//distance plus proche par défaut
-            // voir ajouter compare tag NotInteract ?
+            float closestDist = Mathf.Infinity;
+
             foreach (Collider item in hitColliders)
             {
-                
                 Vector3 playerToObject = item.transform.position - transform.position;//objet - player
                 //Debug.DrawRay(transform.position, playerToObject, Color.red);
 
-                // vérifie obstacle entre player et objet
+                #region vérifie obstacle entre player et objet
+
                 RaycastHit _obstacleHit;
                
                 if (Physics.Raycast(transform.position, playerToObject, out _obstacleHit, playerToObject.magnitude))
@@ -113,6 +121,10 @@ public class BoxInteraction : MonoBehaviour
                         continue; // On passe à l'objet suivant
                     }
                 }
+
+                #endregion 
+                
+                // faire un trie de priorité ici, prendre en compte le centre de l'écran aussi
                 
                 //set l'objet le plus proche
                 if (playerToObject.magnitude < closestDist) // && item.CompareTag("Movable")
@@ -121,81 +133,53 @@ public class BoxInteraction : MonoBehaviour
                     _closestObj = item.gameObject;
                 }
             }
+            
+            SetTextInteraction(_closestObj?.GetComponent<InteractionSystem>());
         }
         else
         { 
             _closestObj = null;
+            SetTextInteraction();
         }
     }
 
     public void InteractAction(InputAction.CallbackContext callbackContext)
     {
-        Debug.Log("Interact");
-        switch (_closestObj?.tag)
+        if (_closestObj == null)
         {
-            // case null:
-            //     interactText?.gameObject.SetActive(false);
-            //     _grabScript.objToCarry = null;
-            //     break;
-
-            case "Movable":
-                if (!_grabScript.isCarrying)
-                {
-                    if (_closestObj.GetComponent<Rigidbody>())
-                    {
-                        //set obj que l'on peut grab
-                        _grabScript.Carry();
-                    }
-                }
-
-                break;
-
-            case "Interact":
-                _closestObj.GetComponent<InteractableObject>().Interact();// voir si moyen de faire avec event ? et/ou heritage
-                break;
-
-            default:
-                break;
+            return;
+        }
+        
+        InteractionSystem interactable = _closestObj?.GetComponent<InteractionSystem>();
+        if (interactable != null)
+        {
+            interactable.Interact();
+        }
+        else
+        {
+            Debug.Log($"L'objet {_closestObj.name} n'a pas  de InteractableObject");
         }
     }
     
-    void CheckInteraction()
+    void SetTextInteraction(InteractionSystem interaction = null)
     {
-        switch (_closestObj?.tag)
+        if (interaction == null)
         {
-            case null:
-                interactText?.gameObject.SetActive(false);
-                _grabScript.objToCarry = null;
-                break;
+            interactText?.gameObject.SetActive(false);
+            return;
+        }
+        
+        //InteractableObject interactable = _closestObj.GetComponent<InteractableObject>();
+        if (interaction != null)
+        {
+            interactText?.gameObject.SetActive(true);
             
-            case "Movable":
-                if (!_grabScript.isCarrying)//check a mettre dans NearObject ? 
-                {
-                    interactText?.gameObject.SetActive(true);
-                    interactText.text = textGrab;
-
-                    if (_closestObj.GetComponent<Rigidbody>())
-                    {
-                        //set obj que l'on peut grab
-                        _grabScript.objToCarry = _closestObj;
-                    }
-                    else
-                    {
-                        interactText?.gameObject.SetActive(false);
-                    }                    
-                }
-                
-                break;
-            
-            case "Interact":
-                interactText?.gameObject.SetActive(true);
-
-                interactText.text = textInteraction;
-                
-                break;
-            
-            default:
-                break;
+            string key = actionReference.action.GetBindingDisplayString();
+            interactText.text = $"{textInteraction} {key} to {interaction.interactionText}";
+        }
+        else
+        {
+            interactText?.gameObject.SetActive(false);
         }
     }
     
