@@ -71,6 +71,20 @@ public class Anim_manager : MonoBehaviour
     
     #endregion
 
+    #region SelfAssign
+
+    public void Left_SelfAssign()
+    {
+        Left_Arm_Animator.Play("Self_Assign_Left");
+    }
+    public void Right_SelfAssign()
+    {
+        Left_Arm_Animator.Play("Self_Assign");
+    }
+
+    
+
+    #endregion
 
     public void setAspirFalse_Right()
     {
