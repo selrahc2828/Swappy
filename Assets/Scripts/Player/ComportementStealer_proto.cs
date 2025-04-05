@@ -19,7 +19,9 @@ public class ComportementStealer_proto : MonoBehaviour
 
     [Header("Comportement stoqu�")]
     public int slot1 = 0;
+    public ComportementsStateMachine originSlot1;
     public int slot2 = 0;
+    public ComportementsStateMachine originSlot2;
 
     [Header("Properties")]
     private ComportementsStateMachine _stateStolen;
@@ -47,6 +49,8 @@ public class ComportementStealer_proto : MonoBehaviour
         controls.Player.ActionSlot2.performed += ActionSlot2;//clic droit
         controls.Player.SwitchSlotsValue.performed += SwitchSlotsValue;//T
         controls.Player.ApplicationDeComportementSurPlayer.performed += ApplicationDeComportementSurPlayer;//F
+        controls.Player.ViderComportementSurPlayer.performed += ViderComportementSurPlayer;//E
+        controls.Player.ViderSlots.performed += ViderSlots;//G
         controls.Player.SIMAction.performed += SimAction;//Alt press
         controls.Player.SIMAction.canceled += SimAction;//Alt release
         
@@ -54,6 +58,8 @@ public class ComportementStealer_proto : MonoBehaviour
         
         slot1 = 0;
         slot2 = 0;
+        originSlot1 = null;
+        originSlot2 = null;
 
         mainCam = GameManager.Instance.mainCamera;
         slot1Text = GameObject.FindGameObjectWithTag("TextSlot1").GetComponent<TextMeshProUGUI>();
@@ -70,6 +76,8 @@ public class ComportementStealer_proto : MonoBehaviour
         controls.Player.ActionSlot2.performed -= ActionSlot2;
         controls.Player.SwitchSlotsValue.performed -= SwitchSlotsValue;
         controls.Player.ApplicationDeComportementSurPlayer.performed -= ApplicationDeComportementSurPlayer;//F
+        controls.Player.ViderComportementSurPlayer.performed -= ViderComportementSurPlayer;//E
+        controls.Player.ViderSlots.performed -= ViderSlots;
         controls.Player.SIMAction.performed -= SimAction;//Alt press
         controls.Player.SIMAction.canceled -= SimAction;//Alt release
     }
@@ -139,6 +147,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     int futurState = currentObjectState.stateValue - currentObjectState.leftValue;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot1 = currentObjectState.leftValue;
+                                    originSlot1 = _stateStolen;
                                     slot1Text.text = ((FirstState)slot1).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                     playeranim.Left_Aspiration();
@@ -168,10 +177,11 @@ public class ComportementStealer_proto : MonoBehaviour
                                 //On v�rifie si le rightValue de l'objet Vis� est vide, si c'est le cas, on lui ajoute le comportement stoqu� dans slot1.
                                 if (currentObjectState.rightValue == 0)
                                 {
-                                    Debug.Log("Addition de " + slot1 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name);
+                                    Debug.Log("Addition de " + slot1 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot1.gameObject.name);
                                     int futurState = currentObjectState.stateValue + slot1;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot1 = 0;
+                                    originSlot1 = null;
                                     slot1Text.text = "";
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                     playeranim.Left_Attribution();
@@ -184,10 +194,11 @@ public class ComportementStealer_proto : MonoBehaviour
                             }
                             else
                             {
-                                Debug.Log("Addition de " + slot1 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name);
+                                Debug.Log("Addition de " + slot1 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot1?.gameObject.name);
                                 int futurState = currentObjectState.stateValue + slot1;
                                 currentObjectState.CalculateNewtState(futurState);
                                 slot1 = 0;
+                                originSlot1 = null;
                                 slot1Text.text = "";
                                 SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                 playeranim.Left_Attribution();
@@ -248,6 +259,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     int futurState = currentObjectState.stateValue - currentObjectState.rightValue;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.rightValue;
+                                    originSlot2 = _stateStolen;
                                     slot2Text.text = ((FirstState)slot2).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                     playeranim.Right_Aspiration();
@@ -259,6 +271,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                     int futurState = currentObjectState.stateValue - currentObjectState.leftValue;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.leftValue;
+                                    originSlot2 = _stateStolen;
                                     slot2Text.text = ((FirstState)slot2).ToString();
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                                     playeranim.Right_Aspiration();
@@ -283,10 +296,11 @@ public class ComportementStealer_proto : MonoBehaviour
                                 //L'objet vis� � une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
                                 if (currentObjectState.rightValue == 0)
                                 {
-                                    Debug.Log("Soustraction de " + slot2 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name);
+                                    Debug.Log("Soustraction de " + slot2 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot2.gameObject.name);
                                     int futurState = currentObjectState.stateValue + slot2;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = 0;
+                                    originSlot2 = null;
                                     slot2Text.text = "";
                                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                     playeranim.Right_Attribution();
@@ -299,10 +313,11 @@ public class ComportementStealer_proto : MonoBehaviour
                             }
                             else
                             {
-                                Debug.Log("Soustraction de " + slot2 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name);
+                                Debug.Log("Soustraction de " + slot2 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot2.gameObject.name);
                                 int futurState = currentObjectState.stateValue + slot2;
                                 currentObjectState.CalculateNewtState(futurState);
                                 slot2 = 0;
+                                originSlot2 = null;
                                 slot2Text.text = "";
                                 SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                                 playeranim.Right_Attribution();
@@ -315,8 +330,158 @@ public class ComportementStealer_proto : MonoBehaviour
         }
     }
 
+    void SimUni(bool isLeft)
+    {
+        _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>();
+
+        if (_stateStolen.currentState is ComportementState)
+        {
+            ComportementState playerObjectState = (ComportementState)_stateStolen.currentState; // etat a l'instant T
+            int playerSlotLeft = playerObjectState.leftValue;
+            int playerSlotRight = playerObjectState.rightValue;
+
+            if (playerObjectState.stateValue == 0) // aucun comp
+            {
+                if (isLeft)
+                {
+                    _stateStolen.inversion = false;
+                    AjouterComp(slot1);
+                }
+                else
+                {
+                    _stateStolen.inversion = false;
+                    AjouterComp(slot2);
+                }
+            }
+            else if (playerObjectState.leftValue != 0 && playerObjectState.rightValue == 0) // 1 seul comp
+            {
+                if (_stateStolen.inversion)
+                {
+                    if (isLeft)
+                    {
+                        _stateStolen.inversion = true;
+                        AjouterComp(slot1);
+                    }
+                    else
+                    {
+                        _stateStolen.inversion = true;
+                        EchangerComp(slot2);
+                    }
+                }
+                else
+                {
+                    if (isLeft)
+                    {
+                        _stateStolen.inversion = false;
+                        EchangerComp(slot1);
+                    }
+                    else
+                    {
+                        _stateStolen.inversion = false;
+                        AjouterComp(slot2);
+                    }
+                }
+            }
+            else // 2 comp
+            {
+                if (_stateStolen.inversion)
+                {
+                    if (playerObjectState.leftValue > playerObjectState.rightValue)
+                    {
+                        
+                    }
+                }
+ 
+            }
+            
+            
+        }
+    }
+
+    void AjouterComp(int slot)
+    {
+        
+    }
+
+    void SoustraireComp(int slot)
+    {
+        
+    }
+
+    void EchangerComp(int slot)
+    {
+        
+    }
+
+    void SimSlotAllChange(bool isLeft)
+    {
+        int playerSlotLeft = 0;
+        int playerSlotRight = 0;
+        
+        // clamp pour pas avoir de negatif au cas où ? 
+        
+        _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>(); // Stocker la reference
+
+        if (_stateStolen.currentState is ComportementState)
+        {
+            ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
+            playerSlotLeft = playerObjectState.leftValue;
+            playerSlotRight = playerObjectState.rightValue;
+            Debug.Log( $"SimSlotAllChange1 playerObjectState left: {playerObjectState.leftValue} / right: {playerObjectState.rightValue}");
+            
+            
+            Debug.Log($"SimSlotAllChange1 - Échange des valeurs : slot1 ({slot1}) ⇄ player left({playerSlotLeft})");
+            Debug.Log($"SimSlotAllChange1 - Échange des valeurs : slot2 ({slot2}) ⇄ player right({playerSlotRight})");
+
+            if (!_stateStolen.inversion)
+            {
+                (slot1, playerObjectState.leftValue) = (playerObjectState.leftValue, slot1);
+                (slot2, playerObjectState.rightValue) = (playerObjectState.rightValue, slot2);
+            }
+            else
+            {
+                (slot1, playerObjectState.rightValue) = (playerObjectState.rightValue, slot1);
+                (slot2, playerObjectState.leftValue) = (playerObjectState.leftValue, slot2);
+            }
+
+            if (playerObjectState.rightValue < playerObjectState.leftValue)
+            {
+                _stateStolen.inversion = true;
+            }
+            else
+            {
+                _stateStolen.inversion = false;
+            }
+            
+            // (slot1, playerObjectState.leftValue) = (playerObjectState.leftValue, slot1);
+            playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
+            slot1Text.text = ((FirstState)slot1).ToString();
+            ComportementState newPlayerObjectState= (ComportementState)_stateStolen.currentState; //reset du state actuel
+            
+            slot1 = slot1;
+            slot2 = slot2;
+            originSlot1 = _stateStolen;
+            originSlot2 = _stateStolen;
+            slot1Text.text = ((FirstState)slot1).ToString();
+            
+            SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
+            if (isLeft)
+            {
+                playeranim.Left_Aspiration();
+                LeftArm.Feedback_Slot_Changed();  
+            }
+            else
+            {
+                playeranim.Right_Aspiration();
+                RightArm.Feedback_Slot_Changed();
+            }
+
+        }
+    }
+    
     void SimSlot1() // left
     {
+
         // verif quand passe de player à main, car le comp de droite passe à gauche 
         
         int playerSlotLeft = 0;
@@ -375,6 +540,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     }
                     
                     slot1 = aRecuperer;
+                    originSlot1 = _stateStolen;
                     slot1Text.text = ((FirstState)slot1).ToString();
                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                     playeranim.Left_Aspiration();
@@ -398,7 +564,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         if (playerObjectState.rightValue == 0) // 1 comportement sur player droit et rien sur sa gauche, j'additionne et check inversion
                         {
                             // addition
-                            Debug.Log("SIM GAUCHE - Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                            Debug.Log("SIM GAUCHE - Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
                     
                             int valueToAdd = slot1;
                             int futurState = playerObjectState.stateValue + valueToAdd;
@@ -411,6 +577,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             
                             
                             slot1 = 0;
+                            originSlot1 = null;
                             slot1Text.text = "";
                             SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                             playeranim.Left_Attribution();
@@ -445,6 +612,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             }
                             
                             //slot1 = 0;
+                            originSlot1 = _stateStolen;
                             slot1Text.text = ((FirstState)slot1).ToString();
                             SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                             playeranim.Left_Attribution();
@@ -479,6 +647,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         
                         
                         //slot1 = 0;
+                        originSlot1 = _stateStolen;
                         slot1Text.text = ((FirstState)slot1).ToString();
                         SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                         playeranim.Left_Attribution();
@@ -489,7 +658,7 @@ public class ComportementStealer_proto : MonoBehaviour
                 }
                 else // j'ai un comp en main gauche et rien sur player donc j'additionne
                 {
-                    Debug.Log("SIM GAUCHE - Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                    Debug.Log("SIM GAUCHE - Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
                     
                     int valueToAdd = slot1;
                     int futurState = playerObjectState.stateValue + valueToAdd;
@@ -501,6 +670,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     _stateStolen.inversion = false;
                     
                     slot1 = 0;
+                    originSlot1 = null;
                     slot1Text.text = "";
                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                     playeranim.Left_Attribution();
@@ -574,6 +744,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     } 
                     
                     slot2 = aRecuperer;
+                    originSlot2 = _stateStolen;
                     slot2Text.text = ((FirstState)slot2).ToString();
                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.steal);
                     playeranim.Right_Aspiration();
@@ -655,6 +826,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         }
                         
                         //slot2 = 0;
+                        originSlot2 = _stateStolen;
                         slot2Text.text = ((FirstState)slot2).ToString();
                         SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                         playeranim.Right_Attribution();
@@ -696,6 +868,8 @@ public class ComportementStealer_proto : MonoBehaviour
                                 Debug.Log($"ICI {newPlayerObjectState.rightValue} <= {tempValueSlot} donc pas d'inversion");
                             } 
                             
+                            
+                            originSlot2 = _stateStolen;
                             slot2Text.text = ((FirstState)slot2).ToString();
                             SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                             playeranim.Right_Attribution();
@@ -705,7 +879,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         else // pas inversé et que 1 comportement
                         {
                             //addition et check si on inverse
-                            Debug.Log("SIM DROIT - Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                            Debug.Log("SIM DROIT - Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
 
                             int futurState = playerObjectState.leftValue + slot2;
                             
@@ -725,6 +899,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             
                             //reset
                             slot2 = 0;
+                            originSlot2 = null;
                             slot2Text.text = "";
                             SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                             playeranim.Right_Attribution();
@@ -739,7 +914,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     // addition et _stateStolen.inversion = true
                     _stateStolen.inversion = true;
                     
-                    Debug.Log("SIM DROIT - Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                    Debug.Log("SIM DROIT - Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
                     
                     int valueToAdd = slot2;
                     int futurState = playerObjectState.stateValue + valueToAdd;
@@ -750,6 +925,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     //_stateStolen.inversion = (newPlayerObjectState.leftValue < valueToAdd);
                     
                     slot2 = 0;
+                    originSlot2 = null;
                     slot2Text.text = "";
                     SoundManager.Instance.PlaySoundPlayer(SoundManager.SoundPlayer.give);
                     playeranim.Right_Attribution();
@@ -768,6 +944,7 @@ public class ComportementStealer_proto : MonoBehaviour
         if (context.performed)
         {
             (slot1, slot2) = (slot2, slot1);
+            (originSlot1, originSlot2) = (originSlot2, originSlot1);
             slot1Text.text = ((FirstState)slot1).ToString();
             slot2Text.text = ((FirstState)slot2).ToString();
             
@@ -798,10 +975,11 @@ public class ComportementStealer_proto : MonoBehaviour
 
                                 if (slot1 != 0)
                                 {
-                                    Debug.Log("Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                                    Debug.Log("Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
                                     int futurState = playerObjectState.stateValue + slot1;
                                     playerObjectState.CalculateNewtState(futurState);
                                     slot1 = 0;
+                                    originSlot1 = null;
                                     slot1Text.text = "";
                                     SoundManager.Instance.PlaySoundComponentPlace(gameObject);
                                     playeranim.Left_Attribution();
@@ -809,10 +987,11 @@ public class ComportementStealer_proto : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.Log("Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                                    Debug.Log("Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
                                     int futurState = playerObjectState.stateValue + slot2;
                                     playerObjectState.CalculateNewtState(futurState);
                                     slot2 = 0;
+                                    originSlot2 = null;
                                     slot2Text.text = "";
                                     SoundManager.Instance.PlaySoundComponentPlace(gameObject);
                                     playeranim.Right_Attribution();
@@ -834,6 +1013,8 @@ public class ComportementStealer_proto : MonoBehaviour
                                 playerObjectState.CalculateNewtState(futurState);
                                 slot1 = 0;
                                 slot2 = 0;
+                                originSlot1 = null;
+                                originSlot2 = null;
                                 slot1Text.text = "";
                                 slot2Text.text = "";
                                 // playeranim.Left_Attribution();
@@ -866,6 +1047,8 @@ public class ComportementStealer_proto : MonoBehaviour
                         
                         slot1 = 0;
                         slot2 = 0;
+                        originSlot1 = null;
+                        originSlot2 = null;
                         slot1Text.text = "";
                         slot2Text.text = "";
                         SoundManager.Instance.PlaySoundComponentPlace(gameObject);
@@ -879,6 +1062,104 @@ public class ComportementStealer_proto : MonoBehaviour
             else
             {
                 Debug.Log("Vous n'avez aucun comportement stoqué");
+            }
+        }
+    }
+
+    void ViderComportementSurPlayer(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            #region Ce code est nul et temporaire, il faudra le refaire pour renvoyer les comportement dans les propriétaires
+            _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>();
+            Debug.Log(_stateStolen);
+            Debug.Log(_stateStolen.currentState);
+            ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
+            Debug.Log(playerObjectState);
+            playerObjectState.CalculateNewtState(0);
+            #endregion
+        }
+    }
+    
+    void ViderSlots(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if(slot1 != 0)
+            {
+                if (originSlot1.currentState is ComportementState)
+                {
+                    ComportementState originObjectState1 = (ComportementState)originSlot1.currentState;
+                    if (originObjectState1.stateValue != 0)
+                    {
+                        if (originObjectState1.rightValue == 0)
+                        {
+                            Debug.Log("r�tribution du comportement : Addition de " + slot1 + " � " + originObjectState1.stateValue);
+                            int futurState = originObjectState1.stateValue + slot1;
+                            originObjectState1.CalculateNewtState(futurState);
+                            slot1 = 0;
+                            originSlot1 = null;
+                            slot1Text.text = "";
+                        }
+                        else
+                        {
+                            slot1 = 0;
+                            originSlot1 = null;
+                            slot1Text.text = "";
+                            Debug.Log("L'objet d'origine poss�de d�ja 2 comportements, Le comportement stoqu� dans la main gauche � �t� supprim�");
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("r�tribution du comportement : Addition de " + slot1 + " � " + originObjectState1.stateValue);
+                        int futurState = originObjectState1.stateValue + slot1;
+                        originObjectState1.CalculateNewtState(futurState);
+                        slot1 = 0;
+                        originSlot1 = null;
+                        slot1Text.text = "";
+
+                    }
+                    //suppression des Feedback orbe/flare comportement sur les bras
+                    LeftArm.Feedback_Slot_Changed(null, null, true);
+                }
+            }
+
+            if (slot2 != 0)
+            {
+                if (originSlot2.currentState is ComportementState)
+                {
+                    ComportementState originObjectState2 = (ComportementState)originSlot2.currentState;
+                    if (originObjectState2.stateValue != 0)
+                    {
+                        if (originObjectState2.rightValue == 0)
+                        {
+                            Debug.Log("r�tribution du comportement : Addition de " + slot2 + " � " + originObjectState2.stateValue);
+                            int futurState = originObjectState2.stateValue + slot2;
+                            originObjectState2.CalculateNewtState(futurState);
+                            slot2 = 0;
+                            originSlot2 = null;
+                            slot2Text.text = "";
+                        }
+                        else
+                        {
+                            slot2 = 0;
+                            originSlot2 = null;
+                            slot2Text.text = "";
+                            Debug.Log("L'objet d'origine poss�de d�ja 2 comportements, Le comportement stoqu� dans la main gauche � �t� supprim�");
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("r�tribution du comportement : Addition de " + slot2 + " � " + originObjectState2.stateValue);
+                        int futurState = originObjectState2.stateValue + slot2;
+                        originObjectState2.CalculateNewtState(futurState);
+                        slot2 = 0;
+                        originSlot2 = null;
+                        slot2Text.text = "";
+                    }
+                    //suppression des Feedback orbe/flare comportement sur les bras
+                    RightArm.Feedback_Slot_Changed(null, null, true);
+                }
             }
         }
     }
