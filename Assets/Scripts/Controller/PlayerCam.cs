@@ -27,8 +27,8 @@ public class PlayerCam : MonoBehaviour
         //get mouse input
         if (!GameManager.Instance.isPaused)
         {
-            float mouseX = Input.GetAxisRaw("Mouse X") * Time.unscaledDeltaTime * sensX * GameManager.Instance.parameters.sensitivity;
-            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.unscaledDeltaTime * sensY * GameManager.Instance.parameters.sensitivity;
+            float mouseX = Input.GetAxisRaw("Mouse X") * GameManager.Instance.parameters.sensitivity;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * GameManager.Instance.parameters.sensitivity;
         
         
             yRotation += mouseX;
