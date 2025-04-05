@@ -26,10 +26,12 @@ public class InventorySystem: MonoBehaviour
         if (!inventoryItems.ContainsKey(newItem))
         {
             inventoryItems.Add(newItem, new InventorySlot(newItem, 0));
-            OnInventoryChanged?.Invoke();
+            
         }
 
         inventoryItems[newItem].quantity++;
+        OnInventoryChanged?.Invoke();
+        
         Debug.Log($"name {newItem.itemName}, quantity {inventoryItems[newItem].quantity}");
     }
 

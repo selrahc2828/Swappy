@@ -22,7 +22,7 @@ public class InventorySlotUI : MonoBehaviour
             iconImage.sprite = item.itemSprite;
 
         if (quantityText != null)
-            quantityText.text = $"{item.itemName} : {quantity}";
+            quantityText.text = quantity.ToString();
 
         // Abonnement au clic sur le bouton
         GetComponent<Button>().onClick.AddListener(() =>

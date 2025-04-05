@@ -64,18 +64,12 @@ public class InventoryPopup : EditorWindow {
             GUILayout.BeginHorizontal();
 
             if (GUILayout.Button("-", GUILayout.Width(30))) {
-                if (item.Value.quantity > 0) {
-                    item.Value.quantity--;
-                    //inventoryPlayer.RemoveItem();
-                    
-                }
-                
+                inventoryPlayer.RemoveItem(item.Key);
             }
+            
             GUILayout.Label(item.Value.quantity.ToString(), GUILayout.Width(100));
             if (GUILayout.Button("+", GUILayout.Width(30))) { 
-                item.Value.quantity++;
-                // inventoryPlayer.AddItem();
-                
+                inventoryPlayer.AddItem(item.Key);
             }
             
             GUILayout.EndHorizontal();
