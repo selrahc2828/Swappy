@@ -8,7 +8,9 @@ public class InventorySystem: MonoBehaviour
 {
     
     [SerializeField] private int maxSlots = 20;
-    
+
+    public int MaxSlots => maxSlots;
+
     private Dictionary<ItemData, InventorySlot> inventoryItems = new Dictionary<ItemData, InventorySlot>();
 
     public Dictionary<ItemData, InventorySlot> InventoryItems

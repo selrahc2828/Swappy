@@ -11,23 +11,30 @@ public class InventorySlotUI : MonoBehaviour
 
     public void Initialize(ItemData item, int quantity, System.Action<ItemData> onClickCallback)
     {
-        if (item == null)
-        {
-            return;
-        }
-        
         itemData = item;
 
-        if (iconImage != null && item.itemSprite != null)
-            iconImage.sprite = item.itemSprite;
-
-        if (quantityText != null)
-            quantityText.text = quantity.ToString();
-
-        // Abonnement au clic sur le bouton
-        GetComponent<Button>().onClick.AddListener(() =>
+        if (itemData != null)
         {
-            onClickCallback?.Invoke(itemData);
-        });
+            if (iconImage != null && item.itemSprite != null)
+                iconImage.sprite = item.itemSprite;
+
+            if (quantityText != null)
+                quantityText.text = quantity.ToString();
+
+            // Abonnement au clic sur le bouton
+            GetComponent<Button>().onClick.RemoveAllListeners();//clear pour éviter de faire plusieurs abonnement 
+            GetComponent<Button>().onClick.AddListener(() =>
+            {
+                onClickCallback?.Invoke(itemData);
+            });      
+        }
+        else
+        {
+            if (quantityText != null)
+                quantityText.text = "";
+            GetComponent<Button>().onClick.RemoveAllListeners();
+        }
+        
+
     }
 }
