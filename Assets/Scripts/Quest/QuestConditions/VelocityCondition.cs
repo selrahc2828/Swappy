@@ -57,7 +57,7 @@ public class VelocityCondition: Condition
         }
     }
 
-    public bool CheckObjectParameters(GameObject target)
+    /*public bool CheckObjectParameters(GameObject target)
     {
         switch (validationType)
         {
@@ -110,5 +110,5 @@ public class VelocityCondition: Condition
                 break;
         }
         return false;
-    }
+    }*/
 }

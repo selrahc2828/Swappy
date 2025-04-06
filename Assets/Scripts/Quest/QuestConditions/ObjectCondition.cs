@@ -57,7 +57,7 @@ public class ObjectCondition : Condition
         }
     }
 
-    public bool CheckObjectParameters(GameObject target)
+    /*public bool CheckObjectParameters(GameObject target)
     {
         switch (validationType)
         {
@@ -110,5 +110,5 @@ public class ObjectCondition : Condition
                 break;
         }
         return false;
-    }
+    }*/
 }
