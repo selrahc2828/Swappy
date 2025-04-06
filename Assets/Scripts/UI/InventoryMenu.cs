@@ -82,13 +82,9 @@ public class InventoryMenu : MonoBehaviour
     
     private void OnItemSlotClicked(ItemData clickedItem)
     {
-        // Sprite imagePreview = clickedItem.itemPrefab.GetComponent<Image>().sprite;
-        // slotInfoImage.sprite = imagePreview;
         slotInfoDescription.text = clickedItem.itemDescription;
         slotInfoName.text = clickedItem.itemName;
         
-        Debug.Log($"Item cliqué : {clickedItem.itemName}");
-
         if (currentPreviewInstance != null) 
             Destroy(currentPreviewInstance);
 
@@ -97,13 +93,12 @@ public class InventoryMenu : MonoBehaviour
         {
             currentPreviewInstance = Instantiate(clickedItem.itemPrefab, previewSpawnPoint.position, Quaternion.identity, previewSpawnPoint);
 
-            //layer que la PreviewCamera voie
+            //layer que la PreviewCamera voit
             currentPreviewInstance.layer = LayerMask.NameToLayer("PreviewObject");
             
             currentPreviewInstance.transform.localRotation = Quaternion.Euler(90f, 0, 0);
             currentPreviewInstance.transform.localScale = Vector3.one * 1f;
         }
-        
     }
     
     public void UpdateInventory()

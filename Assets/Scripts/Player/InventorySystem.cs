@@ -6,8 +6,8 @@ using UnityEngine.Serialization;
 
 public class InventorySystem: MonoBehaviour
 {
-    // [Header("References")]
-    // [SerializeField] private IventoryUIMenu ui;
+    
+    [SerializeField] private int maxSlots = 20;
     
     private Dictionary<ItemData, InventorySlot> inventoryItems = new Dictionary<ItemData, InventorySlot>();
 
@@ -21,26 +21,42 @@ public class InventorySystem: MonoBehaviour
     //emet event
     public event Action OnInventoryChanged;
     
-    public void AddItem(ItemData newItem)
+    public void AddItem(ItemData newItem, int quantity = 1)
     {
         if (!inventoryItems.ContainsKey(newItem))
         {
-            inventoryItems.Add(newItem, new InventorySlot(newItem, 0));
+            if (inventoryItems.Count >= maxSlots)
+            {
+                Debug.Log("Inventaire plein. Impossible d'ajouter plus d'objets.");
+                return;
+            }
             
+            inventoryItems.Add(newItem, new InventorySlot(newItem, 0));
         }
 
-        inventoryItems[newItem].quantity++;
+        inventoryItems[newItem].quantity += quantity;
         OnInventoryChanged?.Invoke();
-        
-        Debug.Log($"name {newItem.itemName}, quantity {inventoryItems[newItem].quantity}");
     }
 
-    public void RemoveItem(ItemData itemToRemove)
+    public void RemoveItem(ItemData itemToRemove,  int quantity = 1)
     {
-        if (inventoryItems[itemToRemove].quantity > 0)
+        
+        if (!inventoryItems.ContainsKey(itemToRemove))
         {
-            inventoryItems[itemToRemove].quantity--;
-            OnInventoryChanged?.Invoke();
+            Debug.LogWarning("L'objet à retirer n'existe pas dans l'inventaire.");
+            return;
         }
+        
+        
+        inventoryItems[itemToRemove].quantity -= quantity;
+        
+        // si on a plus rien, voir si on conserve ou non 
+        if (inventoryItems[itemToRemove].quantity <= 0)
+        {
+            inventoryItems.Remove(itemToRemove);
+            Debug.Log($"L'objet {itemToRemove.itemName} a été retiré de l'inventaire.");
+        }
+        
+        OnInventoryChanged?.Invoke();
     }
 }

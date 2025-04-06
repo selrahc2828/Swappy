@@ -42,7 +42,6 @@ public class ItemDataManager : EditorWindow
     {
         LoadSpritesFromFolder(spritePath);
         LoadPrefabsFromFolder(prefabPath);
-
     }
 
     private void OnGUI()
