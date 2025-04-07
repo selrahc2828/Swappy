@@ -11,6 +11,7 @@ public class CompCondition: Condition
 
     private enum CompCategory
     {
+        None,
         Solo,
         Duo,
         Fusion,
@@ -32,23 +33,24 @@ public class CompCondition: Condition
         //A remplacer par une activation lorsque le joueur input un vol / réattribution de comportement
         if (targetObject != null)
         {
-            CheckObjectParameters(targetObject);
+            SetConditionState(CheckObjectParameters(targetObject));
         }
     }
 
     protected override bool CheckObjectParameters(GameObject target)
     {
-        if (target.GetComponent<ComportementState>() == null)
+        if (target.GetComponent<ComportementsStateMachine>() == null)
         {
-            Debug.LogError("Il n'y a pas de ComportementState sur l'objet target par CompCondition !");
+            Debug.LogError("Il n'y a pas de ComportementsStateMachine sur l'objet target par CompCondition !");
             return !validationBool;
         }
-
+        ComportementState compState = (ComportementState)target.GetComponent<ComportementsStateMachine>().currentState;
+      
         switch (validationType)
         {
             case ValidationTypes.Comportment:
 
-                if (target.GetComponent<ComportementState>().stateValue == (int)targetComportment)
+                if (compState.stateValue == (int)targetComportment)
                 {
                     return(validationBool);
                 }
@@ -56,13 +58,20 @@ public class CompCondition: Condition
 
             case ValidationTypes.CompCategory:
 
-                int rightComp = target.GetComponent<ComportementState>().rightValue;
-                int leftComp = target.GetComponent<ComportementState>().leftValue;
+                int leftComp = compState.leftValue;
+                int rightComp = compState.rightValue;
 
                 switch (targetCompCategory)
                 {
+                    case CompCategory.None:
+                        if (rightComp == 0 && leftComp == 0)
+                        {
+                            return (validationBool);
+                        }
+                        break;
+
                     case CompCategory.Solo:
-                        if (rightComp == 0)
+                        if (rightComp == 0 && leftComp != 0)
                         {
                             return (validationBool);
                         }
