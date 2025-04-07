@@ -7,11 +7,17 @@ public class QuestCondition : Condition
 
     private void Start()
     {
+        if (receivingQuest == attachedQuest)
+        {
+            Debug.LogError("La quête analysée doit être différente de la quête attachée !");
+            return;
+        }
         receivingQuest.QuestEvent.AddListener(ChangeQuestCondition);
     }
 
     private void ChangeQuestCondition()
     {
+        Debug.Log("this: " + this.GetType());
         attachedQuest.SetCondition(this, true);
     }
 

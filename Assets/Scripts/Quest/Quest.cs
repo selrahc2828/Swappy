@@ -48,12 +48,21 @@ public class Quest : MonoBehaviour
 
     private void CheckConditions() //Vérifie si la quête est accomplie en parcourant toutes les entrées du dictionnaire et en regardant si l'une d'elle est false
     {
+        bool debugPreBool = true;
+
         foreach (KeyValuePair<Condition, bool> conditionRef in ActiveConditions)
         {
+            Debug.Log("ActiveCondition: " + conditionRef.Key + " | " + conditionRef.Value);
+
             if (conditionRef.Value == false)
             {
-                return;  
+                debugPreBool = false;
             }
+        }
+
+        if (debugPreBool == false)
+        {
+            return;
         }
 
         Debug.Log("Quest '" + QuestName + "' accomplished");
