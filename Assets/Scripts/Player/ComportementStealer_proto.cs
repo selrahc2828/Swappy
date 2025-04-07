@@ -159,7 +159,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             }
                             else
                             {
-                                Debug.Log("L'objet ne contiens aucun comportement � pr�lever");
+                                //Debug.Log("L'objet ne contiens aucun comportement � pr�lever");
                             }
                         }
                     }
@@ -176,7 +176,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 //On v�rifie si le rightValue de l'objet Vis� est vide, si c'est le cas, on lui ajoute le comportement stoqu� dans slot1.
                                 if (currentObjectState.rightValue == 0)
                                 {
-                                    Debug.Log("Addition de " + slot1 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot1.gameObject.name);
+                                    //Debug.Log("Addition de " + slot1 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot1.gameObject.name);
                                     int futurState = currentObjectState.stateValue + slot1;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot1 = 0;
@@ -254,7 +254,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 //Si la rightValue est superieur a 0, on la stoque, sinon on stoque la leftValue.
                                 if (currentObjectState.rightValue != 0)
                                 {
-                                    Debug.Log("Soustraction de " + currentObjectState.rightValue + " � " + currentObjectState.stateValue + " - Objet d'origine : "+ _hit.collider.gameObject.name);
+                                    //Debug.Log("Soustraction de " + currentObjectState.rightValue + " � " + currentObjectState.stateValue + " - Objet d'origine : "+ _hit.collider.gameObject.name);
                                     int futurState = currentObjectState.stateValue - currentObjectState.rightValue;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.rightValue;
@@ -266,7 +266,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.Log("Soustraction de " + currentObjectState.leftValue + " � " + currentObjectState.stateValue + " - Objet d'origine : "+ _hit.collider.gameObject.name);
+                                    //Debug.Log("Soustraction de " + currentObjectState.leftValue + " � " + currentObjectState.stateValue + " - Objet d'origine : "+ _hit.collider.gameObject.name);
                                     int futurState = currentObjectState.stateValue - currentObjectState.leftValue;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = currentObjectState.leftValue;
@@ -279,7 +279,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             }
                             else
                             {
-                                Debug.Log("L'objet ne contiens aucun comportement � pr�lever");
+                                //Debug.Log("L'objet ne contiens aucun comportement � pr�lever");
                             }
                         }
                     }
@@ -295,7 +295,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 //L'objet vis� � une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
                                 if (currentObjectState.rightValue == 0)
                                 {
-                                    Debug.Log("Soustraction de " + slot2 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot2.gameObject.name);
+                                    //Debug.Log("Soustraction de " + slot2 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot2.gameObject.name);
                                     int futurState = currentObjectState.stateValue + slot2;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot2 = 0;
@@ -307,12 +307,12 @@ public class ComportementStealer_proto : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.Log("L'objet contiens d�j� 2 comportements");
+                                    //Debug.Log("L'objet contiens d�j� 2 comportements");
                                 }
                             }
                             else
                             {
-                                Debug.Log("Soustraction de " + slot2 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot2.gameObject.name);
+                                //Debug.Log("Soustraction de " + slot2 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot2.gameObject.name);
                                 int futurState = currentObjectState.stateValue + slot2;
                                 currentObjectState.CalculateNewtState(futurState);
                                 slot2 = 0;
@@ -499,7 +499,7 @@ public class ComportementStealer_proto : MonoBehaviour
             
             int tempValueSlot = slot1;
 
-            Debug.Log($"SimSlot1 playerObjectState left: {playerObjectState.leftValue} / right: {playerObjectState.rightValue}");
+            //Debug.Log($"SimSlot1 playerObjectState left: {playerObjectState.leftValue} / right: {playerObjectState.rightValue}");
 
             if (slot1 == 0)
             {
@@ -521,7 +521,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     
                     //soustraction
                     
-                    Debug.Log("SIM GAUCHE - Soustraction de " + aRecuperer + " a " + playerObjectState.stateValue + " - Objet d'origine : "+ gameManager.player.gameObject.name);
+                    //Debug.Log("SIM GAUCHE - Soustraction de " + aRecuperer + " a " + playerObjectState.stateValue + " - Objet d'origine : "+ gameManager.player.gameObject.name);
                     
                     // int valueToSteal = playerObjectState.leftValue;
                     int futurState = playerObjectState.stateValue - aRecuperer;
@@ -548,7 +548,7 @@ public class ComportementStealer_proto : MonoBehaviour
                 }
                 else // rien dans le slot1 / main gauche et rien dans le bras gauche
                 {
-                    Debug.Log("SIM GAUCHE - rien a recuperer, voler ou echanger");
+                    //Debug.Log("SIM GAUCHE - rien a recuperer, voler ou echanger");
                 }
             }
             else
@@ -563,7 +563,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         if (playerObjectState.rightValue == 0) // 1 comportement sur player droit et rien sur sa gauche, j'additionne et check inversion
                         {
                             // addition
-                            Debug.Log("SIM GAUCHE - Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
+                            //Debug.Log("SIM GAUCHE - Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
                     
                             int valueToAdd = slot1;
                             int futurState = playerObjectState.stateValue + valueToAdd;
@@ -586,7 +586,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         {
                             // Echange slot1 et rightValue
                             
-                            Debug.Log($"SIM GAUCHE - Echange(Inversion) des valeurs : slot1 ({slot1}) ⇄ player rightValue ({playerObjectState.rightValue})");
+                            //Debug.Log($"SIM GAUCHE - Echange(Inversion) des valeurs : slot1 ({slot1}) ⇄ player rightValue ({playerObjectState.rightValue})");
                             // CAS BRAS DROIT
                             //bounce3 G  magnet27 D ||| main = impulse1
                             //remplacer magnet par impulse ==> impulse1 bounce3 or on veut bounce3 impulse1 en "visuel"
@@ -621,7 +621,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     else // si j'ai 1 comp sur bras gauche, et que je ne suis pas inversé, j'echange le comp bras gauche et le slot1
                     {
                         //Echange slot 1 leftValue
-                        Debug.Log($"SIM GAUCHE - Echange des valeurs : slot1 ({slot1}) ⇄ player leftValue ({playerObjectState.leftValue})");
+                        //Debug.Log($"SIM GAUCHE - Echange des valeurs : slot1 ({slot1}) ⇄ player leftValue ({playerObjectState.leftValue})");
                         
                         (slot1, playerObjectState.leftValue) = (playerObjectState.leftValue, slot1);
                         slot1Text.text = ((FirstState)slot1).ToString();
@@ -657,7 +657,7 @@ public class ComportementStealer_proto : MonoBehaviour
                 }
                 else // j'ai un comp en main gauche et rien sur player donc j'additionne
                 {
-                    Debug.Log("SIM GAUCHE - Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
+                    //Debug.Log("SIM GAUCHE - Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
                     
                     int valueToAdd = slot1;
                     int futurState = playerObjectState.stateValue + valueToAdd;
@@ -677,7 +677,7 @@ public class ComportementStealer_proto : MonoBehaviour
                 } 
             }
             
-            Debug.Log($"_stateStolen.inversion left : {_stateStolen.inversion}");
+            //Debug.Log($"_stateStolen.inversion left : {_stateStolen.inversion}");
         }
         
     }
@@ -699,7 +699,7 @@ public class ComportementStealer_proto : MonoBehaviour
 
             int tempValueSlot = slot2;
             
-            Debug.Log($"SimSlot2 playerObjectState left: {playerObjectState.leftValue} / right: {playerObjectState.rightValue} ");
+            //Debug.Log($"SimSlot2 playerObjectState left: {playerObjectState.leftValue} / right: {playerObjectState.rightValue} ");
        
             if (slot2 == 0)
             {
@@ -723,7 +723,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     
                     //soustraction
                     
-                    Debug.Log("SIM DROIT - Soustraction de " + aRecuperer + " a " + playerObjectState.stateValue + " - Objet d'origine : "+ gameManager.player.gameObject.name);
+                    //Debug.Log("SIM DROIT - Soustraction de " + aRecuperer + " a " + playerObjectState.stateValue + " - Objet d'origine : "+ gameManager.player.gameObject.name);
                     
                     // int valueToSteal = playerObjectState.leftValue;
                     int futurState = playerObjectState.stateValue - aRecuperer;
@@ -734,12 +734,12 @@ public class ComportementStealer_proto : MonoBehaviour
                     if (newPlayerObjectState.rightValue > tempValueSlot)
                     {
                         _stateStolen.inversion = true;
-                        Debug.Log($"ICI {newPlayerObjectState.rightValue} > {tempValueSlot} donc inversion");
+                        //Debug.Log($"ICI {newPlayerObjectState.rightValue} > {tempValueSlot} donc inversion");
                     }
                     else
                     {
                         _stateStolen.inversion = false; // slot est == ou supérieur, donc l'orde du systeme est bon 
-                        Debug.Log($"ICI {newPlayerObjectState.rightValue} <= {tempValueSlot} donc pas d'inversion");
+                        //Debug.Log($"ICI {newPlayerObjectState.rightValue} <= {tempValueSlot} donc pas d'inversion");
                     } 
                     
                     slot2 = aRecuperer;
@@ -752,7 +752,7 @@ public class ComportementStealer_proto : MonoBehaviour
                 }
                 else //si on a rien en main et rien en slot, on a rien à faire
                 {
-                    Debug.Log("SIM DROIT - rien a recuperer, voler ou echanger");
+                    //Debug.Log("SIM DROIT - rien a recuperer, voler ou echanger");
 
                 }
             }
@@ -773,7 +773,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             //echange avec rightValue  check inversion
                             aEchanger = playerObjectState.leftValue; // left car on est inverse QUOI QU'IL ARRIVE C LEFT ET SI PAS INVERSION C RIGHT
                             
-                            Debug.Log($"SIM DROIT - Echange (inversion) des valeurs : slot2 ({slot2}) ⇄ player left ({aEchanger})");
+                            //Debug.Log($"SIM DROIT - Echange (inversion) des valeurs : slot2 ({slot2}) ⇄ player left ({aEchanger})");
                         
                             // Debug.LogError($" avant switch \n playerObjectState.leftValue : {playerObjectState.leftValue} / rightValue: {playerObjectState.rightValue}");
                             
@@ -800,12 +800,12 @@ public class ComportementStealer_proto : MonoBehaviour
                             if (newPlayerObjectState.rightValue > tempValueSlot)
                             {
                                 _stateStolen.inversion = true;
-                                Debug.Log($"ICI {newPlayerObjectState.rightValue} > {tempValueSlot} donc inversion");
+                                //Debug.Log($"ICI {newPlayerObjectState.rightValue} > {tempValueSlot} donc inversion");
                             }
                             else
                             {
                                 _stateStolen.inversion = false; // slot est == ou supérieur, donc l'orde du systeme est bon 
-                                Debug.Log($"ICI {newPlayerObjectState.rightValue} <= {tempValueSlot} donc pas d'inversion");
+                                //Debug.Log($"ICI {newPlayerObjectState.rightValue} <= {tempValueSlot} donc pas d'inversion");
                             } 
                         }
                         else // j'ai 1 comportement et je suis inverse
@@ -814,7 +814,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             aEchanger = playerObjectState.leftValue;
                             _stateStolen.inversion = true;
                             
-                            Debug.Log($"SIM DROIT - Echange (inversion) des valeurs : slot2 ({slot2}) ⇄ player leftValue ({aEchanger})");
+                            //Debug.Log($"SIM DROIT - Echange (inversion) des valeurs : slot2 ({slot2}) ⇄ player leftValue ({aEchanger})");
                         
                             (slot2, playerObjectState.leftValue) = (playerObjectState.leftValue, slot2);
                             slot2Text.text = ((FirstState)slot2).ToString();
@@ -840,7 +840,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         {
                             //echange avec rightValue et inversion = true
                             aEchanger = playerObjectState.rightValue;
-                            Debug.Log($"SIM DROIT - Echange des valeurs : slot2 ({slot2}) ⇄ player rightValue ({aEchanger})");
+                            //Debug.Log($"SIM DROIT - Echange des valeurs : slot2 ({slot2}) ⇄ player rightValue ({aEchanger})");
                             
                             
                             (slot2, playerObjectState.rightValue) = (playerObjectState.rightValue, slot2);
@@ -859,12 +859,12 @@ public class ComportementStealer_proto : MonoBehaviour
                             if (newPlayerObjectState.rightValue > tempValueSlot)
                             {
                                 _stateStolen.inversion = true;
-                                Debug.Log($"ICI {newPlayerObjectState.rightValue} > {tempValueSlot} donc inversion");
+                                //Debug.Log($"ICI {newPlayerObjectState.rightValue} > {tempValueSlot} donc inversion");
                             }
                             else
                             {
                                 _stateStolen.inversion = false; // slot est == ou supérieur, donc l'orde du systeme est bon 
-                                Debug.Log($"ICI {newPlayerObjectState.rightValue} <= {tempValueSlot} donc pas d'inversion");
+                                //Debug.Log($"ICI {newPlayerObjectState.rightValue} <= {tempValueSlot} donc pas d'inversion");
                             } 
                             
                             
@@ -878,7 +878,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         else // pas inversé et que 1 comportement
                         {
                             //addition et check si on inverse
-                            Debug.Log("SIM DROIT - Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
+                            //Debug.Log("SIM DROIT - Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
 
                             int futurState = playerObjectState.leftValue + slot2;
                             
@@ -888,12 +888,12 @@ public class ComportementStealer_proto : MonoBehaviour
                             if (newPlayerObjectState.rightValue > tempValueSlot)
                             {
                                 _stateStolen.inversion = true;
-                                Debug.Log($"ICI {newPlayerObjectState.rightValue} > {tempValueSlot} donc inversion");
+                                //Debug.Log($"ICI {newPlayerObjectState.rightValue} > {tempValueSlot} donc inversion");
                             }
                             else
                             {
                                 _stateStolen.inversion = false; // slot est == ou supérieur, donc l'orde du systeme est bon 
-                                Debug.Log($"ICI {newPlayerObjectState.rightValue} <= {tempValueSlot} donc pas d'inversion");
+                                //Debug.Log($"ICI {newPlayerObjectState.rightValue} <= {tempValueSlot} donc pas d'inversion");
                             } 
                             
                             //reset
@@ -913,7 +913,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     // addition et _stateStolen.inversion = true
                     _stateStolen.inversion = true;
                     
-                    Debug.Log("SIM DROIT - Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
+                    //Debug.Log("SIM DROIT - Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
                     
                     int valueToAdd = slot2;
                     int futurState = playerObjectState.stateValue + valueToAdd;
@@ -974,7 +974,7 @@ public class ComportementStealer_proto : MonoBehaviour
 
                                 if (slot1 != 0)
                                 {
-                                    Debug.Log("Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
+                                    //Debug.Log("Addition de " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot1.gameObject.name);
                                     int futurState = playerObjectState.stateValue + slot1;
                                     playerObjectState.CalculateNewtState(futurState);
                                     slot1 = 0;
@@ -986,7 +986,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.Log("Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
+                                    //Debug.Log("Addition de " + slot2 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name + " - Objet d'origine " + originSlot2.gameObject.name);
                                     int futurState = playerObjectState.stateValue + slot2;
                                     playerObjectState.CalculateNewtState(futurState);
                                     slot2 = 0;
@@ -999,7 +999,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             }
                             else
                             {
-                                Debug.Log("Le Player contiens d�j� 2 comportements");
+                                //Debug.Log("Le Player contiens d�j� 2 comportements");
                             }
                         }
                         else
@@ -1007,7 +1007,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             //L'objet vis� � une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
                             if (playerObjectState.rightValue == 0)
                             {
-                                Debug.Log("Addition de " + slot2 + " et " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                                //Debug.Log("Addition de " + slot2 + " et " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
                                 int futurState = playerObjectState.stateValue + slot2 +slot1;
                                 playerObjectState.CalculateNewtState(futurState);
                                 slot1 = 0;
@@ -1023,13 +1023,13 @@ public class ComportementStealer_proto : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogWarning("Le Player contiens déjà au moins un comportement et vous essayez de lui en ajouter 2 ");
+                                //Debug.LogWarning("Le Player contiens déjà au moins un comportement et vous essayez de lui en ajouter 2 ");
                             }
                         }
                     }
                     else
                     {
-                        Debug.Log("Addition de " + slot2 + " et " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
+                        //Debug.Log("Addition de " + slot2 + " et " + slot1 + " et " + playerObjectState.stateValue + " - Objet visé : " + gameManager.player.gameObject.name);
                         int futurState = playerObjectState.stateValue + slot2 +slot1;
                         playerObjectState.CalculateNewtState(futurState);
                         
@@ -1060,7 +1060,7 @@ public class ComportementStealer_proto : MonoBehaviour
             }
             else
             {
-                Debug.Log("Vous n'avez aucun comportement stoqué");
+                //Debug.Log("Vous n'avez aucun comportement stoqué");
             }
         }
     }
@@ -1071,10 +1071,10 @@ public class ComportementStealer_proto : MonoBehaviour
         {
             #region Ce code est nul et temporaire, il faudra le refaire pour renvoyer les comportement dans les propriétaires
             _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>();
-            Debug.Log(_stateStolen);
-            Debug.Log(_stateStolen.currentState);
+            //Debug.Log(_stateStolen);
+            //Debug.Log(_stateStolen.currentState);
             ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
-            Debug.Log(playerObjectState);
+            //Debug.Log(playerObjectState);
             playerObjectState.CalculateNewtState(0);
             #endregion
         }
@@ -1093,7 +1093,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     {
                         if (originObjectState1.rightValue == 0)
                         {
-                            Debug.Log("r�tribution du comportement : Addition de " + slot1 + " � " + originObjectState1.stateValue);
+                            //Debug.Log("r�tribution du comportement : Addition de " + slot1 + " � " + originObjectState1.stateValue);
                             int futurState = originObjectState1.stateValue + slot1;
                             originObjectState1.CalculateNewtState(futurState);
                             slot1 = 0;
@@ -1105,12 +1105,12 @@ public class ComportementStealer_proto : MonoBehaviour
                             slot1 = 0;
                             originSlot1 = null;
                             slot1Text.text = "";
-                            Debug.Log("L'objet d'origine poss�de d�ja 2 comportements, Le comportement stoqu� dans la main gauche � �t� supprim�");
+                            //Debug.Log("L'objet d'origine poss�de d�ja 2 comportements, Le comportement stoqu� dans la main gauche � �t� supprim�");
                         }
                     }
                     else
                     {
-                        Debug.Log("r�tribution du comportement : Addition de " + slot1 + " � " + originObjectState1.stateValue);
+                        //Debug.Log("r�tribution du comportement : Addition de " + slot1 + " � " + originObjectState1.stateValue);
                         int futurState = originObjectState1.stateValue + slot1;
                         originObjectState1.CalculateNewtState(futurState);
                         slot1 = 0;
@@ -1132,7 +1132,7 @@ public class ComportementStealer_proto : MonoBehaviour
                     {
                         if (originObjectState2.rightValue == 0)
                         {
-                            Debug.Log("r�tribution du comportement : Addition de " + slot2 + " � " + originObjectState2.stateValue);
+                            //Debug.Log("r�tribution du comportement : Addition de " + slot2 + " � " + originObjectState2.stateValue);
                             int futurState = originObjectState2.stateValue + slot2;
                             originObjectState2.CalculateNewtState(futurState);
                             slot2 = 0;
@@ -1144,12 +1144,12 @@ public class ComportementStealer_proto : MonoBehaviour
                             slot2 = 0;
                             originSlot2 = null;
                             slot2Text.text = "";
-                            Debug.Log("L'objet d'origine poss�de d�ja 2 comportements, Le comportement stoqu� dans la main gauche � �t� supprim�");
+                            //Debug.Log("L'objet d'origine poss�de d�ja 2 comportements, Le comportement stoqu� dans la main gauche � �t� supprim�");
                         }
                     }
                     else
                     {
-                        Debug.Log("r�tribution du comportement : Addition de " + slot2 + " � " + originObjectState2.stateValue);
+                        //Debug.Log("r�tribution du comportement : Addition de " + slot2 + " � " + originObjectState2.stateValue);
                         int futurState = originObjectState2.stateValue + slot2;
                         originObjectState2.CalculateNewtState(futurState);
                         slot2 = 0;
