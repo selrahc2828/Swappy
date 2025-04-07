@@ -28,24 +28,25 @@ public class Quest : MonoBehaviour
     private Dictionary<Condition, bool> ActiveConditions = new Dictionary<Condition, bool>();
 
 
-    public void ReferenceThisCondition(Condition conditionScript, bool state) //Référence toutes les conditions d'une quête à l'initialisation dans un dictionnaire
+    public void ReferenceCondition(Condition conditionScript, bool state) //Référence toutes les conditions d'une quête à l'initialisation dans un dictionnaire
     {
         ActiveConditions.Add(conditionScript, state);
     }
 
-    public void ChangeQuestConditions(Condition condition, bool state) //Change le state d'une des condition de la quête
+    public void SetCondition(Condition condition, bool state) //Change le state d'une des condition de la quête
     {
         if (ActiveConditions[condition] == state)
         {
-            //permet de bloquer toute tentative d'update une quest condition avec la même valeur, évitant de call plusieurs fois un accomplissement de quête.
+            //bloque toute tentative d'update une quest condition avec la même valeur, évitant de call plusieurs fois un accomplissement de quête.
             return;
         }
 
         ActiveConditions[condition] = state;
-        CheckQuestConditions();
+
+        CheckConditions();
     }
 
-    private void CheckQuestConditions() //Vérifie si la quête est accomplie en parcourant toutes les entrées du dictionnaires et en regardant si l'une d'elle est false
+    private void CheckConditions() //Vérifie si la quête est accomplie en parcourant toutes les entrées du dictionnaire et en regardant si l'une d'elle est false
     {
         foreach (KeyValuePair<Condition, bool> conditionRef in ActiveConditions)
         {

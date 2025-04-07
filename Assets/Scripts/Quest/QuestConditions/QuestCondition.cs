@@ -7,12 +7,12 @@ public class QuestCondition : Condition
 
     private void Start()
     {
-        receivingQuest.QuestEvent.AddListener(SetQuestCondition);
+        receivingQuest.QuestEvent.AddListener(ChangeQuestCondition);
     }
 
-    private void SetQuestCondition()
+    private void ChangeQuestCondition()
     {
-        SetConditionState(true);
+        attachedQuest.SetCondition(this, true);
     }
 
     protected override Vector3 GetQuestLineStart()

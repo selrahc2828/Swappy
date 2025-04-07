@@ -4,7 +4,7 @@ using UnityEngine;
 public class Condition : MonoBehaviour
 {
     [Tooltip("La Quête remplie par cette condition")] 
-    [SerializeField] private Quest attachedQuest;
+    [SerializeField] protected Quest attachedQuest;
     [Tooltip("En règle générale, laisser l'état de base de la condition à false")] 
     [SerializeField] private bool defaultState = false;
     [Tooltip("Activer UNIQUEMENT si ce script est utilisé comme complément d'une autre condition")]
@@ -23,7 +23,7 @@ public class Condition : MonoBehaviour
             return;
         }
 
-        attachedQuest.ReferenceThisCondition(this, defaultState);
+        attachedQuest.ReferenceCondition(this, defaultState);
     }
 
     protected void SetConditionState(bool state)
@@ -34,7 +34,9 @@ public class Condition : MonoBehaviour
             return;
         }
 
-        attachedQuest.ChangeQuestConditions(this, state);
+        Debug.Log("this: " + this.GetType());
+
+        attachedQuest.SetCondition(this, state);
     }
 
     protected virtual bool CheckObjectParameters(GameObject target)

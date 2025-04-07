@@ -33,7 +33,7 @@ public class CompCondition: Condition
         //A remplacer par une activation lorsque le joueur input un vol / réattribution de comportement
         if (targetObject != null)
         {
-            SetConditionState(CheckObjectParameters(targetObject));
+            attachedQuest.SetCondition(this, CheckObjectParameters(targetObject));
         }
     }
 
@@ -107,5 +107,10 @@ public class CompCondition: Condition
                 return (!validationBool);
         }
         return(!validationBool);
+    }
+
+    protected override Vector3 GetQuestLineStart()
+    {
+        return base.GetQuestLineStart();
     }
 }

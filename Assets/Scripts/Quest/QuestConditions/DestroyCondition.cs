@@ -7,6 +7,6 @@ public class DestroyCondition : Condition
 
     private void OnDestroy()
     {
-        SetConditionState(onDestroyState);
+        attachedQuest.SetCondition(this, onDestroyState);
     }
 }

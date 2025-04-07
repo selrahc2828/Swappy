@@ -52,7 +52,7 @@ public class VelocityCondition: Condition
         {
             if (validationType == ValidationTypes.Velocity || validationType == ValidationTypes.AngularVelocity)
             {
-                SetConditionState(CheckObjectParameters(targetObject));
+                attachedQuest.SetCondition(this, CheckObjectParameters(targetObject));
             }
         }
     }

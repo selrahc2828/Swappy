@@ -14,7 +14,7 @@ public class EventCondition : Condition
 
     public void SetEventConditionState(bool state)
     {
-        SetConditionState(state);
+        attachedQuest.SetCondition(this,state);
 
         isConditionTrue = state;
         timer = permissivityTimer;
@@ -29,7 +29,7 @@ public class EventCondition : Condition
 
             if (timer <= 0)
             {
-                SetConditionState(false);
+                attachedQuest.SetCondition(this, false); ;
 
                 isConditionTrue = false;
             }
