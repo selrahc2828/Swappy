@@ -8,7 +8,11 @@ public enum QuestTypes
     Collectible,
     BlankActivity
 }
-
+public enum QuestRedundancy
+{
+    OneOf,
+    Floating
+}
 public class Quest : MonoBehaviour
 {
     public string QuestName;
@@ -31,6 +35,12 @@ public class Quest : MonoBehaviour
 
     public void ChangeQuestConditions(Condition condition, bool state) //Change le state d'une des condition de la quête
     {
+        if (ActiveConditions[condition] == state)
+        {
+            //permet de bloquer toute tentative d'update une quest condition avec la même valeur, évitant de call plusieurs fois un accomplissement de quête.
+            return;
+        }
+
         ActiveConditions[condition] = state;
         CheckQuestConditions();
     }
