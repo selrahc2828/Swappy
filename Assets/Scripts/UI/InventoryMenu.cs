@@ -66,19 +66,6 @@ public class InventoryMenu : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        // // Pour chaque item dans l'inventaire, on crée un nouveau slot et on le configure
-        // foreach (KeyValuePair<ItemData, InventorySlot> entry in inventorySystem.InventoryItems)
-        // {
-        //     GameObject slot = Instantiate(inventorySlotPrefab, inventoryContent);
-        //     
-        //     InventorySlotUI slotUI = slot.GetComponent<InventorySlotUI>();
-        //
-        //     if (slotUI != null)
-        //     {
-        //         slotUI.Initialize(entry.Key, entry.Value.quantity, OnItemSlotClicked);
-        //     }
-        // }
-
         int totalSlots = inventorySystem.MaxSlots;
         List<ItemData> itemKeys = new List<ItemData>(inventorySystem.InventoryItems.Keys);
         
