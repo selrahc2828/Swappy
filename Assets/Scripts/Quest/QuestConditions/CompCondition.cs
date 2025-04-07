@@ -14,10 +14,11 @@ public class CompCondition: Condition
         Solo,
         Duo,
         Fusion,
-        StrictFusion,
+        StrictFusion
     }
 
     [Space(16)]
+    [Tooltip("Si targetObject vide, le script checkera à chaque vol / réattribution de comportement")]
     public GameObject targetObject;
     [SerializeField] private bool validationBool = true;
     [SerializeField] private ValidationTypes validationType;
@@ -26,8 +27,23 @@ public class CompCondition: Condition
     [SerializeField] private FirstState targetComportment;
     [SerializeField] private CompCategory targetCompCategory;
 
+    private void Update()
+    {
+        //A remplacer par une activation lorsque le joueur input un vol / réattribution de comportement
+        if (targetObject != null)
+        {
+            CheckObjectParameters(targetObject);
+        }
+    }
+
     protected override bool CheckObjectParameters(GameObject target)
     {
+        if (target.GetComponent<ComportementState>() == null)
+        {
+            Debug.LogError("Il n'y a pas de ComportementState sur l'objet target par CompCondition !");
+            return !validationBool;
+        }
+
         switch (validationType)
         {
             case ValidationTypes.Comportment:
@@ -39,31 +55,35 @@ public class CompCondition: Condition
                 return (!validationBool);
 
             case ValidationTypes.CompCategory:
+
+                int rightComp = target.GetComponent<ComportementState>().rightValue;
+                int leftComp = target.GetComponent<ComportementState>().leftValue;
+
                 switch (targetCompCategory)
-                { 
+                {
                     case CompCategory.Solo:
-                        if (target.GetComponent<ComportementState>().rightValue == 0)
+                        if (rightComp == 0)
                         {
                             return (validationBool);
                         }
                         break;
 
                     case CompCategory.Duo:
-                        if (target.GetComponent<ComportementState>().leftValue == target.GetComponent<ComportementState>().rightValue)
+                        if (rightComp != 0 && rightComp == leftComp)
                         {
                             return (validationBool);
                         }
                         break;
 
                     case CompCategory.Fusion:
-                        if (target.GetComponent<ComportementState>().leftValue == 0)
+                        if (rightComp != 0)
                         {
                             return (validationBool);
                         }
                         break;
 
                     case CompCategory.StrictFusion:
-                        if (target.GetComponent<ComportementState>().leftValue == 0)
+                        if (rightComp != 0 && rightComp != leftComp)
                         {
                             return (validationBool);
                         }
