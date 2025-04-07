@@ -101,7 +101,6 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log("ActionSlot1");
             if (GameManager.Instance.grabScript.isCarrying)//on ne peut pas voler/attribuer si on porte un objet
             {
                 return;
@@ -143,7 +142,7 @@ public class ComportementStealer_proto : MonoBehaviour
                                 //stateValue est supperieur � 0, leftValue est donc obligatoirement remplie, etant donn� qu'il s'agit du clique gauche, on ne cherche que la leftValue
                                 if (currentObjectState.leftValue != 0)
                                 {
-                                    Debug.Log("Soustraction de " + currentObjectState.leftValue + " � " + currentObjectState.stateValue + " - Objet d'origine : "+ _hit.collider.gameObject.name);
+                                    //Debug.Log("Soustraction de " + currentObjectState.leftValue + " � " + currentObjectState.stateValue + " - Objet d'origine : "+ _hit.collider.gameObject.name);
                                     int futurState = currentObjectState.stateValue - currentObjectState.leftValue;
                                     currentObjectState.CalculateNewtState(futurState);
                                     slot1 = currentObjectState.leftValue;
@@ -170,7 +169,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         if (_stateStolen.currentState is ComportementState)
                         {
                             ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
-                            Debug.Log("Right Value: " + currentObjectState.stateValue);
+                            //Debug.Log("Right Value: " + currentObjectState.stateValue);
                             //On verifie si l'objet vis� est vide, si c'est le cas on lui donne directement un comp�rtement avec leftValue, sinon on va v�rifier si sa rightValue est vide
                             if(currentObjectState.stateValue != 0)
                             {
@@ -189,12 +188,12 @@ public class ComportementStealer_proto : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.Log("L'objet contiens d�j� 2 comportements");
+                                    //Debug.Log("L'objet contiens d�j� 2 comportements");
                                 }
                             }
                             else
                             {
-                                Debug.Log("Addition de " + slot1 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot1?.gameObject.name);
+                                //Debug.Log("Addition de " + slot1 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot1?.gameObject.name);
                                 int futurState = currentObjectState.stateValue + slot1;
                                 currentObjectState.CalculateNewtState(futurState);
                                 slot1 = 0;

@@ -61,7 +61,6 @@ public class OptionMenuScript : MonoBehaviour
             isOpen = true;
             GameManager.Instance.isPaused = true;
             optionGroup.SetActive(true);
-            Debug.Log($"Pause ");
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
