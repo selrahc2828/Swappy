@@ -52,8 +52,8 @@ public class MouvementState : State
     {
         controls = GameManager.controls;
 
-        walkSpeed = _sm.gameManager.walkSpeed;
-        sprintSpeed = _sm.gameManager.sprintSpeed;
+        walkSpeed = _sm.gameManager.moveSpeed;
+        sprintSpeed = _sm.gameManager.moveSpeed *2 ;
         groundDrag = _sm.gameManager.groundDrag;
         airMultiplier = _sm.gameManager.airMultiplier;
         playerHeight = _sm.gameManager.playerHeight;
