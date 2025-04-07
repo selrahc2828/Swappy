@@ -68,10 +68,14 @@ public class GameManager : MonoBehaviour
     public GameObject planeteCore;
     public float constanteGravitationelle;
     public float massePlanete;
-    
-    [Header("Player Movement Parameters")]
-    public float walkSpeed;
-    public float sprintSpeed;
+
+    [Header("Player Movement Parameters")] 
+    public float maxSpeed;
+    public float moveSpeed;
+    public float sprintMultiplier;
+    public float aerialMultiplier;
+    public float stoppingRatio;
+    public float sideSpeedReductionRatio;
     public float groundDrag;
     public Transform orientation;
 

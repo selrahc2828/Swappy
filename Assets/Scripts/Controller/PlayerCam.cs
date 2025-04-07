@@ -5,19 +5,16 @@ using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
 {
-    public float sensX;
-    public float sensY;
-    
     float xRotation;
     float yRotation;
 
-    private Ray _ray;
-    public LayerMask hitLayer;
     private Transform orientation;
+    private GameObject player;
 
     void Start()
     {
-        orientation = GameManager.Instance.player.transform;
+        orientation = GameManager.Instance.orientation.transform;
+        player = GameManager.Instance.playerFBX;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -36,9 +33,9 @@ public class PlayerCam : MonoBehaviour
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-            transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-            orientation.localRotation = Quaternion.Euler(0, yRotation, 0);
+            transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
+            orientation.localRotation = Quaternion.Euler(0, yRotation, 0); //A activer si on veux que le player ne rotate pas
+            player.transform.localRotation = Quaternion.Euler(0, yRotation, 0); //A activer si on veux que le player rotate
         }
-        
     }
 }

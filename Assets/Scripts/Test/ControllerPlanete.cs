@@ -16,6 +16,7 @@ public class ControllerPlanete : MonoBehaviour
     private Vector2 moveInputVector;
     private Vector3 moveDirection;
     private Controls controls;
+    private Transform orientation;
     private float playerHeight;
 
     [SerializeField] private float maxSpeed;
@@ -46,7 +47,12 @@ public class ControllerPlanete : MonoBehaviour
         controls.Player.StartSprint.performed += StartSprint;
         controls.Player.StopSprint.performed += StopSprint;
 
-        moveSpeed = gameManager.walkSpeed;
+        maxSpeed = gameManager.maxSpeed;
+        moveSpeed = gameManager.moveSpeed;
+        sprintMultiplier = gameManager.sprintMultiplier;
+        aerialMultiplier = gameManager.aerialMultiplier;
+        stoppingRatio = gameManager.stoppingRatio;
+        sideSpeedReductionRatio = gameManager.sideSpeedReductionRatio;
         jumpForce = gameManager.jumpForce;
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
@@ -64,6 +70,7 @@ public class ControllerPlanete : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        orientation = GameManager.Instance.orientation;
         isStopping = true;
         rb = GetComponent<Rigidbody>();
         gravityComponent = GetComponent<GravityPlanete>();
@@ -77,8 +84,8 @@ public class ControllerPlanete : MonoBehaviour
         if (gravityComponent != null)
         {
             moveDirection = Vector3.ProjectOnPlane(
-                GameManager.Instance.orientation.transform.forward * moveInputVector.y +
-                GameManager.Instance.orientation.transform.right * moveInputVector.x,
+                orientation.forward * moveInputVector.y +
+                orientation.right * moveInputVector.x,
                 transform.up
             ).normalized;
         }
@@ -108,13 +115,13 @@ public class ControllerPlanete : MonoBehaviour
             }
             if (moveInputVector.y != 0)
             {
-                Vector3 velocityWithoutSides = Vector3.ProjectOnPlane(rb.velocity, transform.right);
+                Vector3 velocityWithoutSides = Vector3.ProjectOnPlane(rb.velocity, orientation.right);
                 
                 rb.velocity = Vector3.Lerp(rb.velocity, velocityWithoutSides, sideSpeedReductionRatio);
             }
             if (isStopping)
             {
-                rb.velocity = rb.velocity * stoppingRatio;
+                rb.velocity *= stoppingRatio;
             }
         }
         if (localHorizontalVelocity.magnitude > maxSpeed * sprintMultiplierValue && Vector3.Dot(moveDirection, localHorizontalVelocity) > 0)

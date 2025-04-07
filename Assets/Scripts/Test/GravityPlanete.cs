@@ -41,15 +41,15 @@ public class GravityPlanete : MonoBehaviour
             }
         }
 
-        applyGravity(finalGravityDirection);
+        ApplyGravity(finalGravityDirection);
         if (rb.CompareTag("Player"))
         {
-            rotatePlayer(directionToPlanet);
+            RotatePlayer(directionToPlanet);
         }
     }
 
 
-    void applyGravity(Vector3 _directionToPlanet)
+    void ApplyGravity(Vector3 _directionToPlanet)
     {
 
         // Appliquer une force gravitationnelle réaliste
@@ -61,9 +61,8 @@ public class GravityPlanete : MonoBehaviour
         rb.AddForce(gravitationalForce, ForceMode.Acceleration);
     }
 
-    void rotatePlayer(Vector3 _directionToPlanet)
+    void RotatePlayer(Vector3 _directionToPlanet)
     {
-
         // Calculer la rotation cible pour que le joueur "colle" à la planète
         Quaternion targetRotation = Quaternion.FromToRotation(-transform.up, _directionToPlanet) * transform.rotation;
 
