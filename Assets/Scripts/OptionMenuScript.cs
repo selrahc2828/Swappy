@@ -76,7 +76,7 @@ public class OptionMenuScript : MonoBehaviour
             GameManager.controls.Pause.Disable();
             GameManager.controls.Player.Enable();
             
-            Debug.Log($"Resume ");
+            //Debug.Log($"Resume ");
             
             GameManager.Instance.isPaused = false;
             isOpen = false;
