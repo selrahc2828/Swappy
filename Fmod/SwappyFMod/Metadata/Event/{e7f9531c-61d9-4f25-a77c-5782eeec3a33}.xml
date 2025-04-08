@@ -49,9 +49,6 @@
 		</relationship>
 	</object>
 	<object class="MasterTrack" id="{c96c55d1-fcd7-4485-a27d-1361c9da5f5d}">
-		<relationship name="automationTracks">
-			<destination>{22f0a3ae-c3b6-4f96-b0a4-fcda07c1aeec}</destination>
-		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{de3aa97c-8589-4f1c-a65d-6989ad8022ea}</destination>
 		</relationship>
@@ -130,11 +127,6 @@
 		</relationship>
 		<relationship name="mixer">
 			<destination>{100119c7-e992-430c-85d8-6944400db314}</destination>
-		</relationship>
-	</object>
-	<object class="AutomationTrack" id="{22f0a3ae-c3b6-4f96-b0a4-fcda07c1aeec}">
-		<relationship name="automator">
-			<destination>{d7086135-6457-42b8-b308-a9d9cfda037b}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{aeb43579-e182-4332-82c7-58f57695af92}">
@@ -289,7 +281,6 @@
 		<relationship name="effects">
 			<destination>{cf2f25ab-722a-4368-a8cd-90efb8b44ced}</destination>
 			<destination>{be7faf86-c536-43ce-9e48-33dd59f76391}</destination>
-			<destination>{878fc120-0303-450c-a1fd-330fc60598ba}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{70ca6266-0b91-473b-949b-0d65099c92a6}" />
@@ -357,14 +348,6 @@
 	<object class="MixerBusPanner" id="{ffb4ee58-ab49-4c2c-8aff-6dbe12022eb7}" />
 	<object class="MixerBusFader" id="{cf2f25ab-722a-4368-a8cd-90efb8b44ced}" />
 	<object class="SpatialiserEffect" id="{be7faf86-c536-43ce-9e48-33dd59f76391}" />
-	<object class="DelayEffect" id="{878fc120-0303-450c-a1fd-330fc60598ba}">
-		<property name="delay">
-			<value>1</value>
-		</property>
-		<relationship name="automators">
-			<destination>{d7086135-6457-42b8-b308-a9d9cfda037b}</destination>
-		</relationship>
-	</object>
 	<object class="SingleSound" id="{0b32accd-fb2a-402e-9145-5c25ee28ea58}">
 		<relationship name="audioFile">
 			<destination>{b8ea7191-4bff-437a-9db4-191bec460e67}</destination>
@@ -417,39 +400,6 @@
 	<object class="TremoloEffect" id="{472d78c4-93ac-4d4a-a94d-e2706f9970bb}">
 		<property name="frequency">
 			<value>10</value>
-		</property>
-	</object>
-	<object class="Automator" id="{d7086135-6457-42b8-b308-a9d9cfda037b}">
-		<property name="nameOfPropertyBeingAutomated">
-			<value>delay</value>
-		</property>
-		<relationship name="automationCurves">
-			<destination>{27efc88b-bbcd-4b85-98c6-47ad4c86c5eb}</destination>
-		</relationship>
-	</object>
-	<object class="AutomationCurve" id="{27efc88b-bbcd-4b85-98c6-47ad4c86c5eb}">
-		<relationship name="parameter">
-			<destination>{599f9e35-35ad-4c32-bbf5-7b8a2428a8df}</destination>
-		</relationship>
-		<relationship name="automationPoints">
-			<destination>{61d88ce2-21ca-4f05-9256-6a1f960a436c}</destination>
-			<destination>{426e25c6-0de1-4cd4-bcac-1296ca11ae93}</destination>
-		</relationship>
-	</object>
-	<object class="AutomationPoint" id="{61d88ce2-21ca-4f05-9256-6a1f960a436c}">
-		<property name="position">
-			<value>74.152542372881356</value>
-		</property>
-		<property name="value">
-			<value>1</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{426e25c6-0de1-4cd4-bcac-1296ca11ae93}">
-		<property name="position">
-			<value>300</value>
-		</property>
-		<property name="value">
-			<value>1000</value>
 		</property>
 	</object>
 </objects>
