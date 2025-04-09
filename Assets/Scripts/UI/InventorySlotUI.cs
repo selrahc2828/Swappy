@@ -8,7 +8,8 @@ public class InventorySlotUI : MonoBehaviour
     public TextMeshProUGUI quantityText;
 
     private ItemData itemData;
-
+    [SerializeField] Button button;
+    
     public void Initialize(ItemData item, int quantity, System.Action<ItemData> onClickCallback)
     {
         itemData = item;
@@ -22,8 +23,8 @@ public class InventorySlotUI : MonoBehaviour
                 quantityText.text = quantity.ToString();
 
             // Abonnement au clic sur le bouton
-            GetComponent<Button>().onClick.RemoveAllListeners();//clear pour éviter de faire plusieurs abonnement 
-            GetComponent<Button>().onClick.AddListener(() =>
+            button.onClick.RemoveAllListeners();//clear pour éviter de faire plusieurs abonnement 
+            button.onClick.AddListener(() =>
             {
                 onClickCallback?.Invoke(itemData);
             });      

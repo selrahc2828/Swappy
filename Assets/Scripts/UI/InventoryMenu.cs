@@ -16,11 +16,10 @@ public class InventoryMenu : MonoBehaviour
     [Header("Info")]
     public TextMeshProUGUI slotInfoDescription;
     public TextMeshProUGUI slotInfoName;
-    [HideInInspector] public Image slotInfoImage;
     [HideInInspector] public RawImage slotInfoImageRaw; // image UI qui utilise un RenderTexture
 
     [Header("Preview 3D")]
-    public Transform previewSpawnPoint; // empty dans la scène pour instancier le modèle a render
+    public Transform previewSpawnPoint; // empty dans la scène pour instancier le modèle a render == prefab RenderTextureGroup
     private GameObject currentPreviewInstance;
     
     
