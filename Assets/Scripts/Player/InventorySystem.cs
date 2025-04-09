@@ -21,8 +21,10 @@ public class InventorySystem: MonoBehaviour
     // private Dictionary<TapeData, int> tapes = new Dictionary<TapeData, int>();
     
     //emet event
-    public event Action OnInventoryChanged;
-    
+    public event Action OnAddInventory;
+    public event Action OnRemoveInventory;
+    public event Action<ItemData, int> OnPopupInventory;
+
     public void AddItem(ItemData newItem, int quantity = 1)
     {
         if (!inventoryItems.ContainsKey(newItem))
@@ -37,7 +39,8 @@ public class InventorySystem: MonoBehaviour
         }
 
         inventoryItems[newItem].quantity += quantity;
-        OnInventoryChanged?.Invoke();
+        OnAddInventory?.Invoke();
+        OnPopupInventory?.Invoke(newItem, quantity);
     }
 
     public void RemoveItem(ItemData itemToRemove,  int quantity = 1)
@@ -59,6 +62,6 @@ public class InventorySystem: MonoBehaviour
             Debug.Log($"L'objet {itemToRemove.itemName} a été retiré de l'inventaire.");
         }
         
-        OnInventoryChanged?.Invoke();
+        OnRemoveInventory?.Invoke();
     }
 }

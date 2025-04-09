@@ -14,46 +14,31 @@ public class MenuManager : MonoBehaviour
     public GameObject inventoryGroup;
     [Header("Cassettes")]
     public GameObject tapeGroup;
-    
     [Header("Options")]
     public GameObject optionGroup;
-
-    // public Slider mouseSensitivitySlider;
-    // public TextMeshProUGUI textSensiDisplay;
-    // [Header("Volume")]
-    // public Slider volumeSliderMaster;
-    // public Slider volumeSliderPlayer;
-    // public Slider volumeSliderSystem;
-    // public Slider volumeSliderMusic;
-    // public Slider volumeSliderMenu;
-
-    // Start is called before the first frame update
+    
+    [Header("Menus")]
+    public InventoryMenu inventoryMenu;
+    public InventoryMenu tapeMenu;
+    public OptionMenu optionMenu;
+    
     void Start()
     {
         menuGroup.SetActive(false);
-
     }
 
     void OnEnable()
     {
         GameManager.controls.Player.PauseMenu.performed += PauseMenu;
         GameManager.controls.Pause.Resume.performed += Resume;
-
     }
     
     void OnDisable()
     {
         GameManager.controls.Player.PauseMenu.performed -= PauseMenu;
         GameManager.controls.Pause.Resume.performed -= Resume;
+    }
 
-    }
-    
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     public void PauseMenu(InputAction.CallbackContext context)
     {
         if (context.performed)

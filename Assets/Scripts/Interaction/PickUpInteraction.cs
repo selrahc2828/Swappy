@@ -24,8 +24,12 @@ public class PickUpInteraction : InteractionSystem
         base.Interact();
 
         Debug.Log("PickUpInteraction Interact");
+
+        InventorySystem inventory = GameManager.Instance?.player.gameObject.GetComponent<InventorySystem>();
+        if (inventory == null)
+            return;
         
-        FindObjectOfType<InventorySystem>().AddItem(itemData);
+        inventory.AddItem(itemData);
         Destroy(gameObject);
     }
 

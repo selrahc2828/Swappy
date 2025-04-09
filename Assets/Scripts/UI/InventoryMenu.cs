@@ -28,7 +28,8 @@ public class InventoryMenu : MonoBehaviour
     
     void Awake()
     {
-        inventorySystem = FindObjectOfType<InventorySystem>();
+        // inventorySystem = CanvasManager.Instance.Inventory;
+        // Debug.LogWarning($"Awake called inventorySystem");
     }
     
     void Start()
@@ -41,7 +42,8 @@ public class InventoryMenu : MonoBehaviour
         if (inventorySystem != null)
         {
             // Abonnement à l'event avec une méthode callback
-            inventorySystem.OnInventoryChanged += RefreshUI;
+            inventorySystem.OnAddInventory += RefreshUI;
+            Debug.LogError("Inventory menu OnEnable");
         }
         else
         {
@@ -54,7 +56,7 @@ public class InventoryMenu : MonoBehaviour
         if (inventorySystem != null)
         {
             // Désabonnement de l'event pour éviter les erreurs de références invalides
-            inventorySystem.OnInventoryChanged -= RefreshUI;
+            inventorySystem.OnAddInventory -= RefreshUI;
         }
     } 
     
