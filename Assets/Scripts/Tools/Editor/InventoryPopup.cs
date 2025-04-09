@@ -8,7 +8,7 @@ public class InventoryPopup : EditorWindow {
     
     private InventorySystem inventoryPlayer;
 
-    private List<ItemData> itemDatas = new List<ItemData>();
+    private List<CollectibleData> itemDatas = new List<CollectibleData>();
     readonly string dataItemPath = "Assets/Data/Items/Collectibles";
     
     // Méthode pour afficher le pop-up
@@ -33,7 +33,7 @@ public class InventoryPopup : EditorWindow {
         GUILayout.Label("Dictionnaire de l'inventaire", EditorStyles.boldLabel);
 
         // Afficher chaque item du dictionnaire
-        foreach ( ItemData item in itemDatas ) {
+        foreach ( CollectibleData item in itemDatas ) {
             
             GUILayout.BeginHorizontal();
 
@@ -100,11 +100,11 @@ public class InventoryPopup : EditorWindow {
             Debug.LogWarning("Le dossier spécifié n'existe pas : " + folderPath);
         }
 
-        string[] guids = AssetDatabase.FindAssets("t:ItemData", new[] { folderPath });
+        string[] guids = AssetDatabase.FindAssets("t:CollectibleData", new[] { folderPath });
         foreach (string guid in guids)
         {
             string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-            ItemData itemData = AssetDatabase.LoadAssetAtPath<ItemData>(assetPath);
+            CollectibleData itemData = AssetDatabase.LoadAssetAtPath<CollectibleData>(assetPath);
             if (itemData != null)
             {
                 itemDatas.Add(itemData);

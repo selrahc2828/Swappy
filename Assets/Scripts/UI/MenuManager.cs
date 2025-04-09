@@ -19,7 +19,7 @@ public class MenuManager : MonoBehaviour
     
     [Header("Menus")]
     public InventoryMenu inventoryMenu;
-    public InventoryMenu tapeMenu;
+    public TapeMenu tapeMenu;
     public OptionMenu optionMenu;
     
     void Start()

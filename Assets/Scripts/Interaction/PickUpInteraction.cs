@@ -8,6 +8,8 @@ public class PickUpInteraction : InteractionSystem
     public override string interactionText => "Pickup"; // "=>" simplification de : get { return "Grab"; }
     
     public ItemData itemData;
+    private InventorySystem inventory;
+    private TapeSystem tapeSystem;
 
     public override void Initialize()
     {
@@ -16,7 +18,24 @@ public class PickUpInteraction : InteractionSystem
             Debug.LogError("PickUpInteraction: itemData is null");
             return;
         }
+        
+#if !UNITY_EDITOR
+        if (itemData is TapeData)
+        {
+            TapeData tapeData = itemData as TapeData;
+            if (tapeData.isUnlocked == true)// s'il est déjà débloquer on ne le fait pas spawn
+            {
+                return;
+            }
+        }
+#endif
+        
+        
+        inventory = FindObjectOfType<InventorySystem>();
+        tapeSystem = FindObjectOfType<TapeSystem>();
+            
         Instantiate(itemData.itemPrefab, transform.position, Quaternion.identity, transform);
+
     }
 
     public override void Interact()
@@ -25,21 +44,36 @@ public class PickUpInteraction : InteractionSystem
 
         Debug.Log("PickUpInteraction Interact");
 
-        InventorySystem inventory = GameManager.Instance?.player.gameObject.GetComponent<InventorySystem>();
-        if (inventory == null)
-            return;
-        
-        inventory.AddItem(itemData);
-        Destroy(gameObject);
+        PickUp();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            FindObjectOfType<InventorySystem>().AddItem(itemData);
-            Destroy(gameObject);
+            PickUp();
         }
+    }
+
+    public void PickUp()
+    {
+        switch (itemData)
+        {
+            case CollectibleData collectibleData:
+                if (inventory == null)
+                    return;
+        
+                inventory.AddItem(collectibleData);
+                break;
+            case TapeData tapeData:
+                tapeSystem.SetLockTape(tapeData, true);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(itemData));
+        }
+        
+
+        Destroy(gameObject); 
     }
     
     private void OnDrawGizmos() {
