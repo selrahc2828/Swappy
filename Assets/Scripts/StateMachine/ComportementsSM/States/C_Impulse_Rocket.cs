@@ -99,11 +99,11 @@ public class C_Impulse_Rocket : ComportementState
                 impulseTimer = 0f;
             }
 
-            if (_sm.rb.velocity.magnitude > maxSpeed)
+            if (Vector3.Project(_sm.rb.velocity, _sm.transform.up).magnitude > maxSpeed)
             {
-                _sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
+                return;
             }
-            
+
             if (_sm.isPlayer)
             {
                 _sm.rb.AddForce(_sm.transform.up * rocketFlyForceOnPlayer , ForceMode.Force);
