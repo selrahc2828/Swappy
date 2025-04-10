@@ -70,13 +70,15 @@ public class C_Solo_Rocket : ComportementState
             timer = 0f;
         }
         
-        if (_sm.rb.velocity.magnitude > maxSpeed)
-        {
-            _sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
-        }
+        
         
         if (rocketOn)
         {
+            if (Vector3.Project(_sm.rb.velocity, _sm.transform.up).magnitude > maxSpeed)
+            {
+                return;
+            }
+
             if (!rocketStingOn)
             {
                 FMODEventManager.instance.SetNamedParamEventInstance(_rocketSoundEvent,"Stinger", 1f);
