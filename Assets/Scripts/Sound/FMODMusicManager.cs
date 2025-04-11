@@ -27,7 +27,9 @@ public class FMODMusicManager : MonoBehaviour
     
     private EventInstance musictest;
     
+    private EventInstance musicTapeState;
     private EventInstance musicTape;
+    
     
     private void Awake()
     {
@@ -74,7 +76,7 @@ public class FMODMusicManager : MonoBehaviour
         return (value);
     }
 
-    public void SetMusicNameParamInstance(EventInstance musicInstance, string paramName, float value, bool seekSpeed)
+    public void SetMusicNameParamInstance(EventInstance musicInstance, string paramName, float value, bool seekSpeed = true)
     {
         musicInstance.setParameterByName(paramName, value, seekSpeed);
     }
@@ -116,7 +118,7 @@ public class FMODMusicManager : MonoBehaviour
 
     public void ChooseMusicWalkMan(EventInstance musicTape, string musicName)
     {
-        musicTape.setUserData(GCHandle.ToIntPtr(GCHandle.Alloc("CassetteJazzFilmNoir")));
+        musicTape.setUserData(GCHandle.ToIntPtr(GCHandle.Alloc(musicName)));
         musicTape.setCallback(walkmanCallback);
     }
     #endregion
@@ -139,16 +141,20 @@ public class FMODMusicManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            musicTape = CreateMusicInstance(FMODMusicEvents.TestMusic5);
-            ChooseMusicWalkMan(musicTape, "bounce");
+            musicTapeState = CreateMusicInstance(FMODMusicEvents.TestMusic5);
+            musicTape = CreateMusicInstance(FMODMusicEvents.TestMusic6);
+            
+            ChooseMusicWalkMan(musicTape, "dinosaur-1-86566");
+            PlayMusicInstance(musicTapeState);
             PlayMusicInstance(musicTape);
+            
         }
 
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            StopMusic(musicTape);
-            ChooseMusicWalkMan(musicTape, "bounce");
-            PlayMusicInstance(musicTape);
+            SetMusicNameParamInstance(musicTapeState, "State", 2);
+
+
         }
 
         if (Input.GetKeyDown(KeyCode.Keypad3))
