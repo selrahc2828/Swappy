@@ -27,7 +27,7 @@ public class FMODMusicManager : MonoBehaviour
     
     private EventInstance musictest;
     
-    private EventInstance musicTapeState;
+    private EventInstance snapshotWalkman;
     private EventInstance musicTape;
     
     
@@ -141,18 +141,18 @@ public class FMODMusicManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            musicTapeState = CreateMusicInstance(FMODMusicEvents.TestMusic5);
+            snapshotWalkman = CreateMusicInstance(FMODSnapshotEvents.WalkMan);
             musicTape = CreateMusicInstance(FMODMusicEvents.TestMusic6);
             
             ChooseMusicWalkMan(musicTape, "dinosaur-1-86566");
-            PlayMusicInstance(musicTapeState);
+            PlayMusicInstance(snapshotWalkman);
             PlayMusicInstance(musicTape);
             
         }
 
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            SetMusicNameParamInstance(musicTapeState, "State", 2);
+            SetMusicNameParamInstance(snapshotWalkman, "State", 2);
 
 
         }
