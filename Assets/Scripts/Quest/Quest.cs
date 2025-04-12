@@ -11,12 +11,13 @@ public enum QuestTypes
 public enum QuestRedundancy
 {
     OneOf,
-    Floating
+    Multiple
 }
 public class Quest : MonoBehaviour
 {
     public string QuestName;
     public QuestTypes QuestType;
+    public QuestRedundancy Redundancy;
     public UnityEvent QuestEvent;
 
     public readonly Dictionary<QuestTypes, Color> QuestColors = new Dictionary<QuestTypes, Color>()
