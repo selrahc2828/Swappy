@@ -29,12 +29,11 @@ public class TapeMenu : MonoBehaviour
     void OnEnable()
     {
         SetTapeButtons();
-        AdjustScrollPadding();
-
         CenterMiddleButtonIfNoneSelected();
+        AdjustScrollPadding();
     }
 
-    private void SetTapeButtons()
+    public void SetTapeButtons()
     {
         // On supprime tous les slots existants
         foreach (Transform child in tapesContent)
@@ -46,15 +45,11 @@ public class TapeMenu : MonoBehaviour
         {
             GameObject tapeButton = Instantiate(tapeSlotPrefab, tapesContent);
             TapeSlotUI tapeSlotUI = tapeButton.GetComponent<TapeSlotUI>();
-            tapeSlotUI.TapeMenu = this;
-            if (tape)
-            {
-                tapeSlotUI.MusicData = tape;
-            }
+            tapeSlotUI.Initialize(tape, this,SetSelectedTape, CenterButton);
         } 
     }
 
-    void AdjustScrollPadding()
+    public void AdjustScrollPadding()
     {
         // ajoute padding en haut et en bas pour pouvoir placer tous les boutons au centre si on clique dessus (sinon les boutons les plus en haut et en bas ne le font pas)
         
@@ -142,13 +137,12 @@ public class TapeMenu : MonoBehaviour
         scrollRect.normalizedPosition = new Vector2(0f, 1f - normalizedY);
     }
 
-    private void CenterMiddleButtonIfNoneSelected()
+    public void CenterMiddleButtonIfNoneSelected()
     {
         if (selectedTape != null) return;
         if (tapeList == null || tapeList.Count == 0) return;
         
         int middleIndex = tapeList.Count / 2;
-
         if (middleIndex < scrollRect.content.childCount) // securite
         {
             RectTransform middleButton = scrollRect.content.GetChild(middleIndex) as RectTransform;
@@ -157,43 +151,6 @@ public class TapeMenu : MonoBehaviour
                 CenterButton(middleButton);
             }
         }
-
-
-    }
-
-    public void RefreshUI()
-    {
-        // On supprime tous les slots existants
-        foreach (Transform child in tapesContent)
-        {
-            Destroy(child.gameObject);
-        }
-
-        int totalSlots = tapeList.Count;
-        //List<ItemData> itemKeys = new List<ItemData>(tapesContent.InventoryItems.Keys);
-        
-        // instancie un nombre de slot == à maxSlots
-        for (int i = 0; i < totalSlots ; i++)
-        {
-            GameObject slot = Instantiate(tapeSlotPrefab, tapesContent);
-            InventorySlotUI slotUI = slot.GetComponent<InventorySlotUI>();
-            
-            if (slotUI != null)
-            {
-                // if (i < itemKeys.Count)
-                // {
-                //     //remplis avec donnees inventaire
-                //     
-                //     // slotUI.Initialize(itemKeys[i], inventorySystem.InventoryItems[itemKeys[i]].quantity, OnItemSlotClicked);
-                // }
-                // else
-                // {
-                //     // slotUI.Initialize(null, 0, null);
-                // }
-            }
-            
-        }
-        
     }
     
 }

@@ -72,7 +72,6 @@ public class PickUpInteraction : InteractionSystem
                 throw new ArgumentOutOfRangeException(nameof(itemData));
         }
         
-
         Destroy(gameObject); 
     }
     

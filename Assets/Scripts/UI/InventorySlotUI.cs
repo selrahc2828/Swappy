@@ -14,12 +14,12 @@ public class InventorySlotUI : MonoBehaviour
     {
         itemData = item;
 
-        if (itemData != null)
+        if (itemData is not null)
         {
-            if (iconImage != null && item.itemSprite != null)
+            if (iconImage is not  null && item.itemSprite is not  null)
                 iconImage.sprite = item.itemSprite;
 
-            if (quantityText != null)
+            if (quantityText is not  null)
                 quantityText.text = quantity.ToString();
 
             // Abonnement au clic sur le bouton
@@ -31,9 +31,9 @@ public class InventorySlotUI : MonoBehaviour
         }
         else
         {
-            if (quantityText != null)
+            if (quantityText is not  null)
                 quantityText.text = "";
-            GetComponent<Button>().onClick.RemoveAllListeners();
+            button.onClick.RemoveAllListeners();//GetComponent<Button>()
         }
         
 

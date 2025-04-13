@@ -8,50 +8,79 @@ using UnityEngine.UI;
 
 public class TapeSlotUI : MonoBehaviour
 {
-    [SerializeField] private TapeData musicData;
-    public TapeData MusicData
-    {
-        get => musicData;
-        set => musicData = value;
-    }
     [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private Button button;
-
-    [SerializeField] private TapeMenu tapeMenu;
-
-    public TapeMenu TapeMenu
+     [SerializeField] private Button button;
+    
+     // [SerializeField] private TapeData musicData;
+    // public TapeData MusicData
+    // {
+    //     get => musicData;
+    //     set => musicData = value;
+    // }
+    // [SerializeField] private TapeMenu tapeMenu; // pour test en inspecteur si on le set et pas ajout dynamique
+    
+    private void OnEnable()// pour test en inspecteur si on le set et pas ajout dynamique
     {
-        get => tapeMenu;
-        set => tapeMenu = value;
+        #region pour test en inspecteur si on le set et pas ajout dynamique
+        // button.onClick.AddListener(() => {
+        //     tapeMenu.CenterButton(transform as RectTransform);
+        // });
+        //
+        //
+        // if (musicData == null)
+        // {
+        //     button.interactable  = false;
+        //     nameText.text = $"??? - Pas de TapeData";
+        //     return;
+        // }
+        //
+        // if (musicData?.isUnlocked == false)
+        // {
+        //     nameText.text = $"???";
+        //     button.interactable  = false;
+        // }
+        // else
+        // {
+        //     nameText.text = musicData?.itemName;
+        //     button.interactable  = true;
+        //     button.onClick.AddListener(() => {
+        //         tapeMenu.SetSelectedTape(musicData);
+        //         tapeMenu.CenterButton(transform as RectTransform);
+        //     });
+        //     
+        // }
+        
+
+        #endregion
     }
-
-    private void OnEnable()
+    
+    public void Initialize(TapeData tapeData, TapeMenu menu, Action<TapeData> onClickCallback, Action<RectTransform> onClickCallback2)
     {
-        button.onClick.AddListener(() => {
-            tapeMenu.CenterButton(transform as RectTransform);
-        });
+        // button.onClick.AddListener(() => {
+        //     onClickCallback2?.Invoke(transform as RectTransform);
+        // });
         
-        
-        if (musicData == null)
+        if (tapeData == null)
         {
             button.interactable  = false;
             nameText.text = $"??? - Pas de TapeData";
             return;
         }
         
-        if (musicData?.isUnlocked == false)
+        if (tapeData?.isUnlocked == false)
         {
             nameText.text = $"???";
             button.interactable  = false;
         }
         else
         {
-            nameText.text = musicData?.itemName;
+            nameText.text = tapeData?.itemName;
             button.interactable  = true;
-            button.onClick.AddListener(() => {
-                tapeMenu.SetSelectedTape(musicData);
-                tapeMenu.CenterButton(transform as RectTransform);
-            });
+            button.onClick.AddListener(() =>
+            {
+                onClickCallback?.Invoke(tapeData); //SetSelectedTape
+                onClickCallback2?.Invoke(transform as RectTransform); //CenterButton
+            });  
             
         }
     }

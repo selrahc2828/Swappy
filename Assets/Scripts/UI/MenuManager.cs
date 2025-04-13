@@ -98,6 +98,10 @@ public class MenuManager : MonoBehaviour
         inventoryGroup.SetActive(false);
         tapeGroup.SetActive(true);
         optionGroup.SetActive(false);
+        
+        tapeMenu.SetTapeButtons();
+        tapeMenu.CenterMiddleButtonIfNoneSelected();
+        tapeMenu.AdjustScrollPadding();
     }
     
 }
