@@ -19,18 +19,18 @@ public class CanvasManager : MonoBehaviour
     
     private void Awake()
     {
-        Debug.LogError("awake");
+        // Debug.Log("awake CanvasManager");
 
         // Singleton pattern simple
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
-            Debug.LogError("awake instance already exists!");
+            // Debug.Log("awake CanvasManager instance already exists!");
             return;
         }
 
         Instance = this;
-        Debug.LogError("awake instance Initialize");
+        // Debug.Log("awake CanvasManager instance Initialize");
         Initialize();
     }
     

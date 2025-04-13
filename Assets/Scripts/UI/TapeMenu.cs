@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -11,7 +13,10 @@ public class TapeMenu : MonoBehaviour
     private TapeData selectedTape;
     [SerializeField] private TextMeshProUGUI nameSelectedTape;
     [SerializeField] private ScrollRect scrollRect;
-    
+    [SerializeField] private Transform tapesContent;
+    [SerializeField] private GameObject tapeSlotPrefab;
+    [SerializeField] private List<TapeData> tapeList = new List<TapeData>();
+
     
     public event Action<string> onPlaySelected;
     public event Action<string> onStopSelected;
@@ -20,13 +25,60 @@ public class TapeMenu : MonoBehaviour
     public GameObject muteImage;
     public GameObject notMuteImage;
 
+
+    void OnEnable()
+    {
+        SetTapeButtons();
+        AdjustScrollPadding();
+    }
+
+    private void SetTapeButtons()
+    {
+        // On supprime tous les slots existants
+        foreach (Transform child in tapesContent)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        foreach (TapeData tape in tapeList)
+        {
+            GameObject tapeButton = Instantiate(tapeSlotPrefab, tapesContent);
+            TapeSlotUI tapeSlotUI = tapeButton.GetComponent<TapeSlotUI>();
+            tapeSlotUI.TapeMenu = this;
+            if (tape)
+            {
+                tapeSlotUI.MusicData = tape;
+            }
+        }    
+    }
+
+    void AdjustScrollPadding()
+    {
+        // ajoute padding en haut et en bas pour pouvoir placer tous les boutons au centre si on clique dessus (sinon les boutons les plus en haut et en bas ne le font pas)
+        
+        
+        var layout = scrollRect.content.GetComponent<VerticalLayoutGroup>();
+        float viewportHalfHeight = scrollRect.viewport.rect.height / 2f; // centre du conten
+
+        // On concidere que tous les enfants seront la meme prefab alors on récupere la hauteur de cette prefab
+        float maxItemHeight = tapeSlotPrefab.GetComponent<RectTransform>().rect.height ;
+
+        // Calcul du padding haut et bas
+        int idealPadding = Mathf.RoundToInt(viewportHalfHeight - (maxItemHeight / 2f));//car bouton centré au milieux
+        idealPadding = Mathf.Max(0, idealPadding);// au cas ou le bouton est trop gros et donne une valeur négative
+
+        layout.padding.top = idealPadding;
+        layout.padding.bottom = idealPadding;
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
+        
+    }
     
     public void SetSelectedTape(TapeData tape)
     {
         selectedTape = tape;
         nameSelectedTape.text = tape.itemName;
     }
-
 
     public void PlayTape()
     {
@@ -68,9 +120,10 @@ public class TapeMenu : MonoBehaviour
     
     public void CenterButton(RectTransform targetToMove)
     {
+        // content pivot et boutons pivot X = 0.5, Y = 1
+        // enfant ajouté de bas en haut, on place tout à l'origine en haut
+        // pour simplifier les calculs de localPosition.y et normalizedPosition.y
         
-        Debug.Log($"CenterOnButton");
-
         Canvas.ForceUpdateCanvases();
         
         RectTransform content = scrollRect.content;
@@ -87,4 +140,78 @@ public class TapeMenu : MonoBehaviour
         scrollRect.normalizedPosition = new Vector2(0f, 1f - normalizedY);
     }
 
+    private void CenterClosestButtonIfNoneSelected()
+    {
+        if (selectedTape != null) return;
+
+        RectTransform content = scrollRect.content;
+        RectTransform viewport = scrollRect.viewport;
+
+        float closestDistance = float.MaxValue;
+        RectTransform closestButton = null;
+
+        foreach (Transform child in content)
+        {
+            RectTransform childRect = child as RectTransform;
+
+            // Obtenir la position du bouton dans le viewport
+            Vector3 worldPos = childRect.position;
+            Vector2 localPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                viewport,
+                worldPos,
+                viewport.GetComponentInParent<Canvas>().worldCamera,
+                out localPoint
+            );
+
+            float distanceToCenter = Mathf.Abs(localPoint.y);
+
+            if (distanceToCenter < closestDistance)
+            {
+                closestDistance = distanceToCenter;
+                closestButton = childRect;
+            }
+        }
+
+        if (closestButton != null)
+        {
+            CenterButton(closestButton);
+        }
+    }
+
+    public void RefreshUI()
+    {
+        // On supprime tous les slots existants
+        foreach (Transform child in tapesContent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        int totalSlots = tapeList.Count;
+        //List<ItemData> itemKeys = new List<ItemData>(tapesContent.InventoryItems.Keys);
+        
+        // instancie un nombre de slot == à maxSlots
+        for (int i = 0; i < totalSlots ; i++)
+        {
+            GameObject slot = Instantiate(tapeSlotPrefab, tapesContent);
+            InventorySlotUI slotUI = slot.GetComponent<InventorySlotUI>();
+            
+            if (slotUI != null)
+            {
+                // if (i < itemKeys.Count)
+                // {
+                //     //remplis avec donnees inventaire
+                //     
+                //     // slotUI.Initialize(itemKeys[i], inventorySystem.InventoryItems[itemKeys[i]].quantity, OnItemSlotClicked);
+                // }
+                // else
+                // {
+                //     // slotUI.Initialize(null, 0, null);
+                // }
+            }
+            
+        }
+        
+    }
+    
 }

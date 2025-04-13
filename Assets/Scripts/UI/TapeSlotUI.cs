@@ -9,16 +9,20 @@ using UnityEngine.UI;
 public class TapeSlotUI : MonoBehaviour
 {
     [SerializeField] private TapeData musicData;
+    public TapeData MusicData
+    {
+        get => musicData;
+        set => musicData = value;
+    }
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private Button button;
 
-    [SerializeField] private TapeMenu tapeMenu; 
-    
-    [SerializeField] ScrollRect scrollRect;
-    public ScrollRect ScrollRect
+    [SerializeField] private TapeMenu tapeMenu;
+
+    public TapeMenu TapeMenu
     {
-        get => scrollRect;
-        set => scrollRect = value;
+        get => tapeMenu;
+        set => tapeMenu = value;
     }
 
     private void OnEnable()
@@ -30,30 +34,26 @@ public class TapeSlotUI : MonoBehaviour
         
         if (musicData == null)
         {
-            //button.interactable  = false;
+            button.interactable  = false;
+            nameText.text = $"??? - Pas de TapeData";
             return;
         }
         
         if (musicData?.isUnlocked == false)
         {
-            // nameText.text = $"???";
-            //button.interactable  = false;
+            nameText.text = $"???";
+            button.interactable  = false;
         }
         else
         {
             nameText.text = musicData?.itemName;
             button.interactable  = true;
             button.onClick.AddListener(() => {
-                SendMusic();
                 tapeMenu.SetSelectedTape(musicData);
-                // tapeMenu.CenterButton(transform as RectTransform);
+                tapeMenu.CenterButton(transform as RectTransform);
             });
             
         }
     }
 
-    public void SendMusic()
-    {
-        Debug.Log($"Tape click music: {musicData.name}");
-    }
 }

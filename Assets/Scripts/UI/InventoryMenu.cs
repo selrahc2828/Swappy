@@ -27,6 +27,7 @@ public class InventoryMenu : MonoBehaviour
     
     void Awake()
     {
+        // pb de synchro et ici est null
         // inventorySystem = CanvasManager.Instance.Inventory;
         // Debug.LogWarning($"Awake called inventorySystem");
     }
@@ -46,7 +47,10 @@ public class InventoryMenu : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Inventory system is null");
+            Debug.Log("Inventory system is null");
+            inventorySystem = FindObjectOfType<InventorySystem>(); // si possible à mettre une ref dans un manager
+            inventorySystem.OnAddInventory += RefreshUI;
+
         }
     }
 
