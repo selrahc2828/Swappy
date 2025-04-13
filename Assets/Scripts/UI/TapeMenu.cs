@@ -30,6 +30,8 @@ public class TapeMenu : MonoBehaviour
     {
         SetTapeButtons();
         AdjustScrollPadding();
+
+        CenterMiddleButtonIfNoneSelected();
     }
 
     private void SetTapeButtons()
@@ -49,7 +51,7 @@ public class TapeMenu : MonoBehaviour
             {
                 tapeSlotUI.MusicData = tape;
             }
-        }    
+        } 
     }
 
     void AdjustScrollPadding()
@@ -140,43 +142,23 @@ public class TapeMenu : MonoBehaviour
         scrollRect.normalizedPosition = new Vector2(0f, 1f - normalizedY);
     }
 
-    private void CenterClosestButtonIfNoneSelected()
+    private void CenterMiddleButtonIfNoneSelected()
     {
         if (selectedTape != null) return;
+        if (tapeList == null || tapeList.Count == 0) return;
+        
+        int middleIndex = tapeList.Count / 2;
 
-        RectTransform content = scrollRect.content;
-        RectTransform viewport = scrollRect.viewport;
-
-        float closestDistance = float.MaxValue;
-        RectTransform closestButton = null;
-
-        foreach (Transform child in content)
+        if (middleIndex < scrollRect.content.childCount) // securite
         {
-            RectTransform childRect = child as RectTransform;
-
-            // Obtenir la position du bouton dans le viewport
-            Vector3 worldPos = childRect.position;
-            Vector2 localPoint;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                viewport,
-                worldPos,
-                viewport.GetComponentInParent<Canvas>().worldCamera,
-                out localPoint
-            );
-
-            float distanceToCenter = Mathf.Abs(localPoint.y);
-
-            if (distanceToCenter < closestDistance)
+            RectTransform middleButton = scrollRect.content.GetChild(middleIndex) as RectTransform;
+            if (middleButton != null)
             {
-                closestDistance = distanceToCenter;
-                closestButton = childRect;
+                CenterButton(middleButton);
             }
         }
 
-        if (closestButton != null)
-        {
-            CenterButton(closestButton);
-        }
+
     }
 
     public void RefreshUI()
