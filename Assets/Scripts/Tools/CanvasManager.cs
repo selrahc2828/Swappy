@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
@@ -15,7 +16,12 @@ public class CanvasManager : MonoBehaviour
     
     [Header("Pick Item")]
     [SerializeField] private GameObject itemPopupPrefab;
-    [SerializeField] private Transform popupParent; // un panel dans ton Canvas
+    [SerializeField] private Transform popupItemParent;
+    
+    [Header("Pick Tape")]
+    [SerializeField] private GameObject tapePopupGroup;
+    [SerializeField] private Transform popupTapeParent; 
+
     
     private void Awake()
     {
@@ -61,9 +67,9 @@ public class CanvasManager : MonoBehaviour
 
     public void ShowPopup(ItemData item, int amount = 1)
     {
-        if (itemPopupPrefab == null || popupParent == null) return;
+        if (itemPopupPrefab == null || popupItemParent == null) return;
 
-        GameObject popup = Instantiate(itemPopupPrefab, popupParent);
+        GameObject popup = Instantiate(itemPopupPrefab, popupItemParent);
 
         PopupGroup popupGroup = popup.GetComponent<PopupGroup>();
         if (popupGroup != null)

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class InventoryMenu : MonoBehaviour
@@ -18,8 +19,8 @@ public class InventoryMenu : MonoBehaviour
     public TextMeshProUGUI slotInfoName;
     [HideInInspector] public RawImage slotInfoImageRaw; // image UI qui utilise un RenderTexture
 
-    [Header("Preview 3D")]
-    public Transform previewSpawnPoint; // empty dans la scène pour instancier le modèle a render == prefab RenderTextureGroup
+    [FormerlySerializedAs("previewSpawnPoint")] [Header("Preview 3D")]
+    public PreviewInventoryControl previewControl; // empty dans la scène pour instancier le modèle a render == prefab RenderTextureGroup
     private GameObject currentPreviewInstance;
     
     
@@ -107,10 +108,11 @@ public class InventoryMenu : MonoBehaviour
             Destroy(currentPreviewInstance);
 
         // instancie prefab pour la preview
-        if (clickedItem.itemPrefab != null && previewSpawnPoint != null)
+        if (clickedItem.itemPrefab != null && previewControl != null)
         {
-            currentPreviewInstance = Instantiate(clickedItem.itemPrefab, previewSpawnPoint.position, Quaternion.identity, previewSpawnPoint);
-
+            currentPreviewInstance = Instantiate(clickedItem.itemPrefab, previewControl.PreviewPosition.position, Quaternion.identity, previewControl.PreviewPosition);
+            previewControl.SetOffsetCamera(clickedItem.itemPrefab);
+            
             //layer que la PreviewCamera voit
             currentPreviewInstance.layer = LayerMask.NameToLayer("PreviewObject");
             
