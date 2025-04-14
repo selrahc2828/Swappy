@@ -24,18 +24,8 @@ public class C_Impulse_Magnet : ComportementState
        // prefabSonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
         //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
         stateValue = 28;
-        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
-        {
-            leftValue = 27;
-            rightValue = 1;
-        }
-        else  // Par défaut, initialisation pour la main gauche
-        {
-            leftValue = 1;
-            rightValue = 27;
-        }
-        // leftValue = 1;
-        // rightValue = 27;
+        leftValue = 1;
+        rightValue = 27;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.magnetColor);
         

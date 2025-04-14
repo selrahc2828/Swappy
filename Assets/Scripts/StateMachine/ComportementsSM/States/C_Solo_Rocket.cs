@@ -28,18 +28,8 @@ public class C_Solo_Rocket : ComportementState
         FMODEventManager.instance.PlayEventInstance(_rocketSoundEvent);
         isKinematic = false;
         stateValue = 81;
-        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
-        {
-            leftValue = 0;
-            rightValue = 81;
-        }
-        else  // Par défaut, initialisation pour la main gauche
-        {
-            leftValue = 81;
-            rightValue = 0;
-        }
-        // leftValue = 81;
-        // rightValue = 0;
+        leftValue = 81;
+        rightValue = 0;
         base.Enter();
 
         timer = 0f;

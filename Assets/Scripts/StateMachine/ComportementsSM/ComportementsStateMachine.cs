@@ -80,7 +80,6 @@ public class ComportementsStateMachine : StateMachine
     public string displayComportementName;
 
     public FirstState initialState;
-    public bool updateRight; // pour reperer si on modifie le comportement de droite pour bien placer les comportements pour le player 
     public bool inversion;
     
     public override void Initialize()
