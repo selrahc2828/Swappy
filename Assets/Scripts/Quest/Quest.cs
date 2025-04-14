@@ -11,13 +11,18 @@ public enum QuestTypes
 public enum QuestRedundancy
 {
     OneOf,
-    Multiple
+    MultipleDiscrete,
+    MultipleContinuous,
+    CountDiscrete,
+    CountContinuous,
 }
+
 public class Quest : MonoBehaviour
 {
     public string QuestName;
     public QuestTypes QuestType;
-    public QuestRedundancy Redundancy;
+    [SerializeField] private QuestRedundancy Redundancy;
+    [SerializeField] private int validationCounter;
     public UnityEvent QuestEvent;
 
     public readonly Dictionary<QuestTypes, Color> QuestColors = new Dictionary<QuestTypes, Color>()
@@ -27,6 +32,8 @@ public class Quest : MonoBehaviour
         {QuestTypes.BlankActivity, Color.green} };
 
     private Dictionary<Condition, bool> ActiveConditions = new Dictionary<Condition, bool>();
+    private bool hasBeenValidatedOnce;
+    private int validatedCounter;
 
 
     public void ReferenceCondition(Condition conditionScript, bool state) //Référence toutes les conditions d'une quête à l'initialisation dans un dictionnaire
@@ -36,20 +43,40 @@ public class Quest : MonoBehaviour
 
     public void SetCondition(Condition condition, bool state) //Change le state d'une des condition de la quête
     {
-        if (ActiveConditions[condition] == state)
+        switch (Redundancy)
         {
-            //bloque toute tentative d'update une quest condition avec la même valeur, évitant de call plusieurs fois un accomplissement de quête.
-            return;
+            case QuestRedundancy.OneOf:
+                if (hasBeenValidatedOnce)
+                {
+                    return;
+                }
+                break;
+
+            case QuestRedundancy.MultipleDiscrete:
+                if (ActiveConditions[condition] == state)
+                {
+                    return;
+                }
+                break;
+
+            case QuestRedundancy.CountDiscrete:
+                if (ActiveConditions[condition] == state)
+                {
+                    return;
+                }
+                break;
+
+            default:
+                break;
         }
 
         ActiveConditions[condition] = state;
-
         CheckConditions();
     }
 
     private void CheckConditions() //Vérifie si la quête est accomplie en parcourant toutes les entrées du dictionnaire et en regardant si l'une d'elle est false
     {
-        bool debugPreBool = true;
+
 
         foreach (KeyValuePair<Condition, bool> conditionRef in ActiveConditions)
         {
@@ -57,16 +84,21 @@ public class Quest : MonoBehaviour
 
             if (conditionRef.Value == false)
             {
-                debugPreBool = false;
+                return;
             }
         }
 
-        if (debugPreBool == false)
+        if (Redundancy == QuestRedundancy.CountContinuous || Redundancy == QuestRedundancy.CountDiscrete)
         {
-            return;
+            validatedCounter++;
+            if (validatedCounter != validationCounter)
+            {
+                return;
+            }
         }
-
+        
         Debug.Log("Quest '" + QuestName + "' accomplished");
+        hasBeenValidatedOnce = true;
         QuestEvent.Invoke();
     }
 
