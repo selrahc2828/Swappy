@@ -1,42 +1,20 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Condition : MonoBehaviour
 {
-    [Tooltip("La Quête remplie par cette condition")] 
+    [Tooltip("La Quête remplie par cette condition. Si ce champs est vide, la condition sera considérée comme complément d'une autre condition")] 
     [SerializeField] protected Quest attachedQuest;
     [Tooltip("En règle générale, laisser l'état de base de la condition à false")] 
     [SerializeField] private bool defaultState = false;
-    [Tooltip("Activer UNIQUEMENT si ce script est utilisé comme complément d'une autre condition")]
-    [SerializeField] private bool isAdditionalCheck = false;
 
     private void Start()
     {
-        if (isAdditionalCheck)
-        {
-            return;
-        }
-
         if (attachedQuest == null)
         {
-            Debug.LogError("Il n'y a pas de script de Quête précisé dans cette Condition !");
             return;
         }
 
         attachedQuest.ReferenceCondition(this, defaultState);
-    }
-
-    protected void SetConditionState(bool state)
-    {
-        if (isAdditionalCheck)
-        {
-            Debug.LogWarning("Cette condition est marquée comme un AdditionalCheck et ne doit donc pas être reliée à une quête");
-            return;
-        }
-
-        Debug.Log("this: " + this.GetType());
-
-        attachedQuest.SetCondition(this, state);
     }
 
     protected virtual bool CheckObjectParameters(GameObject target)
@@ -47,7 +25,7 @@ public class Condition : MonoBehaviour
 
     public void OnDrawGizmos()
     {
-        if (attachedQuest != null && isAdditionalCheck == false)
+        if (attachedQuest != null)
         {
             if (attachedQuest.QuestColors.TryGetValue(attachedQuest.QuestType, out Color questColor))
             {
@@ -63,5 +41,10 @@ public class Condition : MonoBehaviour
     protected virtual Vector3 GetQuestLineStart()
     {
         return transform.position;
+    }
+
+    protected virtual void OnDestroy()
+    {
+
     }
 }
