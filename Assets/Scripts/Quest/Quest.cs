@@ -80,8 +80,6 @@ public class Quest : MonoBehaviour
 
         foreach (KeyValuePair<Condition, bool> conditionRef in ActiveConditions)
         {
-            Debug.Log("ActiveCondition: " + conditionRef.Key + " | " + conditionRef.Value);
-
             if (conditionRef.Value == false)
             {
                 return;
