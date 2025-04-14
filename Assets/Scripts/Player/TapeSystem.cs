@@ -20,6 +20,7 @@ public class TapeSystem : MonoBehaviour
     
     //emet event
     public event Action OnAddTapeList;
+    public event Action<TapeData> OnPopupTape;
     public event Action OnRemoveTapeList;
     public event Action OnTapeUnlockStatusChanged;
 
@@ -48,5 +49,6 @@ public class TapeSystem : MonoBehaviour
         tapeList[index].isUnlocked = lockTape;
         
         OnTapeUnlockStatusChanged?.Invoke();
+        OnPopupTape?.Invoke(tapeToSet);
     }
 }

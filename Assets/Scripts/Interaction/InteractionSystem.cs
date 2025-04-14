@@ -18,7 +18,7 @@ public abstract class InteractionSystem : MonoBehaviour
     
     public virtual void Interact()
     {
-        Debug.Log("Je viens d'interagir youpi");
+        
     }
 
 }

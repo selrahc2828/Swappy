@@ -14,12 +14,15 @@ public class CanvasManager : MonoBehaviour
     
     public MenuManager menuManager;
     
+    private TapeSystem tapeSystem;
+    public TapeSystem TapeSystem => tapeSystem;
+    
     [Header("Pick Item")]
     [SerializeField] private GameObject itemPopupPrefab;
     [SerializeField] private Transform popupItemParent;
     
     [Header("Pick Tape")]
-    [SerializeField] private GameObject tapePopupGroup;
+    [SerializeField] private GameObject tapePopupPrefab;
     [SerializeField] private Transform popupTapeParent; 
 
     
@@ -44,7 +47,12 @@ public class CanvasManager : MonoBehaviour
     {
         if (inventorySystem != null)
         {
-            inventorySystem.OnPopupInventory += ShowPopup;
+            inventorySystem.OnPopupInventory += ShowPopupItem;
+        }
+
+        if (tapeSystem != null)
+        {
+            tapeSystem.OnPopupTape += ShowPopupTape;
         }
     }
 
@@ -52,7 +60,12 @@ public class CanvasManager : MonoBehaviour
     {
         if (inventorySystem != null)
         {
-            inventorySystem.OnPopupInventory -= ShowPopup;
+            inventorySystem.OnPopupInventory -= ShowPopupItem;
+        }
+
+        if (tapeSystem != null)
+        {
+            tapeSystem.OnPopupTape -= ShowPopupTape;
         }
     }
 
@@ -63,19 +76,31 @@ public class CanvasManager : MonoBehaviour
         {
             menuManager.inventoryMenu.inventorySystem = inventorySystem;
         }
+        
+        tapeSystem = FindObjectOfType<TapeSystem>();
     }
 
-    public void ShowPopup(ItemData item, int amount = 1)
+    public void ShowPopupItem(ItemData item, int amount = 1)
     {
-        if (itemPopupPrefab == null || popupItemParent == null) return;
+        if (itemPopupPrefab is null || popupItemParent is null) return;
 
         GameObject popup = Instantiate(itemPopupPrefab, popupItemParent);
 
-        PopupGroup popupGroup = popup.GetComponent<PopupGroup>();
-        if (popupGroup != null)
+        PopupItemGroup popupItemGroup = popup.GetComponent<PopupItemGroup>();
+        if (popupItemGroup != null)
         {
-            popupGroup.icon.sprite = item.itemSprite;
-            popupGroup.textQuantity.text = $"+ {amount}";
+            popupItemGroup.icon.sprite = item.itemSprite;
+            popupItemGroup.textQuantity.text = $"+ {amount}";
         }
+    }
+
+    public void ShowPopupTape(TapeData tape)
+    {
+        if (tapePopupPrefab == null || popupTapeParent == null) return;
+        
+        GameObject popup = Instantiate(tapePopupPrefab, popupTapeParent);
+        PopupTapeGroup popupTapeGroup = popup.GetComponent<PopupTapeGroup>();
+        popupTapeGroup.icon.sprite = tape.itemSprite;
+        popupTapeGroup.textName.text = tape.itemName;
     }
 }

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PopupGroup : MonoBehaviour
+public class PopupItemGroup : MonoBehaviour
 {
     public float duration = 1.5f; // durée de l'animation
     public float distance = 50f; // distance à parcourir

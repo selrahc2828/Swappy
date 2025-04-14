@@ -62,7 +62,6 @@ public class PickUpInteraction : InteractionSystem
             case CollectibleData collectibleData:
                 if (inventory == null)
                     return;
-        
                 inventory.AddItem(collectibleData);
                 break;
             case TapeData tapeData:
