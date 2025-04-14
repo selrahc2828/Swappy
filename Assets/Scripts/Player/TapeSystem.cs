@@ -15,7 +15,6 @@ public class TapeSystem : MonoBehaviour
     public List<TapeData> TapeList
     {
         get => tapeList;
-        //set => inventoryItems = value;
     }
     
     //emet event

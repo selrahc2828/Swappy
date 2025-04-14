@@ -16,6 +16,11 @@ public class TapeMenu : MonoBehaviour
     [SerializeField] private Transform tapesContent;
     [SerializeField] private GameObject tapeSlotPrefab;
     [SerializeField] private List<TapeData> tapeList = new List<TapeData>();
+    public List<TapeData> TapeList
+    {
+        get => tapeList;
+        set => tapeList = value;
+    }
 
     
     public event Action<string> onPlaySelected;
@@ -24,10 +29,13 @@ public class TapeMenu : MonoBehaviour
     public bool isMuted;
     public GameObject muteImage;
     public GameObject notMuteImage;
+    private VerticalLayoutGroup layout;
 
 
     void OnEnable()
     {
+        layout = scrollRect.content.GetComponent<VerticalLayoutGroup>();
+
         SetTapeButtons();
         CenterMiddleButtonIfNoneSelected();
         AdjustScrollPadding();
@@ -51,10 +59,9 @@ public class TapeMenu : MonoBehaviour
 
     public void AdjustScrollPadding()
     {
-        // ajoute padding en haut et en bas pour pouvoir placer tous les boutons au centre si on clique dessus (sinon les boutons les plus en haut et en bas ne le font pas)
+        // ajoute padding en haut et en bas pour pouvoir placer tous les boutons au centre si on clique dessus
+        // (sinon les boutons les plus en haut et en bas ne le font pas)
         
-        
-        var layout = scrollRect.content.GetComponent<VerticalLayoutGroup>();
         float viewportHalfHeight = scrollRect.viewport.rect.height / 2f; // centre du conten
 
         // On concidere que tous les enfants seront la meme prefab alors on récupere la hauteur de cette prefab
@@ -68,7 +75,6 @@ public class TapeMenu : MonoBehaviour
         layout.padding.bottom = idealPadding;
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
-        
     }
     
     public void SetSelectedTape(TapeData tape)
@@ -82,7 +88,6 @@ public class TapeMenu : MonoBehaviour
         if (selectedTape == null)
             return;
         
-        Debug.Log($"FMOD MANAGER PLAY: {selectedTape.itemName}");
         onPlaySelected?.Invoke(selectedTape.itemName);// emet le nom du son pour FMOD
     }
     
@@ -91,14 +96,11 @@ public class TapeMenu : MonoBehaviour
         if (selectedTape == null)
             return;
         
-        Debug.Log($"FMOD MANAGER STOP: {selectedTape.itemName}");
         onStopSelected?.Invoke(selectedTape.itemName);
     }
 
     public void MuteEnvironment()
     {
-        Debug.Log($"FMOD MANAGER MUTE ENVIRO");
-
         isMuted = !isMuted;
         
         onMute?.Invoke(isMuted);
@@ -117,6 +119,7 @@ public class TapeMenu : MonoBehaviour
     
     public void CenterButton(RectTransform targetToMove)
     {
+        // prefab
         // content pivot et boutons pivot X = 0.5, Y = 1
         // enfant ajouté de bas en haut, on place tout à l'origine en haut
         // pour simplifier les calculs de localPosition.y et normalizedPosition.y

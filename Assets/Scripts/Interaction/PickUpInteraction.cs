@@ -31,8 +31,8 @@ public class PickUpInteraction : InteractionSystem
 #endif
         
         
-        inventory = FindObjectOfType<InventorySystem>();
-        tapeSystem = FindObjectOfType<TapeSystem>();
+        inventory = FindObjectOfType<InventorySystem>(); // voir pour ref ailleur
+        tapeSystem = FindObjectOfType<TapeSystem>(); // voir pour ref ailleur
             
         Instantiate(itemData.itemPrefab, transform.position, Quaternion.identity, transform);
 

@@ -53,6 +53,8 @@ public class CanvasManager : MonoBehaviour
         if (tapeSystem != null)
         {
             tapeSystem.OnPopupTape += ShowPopupTape;
+            // refresh les boutons si on débloque une tape / change la valeur data.isUnlocked
+            tapeSystem.OnTapeUnlockStatusChanged += menuManager.tapeMenu.SetTapeButtons;
         }
     }
 
@@ -66,6 +68,7 @@ public class CanvasManager : MonoBehaviour
         if (tapeSystem != null)
         {
             tapeSystem.OnPopupTape -= ShowPopupTape;
+            tapeSystem.OnTapeUnlockStatusChanged -= menuManager.tapeMenu.SetTapeButtons;
         }
     }
 
@@ -78,6 +81,10 @@ public class CanvasManager : MonoBehaviour
         }
         
         tapeSystem = FindObjectOfType<TapeSystem>();
+        if (tapeSystem != null)
+        {
+            menuManager.tapeMenu.TapeList = tapeSystem.TapeList;
+        }
     }
 
     public void ShowPopupItem(ItemData item, int amount = 1)
