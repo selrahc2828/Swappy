@@ -41,6 +41,11 @@ public class Quest : MonoBehaviour
         ActiveConditions.Add(conditionScript, state);
     }
 
+    public void UnreferenceCondition(Condition conditionScript)
+    {
+        ActiveConditions.Remove(conditionScript);
+    }
+
     public void SetCondition(Condition condition, bool state) //Change le state d'une des condition de la quête
     {
         switch (Redundancy)

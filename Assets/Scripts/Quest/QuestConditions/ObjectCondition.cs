@@ -26,7 +26,6 @@ public class ObjectCondition : Condition
 
     [Space(16)]
     public GameObject targetObject;
-    [SerializeField] private bool validationBool = true;
     [SerializeField] private ValidationTypes validationType;
     [SerializeField] private OperatorTypes operatorType;
 

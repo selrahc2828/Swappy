@@ -2,11 +2,9 @@ using UnityEngine;
 
 public class DestroyCondition : Condition
 {
-    [Space(16)]
-    [SerializeField] private bool onDestroyState = true;
-
     private void OnDestroy()
     {
-        attachedQuest.SetCondition(this, onDestroyState);
+        attachedQuest.SetCondition(this, validationBool);
+        attachedQuest.UnreferenceCondition(this);
     }
 }

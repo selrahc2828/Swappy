@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Condition : MonoBehaviour
@@ -6,6 +7,7 @@ public class Condition : MonoBehaviour
     [SerializeField] protected Quest attachedQuest;
     [Tooltip("En règle générale, laisser l'état de base de la condition à false")] 
     [SerializeField] private bool defaultState = false;
+    [SerializeField] protected bool validationBool = false;
 
     private void Start()
     {
@@ -21,6 +23,11 @@ public class Condition : MonoBehaviour
     {
         Debug.LogError("La condition '" + this + "' dans l'objet " + transform.name + " ne peux pas être utilisée comme complément d'une autre condition !");
         return false;
+    }
+
+    protected virtual void OnDisable()
+    {
+        attachedQuest.UnreferenceCondition(this);
     }
 
     public void OnDrawGizmos()
@@ -41,10 +48,5 @@ public class Condition : MonoBehaviour
     protected virtual Vector3 GetQuestLineStart()
     {
         return transform.position;
-    }
-
-    protected virtual void OnDestroy()
-    {
-
     }
 }
