@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5073832175352828605}
   - component: {fileID: 1946511582474088869}
-  - component: {fileID: 8417560876531944415}
   - component: {fileID: 3738601696558851606}
   - component: {fileID: 368593988133447694}
   - component: {fileID: 2249551179768967199}
@@ -73,21 +72,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 2
---- !u!114 &8417560876531944415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 55948801783339615}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05913fd622461c448a4c5f50ceebd9cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  gameManager: {fileID: 0}
-  soundManager: {fileID: 0}
 --- !u!114 &3738601696558851606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,178 +184,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16543dbc1a95ab3419a9da7c8b9e6773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  rb: {fileID: 0}
-  moveInputVector: {x: 0, y: 0}
-  moveDirection: {x: 0, y: 0, z: 0}
-  grounded: 0
-  planete: {fileID: 0}
-  playerHeight: 0
-  antiStickBaseValue: 0
-  antiStickMaterial: {fileID: 0}
   maxSpeed: 0
+  moveSpeed: 0
+  sprintMultiplier: 0
+  aerialMultiplier: 0
+  stoppingRatio: 0
+  sideSpeedReductionRatio: 0
   jumpForce: 0.5
   isSprinting: 0
   isStopping: 0
-  moveSpeedCurveAttackWalk:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 24.510355
-      outSlope: 557.07654
-      tangentMode: 1
-      weightedMode: 2
-      inWeight: 0
-      outWeight: 0.0023603141
-    - serializedVersion: 3
-      time: 0.7600703
-      value: 1
-      inSlope: 0.0036503375
-      outSlope: 0
-      tangentMode: 1
-      weightedMode: 1
-      inWeight: 0.9973016
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  moveSpeedCurveAttackRun:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 4.9064984
-      outSlope: 155.37534
-      tangentMode: 1
-      weightedMode: 3
-      inWeight: 0.64317113
-      outWeight: 0.006421425
-    - serializedVersion: 3
-      time: 1
-      value: 1.5
-      inSlope: 0.0031014802
-      outSlope: 0.0031014802
-      tangentMode: 0
-      weightedMode: 1
-      inWeight: 1
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  moveSpeedCurveSustainWalk:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 1
-    m_RotationOrder: 4
-  moveSpeedCurveSustainRun:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1.5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1.5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 1
-    m_RotationOrder: 4
-  moveSpeedCurveReleaseWalk:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -2.264376
-      outSlope: -1285.9408
-      tangentMode: 1
-      weightedMode: 2
-      inWeight: 0
-      outWeight: 0.0007770007
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -0.0015119181
-      outSlope: -0.0015119181
-      tangentMode: 0
-      weightedMode: 1
-      inWeight: 0.9992503
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  moveSpeedCurveReleaseRun:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1.5
-      inSlope: -2.264376
-      outSlope: -744.18604
-      tangentMode: 1
-      weightedMode: 2
-      inWeight: 0
-      outWeight: 0.0013342298
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -0.0015119181
-      outSlope: -0.0015119181
-      tangentMode: 0
-      weightedMode: 1
-      inWeight: 0.9992503
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  mouvementAttackDuration: 0.5
-  mouvementReleaseDuration: 0.5
-  gravityComponent: {fileID: 0}
+  grounded: 0
   touchingInclinedSurface: 0
   touchingInclinedSurfaceDirection: {x: 0, y: 0, z: 0}
-  touchingInclinedSurfaceDirectionOnPlanet: {x: 0, y: 0, z: 0}
 --- !u!114 &3479498097909473970
 MonoBehaviour:
   m_ObjectHideFlags: 0
