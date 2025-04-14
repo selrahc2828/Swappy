@@ -58,7 +58,7 @@ public class ComportementStealer_proto : MonoBehaviour
             simActive = false;
         }
     }
-    
+
     void ActionSlot1(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -73,79 +73,7 @@ public class ComportementStealer_proto : MonoBehaviour
                 SimSlot1();
                 return;
             }
-            
-            RaycastHit _hit;
-
-            _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
-            {
-                if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
-                {
-                    return;
-                }
-                var stateMachine = _hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
-                if (stateMachine != null)
-                {
-                    //On verifie si slot1 est superieur a 0, s'il l'est, on cherche alors a donner un comportement a l'objet vise, sinon on cherche a prelever un comportement � l'objet vis�
-                    if (slot1 == 0)
-                    {
-                        _stateStolen = stateMachine; // Stocker la r�f�rence
-                        if (_stateStolen.currentState is ComportementState)
-                        {
-                            ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
-                            
-                            //On v�rifie que la stateValue de l'objet vis� est superieur � 0, on ne peut pr�lever un comportement que si c'est le cas.
-                            if(currentObjectState.stateValue != 0)
-                            {
-                                //stateValue est supperieur � 0, leftValue est donc obligatoirement remplie, etant donn� qu'il s'agit du clique gauche, on ne cherche que la leftValue
-                                if (currentObjectState.leftValue != 0)
-                                {
-                                    int futurState = currentObjectState.stateValue - currentObjectState.leftValue;
-                                    currentObjectState.CalculateNewtState(futurState);
-                                    slot1 = currentObjectState.leftValue;
-                                }
-                                else
-                                {
-                                    Debug.LogWarning("Normalement c'est litteralement impossible de faire �a");
-                                }
-                            }
-                            else
-                            {
-                                Debug.Log("L'objet ne contiens aucun comportement � pr�lever");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        _stateStolen = stateMachine; // Stocker la r�f�rence
-                        if (_stateStolen.currentState is ComportementState)
-                        {
-                            ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
-                            //On verifie si l'objet vis� est vide, si c'est le cas on lui donne directement un comp�rtement avec leftValue, sinon on va v�rifier si sa rightValue est vide
-                            if(currentObjectState.stateValue != 0)
-                            {
-                                //On v�rifie si le rightValue de l'objet Vis� est vide, si c'est le cas, on lui ajoute le comportement stoqu� dans slot1.
-                                if (currentObjectState.rightValue == 0)
-                                {
-                                    int futurState = currentObjectState.stateValue + slot1;
-                                    currentObjectState.CalculateNewtState(futurState);
-                                    slot1 = 0;
-                                }
-                                else
-                                {
-                                    Debug.Log("L'objet contiens d�j� 2 comportements");
-                                }
-                            }
-                            else
-                            {
-                                int futurState = currentObjectState.stateValue + slot1;
-                                currentObjectState.CalculateNewtState(futurState);
-                                slot1 = 0;
-                            }
-                        }
-                    }
-                }
-            }
+            Slot1();
         }
     }
 
@@ -153,7 +81,6 @@ public class ComportementStealer_proto : MonoBehaviour
     {
         if (context.performed)
         {
-            
             if (GameManager.Instance.grabScript.isCarrying)//on ne peut pas voler/attribuer si on porte un objet
             {
                 return;
@@ -164,78 +91,71 @@ public class ComportementStealer_proto : MonoBehaviour
                 SimSlot2();
                 return;
             }
-            
-            RaycastHit _hit;
-
-            _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
+            Slot2();
+        }
+    }
+    
+    void Slot1()
+    {
+        _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(_ray, out var hit, Mathf.Infinity, hitLayer)) //mask
+        {
+            if (hit.collider == null || hit.collider.CompareTag("NotInteract"))
             {
-                if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
+                return;
+            }
+            var stateMachine = hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
+            if (stateMachine != null)
+            {
+                //On verifie si slot1 est superieur a 0, s'il l'est, on cherche alors a donner un comportement a l'objet vise, sinon on cherche a prelever un comportement � l'objet vis�
+                if (slot1 == 0)
                 {
-                    return;
-                }
-                var stateMachine = _hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
-                if (stateMachine != null)
-                {
-                    //On verifie si slot2 est superieur � 0, s'il l'est, on cherche alors � donner un comportement � l'objet vis�, sinon on cherche � pr�lever un comportement � l'objet vis�
-                    if (slot2 == 0)
+                    _stateStolen = stateMachine; // Stocker la r�f�rence
+                    if (_stateStolen.currentState is ComportementState)
                     {
-                        _stateStolen = stateMachine; // Stocker la r�f�rence
-                        if (_stateStolen.currentState is ComportementState)
+                        ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
+                        
+                        //On v�rifie que la stateValue de l'objet vis� est superieur � 0, on ne peut pr�lever un comportement que si c'est le cas.
+                        if(currentObjectState.stateValue != 0)
                         {
-                            ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
-                            //On verifie si l'objet vis� contiens une stateValue, si la stateValue est superieur a 0, l'objet a un comportement
-                            if (currentObjectState.stateValue != 0)
+                            //stateValue est supperieur � 0, leftValue est donc obligatoirement remplie, etant donn� qu'il s'agit du clique gauche, on ne cherche que la leftValue
+                            if (currentObjectState.leftValue != 0)//left
                             {
-                                //L'objet vis� a une stateValue superieur � 0 donc sa leftValue est forc�ment remplis, on test dans un premier temps la rightValue etant donn� que c'ets le click droit.
-                                //Si la rightValue est superieur a 0, on la stoque, sinon on stoque la leftValue.
-                                if (currentObjectState.rightValue != 0)
-                                {
-                                    int futurState = currentObjectState.stateValue - currentObjectState.rightValue;
-                                    currentObjectState.CalculateNewtState(futurState);
-                                    slot2 = currentObjectState.rightValue;
-                                }
-                                else
-                                {
-                                    int futurState = currentObjectState.stateValue - currentObjectState.leftValue;
-                                    currentObjectState.CalculateNewtState(futurState);
-                                    slot2 = currentObjectState.leftValue;
-                                }
+                                ExecuteChangeStateSubtractive(currentObjectState, false);//on vole le comportement gauche
                             }
                             else
                             {
-                                Debug.Log("L'objet ne contiens aucun comportement � pr�lever");
+                                Debug.LogWarning("Normalement c'est litteralement impossible de faire �a");
                             }
                         }
-                    }
-                    else
-                    {
-                        _stateStolen = stateMachine; // Stocker la r�f�rence
-                        if (_stateStolen.currentState is ComportementState)
+                        else
                         {
-                            ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
-                            //On test si l'objet vis� est vide ou non, s'il est vide, on lui ajoute directement le comportement, sinon on verifie s'il a une place libre
-                            if(currentObjectState.stateValue != 0)
+                            Debug.Log("L'objet ne contiens aucun comportement � pr�lever");
+                        }
+                    }
+                }
+                else
+                {
+                    _stateStolen = stateMachine; // Stocker la r�f�rence
+                    if (_stateStolen.currentState is ComportementState)
+                    {
+                        ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
+                        //On verifie si l'objet vis� est vide, si c'est le cas on lui donne directement un comp�rtement avec leftValue, sinon on va v�rifier si sa rightValue est vide
+                        if(currentObjectState.stateValue != 0)
+                        {
+                            //On v�rifie si le rightValue de l'objet Vis� est vide, si c'est le cas, on lui ajoute le comportement stoqu� dans slot1.
+                            if (currentObjectState.rightValue == 0)
                             {
-                                //L'objet vis� � une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
-                                if (currentObjectState.rightValue == 0)
-                                {
-                                    //Debug.Log("Soustraction de " + slot2 + " � " + currentObjectState.stateValue + " - Objet visé : "+ _hit.collider.gameObject.name + " - Objet d'origine "+originSlot2.gameObject.name);
-                                    int futurState = currentObjectState.stateValue + slot2;
-                                    currentObjectState.CalculateNewtState(futurState);
-                                    slot2 = 0;
-                                }
-                                else
-                                {
-                                    Debug.Log("L'objet contiens d�j� 2 comportements");
-                                }
+                                ExecuteChangeStateAdditive(currentObjectState, ref slot1);//on donne le comportement gauche
                             }
                             else
                             {
-                                int futurState = currentObjectState.stateValue + slot2;
-                                currentObjectState.CalculateNewtState(futurState);
-                                slot2 = 0;
+                                Debug.Log("L'objet contiens d�j� 2 comportements");
                             }
+                        }
+                        else
+                        {
+                            ExecuteChangeStateAdditive(currentObjectState, ref slot1);//on donne le comportement gauche
                         }
                     }
                 }
@@ -243,11 +163,76 @@ public class ComportementStealer_proto : MonoBehaviour
         }
     }
 
+    void Slot2()
+    {
+        _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(_ray, out var hit, Mathf.Infinity, hitLayer)) //mask
+        {
+            if (hit.collider == null || hit.collider.CompareTag("NotInteract"))
+            {
+                return;
+            }
+            var stateMachine = hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
+            if (stateMachine != null)
+            {
+                //On verifie si slot2 est superieur � 0, s'il l'est, on cherche alors � donner un comportement � l'objet vis�, sinon on cherche � pr�lever un comportement � l'objet vis�
+                if (slot2 == 0)
+                {
+                    _stateStolen = stateMachine; // Stocker la r�f�rence
+                    if (_stateStolen.currentState is ComportementState)
+                    {
+                        ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
+                        //On verifie si l'objet vis� contiens une stateValue, si la stateValue est superieur a 0, l'objet a un comportement
+                        if (currentObjectState.stateValue != 0)
+                        {
+                            //L'objet vis� a une stateValue superieur � 0 donc sa leftValue est forc�ment remplis, on test dans un premier temps la rightValue etant donn� que c'ets le click droit.
+                            //Si la rightValue est superieur a 0, on la stoque, sinon on stoque la leftValue.
+                            if (currentObjectState.rightValue != 0)//right
+                            {
+                                ExecuteChangeStateSubtractive(currentObjectState, true);//on prend le comportement de droite
+                            }
+                            else//left
+                            {
+                                ExecuteChangeStateSubtractive(currentObjectState, false);//on prend le comportement de gauche
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log("L'objet ne contiens aucun comportement � pr�lever");
+                        }
+                    }
+                }
+                else
+                {
+                    _stateStolen = stateMachine; // Stocker la r�f�rence
+                    if (_stateStolen.currentState is ComportementState)
+                    {
+                        ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
+                        //On test si l'objet vis� est vide ou non, s'il est vide, on lui ajoute directement le comportement, sinon on verifie s'il a une place libre
+                        if(currentObjectState.stateValue != 0)
+                        {
+                            //L'objet vis� � une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
+                            if (currentObjectState.rightValue == 0)
+                            {
+                                ExecuteChangeStateAdditive(currentObjectState,ref slot2);//on donne le comportement de droite
+                            }
+                            else
+                            {
+                                Debug.Log("L'objet contiens d�j� 2 comportements");
+                            }
+                        }
+                        else
+                        {
+                            ExecuteChangeStateAdditive(currentObjectState,ref slot2);//on donne le comportement de droite
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     void SimSlot1() // left
     {
-
-        // verif quand passe de player à main, car le comp de droite passe à gauche 
-        
         _stateStolen = gameManager.player.GetComponent<ComportementsStateMachine>(); // Stocker la reference
         
         if (_stateStolen.currentState is ComportementState)
@@ -272,11 +257,11 @@ public class ComportementStealer_proto : MonoBehaviour
                         aRecuperer = playerObjectState.rightValue;
                     }
                     
-                    // int valueToSteal = playerObjectState.leftValue;
                     int futurState = playerObjectState.stateValue - aRecuperer;
                     playerObjectState.CalculateNewtState(futurState);
+                    slot1 = aRecuperer;
                     
-                    newPlayerObjectState = (ComportementState)_stateStolen.currentState; //reset du state actuel
+                    newPlayerObjectState = (ComportementState)_stateStolen.currentState; //setup de la variable du nouveau state actuel
                     
                     if (newPlayerObjectState.leftValue != 0)
                     {
@@ -286,9 +271,6 @@ public class ComportementStealer_proto : MonoBehaviour
                     {
                         _stateStolen.inversion = false;
                     }
-                    
-                    slot1 = aRecuperer;
-                    
                 }
                 else // rien dans le slot1 / main gauche et rien dans le bras gauche
                 {
@@ -515,6 +497,26 @@ public class ComportementStealer_proto : MonoBehaviour
         if (context.performed)
         {
             (slot1, slot2) = (slot2, slot1);
+        }
+    }
+
+    void ExecuteChangeStateAdditive(ComportementState currentObjectState,ref int addedSlotValue)
+    {
+        currentObjectState.CalculateNewtState(currentObjectState.stateValue + addedSlotValue);
+        addedSlotValue = 0;
+    }
+    
+    void ExecuteChangeStateSubtractive(ComportementState currentObjectState, bool right)
+    {
+        if (right)
+        {
+            currentObjectState.CalculateNewtState(currentObjectState.stateValue - currentObjectState.rightValue);
+            slot2 = currentObjectState.rightValue;
+        }
+        else
+        {
+            currentObjectState.CalculateNewtState(currentObjectState.stateValue - currentObjectState.leftValue);
+            slot2 = currentObjectState.leftValue;
         }
     }
 }
