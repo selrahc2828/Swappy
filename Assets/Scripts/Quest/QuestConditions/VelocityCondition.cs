@@ -1,114 +1,50 @@
 using UnityEngine;
 
-public class VelocityCondition: Condition
+public class VelocityCondition : Condition
 {
-    private enum ValidationTypes
+    private enum VelocityType
     {
-        Tag,
-        Layer,
-        Comportment,
-        CompCategory,
-        Velocity,
+        VelocityMagnitude,
         AngularVelocity,
-    }
-    private enum OperatorTypes
-    {
-        Equal,
-        Min
-    }
-    private enum CompCategory
-    {
-        Solo,
-        Duo,
-        Fusion,
-        StrictFusion,
     }
 
     [Space(16)]
     public GameObject targetObject;
-    [SerializeField] private bool validationBool = true;
-    [SerializeField] private ValidationTypes validationType;
-    [SerializeField] private OperatorTypes operatorType;
+    [SerializeField] private VelocityType validationType;
+    [SerializeField] private float targetVelocityMin;
+    [SerializeField] private float targetVelocityMax;
 
-    [Space(16)]
-    [SerializeField] private string targetTag;
-    [SerializeField] private LayerMask targetLayer;
-    [SerializeField] private FirstState targetComportment;
-    [SerializeField] private float targetVelocity;
-    [SerializeField] private float targetAngularVelocity;
-
-    private GameManager gameManager;
-    private GameObject player;
 
     private void Start()
     {
-        gameManager = GameManager.Instance;
-        player = gameManager.player;
-    }
-
-    private void FixedUpdate()
-    {
-        if (targetObject != null)
+        if (targetObject == null && attachedQuest != null)
         {
-            if (validationType == ValidationTypes.Velocity || validationType == ValidationTypes.AngularVelocity)
-            {
-                attachedQuest.SetCondition(this, CheckObjectParameters(targetObject));
-            }
+            Debug.LogError("Il n'y a pas de Target Object référencé alors que cette condition n'est pas additionelle");
         }
     }
 
-    /*public bool CheckObjectParameters(GameObject target)
+    protected override bool CheckObjectParameters(GameObject target)
     {
+        Rigidbody targetRb = targetObject.GetComponent<Rigidbody>();
+        float velocity = targetRb.velocity.magnitude;
+        float angular = targetRb.angularVelocity.magnitude;
+
         switch (validationType)
         {
-            case ValidationTypes.Tag:
-                if (targer)
-                break;
-            case ValidationTypes.Comportment:
-
-                if (target.GetComponent<ComportementState>().stateValue == (int)targetComportment)
+            case VelocityType.VelocityMagnitude:
+                if (velocity >= targetVelocityMin && velocity <= targetVelocityMax)
                 {
-                    SetConditionState(validationBool);
+                    return validationBool;
                 }
                 break;
 
-            case ValidationTypes.Velocity:
-                if (operatorType == OperatorTypes.Min)
+            case VelocityType.AngularVelocity:
+                if (angular >= targetVelocityMin && angular <= targetVelocityMax)
                 {
-                    if (target.GetComponent<Rigidbody>().velocity.magnitude >= targetVelocity)
-                    {
-                        SetConditionState(validationBool);
-                    }
+                    return validationBool;
                 }
-                else
-                {
-                    if (target.GetComponent<Rigidbody>().velocity.magnitude == targetVelocity)
-                    {
-                        SetConditionState(validationBool);
-                    }
-                }
-                break;
-
-            case ValidationTypes.AngularVelocity:
-                if (operatorType == OperatorTypes.Min)
-                {
-                    if (target.GetComponent<Rigidbody>().angularVelocity.magnitude >= targetAngularVelocity)
-                    {
-                        SetConditionState(validationBool);
-                    }
-                }
-                else
-                {
-                    if (target.GetComponent<Rigidbody>().angularVelocity.magnitude == targetAngularVelocity)
-                    {
-                        SetConditionState(validationBool);
-                    }
-                }
-                break;
-
-            default:
                 break;
         }
-        return false;
-    }*/
+        return !validationBool;
+    }
 }
