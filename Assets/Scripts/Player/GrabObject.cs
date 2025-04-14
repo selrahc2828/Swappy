@@ -121,6 +121,9 @@ public class GrabObject : MonoBehaviour
             // on save le parent car on va déplacer l'objet en enfant de handlerPosition
             _originParent = carriedObject.transform.parent;
 
+            // empeche de pouvoir sauter dessus quand on le porte
+            carriedObject.layer = LayerMask.NameToLayer("Water");
+            
             //dire a l'objet qu'il est grab au niveau FSM
             var FSM_OfObject = carriedObject.GetComponent<ComportementsStateMachine>();
             ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
@@ -181,6 +184,10 @@ public class GrabObject : MonoBehaviour
                         //carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
                     }
                 }
+                
+                // on remet le layer pour pouvoir marcher dessus
+                carriedObject.layer = LayerMask.NameToLayer("Ground");
+                
             }
             //reset
             grabUI?.SetActive(false);
