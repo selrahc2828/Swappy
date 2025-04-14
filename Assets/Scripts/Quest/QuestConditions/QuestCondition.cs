@@ -17,7 +17,6 @@ public class QuestCondition : Condition
 
     private void ChangeQuestCondition()
     {
-        Debug.Log("this: " + this.GetType());
         attachedQuest.SetCondition(this, true);
     }
 
