@@ -14,12 +14,15 @@ public class MenuManager : MonoBehaviour
     public GameObject inventoryGroup;
     [Header("Cassettes")]
     public GameObject tapeGroup;
+    [Header("Map")]
+    public GameObject mapGroup;
     [Header("Options")]
     public GameObject optionGroup;
     
     [Header("Menus")]
     public InventoryMenu inventoryMenu;
     public TapeMenu tapeMenu;
+    public OptionMenu mapMenu;
     public OptionMenu optionMenu;
     
     void Start()
@@ -30,13 +33,13 @@ public class MenuManager : MonoBehaviour
     void OnEnable()
     {
         GameManager.controls.Player.PauseMenu.performed += PauseMenu;
-        GameManager.controls.Pause.Resume.performed += Resume;
+        GameManager.controls.Pause.Resume.performed += ResumeAction;
     }
     
     void OnDisable()
     {
         GameManager.controls.Player.PauseMenu.performed -= PauseMenu;
-        GameManager.controls.Pause.Resume.performed -= Resume;
+        GameManager.controls.Pause.Resume.performed -= ResumeAction;
     }
 
     public void PauseMenu(InputAction.CallbackContext context)
@@ -58,31 +61,36 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void Resume(InputAction.CallbackContext context)
+    public void ResumeAction(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            //changer quand on merge avec le multi scene
-
-            GameManager.controls.Pause.Disable();
-            GameManager.controls.Player.Enable();
-            GameManager.Instance.isPaused = false;
-            isOpen = false;
-            
-            menuGroup.SetActive(isOpen);
-            
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            GameManager.Instance.isPaused = false;
-            Time.timeScale = 1f;//verif avec le slowTime
+            Resume();
         }
     }
-    
+
+    public void Resume()
+    {
+        //changer quand on merge avec le multi scene
+
+        GameManager.controls.Pause.Disable();
+        GameManager.controls.Player.Enable();
+        GameManager.Instance.isPaused = false;
+        isOpen = false;
+            
+        menuGroup.SetActive(isOpen);
+            
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        GameManager.Instance.isPaused = false;
+        Time.timeScale = 1f;//verif avec le slowTime
+    }
     
     public void OpenInventory()
     {
         inventoryGroup.SetActive(true);
         tapeGroup.SetActive(false);
+        mapGroup.SetActive(false);
         optionGroup.SetActive(false);
     }
 
@@ -90,6 +98,7 @@ public class MenuManager : MonoBehaviour
     {
         inventoryGroup.SetActive(false);
         tapeGroup.SetActive(false);
+        mapGroup.SetActive(false);
         optionGroup.SetActive(true);
     }
 
@@ -97,11 +106,19 @@ public class MenuManager : MonoBehaviour
     {
         inventoryGroup.SetActive(false);
         tapeGroup.SetActive(true);
+        mapGroup.SetActive(false);
         optionGroup.SetActive(false);
         
         tapeMenu.SetTapeButtons();
         tapeMenu.CenterMiddleButtonIfNoneSelected();
         tapeMenu.AdjustScrollPadding();
+    }
+    public void OpenMap()
+    {
+        inventoryGroup.SetActive(false);
+        tapeGroup.SetActive(false);
+        mapGroup.SetActive(true);
+        optionGroup.SetActive(false);
     }
     
 }
