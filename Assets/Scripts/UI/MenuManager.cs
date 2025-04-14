@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -9,6 +10,8 @@ public class MenuManager : MonoBehaviour
 {
     public bool isOpen = false;
     public GameObject menuGroup;
+    
+    public GameObject firstButton;
     
     [Header("Inventaire")]
     public GameObject inventoryGroup;
@@ -34,6 +37,17 @@ public class MenuManager : MonoBehaviour
     {
         GameManager.controls.Player.PauseMenu.performed += PauseMenu;
         GameManager.controls.Pause.Resume.performed += ResumeAction;
+        
+        
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstButton);
+
+        // Lancer le OnClick manuellement si tu veux
+        Button btn = firstButton?.GetComponent<Button>();
+        if (btn != null)
+        {
+            btn.onClick.Invoke();
+        }
     }
     
     void OnDisable()
