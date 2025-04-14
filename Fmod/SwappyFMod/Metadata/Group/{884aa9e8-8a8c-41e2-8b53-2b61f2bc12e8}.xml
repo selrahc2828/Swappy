@@ -4,6 +4,9 @@
 		<property name="name">
 			<value>Player</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{7c688a3c-d9fe-4cc4-ac6a-a04e4ed53712}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{b54a9e1b-b348-47ae-ace7-eb293a9e878a}</destination>
 		</relationship>
@@ -13,6 +16,17 @@
 		<relationship name="output">
 			<destination>{fbe03aa7-6df1-4c2f-8fe4-35dd405854ba}</destination>
 		</relationship>
+	</object>
+	<object class="ADSRModulator" id="{7c688a3c-d9fe-4cc4-ac6a-a04e4ed53712}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{b54a9e1b-b348-47ae-ace7-eb293a9e878a}">
 		<relationship name="effects">

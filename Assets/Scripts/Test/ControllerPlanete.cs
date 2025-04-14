@@ -6,67 +6,62 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Windows;
 using UnityEngine.InputSystem;
+using Input = UnityEngine.Input;
 
 [RequireComponent(typeof(Rigidbody))]
 public class ControllerPlanete : MonoBehaviour
 {
-    public GameManager gameManager;
-    public Rigidbody rb;
-    public Vector2 moveInputVector;
-    public Vector3 moveDirection;
-    public Controls controls;
-    public bool grounded;
-    public GameObject planete;
-    public float playerHeight;
-    public float antiStickBaseValue;
-    public PhysicMaterial antiStickMaterial;
+    private GameManager gameManager;
+    private Rigidbody rb;
+    private Vector2 moveInputVector;
+    private Vector3 moveDirection;
+    private Controls controls;
+    private Transform orientation;
+    private float playerHeight;
 
-    public float maxSpeed;
-    public float jumpForce;
-    public bool isSprinting;
-    public bool isStopping;
-
-    public AnimationCurve moveSpeedCurveAttackWalk;
-    public AnimationCurve moveSpeedCurveAttackRun;
-    public AnimationCurve moveSpeedCurveSustainWalk;
-    public AnimationCurve moveSpeedCurveSustainRun;
-    public AnimationCurve moveSpeedCurveReleaseWalk;
-    public AnimationCurve moveSpeedCurveReleaseRun;
-    private float mouvementAttackTime;
-    public float mouvementAttackDuration;
-    private float mouvementSustainTime;
-    private float mouvementReleaseTime;
-    public float mouvementReleaseDuration;
+    [SerializeField] private float maxSpeed;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float sprintMultiplier;
+    [SerializeField] private float aerialMultiplier;
+    [SerializeField] private float stoppingRatio;
+    [SerializeField] private float sideSpeedReductionRatio;
+    [SerializeField] private float jumpForce;
+    
+    [SerializeField] private bool isSprinting;
+    [SerializeField] private bool isStopping;
+    [SerializeField] private bool grounded;
+    [SerializeField] private bool touchingInclinedSurface;
 
     private LayerMask whatIsGround;
-    public GravityPlanete gravityComponent;
-    public bool touchingInclinedSurface;
-    public Vector3 touchingInclinedSurfaceDirection;
-    public Vector3 touchingInclinedSurfaceDirectionOnPlanet;
-
+    private GravityPlanete gravityComponent;
+    [SerializeField] private Vector3 touchingInclinedSurfaceDirection;
+    
     private void OnEnable()
     {
         gameManager = GameManager.Instance;
         controls = GameManager.controls;
         
-        controls.Player.Movement.performed += MouvementAttack;
-        controls.Player.Movement.canceled += MouvementAttack;
+        controls.Player.Movement.performed += MovementAttack;
+        controls.Player.Movement.canceled += MovementAttack;
         controls.Player.Jump.performed += Jump;
         controls.Player.StartSprint.performed += StartSprint;
         controls.Player.StopSprint.performed += StopSprint;
 
-        maxSpeed = gameManager.walkSpeed;
+        maxSpeed = gameManager.maxSpeed;
+        moveSpeed = gameManager.moveSpeed;
+        sprintMultiplier = gameManager.sprintMultiplier;
+        aerialMultiplier = gameManager.aerialMultiplier;
+        stoppingRatio = gameManager.stoppingRatio;
+        sideSpeedReductionRatio = gameManager.sideSpeedReductionRatio;
         jumpForce = gameManager.jumpForce;
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
-        antiStickBaseValue = gameManager.playerAntiStick.dynamicFriction;
-        antiStickMaterial = gameManager.playerAntiStick;
     }
 
     private void OnDisable()
     {
-        controls.Player.Movement.performed -= MouvementAttack;
-        controls.Player.Movement.canceled -= MouvementAttack;
+        controls.Player.Movement.performed -= MovementAttack;
+        controls.Player.Movement.canceled -= MovementAttack;
         controls.Player.Jump.performed -= Jump;
         controls.Player.StartSprint.performed -= StartSprint;
         controls.Player.StopSprint.performed -= StopSprint;
@@ -75,10 +70,8 @@ public class ControllerPlanete : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        orientation = GameManager.Instance.orientation;
         isStopping = true;
-        mouvementAttackTime = 0f; 
-        mouvementSustainTime = 0f;
-        mouvementReleaseTime = 0f;
         rb = GetComponent<Rigidbody>();
         gravityComponent = GetComponent<GravityPlanete>();
     }
@@ -91,85 +84,60 @@ public class ControllerPlanete : MonoBehaviour
         if (gravityComponent != null)
         {
             moveDirection = Vector3.ProjectOnPlane(
-                GameManager.Instance.orientation.transform.forward * moveInputVector.y +
-                GameManager.Instance.orientation.transform.right * moveInputVector.x,
-                gravityComponent.transform.up
+                orientation.forward * moveInputVector.y +
+                orientation.right * moveInputVector.x,
+                transform.up
             ).normalized;
         }
-
-        if (touchingInclinedSurface)
+        
+        //est ce que je touche un mur et l'input de mouvement est vers le mur
+        if (touchingInclinedSurface && Vector3.Dot(moveDirection, touchingInclinedSurfaceDirection) < 0)
         {
-            moveDirection = Vector3.ProjectOnPlane(moveDirection, touchingInclinedSurfaceDirection).normalized;
+            moveDirection = Vector3.ProjectOnPlane(moveDirection, touchingInclinedSurfaceDirection);
         }
     }
 
     void FixedUpdate()
     {
         GroundCheck();
-
-        float targetVelocity = 0;
-        Vector3 movement = moveDirection;
-
-        if(isSprinting)
-        {
-            if(isStopping)
-            {
-                float curveTime = Mathf.Clamp01((Time.time - mouvementReleaseTime) / (mouvementReleaseDuration));
-                targetVelocity = moveSpeedCurveReleaseRun.Evaluate(curveTime);
-            }
-            else
-            {
-                float curveTime = Mathf.Clamp01((Time.time - mouvementAttackTime) / (mouvementSustainTime - mouvementAttackTime)); 
-                if (curveTime < 1)
-                {
-                    targetVelocity = moveSpeedCurveAttackRun.Evaluate(curveTime);
-                }
-                else
-                {
-                    targetVelocity = moveSpeedCurveSustainRun.Evaluate(curveTime);
-                }
-            }
-        }
-        else
-        {
-            if(isStopping)
-            {
-                float curveTime = Mathf.Clamp01((Time.time - mouvementReleaseTime) / (mouvementReleaseDuration));
-                targetVelocity = moveSpeedCurveReleaseWalk.Evaluate(curveTime);
-            }
-            else
-            {
-                float curveTime = Mathf.Clamp01((Time.time - mouvementAttackTime) / (mouvementSustainTime - mouvementAttackTime)); 
-                if (curveTime < 1)
-                {
-                    targetVelocity = moveSpeedCurveAttackWalk.Evaluate(curveTime);
-                }
-                else
-                {
-                    targetVelocity = moveSpeedCurveSustainWalk.Evaluate(curveTime);
-                }
-            }
-        }
         
-        movement *= targetVelocity * maxSpeed;
-
-        Vector3 localVerticalVelocity = Vector3.Project(rb.velocity, transform.up);
+        Vector3 localHorizontalVelocity = Vector3.ProjectOnPlane(rb.velocity, transform.up);
         
-        movement = Vector3.ProjectOnPlane(movement, gravityComponent.transform.up);
-        if(touchingInclinedSurface)
+        float orientationValue = 1;
+        float aerialMultiplierValue = grounded ? 1 : aerialMultiplier;
+        float sprintMultiplierValue = isSprinting ? sprintMultiplier : 1;
+        
+        if (grounded)
         {
-            movement = Vector3.ProjectOnPlane(moveDirection, touchingInclinedSurfaceDirection);
+            if (rb.velocity.magnitude > 1f)
+            {
+                orientationValue = ((Vector3.Dot(moveDirection.normalized, rb.velocity.normalized) -1) /-2) + 1;
+            }
+            if (moveInputVector.y == 0)
+            {
+                Vector3 velocityWithoutSides = Vector3.ProjectOnPlane(rb.velocity, orientation.right);
+                
+                rb.velocity = Vector3.Lerp(rb.velocity, velocityWithoutSides, sideSpeedReductionRatio);
+            }
+            if (isStopping)
+            {
+                rb.velocity *= stoppingRatio;
+            }
         }
-        rb.velocity = localVerticalVelocity + movement;
+        if (localHorizontalVelocity.magnitude > maxSpeed * sprintMultiplierValue && Vector3.Dot(moveDirection, localHorizontalVelocity) > 0)
+        {
+            moveDirection = Vector3.ProjectOnPlane(moveDirection, localHorizontalVelocity);
+        }
+        rb.AddForce(moveDirection * (moveSpeed * orientationValue * aerialMultiplierValue * sprintMultiplierValue), ForceMode.Acceleration);
     }
 
     void GroundCheck()
     {
-        Vector3 groundDirection = -gravityComponent.transform.up;
+        Vector3 groundDirection = -transform.up;
         grounded = false;
         touchingInclinedSurface = false;
 
-        if (Physics.Raycast(transform.position, groundDirection, out RaycastHit hit, playerHeight * 0.5f + 0.3f, whatIsGround))
+        if (Physics.Raycast(transform.position, groundDirection, out RaycastHit hit, playerHeight * 0.5f + 0.2f, whatIsGround))
         {
             float slopeAngle = Vector3.Angle(hit.normal, -groundDirection);
             if (slopeAngle < 75f) // Seulement consid�r� comme sol si l'angle est faible
@@ -184,8 +152,8 @@ public class ControllerPlanete : MonoBehaviour
         {
             foreach (ContactPoint contact in collision.contacts)
             {
-                float slopeAngle = Vector3.Angle(contact.normal, -gravityComponent.transform.up);
-                //Debug.Log(slopeAngle);
+                float slopeAngle = Vector3.Angle(contact.normal, -transform.up);
+                
                 if (slopeAngle > 90f && slopeAngle < 125f) // Surface inclin�e d�tect�e
                 {
                     touchingInclinedSurface = true;
@@ -195,24 +163,21 @@ public class ControllerPlanete : MonoBehaviour
         }
     }
 
-    private void MouvementAttack(InputAction.CallbackContext context)
+    private void MovementAttack(InputAction.CallbackContext context)
     {
         if(context.performed)
         {
-            mouvementAttackTime = Time.time;
-            mouvementSustainTime = mouvementAttackTime + mouvementAttackDuration;
             isStopping = false;
         }
         if(context.canceled)
         {
-            mouvementReleaseTime = Time.time;
             isStopping = true;
         }
     }
 
     private void StartSprint(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && grounded)
         {
             isSprinting = true;
         }
