@@ -276,4 +276,17 @@ public class FMODMusicManager : MonoBehaviour
         return FMOD.RESULT.OK;
     }
     #endregion
+
+
+
+
+
+
+    public enum MusicAction : int
+    {
+        None,
+        Play,
+        Stop,
+        Switch
+    }
 }
