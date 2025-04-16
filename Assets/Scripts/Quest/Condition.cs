@@ -7,7 +7,7 @@ public class Condition : MonoBehaviour
     [SerializeField] protected Quest attachedQuest;
     [Tooltip("En règle générale, laisser l'état de base de la condition à false")] 
     [SerializeField] private bool defaultState = false;
-    [SerializeField] protected bool validationBool = false;
+    [SerializeField] protected bool validationBool = true;
 
     private void Start()
     {
@@ -19,7 +19,7 @@ public class Condition : MonoBehaviour
         attachedQuest.ReferenceCondition(this, defaultState);
     }
 
-    protected virtual bool CheckObjectParameters(GameObject target)
+    public virtual bool CheckObjectParameters(GameObject target)
     {
         Debug.LogError("La condition '" + this + "' dans l'objet " + transform.name + " ne peux pas être utilisée comme complément d'une autre condition !");
         return false;

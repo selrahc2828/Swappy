@@ -21,7 +21,6 @@ public class CompCondition: Condition
     [Space(16)]
     [Tooltip("Si targetObject vide, le script checkera à chaque vol / réattribution de comportement")]
     public GameObject targetObject;
-    [SerializeField] private bool validationBool = true;
     [SerializeField] private ValidationTypes validationType;
 
     [Space(16)]
@@ -37,11 +36,14 @@ public class CompCondition: Condition
         }
     }
 
-    protected override bool CheckObjectParameters(GameObject target)
+    public override bool CheckObjectParameters(GameObject target)
     {
         if (target.GetComponent<ComportementsStateMachine>() == null)
         {
-            Debug.LogError("Il n'y a pas de ComportementsStateMachine sur l'objet target par CompCondition !");
+            if (attachedQuest != null)
+            {
+                Debug.LogError("Il n'y a pas de ComportementsStateMachine sur l'objet target par CompCondition !");
+            }
             return !validationBool;
         }
         ComportementState compState = (ComportementState)target.GetComponent<ComportementsStateMachine>().currentState;

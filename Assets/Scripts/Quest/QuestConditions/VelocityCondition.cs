@@ -14,7 +14,6 @@ public class VelocityCondition : Condition
     [SerializeField] private float targetVelocityMin;
     [SerializeField] private float targetVelocityMax;
 
-
     private void Start()
     {
         if (targetObject == null && attachedQuest != null)
@@ -23,7 +22,15 @@ public class VelocityCondition : Condition
         }
     }
 
-    protected override bool CheckObjectParameters(GameObject target)
+    private void FixedUpdate()
+    {
+        if (targetObject != null && attachedQuest != null)
+        {
+            attachedQuest.SetCondition(this, CheckObjectParameters(targetObject));
+        }
+    }
+
+    public override bool CheckObjectParameters(GameObject target)
     {
         Rigidbody targetRb = targetObject.GetComponent<Rigidbody>();
         float velocity = targetRb.velocity.magnitude;
