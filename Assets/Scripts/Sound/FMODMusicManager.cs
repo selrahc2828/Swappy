@@ -113,9 +113,27 @@ public class FMODMusicManager : MonoBehaviour
         return musicPlaylist.Count;
     }
 
-    public EventInstance GetMusicPlaylistInstance(int musicIndex = 0)
+    public EventInstance GetMusicPlaylistInstance(EventReference musicReference)
     {
-        return musicPlaylist[musicIndex];
+        bool isFound = false;
+        EventInstance musicTarget = CreateMusicInstance(musicReference);
+        musicTarget.getDescription(out EventDescription target);
+        target.getID(out GUID targetID);
+        foreach (EventInstance musicInstance in musicPlaylist)
+        {
+            musicInstance.getDescription(out EventDescription eventDescription);
+            eventDescription.getID(out GUID eventID);
+            if ( targetID == eventID)
+            {
+                isFound = true;
+                return musicInstance;
+            }
+        }
+        if (!isFound)
+        {
+            return musicTarget;
+        }
+        return default;
     }
 
     #endregion

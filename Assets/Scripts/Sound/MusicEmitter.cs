@@ -24,22 +24,11 @@ namespace FMODUnity
             {
                 gameObject.AddComponent<BoxCollider>();
             }
-            else
-            {
-                Debug.Log(("ntm"));
-            }
         }
 
         void Start()
         {
-            if (FMODMusicManager.instance.GetPlaylistMusicSize() < 1)
-            {
-                _musicInstance = FMODMusicManager.instance.CreateMusicInstance(Music);
-            }
-            else
-            {
-                _musicInstance = FMODMusicManager.instance.GetMusicPlaylistInstance();
-            }
+            _musicInstance = FMODMusicManager.instance.GetMusicPlaylistInstance(Music);
 
             if (When == OnWhat.OnStart )
             {
