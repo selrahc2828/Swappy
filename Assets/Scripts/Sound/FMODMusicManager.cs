@@ -19,7 +19,7 @@ public class FMODMusicManager : MonoBehaviour
 
     //private EventInstance musicInstance;
     
-    private List<EventInstance> musicPlaylist = new List<EventInstance>();
+    public List<EventInstance> musicPlaylist = new List<EventInstance>();
     
     private PLAYBACK_STATE musicState;
 
@@ -108,9 +108,14 @@ public class FMODMusicManager : MonoBehaviour
     }
     #endregion
     #region Param Music Playlist
-    public float GetPlaylistMusicSize()
+    public int GetPlaylistMusicSize()
     {
         return musicPlaylist.Count;
+    }
+
+    public EventInstance GetMusicPlaylistInstance(int musicIndex = 0)
+    {
+        return musicPlaylist[musicIndex];
     }
 
     #endregion
@@ -289,4 +294,5 @@ public class FMODMusicManager : MonoBehaviour
         Stop,
         Switch
     }
+
 }
