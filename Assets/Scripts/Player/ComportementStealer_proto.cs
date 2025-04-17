@@ -107,30 +107,30 @@ public class ComportementStealer_proto : MonoBehaviour
             var stateMachine = hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
             if (stateMachine != null)
             {
-                //On verifie si slot1 est superieur a 0, s'il l'est, on cherche alors a donner un comportement a l'objet vise, sinon on cherche a prelever un comportement � l'objet vis�
+                //On verifie si slot1 est superieur a 0, s'il l'est, on cherche alors a donner un comportement a l'objet vise, sinon on cherche a prelever un comportement a l'objet vise
                 if (slot1 == 0)
                 {
-                    _stateStolen = stateMachine; // Stocker la r�f�rence
+                    _stateStolen = stateMachine; // Stocker la reference
                     if (_stateStolen.currentState is ComportementState)
                     {
                         ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
                         
-                        //On v�rifie que la stateValue de l'objet vis� est superieur � 0, on ne peut pr�lever un comportement que si c'est le cas.
+                        //On verifie que la stateValue de l'objet vise est superieur a 0, on ne peut prelever un comportement que si c'est le cas.
                         if(currentObjectState.stateValue != 0)
                         {
-                            //stateValue est supperieur � 0, leftValue est donc obligatoirement remplie, etant donn� qu'il s'agit du clique gauche, on ne cherche que la leftValue
+                            //stateValue est supperieur a 0, leftValue est donc obligatoirement remplie, etant donn� qu'il s'agit du clique gauche, on ne cherche que la leftValue
                             if (currentObjectState.leftValue != 0)//left
                             {
-                                ExecuteChangeStateSubtractive(currentObjectState, false);//on vole le comportement gauche
+                                ExecuteChangeStateSubtractive(currentObjectState, ref slot1, false); //on vole le comportement de gauche de l'objet vise
                             }
                             else
                             {
-                                Debug.LogWarning("Normalement c'est litteralement impossible de faire �a");
+                                Debug.LogWarning("Normalement c'est litteralement impossible de faire ca");
                             }
                         }
                         else
                         {
-                            Debug.Log("L'objet ne contiens aucun comportement � pr�lever");
+                            Debug.Log("L'objet ne contiens aucun comportement a prelever");
                         }
                     }
                 }
@@ -146,16 +146,16 @@ public class ComportementStealer_proto : MonoBehaviour
                             //On v�rifie si le rightValue de l'objet Vis� est vide, si c'est le cas, on lui ajoute le comportement stoqu� dans slot1.
                             if (currentObjectState.rightValue == 0)
                             {
-                                ExecuteChangeStateAdditive(currentObjectState, ref slot1);//on donne le comportement gauche
+                                ExecuteChangeStateAdditive(currentObjectState, ref slot1); //on donne le comportement de la main gauche a l'objet vise
                             }
                             else
                             {
-                                Debug.Log("L'objet contiens d�j� 2 comportements");
+                                Debug.Log("L'objet contiens deja 2 comportements");
                             }
                         }
                         else
                         {
-                            ExecuteChangeStateAdditive(currentObjectState, ref slot1);//on donne le comportement gauche
+                            ExecuteChangeStateAdditive(currentObjectState, ref slot1); //on donne le comportement de la main gauche a l'objet vise
                         }
                     }
                 }
@@ -175,55 +175,55 @@ public class ComportementStealer_proto : MonoBehaviour
             var stateMachine = hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
             if (stateMachine != null)
             {
-                //On verifie si slot2 est superieur � 0, s'il l'est, on cherche alors � donner un comportement � l'objet vis�, sinon on cherche � pr�lever un comportement � l'objet vis�
+                //On verifie si slot2 est superieur a 0, s'il l'est, on cherche alors a donner un comportement a l'objet vise, sinon on cherche � pr�lever un comportement a l'objet vise
                 if (slot2 == 0)
                 {
                     _stateStolen = stateMachine; // Stocker la r�f�rence
                     if (_stateStolen.currentState is ComportementState)
                     {
                         ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
-                        //On verifie si l'objet vis� contiens une stateValue, si la stateValue est superieur a 0, l'objet a un comportement
+                        //On verifie si l'objet vise contiens une stateValue, si la stateValue est superieur a 0, l'objet a un comportement
                         if (currentObjectState.stateValue != 0)
                         {
-                            //L'objet vis� a une stateValue superieur � 0 donc sa leftValue est forc�ment remplis, on test dans un premier temps la rightValue etant donn� que c'ets le click droit.
+                            //L'objet vise a une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on test dans un premier temps la rightValue etant donne que c'ets le click droit.
                             //Si la rightValue est superieur a 0, on la stoque, sinon on stoque la leftValue.
                             if (currentObjectState.rightValue != 0)//right
                             {
-                                ExecuteChangeStateSubtractive(currentObjectState, true);//on prend le comportement de droite
+                                ExecuteChangeStateSubtractive(currentObjectState, ref slot2, true); //on prend le comportement de droite de l'objet vise
                             }
                             else//left
                             {
-                                ExecuteChangeStateSubtractive(currentObjectState, false);//on prend le comportement de gauche
+                                ExecuteChangeStateSubtractive(currentObjectState, ref slot2, false); //on prend le comportement de gauche de l'objet vise
                             }
                         }
                         else
                         {
-                            Debug.Log("L'objet ne contiens aucun comportement � pr�lever");
+                            Debug.Log("L'objet ne contiens aucun comportement a prelever");
                         }
                     }
                 }
                 else
                 {
-                    _stateStolen = stateMachine; // Stocker la r�f�rence
+                    _stateStolen = stateMachine; // Stocker la reference
                     if (_stateStolen.currentState is ComportementState)
                     {
                         ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
-                        //On test si l'objet vis� est vide ou non, s'il est vide, on lui ajoute directement le comportement, sinon on verifie s'il a une place libre
+                        //On test si l'objet vise est vide ou non, s'il est vide, on lui ajoute directement le comportement, sinon on verifie s'il a une place libre
                         if(currentObjectState.stateValue != 0)
                         {
-                            //L'objet vis� � une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
+                            //L'objet vise a une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
                             if (currentObjectState.rightValue == 0)
                             {
-                                ExecuteChangeStateAdditive(currentObjectState,ref slot2);//on donne le comportement de droite
+                                ExecuteChangeStateAdditive(currentObjectState,ref slot2); //on donne le comportement de la main droite du joueur a l'objet vise
                             }
                             else
                             {
-                                Debug.Log("L'objet contiens d�j� 2 comportements");
+                                Debug.Log("L'objet contiens deja 2 comportements");
                             }
                         }
                         else
                         {
-                            ExecuteChangeStateAdditive(currentObjectState,ref slot2);//on donne le comportement de droite
+                            ExecuteChangeStateAdditive(currentObjectState,ref slot2); //on donne le comportement de la main droite du joueur a l'objet vise
                         }
                     }
                 }
@@ -240,106 +240,57 @@ public class ComportementStealer_proto : MonoBehaviour
             ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
             ComportementState newPlayerObjectState;
             
-            int tempValueSlot = slot1;
+            int originValueSlot1 = slot1;
 
-            if (slot1 == 0)
+            if (slot1 == 0) // il n y a pas de comportement dans main gauche
             {
-                if (playerObjectState.stateValue !=0)
+                if (playerObjectState.stateValue !=0) // le joueur a au moins 1 comportement sur lui  --> la left Value est forcement positive
                 {
-                    int aRecuperer = playerObjectState.leftValue;
-                    
+
                     if (_stateStolen.inversion)
                     {
-                        if (playerObjectState.rightValue == 0)// rien sur bras gauche (car il est visuellement a droite)
+                        if (playerObjectState.rightValue == 0)
                         {
                             return;
                         }
-                        aRecuperer = playerObjectState.rightValue;
-                    }
-                    
-                    int futurState = playerObjectState.stateValue - aRecuperer;
-                    playerObjectState.CalculateNewtState(futurState);
-                    slot1 = aRecuperer;
-                    
-                    newPlayerObjectState = (ComportementState)_stateStolen.currentState; //setup de la variable du nouveau state actuel
-                    
-                    if (newPlayerObjectState.leftValue != 0)
-                    {
-                        _stateStolen.inversion = true;  // on retire value de gauche, si != 0 alors on avait un comp à droite
+                        ExecuteChangeStateSubtractive(playerObjectState, ref slot1, true);
+                        _stateStolen.inversion = false;
                     }
                     else
                     {
-                        _stateStolen.inversion = false;
+                        ExecuteChangeStateSubtractive(playerObjectState, ref slot1, false);
+                        _stateStolen.inversion = playerObjectState.rightValue != 0;// on viens de prendre le comportement gauche du joueur en mode non inverse
+                                                                                   // soit la valeur du comportement de droite est positive (le joueur avais un double comportement) et l'inversion est obligatoire
+                                                                                   // soit la valeur du comportement de droite est nulle et l'inversion ne se fais pas
                     }
                 }
-                else // rien dans le slot1 / main gauche et rien dans le bras gauche
+                else // le joueur n'a aucun comportement sur lui
                 {
                     Debug.Log("SIM GAUCHE - rien a recuperer, voler ou echanger");
                 }
             }
-            else
+            else //le joueur a un comportement sur sa main gauche
             {
-                if (playerObjectState.stateValue !=0 )//left forcément remplis
+                if (playerObjectState.stateValue !=0 ) // le joueur a au moins 1 comportement sur lui --> la left Value est forcement positive
                 {
-                    if (_stateStolen.inversion)
+                    if (_stateStolen.inversion) // le comportement sur le joueur est inversé (la gauche est devenu la droite)
                     {
-                        if (playerObjectState.rightValue == 0) // 1 comportement sur player droit et rien sur sa gauche, j'additionne et check inversion
-                        {
-                            int valueToAdd = slot1;
-                            int futurState = playerObjectState.stateValue + valueToAdd;
-
-                            playerObjectState.CalculateNewtState(futurState);
-                            newPlayerObjectState = (ComportementState)_stateStolen.currentState;
-                            
-                            _stateStolen.inversion = (newPlayerObjectState.leftValue < slot1);
-                            slot1 = 0;
-                        }
-                        else // rightValue est le comportement sur la gauche du player, je dois echanger avec slot 1
-                        {
-                            (slot1, playerObjectState.rightValue) = (playerObjectState.rightValue, slot1);
-
-                            playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
-                            newPlayerObjectState = (ComportementState)_stateStolen.currentState; 
-
-                            if (newPlayerObjectState.leftValue < tempValueSlot)
-                            {
-                                _stateStolen.inversion = true;
-                            }
-                            else
-                            {
-                                _stateStolen.inversion = false;
-                            }
-                        }
+                        ExchangeStateWithPlayerAndHand(playerObjectState, ref slot1, true);
+                        _stateStolen.inversion = (originValueSlot1 <= playerObjectState.leftValue); //Le seul moment ou on change inversion c'est quand il y a une inversion naturelle.
+                                                                                                    //une inversion naterelle ne se produit avec le slot1 que lorsque la valeur du slot1 est inferieur ou égale a left value avant l'echange
                     }
-                    else // si j'ai 1 comp sur bras gauche, et que je ne suis pas inversé, j'echange le comp bras gauche et le slot1
+                    else // le comportement sur le joueur n'est pas inversé
                     {
-                        (slot1, playerObjectState.leftValue) = (playerObjectState.leftValue, slot1);
-                        
-                        playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
-                        newPlayerObjectState = (ComportementState)_stateStolen.currentState;
-                        
-                        // verif inversion left < tempValueSlot => inversion
-                        if (newPlayerObjectState.leftValue < tempValueSlot)
-                        {
-                            _stateStolen.inversion = true;
-                        }
-                        else
-                        {
-                            _stateStolen.inversion = false;
-                        }
+                        ExchangeStateWithPlayerAndHand(playerObjectState, ref slot1, false);
+                        _stateStolen.inversion = (originValueSlot1 < playerObjectState.rightValue && playerObjectState.rightValue != 0);//Le seul moment ou on change inversion c'est quand il y a une inversion naturelle.
+                                                                                                                            //une inversion naterelle ne se produit avec le slot1 que lorsque la valeur du slot1 est inferieur right value avant l'echange
+                                                                                                                            //tant que right value est différent de 0
                     }
                 }
-                else // j'ai un comp en main gauche et rien sur player donc j'additionne
+                else // le joueur n'a aucun comportement sur lui
                 {
-                    int valueToAdd = slot1;
-                    int futurState = playerObjectState.stateValue + valueToAdd;
-
-                    playerObjectState.CalculateNewtState(futurState);
-                    
-                    // ici on a rien sur player, on ajoute forcement à gauche et le visuel est forcement a gauche
+                    ExchangeStateWithPlayerAndHand(playerObjectState, ref slot1, true);
                     _stateStolen.inversion = false;
-                    
-                    slot1 = 0;
                 } 
             }
         }
@@ -352,141 +303,67 @@ public class ComportementStealer_proto : MonoBehaviour
         if (_stateStolen.currentState is ComportementState)
         {
             ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
-            ComportementState newPlayerObjectState;
 
-            int tempValueSlot = slot2;
+            int originValueSlot2 = slot2;
        
-            if (slot2 == 0)
+            if (slot2 == 0) // si on a rien dans la main droite
             {
-                if (playerObjectState.stateValue != 0) // uniquement une soustraction
+                if (playerObjectState.stateValue != 0) // le joueur a au moins 1 comportement sur lui --> la left Value est forcement positive
                 {
-                    int aRecuperer = 0;
-                    if (_stateStolen.inversion)//leftValue est a droite
+                    if(_stateStolen.inversion)
                     {
-                        aRecuperer = playerObjectState.leftValue;
-                    }
-                    else // rightValue est a droite
-                    {
-                        if (playerObjectState.rightValue != 0)
+                        if(playerObjectState.leftValue == 0)
                         {
-                            aRecuperer = playerObjectState.rightValue;
+                            return;
                         }
-                    }
-
-                    if (aRecuperer == 0)// pour ne pas reset le comportement
-                        return;
-                    
-                    // int valueToSteal = playerObjectState.leftValue;
-                    int futurState = playerObjectState.stateValue - aRecuperer;
-                    playerObjectState.CalculateNewtState(futurState);
-                    
-                    newPlayerObjectState = (ComportementState)_stateStolen.currentState; //reset du state actuel
-                    
-                    if (newPlayerObjectState.rightValue > tempValueSlot)
-                    {
-                        _stateStolen.inversion = true;
+                        ExecuteChangeStateSubtractive(playerObjectState, ref slot2, false);
                     }
                     else
                     {
-                        _stateStolen.inversion = false; // slot est == ou supérieur, donc l'orde du systeme est bon 
-                    } 
-                    
-                    slot2 = aRecuperer;
-                    
+                        if (playerObjectState.rightValue == 0)
+                        {
+                            return;
+                        }
+                        ExecuteChangeStateSubtractive(playerObjectState, ref slot2, true);
+                    }          
+                    _stateStolen.inversion = false;                    
                 }
                 else //si on a rien en main et rien en slot, on a rien à faire
                 {
                     Debug.Log("SIM DROIT - rien a recuperer, voler ou echanger");
                 }
             }
-            else
+            else // si on a un comportement dans la main droite
             {
-                if (playerObjectState.stateValue != 0) //left forcément remplis
+                if (playerObjectState.stateValue != 0) // le joueur a au moins 1 comportement sur lui  --> la left Value est forcement positive
                 {
-                    // cas 1 ou 2 comportement
-                    if (_stateStolen.inversion) // je suis inversé donc j'ai forcement un comportement sur bras droit
+                    if (_stateStolen.inversion) // le comportement sur le joueur est inversé (la gauche est devenu la droite)
                     {
-                        // QUOI QU'IL ARRIVE C LEFT car je suis inversé donc left toujours à droite ET SI PAS INVERSION C RIGHT
-                        if (playerObjectState.rightValue != 0)// si j'ai 2 comportement, je dois en echanger 1
+                        ExchangeStateWithPlayerAndHand(playerObjectState, ref slot2, false);
+
+                        if (originValueSlot2 != 0 && originValueSlot2 >= playerObjectState.rightValue)//Le seul moment ou on change inversion c'est quand il y a une inversion naturelle.
+                                                                                                     // une inversion naterelle ne se produit avec le slot2 que lorsque la valeur du slot2 est superieur ou égale a right value avant l'echange
+                                                                                                     // tant que right value est differente de 0
                         {
-                            (slot2, playerObjectState.leftValue) = (playerObjectState.leftValue, slot2);
-                            
-                            int futurState = playerObjectState.leftValue + playerObjectState.rightValue;
-                            
-                            playerObjectState.CalculateNewtState(futurState);
-                            newPlayerObjectState = (ComportementState)_stateStolen.currentState;
-                            
-                            //si right est <= slot2 / tempValueSlot = inverse false
-                            if (newPlayerObjectState.rightValue > tempValueSlot)
-                            {
-                                _stateStolen.inversion = true;
-                            }
-                            else
-                            {
-                                _stateStolen.inversion = false; // slot est == ou supérieur, donc l'orde du systeme est bon 
-                            } 
-                        }
-                        else // j'ai 1 comportement et je suis inverse
-                        {
-                            //echange avec leftValue  et inversion = true
-                            _stateStolen.inversion = true;
-                        
-                            (slot2, playerObjectState.leftValue) = (playerObjectState.leftValue, slot2);
-                        
-                            playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
+                            _stateStolen.inversion = !_stateStolen.inversion;
                         }
                     }
-                    else
+                    else // le comportement sur le joueur n'est pas inverse
                     {
-                        if (playerObjectState.rightValue != 0) // si j'ai 2 comportement, et que je ne suis pas inversé
+                        ExchangeStateWithPlayerAndHand(playerObjectState, ref slot2, true);
+
+                        if (originValueSlot2 < playerObjectState.leftValue) //Le seul moment ou on change inversion c'est quand il y a une inversion naturelle.
+                                                                            //une inversion naterelle ne se produit avec le slot2 que lorsque la valeur du slot2 est inferieur a left value avant l'echange
                         {
-                            (slot2, playerObjectState.rightValue) = (playerObjectState.rightValue, slot2);
-                            
-                            int futurState = playerObjectState.leftValue + playerObjectState.rightValue;
-                            
-                            playerObjectState.CalculateNewtState(futurState);
-                            newPlayerObjectState = (ComportementState)_stateStolen.currentState;
-                            
-                            //si right est <= slot2 / tempValueSlot = inverse false
-                            if (newPlayerObjectState.rightValue > tempValueSlot)
-                            {
-                                _stateStolen.inversion = true;
-                            }
-                            else
-                            {
-                                _stateStolen.inversion = false; // slot est == ou supérieur, donc l'orde du systeme est bon 
-                            } 
-                        }
-                        else // pas inversé et que 1 comportement
-                        {
-                            int futurState = playerObjectState.leftValue + slot2;
-                            
-                            playerObjectState.CalculateNewtState(futurState);
-                            newPlayerObjectState = (ComportementState)_stateStolen.currentState;
-                            
-                            if (newPlayerObjectState.rightValue > tempValueSlot)
-                            {
-                                _stateStolen.inversion = true;
-                            }
-                            else
-                            {
-                                _stateStolen.inversion = false; // slot est == ou supérieur, donc l'orde du systeme est bon 
-                            } 
-                            //reset
-                            slot2 = 0;
+                            _stateStolen.inversion = !_stateStolen.inversion;
                         }
                     }
                 }
-                else // je n'ai aucun comportement sur player, j'en ajoute 1 qui se place à droite
+                else // le joueur n'a aucun comportement sur lui
                 {
-                    _stateStolen.inversion = true;
-                    
-                    int valueToAdd = slot2;
-                    int futurState = playerObjectState.stateValue + valueToAdd;
+                    ExchangeStateWithPlayerAndHand(playerObjectState, ref slot2, true);
 
-                    playerObjectState.CalculateNewtState(futurState);
-                    
-                    slot2 = 0;
+                    _stateStolen.inversion = true;
                 }
             }
         }
@@ -499,6 +376,18 @@ public class ComportementStealer_proto : MonoBehaviour
             (slot1, slot2) = (slot2, slot1);
         }
     }
+    void ExchangeStateWithPlayerAndHand(ComportementState playerObjectState, ref int exchangedSlotValue, bool right)
+    {
+        if(right)
+        {
+            (exchangedSlotValue, playerObjectState.rightValue) = (playerObjectState.rightValue, exchangedSlotValue);
+        }
+        else
+        {
+            (exchangedSlotValue, playerObjectState.leftValue) = (playerObjectState.leftValue, exchangedSlotValue);
+        }
+        playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
+    }
 
     void ExecuteChangeStateAdditive(ComportementState currentObjectState,ref int addedSlotValue)
     {
@@ -506,17 +395,17 @@ public class ComportementStealer_proto : MonoBehaviour
         addedSlotValue = 0;
     }
     
-    void ExecuteChangeStateSubtractive(ComportementState currentObjectState, bool right)
+    void ExecuteChangeStateSubtractive(ComportementState currentObjectState, ref int substractedSlotValue, bool right)
     {
         if (right)
         {
             currentObjectState.CalculateNewtState(currentObjectState.stateValue - currentObjectState.rightValue);
-            slot2 = currentObjectState.rightValue;
+            substractedSlotValue = currentObjectState.rightValue;
         }
         else
         {
             currentObjectState.CalculateNewtState(currentObjectState.stateValue - currentObjectState.leftValue);
-            slot2 = currentObjectState.leftValue;
+            substractedSlotValue = currentObjectState.leftValue;
         }
     }
 }
