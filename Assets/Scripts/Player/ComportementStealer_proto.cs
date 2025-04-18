@@ -19,6 +19,7 @@ public class ComportementStealer_proto : MonoBehaviour
     private ComportementsStateMachine _stateStolen;
 
     public bool simActive;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -136,17 +137,17 @@ public class ComportementStealer_proto : MonoBehaviour
                 }
                 else
                 {
-                    _stateStolen = stateMachine; // Stocker la r�f�rence
+                    _stateStolen = stateMachine; // Stocker la reference
                     if (_stateStolen.currentState is ComportementState)
                     {
                         ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
-                        //On verifie si l'objet vis� est vide, si c'est le cas on lui donne directement un comp�rtement avec leftValue, sinon on va v�rifier si sa rightValue est vide
+                        //On verifie si l'objet vise est vide, si c'est le cas on lui donne directement un comp�rtement avec leftValue, sinon on va v�rifier si sa rightValue est vide
                         if(currentObjectState.stateValue != 0)
                         {
-                            //On v�rifie si le rightValue de l'objet Vis� est vide, si c'est le cas, on lui ajoute le comportement stoqu� dans slot1.
+                            //On verifie si le rightValue de l'objet Vise est vide, si c'est le cas, on lui ajoute le comportement stoque dans slot1.
                             if (currentObjectState.rightValue == 0)
                             {
-                                ExecuteChangeStateAdditive(currentObjectState, ref slot1); //on donne le comportement de la main gauche a l'objet vise
+                                ExecuteChangeStateAdditive(currentObjectState, ref slot1, false); //on donne le comportement de la main gauche a l'objet vise
                             }
                             else
                             {
@@ -155,7 +156,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         }
                         else
                         {
-                            ExecuteChangeStateAdditive(currentObjectState, ref slot1); //on donne le comportement de la main gauche a l'objet vise
+                            ExecuteChangeStateAdditive(currentObjectState, ref slot1, false); //on donne le comportement de la main gauche a l'objet vise
                         }
                     }
                 }
@@ -214,7 +215,7 @@ public class ComportementStealer_proto : MonoBehaviour
                             //L'objet vise a une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on ne test que la rightValue, si elle a une valeur de 0 on lui ajoute le comportement stoqu�
                             if (currentObjectState.rightValue == 0)
                             {
-                                ExecuteChangeStateAdditive(currentObjectState,ref slot2); //on donne le comportement de la main droite du joueur a l'objet vise
+                                ExecuteChangeStateAdditive(currentObjectState,ref slot2, true); //on donne le comportement de la main droite du joueur a l'objet vise
                             }
                             else
                             {
@@ -223,7 +224,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         }
                         else
                         {
-                            ExecuteChangeStateAdditive(currentObjectState,ref slot2); //on donne le comportement de la main droite du joueur a l'objet vise
+                            ExecuteChangeStateAdditive(currentObjectState,ref slot2, true); //on donne le comportement de la main droite du joueur a l'objet vise
                         }
                     }
                 }
@@ -238,7 +239,6 @@ public class ComportementStealer_proto : MonoBehaviour
         if (_stateStolen.currentState is ComportementState)
         {
             ComportementState playerObjectState = (ComportementState)_stateStolen.currentState;
-            ComportementState newPlayerObjectState;
             
             int originValueSlot1 = slot1;
 
@@ -283,8 +283,8 @@ public class ComportementStealer_proto : MonoBehaviour
                     {
                         ExchangeStateWithPlayerAndHand(playerObjectState, ref slot1, false);
                         _stateStolen.inversion = (originValueSlot1 < playerObjectState.rightValue && playerObjectState.rightValue != 0);//Le seul moment ou on change inversion c'est quand il y a une inversion naturelle.
-                                                                                                                            //une inversion naterelle ne se produit avec le slot1 que lorsque la valeur du slot1 est inferieur right value avant l'echange
-                                                                                                                            //tant que right value est différent de 0
+                                                                                                                                        //une inversion naterelle ne se produit avec le slot1 que lorsque la valeur du slot1 est inferieur right value avant l'echange
+                                                                                                                                        //tant que right value est différent de 0
                     }
                 }
                 else // le joueur n'a aucun comportement sur lui
@@ -387,12 +387,14 @@ public class ComportementStealer_proto : MonoBehaviour
             (exchangedSlotValue, playerObjectState.leftValue) = (playerObjectState.leftValue, exchangedSlotValue);
         }
         playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
+        GlobalEventManager.Instance.ComportmentExchanged(right);
     }
 
-    void ExecuteChangeStateAdditive(ComportementState currentObjectState,ref int addedSlotValue)
+    void ExecuteChangeStateAdditive(ComportementState currentObjectState,ref int addedSlotValue, bool right)
     {
         currentObjectState.CalculateNewtState(currentObjectState.stateValue + addedSlotValue);
         addedSlotValue = 0;
+        GlobalEventManager.Instance.ComportmentAdded(currentObjectState.GetGameObject(), right);
     }
     
     void ExecuteChangeStateSubtractive(ComportementState currentObjectState, ref int substractedSlotValue, bool right)
@@ -407,5 +409,6 @@ public class ComportementStealer_proto : MonoBehaviour
             currentObjectState.CalculateNewtState(currentObjectState.stateValue - currentObjectState.leftValue);
             substractedSlotValue = currentObjectState.leftValue;
         }
+        GlobalEventManager.Instance.ComportmentExtracted(currentObjectState.GetGameObject(), right);
     }
 }

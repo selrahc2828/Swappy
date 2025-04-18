@@ -83,6 +83,10 @@ public class ComportementState : State
     {
         _sm.rb.AddForce(thrownDirection, ForceMode.Impulse);
     }
+    public GameObject GetGameObject()
+    {
+        return _sm.gameObject;
+    }
 
     public void CalculateNewtState(int newValue)
     {
