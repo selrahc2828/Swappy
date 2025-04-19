@@ -52,12 +52,15 @@ public class ComportementStealer_proto : MonoBehaviour
         if (context.performed)
         {
             simActive = true;
+            
         }
 
         if (context.canceled)
         {
             simActive = false;
+            
         }
+        GlobalEventManager.Instance.SelfImpactMod(simActive);
     }
 
     void ActionSlot1(InputAction.CallbackContext context)
@@ -119,14 +122,21 @@ public class ComportementStealer_proto : MonoBehaviour
                         //On verifie que la stateValue de l'objet vise est superieur a 0, on ne peut prelever un comportement que si c'est le cas.
                         if(currentObjectState.stateValue != 0)
                         {
-                            //stateValue est supperieur a 0, leftValue est donc obligatoirement remplie, etant donn� qu'il s'agit du clique gauche, on ne cherche que la leftValue
-                            if (currentObjectState.leftValue != 0)//left
+                            if (_stateStolen.inversion)
                             {
-                                ExecuteChangeStateSubtractive(currentObjectState, ref slot1, false); //on vole le comportement de gauche de l'objet vise
+                                //stateValue est supperieur a 0, leftValue est donc obligatoirement remplie, etant donn� qu'il s'agit du clique gauche, on ne cherche que la leftValue
+                                if (currentObjectState.rightValue != 0)//left
+                                {
+                                    ExecuteChangeStateSubtractive(currentObjectState, ref slot1, true, false); //on vole le comportement de gauche de l'objet vise
+                                }
+                                else
+                                {
+                                    ExecuteChangeStateSubtractive(currentObjectState, ref slot1, false, false);
+                                }
                             }
                             else
                             {
-                                Debug.LogWarning("Normalement c'est litteralement impossible de faire ca");
+                                ExecuteChangeStateSubtractive(currentObjectState, ref slot1, false, false);
                             }
                         }
                         else
@@ -184,17 +194,24 @@ public class ComportementStealer_proto : MonoBehaviour
                     {
                         ComportementState currentObjectState = (ComportementState)_stateStolen.currentState;
                         //On verifie si l'objet vise contiens une stateValue, si la stateValue est superieur a 0, l'objet a un comportement
-                        if (currentObjectState.stateValue != 0)
+                        if (currentObjectState.stateValue != 0) // l'objet a deja au moin un comportement
                         {
                             //L'objet vise a une stateValue superieur a 0 donc sa leftValue est forc�ment remplis, on test dans un premier temps la rightValue etant donne que c'ets le click droit.
                             //Si la rightValue est superieur a 0, on la stoque, sinon on stoque la leftValue.
                             if (currentObjectState.rightValue != 0)//right
                             {
-                                ExecuteChangeStateSubtractive(currentObjectState, ref slot2, true); //on prend le comportement de droite de l'objet vise
+                                if (_stateStolen.inversion)
+                                {
+                                    ExecuteChangeStateSubtractive(currentObjectState, ref slot2, false, true); //on prend le comportement de droite de l'objet vise
+                                }
+                                else
+                                {
+                                    ExecuteChangeStateSubtractive(currentObjectState, ref slot2, true, true);
+                                }
                             }
                             else//left
                             {
-                                ExecuteChangeStateSubtractive(currentObjectState, ref slot2, false); //on prend le comportement de gauche de l'objet vise
+                                ExecuteChangeStateSubtractive(currentObjectState, ref slot2, false, true); //on prend le comportement de gauche de l'objet vise
                             }
                         }
                         else
@@ -253,12 +270,12 @@ public class ComportementStealer_proto : MonoBehaviour
                         {
                             return;
                         }
-                        ExecuteChangeStateSubtractive(playerObjectState, ref slot1, true);
+                        ExecuteChangeStateSubtractive(playerObjectState, ref slot1, true, true);
                         _stateStolen.inversion = false;
                     }
                     else
                     {
-                        ExecuteChangeStateSubtractive(playerObjectState, ref slot1, false);
+                        ExecuteChangeStateSubtractive(playerObjectState, ref slot1, false, false);
                         _stateStolen.inversion = playerObjectState.rightValue != 0;// on viens de prendre le comportement gauche du joueur en mode non inverse
                                                                                    // soit la valeur du comportement de droite est positive (le joueur avais un double comportement) et l'inversion est obligatoire
                                                                                    // soit la valeur du comportement de droite est nulle et l'inversion ne se fais pas
@@ -316,7 +333,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         {
                             return;
                         }
-                        ExecuteChangeStateSubtractive(playerObjectState, ref slot2, false);
+                        ExecuteChangeStateSubtractive(playerObjectState, ref slot2, false, false);
                     }
                     else
                     {
@@ -324,7 +341,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         {
                             return;
                         }
-                        ExecuteChangeStateSubtractive(playerObjectState, ref slot2, true);
+                        ExecuteChangeStateSubtractive(playerObjectState, ref slot2, true,true);
                     }          
                     _stateStolen.inversion = false;                    
                 }
@@ -397,9 +414,9 @@ public class ComportementStealer_proto : MonoBehaviour
         GlobalEventManager.Instance.ComportmentAdded(currentObjectState.GetGameObject(), right);
     }
     
-    void ExecuteChangeStateSubtractive(ComportementState currentObjectState, ref int substractedSlotValue, bool right)
+    void ExecuteChangeStateSubtractive(ComportementState currentObjectState, ref int substractedSlotValue, bool rightValue, bool rightHand)
     {
-        if (right)
+        if (rightValue)
         {
             currentObjectState.CalculateNewtState(currentObjectState.stateValue - currentObjectState.rightValue);
             substractedSlotValue = currentObjectState.rightValue;
@@ -409,6 +426,6 @@ public class ComportementStealer_proto : MonoBehaviour
             currentObjectState.CalculateNewtState(currentObjectState.stateValue - currentObjectState.leftValue);
             substractedSlotValue = currentObjectState.leftValue;
         }
-        GlobalEventManager.Instance.ComportmentExtracted(currentObjectState.GetGameObject(), right);
+        GlobalEventManager.Instance.ComportmentExtracted(currentObjectState.GetGameObject(), rightValue, rightHand);
     }
 }
