@@ -183,6 +183,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8980300366775727764}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3795007791278973488}
   m_SourcePrefab: {fileID: 100100000, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
 --- !u!1 &6304569146231824499 stripped
 GameObject:
@@ -279,6 +282,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d4585f984fe4230b40a49c19ae6c9c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3795007791278973488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6304569146231824499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7a6870f499b3a41b76b84d1c8f626c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planeteRB: {fileID: 0}
+  rb: {fileID: 0}
+  offsetRotation: {x: 0, y: 0, z: 0}
+  gravityConstant: 9.81
+  massePlanete: 0
+  maxAngle: 30
 --- !u!4 &6644362582985112265 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
