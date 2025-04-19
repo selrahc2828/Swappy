@@ -12,11 +12,24 @@ public class Anim_manager : MonoBehaviour
     
     
 
+    private void OnDisable()
+    {
+        GlobalEventManager.Instance.OnComportmentExtracted -= HandleComportmentExtraction;
+        GlobalEventManager.Instance.OnComportmentAdded -= HandleComportmentAttribution;
+    }
+
     void Start()
     {
+        GlobalEventManager.Instance.OnComportmentExtracted += HandleComportmentExtraction;
+        GlobalEventManager.Instance.OnComportmentAdded += HandleComportmentAttribution;
+        
         Left_Arm_Animator = GameObject.FindGameObjectWithTag("leftArm").GetComponent<Animator>();
         Right_Arm_Animator = GameObject.FindGameObjectWithTag("rightArm").GetComponent<Animator>();
         Start_Local_Left_Transform = Left_Arm_Animator.transform;
+        
+        
+        
+        
     }
 
     
@@ -35,24 +48,93 @@ public class Anim_manager : MonoBehaviour
     #endregion
     
     #region Attribution
+
+    public void HandleComportmentAttribution(GameObject target, bool righthand)
+    {
+        if (target.tag != "Player")
+        {
+            if (righthand)
+            {
+                Right_Attribution();
+            }
+            else
+            {
+                Left_Attribution();
+            }
+        }
+        else
+        {
+            if (righthand)
+            {
+                Right_SelfAssign();
+            }
+            else
+            {
+                Left_SelfAssign();
+            }
+        }
+    }
+    
     public void Left_Attribution()
     {
         Left_Arm_Animator.Play("AtributionLeft_");
         
-       // Left_Arm_Animator.SetBool("To_Attrib", true);
+       
         
     }
     public void Right_Attribution()
     {
         Right_Arm_Animator.Play("Atribution");
         
-       // Right_Arm_Animator.SetBool("To_Attrib", true);
+       
         
     }
+    
+    #region SelfAssign
+
+    public void Left_SelfAssign()
+    {
+        Left_Arm_Animator.Play("Self_Assign_Left");
+    }
+    public void Right_SelfAssign()
+    {
+        Left_Arm_Animator.Play("Self_Assign");
+    }
+
+    
+
+    #endregion
     
     #endregion
     
     #region Aspiration
+
+    public void HandleComportmentExtraction(GameObject target, bool righthand)
+    {
+        if (target.tag != "Player")
+        {
+            if (righthand)
+            {
+                Right_Aspiration();
+            }
+            else
+            {
+                Left_Aspiration();
+            }
+        }
+        else
+        {
+            if (righthand)
+            {
+                Right_SelfAspiration();
+            }
+            else
+            {
+                Left_SelfAspiration();
+            }
+        }
+    }
+    
     public void Left_Aspiration()
     {
         
@@ -69,31 +151,22 @@ public class Anim_manager : MonoBehaviour
         
     }
     
-    #endregion
+    #region SelfAspiration
 
-    #region SelfAssign
-
-    public void Left_SelfAssign()
-    {
-        Left_Arm_Animator.Play("Self_Assign_Left");
-    }
-    public void Right_SelfAssign()
-    {
-        Left_Arm_Animator.Play("Self_Assign");
-    }
-
-    
-
-    #endregion
-
-    public void setAspirFalse_Right()
+    public void Right_SelfAspiration()
     {
         
         Right_Arm_Animator.SetBool("To_Aspir", false);
     }
-    public void setAspirFalse_Left()
+    public void Left_SelfAspiration()
     {
         Left_Arm_Animator.gameObject.transform.localPosition = Start_Local_Left_Transform.position;
         Left_Arm_Animator.SetBool("To_Aspir", false);
     }
+    
+    #endregion
+    
+    #endregion
+
+    
 }
