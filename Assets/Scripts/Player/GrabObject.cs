@@ -211,8 +211,6 @@ public class GrabObject : MonoBehaviour
             rb.useGravity = true;
             rb.drag = 0f;
             rb.constraints = RigidbodyConstraints.None;
-            
-
         }
     }
 }
