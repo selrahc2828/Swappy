@@ -15,7 +15,10 @@ public class FMODEventManager : MonoBehaviour
     public FMODSnapshotEvents FMODSnapshots;
     public FMODBus Fmodbus;
 
-    private List<EventInstance> eventPlaylist = new List<EventInstance>();
+    private List<EventInstance> eventPlaylist;
+
+
+    private Dictionary<GameObject, Dictionary<EventReference, EventInstance>> EncyclopediaInstance;
     
     private void Awake()
     {
@@ -51,11 +54,16 @@ public class FMODEventManager : MonoBehaviour
     {
         eventInstance.start();
     }
-    
-    public void PlayEventInstance3D(EventInstance eventInstance, GameObject gameObject, Rigidbody rigidbody)
+
+    public void PlayEvenntInstance3DNotMoving(EventInstance eventInstance, Vector3 position)
+    {
+        eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
+        PlayEventInstance(eventInstance);
+    }    
+    public void PlayEventInstance3DMoving(EventInstance eventInstance, GameObject gameObject, Rigidbody rigidbody)
     {
         RuntimeManager.AttachInstanceToGameObject(eventInstance,gameObject.transform,rigidbody);
-        eventInstance.start();
+        PlayEventInstance(eventInstance);
     }
     
     public float GetNamedParamEventInstance(EventInstance eventInstance, string name)
@@ -98,11 +106,113 @@ public class FMODEventManager : MonoBehaviour
         
     }
     #endregion
-    #region Param Playlist
+    #region Param Encyclopedia
     public float GetPlaylistEventSize()
     {
         return eventPlaylist.Count;
     }
+    
+    public bool CheckInstanceInEncylopedia(GameObject _keyGameObject, EventReference _keyEventReference, out EventInstance eventInstance)
+    {
+
+        if (EncyclopediaInstance.ContainsKey(_keyGameObject))
+        {
+            if (EncyclopediaInstance[_keyGameObject].ContainsKey(_keyEventReference))
+            {
+                eventInstance = EncyclopediaInstance[_keyGameObject][_keyEventReference];
+                return true;
+            }
+            else
+            {
+                Debug.Log("Event instance not referenced yet in Encyclopedia");
+                eventInstance = default(EventInstance);
+                return false;
+            }
+        }
+        else
+        {
+            Debug.Log("Game objet not referenced yet in Encyclopedia");
+            eventInstance = default(EventInstance);
+            return false;
+        }
+    }
+
+    public EventInstance GetInstanceFromEncyclopediaKey(GameObject _keyGameObject, EventReference _keyEventReference)
+    {
+        CheckInstanceInEncylopedia(_keyGameObject, _keyEventReference, out EventInstance eventInstance);
+        return eventInstance;
+    }
+
+    public int GetEncyclopediaSize()
+    {
+        return EncyclopediaInstance.Count;
+    }
+
+    public int GetEncyclopediaPageSize(GameObject _keyGameObject)
+    {
+        if (EncyclopediaInstance.ContainsKey(_keyGameObject))
+        {
+            return EncyclopediaInstance[_keyGameObject].Count;
+        }
+        else
+        {
+            Debug.Log("Game objet not referenced yet in Encyclopedia");
+            return default;
+        }
+    }
+    
+
+    public void AddInstanceInEncyclopedia(GameObject _keyGameObject, EventReference _keyEventReference, EventInstance newEventInstanceToAdd)
+    {
+        if (CheckInstanceInEncylopedia(_keyGameObject, _keyEventReference, out EventInstance eventInstance))
+        {
+            Debug.LogWarning("Event instance already exists");
+        }
+        else
+        {
+            if (!EncyclopediaInstance.ContainsKey(_keyGameObject))
+            {
+                EncyclopediaInstance.Add(_keyGameObject, new Dictionary<EventReference, EventInstance>());
+            }
+            EncyclopediaInstance[_keyGameObject].Add(_keyEventReference, newEventInstanceToAdd);
+        }
+        
+    }
+
+    public void SwitchParameterInstanceInEncyclopedia(GameObject _keyGameObject, EventReference _keyEventReference, string parameterName, float parameterValue)
+    {
+        if (CheckInstanceInEncylopedia(_keyGameObject, _keyEventReference, out EventInstance eventInstance))
+        {
+            SetNamedParamEventInstance(eventInstance, parameterName, parameterValue);
+        }
+        else
+        {
+            Debug.LogWarning("Event instance not referenced yet in Encyclopedia");
+        }
+    }
+
+    public void RemoveInstanceInEncyclopedia(GameObject _keyGameObject, EventReference _keyEventReference)
+    {
+        if (CheckInstanceInEncylopedia(_keyGameObject, _keyEventReference, out EventInstance eventInstance))
+        {
+            ReleaseEventInstance(eventInstance);
+            EncyclopediaInstance[_keyGameObject].Remove(_keyEventReference);
+            if (EncyclopediaInstance[_keyGameObject].Count == 0)
+            {
+                EncyclopediaInstance[_keyGameObject] = null;
+                EncyclopediaInstance.Remove(_keyGameObject);
+            }
+            else
+            {
+                Debug.LogWarning("Event instance not registered in Encyclopedia");
+            }
+        }
+        else
+        {
+            Debug.Log("Game objet not referenced yet in Encyclopedia");
+        }
+    }
+    
     #endregion
     #region Param Bus
     public void Mute(string busRef)
@@ -136,6 +246,7 @@ public class FMODEventManager : MonoBehaviour
             eventInstance.release();
         }
         eventPlaylist.Clear();
+        EncyclopediaInstance.Clear();
     }
 
     private void OnDestroy()
@@ -143,5 +254,7 @@ public class FMODEventManager : MonoBehaviour
         CleanUpAllSound();
     }
     #endregion
+    
+    
 
 }
