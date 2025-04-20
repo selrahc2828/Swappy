@@ -29,6 +29,11 @@ public class BreakableObject : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.rigidbody == null)
+        {
+            return;
+        }
+
         Rigidbody rb = collision.rigidbody;
         float cineticForce = (rb.mass / 2) * (rb.velocity.magnitude * rb.velocity.magnitude);
 
