@@ -11,7 +11,7 @@ public class BreakableObject : MonoBehaviour
 
         if (collision.relativeVelocity.magnitude > minBreakMagnitude)
         {
-            GameObject.Instantiate(shatteredVersion, transform.position, Quaternion.identity);
+            GameObject.Instantiate(shatteredVersion, transform.position, transform.rotation);
             GameObject.Destroy(gameObject);
         }
     }
