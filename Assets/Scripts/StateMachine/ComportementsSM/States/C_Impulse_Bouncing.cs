@@ -12,7 +12,8 @@ public class C_Impulse_Bouncing : ComportementState
     private float impulseBounceTimer;
     private float impulseBounceCooldown;
     private GameObject impulseBounceFeedback;
-    
+    private bool applyOnMe = false;
+
     private float impulseForceMultiplier;//coeff de conservation de la velocité lors de la collision
     
     private bool canBounce = true; // verif si on peut faire l'impulse
@@ -69,7 +70,7 @@ public class C_Impulse_Bouncing : ComportementState
         saveImpulseForce = impulseBounceForce;
         trueImpulseBounceForce = impulseBounceForce;
         impulseForceMultiplier = _sm.comportementManager.impulseBounceData.impulseForceMultiplier;
-        
+        applyOnMe = _sm.comportementManager.impulseData.applyOnMe;
         impulseBounceFeedback = _sm.comportementManager.impulseData.impulseFeedback;
         
         feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
@@ -140,7 +141,7 @@ public class C_Impulse_Bouncing : ComportementState
         Gizmos.DrawWireSphere(_sm.transform.position, trueImpulseBounceRange);  
 
     }
-    
+
     public void Repulse()
     {
         if (impulseBounceFeedback)
@@ -155,36 +156,42 @@ public class C_Impulse_Bouncing : ComportementState
         {
             foreach (Collider objectInRange in objectsInRange)
             {
-                if (objectInRange.GetComponentInParent<Rigidbody>() == null)
-                {
-                    continue;
-                }
-
-                Vector3 direction;
                 if (objectInRange.gameObject.CompareTag("Player"))
                 {
+                    if (!objectInRange.gameObject.GetComponentInParent<Rigidbody>())
+                    {
+                        return;
+                    }
                     //collider et rigid body pas au même endroit pour lui
                     GameObject objectAffected = objectInRange.gameObject.GetComponentInParent<Rigidbody>().gameObject;
-                    
-                    direction = (objectAffected.GetComponent<Rigidbody>().transform.position - _sm.transform.position).normalized;
-                    objectAffected.GetComponent<Rigidbody>().AddForce( direction * trueImpulseBounceForce, ForceMode.Impulse);
 
-                    // pb pour appliquer la force à cause du drag sur le rigidbody ?
-                    //ApplyForce(objectAffected.GetComponent<Rigidbody>(), objectAffected,repulserForce);
-                    
+                    // pb pour appliquer la force à cause du drag sur le rigidbody
+                    ApplyForce(objectAffected.GetComponent<Rigidbody>(), objectAffected, impulseBounceForce);
+
                     // player relache l'objet repulse
                     if (isGrabbed) //juste isGrabbed ? objectAffected.GetComponent<GrabObject>().carriedObject == _sm.gameObject
                     {
                         objectAffected.GetComponent<GrabObject>().Release(true);
                     }
                 }
-                else
+                else if (objectInRange.GetComponent<Rigidbody>() != null)
                 {
-                    direction = (objectInRange.GetComponent<Rigidbody>().transform.position - _sm.transform.position).normalized;
-
-                    objectInRange.GetComponent<Rigidbody>().AddForce( direction * trueImpulseBounceForce, ForceMode.Impulse);
-                }  
+                    ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, impulseBounceForce);
+                }
             }
         }
     }
+            public void ApplyForce(Rigidbody rbObj, GameObject objToApply, float force)
+    {
+        if (!applyOnMe && objToApply == _sm.gameObject)
+        {
+            // si rigid body sur objet, on applique pas la force sur lui pour le lancer par exemple
+            return;
+        }
+        else
+        {
+            Vector3 direction = (objToApply.transform.position - _sm.transform.position).normalized;
+            rbObj.AddForce(direction * force, ForceMode.Impulse);
+        }
+    }    
 }
