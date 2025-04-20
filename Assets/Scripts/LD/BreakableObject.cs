@@ -15,10 +15,4 @@ public class BreakableObject : MonoBehaviour
             GameObject.Destroy(gameObject);
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(GetComponent<Rigidbody>().centerOfMass, 0.1f);
-    }
 }
