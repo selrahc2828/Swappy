@@ -14,5 +14,7 @@ public partial class ComportementManager
         public GameObject impulseFeedback;
         [Tooltip("Si Rigidbody sur lui")]
         public bool applyOnMe = false;
+        public float doubleRepulseForceMult = 1.5f;
+        public float doubleRepulseRangeMult = 1.5f;
     }
 }
