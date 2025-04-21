@@ -83,7 +83,7 @@ public class C_Solo_Rocket : ComportementState
         {
             _sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
         }
-        
+
         if (rocketOn)
         {
             if (!rocketStingOn)
@@ -97,7 +97,7 @@ public class C_Solo_Rocket : ComportementState
             }
             else if(isGrabbed)
             {
-                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketForceWhenGrab, ForceMode.Force);
+                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketForceWhenGrab, ForceMode.Acceleration);
             }
             else
             {

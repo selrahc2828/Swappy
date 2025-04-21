@@ -98,7 +98,7 @@ public class C_Bouncing_Rocket : ComportementState
             }
             else if(isGrabbed)
             {
-                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(rocketDirection * rocketForceWhenGrab, ForceMode.Force);
+                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(rocketDirection * rocketForceWhenGrab, ForceMode.Acceleration);
             }
             else
             {

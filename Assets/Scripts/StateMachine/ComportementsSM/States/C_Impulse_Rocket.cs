@@ -122,7 +122,7 @@ public class C_Impulse_Rocket : ComportementState
             }
             else if(isGrabbed)
             {
-                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketForceWhenGrab, ForceMode.Force);
+                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketForceWhenGrab, ForceMode.Acceleration);
             }
             else
             {
