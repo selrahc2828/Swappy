@@ -110,7 +110,7 @@ public class GrabObject : MonoBehaviour
     public void MoveObject()
     {
         Vector3 dir = handlerPosition.position - carriedObject.transform.position;
-        carriedObject.GetComponent<Rigidbody>().AddForce(dir * grabForce);
+        carriedObject.GetComponent<Rigidbody>().AddForce(dir * grabForce, ForceMode.Acceleration);
     }
     
     public void Carry()
