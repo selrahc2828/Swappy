@@ -8,22 +8,14 @@ public class InventorySystem: MonoBehaviour
 {
     
     [SerializeField] private int maxSlots = 20;
-
     public int MaxSlots => maxSlots;
 
     private Dictionary<ItemData, InventorySlot> inventoryItems = new Dictionary<ItemData, InventorySlot>();
-
     public Dictionary<ItemData, InventorySlot> InventoryItems
     {
         get => inventoryItems;
         //set => inventoryItems = value;
     }
-    // private Dictionary<TapeData, int> tapes = new Dictionary<TapeData, int>();
-    
-    //emet event
-    public event Action OnAddInventory;
-    public event Action OnRemoveInventory;
-    public event Action<ItemData, int> OnPopupInventory;
 
     public void AddItem(ItemData newItem, int quantity = 1)
     {
@@ -34,15 +26,12 @@ public class InventorySystem: MonoBehaviour
                 Debug.Log("Inventaire plein. Impossible d'ajouter plus d'objets.");
                 return;
             }
-            
             inventoryItems.Add(newItem, new InventorySlot(newItem, 0));
         }
 
         inventoryItems[newItem].quantity += quantity;
         GlobalEventManager.Instance.AddInventory();
-        //OnAddInventory?.Invoke();
         GlobalEventManager.Instance.DisplayPopupPickUpItem(newItem, quantity);
-        // OnPopupInventory?.Invoke(newItem, quantity);
     }
 
     public void RemoveItem(ItemData itemToRemove,  int quantity = 1)
@@ -54,16 +43,16 @@ public class InventorySystem: MonoBehaviour
             return;
         }
         
-        
         inventoryItems[itemToRemove].quantity -= quantity;
         
         // si on a plus rien, voir si on conserve ou non 
         if (inventoryItems[itemToRemove].quantity <= 0)
         {
             inventoryItems.Remove(itemToRemove);
+            
             Debug.Log($"L'objet {itemToRemove.itemName} a été retiré de l'inventaire.");
         }
         
-        OnRemoveInventory?.Invoke();
+        GlobalEventManager.Instance.RemoveInventory();
     }
 }

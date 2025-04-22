@@ -15,6 +15,7 @@ public class GlobalEventManager : MonoBehaviour
 
     // Inventory
     public event Action OnAddInventory;
+    public event Action OnRemoveInventory;
     public event Action<ItemData, int> OnPopupInventory;
 
 
@@ -49,11 +50,14 @@ public class GlobalEventManager : MonoBehaviour
         OnAddInventory?.Invoke();
     }
     
+    public void RemoveInventory() //appele quand on retirant un item de l'inventaire
+    {
+        OnRemoveInventory?.Invoke();
+    }
     public void DisplayPopupPickUpItem(ItemData newItem, int quantity) //appele quand on ajoute un item dans l'inventaire
     {
         OnPopupInventory?.Invoke(newItem, quantity);
     }
     
-
     #endregion
 }
