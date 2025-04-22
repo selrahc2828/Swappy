@@ -84,22 +84,22 @@ MonoBehaviour:
   playerAntiStick: {fileID: 13400000, guid: 7d0324e019535384a977d1652c3ca988, type: 2}
   mainCamera: {fileID: 0}
   planeteCore: {fileID: 0}
-  constanteGravitationelle: 9.81
-  massePlanete: 100000
-  maxSpeed: 0
-  moveSpeed: 0
-  sprintMultiplier: 0
-  aerialMultiplier: 0
-  stoppingRatio: 0
-  sideSpeedReductionRatio: 0
+  constanteGravitationelle: 11
+  massePlanete: 1000000
+  maxSpeed: 7.5
+  moveSpeed: 30
+  sprintMultiplier: 1.5
+  aerialMultiplier: 0.35
+  stoppingRatio: 0.9
+  sideSpeedReductionRatio: 0.1
   groundDrag: 5
   orientation: {fileID: 0}
-  jumpForce: 50
+  jumpForce: 7.5
   jumpCooldown: 0.25
   airMultiplier: 0.2
   crouchSpeed: 20
   crouchYScale: 0.5
-  playerHeight: 2
+  playerHeight: 3
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -202,11 +202,14 @@ MonoBehaviour:
     impulseGradiantForce: 1
     impulseFeedback: {fileID: 5997281712086689970, guid: d7e7b2fb81b45414cbff7f19ab5a5b62, type: 3}
     applyOnMe: 0
+    doubleRepulseForceMult: 1.5
+    doubleRepulseRangeMult: 1.5
   rocketData:
-    rocketForce: 75
+    rocketForce: 750
     rocketForceOnPlayer: 75
     rocketForceWhenGrab: 75
-    rocketOnOffCouldown: 5
+    rocketOnCooldown: 5
+    rocketOffCooldown: 6
     rocketMaxSpeed: 15
   doubleRocketData:
     rocketDoubleForce: 150
@@ -263,9 +266,7 @@ MonoBehaviour:
   impulseRocketData:
     impulseRocketExplosionForce: 6
     impulseRocketExplosionRange: 4
-    impulseRocketFlyForce: 75
     impulseRocketFlyForceOnPlayer: 75
-    impulseRocketFlyTime: 5
     timeBetweenImpulses: 0.5
 --- !u!114 &877786246134460342
 MonoBehaviour:
