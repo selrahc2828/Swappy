@@ -21,7 +21,7 @@ public class FMODMusicManager : MonoBehaviour
     
     public List<EventInstance> musicPlaylist = new List<EventInstance>();
     
-    private PLAYBACK_STATE musicState;
+    //private PLAYBACK_STATE musicState;
 
     FMOD.Studio.EVENT_CALLBACK walkmanCallback;
     
@@ -59,7 +59,7 @@ public class FMODMusicManager : MonoBehaviour
 
     public void PlayMusicInstance(EventInstance musicInstance)
     {
-        musicInstance.getPlaybackState(out musicState);
+        musicInstance.getPlaybackState(out PLAYBACK_STATE musicState);
         if (musicState != PLAYBACK_STATE.PLAYING)
         {
             musicInstance.start();
@@ -83,7 +83,7 @@ public class FMODMusicManager : MonoBehaviour
 
     public void StopMusic(EventInstance musicInstance)
     {
-        if (musicInstance.getPlaybackState(out musicState) != (RESULT)PLAYBACK_STATE.STOPPED)
+        if (musicInstance.getPlaybackState(out PLAYBACK_STATE musicState) != (RESULT)PLAYBACK_STATE.STOPPED)
         {
             musicInstance.stop(STOP_MODE.ALLOWFADEOUT);
         }
@@ -95,7 +95,8 @@ public class FMODMusicManager : MonoBehaviour
 
     public void ReleaseMusicInstance(EventInstance musicInstance)
     {
-        if (musicInstance.getPlaybackState(out musicState) == (RESULT)PLAYBACK_STATE.STOPPED)
+        musicInstance.getPlaybackState(out PLAYBACK_STATE musicState);
+        if (musicState==PLAYBACK_STATE.STOPPED || musicState == PLAYBACK_STATE.STOPPING )
         {
             //Debug.Log("Music instance released");
             musicInstance.release();
@@ -164,25 +165,38 @@ public class FMODMusicManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            snapshotWalkman = CreateMusicInstance(FMODSnapshotEvents.WalkMan);
             musicTape = CreateMusicInstance(FMODMusicEvents.TestMusic6);
             
-            ChooseMusicWalkMan(musicTape, "dinosaur-1-86566");
-            PlayMusicInstance(snapshotWalkman);
+            ChooseMusicWalkMan(musicTape, "CassetteJazzFilmNoir");
             PlayMusicInstance(musicTape);
             
         }
 
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            SetMusicNameParamInstance(snapshotWalkman, "State", 2);
+           
+            ChooseMusicWalkMan(musicTape, "CassetteOrchestral");
 
+        }
 
+        if (Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            ChooseMusicWalkMan(musicTape, "CassetteJazzFilm");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            PlayMusicInstance(musicTape);
         }
 
         if (Input.GetKeyDown(KeyCode.Keypad3))
         {
             StopMusic(musicTape);
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
             ReleaseMusicInstance(musicTape);
         }
      

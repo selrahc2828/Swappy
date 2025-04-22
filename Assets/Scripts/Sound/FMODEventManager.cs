@@ -16,10 +16,10 @@ public class FMODEventManager : MonoBehaviour
     public FMODSnapshotEvents FMODSnapshots;
     public FMODBus Fmodbus;
 
-    private List<EventInstance> eventPlaylist;
+    private List<EventInstance> _eventPlaylist = new List<EventInstance>();
 
 
-    private Dictionary<GameObject, Dictionary<EventReference, EventInstance>> EncyclopediaInstance;
+    private Dictionary<GameObject, Dictionary<EventReference, EventInstance>> EncyclopediaInstance = new Dictionary<GameObject, Dictionary<EventReference, EventInstance>>();
     
     private void Awake()
     {
@@ -42,21 +42,24 @@ public class FMODEventManager : MonoBehaviour
     {
         RuntimeManager.PlayOneShotAttached(sound, gameObject);
     }
-    #endregion
+    #endregion  
     #region Param Instances
     public EventInstance CreateEventInstance(EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
-        eventPlaylist.Add(eventInstance);
+        //_eventPlaylist.Add(eventInstance);
+      
         return eventInstance;
     }
 
     public void PlayEventInstance(EventInstance eventInstance)
     {
-        eventInstance.start();
+
+            eventInstance.start();
+
     }
 
-    public void PlayEvenntInstance3DNotMoving(EventInstance eventInstance, Vector3 position)
+    public void PlayEventInstance3DNotMoving(EventInstance eventInstance, Vector3 position)
     {
         Set3DparamEventInstance(eventInstance, position);
         PlayEventInstance(eventInstance);
@@ -85,7 +88,8 @@ public class FMODEventManager : MonoBehaviour
 
     public void StopEventInstance(EventInstance eventInstance)
     {
-        if (eventInstance.getPlaybackState(out PLAYBACK_STATE eventState) != (RESULT)PLAYBACK_STATE.STOPPED)
+        eventInstance.getPlaybackState(out PLAYBACK_STATE eventState);
+        if (eventState != PLAYBACK_STATE.STOPPED || eventState != PLAYBACK_STATE.STOPPING)
         {
             eventInstance.stop(STOP_MODE.ALLOWFADEOUT);
         }
@@ -93,24 +97,14 @@ public class FMODEventManager : MonoBehaviour
     
     public void ReleaseEventInstance(EventInstance eventInstance)
     {
-        if (eventInstance.getPlaybackState(out PLAYBACK_STATE eventState) == (RESULT)PLAYBACK_STATE.STOPPED || eventState == PLAYBACK_STATE.STOPPING)
-        {
             eventInstance.release();
-            eventPlaylist.Remove(eventInstance);
-            //Debug.Log("event instance is release");
-        }
-        else
-        {
-            Debug.LogWarning("event instance isn't release");
-        }
-        
-        
+            _eventPlaylist.Remove(eventInstance);
     }
     #endregion
     #region Param Encyclopedia
     public int GetPlaylistEventSize()
     {
-        return eventPlaylist.Count;
+        return _eventPlaylist.Count;
     }
     
     public bool CheckInstanceInEncylopedia(GameObject _keyGameObject, EventReference _keyEventReference, out EventInstance eventInstance)
@@ -132,7 +126,7 @@ public class FMODEventManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Game objet not referenced yet in Encyclopedia");
+            Debug.Log("GameObjet not referenced yet in Encyclopedia");
             eventInstance = default(EventInstance);
             return false;
         }
@@ -162,7 +156,6 @@ public class FMODEventManager : MonoBehaviour
         }
     }
     
-
     public void AddInstanceInEncyclopedia(GameObject _keyGameObject, EventReference _keyEventReference, EventInstance newEventInstanceToAdd)
     {
         if (CheckInstanceInEncylopedia(_keyGameObject, _keyEventReference, out EventInstance eventInstance))
@@ -228,27 +221,30 @@ public class FMODEventManager : MonoBehaviour
         {
             Debug.LogWarning("Couple of Event instance not referenced in Encyclopedia");
         }
-        else if (playlistSize == eventInstanceNumber)
-        {
-            Debug.Log("All Event instance found in Encyclopedia");
-        }
         else if (playlistSize < eventInstanceNumber)
         {
             Debug.LogError("Event instance referenced in Encyclopedia but not exist");
         }
 
-        float eventInstanceRateByGameObject = eventInstanceNumber / encyclopediaSize;
-        if (eventInstanceRateByGameObject < 1)
+        if (encyclopediaSize == 0)
         {
-            Debug.LogError("More Game objects found in Encyclopedia than Event instance");
+            Debug.Log("No Event instance in Encyclopedia");
         }
-        else if (eventInstanceRateByGameObject == 1)
+        else
         {
-            Debug.Log("Every Game objects found in Encyclopedia got only one Event instance");
-        }
-        else if (eventInstanceRateByGameObject > 1)
-        {
-            Debug.Log("Average number of Event instance per Game Objects in Encyclopedia"+ Mathf.Round(eventInstanceRateByGameObject));
+            float eventInstanceRateByGameObject = eventInstanceNumber / encyclopediaSize;
+            if (eventInstanceRateByGameObject < 1)
+            {
+                Debug.LogError("More Game objects found in Encyclopedia than Event instance");
+            }
+            else if (eventInstanceRateByGameObject == 1)
+            {
+                Debug.Log("Every Game objects found in Encyclopedia got only one Event instance");
+            }
+            else if (eventInstanceRateByGameObject > 1)
+            {
+                Debug.Log("Average number of Event instance per Game Objects in Encyclopedia"+ Mathf.Round(eventInstanceRateByGameObject));
+            }
         }
         
     }
@@ -280,12 +276,12 @@ public class FMODEventManager : MonoBehaviour
     private void CleanUpAllSound()
     {
         CheckAllInstanceInEncyclopedia();
-        foreach (EventInstance eventInstance in eventPlaylist)
+        foreach (EventInstance eventInstance in _eventPlaylist)
         {
             eventInstance.stop(STOP_MODE.IMMEDIATE);
             eventInstance.release();
         }
-        eventPlaylist.Clear();
+        _eventPlaylist.Clear();
         EncyclopediaInstance.Clear();
     }
 
