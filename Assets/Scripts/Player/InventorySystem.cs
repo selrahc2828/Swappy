@@ -39,8 +39,10 @@ public class InventorySystem: MonoBehaviour
         }
 
         inventoryItems[newItem].quantity += quantity;
-        OnAddInventory?.Invoke();
-        OnPopupInventory?.Invoke(newItem, quantity);
+        GlobalEventManager.Instance.AddInventory();
+        //OnAddInventory?.Invoke();
+        GlobalEventManager.Instance.DisplayPopupPickUpItem(newItem, quantity);
+        // OnPopupInventory?.Invoke(newItem, quantity);
     }
 
     public void RemoveItem(ItemData itemToRemove,  int quantity = 1)

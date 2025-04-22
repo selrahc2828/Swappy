@@ -47,7 +47,8 @@ public class CanvasManager : MonoBehaviour
     {
         if (inventorySystem != null)
         {
-            inventorySystem.OnPopupInventory += ShowPopupItem;
+            // inventorySystem.OnPopupInventory += ShowPopupItem;
+            GlobalEventManager.Instance.OnPopupInventory += ShowPopupItem;
         }
 
         if (tapeSystem != null)
@@ -62,7 +63,9 @@ public class CanvasManager : MonoBehaviour
     {
         if (inventorySystem != null)
         {
-            inventorySystem.OnPopupInventory -= ShowPopupItem;
+            // inventorySystem.OnPopupInventory -= ShowPopupItem;
+            GlobalEventManager.Instance.OnPopupInventory -= ShowPopupItem;
+
         }
 
         if (tapeSystem != null)

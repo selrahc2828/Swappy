@@ -13,6 +13,11 @@ public class GlobalEventManager : MonoBehaviour
 
     public event Action<bool> OnSelfImpactMod;
 
+    // Inventory
+    public event Action OnAddInventory;
+    public event Action<ItemData, int> OnPopupInventory;
+
+
     private void Awake()
     {
         Instance = this;
@@ -37,4 +42,18 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnSelfImpactMod?.Invoke(active);
     }
+
+    #region  Inventaire
+    public void AddInventory() //appele quand on ajoute un item dans l'inventaire
+    {
+        OnAddInventory?.Invoke();
+    }
+    
+    public void DisplayPopupPickUpItem(ItemData newItem, int quantity) //appele quand on ajoute un item dans l'inventaire
+    {
+        OnPopupInventory?.Invoke(newItem, quantity);
+    }
+    
+
+    #endregion
 }

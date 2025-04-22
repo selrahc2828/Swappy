@@ -43,14 +43,17 @@ public class InventoryMenu : MonoBehaviour
         if (inventorySystem != null)
         {
             // Abonnement à l'event avec une méthode callback
-            inventorySystem.OnAddInventory += RefreshUI;
+            // inventorySystem.OnAddInventory += RefreshUI;
+            GlobalEventManager.Instance.OnAddInventory += RefreshUI;
             Debug.LogError("Inventory menu OnEnable");
         }
         else
         {
             Debug.Log("Inventory system is null");
             inventorySystem = FindObjectOfType<InventorySystem>(); // si possible à mettre une ref dans un manager
-            inventorySystem.OnAddInventory += RefreshUI;
+            // inventorySystem.OnAddInventory += RefreshUI;
+            GlobalEventManager.Instance.OnAddInventory += RefreshUI;
+
 
         }
     }
@@ -60,7 +63,9 @@ public class InventoryMenu : MonoBehaviour
         if (inventorySystem != null)
         {
             // Désabonnement de l'event pour éviter les erreurs de références invalides
-            inventorySystem.OnAddInventory -= RefreshUI;
+            // inventorySystem.OnAddInventory -= RefreshUI;
+            GlobalEventManager.Instance.OnAddInventory -= RefreshUI;
+
         }
     } 
     
