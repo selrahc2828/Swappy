@@ -5,18 +5,17 @@ using UnityEngine;
 public class LocalisationGPS : MonoBehaviour
 {
     public GameObject miniMapPlayer;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject miniMapMainPlanetCore;
+    public GameObject mainPlanetCore;
+    
+    [Range(0.0001f, 0.001f)]
+    public float scaleRatio = 5f;
 
     // Update is called once per frame
     void Update()
     {
-        miniMapPlayer.transform.rotation = Quaternion.Euler(
-                                                GameManager.Instance.player.transform.rotation.eulerAngles.x, 
-                                                GameManager.Instance.player.transform.rotation.eulerAngles.y, 
-                                                GameManager.Instance.player.transform.rotation.eulerAngles.z);
-    }
+        Vector3 relativeLocalPos = mainPlanetCore.transform.InverseTransformPoint(GameManager.Instance.player.transform.position);
+        Vector3 scaledLocalPos = relativeLocalPos * scaleRatio;
+        miniMapPlayer.transform.position = miniMapMainPlanetCore.transform.TransformPoint(scaledLocalPos);
+    }   
 }
