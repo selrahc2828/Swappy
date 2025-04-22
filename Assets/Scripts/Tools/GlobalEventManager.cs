@@ -17,7 +17,12 @@ public class GlobalEventManager : MonoBehaviour
     public event Action OnAddInventory;
     public event Action OnRemoveInventory;
     public event Action<ItemData, int> OnPopupInventory;
-
+    
+    // Tape
+    public event Action OnAddTape;
+    public event Action OnRemoveTape;
+    public event Action OnSetStateTape;
+    public event Action<TapeData> OnPopupTape;
 
     private void Awake()
     {
@@ -44,13 +49,13 @@ public class GlobalEventManager : MonoBehaviour
         OnSelfImpactMod?.Invoke(active);
     }
 
-    #region  Inventaire
+    #region Inventaire
     public void AddInventory() //appele quand on ajoute un item dans l'inventaire
     {
         OnAddInventory?.Invoke();
     }
     
-    public void RemoveInventory() //appele quand on retirant un item de l'inventaire
+    public void RemoveInventory() //appele quand on retire un item de l'inventaire
     {
         OnRemoveInventory?.Invoke();
     }
@@ -58,6 +63,27 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnPopupInventory?.Invoke(newItem, quantity);
     }
+    #endregion
     
+    #region Tapes
+    public void AddTape() //appele quand on ajoute une nouvelle cassette
+    {
+        OnAddTape?.Invoke();
+    }
+    
+    public void RemoveTape() //appele quand on retire une cassette
+    {
+        OnRemoveTape?.Invoke();
+    }
+    
+    public void SetStateTape() //appele quand on ramasse/déebloque une nouvelle cassette
+    {
+        OnSetStateTape?.Invoke();
+    }
+    
+    public void DisplayPopupPickUpTape(TapeData newItem) //appele quand on ajoute un item dans l'inventaire
+    {
+        OnPopupTape?.Invoke(newItem);
+    }
     #endregion
 }

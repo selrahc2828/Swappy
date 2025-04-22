@@ -19,19 +19,11 @@ public class InventoryMenu : MonoBehaviour
     public TextMeshProUGUI slotInfoName;
     [HideInInspector] public RawImage slotInfoImageRaw; // image UI qui utilise un RenderTexture
 
-    [FormerlySerializedAs("previewSpawnPoint")] [Header("Preview 3D")]
+    [Header("Preview 3D")]
     public PreviewInventoryControl previewControl; // empty dans la scène pour instancier le modèle a render == prefab RenderTextureGroup
     private GameObject currentPreviewInstance;
     
-    
     //ecoute event
-    
-    void Awake()
-    {
-        // pb de synchro et ici est null
-        // inventorySystem = CanvasManager.Instance.Inventory;
-        // Debug.LogWarning($"Awake called inventorySystem");
-    }
     
     void Start()
     {
@@ -40,22 +32,8 @@ public class InventoryMenu : MonoBehaviour
 
     void OnEnable()
     {
-        if (inventorySystem != null)
-        {
-            // Abonnement à l'event avec une méthode callback
-            // inventorySystem.OnAddInventory += RefreshUI;
-            GlobalEventManager.Instance.OnAddInventory += RefreshUI;
-            Debug.LogError("Inventory menu OnEnable");
-        }
-        else
-        {
-            Debug.Log("Inventory system is null");
-            inventorySystem = FindObjectOfType<InventorySystem>(); // si possible à mettre une ref dans un manager
-            // inventorySystem.OnAddInventory += RefreshUI;
-            GlobalEventManager.Instance.OnAddInventory += RefreshUI;
-
-
-        }
+        inventorySystem = FindObjectOfType<InventorySystem>();
+        GlobalEventManager.Instance.OnAddInventory += RefreshUI;
     }
 
     void OnDisable()
@@ -63,9 +41,7 @@ public class InventoryMenu : MonoBehaviour
         if (inventorySystem != null)
         {
             // Désabonnement de l'event pour éviter les erreurs de références invalides
-            // inventorySystem.OnAddInventory -= RefreshUI;
             GlobalEventManager.Instance.OnAddInventory -= RefreshUI;
-
         }
     } 
     
@@ -91,7 +67,6 @@ public class InventoryMenu : MonoBehaviour
                 if (i < itemKeys.Count)
                 {
                     //remplis avec donnees inventaire
-                    
                     slotUI.Initialize(itemKeys[i], inventorySystem.InventoryItems[itemKeys[i]].quantity, OnItemSlotClicked);
                 }
                 else
@@ -99,9 +74,7 @@ public class InventoryMenu : MonoBehaviour
                     slotUI.Initialize(null, 0, null);
                 }
             }
-            
         }
-        
     }
     
     private void OnItemSlotClicked(ItemData clickedItem)
@@ -130,5 +103,4 @@ public class InventoryMenu : MonoBehaviour
     {
         RefreshUI();
     }
-    
 }

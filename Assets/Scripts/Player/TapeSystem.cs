@@ -18,23 +18,20 @@ public class TapeSystem : MonoBehaviour
     }
     
     //emet event
-    public event Action OnAddTapeList;
-    public event Action<TapeData> OnPopupTape;
-    public event Action OnRemoveTapeList;
-    public event Action OnTapeUnlockStatusChanged;
 
     public void AddTape(TapeData newTape)
     {
         Debug.Log($"Adding tape {newTape}");
 
         tapeList.Add(newTape);
-        OnAddTapeList?.Invoke();
+        GlobalEventManager.Instance.AddTape();
     }
 
     public void RemoveTape(TapeData tapeToRemove)
     {
         tapeList.Remove(tapeToRemove);
-        OnRemoveTapeList?.Invoke();
+        GlobalEventManager.Instance.RemoveTape();
+
     }
 
     public void SetLockTape(TapeData tapeToSet, bool lockTape)
@@ -47,7 +44,7 @@ public class TapeSystem : MonoBehaviour
         int index = tapeList.IndexOf(tapeToSet);
         tapeList[index].isUnlocked = lockTape;
         
-        OnTapeUnlockStatusChanged?.Invoke();
-        OnPopupTape?.Invoke(tapeToSet);
+        GlobalEventManager.Instance.SetStateTape();
+        GlobalEventManager.Instance.DisplayPopupPickUpTape(tapeToSet);
     }
 }

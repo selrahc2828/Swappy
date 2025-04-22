@@ -23,7 +23,7 @@ public class PickUpInteraction : InteractionSystem
         if (itemData is TapeData)
         {
             TapeData tapeData = itemData as TapeData;
-            if (tapeData.isUnlocked == true)// s'il est déjà débloquer on ne le fait pas spawn
+            if (tapeData.isUnlocked == true)// s'il est déjà debloquer on ne le fait pas spawn
             {
                 return;
             }

@@ -21,7 +21,6 @@ public class TapeMenu : MonoBehaviour
         get => tapeList;
         set => tapeList = value;
     }
-
     
     public event Action<string> onPlaySelected;
     public event Action<string> onStopSelected;
@@ -30,8 +29,7 @@ public class TapeMenu : MonoBehaviour
     public GameObject muteImage;
     public GameObject notMuteImage;
     private VerticalLayoutGroup layout;
-
-
+    
     void OnEnable()
     {
         layout = scrollRect.content.GetComponent<VerticalLayoutGroup>();
@@ -155,5 +153,4 @@ public class TapeMenu : MonoBehaviour
             }
         }
     }
-    
 }

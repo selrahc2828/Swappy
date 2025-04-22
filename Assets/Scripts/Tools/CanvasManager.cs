@@ -9,9 +9,6 @@ public class CanvasManager : MonoBehaviour
     public static CanvasManager Instance { get; private set; }
 
     // === Références ===
-    private InventorySystem inventorySystem;
-    public InventorySystem Inventory => inventorySystem;
-    
     public MenuManager menuManager;
     
     private TapeSystem tapeSystem;
@@ -34,54 +31,39 @@ public class CanvasManager : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
-            // Debug.Log("awake CanvasManager instance already exists!");
             return;
         }
 
         Instance = this;
-        // Debug.Log("awake CanvasManager instance Initialize");
+
         Initialize();
     }
     
     private void OnEnable()
     {
-        if (inventorySystem != null)
-        {
-            // inventorySystem.OnPopupInventory += ShowPopupItem;
-            GlobalEventManager.Instance.OnPopupInventory += ShowPopupItem;
-        }
-
+        GlobalEventManager.Instance.OnPopupInventory += ShowPopupItem;
+        
         if (tapeSystem != null)
         {
-            tapeSystem.OnPopupTape += ShowPopupTape;
+            GlobalEventManager.Instance.OnPopupTape += ShowPopupTape;
             // refresh les boutons si on débloque une tape / change la valeur data.isUnlocked
-            tapeSystem.OnTapeUnlockStatusChanged += menuManager.tapeMenu.SetTapeButtons;
+            GlobalEventManager.Instance.OnSetStateTape += menuManager.tapeMenu.SetTapeButtons;
         }
     }
 
     private void OnDisable()
     {
-        if (inventorySystem != null)
-        {
-            // inventorySystem.OnPopupInventory -= ShowPopupItem;
-            GlobalEventManager.Instance.OnPopupInventory -= ShowPopupItem;
-        }
-
+        GlobalEventManager.Instance.OnPopupInventory -= ShowPopupItem;
+        
         if (tapeSystem != null)
         {
-            tapeSystem.OnPopupTape -= ShowPopupTape;
-            tapeSystem.OnTapeUnlockStatusChanged -= menuManager.tapeMenu.SetTapeButtons;
+            GlobalEventManager.Instance.OnPopupTape -= ShowPopupTape;
+            GlobalEventManager.Instance.OnSetStateTape -= menuManager.tapeMenu.SetTapeButtons;
         }
     }
 
     public void Initialize()
     {
-        inventorySystem = FindObjectOfType<InventorySystem>();
-        if (inventorySystem != null)
-        {
-            menuManager.inventoryMenu.inventorySystem = inventorySystem;
-        }
-        
         tapeSystem = FindObjectOfType<TapeSystem>();
         if (tapeSystem != null)
         {
