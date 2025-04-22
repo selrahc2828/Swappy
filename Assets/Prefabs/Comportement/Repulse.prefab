@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -5778421851485297985}
   - component: {fileID: 1030383207053547449}
   - component: {fileID: 4946006431185967247}
+  - component: {fileID: 2754838276497145433}
   m_Layer: 0
   m_Name: Repulse
   m_TagString: Movable
@@ -74,7 +75,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3779238124936448411}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 6
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -141,6 +142,18 @@ MonoBehaviour:
   gravityConstant: 9.81
   massePlanete: 0
   maxAngle: 30
+--- !u!114 &2754838276497145433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3779238124936448411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4585f984fe4230b40a49c19ae6c9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5256114654808761295
 PrefabInstance:
   m_ObjectHideFlags: 0

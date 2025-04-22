@@ -61,23 +61,13 @@ public class ComportementsStateMachine : StateMachine
 
     [HideInInspector] public GameManager gameManager;
     [HideInInspector] public ComportementManager comportementManager;
-    [HideInInspector] public SoundManager soundManager;
 
-    //� voir si on garde �a
-    [HideInInspector] public Material bounce;
-    [HideInInspector] public Material rocket;
-    [HideInInspector] public Material immuable;
-    [HideInInspector] public Material rien;
-    [HideInInspector] public Material impulse;
-    [HideInInspector] public Material magnet;
     [HideInInspector] public MeshRenderer rend;
 
-    [HideInInspector] public GameObject player;
-    public bool isPlayer = false;
+    public bool isPlayer;
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public Collider objectCollider;
     
-    public string displayComportementName;
 
     public FirstState initialState;
     public bool updateRight; // pour reperer si on modifie le comportement de droite pour bien placer les comportements pour le player 
@@ -116,9 +106,7 @@ public class ComportementsStateMachine : StateMachine
         GoToInitialState(initialState);
         gameManager = GameManager.Instance;
         comportementManager = ComportementManager.Instance;
-        soundManager = SoundManager.Instance;
         rend = GetComponentInChildren<MeshRenderer>();//cherche dans lui même et enfant, les prefabs de comportement on le mesh en enfant
-        player = gameManager.player;
         rb = GetComponent<Rigidbody>();
         //surtout pour Player qui a 2 collider en enfant
         objectCollider = GetComponentInChildren<Collider>();

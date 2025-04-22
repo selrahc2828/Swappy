@@ -27,7 +27,7 @@ public class C_Double_Impulse : ComportementState
         
         impulseTime = _sm.comportementManager.impulseData.doubleImpulseTime;
         impulseTimer = 0f;
-        impulseRange = 2.5f * _sm.comportementManager.impulseData.impulseRange;
+        impulseRange = _sm.comportementManager.impulseData.doubleRepulseRangeMult * _sm.comportementManager.impulseData.impulseRange;
 
         if (_sm.isPlayer)
         {
@@ -39,7 +39,7 @@ public class C_Double_Impulse : ComportementState
         }
         
         // pb si obj n'a pas de collider direct (ax Player)
-        impulseForce = 2.5f * _sm.comportementManager.impulseData.impulseForce;
+        impulseForce = _sm.comportementManager.impulseData.doubleRepulseForceMult * _sm.comportementManager.impulseData.impulseForce;
         destroyOnUse = _sm.comportementManager.impulseData.destroyOnUse;
         feedback = _sm.comportementManager.impulseData.impulseFeedback;
     }

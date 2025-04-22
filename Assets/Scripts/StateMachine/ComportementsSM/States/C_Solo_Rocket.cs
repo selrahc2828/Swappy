@@ -8,7 +8,8 @@ public class C_Solo_Rocket : ComportementState
     private float rocketForce = 20;
     private float rocketForceOnPlayer = 20;
     private float rocketForceWhenGrab= 20;
-    private float onOffCooldown;
+    private float onCooldown;
+    private float offCooldown;
     private float timer;
     private float maxSpeed;
     private bool rocketOn;
@@ -48,8 +49,9 @@ public class C_Solo_Rocket : ComportementState
         rocketForce = _sm.comportementManager.rocketData.rocketForce;
         rocketForceOnPlayer = _sm.comportementManager.rocketData.rocketForceOnPlayer;
         rocketForceWhenGrab = _sm.comportementManager.rocketData.rocketForceWhenGrab;
-        onOffCooldown = _sm.comportementManager.rocketData.rocketOnOffCouldown;
-        
+        onCooldown = _sm.comportementManager.rocketData.rocketOnCooldown;
+        offCooldown = _sm.comportementManager.rocketData.rocketOffCooldown;
+
         // _sm.rend.material = _sm.rocket;
         ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
@@ -65,18 +67,23 @@ public class C_Solo_Rocket : ComportementState
     {
         base.TickPhysics();
         timer += Time.fixedDeltaTime;
-        if (timer > onOffCooldown)
+        if (timer > onCooldown && !rocketOn)
         {
-            
-            rocketOn = !rocketOn;
+            rocketOn = true;
             timer = 0f;
         }
-        
-        if (_sm.rb.velocity.magnitude > maxSpeed)
+
+        if (timer > offCooldown && rocketOn)
+        {
+            rocketOn = false;
+            timer = 0f;
+        }
+
+        if (_sm.rb.velocity.magnitude > maxSpeed && rocketOn)
         {
             _sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
         }
-        
+
         if (rocketOn)
         {
             if (!rocketStingOn)
@@ -90,7 +97,7 @@ public class C_Solo_Rocket : ComportementState
             }
             else if(isGrabbed)
             {
-                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketForceWhenGrab, ForceMode.Force);
+                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketForceWhenGrab, ForceMode.Acceleration);
             }
             else
             {

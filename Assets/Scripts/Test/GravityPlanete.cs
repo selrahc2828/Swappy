@@ -1,71 +1,78 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class GravityPlanete : MonoBehaviour
 {
-    [SerializeField] private Rigidbody planeteRB;
+    [SerializeField] private List<Rigidbody> planetesRB;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Vector3 offsetRotation;
     [SerializeField] private float gravityConstant = 9.81f;
-    [SerializeField] private float massePlanete;
     [SerializeField] private float maxAngle = 30f;
 
     private float marche;
 
     void Start()
     {
-        planeteRB = GameManager.Instance.planeteCore.GetComponent<Rigidbody>();
+        for(int i = 0; i < GameManager.Instance.planeteCores.Count; i++)
+        {
+            planetesRB.Add(GameManager.Instance.planeteCores[i].GetComponent<Rigidbody>());
+        }
         gravityConstant = GameManager.Instance.constanteGravitationelle;
-        massePlanete = GameManager.Instance.massePlanete;
-        planeteRB.mass = massePlanete;
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
     }
 
     void FixedUpdate()
     {
-        // Calculer la direction de la planète par rapport au joueur
-        Vector3 directionToPlanet = (Vector3.zero - transform.position).normalized;////////////////CHANGER VECTOR3.ZERO QUAND ON AURA UN VRAI MODEL
-        Vector3 finalGravityDirection = directionToPlanet;
-
+        // Calculer la direction de la gravité par rapport au joueur
+        Vector3 gravityDirection = CalculateGravityDirection();
+        
+        if (rb.CompareTag("Player"))
+        {
+            RotatePlayer(gravityDirection);
+        }
+        
         // Vérifier la normale du sol sous le joueur
         if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, 2.5f))
         {
             Vector3 groundNormal = hit.normal;
-            float angle = Vector3.Angle(groundNormal, directionToPlanet);
+            float angle = Vector3.Angle(groundNormal, gravityDirection);
 
             if (angle < maxAngle)
             {
-                finalGravityDirection = groundNormal;
+                gravityDirection = groundNormal;
             }
         }
+        ApplyGravity(gravityDirection);
+    }
 
-        applyGravity(finalGravityDirection);
-        if (rb.CompareTag("Player"))
+    Vector3 CalculateGravityDirection()
+    {
+        Vector3 gravityVector = Vector3.zero;
+        foreach (Rigidbody planeteRB in planetesRB)
         {
-            rotatePlayer(directionToPlanet);
+            float distance = Vector3.Distance(planeteRB.transform.position, transform.position);
+            float gravitationalForceMagnitude = gravityConstant * planeteRB.mass / Mathf.Pow(distance, 2); // F = G * M / r^2
+            Vector3 gravitationalForce = (planeteRB.transform.position - transform.position).normalized * gravitationalForceMagnitude;
+            gravityVector += gravitationalForce;
+            // Appliquer la force au Rigidbody du joueur
+            rb.AddForce(gravitationalForce, ForceMode.Acceleration);
         }
+        return gravityVector;
     }
-
-
-    void applyGravity(Vector3 _directionToPlanet)
+    
+    void ApplyGravity(Vector3 gravityVector)
     {
-
-        // Appliquer une force gravitationnelle réaliste
-        float distance = Vector3.Distance(Vector3.zero, transform.position);
-        float gravitationalForceMagnitude = gravityConstant * planeteRB.mass / Mathf.Pow(distance, 2); // F = G * M / r^2
-        Vector3 gravitationalForce = _directionToPlanet * gravitationalForceMagnitude;
-
         // Appliquer la force au Rigidbody du joueur
-        rb.AddForce(gravitationalForce, ForceMode.Acceleration);
+        rb.AddForce(gravityVector, ForceMode.Acceleration);
     }
 
-    void rotatePlayer(Vector3 _directionToPlanet)
+    void RotatePlayer(Vector3 _directionToGravityForce)
     {
-
         // Calculer la rotation cible pour que le joueur "colle" à la planète
-        Quaternion targetRotation = Quaternion.FromToRotation(-transform.up, _directionToPlanet) * transform.rotation;
+        Quaternion targetRotation = Quaternion.FromToRotation(-transform.up, _directionToGravityForce) * transform.rotation;
 
         // Appliquer un offset si nécessaire
         targetRotation *= Quaternion.Euler(offsetRotation);
@@ -76,15 +83,19 @@ public class GravityPlanete : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(planeteRB != null)
+        Vector3 gravityDirection = Vector3.zero;
+        foreach (Rigidbody planeteRB in planetesRB)
         {
-            Vector3 directionToPlanet = (transform.position - transform.position).normalized;
-            float distance = Vector3.Distance(Vector3.zero, transform.position);
-            float gravitationalForceMagnitude = gravityConstant * planeteRB.mass / Mathf.Pow(distance, 2);
-            Vector3 gravitationalForce = directionToPlanet * gravitationalForceMagnitude;
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, transform.position + gravitationalForce);
+            if(planeteRB != null)
+            {
+                Vector3 directionToPlanet = (transform.position - transform.position).normalized;
+                float distance = Vector3.Distance(Vector3.zero, transform.position);
+                float gravitationalForceMagnitude = gravityConstant * planeteRB.mass / Mathf.Pow(distance, 2);
+                Vector3 gravitationalForce = directionToPlanet * gravitationalForceMagnitude;
+                gravityDirection += gravitationalForce;
+            }
         }
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + gravityDirection);
     }
 }
