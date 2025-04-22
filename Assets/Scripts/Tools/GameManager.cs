@@ -166,11 +166,6 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Il n'y a pas de PlayerCam dans la scène");
         }
         
-        moveCamScript = FindObjectOfType<MoveCamera>();
-        if (moveCamScript == null)
-        {
-            Debug.LogWarning("Il n'y a pas de MoveCamera dans la scène");
-        }
         
         orientation = GameObject.FindGameObjectWithTag("Orientation").transform;
         

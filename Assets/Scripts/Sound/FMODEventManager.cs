@@ -31,6 +31,12 @@ public class FMODEventManager : MonoBehaviour
         instance = this;
         // DontDestroyOnLoad(gameObject);
     }
+
+    private void Start()
+    {
+        GlobalEventManager.Instance.OnComportmentExtracted += OnComportementExtracted;
+        GlobalEventManager.Instance.OnComportmentAdded += OnComportementAdded;
+    }
     #endregion
     #region Play Once
     public void PlayOneShot(EventReference sound, Vector3 position)
@@ -291,6 +297,61 @@ public class FMODEventManager : MonoBehaviour
     }
     #endregion
     
+    #region C# Event
+
+    private void OnComportementExtracted(GameObject gameObject, bool rightvalue, bool righthand)
+    {
+        if (!CheckInstanceInEncylopedia(gameObject, FMODEvents.PlayerStealComp, out EventInstance eventInstance))
+        {
+            eventInstance = CreateEventInstance(FMODEvents.PlayerStealComp);
+        }
+
+        if (righthand)
+        {
+            SetNamedParamEventInstance(eventInstance,"HAND",2);
+        }
+        else
+        {
+            SetNamedParamEventInstance(eventInstance,"HAND",0);
+        }
+        
+        PlayEventInstance(eventInstance);
+        ReleaseEventInstance(eventInstance);
+    }
+
+    private void OnComportementAdded(GameObject gameObject, bool righthand)
+    {
+        if (!CheckInstanceInEncylopedia(gameObject, FMODEvents.PlayerGiveComp, out EventInstance eventInstance))
+        {
+            eventInstance = CreateEventInstance(FMODEvents.PlayerGiveComp);
+        }
+
+        if (righthand)
+        {
+            SetNamedParamEventInstance(eventInstance,"HAND",2);
+        }
+        else
+        {
+            SetNamedParamEventInstance(eventInstance,"HAND",0);
+        }
+        
+        PlayEventInstance(eventInstance);
+        ReleaseEventInstance(eventInstance);
+    }
+
+    private void OnEnterComportement()
+    {
+        
+    }
+    private void OnComportementIsPlay()
+    {
+        
+    }
+    private void OnExitComportement()
+    {
+        
+    }
     
+    #endregion
 
 }
