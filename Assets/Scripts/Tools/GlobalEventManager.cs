@@ -13,6 +13,10 @@ public class GlobalEventManager : MonoBehaviour
 
     public event Action<bool> OnSelfImpactMod;
 
+    public event Action<GameObject> OnComportementStateEnter;
+    public event Action<GameObject> OnComportementStateExit;
+    public event Action<GameObject> OnComportementStatePlay;
+
     private void Awake()
     {
         Instance = this;
@@ -36,5 +40,20 @@ public class GlobalEventManager : MonoBehaviour
     public void SelfImpactMod(bool active) // appele quand on echange le comportement d'une main avec un comportement du player
     {
         OnSelfImpactMod?.Invoke(active);
+    }
+
+    public void ComportmentStateEnter(GameObject comportableObject)
+    {
+        OnComportementStateEnter?.Invoke(comportableObject);
+    }
+
+    public void ComportmentStateExit(GameObject comportableObject)
+    {
+        OnComportementStateExit?.Invoke(comportableObject);
+    }
+
+    public void ComportmentStatePlay(GameObject comportableObject)
+    {
+        OnComportementStatePlay?.Invoke(comportableObject);
     }
 }

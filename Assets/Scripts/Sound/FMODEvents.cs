@@ -24,25 +24,25 @@ public class FMODEvents : ScriptableObject
     [field: Space]
     [field: Space]
     [field: Space]
-    [field: SerializeField] public EventReference DoubleImpulseBoom { get; private set; }
-    [field: SerializeField] public EventReference ImpulseBounceHit { get; private set; }
-    [field: SerializeField] public EventReference ImpulseImmuableHit { get; private set; }
-    [field: SerializeField] public EventReference ImpulseRocketStart { get; private set; }
-    [field: SerializeField] public EventReference ImpulseRocketBoom { get; private set; }
-    [field: SerializeField] public EventReference ImpulseMagnetStart { get; private set; }
+    [field: SerializeField] public EventReference DoubleImpulse { get; private set; }
+    [field: SerializeField] public EventReference ImpulseBounce { get; private set; }
+    [field: SerializeField] public EventReference ImpulseImmuable { get; private set; }
+    [field: SerializeField] public EventReference ImpulseRocket { get; private set; }
+
+    [field: SerializeField] public EventReference ImpulseMagnet { get; private set; }
     [field: Space]
-    [field: SerializeField] public EventReference DoubleBounceHit { get; private set; }
-    [field: SerializeField] public EventReference BounceImmuableHit { get; private set; }
-    [field: SerializeField] public EventReference BounceRocketHit { get; private set; }
-    [field: SerializeField] public EventReference BounceRocketStart { get; private set; }
-    [field: SerializeField] public EventReference BounceMagnetHit { get; private set; }
+    [field: SerializeField] public EventReference DoubleBounce { get; private set; }
+    [field: SerializeField] public EventReference BounceImmuable { get; private set; }
+    [field: SerializeField] public EventReference BounceRocket { get; private set; }
+
+    [field: SerializeField] public EventReference BounceMagnet { get; private set; }
     [field: Space]
-    [field: SerializeField] public EventReference DoubleImmuableHit { get; private set; }
-    [field: SerializeField] public EventReference ImmuableRocketHit { get; private set; }
-    [field: SerializeField] public EventReference ImmuableMagnetStart { get; private set; }
+    [field: SerializeField] public EventReference DoubleImmuable{ get; private set; }
+    [field: SerializeField] public EventReference ImmuableRocket { get; private set; }
+    [field: SerializeField] public EventReference ImmuableMagnet { get; private set; }
     [field: Space]
-    [field: SerializeField] public EventReference DoubleRocketStart { get; private set; }
-    [field: SerializeField] public EventReference RocketMagnetStart { get; private set; }
+    [field: SerializeField] public EventReference DoubleRocket { get; private set; }
+    [field: SerializeField] public EventReference RocketMagnet { get; private set; }
     [field: Space]
     [field: SerializeField] public EventReference DoubleMagnet { get; private set; }
     [field: Space]
