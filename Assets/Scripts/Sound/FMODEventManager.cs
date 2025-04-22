@@ -279,6 +279,7 @@ public class FMODEventManager : MonoBehaviour
     #region On destroy
     private void CleanUpAllSound()
     {
+        CheckAllInstanceInEncyclopedia();
         foreach (EventInstance eventInstance in eventPlaylist)
         {
             eventInstance.stop(STOP_MODE.IMMEDIATE);
