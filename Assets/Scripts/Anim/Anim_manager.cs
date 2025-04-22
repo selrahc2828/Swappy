@@ -47,7 +47,7 @@ public class Anim_manager : MonoBehaviour
     
     #region Attribution
 
-    public void HandleComportmentAttribution(GameObject target, bool righthand)
+    public void HandleComportmentAttribution(GameObject target, bool rightValue, bool righthand)
     {
         if (!target.CompareTag("Player"))
         {
