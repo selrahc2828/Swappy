@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1084061241040631210}
   - component: {fileID: 910328252104787046}
   - component: {fileID: 2077598760951438437}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: boing
   m_TagString: Movable
   m_Icon: {fileID: 0}
@@ -53,9 +53,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589453074873935271}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 6
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -220,6 +220,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 693416ab8f846d84da22addee32884f5, type: 3}
       propertyPath: m_Name
       value: RebondissantPlaceholder
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 693416ab8f846d84da22addee32884f5, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

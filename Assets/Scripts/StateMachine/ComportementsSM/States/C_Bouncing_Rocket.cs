@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class C_Bouncing_Rocket : ComportementState
@@ -10,7 +11,8 @@ public class C_Bouncing_Rocket : ComportementState
     private float rocketForce = 20;
     private float rocketForceOnPlayer = 20;
     private float rocketForceWhenGrab= 20;
-    private float onOffCooldown;
+    private float onCooldown;
+    private float offCooldown;
     private float timer;
     private float maxSpeed;
     private bool rocketOn;
@@ -36,8 +38,9 @@ public class C_Bouncing_Rocket : ComportementState
         rocketForce = _sm.comportementManager.rocketData.rocketForce;
         rocketForceOnPlayer = _sm.comportementManager.rocketData.rocketForceOnPlayer;
         rocketForceWhenGrab = _sm.comportementManager.rocketData.rocketForceWhenGrab;
-        onOffCooldown = _sm.comportementManager.rocketData.rocketOnOffCouldown;
-        
+        onCooldown = _sm.comportementManager.rocketData.rocketOnCooldown;
+        offCooldown = _sm.comportementManager.rocketData.rocketOffCooldown;
+
         bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
         if (_sm.isPlayer)
         {
@@ -59,14 +62,20 @@ public class C_Bouncing_Rocket : ComportementState
     {
         base.TickPhysics();
         timer += Time.fixedDeltaTime;
-        if (timer > onOffCooldown)
+        if (timer > onCooldown && !rocketOn)
         {
-            rocketOn = !rocketOn;
+            rocketOn = true;
             rocketDirection = Vector3.up;
             timer = 0f;
         }
-        
-        if (_sm.rb.velocity.magnitude > maxSpeed)
+
+        if (timer > offCooldown && rocketOn)
+        {
+            rocketOn = false;
+            timer = 0f;
+        }
+
+        if (_sm.rb.velocity.magnitude > maxSpeed && rocketOn)
         {
             _sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
         }
@@ -79,7 +88,7 @@ public class C_Bouncing_Rocket : ComportementState
             }
             else if(isGrabbed)
             {
-                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(rocketDirection * rocketForceWhenGrab, ForceMode.Force);
+                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(rocketDirection * rocketForceWhenGrab, ForceMode.Acceleration);
             }
             else
             {

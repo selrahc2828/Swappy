@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6156703577998449374}
   - component: {fileID: 2413593469913706812}
-  - component: {fileID: 5823848060800816550}
   - component: {fileID: 4121251643802725029}
   - component: {fileID: 2235208548937862988}
   - component: {fileID: -3700812352556352242}
-  - component: {fileID: 2407269517425618801}
+  - component: {fileID: 5702627195354861383}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Movable
@@ -46,7 +45,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 447375944755427264}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 6
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -65,29 +64,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &5823848060800816550
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 447375944755427264}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.55240095
-  m_Height: 1.4605904
-  m_Direction: 1
-  m_Center: {x: 0.0047637224, y: 0.1445483, z: 0}
 --- !u!114 &4121251643802725029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,18 +124,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d4585f984fe4230b40a49c19ae6c9c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2407269517425618801
-MonoBehaviour:
+--- !u!65 &5702627195354861383
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 447375944755427264}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d4585f984fe4230b40a49c19ae6c9c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &411496001056765527
 PrefabInstance:
   m_ObjectHideFlags: 0
