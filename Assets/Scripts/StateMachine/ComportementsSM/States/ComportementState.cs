@@ -28,12 +28,6 @@ public class ComportementState : State
 
     public override void Enter()
     {
-        // Debug.Log(_sm.currentState + " enter " + stateValue);
-        //_sm.text.text = stateValue.ToString();
-        _sm.displayComportementName = _sm.currentState.ToString();
-
-        // feedBack_GO_Left = SetFeedbackComportement(leftValue);
-        // feedBack_GO_Right = SetFeedbackComportement(rightValue);
 
     }
 
@@ -88,6 +82,10 @@ public class ComportementState : State
     public void GetThrown(Vector3 thrownDirection)
     {
         _sm.rb.AddForce(thrownDirection, ForceMode.Impulse);
+    }
+    public GameObject GetGameObject()
+    {
+        return _sm.gameObject;
     }
 
     public void CalculateNewtState(int newValue)
