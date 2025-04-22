@@ -8,7 +8,7 @@ public class GlobalEventManager : MonoBehaviour
     public static GlobalEventManager Instance;
 
     public event Action<GameObject, bool, bool> OnComportmentExtracted;
-    public event Action<GameObject, bool> OnComportmentAdded;
+    public event Action<GameObject, bool, bool> OnComportmentAdded;
     public event Action<bool> OnComportmentExchanged;
 
     public event Action<bool> OnSelfImpactMod;
@@ -23,9 +23,9 @@ public class GlobalEventManager : MonoBehaviour
         OnComportmentExtracted?.Invoke(originOfComportment, rightValue, rightHand);
     }
 
-    public void ComportmentAdded(GameObject objectToAddComportment, bool rightHand) //appele quand on donne un comportement a un objet
+    public void ComportmentAdded(GameObject objectToAddComportment, bool rightValue, bool rightHand) //appele quand on donne un comportement a un objet
     {
-        OnComportmentAdded?.Invoke(objectToAddComportment, rightHand);
+        OnComportmentAdded?.Invoke(objectToAddComportment, rightValue, rightHand);
     }
 
     public void ComportmentExchanged(bool rightHand) // appele quand on echange le comportement d'une main avec un comportement du player
