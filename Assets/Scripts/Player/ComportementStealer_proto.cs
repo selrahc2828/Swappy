@@ -60,7 +60,7 @@ public class ComportementStealer_proto : MonoBehaviour
             simActive = false;
             
         }
-        GlobalEventManager.Instance.SelfImpactMod(simActive);
+        GlobalEventManager.Instance.SelfImpactMod(this.gameObject,simActive);
     }
 
     void ActionSlot1(InputAction.CallbackContext context)
@@ -397,7 +397,7 @@ public class ComportementStealer_proto : MonoBehaviour
             (exchangedSlotValue, playerObjectState.leftValue) = (playerObjectState.leftValue, exchangedSlotValue);
         }
         playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
-        GlobalEventManager.Instance.ComportmentExchanged(rightHand);
+        GlobalEventManager.Instance.ComportmentExchanged(this.gameObject,rightHand);
     }
 
     void ExecuteChangeStateAdditive(ComportementState currentObjectState,ref int addedSlotValue, bool rightValue, bool rightHand)

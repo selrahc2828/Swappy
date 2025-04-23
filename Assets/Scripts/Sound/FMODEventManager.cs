@@ -40,24 +40,26 @@ public class FMODEventManager : MonoBehaviour
     {
         GlobalEventManager.Instance.OnComportmentExtracted += OnComportementExtracted;
         GlobalEventManager.Instance.OnComportmentAdded += OnComportementAdded;
+        GlobalEventManager.Instance.OnComportmentExchanged += OnComportmentExchanged;
+        GlobalEventManager.Instance.OnSelfImpactMod += OnSelfImpactMode;
         GlobalEventManager.Instance.OnComportementStateEnter += OnEnterComportement;
         GlobalEventManager.Instance.OnComportementStateExit += OnExitComportement;
         GlobalEventManager.Instance.OnComportementStatePlay += OnComportementIsPlay;
         GlobalEventManager.Instance.OnFootstep += OnFootstep;
         GlobalEventManager.Instance.OnJump += OnJump;
-        GlobalEventManager.Instance.OnLand += OnLand;
     }
 
     private void OnDisable()
     {
         GlobalEventManager.Instance.OnComportmentExtracted -= OnComportementExtracted;
         GlobalEventManager.Instance.OnComportmentAdded -= OnComportementAdded;
+        GlobalEventManager.Instance.OnComportmentExchanged -= OnComportmentExchanged;
+        GlobalEventManager.Instance.OnSelfImpactMod -= OnSelfImpactMode;
         GlobalEventManager.Instance.OnComportementStateEnter -= OnEnterComportement;
         GlobalEventManager.Instance.OnComportementStateExit -= OnExitComportement;
         GlobalEventManager.Instance.OnComportementStatePlay -= OnComportementIsPlay;
         GlobalEventManager.Instance.OnFootstep -= OnFootstep;
         GlobalEventManager.Instance.OnJump -= OnJump;
-        GlobalEventManager.Instance.OnLand -= OnLand;
     }
 
     #endregion
@@ -362,10 +364,53 @@ public class FMODEventManager : MonoBehaviour
         ReleaseEventInstance(eventInstance);
     }
 
+    private void OnComportmentExchanged(GameObject _gameObject, bool righthand, bool comportementIn, bool comportementOut)
+    {
+        if (!CheckInstanceInEncylopedia(_gameObject, FMODEvents.PlayerSelfSwitch, out EventInstance eventInstance))
+        {
+            eventInstance = CreateEventInstance(FMODEvents.PlayerSelfSwitch);
+        }
+        if(righthand)
+        {
+            SetNamedParamEventInstance(eventInstance,"HAND",2);
+        }
+        else
+        {
+            SetNamedParamEventInstance(eventInstance,"HAND",0);
+        }
+
+        if (comportementIn)
+        {
+            SetNamedParamEventInstance(eventInstance,"IN",1);
+        }
+        if (comportementOut)
+        {
+            SetNamedParamEventInstance(eventInstance,"OUT",1);
+        }
+        
+        PlayEventInstance(eventInstance);
+        ReleaseEventInstance(eventInstance);
+    }
+    
+    private void OnSelfImpactMode(GameObject _gameObject, bool isActive)
+    {
+        var GetInstance=GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactMode);
+        if (isActive)
+        {
+            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactMode,CreateEventInstance(FMODEvents.PlayerSelfImpactMode));
+            PlayEventInstance(GetInstance);
+        }
+        else
+        {
+            StopEventInstance(GetInstance);
+            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactMode);
+        }
+    }
+
+
     #region Comportement Sound
     private void OnEnterComportement(GameObject _gameObject)
     {
-        Step step = Step.Enter;
         var stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
         if (stateMachine.currentState is ComportementState)
         {
@@ -374,65 +419,85 @@ public class FMODEventManager : MonoBehaviour
                 {
                     case 0:
                         break;
-                    case 1:
-                        ActionOnStateComportement(_gameObject, FMODEvents.Impulse, step);
+                    case 1: 
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.Impulse,CreateEventInstance(FMODEvents.Impulse));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.Impulse),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 2:
-                        ActionOnStateComportement(_gameObject, FMODEvents.DoubleImpulse, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.DoubleImpulse,CreateEventInstance(FMODEvents.DoubleImpulse));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.DoubleImpulse),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 3:
-                        ActionOnStateComportement(_gameObject, FMODEvents.Bounce, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.Bounce,CreateEventInstance(FMODEvents.Bounce));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.Bounce),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 4:
-                        ActionOnStateComportement(_gameObject, FMODEvents.ImpulseBounce, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.ImpulseBounce,CreateEventInstance(FMODEvents.ImpulseBounce));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.ImpulseBounce),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 6:
-                        ActionOnStateComportement(_gameObject, FMODEvents.DoubleBounce, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.DoubleBounce,CreateEventInstance(FMODEvents.DoubleBounce));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.DoubleBounce),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 9:
-                        ActionOnStateComportement(_gameObject, FMODEvents.Immuable, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.Immuable,CreateEventInstance(FMODEvents.Immuable));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.Immuable),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 10:
-                        ActionOnStateComportement(_gameObject, FMODEvents.ImpulseImmuable, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.ImpulseImmuable,CreateEventInstance(FMODEvents.ImpulseImmuable));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.ImpulseImmuable),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 12:
-                        ActionOnStateComportement(_gameObject, FMODEvents.BounceImmuable, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.BounceImmuable,CreateEventInstance(FMODEvents.BounceImmuable));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.BounceImmuable),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 18:
-                        ActionOnStateComportement(_gameObject, FMODEvents.DoubleImmuable, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.DoubleImmuable,CreateEventInstance(FMODEvents.DoubleImmuable));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.DoubleImmuable),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 27:
-                        ActionOnStateComportement(_gameObject, FMODEvents.Magnet, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.Magnet,CreateEventInstance(FMODEvents.Magnet));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.Magnet),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 28:
-                        ActionOnStateComportement(_gameObject, FMODEvents.ImpulseMagnet, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.ImpulseMagnet,CreateEventInstance(FMODEvents.ImpulseMagnet));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.ImpulseMagnet),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 30:
-                        ActionOnStateComportement(_gameObject, FMODEvents.BounceMagnet, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.BounceMagnet,CreateEventInstance(FMODEvents.BounceMagnet));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.BounceMagnet),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 36:
-                        ActionOnStateComportement(_gameObject, FMODEvents.ImmuableMagnet, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.ImmuableMagnet,CreateEventInstance(FMODEvents.ImmuableMagnet));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.ImmuableMagnet),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 54:
-                        ActionOnStateComportement(_gameObject, FMODEvents.DoubleMagnet, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.DoubleMagnet,CreateEventInstance(FMODEvents.DoubleMagnet));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.DoubleMagnet),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 81:
-                        ActionOnStateComportement(_gameObject, FMODEvents.Rocket, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.Rocket,CreateEventInstance(FMODEvents.Rocket));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.Rocket),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 82:
-                        ActionOnStateComportement(_gameObject, FMODEvents.ImpulseRocket, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.ImpulseRocket,CreateEventInstance(FMODEvents.ImpulseRocket));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.ImpulseRocket),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 84:
-                        ActionOnStateComportement(_gameObject, FMODEvents.BounceRocket, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.BounceRocket,CreateEventInstance(FMODEvents.BounceRocket));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.BounceRocket),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 90:
-                        ActionOnStateComportement(_gameObject, FMODEvents.ImmuableRocket, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.ImmuableRocket,CreateEventInstance(FMODEvents.ImmuableRocket));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.ImmuableRocket),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 108:
-                        ActionOnStateComportement(_gameObject, FMODEvents.RocketMagnet, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.RocketMagnet,CreateEventInstance(FMODEvents.RocketMagnet));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.RocketMagnet),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     case 162:
-                        ActionOnStateComportement(_gameObject, FMODEvents.DoubleRocket, step);
+                        AddInstanceInEncyclopedia(_gameObject,FMODEvents.DoubleRocket,CreateEventInstance(FMODEvents.DoubleRocket));
+                        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.DoubleRocket),_gameObject,_gameObject.GetComponent<Rigidbody>());
                         break;
                     default:
                         Debug.LogError("Si tu fais apparaitre ça c'est que t'es vraiment for");
@@ -442,7 +507,6 @@ public class FMODEventManager : MonoBehaviour
     }
     private void OnComportementIsPlay(GameObject _gameObject)
     {
-        Step step = Step.Play;
         var stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
         if (stateMachine.currentState is ComportementState)
         {
@@ -452,64 +516,64 @@ public class FMODEventManager : MonoBehaviour
                 case 0:
                     break;
                 case 1:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImpulseMagnet, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.Impulse,"Stinger",1);
                     break;
                 case 2:
-                    ActionOnStateComportement(_gameObject, FMODEvents.DoubleImpulse, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.DoubleImpulse,"Stinger",1);
                     break;
                 case 3:
-                    ActionOnStateComportement(_gameObject, FMODEvents.Bounce, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.Bounce,"Stinger",1);
                     break;
                 case 4:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImpulseBounce, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.ImpulseBounce,"Stinger",1);
                     break;
                 case 6:
-                    ActionOnStateComportement(_gameObject, FMODEvents.DoubleBounce, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.DoubleBounce,"Stinger",1);
                     break;
                 case 9:
-                    ActionOnStateComportement(_gameObject, FMODEvents.Immuable, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.Immuable,"Stinger",1);
                     break;
                 case 10:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImpulseImmuable, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.ImpulseImmuable,"Stinger",1);
                     break;
                 case 12:
-                    ActionOnStateComportement(_gameObject, FMODEvents.BounceImmuable, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.BounceImmuable,"Stinger",1);
                     break;
                 case 18:
-                    ActionOnStateComportement(_gameObject, FMODEvents.DoubleImmuable, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.DoubleImmuable,"Stinger",1);
                     break;
                 case 27:
-                    ActionOnStateComportement(_gameObject, FMODEvents.Magnet, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.Magnet,"Stinger",1);
                     break;
                 case 28:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImpulseMagnet, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.ImpulseMagnet,"Stinger",1);
                     break;
                 case 30:
-                    ActionOnStateComportement(_gameObject, FMODEvents.BounceMagnet, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.BounceMagnet,"Stinger",1);
                     break;
                 case 36:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImpulseMagnet, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.ImmuableMagnet,"Stinger",1);
                     break;
                 case 54:
-                    ActionOnStateComportement(_gameObject, FMODEvents.DoubleMagnet, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.DoubleMagnet,"Stinger",1);
                     break;
                 case 81:
-                    ActionOnStateComportement(_gameObject, FMODEvents.Rocket, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.Rocket,"Stinger",1);
                     break;
                 case 82:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImpulseRocket, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.ImpulseRocket,"Stinger",1);
                     break;
                 case 84:
-                    ActionOnStateComportement(_gameObject, FMODEvents.BounceRocket, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.BounceRocket,"Stinger",1);
                     break;
                 case 90:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImmuableRocket, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.ImmuableRocket,"Stinger",1);
                     break;
                 case 108:
-                    ActionOnStateComportement(_gameObject, FMODEvents.RocketMagnet, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.RocketMagnet,"Stinger",1);
                     break;
                 case 162:
-                    ActionOnStateComportement(_gameObject, FMODEvents.DoubleRocket, step);
+                    SwitchParameterInstanceInEncyclopedia(_gameObject,FMODEvents.DoubleRocket,"Stinger",1);
                     break;
                 default:
                     Debug.LogError("Si tu fais apparaitre ça c'est que t'es vraiment for");
@@ -519,7 +583,6 @@ public class FMODEventManager : MonoBehaviour
     }
     private void OnExitComportement(GameObject _gameObject)
     {
-        Step step = Step.Exit;
         var stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
         if (stateMachine.currentState is ComportementState)
         {
@@ -529,64 +592,84 @@ public class FMODEventManager : MonoBehaviour
                 case 0:
                     break;
                 case 1:
-                    ActionOnStateComportement(_gameObject, FMODEvents.Impulse, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.Impulse));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.Impulse);
                     break;
                 case 2:
-                    ActionOnStateComportement(_gameObject, FMODEvents.DoubleImpulse, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.DoubleImpulse));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.DoubleImpulse);
                     break;
                 case 3:
-                    ActionOnStateComportement(_gameObject, FMODEvents.Bounce, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.Bounce));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.Bounce);
                     break;
                 case 4:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImpulseBounce, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.ImpulseBounce));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.ImpulseBounce);
                     break;
                 case 6:
-                    ActionOnStateComportement(_gameObject, FMODEvents.DoubleBounce, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.DoubleBounce));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.DoubleBounce);
                     break;
                 case 9:
-                    ActionOnStateComportement(_gameObject, FMODEvents.Immuable, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.Immuable));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.Immuable);
                     break;
                 case 10:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImpulseImmuable, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.ImpulseImmuable));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.ImpulseImmuable);
                     break;
                 case 12:
-                    ActionOnStateComportement(_gameObject, FMODEvents.BounceImmuable, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.BounceImmuable));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.BounceImmuable);
                     break;
                 case 18:
-                    ActionOnStateComportement(_gameObject, FMODEvents.DoubleImmuable, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.DoubleImmuable));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.DoubleImmuable);
                     break;
                 case 27:
-                    ActionOnStateComportement(_gameObject, FMODEvents.Magnet, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.Magnet));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.Magnet);
                     break;
                 case 28:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImpulseMagnet, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.ImpulseMagnet));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.ImpulseMagnet);
                     break;
                 case 30:
-                    ActionOnStateComportement(_gameObject, FMODEvents.BounceMagnet, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.BounceMagnet));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.BounceMagnet);
                     break;
                 case 36:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImpulseMagnet, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.ImmuableMagnet));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.ImmuableMagnet);
                     break;
                 case 54:
-                    ActionOnStateComportement(_gameObject, FMODEvents.DoubleMagnet, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.DoubleMagnet));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.DoubleMagnet);
                     break;
                 case 81:
-                    ActionOnStateComportement(_gameObject, FMODEvents.Rocket, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.Rocket));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.Rocket);
                     break;
                 case 82:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImpulseRocket, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.ImpulseRocket));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.ImpulseRocket);
                     break;
                 case 84:
-                    ActionOnStateComportement(_gameObject, FMODEvents.BounceRocket, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.BounceRocket));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.BounceRocket);
                     break;
                 case 90:
-                    ActionOnStateComportement(_gameObject, FMODEvents.ImmuableRocket, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.ImmuableRocket));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.ImmuableRocket);
                     break;
                 case 108:
-                    ActionOnStateComportement(_gameObject, FMODEvents.RocketMagnet, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.RocketMagnet));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.RocketMagnet);
                     break;
                 case 162:
-                    ActionOnStateComportement(_gameObject, FMODEvents.DoubleRocket, step);
+                    StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.DoubleRocket));
+                    RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.DoubleRocket);
                     break;
                 default:
                     Debug.LogError("Si tu fais apparaitre ça c'est que t'es vraiment for");
@@ -601,6 +684,7 @@ public class FMODEventManager : MonoBehaviour
         Play,
         Exit
     }
+
     private void ActionOnStateComportement(GameObject _gameObject, EventReference eventReference, Step step)
     {
         var GetInstance = GetInstanceFromEncyclopediaKey(_gameObject, eventReference);
@@ -609,13 +693,6 @@ public class FMODEventManager : MonoBehaviour
             case Step.Enter:
                 AddInstanceInEncyclopedia(_gameObject, eventReference,CreateEventInstance(eventReference));
                 PlayEventInstance3DMoving(GetInstance,_gameObject,_gameObject.GetComponent<Rigidbody>());
-                break;
-            case Step.Play:
-                SetNamedParamEventInstance(GetInstance, "Stinger",1);
-                break;
-            case Step.Exit:
-                StopEventInstance(GetInstance);
-                RemoveInstanceInEncyclopedia(_gameObject,eventReference);
                 break;
             default:
                 break;
@@ -651,7 +728,6 @@ public class FMODEventManager : MonoBehaviour
         var GetInstance = GetInstanceFromEncyclopediaKey(_groundCollider, FMODEvents.PlayerLand);
         SwitchGround(_groundCollider,GetInstance);
         PlayEventInstance(GetInstance);
-        RemoveInstanceInEncyclopedia(_groundCollider,FMODEvents.PlayerLand);
         
     }
 
@@ -677,6 +753,7 @@ public class FMODEventManager : MonoBehaviour
         }
     }
     #endregion
+    
     
     
     #endregion

@@ -194,7 +194,7 @@ public class Anim_manager : MonoBehaviour
     
     #region SelfImpactMod
 
-    public void HandleSelfImpactMod(bool active)
+    public void HandleSelfImpactMod(GameObject _gameObject,bool active)
     {
         if (active)
         {

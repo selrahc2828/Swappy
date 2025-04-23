@@ -9,9 +9,9 @@ public class GlobalEventManager : MonoBehaviour
 
     public event Action<GameObject, bool, bool> OnComportmentExtracted;
     public event Action<GameObject, bool, bool> OnComportmentAdded;
-    public event Action<bool> OnComportmentExchanged;
+    public event Action<GameObject,bool, bool, bool> OnComportmentExchanged;
 
-    public event Action<bool> OnSelfImpactMod;
+    public event Action<GameObject,bool> OnSelfImpactMod;
 
     public event Action<GameObject> OnComportementStateEnter;
     public event Action<GameObject> OnComportementStateExit;
@@ -35,14 +35,14 @@ public class GlobalEventManager : MonoBehaviour
         OnComportmentAdded?.Invoke(objectToAddComportment, rightValue, rightHand);
     }
 
-    public void ComportmentExchanged(bool rightHand) // appele quand on echange le comportement d'une main avec un comportement du player
+    public void ComportmentExchanged(GameObject player, bool rightHand, bool comportementIn = false, bool comportementOut = false) // appele quand on echange le comportement d'une main avec un comportement du player
     {
-        OnComportmentExchanged?.Invoke(rightHand);
+        OnComportmentExchanged?.Invoke(player, rightHand,comportementIn, comportementOut);
     }
     
-    public void SelfImpactMod(bool active) // appele quand on echange le comportement d'une main avec un comportement du player
+    public void SelfImpactMod(GameObject player, bool active) // appele quand on echange le comportement d'une main avec un comportement du player
     {
-        OnSelfImpactMod?.Invoke(active);
+        OnSelfImpactMod?.Invoke(player, active);
     }
 
     public void ComportmentStateEnter(GameObject comportableObject) // appele dans le Enter des comportements
