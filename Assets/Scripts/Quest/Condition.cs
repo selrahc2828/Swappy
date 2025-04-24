@@ -12,7 +12,7 @@ public class Condition : MonoBehaviour
     }
 
     public UnityEvent<bool, Condition> ConditionOutput;
-    [SerializeField] private ConditionRedundancyType ConditionRedudancy;
+    [SerializeField] private ConditionRedundancyType ConditionRedudancy = ConditionRedundancyType.OneOf;
 
     private bool hasBeenTrueOnce = false;
     private bool lastConditionState = false;
@@ -60,17 +60,10 @@ public class Condition : MonoBehaviour
             Gizmos.DrawLine(GetConditionLineStart(), ConditionOutput.GetPersistentTarget(i).GetComponent<Transform>().position + Vector3.up * 2.5f);
             Gizmos.DrawCube(transform.position + Vector3.up, Vector3.one * 0.7f);
         }
-
     }
 
-    public virtual Vector3 GetConditionLineStart()
+    protected virtual Vector3 GetConditionLineStart()
     {
         return transform.position;
-    }
-
-    public virtual bool CheckObjectParameters(GameObject target)
-    {
-        Debug.LogError("La condition '" + this + "' dans l'objet " + transform.name + " ne peux pas être utilisée comme complément d'une autre condition !");
-        return false;
     }
 }
