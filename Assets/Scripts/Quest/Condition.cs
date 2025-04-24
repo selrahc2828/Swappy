@@ -48,7 +48,6 @@ public class Condition : MonoBehaviour
 
             default:
                 return;
-
         }
     }
 
