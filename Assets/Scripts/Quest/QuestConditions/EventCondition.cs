@@ -36,7 +36,7 @@ public class EventCondition : Condition
 
         }
     }
-    protected override Vector3 GetQuestLineStart()
+    protected override Vector3 GetConditionLineStart()
     {
         return eventSource.transform.position;
     }

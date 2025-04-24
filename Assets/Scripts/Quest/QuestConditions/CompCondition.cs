@@ -111,8 +111,8 @@ public class CompCondition: Condition
         return(!validationBool);
     }
 
-    protected override Vector3 GetQuestLineStart()
+    protected override Vector3 GetConditionLineStart()
     {
-        return base.GetQuestLineStart();
+        return base.GetConditionLineStart();
     }
 }

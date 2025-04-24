@@ -20,7 +20,7 @@ public class QuestCondition : Condition
         attachedQuest.SetCondition(this, true);
     }
 
-    protected override Vector3 GetQuestLineStart()
+    protected override Vector3 GetConditionLineStart()
     {
         return receivingQuest.transform.position + Vector3.up * 2.5f;
     }
