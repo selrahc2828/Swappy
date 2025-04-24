@@ -16,6 +16,8 @@ public class AndOrOperator : OperatorCondition
 
     public override void OperatorInput(bool state, Condition source)
     {
+        ActiveConditions[source] = state;
+
         switch (operatorType)
         {
             case OperatorTypes.And:
