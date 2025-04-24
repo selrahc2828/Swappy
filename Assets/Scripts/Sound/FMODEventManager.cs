@@ -325,7 +325,8 @@ public class FMODEventManager : MonoBehaviour
     #endregion
     
     #region C# Event
-
+    
+    #region Player Interact
     private void OnComportementExtracted(GameObject _gameObject, bool rightvalue, bool righthand)
     {
         if (!CheckInstanceInEncylopedia(gameObject, FMODEvents.PlayerStealComp, out EventInstance eventInstance))
@@ -341,11 +342,15 @@ public class FMODEventManager : MonoBehaviour
         {
             SetNamedParamEventInstance(eventInstance,"HAND",0);
         }
+
+        if (_gameObject.CompareTag("Player"))
+        {
+            SetNamedParamEventInstance(eventInstance,"SIM",1);
+        }
         
         PlayEventInstance(eventInstance);
         ReleaseEventInstance(eventInstance);
     }
-
     private void OnComportementAdded(GameObject _gameObject, bool rightvalue, bool righthand)
     {
         if (!CheckInstanceInEncylopedia(gameObject, FMODEvents.PlayerGiveComp, out EventInstance eventInstance))
@@ -361,12 +366,16 @@ public class FMODEventManager : MonoBehaviour
         {
             SetNamedParamEventInstance(eventInstance,"HAND",0);
         }
+        if (_gameObject.CompareTag("Player"))
+        {
+            SetNamedParamEventInstance(eventInstance,"SIM",1);
+        }
+        
         
         PlayEventInstance(eventInstance);
         ReleaseEventInstance(eventInstance);
     }
-
-    private void OnComportmentExchanged(GameObject _gameObject, bool righthand, bool comportementIn, bool comportementOut)
+    private void OnComportmentExchanged(GameObject _gameObject, bool righthand)
     {
         if (!CheckInstanceInEncylopedia(_gameObject, FMODEvents.PlayerSelfSwitch, out EventInstance eventInstance))
         {
@@ -381,19 +390,18 @@ public class FMODEventManager : MonoBehaviour
             SetNamedParamEventInstance(eventInstance,"HAND",0);
         }
 
-        if (comportementIn)
-        {
-            SetNamedParamEventInstance(eventInstance,"IN",1);
-        }
-        if (comportementOut)
-        {
-            SetNamedParamEventInstance(eventInstance,"OUT",1);
-        }
+        // if (comportementIn)
+        // {
+        //     SetNamedParamEventInstance(eventInstance,"IN",1);
+        // }
+        // if (comportementOut)
+        // {
+        //     SetNamedParamEventInstance(eventInstance,"OUT",1);
+        // }
         
         PlayEventInstance(eventInstance);
         ReleaseEventInstance(eventInstance);
     }
-    
     private void OnSelfImpactMode(GameObject _gameObject, bool isActive)
     {
         var GetInstance=GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactMode);
@@ -408,7 +416,7 @@ public class FMODEventManager : MonoBehaviour
             RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactMode);
         }
     }
-
+    #endregion
 
     #region Comportement Sound
     private void OnEnterComportement(GameObject _gameObject)
