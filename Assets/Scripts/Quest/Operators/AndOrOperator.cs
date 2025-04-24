@@ -14,36 +14,42 @@ public class AndOrOperator : OperatorCondition
 
     private Dictionary<Condition, bool> ActiveConditions = new Dictionary<Condition, bool>();
 
-    public override bool OperatorInput(bool state, Condition source)
+    public override void OperatorInput(bool state, Condition source)
     {
         switch (operatorType)
         {
             case OperatorTypes.And:
                 if (argumentCount != ActiveConditions.Count)
                 {
-                    return false;
+                    SetConditionState(false);
+                    return;
                 }
                 foreach (KeyValuePair<Condition, bool> conditionRef in ActiveConditions)
                 {
                     if (conditionRef.Value == false)
                     {
-                        return false;
+                        SetConditionState(true);
+                        return;
                     }
                 }
-                return true;
+                SetConditionState(false);
+                return;
 
             case OperatorTypes.Or:
                 foreach (KeyValuePair<Condition, bool> conditionRef in ActiveConditions)
                 {
                     if (conditionRef.Value == true)
                     {
-                        return true;
+                        SetConditionState(true);
+                        return;
                     }
                 }
-                return false;
+                SetConditionState(false);
+                return;
 
-                default: 
-                    return false;
+            default:
+                SetConditionState(false);
+                return;
         }
     }
 }
