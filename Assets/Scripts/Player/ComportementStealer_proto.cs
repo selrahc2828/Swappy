@@ -285,7 +285,14 @@ public class ComportementStealer_proto : MonoBehaviour
                 {
                     if (_stateStolen.inversion) // le comportement sur le joueur est inversé (la gauche est devenu la droite)
                     {
-                        ExchangeStateWithPlayerAndHand(playerObjectState, ref slot1, true, false);
+                        if(playerObjectState.rightValue != 0)
+                        {
+                            ExchangeStateWithPlayerAndHand(playerObjectState, ref slot1, true, false);
+                        }
+                        else
+                        {
+                            ExecuteChangeStateAdditive(playerObjectState, ref slot1, true, false);
+                        }
                         _stateStolen.inversion = (originValueSlot1 <= playerObjectState.leftValue); //Le seul moment ou on change inversion c'est quand il y a une inversion naturelle.
                                                                                                     //une inversion naterelle ne se produit avec le slot1 que lorsque la valeur du slot1 est inferieur ou égale a left value avant l'echange
                     }
@@ -299,7 +306,7 @@ public class ComportementStealer_proto : MonoBehaviour
                 }
                 else // le joueur n'a aucun comportement sur lui
                 {
-                    ExchangeStateWithPlayerAndHand(playerObjectState, ref slot1, false, false);
+                    ExecuteChangeStateAdditive(playerObjectState, ref slot1, false, false);
                     _stateStolen.inversion = false;
                 } 
             }
@@ -360,7 +367,14 @@ public class ComportementStealer_proto : MonoBehaviour
                     }
                     else // le comportement sur le joueur n'est pas inverse
                     {
-                        ExchangeStateWithPlayerAndHand(playerObjectState, ref slot2, true, true);
+                        if(playerObjectState.rightValue != 0)
+                        {
+                            ExchangeStateWithPlayerAndHand(playerObjectState, ref slot2, true, true);
+                        }
+                        else
+                        {
+                            ExecuteChangeStateAdditive(playerObjectState, ref slot2, true, true);
+                        }
 
                         if (originValueSlot2 < playerObjectState.leftValue) //Le seul moment ou on change inversion c'est quand il y a une inversion naturelle.
                                                                             //une inversion naterelle ne se produit avec le slot2 que lorsque la valeur du slot2 est inferieur a left value avant l'echange
@@ -371,7 +385,7 @@ public class ComportementStealer_proto : MonoBehaviour
                 }
                 else // le joueur n'a aucun comportement sur lui
                 {
-                    ExchangeStateWithPlayerAndHand(playerObjectState, ref slot2, false, true);
+                    ExecuteChangeStateAdditive(playerObjectState, ref slot2, false, true);
 
                     _stateStolen.inversion = true;
                 }
