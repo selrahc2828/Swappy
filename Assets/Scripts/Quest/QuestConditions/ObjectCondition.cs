@@ -1,7 +1,6 @@
-using UnityEditor.UIElements;
 using UnityEngine;
 
-public class ObjectCondition : Condition
+public class ObjectCondition : AdditionalCondition
 {
     private enum ValidationTypes
     {
@@ -17,19 +16,12 @@ public class ObjectCondition : Condition
     [SerializeField] private string targetTag;
     [SerializeField] private LayerMask targetLayer;
 
-    private void Start()
-    {
-        if (targetObject == null && attachedQuest != null)
-        {
-            Debug.LogError("Il n'y a pas de Target Object référencé alors que cette condition n'est pas additionelle");
-        }
-    }
 
     private void FixedUpdate()
     {
-        if (targetObject != null && attachedQuest != null)
+        if (targetObject != null)
         {
-            attachedQuest.SetCondition(this, CheckObjectParameters(targetObject));
+            SetConditionState(CheckObjectParameters(targetObject));
         }
     }
 
@@ -40,17 +32,17 @@ public class ObjectCondition : Condition
             case ValidationTypes.Tag:
                 if (targetObject.CompareTag(targetTag))
                 {
-                    return validationBool;
+                    return true;
                 }
                 break;
 
             case ValidationTypes.Layer:
                 if (targetObject.layer == targetLayer)
                 {
-                    return validationBool;
+                    return true;
                 }
                 break;
         }
-        return !validationBool;
+        return false;
     }
 }
