@@ -15,6 +15,6 @@ public class FMODSnapshotEvents : ScriptableObject
     [field: Space]
     [field: Space]
     [field: Header("Music")]
-    [field: SerializeField] public EventReference Snapshot3 { get; private set; }
+    [field: SerializeField] public EventReference WalkMan { get; private set; }
 
 }
