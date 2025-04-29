@@ -7,9 +7,7 @@ public partial class ComportementManager
     {
         public float impulseRocketExplosionForce = 6f;
         public float impulseRocketExplosionRange = 4f;
-        public float impulseRocketFlyForce = 75f;
         public float impulseRocketFlyForceOnPlayer = 75f;
-        public float impulseRocketFlyTime = 5f;
         public float timeBetweenImpulses = .5f;
     }
 }

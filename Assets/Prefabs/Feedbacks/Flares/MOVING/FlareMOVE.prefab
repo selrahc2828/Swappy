@@ -46,10 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a83a2159c1e7854482feab0dee36ef7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPosition: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   speed: 100
-  flare: {fileID: 2016382238944505}
-  flareRenderer: {fileID: 6522069101641022201}
   speedCurve:
     serializedVersion: 2
     m_Curve:
@@ -101,7 +100,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  isAttribute: 0
+  flare: {fileID: 2016382238944505}
+  flareRenderer: {fileID: 6522069101641022201}
+  attributeToObject: 0
 --- !u!1 &7526777478847865934
 GameObject:
   m_ObjectHideFlags: 0

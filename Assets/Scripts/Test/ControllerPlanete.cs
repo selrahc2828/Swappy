@@ -113,7 +113,7 @@ public class ControllerPlanete : MonoBehaviour
             {
                 orientationValue = ((Vector3.Dot(moveDirection.normalized, rb.velocity.normalized) -1) /-2) + 1;
             }
-            if (moveInputVector.y != 0)
+            if (moveInputVector.y == 0)
             {
                 Vector3 velocityWithoutSides = Vector3.ProjectOnPlane(rb.velocity, orientation.right);
                 

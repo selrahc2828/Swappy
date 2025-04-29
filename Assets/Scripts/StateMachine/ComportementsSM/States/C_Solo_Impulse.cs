@@ -17,7 +17,6 @@ public class C_Solo_Impulse : ComportementState
     private GameObject feedback;
     
     
-    private EventInstance _impulseSoundInstance;
     
     public C_Solo_Impulse(StateMachine stateMachine) : base(stateMachine)
     {
@@ -25,9 +24,6 @@ public class C_Solo_Impulse : ComportementState
 
     public override void Enter()
     {
-        _impulseSoundInstance = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.Impulse);
-        FMODEventManager.instance.Set3DparamEventInstance(_impulseSoundInstance,_sm.transform.position);
-        FMODEventManager.instance.PlayEventInstance(_impulseSoundInstance);
         isKinematic = false;
         stateValue = 1;
         
@@ -91,7 +87,6 @@ public class C_Solo_Impulse : ComportementState
     public override void Exit()
     {
         base.Exit();
-        FMODEventManager.instance.ReleaseEventInstance(_impulseSoundInstance);
     }
     
     public override void DisplayGizmos()
@@ -103,7 +98,6 @@ public class C_Solo_Impulse : ComportementState
  
     public void Repulse()
     {
-        FMODEventManager.instance.SetNamedParamEventInstance(_impulseSoundInstance,"Stinger", 1f);
         
         if (feedback)
         {

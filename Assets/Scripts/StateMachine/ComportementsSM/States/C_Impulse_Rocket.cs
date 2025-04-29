@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class C_Impulse_Rocket : ComportementState
@@ -7,10 +8,13 @@ public class C_Impulse_Rocket : ComportementState
     private float explosionForce;
     private float explosionRange;
     private float explosionTrueRange;
-    private float rocketFlyForce;
-    private float rocketFlyForceOnPlayer;
+    private float rocketForce = 20;
+    private float rocketForceOnPlayer = 20;
+    private float rocketForceWhenGrab = 20;
     private float flyTime;
-    private float flyTimer;
+    private float onTimer;
+    private float onCooldown;
+    private float offCooldown;
     private float impulseTimer;
     private float timeBetweenImpulses;
     private float maxSpeed;
@@ -41,7 +45,6 @@ public class C_Impulse_Rocket : ComportementState
         
         maxSpeed = _sm.comportementManager.rocketData.rocketMaxSpeed;
         explosionForce = _sm.comportementManager.impulseRocketData.impulseRocketExplosionForce;
-        rocketFlyForceOnPlayer = _sm.comportementManager.impulseRocketData.impulseRocketFlyForceOnPlayer;
         explosionRange = _sm.comportementManager.impulseRocketData.impulseRocketExplosionRange;
         feedback = _sm.comportementManager.impulseData.impulseFeedback;
 
@@ -55,10 +58,13 @@ public class C_Impulse_Rocket : ComportementState
             explosionTrueRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + explosionRange;
         }
         // pb si obj n'a pas de collider direct (ax Player)
-        rocketFlyForce = _sm.comportementManager.impulseRocketData.impulseRocketFlyForce;
-        flyTime = _sm.comportementManager.impulseRocketData.impulseRocketFlyTime;
+        rocketForce = _sm.comportementManager.rocketData.rocketForce;
+        rocketForceOnPlayer = _sm.comportementManager.rocketData.rocketForceOnPlayer;
+        rocketForceWhenGrab = _sm.comportementManager.rocketData.rocketForceWhenGrab;
+        onCooldown = _sm.comportementManager.rocketData.rocketOnCooldown;
+        offCooldown = _sm.comportementManager.rocketData.rocketOffCooldown;
         timeBetweenImpulses = _sm.comportementManager.impulseRocketData.timeBetweenImpulses;
-        flyTimer = 0f;
+        onTimer = 0f;
         impulseTimer = 0f;
         rocketOn = false;
         
@@ -75,16 +81,22 @@ public class C_Impulse_Rocket : ComportementState
     public override void TickPhysics()
     {
         base.TickPhysics();
-        flyTimer += Time.fixedDeltaTime;
-        if (flyTimer > flyTime)
+        onTimer += Time.fixedDeltaTime;
+
+        if (onTimer > onCooldown && !rocketOn)
         {
-            rocketOn = !rocketOn;
-            if (!rocketOn)
-            {
-                isSonOn = false;
-            }
-            flyTimer = 0f;
+            rocketOn = true;
+            onTimer = 0f;
         }
+
+        if (onTimer > offCooldown && rocketOn)
+        {
+            rocketOn = false;
+            isSonOn = false;
+            onTimer = 0f;
+        }
+
+
         if (rocketOn)
         {
             if (!isSonOn)
@@ -99,22 +111,22 @@ public class C_Impulse_Rocket : ComportementState
                 impulseTimer = 0f;
             }
 
-            if (_sm.rb.velocity.magnitude > maxSpeed)
+            if (_sm.rb.velocity.magnitude > maxSpeed && rocketOn)
             {
                 _sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
             }
             
             if (_sm.isPlayer)
             {
-                _sm.rb.AddForce(_sm.transform.up * rocketFlyForceOnPlayer , ForceMode.Force);
+                _sm.rb.AddForce(_sm.transform.up * rocketForceOnPlayer , ForceMode.Force);
             }
             else if(isGrabbed)
             {
-                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketFlyForceOnPlayer, ForceMode.Force);
+                _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketForceWhenGrab, ForceMode.Acceleration);
             }
             else
             {
-                _sm.rb.AddForce(_sm.transform.up * rocketFlyForce, ForceMode.Force);
+                _sm.rb.AddForce(_sm.transform.up * rocketForce, ForceMode.Force);
             }
         }
     }
