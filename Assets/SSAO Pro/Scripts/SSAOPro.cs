@@ -248,7 +248,7 @@ public class SSAOPro : MonoBehaviour
             int d = BlurDownsampling ? Downsampling : 1;
             RenderTexture rt1 = RenderTexture.GetTemporary(source.width / d, source.height / d, 0, RenderTextureFormat.ARGB32);
             RenderTexture rt2 = RenderTexture.GetTemporary(source.width / Downsampling, source.height / Downsampling, 0, RenderTextureFormat.ARGB32);
-            Graphics.Blit(rt1, rt1, Material, (int)Pass.Clear);
+            Graphics.Blit(source, rt1, Material, (int)Pass.Clear);
 
             // SSAO
             Graphics.Blit(source, rt1, Material, ssaoPass);
