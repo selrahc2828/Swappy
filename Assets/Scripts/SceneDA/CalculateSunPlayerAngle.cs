@@ -5,13 +5,15 @@ using UnityEngine;
 public class CalculateSunPlayerAngle : MonoBehaviour
 {
     public Vector3 lightDirection;
+    public GameObject player;
     public Vector3 playerUpDirection;
     
     // Start is called before the first frame update
     void Start()
     {
         lightDirection = transform.forward;
-        playerUpDirection = GameManager.Instance.player.transform.up;
+        player = GameManager.Instance.player;
+        playerUpDirection = player.transform.up;
     }
 
     // Update is called once per frame
