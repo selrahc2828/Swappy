@@ -91,12 +91,12 @@ Shader "Skybox/Cubemap Blend"
 			};
 
 			uniform half4 _Tex_HDR;
-			uniform half _Cubemapp;
 			uniform half4 _Tex_Blend_HDR;
-			uniform half _Rotationn;
-			uniform half _Fogg;
 			uniform half _FogMessage;
+			uniform half _Cubemapp;
+			uniform half _Fogg;
 			uniform half _SkyboxExtended;
+			uniform half _Rotationn;
 			uniform samplerCUBE _Tex;
 			uniform float _CubemapPosition;
 			uniform half _Rotation;
@@ -237,7 +237,6 @@ Node;AmplifyShaderEditor.OneMinusNode;329;-256,2880;Inherit;False;1;0;FLOAT;0;Fa
 Node;AmplifyShaderEditor.TFHCRemapNode;315;-320,2560;Inherit;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;0;False;4;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.VertexToFragmentNode;774;1024,1536;Inherit;False;False;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.SamplerNode;41;1536,1536;Inherit;True;Property;_Tex;Cubemap (HDR);2;1;[NoScaleOffset];Create;False;0;0;0;False;1;StyledTextureSingleLine;False;-1;None;beb1457d375110e468b8d8e1f29fccea;True;0;False;black;LockedToCube;False;Object;-1;Auto;Cube;8;0;SAMPLERCUBE;;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;1226;1536,2048;Half;False;Property;_CubemapTransition;Cubemap Transition;4;0;Create;False;0;0;0;False;1;Space(10);False;0;1;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SamplerNode;1223;1536,1792;Inherit;True;Property;_Tex_Blend;Cubemap Blend (HDR);3;1;[NoScaleOffset];Create;False;0;0;0;False;1;StyledTextureSingleLine;False;-1;None;beb1457d375110e468b8d8e1f29fccea;True;0;False;black;LockedToCube;False;Object;-1;Auto;Cube;8;0;SAMPLERCUBE;;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.PowerNode;677;-64,2560;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.CustomExpressionNode;1224;1920,1792;Half;False;DecodeHDR(Data, _Tex_Blend_HDR);3;Create;1;True;Data;FLOAT4;0,0,0,0;In;;Float;False;DecodeHDR;True;False;0;;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT3;0
@@ -282,6 +281,7 @@ Node;AmplifyShaderEditor.SimpleAddOpNode;276;-512,1792;Inherit;False;2;2;0;FLOAT
 Node;AmplifyShaderEditor.RadiansOpNode;47;-384,1793;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.OneMinusNode;1222;-255,1792;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.FunctionNode;1217;-128,1536;Inherit;False;Compute Rotation Y;-1;;1;693b7d13a80c93a4e8b791a9cd5e5ab2;0;2;38;FLOAT3;0,0,0;False;43;FLOAT;0;False;1;FLOAT3;19
+Node;AmplifyShaderEditor.RangedFloatNode;1226;1536,2048;Half;False;Property;_CubemapTransition;Cubemap Transition;4;0;Create;False;0;0;0;False;1;Space(10);False;0;1;0;1;0;1;FLOAT;0
 WireConnection;309;0;267;2
 WireConnection;309;1;267;1
 WireConnection;268;0;1007;0
@@ -349,4 +349,4 @@ WireConnection;1222;0;47;0
 WireConnection;1217;38;1220;0
 WireConnection;1217;43;1222;0
 ASEEND*/
-//CHKSM=D48094D8429F4CF67E7ED90CFF88099C71FA0E44
+//CHKSM=FDC305550660193159D97F0B059A6374D5FB1E19
