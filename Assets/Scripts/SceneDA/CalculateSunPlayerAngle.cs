@@ -12,14 +12,13 @@ public class CalculateSunPlayerAngle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lightDirection = transform.forward;
-        player = GameManager.Instance.player;
-        
+        player = GameManager.Instance.player;       
     }
 
     // Update is called once per frame
     void Update()
     {
+        lightDirection = transform.forward;
         playerUpDirection = player.transform.up;
         float angleBetweenLightAndPlayer = Vector3.Angle(lightDirection, playerUpDirection);
         NormalizedAngleBetweenLightAndPlayer = 1f - 2f * (angleBetweenLightAndPlayer / 180f);
