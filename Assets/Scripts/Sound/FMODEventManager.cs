@@ -331,7 +331,8 @@ public class FMODEventManager : MonoBehaviour
     {
         if (!CheckInstanceInEncylopedia(gameObject, FMODEvents.PlayerStealComp, out EventInstance eventInstance))
         {
-            eventInstance = CreateEventInstance(FMODEvents.PlayerStealComp);
+            AddInstanceInEncyclopedia(_gameObject, FMODEvents.PlayerStealComp,CreateEventInstance(FMODEvents.PlayerStealComp));
+            eventInstance = GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.PlayerStealComp);
         }
 
         if (righthand)
@@ -349,13 +350,14 @@ public class FMODEventManager : MonoBehaviour
         }
         
         PlayEventInstance(eventInstance);
-        ReleaseEventInstance(eventInstance);
+        RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.PlayerStealComp);
     }
     private void OnComportementAdded(GameObject _gameObject, bool rightvalue, bool righthand)
     {
         if (!CheckInstanceInEncylopedia(gameObject, FMODEvents.PlayerGiveComp, out EventInstance eventInstance))
         {
-            eventInstance = CreateEventInstance(FMODEvents.PlayerGiveComp);
+            AddInstanceInEncyclopedia(_gameObject, FMODEvents.PlayerGiveComp,CreateEventInstance(FMODEvents.PlayerGiveComp));
+            eventInstance = GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.PlayerGiveComp);
         }
 
         if (righthand)
@@ -373,13 +375,14 @@ public class FMODEventManager : MonoBehaviour
         
         
         PlayEventInstance(eventInstance);
-        ReleaseEventInstance(eventInstance);
+        RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.PlayerGiveComp);
     }
     private void OnComportmentExchanged(GameObject _gameObject, bool righthand)
     {
         if (!CheckInstanceInEncylopedia(_gameObject, FMODEvents.PlayerSelfSwitch, out EventInstance eventInstance))
         {
-            eventInstance = CreateEventInstance(FMODEvents.PlayerSelfSwitch);
+            AddInstanceInEncyclopedia(_gameObject, FMODEvents.PlayerSelfSwitch,CreateEventInstance(FMODEvents.PlayerSelfSwitch));
+            eventInstance = GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.PlayerSelfSwitch);
         }
         if(righthand)
         {
@@ -389,22 +392,12 @@ public class FMODEventManager : MonoBehaviour
         {
             SetNamedParamEventInstance(eventInstance,"HAND",0);
         }
-
-        // if (comportementIn)
-        // {
-        //     SetNamedParamEventInstance(eventInstance,"IN",1);
-        // }
-        // if (comportementOut)
-        // {
-        //     SetNamedParamEventInstance(eventInstance,"OUT",1);
-        // }
-        
         PlayEventInstance(eventInstance);
-        ReleaseEventInstance(eventInstance);
+        RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.PlayerSelfSwitch);
     }
     private void OnSelfImpactMode(GameObject _gameObject, bool isActive)
     {
-        var GetInstance=GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactMode);
+        var GetInstance = GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactMode);
         if (isActive)
         {
             AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactMode,CreateEventInstance(FMODEvents.PlayerSelfImpactMode));
@@ -613,10 +606,13 @@ public class FMODEventManager : MonoBehaviour
     private void ActionOnPlayerMove(GameObject _gameObject, MovingTypeSound _movingType)
     {
         MovingRef(_movingType, out EventReference _eventReference);
-        var getInstance = GetInstanceFromEncyclopediaKey(_gameObject, _eventReference);
-        AddInstanceInEncyclopedia(_gameObject,_eventReference,CreateEventInstance(_eventReference));
-        SwitchGround(_gameObject,getInstance);
-        PlayEventInstance(getInstance);
+        if (!CheckInstanceInEncylopedia(_gameObject, _eventReference, out EventInstance _eventInstance))
+        {
+            AddInstanceInEncyclopedia(_gameObject,_eventReference,CreateEventInstance(_eventReference));
+        }
+        _eventInstance = GetInstanceFromEncyclopediaKey(_gameObject, _eventReference);
+        SwitchGround(_gameObject,_eventInstance);
+        PlayEventInstance(_eventInstance);
         RemoveInstanceInEncyclopedia(_gameObject,_eventReference);
     }
     #endregion
