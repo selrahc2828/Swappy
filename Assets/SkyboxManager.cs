@@ -9,12 +9,12 @@ public class SkyboxManager : MonoBehaviour
     public CalculateSunPlayerAngle CalculateSunPlayerAngle;
     public Material SkyboxMat;
     public GameObject Sun;
-    public float rotationSpeed;
+    public float NumberOfMinuteForOneDay;
 
     private void Update()
     {
-        Sun.transform.Rotate(rotationSpeed * Time.deltaTime, 0, 0);
-        LightAngle = CalculateSunPlayerAngle.NormalizedAngleBetweenLightAndPlayer;
+        Sun.transform.Rotate((360 / (NumberOfMinuteForOneDay * 60)) * Time.deltaTime, 0, 0);
+        LightAngle = CalculateSunPlayerAngle.valueToUseInShader;
         SkyboxMat.SetFloat("_CubemapTransition", Mathf.Abs(LightAngle));
     }
 }
