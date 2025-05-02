@@ -5,7 +5,7 @@
 			<value>BounceImmuable</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{3989aaa9-74b8-4604-b01a-b40b5df3a651}</destination>
@@ -98,6 +98,7 @@
 	<object class="MixerBusEffectChain" id="{beb0c962-832e-4b14-ad46-4aa8dba1896d}">
 		<relationship name="effects">
 			<destination>{f17822c8-78de-4412-bf19-2dc5fac56a29}</destination>
+			<destination>{1085fd4d-37a6-4e97-ae86-da6fad19bd3f}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{1dad8b1e-9bcf-4ac8-9771-79ddbacb0a9a}" />
@@ -109,5 +110,13 @@
 	</object>
 	<object class="MixerBusPanner" id="{b9f4786a-c94f-40e4-acbc-4a6506225680}" />
 	<object class="MixerBusFader" id="{f17822c8-78de-4412-bf19-2dc5fac56a29}" />
+	<object class="ProxyEffect" id="{1085fd4d-37a6-4e97-ae86-da6fad19bd3f}">
+		<property name="inputFormat">
+			<value>0</value>
+		</property>
+		<relationship name="preset">
+			<destination>{2e8efaa2-e3ce-46a4-b9c1-b23949d7083e}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{f4d9921e-7e97-4d32-82e7-dae9db6dd399}" />
 </objects>

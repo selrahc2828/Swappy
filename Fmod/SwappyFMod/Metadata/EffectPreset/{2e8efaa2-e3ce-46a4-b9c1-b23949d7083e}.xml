@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EffectPreset" id="{2e8efaa2-e3ce-46a4-b9c1-b23949d7083e}">
+		<property name="name">
+			<value>Reverb Spatializes</value>
+		</property>
+		<relationship name="folder">
+			<destination>{9f32c4a6-324d-4bd3-b0ee-2cbcd5662bf2}</destination>
+		</relationship>
+		<relationship name="effect">
+			<destination>{6beb1ba8-6a79-49e7-a071-40457535d5bf}</destination>
+		</relationship>
+	</object>
+	<object class="EffectChain" id="{6beb1ba8-6a79-49e7-a071-40457535d5bf}">
+		<relationship name="effects">
+			<destination>{94082063-f6f8-4fb3-b631-1bf0122ac20f}</destination>
+			<destination>{9e5e4cd0-2fc7-4cba-9d38-7ed194d5d31d}</destination>
+		</relationship>
+	</object>
+	<object class="SpatialiserEffect" id="{94082063-f6f8-4fb3-b631-1bf0122ac20f}" />
+	<object class="MixerSend" id="{9e5e4cd0-2fc7-4cba-9d38-7ed194d5d31d}">
+		<property name="level">
+			<value>-9</value>
+		</property>
+		<property name="inputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{1bd01a40-4856-4134-9a90-71521c79581e}</destination>
+		</relationship>
+	</object>
+</objects>

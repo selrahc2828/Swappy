@@ -5,7 +5,7 @@
 			<value>RocketMagnet</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{3989aaa9-74b8-4604-b01a-b40b5df3a651}</destination>
@@ -98,6 +98,7 @@
 	<object class="MixerBusEffectChain" id="{84d7d59c-8d72-48ec-be6a-e444317579cf}">
 		<relationship name="effects">
 			<destination>{7258a945-fe16-49f3-b6cb-8f8a2e3cae01}</destination>
+			<destination>{37eca045-2974-4bd5-8fc8-fb21b3014b53}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{772abc87-29fd-4461-a57d-c94a82add19c}" />
@@ -109,5 +110,13 @@
 	</object>
 	<object class="MixerBusPanner" id="{9d36999a-03f1-4dfd-9375-f671a0cf027c}" />
 	<object class="MixerBusFader" id="{7258a945-fe16-49f3-b6cb-8f8a2e3cae01}" />
+	<object class="ProxyEffect" id="{37eca045-2974-4bd5-8fc8-fb21b3014b53}">
+		<property name="inputFormat">
+			<value>0</value>
+		</property>
+		<relationship name="preset">
+			<destination>{2e8efaa2-e3ce-46a4-b9c1-b23949d7083e}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{90439b34-98ec-4ca9-aa57-123eda54c32c}" />
 </objects>
