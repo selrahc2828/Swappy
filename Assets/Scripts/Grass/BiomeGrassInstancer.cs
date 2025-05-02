@@ -11,12 +11,14 @@ public class BiomeGrassInstancer : MonoBehaviour
     public MeshFilter groundMeshFilter;
     public Mesh grassMesh;
     public Material grassMaterial;
+    public Transform planetCenter;
 
     [Header("Grass Settings")]
     public int instanceCount = 10000;
     public float visibleDistance = 100f;
     public Vector2 scaleRange = new Vector2(0.8f, 1.2f);
     public float uniformScaleMultiplier = 1f;
+    public float topFaceAngleThreshold = 15f; // degrés
 
     [Header("Debug")]
     public bool showPositionGizmos = true;
@@ -39,13 +41,14 @@ public class BiomeGrassInstancer : MonoBehaviour
         GenerateGrass();
     }
 
+    [ContextMenu("Regenerate Grass")]
     public void GenerateGrass()
     {
         allMatrices.Clear();
 
-        if (groundMeshFilter == null || groundMeshFilter.sharedMesh == null)
+        if (groundMeshFilter == null || groundMeshFilter.sharedMesh == null || planetCenter == null)
         {
-            Debug.LogError("Ground MeshFilter or its Mesh is not assigned!");
+            Debug.LogError("Missing reference(s) for MeshGrassInstancer.");
             return;
         }
 
@@ -55,8 +58,11 @@ public class BiomeGrassInstancer : MonoBehaviour
         Vector3[] normals = mesh.normals;
         Transform groundTransform = groundMeshFilter.transform;
 
-        for (int i = 0; i < instanceCount; i++)
+        int placed = 0;
+        int attempts = 0;
+        while (placed < instanceCount && attempts < instanceCount * 10)
         {
+            attempts++;
             int triIndex = Random.Range(0, triangles.Length / 3) * 3;
 
             Vector3 v0 = vertices[triangles[triIndex + 0]];
@@ -70,17 +76,28 @@ public class BiomeGrassInstancer : MonoBehaviour
             Vector3 n1 = normals[triangles[triIndex + 1]];
             Vector3 n2 = normals[triangles[triIndex + 2]];
             Vector3 localNormal = (n0 + n1 + n2).normalized;
-            Vector3 worldNormal = groundTransform.TransformDirection(localNormal);
+            Vector3 worldNormal = groundTransform.TransformDirection(localNormal).normalized;
 
-            Quaternion rot = Quaternion.LookRotation(Vector3.Cross(worldNormal, Vector3.right), worldNormal);
+            // Check if face is "upward"
+            Vector3 toCenter = (worldPoint - planetCenter.position).normalized;
+            float angle = Vector3.Angle(worldNormal, toCenter);
+            if (angle > topFaceAngleThreshold) continue;
+
+            // Random rotation around local Y (normal)
+            Quaternion alignToNormal = Quaternion.LookRotation(Vector3.Cross(worldNormal, Vector3.right), worldNormal);
+            float randomYRot = Random.Range(0f, 360f);
+            Quaternion randomY = Quaternion.AngleAxis(randomYRot, Vector3.up);
+            Quaternion finalRot = alignToNormal * randomY;
+
             float randomScale = Random.Range(scaleRange.x, scaleRange.y) * uniformScaleMultiplier;
             Vector3 scale = Vector3.one * randomScale;
 
-            Matrix4x4 matrix = Matrix4x4.TRS(worldPoint, rot, scale);
+            Matrix4x4 matrix = Matrix4x4.TRS(worldPoint, finalRot, scale);
             allMatrices.Add(matrix);
+            placed++;
         }
 
-        Debug.Log($"Placed {allMatrices.Count} grass instances.");
+        Debug.Log($"Placed {allMatrices.Count} grass instances (attempts: {attempts}).");
     }
 
     void Update()
@@ -121,7 +138,6 @@ public class BiomeGrassInstancer : MonoBehaviour
 
         if (allMatrices == null) return;
 
-        // Sphere Gizmos at position
         if (showPositionGizmos)
         {
             Gizmos.color = positionGizmoColor;
@@ -131,12 +147,9 @@ public class BiomeGrassInstancer : MonoBehaviour
             }
         }
 
-        // Mesh outline
         if (showMeshGizmos && grassMesh != null)
         {
-            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
             Gizmos.color = meshOutlineColor;
-
             foreach (var matrix in allMatrices)
             {
                 Graphics.DrawMeshNow(grassMesh, matrix);
@@ -156,3 +169,4 @@ public class BiomeGrassInstancer : MonoBehaviour
         return a + r1 * (b - a) + r2 * (c - a);
     }
 }
+
