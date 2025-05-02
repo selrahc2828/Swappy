@@ -62,6 +62,6 @@ public class C_Solo_Immuable : ComportementState
 
     public override void CollisionStart(Collision other)
     {
-        
+        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
     }
 }

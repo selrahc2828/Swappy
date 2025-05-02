@@ -101,8 +101,9 @@ public class FMODEventManager : MonoBehaviour
     }    
     public void PlayEventInstance3DMoving(EventInstance eventInstance, GameObject gameObject, Rigidbody rigidbody)
     {
+        eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
         RuntimeManager.AttachInstanceToGameObject(eventInstance,gameObject.transform,rigidbody);
-        PlayEventInstance(eventInstance);
+        eventInstance.start();
     }
     
     public float GetNamedParamEventInstance(EventInstance eventInstance, string name)
@@ -154,14 +155,14 @@ public class FMODEventManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Event instance not referenced yet in Encyclopedia");
+                Debug.Log("Event instance not referenced yet in Encyclopedia"+_keyGameObject.name+_keyEventReference);
                 eventInstance = default(EventInstance);
                 return false;
             }
         }
         else
         {
-            Debug.Log("GameObjet not referenced yet in Encyclopedia");
+            Debug.Log("GameObjet not referenced yet in Encyclopedia"+_keyGameObject.name);
             eventInstance = default(EventInstance);
             return false;
         }
@@ -233,7 +234,7 @@ public class FMODEventManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Event instance not registered in Encyclopedia");
+                Debug.LogWarning("Event instance not registered in Encyclopedia"+_keyEventReference+_keyGameObject.name);
             }
         }
         else
@@ -274,7 +275,7 @@ public class FMODEventManager : MonoBehaviour
             }
             else if (eventInstanceRateByGameObject == 1)
             {
-                Debug.Log("Every Game objects found in Encyclopedia got only one Event instance");
+                //Debug.Log("Every Game objects found in Encyclopedia got only one Event instance");
             }
             else if (eventInstanceRateByGameObject > 1)
             {
@@ -437,19 +438,19 @@ public class FMODEventManager : MonoBehaviour
     }
     private void ActionOnStateComportement(GameObject _gameObject, EventReference _eventReference, Step step, float force)
     {
-        var GetInstance = GetInstanceFromEncyclopediaKey(_gameObject, _eventReference);
+        GetInstanceFromEncyclopediaKey(_gameObject,_eventReference);
         switch (step)
         {
             case Step.Enter:
                 AddInstanceInEncyclopedia(_gameObject, _eventReference,CreateEventInstance(_eventReference));
-                PlayEventInstance3DMoving(GetInstance,_gameObject,_gameObject.GetComponent<Rigidbody>());
+                PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),_gameObject,_gameObject.GetComponent<Rigidbody>());
                 break;
             case Step.Play:
-                SetNamedParamEventInstance(GetInstance, "POWER", force);
-                SetNamedParamEventInstance(GetInstance, "Stinger",1);
+                SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference), "POWER", force);
+                SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference), "Stinger",1);
                 break;
             case Step.Exit:
-                StopEventInstance(GetInstance);
+                StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference));
                 RemoveInstanceInEncyclopedia(_gameObject,_eventReference);
                 break;
             default:
@@ -619,9 +620,10 @@ public class FMODEventManager : MonoBehaviour
     private void CollisionSound(GameObject _gameObject)
     {
         var getReference = FMODEvents.Collision;
-        AddInstanceInEncyclopedia(_gameObject,getReference,CreateEventInstance(getReference));
-        PlayEventInstance3DNotMoving(GetInstanceFromEncyclopediaKey(_gameObject,getReference),_gameObject.transform.position);
-        RemoveInstanceInEncyclopedia(_gameObject,getReference);
+        PlayOneShotAttached(getReference, _gameObject);
+        // AddInstanceInEncyclopedia(_gameObject,getReference,CreateEventInstance(getReference));
+        // PlayEventInstance3DNotMoving(GetInstanceFromEncyclopediaKey(_gameObject,getReference),_gameObject.transform.position);
+        // RemoveInstanceInEncyclopedia(_gameObject,getReference);
     }
     #endregion
     
