@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using FMOD.Studio;
+
 using UnityEngine;
 
 public class C_Solo_Impulse : ComportementState

@@ -52,7 +52,6 @@ public class C_Double_Immuable : ComportementState
 
     public override void CollisionStart(Collision other)
     {
-        // SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit,_sm.gameObject);
-        // SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit,_sm.gameObject);
+
     }
 }

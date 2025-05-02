@@ -63,7 +63,6 @@ public class C_Double_Bouncing : ComportementState
 
     public override void CollisionStart(Collision other)
     {
-        //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit,_sm.gameObject);
-        //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit,_sm.gameObject);
+        
     }
 }
