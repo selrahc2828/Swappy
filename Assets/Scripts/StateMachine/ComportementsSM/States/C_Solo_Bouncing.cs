@@ -54,7 +54,6 @@ public class C_Solo_Bouncing : ComportementState
     public override void TickLogic()
     {
         base.TickLogic();
-        //FMODEventManager.instance.GetInstanceFromEncyclopediaKey(_sm.gameObject, FMODEventManager.instance.FMODEvents.Bounce).set3DAttributes(RuntimeUtils.To3DAttributes(_sm.gameObject));
     }
 
     public override void TickPhysics()
