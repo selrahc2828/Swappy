@@ -415,32 +415,17 @@ public class FMODEventManager : MonoBehaviour
     private void OnEnterComportement(GameObject _gameObject)
     {
         Step step = Step.Enter;
-        var stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
-        if (stateMachine.currentState is ComportementState)
-        {
-                ComportementState gameObjectCurrenState = (ComportementState) stateMachine.currentState ;
-                FindStateComportement(_gameObject,gameObjectCurrenState.stateValue,step);
-        }
+        GetComportementState(_gameObject,step,0.8f);
     }
-    private void OnComportementIsPlay(GameObject _gameObject)
+    private void OnComportementIsPlay(GameObject _gameObject,float force=0.8f)
     {
         Step step = Step.Play;
-        var stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
-        if (stateMachine.currentState is ComportementState)
-        {
-            ComportementState gameObjectCurrentState = (ComportementState)stateMachine.currentState;
-            FindStateComportement(_gameObject, gameObjectCurrentState.stateValue, step);
-        }
+        GetComportementState(_gameObject,step,force);
     }
     private void OnExitComportement(GameObject _gameObject)
     {
         Step step = Step.Exit;
-        var stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
-        if (stateMachine.currentState is ComportementState)
-        {
-            ComportementState gameObjectCurrenState = (ComportementState)stateMachine.currentState;
-            FindStateComportement(_gameObject, gameObjectCurrenState.stateValue,step);
-        }
+        GetComportementState(_gameObject,step,0.8f);
     }
     private enum Step 
     {
@@ -448,7 +433,7 @@ public class FMODEventManager : MonoBehaviour
         Play,
         Exit
     }
-    private void ActionOnStateComportement(GameObject _gameObject, EventReference _eventReference, Step step)
+    private void ActionOnStateComportement(GameObject _gameObject, EventReference _eventReference, Step step, float force)
     {
         var GetInstance = GetInstanceFromEncyclopediaKey(_gameObject, _eventReference);
         switch (step)
@@ -458,6 +443,7 @@ public class FMODEventManager : MonoBehaviour
                 PlayEventInstance3DMoving(GetInstance,_gameObject,_gameObject.GetComponent<Rigidbody>());
                 break;
             case Step.Play:
+                SetNamedParamEventInstance(GetInstance, "POWER", force);
                 SetNamedParamEventInstance(GetInstance, "Stinger",1);
                 break;
             case Step.Exit:
@@ -469,75 +455,84 @@ public class FMODEventManager : MonoBehaviour
             
         }
     }
-    private void FindStateComportement(GameObject _gameObject, int stateValue, Step step)
+    private void FindStateComportement(GameObject _gameObject, int stateValue, Step step, float force)
     {
         switch (stateValue)
         {
             case 0:
                 break;
             case 1:
-                ActionOnStateComportement(_gameObject, FMODEvents.Impulse, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.Impulse, step, force);
                 break;
             case 2:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleImpulse, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.DoubleImpulse, step, force);
                 break;
             case 3:
-                ActionOnStateComportement(_gameObject, FMODEvents.Bounce, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.Bounce, step, force);
                 break;
             case 4:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseBounce, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseBounce, step, force);
                 break;
             case 6:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleBounce, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.DoubleBounce, step, force);
                 break;
             case 9:
-                ActionOnStateComportement(_gameObject, FMODEvents.Immuable, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.Immuable, step, force);
                 break;
             case 10:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseImmuable, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseImmuable, step, force);
                 break;
             case 12:
-                ActionOnStateComportement(_gameObject, FMODEvents.BounceImmuable, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.BounceImmuable, step, force);
                 break;
             case 18:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleImmuable, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.DoubleImmuable, step, force);
                 break;
             case 27:
-                ActionOnStateComportement(_gameObject, FMODEvents.Magnet, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.Magnet, step, force);
                 break;
             case 28:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseMagnet, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseMagnet, step, force);
                 break;
             case 30:
-                ActionOnStateComportement(_gameObject, FMODEvents.BounceMagnet, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.BounceMagnet, step, force);
                 break;
             case 36:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImmuableMagnet, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.ImmuableMagnet, step, force);
                 break;
             case 54:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleMagnet, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.DoubleMagnet, step, force);
                 break;
             case 81:
-                ActionOnStateComportement(_gameObject, FMODEvents.Rocket, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.Rocket, step, force);
                 break;
             case 82:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseRocket, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseRocket, step, force);
                 break;
             case 84:
-                ActionOnStateComportement(_gameObject, FMODEvents.BounceRocket, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.BounceRocket, step, force);
                 break;
             case 90:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImmuableRocket, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.ImmuableRocket, step, force);
                 break;
             case 108:
-                ActionOnStateComportement(_gameObject, FMODEvents.MagnetRocket, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.MagnetRocket, step, force);
                 break;
             case 162:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleRocket, step);
+                ActionOnStateComportement(_gameObject, FMODEvents.DoubleRocket, step, force);
                 break;
             default:
                 Debug.LogError("Si tu fais apparaitre ça c'est que t'es vraiment for");
                 break;
+        }
+    }
+    private void GetComportementState(GameObject _gameObject, Step step, float force)
+    {
+        var stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
+        if (stateMachine.currentState is ComportementState)
+        {
+            ComportementState gameObjectCurrenState = (ComportementState)stateMachine.currentState;
+            FindStateComportement(_gameObject, gameObjectCurrenState.stateValue,step,force);
         }
     }
     #endregion

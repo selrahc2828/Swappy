@@ -15,7 +15,7 @@ public class GlobalEventManager : MonoBehaviour
 
     public event Action<GameObject> OnComportementStateEnter;
     public event Action<GameObject> OnComportementStateExit;
-    public event Action<GameObject> OnComportementStatePlay;
+    public event Action<GameObject, float> OnComportementStatePlay;
     public event Action<GameObject> OnFootstep;
     public event Action<GameObject> OnJump;
     public event Action<GameObject> OnLand;
@@ -55,9 +55,9 @@ public class GlobalEventManager : MonoBehaviour
         OnComportementStateExit?.Invoke(comportableObject);
     }
 
-    public void ComportmentStatePlay(GameObject comportableObject) // appele lorsque le comportement agit
+    public void ComportmentStatePlay(GameObject comportableObject, float force = 0.8f) // appele lorsque le comportement agit
     {
-        OnComportementStatePlay?.Invoke(comportableObject);
+        OnComportementStatePlay?.Invoke(comportableObject,force);
     }
 
     public void Footstep(GameObject groundObject) // appele lors d'un pas du player

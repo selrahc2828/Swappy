@@ -28,7 +28,7 @@ public class ComportementState : State
 
     public override void Enter()
     {
-
+        GlobalEventManager.Instance.ComportmentStateEnter(_sm.gameObject);
     }
 
     public override void TickLogic()
@@ -49,6 +49,7 @@ public class ComportementState : State
 
     public override void Exit()
     {
+        GlobalEventManager.Instance.ComportmentStateExit(_sm.gameObject);
         // Debug.Log(_sm.currentState + " exit");
 
         // if (feedBack_GO_Left != null)
