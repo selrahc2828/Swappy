@@ -332,37 +332,51 @@ public class FMODEventManager : MonoBehaviour
     #region Player Interact
     private void OnComportementExtracted(GameObject _gameObject, bool rightvalue, bool righthand)
     {
-        if (!CheckInstanceInEncylopedia(gameObject, FMODEvents.PlayerStealComp, out EventInstance eventInstance))
-        {
-            AddInstanceInEncyclopedia(_gameObject, FMODEvents.PlayerStealComp,CreateEventInstance(FMODEvents.PlayerStealComp));
-            eventInstance = GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.PlayerStealComp);
-        }
-
-        if (righthand)
-        {
-            SetNamedParamEventInstance(eventInstance,"HAND",2);
-        }
-        else
-        {
-            SetNamedParamEventInstance(eventInstance,"HAND",0);
-        }
-
+        var eventInstance = CreateEventInstance(FMODEvents.PlayerStealComp);
+        PickHand(eventInstance,righthand);
         if (_gameObject.CompareTag("Player"))
         {
             SetNamedParamEventInstance(eventInstance,"SIM",1);
         }
         
         PlayEventInstance(eventInstance);
-        RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.PlayerStealComp);
+        ReleaseEventInstance(eventInstance);
     }
     private void OnComportementAdded(GameObject _gameObject, bool rightvalue, bool righthand)
     {
-        if (!CheckInstanceInEncylopedia(gameObject, FMODEvents.PlayerGiveComp, out EventInstance eventInstance))
+        var eventInstance = CreateEventInstance(FMODEvents.PlayerGiveComp);
+        PickHand(eventInstance,righthand);
+        if (_gameObject.CompareTag("Player"))
         {
-            AddInstanceInEncyclopedia(_gameObject, FMODEvents.PlayerGiveComp,CreateEventInstance(FMODEvents.PlayerGiveComp));
-            eventInstance = GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.PlayerGiveComp);
+            SetNamedParamEventInstance(eventInstance,"SIM",1);
         }
+        
+        PlayEventInstance(eventInstance);
+        ReleaseEventInstance(eventInstance);
+    }
+    private void OnComportmentExchanged(GameObject _gameObject, bool righthand)
+    {
+        var eventInstance = CreateEventInstance(FMODEvents.PlayerSelfSwitch);
+        PickHand(eventInstance,righthand);
+        PlayEventInstance(eventInstance);
+        ReleaseEventInstance(eventInstance);
+    }
+    private void OnSelfImpactMode(GameObject _gameObject, bool isActive)
+    {
+        if (isActive)
+        {
+            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactMode,CreateEventInstance(FMODEvents.PlayerSelfImpactMode));
+            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactMode));
+        }
+        else
+        {
+            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactMode));
+            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactMode);
+        }
+    }
 
+    private void PickHand(EventInstance eventInstance, bool righthand)
+    {
         if (righthand)
         {
             SetNamedParamEventInstance(eventInstance,"HAND",2);
@@ -370,51 +384,17 @@ public class FMODEventManager : MonoBehaviour
         else
         {
             SetNamedParamEventInstance(eventInstance,"HAND",0);
-        }
-        if (_gameObject.CompareTag("Player"))
-        {
-            SetNamedParamEventInstance(eventInstance,"SIM",1);
-        }
-        
-        
-        PlayEventInstance(eventInstance);
-        RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.PlayerGiveComp);
-    }
-    private void OnComportmentExchanged(GameObject _gameObject, bool righthand)
-    {
-        if (!CheckInstanceInEncylopedia(_gameObject, FMODEvents.PlayerSelfSwitch, out EventInstance eventInstance))
-        {
-            AddInstanceInEncyclopedia(_gameObject, FMODEvents.PlayerSelfSwitch,CreateEventInstance(FMODEvents.PlayerSelfSwitch));
-            eventInstance = GetInstanceFromEncyclopediaKey(_gameObject, FMODEvents.PlayerSelfSwitch);
-        }
-        if(righthand)
-        {
-            SetNamedParamEventInstance(eventInstance,"HAND",2);
-        }
-        else
-        {
-            SetNamedParamEventInstance(eventInstance,"HAND",0);
-        }
-        PlayEventInstance(eventInstance);
-        RemoveInstanceInEncyclopedia(_gameObject, FMODEvents.PlayerSelfSwitch);
-    }
-    private void OnSelfImpactMode(GameObject _gameObject, bool isActive)
-    {
-        var GetInstance = GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactMode);
-        if (isActive)
-        {
-            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactMode,CreateEventInstance(FMODEvents.PlayerSelfImpactMode));
-            PlayEventInstance(GetInstance);
-        }
-        else
-        {
-            StopEventInstance(GetInstance);
-            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactMode);
         }
     }
     #endregion
 
     #region Comportement Sound
+    private enum Step 
+    {
+        Enter,
+        Play,
+        Exit
+    }
     private void OnEnterComportement(GameObject _gameObject)
     {
         Step step = Step.Enter;
@@ -430,32 +410,13 @@ public class FMODEventManager : MonoBehaviour
         Step step = Step.Exit;
         GetComportementState(_gameObject,step,0.8f);
     }
-    private enum Step 
+    private void GetComportementState(GameObject _gameObject, Step step, float force)
     {
-        Enter,
-        Play,
-        Exit
-    }
-    private void ActionOnStateComportement(GameObject _gameObject, EventReference _eventReference, Step step, float force)
-    {
-        GetInstanceFromEncyclopediaKey(_gameObject,_eventReference);
-        switch (step)
+        var stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
+        if (stateMachine.currentState is ComportementState)
         {
-            case Step.Enter:
-                AddInstanceInEncyclopedia(_gameObject, _eventReference,CreateEventInstance(_eventReference));
-                PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),_gameObject,_gameObject.GetComponent<Rigidbody>());
-                break;
-            case Step.Play:
-                SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference), "POWER", force);
-                SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference), "Stinger",1);
-                break;
-            case Step.Exit:
-                StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference));
-                RemoveInstanceInEncyclopedia(_gameObject,_eventReference);
-                break;
-            default:
-                break;
-            
+            ComportementState gameObjectCurrenState = (ComportementState)stateMachine.currentState;
+            FindStateComportement(_gameObject, gameObjectCurrenState.stateValue,step,force);
         }
     }
     private void FindStateComportement(GameObject _gameObject, int stateValue, Step step, float force)
@@ -529,15 +490,28 @@ public class FMODEventManager : MonoBehaviour
                 break;
         }
     }
-    private void GetComportementState(GameObject _gameObject, Step step, float force)
+    private void ActionOnStateComportement(GameObject _gameObject, EventReference _eventReference, Step step, float force)
     {
-        var stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
-        if (stateMachine.currentState is ComportementState)
+        switch (step)
         {
-            ComportementState gameObjectCurrenState = (ComportementState)stateMachine.currentState;
-            FindStateComportement(_gameObject, gameObjectCurrenState.stateValue,step,force);
+            case Step.Enter:
+                AddInstanceInEncyclopedia(_gameObject, _eventReference,CreateEventInstance(_eventReference));
+                PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),_gameObject,_gameObject.GetComponent<Rigidbody>());
+                break;
+            case Step.Play:
+                SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference), "POWER", force);
+                SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference), "Stinger",1);
+                break;
+            case Step.Exit:
+                StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference));
+                RemoveInstanceInEncyclopedia(_gameObject,_eventReference);
+                break;
+            default:
+                break;
         }
     }
+   
+    
     #endregion
     
     #region Player Moving Sound

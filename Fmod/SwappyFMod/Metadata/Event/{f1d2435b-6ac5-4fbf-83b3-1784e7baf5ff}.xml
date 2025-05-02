@@ -67,11 +67,7 @@
 			<destination>{884aa9e8-8a8c-41e2-8b53-2b61f2bc12e8}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{57cfa866-5604-4f20-a878-51e173836602}">
-		<property name="maxVoices">
-			<value>5</value>
-		</property>
-	</object>
+	<object class="EventAutomatableProperties" id="{57cfa866-5604-4f20-a878-51e173836602}" />
 	<object class="MarkerTrack" id="{aeab2bf2-f2f9-4c96-8928-e05673a06286}" />
 	<object class="GroupTrack" id="{fc1a8c5f-3efc-45a8-82d5-de177d45bd17}">
 		<relationship name="automationTracks">
@@ -252,6 +248,7 @@
 		<relationship name="effects">
 			<destination>{34d0b806-1ea8-4bfd-a3a0-a8c225f8b63d}</destination>
 			<destination>{eb620d63-e7aa-467b-a278-bc4ba1163e34}</destination>
+			<destination>{8cc0b27e-37ac-436e-b332-517fe4b109b9}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{3973b1c5-223a-48a6-a362-c000529b110b}" />
@@ -342,6 +339,14 @@
 	<object class="PannerEffect" id="{eb620d63-e7aa-467b-a278-bc4ba1163e34}">
 		<relationship name="automators">
 			<destination>{73d5643b-624f-44f1-817a-89fa8c5e37f3}</destination>
+		</relationship>
+	</object>
+	<object class="ProxyEffect" id="{8cc0b27e-37ac-436e-b332-517fe4b109b9}">
+		<property name="inputFormat">
+			<value>1</value>
+		</property>
+		<relationship name="preset">
+			<destination>{ce246a1c-9db1-4f97-8b1a-eb0543ae8871}</destination>
 		</relationship>
 	</object>
 	<object class="AutomationPoint" id="{9dd7026e-c0a0-49f0-8785-150a745faf6a}">

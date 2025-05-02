@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EffectPreset" id="{ce246a1c-9db1-4f97-8b1a-eb0543ae8871}">
+		<property name="name">
+			<value>Reverb Player</value>
+		</property>
+		<relationship name="folder">
+			<destination>{9f32c4a6-324d-4bd3-b0ee-2cbcd5662bf2}</destination>
+		</relationship>
+		<relationship name="effect">
+			<destination>{68917405-7000-4b91-b1af-5a0f05248069}</destination>
+		</relationship>
+	</object>
+	<object class="EffectChain" id="{68917405-7000-4b91-b1af-5a0f05248069}">
+		<relationship name="effects">
+			<destination>{1f383376-54f3-401a-85b7-407668775f2b}</destination>
+		</relationship>
+	</object>
+	<object class="MixerSend" id="{1f383376-54f3-401a-85b7-407668775f2b}">
+		<property name="level">
+			<value>-9</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{1bd01a40-4856-4134-9a90-71521c79581e}</destination>
+		</relationship>
+	</object>
+</objects>
