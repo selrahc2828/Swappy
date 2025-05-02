@@ -48,6 +48,7 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnFootstep += OnFootstep;
         GlobalEventManager.Instance.OnJump += OnJump;
         GlobalEventManager.Instance.OnLand += OnLand;
+        GlobalEventManager.Instance.OnCollide += CollisionSound;
     }
 
     private void OnDisable()
@@ -62,6 +63,7 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnFootstep -= OnFootstep;
         GlobalEventManager.Instance.OnJump -= OnJump;
         GlobalEventManager.Instance.OnLand -= OnLand;
+        GlobalEventManager.Instance.OnCollide -= CollisionSound;
     }
 
     #endregion
@@ -609,6 +611,17 @@ public class FMODEventManager : MonoBehaviour
         SwitchGround(_gameObject,_eventInstance);
         PlayEventInstance(_eventInstance);
         RemoveInstanceInEncyclopedia(_gameObject,_eventReference);
+    }
+    #endregion
+    
+    #region collision
+
+    private void CollisionSound(GameObject _gameObject)
+    {
+        var getReference = FMODEvents.Collision;
+        AddInstanceInEncyclopedia(_gameObject,getReference,CreateEventInstance(getReference));
+        PlayEventInstance3DNotMoving(GetInstanceFromEncyclopediaKey(_gameObject,getReference),_gameObject.transform.position);
+        RemoveInstanceInEncyclopedia(_gameObject,getReference);
     }
     #endregion
     

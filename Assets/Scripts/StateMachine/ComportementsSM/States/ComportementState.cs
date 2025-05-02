@@ -66,6 +66,7 @@ public class ComportementState : State
     public override void CollisionStart(Collision other)
     {
         // Debug.Log($"{_sm.name } collision start/enter with {other.collider.name}");
+        GlobalEventManager.Instance.Collision(_sm.gameObject);
     }
 
     public override void CollisionDuring(Collision other)

@@ -19,6 +19,8 @@ public class GlobalEventManager : MonoBehaviour
     public event Action<GameObject> OnFootstep;
     public event Action<GameObject> OnJump;
     public event Action<GameObject> OnLand;
+    
+    public event Action<GameObject> OnCollide;
 
     private void Awake()
     {
@@ -73,5 +75,10 @@ public class GlobalEventManager : MonoBehaviour
     public void Land(GameObject groundObject) // appele lors d'un atterissage du player
     {
         OnLand?.Invoke(groundObject);
+    }
+
+    public void Collision(GameObject gameObject) // appele lors d'un collision d'un objet
+    {
+        OnCollide?.Invoke(gameObject);
     }
 }
