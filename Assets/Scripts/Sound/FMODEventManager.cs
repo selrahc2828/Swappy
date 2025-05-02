@@ -578,14 +578,10 @@ public class FMODEventManager : MonoBehaviour
     private void ActionOnPlayerMove(GameObject _gameObject, MovingTypeSound _movingType)
     {
         MovingRef(_movingType, out EventReference _eventReference);
-        if (!CheckInstanceInEncylopedia(_gameObject, _eventReference, out EventInstance _eventInstance))
-        {
-            AddInstanceInEncyclopedia(_gameObject,_eventReference,CreateEventInstance(_eventReference));
-        }
-        _eventInstance = GetInstanceFromEncyclopediaKey(_gameObject, _eventReference);
+         var _eventInstance = CreateEventInstance(_eventReference);
         SwitchGround(_gameObject,_eventInstance);
         PlayEventInstance(_eventInstance);
-        RemoveInstanceInEncyclopedia(_gameObject,_eventReference);
+        ReleaseEventInstance(_eventInstance);
     }
     #endregion
     
@@ -595,9 +591,7 @@ public class FMODEventManager : MonoBehaviour
     {
         var getReference = FMODEvents.Collision;
         PlayOneShotAttached(getReference, _gameObject);
-        // AddInstanceInEncyclopedia(_gameObject,getReference,CreateEventInstance(getReference));
-        // PlayEventInstance3DNotMoving(GetInstanceFromEncyclopediaKey(_gameObject,getReference),_gameObject.transform.position);
-        // RemoveInstanceInEncyclopedia(_gameObject,getReference);
+        
     }
     #endregion
     
