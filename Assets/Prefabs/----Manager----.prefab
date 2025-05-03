@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2779393325064255514}
   - component: {fileID: 4669680273125285513}
   - component: {fileID: 6379858210635807379}
+  - component: {fileID: 8997918378461543700}
   m_Layer: 0
   m_Name: ----Manager----
   m_TagString: Untagged
@@ -339,4 +340,32 @@ MonoBehaviour:
   CalculateSunPlayerAngle: {fileID: 0}
   SkyboxMat: {fileID: 2100000, guid: 1cf6f4c6e6e0518419839d3f5448dd99, type: 2}
   Sun: {fileID: 0}
-  rotationSpeed: 20
+  NumberOfMinuteForOneDay: 0
+--- !u!114 &8997918378461543700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573964937435694765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aba564ef413dde04b8e82e490c236809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundMeshFilter: {fileID: 0}
+  grassMesh: {fileID: 0}
+  grassMaterial: {fileID: 0}
+  planetCenter: {fileID: 0}
+  instanceCount: 10000
+  visibleDistance: 100
+  scaleRange: {x: 0.8, y: 1.2}
+  uniformScaleMultiplier: 1
+  topFaceAngleThreshold: 15
+  showPositionGizmos: 1
+  positionGizmoColor: {r: 0, g: 1, b: 0, a: 1}
+  gizmoSphereSize: 0.05
+  showMeshGizmos: 0
+  meshOutlineColor: {r: 0, g: 1, b: 0, a: 0.1}
+  showCullingRange: 1
+  cullingRangeColor: {r: 1, g: 0.5, b: 0, a: 0.25}
