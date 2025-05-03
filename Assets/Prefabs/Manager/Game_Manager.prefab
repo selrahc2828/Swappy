@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4089087735091080540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 563936494370634401}
+  - component: {fileID: 3780514092248970774}
+  m_Layer: 0
+  m_Name: Game_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &563936494370634401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089087735091080540}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -111.22359, y: 819.4253, z: 672.6431}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3780514092248970774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089087735091080540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8a5e80d09521a44fad5dca4490a1e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 0b6353e928f889a48b9cab55823e8f8a, type: 2}
+  scene1: Playground SandBox
+  scene2: Crysis2
+  keyForScene1: 49
+  keyForScene2: 50
+  keyForScene3: 51
+  camControllerScript: {fileID: 0}
+  playerCamScript: {fileID: 0}
+  moveCamScript: {fileID: 0}
+  grabScript: {fileID: 0}
+  slowCoeff: 0.25
+  slowMotion: 0
+  slowTimerActive: 1
+  slowTimer: 0
+  slowTimeDuration: 5
+  timerSlowText: {fileID: 0}
+  defaultColor: {fileID: 2100000, guid: acd0a1c2936eda841acbc8f868a8cf4c, type: 2}
+  interactAVolerMat: {fileID: 2100000, guid: 9f40e193fdded1744a73a9b61d06c4ca, type: 2}
+  interactRienAVolerMat: {fileID: 2100000, guid: 91000070d7519764cb026b60431260a5, type: 2}
+  interactNOTPossibleMat: {fileID: 2100000, guid: 0e71b22f21886af4688cb978b07a2f37, type: 2}
+  Repulsive_color: {r: 0.31185475, g: 0.9056604, b: 0.31860486, a: 0}
+  Rebond_color: {r: 0.26415092, g: 0.15574937, b: 0.15574937, a: 0}
+  fusee_color: {r: 0.3773585, g: 0.10857955, b: 0.10857955, a: 0}
+  aimant_color: {r: 0.754717, g: 0.50907797, b: 0.50907797, a: 0}
+  immuable_color: {r: 0.5471698, g: 0.2710039, b: 0.2710039, a: 0}
+  Uncomportemented_color: {r: 0.8018868, g: 0.13995194, b: 0.13995194, a: 0}
+  ui: {fileID: 0}
+  isPaused: 0
+  players: []
+  player: {fileID: 0}
+  playerFBX: {fileID: 0}
+  playerAntiStick: {fileID: 13400000, guid: 7d0324e019535384a977d1652c3ca988, type: 2}
+  mainCamera: {fileID: 0}
+  planeteCores:
+  - {fileID: 0}
+  constanteGravitationelle: 8.5
+  maxSpeed: 7.5
+  moveSpeed: 30
+  sprintMultiplier: 1.5
+  aerialMultiplier: 0.25
+  stoppingRatio: 0.9
+  sideSpeedReductionRatio: 0.1
+  groundDrag: 5
+  orientation: {fileID: 0}
+  jumpForce: 7.5
+  jumpCooldown: 0.25
+  airMultiplier: 0.2
+  crouchSpeed: 20
+  crouchYScale: 0.5
+  playerHeight: 2.8
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  maxSlopeAngle: 45

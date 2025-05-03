@@ -39,12 +39,6 @@ public class SetUpFeedbackUi : MonoBehaviour
         _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
         {
-            if (_hit.collider == null || _hit.collider.CompareTag("NotInteract"))
-            {
-                ParentIndicationActive();
-                return;
-            }
-            
             var stateMachine = _hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
             if (stateMachine != null)
             {

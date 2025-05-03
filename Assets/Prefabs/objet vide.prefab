@@ -160,7 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       propertyPath: m_TagString
-      value: Movable
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -7511558181221131132, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
@@ -254,21 +254,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   comportementManager: {fileID: 0}
-  soundManager: {fileID: 0}
-  bounce: {fileID: 2100000, guid: 91000070d7519764cb026b60431260a5, type: 2}
-  rocket: {fileID: 2100000, guid: c8ee28777e556cd43a9538424d740be1, type: 2}
-  immuable: {fileID: 2100000, guid: 9a3c6969002f61e4c83567aaaa265f8d, type: 2}
-  rien: {fileID: 2100000, guid: 0e71b22f21886af4688cb978b07a2f37, type: 2}
-  impulse: {fileID: 2100000, guid: 9f40e193fdded1744a73a9b61d06c4ca, type: 2}
-  magnet: {fileID: 2100000, guid: 6b6cb3f8babd7c144bc74aec27b5520a, type: 2}
   rend: {fileID: 0}
-  player: {fileID: 0}
   isPlayer: 0
   rb: {fileID: 0}
   objectCollider: {fileID: 0}
-  displayComportementName: 
   initialState: 0
-  updateRight: 0
   inversion: 0
 --- !u!114 &8980300366775727764
 MonoBehaviour:
@@ -294,11 +284,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7a6870f499b3a41b76b84d1c8f626c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planeteRB: {fileID: 0}
+  planetesRB: []
   rb: {fileID: 0}
   offsetRotation: {x: 0, y: 0, z: 0}
   gravityConstant: 9.81
-  massePlanete: 0
   maxAngle: 30
 --- !u!4 &6644362582985112265 stripped
 Transform:

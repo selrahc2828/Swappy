@@ -104,10 +104,6 @@ public class ComportementStealer_proto : MonoBehaviour
         _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(_ray, out var hit, Mathf.Infinity, hitLayer)) //mask
         {
-            if (hit.collider == null || hit.collider.CompareTag("NotInteract"))
-            {
-                return;
-            }
             var stateMachine = hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
             if (stateMachine != null)
             {
