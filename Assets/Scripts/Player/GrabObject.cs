@@ -196,7 +196,6 @@ public class GrabObject : MonoBehaviour
         {
             objetGrab.transform.SetParent(handlerPosition);
 
-            rb.useGravity = false;
             rb.drag = 10f;
             rb.constraints = RigidbodyConstraints.FreezeRotation;
             //marche moyen
@@ -208,7 +207,6 @@ public class GrabObject : MonoBehaviour
         {
             objetGrab.transform.SetParent(_originParent);
 
-            rb.useGravity = true;
             rb.drag = 0f;
             rb.constraints = RigidbodyConstraints.None;
         }
