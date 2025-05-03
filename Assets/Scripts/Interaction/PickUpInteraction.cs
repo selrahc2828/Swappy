@@ -8,6 +8,8 @@ public class PickUpInteraction : InteractionSystem
     public override string interactionText => "Pickup"; // "=>" simplification de : get { return "Grab"; }
     
     public ItemData itemData;
+    private InventorySystem inventory;
+    private TapeSystem tapeSystem;
 
     public override void Initialize()
     {
@@ -16,6 +18,21 @@ public class PickUpInteraction : InteractionSystem
             Debug.LogError("PickUpInteraction: itemData is null");
             return;
         }
+        
+#if !UNITY_EDITOR
+        if (itemData is TapeData)
+        {
+            TapeData tapeData = itemData as TapeData;
+            if (tapeData.isUnlocked == true)// s'il est déjà debloquer on ne le fait pas spawn
+            {
+                return;
+            }
+        }
+#endif
+        
+        inventory = FindObjectOfType<InventorySystem>(); // voir pour ref ailleur
+        tapeSystem = FindObjectOfType<TapeSystem>(); // voir pour ref ailleur
+            
         Instantiate(itemData.itemPrefab, transform.position, Quaternion.identity, transform);
     }
 
@@ -24,18 +41,35 @@ public class PickUpInteraction : InteractionSystem
         base.Interact();
 
         Debug.Log("PickUpInteraction Interact");
-        
-        FindObjectOfType<InventorySystem>().AddItem(itemData);
-        Destroy(gameObject);
+
+        PickUp();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            FindObjectOfType<InventorySystem>().AddItem(itemData);
-            Destroy(gameObject);
+            PickUp();
         }
+    }
+
+    public void PickUp()
+    {
+        switch (itemData)
+        {
+            case CollectibleData collectibleData:
+                if (inventory == null)
+                    return;
+                inventory.AddItem(collectibleData);
+                break;
+            case TapeData tapeData:
+                tapeSystem.SetLockTape(tapeData, true);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(itemData));
+        }
+        
+        Destroy(gameObject); 
     }
     
     private void OnDrawGizmos() {

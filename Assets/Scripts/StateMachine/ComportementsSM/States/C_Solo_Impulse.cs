@@ -26,20 +26,8 @@ public class C_Solo_Impulse : ComportementState
     {
         isKinematic = false;
         stateValue = 1;
-        
-        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
-        {
-            leftValue = 0;
-            rightValue = 1;
-        }
-        else  // Par défaut, initialisation pour la main gauche
-        {
-            leftValue = 1;
-            rightValue = 0;
-        }
-        
-        // leftValue = 1;
-        // rightValue = 0;
+        leftValue = 1;
+        rightValue = 0;
         base.Enter();
         
         repulserTime = _sm.comportementManager.impulseData.impulseTime;

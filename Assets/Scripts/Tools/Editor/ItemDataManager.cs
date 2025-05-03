@@ -22,10 +22,10 @@ public class ItemDataManager : EditorWindow
     private string[] prefabNames;
     private int selectedItemPrefabIndex;
     
-    [Header("Create item")]
+    [Header("Create Collectible item")]
     private string itemName = "New Item";
     private int itemId;
-    private ItemData.Category itemCategory;
+    private CollectibleData.Category itemCategory;
     private string itemDescription = "";
     
     private Sprite selectedSprite; //id sprite selectionné
@@ -35,24 +35,23 @@ public class ItemDataManager : EditorWindow
     [MenuItem("Tools/ItemDataManager")]
     public static void ShowWindow()
     {
-        GetWindow<ItemDataManager>("Item Data Editor");
+        GetWindow<ItemDataManager>("Collectible Data Data Editor");
     }
 
     private void OnEnable()
     {
         LoadSpritesFromFolder(spritePath);
         LoadPrefabsFromFolder(prefabPath);
-
     }
 
     private void OnGUI()
     {            
         GUILayout.Label("Sprite Path: " + spritePath);
         GUILayout.Label("Prefab Path: " + prefabPath);
-        GUILayout.Label("Data Item Path: " + dataItemPath);
+        GUILayout.Label("CollectibleData Item Path: " + dataItemPath);
         GUILayout.Space(10);
 
-        GUILayout.Label("Create Item", EditorStyles.boldLabel);
+        GUILayout.Label("Create Item Collectible", EditorStyles.boldLabel);
         GUILayout.Space(5);
         
         GUILayout.BeginHorizontal();
@@ -62,7 +61,7 @@ public class ItemDataManager : EditorWindow
         
         // itemId = EditorGUILayout.IntField("ID de l'item", itemId);
         
-        itemCategory = (ItemData.Category)EditorGUILayout.EnumPopup("Catégorie", itemCategory);
+        itemCategory = (CollectibleData.Category)EditorGUILayout.EnumPopup("Catégorie", itemCategory);
         
         GUILayout.Label("Description de l'item");
         
@@ -187,7 +186,7 @@ public class ItemDataManager : EditorWindow
 
             #endregion
         
-            ItemData newItemData = CreateInstance<ItemData>();
+            CollectibleData newItemData = CreateInstance<CollectibleData>();
             //newItemData.itemId = itemId;
             newItemData.itemCategory = itemCategory;
             newItemData.itemName = itemName;

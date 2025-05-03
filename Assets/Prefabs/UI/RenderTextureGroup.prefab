@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8431908132457546939}
   - component: {fileID: 117930859316579631}
-  - component: {fileID: 3886928458703247119}
   m_Layer: 0
   m_Name: PreviewCamera
   m_TagString: Untagged
@@ -84,20 +83,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &3886928458703247119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1604479784599110111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b3bada22029465b9ce83978b2f3137f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pivot: {fileID: 6027698997572612185}
-  orbitSpeed: 15
 --- !u!1 &6320623013380385074
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,6 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3933658916666699243}
+  - component: {fileID: 6850689779703787139}
   m_Layer: 0
   m_Name: RenderTextureGroup
   m_TagString: Untagged
@@ -131,6 +117,23 @@ Transform:
   - {fileID: 6027698997572612185}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6850689779703787139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320623013380385074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af1955d087fd1324eb2456358ea298ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 30
+  previewPosition: {fileID: 6027698997572612185}
+  camPosition: {fileID: 8431908132457546939}
+  offset: 2.4
+  direction: {x: 0, y: 0, z: -1}
 --- !u!1 &8548521935083798246
 GameObject:
   m_ObjectHideFlags: 0

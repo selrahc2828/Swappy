@@ -23,18 +23,8 @@ public class C_Solo_Bouncing : ComportementState
         FMODEventManager.instance.PlayEventInstance(_bounceSoundInstane);
         isKinematic = false;
         stateValue = 3;
-        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
-        {
-            leftValue = 0;
-            rightValue = 3;
-        }
-        else  // Par défaut, initialisation pour la main gauche
-        {
-            leftValue = 3;
-            rightValue = 0;
-        }
-        // leftValue = 3;
-        // rightValue = 0;
+        leftValue = 3;
+        rightValue = 0;
         base.Enter();
 
         _bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
