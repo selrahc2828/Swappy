@@ -12,14 +12,11 @@ public class AreaCondition : Condition
 
     [SerializeField] private ValidationTypes validationType;
     [SerializeField] private GameObject targetObject;
-    [SerializeField] private Condition additionalCondition;
-    [SerializeField] private bool useTimer;
+    [SerializeField] private AdditionalCondition additionalCondition;
 
     [SerializeField] private float preciseObjectNumber;
     [SerializeField] private float minObjectNumber;
     [SerializeField] private float maxObjectNumber;
-
-    [SerializeField] private float validationTimer;
 
     private List<GameObject> objectsInArera = new List<GameObject>();
     private Collider areaTrigger;
@@ -44,7 +41,7 @@ public class AreaCondition : Condition
         if (additionalCondition == null && validationType != ValidationTypes.OneOf)
         {
             Debug.LogError("Si validationType est dans un autre mode que OneOf, une condition additionelle doit être renseignée pour vérifier un paramètre d'objet plutôt que l'identité d'un seul objet");
-            Debug.LogWarning("(C'est comme si vous demandiez à la police de retrouver deux 'Xavier Dupont de Ligonès' plutôt qu'un seul en disant qu'ils sont plusieurs à avoir transormé leur famille en terasse, ca peux pas fonctionner mdr.)");
+            Debug.Log("(C'est comme si vous demandiez à la police de retrouver deux 'Xavier Dupont de Ligonès' plutôt qu'un seul en disant qu'ils sont plusieurs à avoir transormé leur famille en terasse, ca peux pas fonctionner mdr.)");
         }
 
         if (additionalCondition == null && targetObject == null)
@@ -81,11 +78,11 @@ public class AreaCondition : Condition
             {
                 if (targetObject == target)
                 {
-                    attachedQuest.SetCondition(this, validationBool);
+                    SetConditionState(true);
                     return;
                 }
             }
-            attachedQuest.SetCondition(this, !validationBool);
+            SetConditionState(false);
         }
 
         else if (additionalCondition != null)
@@ -97,13 +94,10 @@ public class AreaCondition : Condition
                 case ValidationTypes.OneOf:
                     foreach (GameObject target in objectsInArera)
                     {
-                        if (additionalCondition.CheckObjectParameters(target))
-                        {
-                            attachedQuest.SetCondition(this, validationBool);
-                            return;
-                        }
+                        SetConditionState(additionalCondition.CheckObjectParameters(target));                           
+                        return;
                     }
-                    attachedQuest.SetCondition(this, !validationBool);
+                    SetConditionState(false);
                     return;
 
                 case ValidationTypes.Precise:
@@ -116,10 +110,10 @@ public class AreaCondition : Condition
                     }
                     if (count == preciseObjectNumber)
                     {
-                        attachedQuest.SetCondition(this, validationBool);
+                        SetConditionState(true);
                         return;
                     }
-                    attachedQuest.SetCondition(this, !validationBool);
+                    SetConditionState(false);
                     return;
 
                  case ValidationTypes.MinMax:
@@ -132,10 +126,10 @@ public class AreaCondition : Condition
                     }
                     if (count >= minObjectNumber && count <= maxObjectNumber)
                     {
-                        attachedQuest.SetCondition(this, validationBool);
+                        SetConditionState(true);
                         return;
                     }
-                    attachedQuest.SetCondition(this, !validationBool);
+                    SetConditionState(false);
                     return;
 
             }

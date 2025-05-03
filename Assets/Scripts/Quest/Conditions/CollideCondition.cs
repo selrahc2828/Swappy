@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class CollideCondition : Condition
@@ -13,17 +12,12 @@ public class CollideCondition : Condition
 
     [Space(16)]
     [SerializeField] private ValidationTypes validationType;
-    [SerializeField] private Condition additionalCondition;
+    [SerializeField] private AdditionalCondition additionalCondition;
     [SerializeField] private float minVelocity;
     [SerializeField] private float maxVelocity;
 
     private void Start()
     {
-        if (attachedQuest == null)
-        {
-            Debug.LogError("Il n'y a pas de Quête référencée dans ce script (cette condition ne peux pas être additionelle)");
-        }
-
         if (validationType == ValidationTypes.ObjectSpecific || validationType == ValidationTypes.BothSpecific)
         {
             if (additionalCondition == null)
@@ -58,25 +52,27 @@ public class CollideCondition : Condition
         switch (validationType)
         {
             case ValidationTypes.None:
-                attachedQuest.SetCondition(this, validationBool);
+                SetConditionState(true);
                 break;
 
             case ValidationTypes.ObjectSpecific:
-                attachedQuest.SetCondition(this, additionalCondition.CheckObjectParameters(collision.gameObject));
+                SetConditionState(additionalCondition.CheckObjectParameters(collision.gameObject));
                 break;
 
             case ValidationTypes.VelocitySpecific:
                 if (CheckVelocityMinMax(colMagnitude, thisMagnitude))
                 {
-                    attachedQuest.SetCondition(this, validationBool);
+                    SetConditionState(true);
                 }
+                SetConditionState(false);
                 break;
 
             case ValidationTypes.BothSpecific:
                 if (CheckVelocityMinMax(colMagnitude, thisMagnitude))
                 {
-                    attachedQuest.SetCondition(this, additionalCondition.CheckObjectParameters(collision.gameObject));
+                    SetConditionState(additionalCondition.CheckObjectParameters(collision.gameObject));
                 }
+                SetConditionState(false);
                 break;
         }
     }

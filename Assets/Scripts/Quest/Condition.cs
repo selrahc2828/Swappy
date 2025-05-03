@@ -1,51 +1,67 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Condition : MonoBehaviour
 {
-    [Tooltip("La Quête remplie par cette condition. Si ce champs est vide, la condition sera considérée comme complément d'une autre condition")] 
-    [SerializeField] protected Quest attachedQuest;
-    [Tooltip("En règle générale, laisser l'état de base de la condition à false")] 
-    [SerializeField] private bool defaultState = false;
-    [SerializeField] protected bool validationBool = true;
-
-    private void Start()
+    private enum ConditionRedundancyType
     {
-        if (attachedQuest == null)
+        OneOf,
+        MultipleDiscrete,
+        MultipleContinuous,
+    }
+
+    public UnityEvent<bool, Condition> ConditionOutput;
+    [SerializeField] private ConditionRedundancyType ConditionRedudancy = ConditionRedundancyType.OneOf;
+
+    private bool hasBeenTrueOnce = false;
+    private bool lastConditionState = false;
+
+    protected void SetConditionState(bool state)
+    {
+        switch (ConditionRedudancy) 
         {
-            return;
+            case ConditionRedundancyType.OneOf:
+                if (hasBeenTrueOnce) 
+                {
+                    return;
+                }
+                if (state)
+                {
+                    hasBeenTrueOnce = true;
+                    ConditionOutput.Invoke(state, this);
+                }
+                return;
+                
+            case ConditionRedundancyType.MultipleDiscrete:
+                if (lastConditionState == state)
+                {
+                    return;
+                }
+                lastConditionState = state;
+                ConditionOutput.Invoke(state, this);
+                return;
+
+            case ConditionRedundancyType.MultipleContinuous:
+                ConditionOutput.Invoke(state, this);
+                return;
+
+            default:
+                return;
         }
-
-        attachedQuest.ReferenceCondition(this, defaultState);
     }
 
-    public virtual bool CheckObjectParameters(GameObject target)
+    private void OnDrawGizmos()
     {
-        Debug.LogError("La condition '" + this + "' dans l'objet " + transform.name + " ne peux pas être utilisée comme complément d'une autre condition !");
-        return false;
-    }
-
-    protected virtual void OnDisable()
-    {
-        attachedQuest.UnreferenceCondition(this);
-    }
-
-    public void OnDrawGizmos()
-    {
-        if (attachedQuest != null)
+        int listenersCount = ConditionOutput.GetPersistentEventCount();
+        for (int i = 0; i <= listenersCount; i++)
         {
-            if (attachedQuest.QuestColors.TryGetValue(attachedQuest.QuestType, out Color questColor))
-            {
-                Gizmos.color = questColor;
-            }
-
-            Gizmos.DrawLine(GetQuestLineStart(), attachedQuest.transform.position + Vector3.up * 2.5f);
+            Gizmos.DrawLine(GetConditionLineStart(), ConditionOutput.GetPersistentTarget(i).GetComponent<Transform>().position + Vector3.up * 2.5f);
             Gizmos.DrawCube(transform.position + Vector3.up, Vector3.one * 0.7f);
         }
-
     }
 
-    protected virtual Vector3 GetQuestLineStart()
+    protected virtual Vector3 GetConditionLineStart()
     {
         return transform.position;
     }

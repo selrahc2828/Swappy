@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class VelocityCondition : Condition
+public class VelocityCondition : AdditionalCondition
 {
     private enum VelocityType
     {
@@ -14,19 +14,11 @@ public class VelocityCondition : Condition
     [SerializeField] private float targetVelocityMin;
     [SerializeField] private float targetVelocityMax;
 
-    private void Start()
-    {
-        if (targetObject == null && attachedQuest != null)
-        {
-            Debug.LogError("Il n'y a pas de Target Object référencé alors que cette condition n'est pas additionelle");
-        }
-    }
-
     private void FixedUpdate()
     {
-        if (targetObject != null && attachedQuest != null)
+        if (targetObject != null)
         {
-            attachedQuest.SetCondition(this, CheckObjectParameters(targetObject));
+            SetConditionState(CheckObjectParameters(targetObject));
         }
     }
 
@@ -41,17 +33,17 @@ public class VelocityCondition : Condition
             case VelocityType.VelocityMagnitude:
                 if (velocity >= targetVelocityMin && velocity <= targetVelocityMax)
                 {
-                    return validationBool;
+                    return true;
                 }
                 break;
 
             case VelocityType.AngularVelocity:
                 if (angular >= targetVelocityMin && angular <= targetVelocityMax)
                 {
-                    return validationBool;
+                    return true;
                 }
                 break;
         }
-        return !validationBool;
+        return false;
     }
 }
