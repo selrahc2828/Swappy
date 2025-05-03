@@ -21,8 +21,7 @@ public class C_Double_Magnet : ComportementState
 
     public override void Enter()
     {
-        // SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart,_sm.gameObject);
-        // sonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
+
 
         stateValue = 54;
         leftValue = 27;

@@ -9,16 +9,18 @@ public class GlobalEventManager : MonoBehaviour
 
     public event Action<GameObject, bool, bool> OnComportmentExtracted;
     public event Action<GameObject, bool, bool> OnComportmentAdded;
-    public event Action<GameObject,bool, bool, bool> OnComportmentExchanged;
+    public event Action<GameObject,bool> OnComportmentExchanged;
 
     public event Action<GameObject,bool> OnSelfImpactMod;
 
     public event Action<GameObject> OnComportementStateEnter;
     public event Action<GameObject> OnComportementStateExit;
-    public event Action<GameObject> OnComportementStatePlay;
+    public event Action<GameObject, float> OnComportementStatePlay;
     public event Action<GameObject> OnFootstep;
     public event Action<GameObject> OnJump;
     public event Action<GameObject> OnLand;
+    
+    public event Action<GameObject> OnCollide;
 
     // Inventory
     public event Action OnAddInventory;
@@ -52,9 +54,9 @@ public class GlobalEventManager : MonoBehaviour
         OnComportmentAdded?.Invoke(objectToAddComportment, rightValue, rightHand);
     }
 
-    public void ComportmentExchanged(GameObject player, bool rightHand, bool comportementIn = false, bool comportementOut = false) // appele quand on echange le comportement d'une main avec un comportement du player
+    public void ComportmentExchanged(GameObject player, bool rightHand) // appele quand on echange le comportement d'une main avec un comportement du player
     {
-        OnComportmentExchanged?.Invoke(player, rightHand,comportementIn, comportementOut);
+        OnComportmentExchanged?.Invoke(player, rightHand);
     }
     
     public void SelfImpactMod(GameObject player, bool active) // appele quand on echange le comportement d'une main avec un comportement du player
@@ -72,9 +74,9 @@ public class GlobalEventManager : MonoBehaviour
         OnComportementStateExit?.Invoke(comportableObject);
     }
 
-    public void ComportmentStatePlay(GameObject comportableObject) // appele lorsque le comportement agit
+    public void ComportmentStatePlay(GameObject comportableObject, float force = 0.8f) // appele lorsque le comportement agit
     {
-        OnComportementStatePlay?.Invoke(comportableObject);
+        OnComportementStatePlay?.Invoke(comportableObject,force);
     }
 
     public void Footstep(GameObject groundObject) // appele lors d'un pas du player
@@ -143,4 +145,10 @@ public class GlobalEventManager : MonoBehaviour
     }
 
     #endregion
+
+    public void Collision(GameObject gameObject) // appele lors d'un collision d'un objet
+    {
+        OnCollide?.Invoke(gameObject);
+    }
+
 }

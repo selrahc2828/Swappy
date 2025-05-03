@@ -91,7 +91,7 @@ public class C_Impulse_Rocket : ComportementState
         {
             if (!isSonOn)
             {
-                //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.propelerStart,_sm.gameObject);
+                
                 isSonOn = true;
             }
             impulseTimer += Time.fixedDeltaTime;
@@ -142,7 +142,7 @@ public class C_Impulse_Rocket : ComportementState
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
             shockWave.GetComponent<GrowToRadius>().targetRadius = explosionTrueRange;
         }
-        //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.repulseBoom,_sm.gameObject);
+        
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, explosionTrueRange);
         if (objectsInRange.Length > 0)
         {

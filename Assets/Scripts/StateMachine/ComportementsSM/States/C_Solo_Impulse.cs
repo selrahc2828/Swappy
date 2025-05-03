@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using FMOD.Studio;
+
 using UnityEngine;
 
 public class C_Solo_Impulse : ComportementState
@@ -86,7 +86,7 @@ public class C_Solo_Impulse : ComportementState
  
     public void Repulse()
     {
-        
+        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         if (feedback)
         {
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);

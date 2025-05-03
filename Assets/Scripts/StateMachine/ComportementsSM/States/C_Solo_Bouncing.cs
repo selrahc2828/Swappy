@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 
 
@@ -10,7 +10,7 @@ public class C_Solo_Bouncing : ComportementState
     private PhysicMaterial _basePlayerMaterial;
     private PhysicMaterial _basePlayerSlideMaterial;
     
-    private EventInstance _bounceSoundInstane;
+    
 
     public C_Solo_Bouncing(StateMachine stateMachine) : base(stateMachine)
     {
@@ -18,9 +18,7 @@ public class C_Solo_Bouncing : ComportementState
 
     public override void Enter()
     {
-        _bounceSoundInstane = FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.Bounce);
-        FMODEventManager.instance.Set3DparamEventInstance(_bounceSoundInstane,_sm.transform.position);
-        FMODEventManager.instance.PlayEventInstance(_bounceSoundInstane);
+        
         isKinematic = false;
         stateValue = 3;
         leftValue = 3;
@@ -68,12 +66,12 @@ public class C_Solo_Bouncing : ComportementState
             _sm.GetComponent<Collider>().material = null;
         }
         
-        FMODEventManager.instance.ReleaseEventInstance(_bounceSoundInstane);
+        
 
     }
 
     public override void CollisionStart(Collision other)
     {
-        FMODEventManager.instance.SetNamedParamEventInstance(_bounceSoundInstane, "Stinger", 1f);
+        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
     }
 }

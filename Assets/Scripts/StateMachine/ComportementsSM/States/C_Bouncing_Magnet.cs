@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using FMODUnity;
+
 using UnityEngine;
 
 public class C_Bouncing_Magnet : ComportementState
@@ -49,8 +49,7 @@ public class C_Bouncing_Magnet : ComportementState
 
     public override void Enter()
     {
-        //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart,_sm.gameObject);
-        //sonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
+        
         isKinematic = false;
         stateValue = 30;
         leftValue = 3;

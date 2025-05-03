@@ -83,7 +83,8 @@ public class FMODMusicManager : MonoBehaviour
 
     public void StopMusic(EventInstance musicInstance)
     {
-        if (musicInstance.getPlaybackState(out PLAYBACK_STATE musicState) != (RESULT)PLAYBACK_STATE.STOPPED)
+    musicInstance.getPlaybackState(out PLAYBACK_STATE musicState);
+        if (musicState != PLAYBACK_STATE.STOPPED || musicState == PLAYBACK_STATE.STOPPING)
         {
             musicInstance.stop(STOP_MODE.ALLOWFADEOUT);
         }
@@ -144,6 +145,13 @@ public class FMODMusicManager : MonoBehaviour
     {
         musicTape.setUserData(GCHandle.ToIntPtr(GCHandle.Alloc(musicName)));
         musicTape.setCallback(walkmanCallback);
+    }
+
+    public void ChangeMusicWalkman(EventInstance musicTape, string newMusicName)
+    {
+        musicTape.stop(STOP_MODE.ALLOWFADEOUT);
+        ChooseMusicWalkMan(musicTape, newMusicName);
+        musicTape.start();
     }
     #endregion
     #region Param Music Test 

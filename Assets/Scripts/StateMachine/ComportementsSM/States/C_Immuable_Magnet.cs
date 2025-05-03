@@ -18,8 +18,7 @@ public class C_Immuable_Magnet : ComportementState
 
     public override void Enter()
     {
-        // SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.aimantStart,_sm.gameObject);
-        // sonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
+
         isKinematic = true;
         stateValue = 36;
         leftValue = 9;
@@ -75,7 +74,7 @@ public class C_Immuable_Magnet : ComportementState
 
     public void OncollisionEnter(Collision collision)
     {
-        SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit,_sm.gameObject);
+        
     }
     public void Attract()
     {
