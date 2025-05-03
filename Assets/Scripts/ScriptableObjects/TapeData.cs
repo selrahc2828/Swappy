@@ -7,5 +7,6 @@ using UnityEngine;
 public class TapeData : ItemData
 {
     public EventReference musicEvent;
+    public string musicFmodName;
     public bool isUnlocked = false;
 }

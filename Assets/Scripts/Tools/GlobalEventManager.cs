@@ -23,6 +23,12 @@ public class GlobalEventManager : MonoBehaviour
     public event Action OnRemoveTape;
     public event Action OnSetStateTape;
     public event Action<TapeData> OnPopupTape;
+    
+    // Fragment
+    public event Action OnAddFragment;
+    public event Action OnRemoveFragment;
+
+
 
     private void Awake()
     {
@@ -85,5 +91,19 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnPopupTape?.Invoke(newItem);
     }
+    #endregion
+
+    #region Fragment
+
+    public void AddFragment() //appele quand on ramasse un fragment
+    {
+        OnAddFragment?.Invoke();
+    }
+    
+    public void RemoveFragment() //appele quand on perd un fragment
+    {
+        OnRemoveFragment?.Invoke();
+    }
+
     #endregion
 }

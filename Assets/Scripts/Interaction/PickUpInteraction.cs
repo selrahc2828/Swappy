@@ -30,12 +30,10 @@ public class PickUpInteraction : InteractionSystem
         }
 #endif
         
-        
         inventory = FindObjectOfType<InventorySystem>(); // voir pour ref ailleur
         tapeSystem = FindObjectOfType<TapeSystem>(); // voir pour ref ailleur
             
         Instantiate(itemData.itemPrefab, transform.position, Quaternion.identity, transform);
-
     }
 
     public override void Interact()
