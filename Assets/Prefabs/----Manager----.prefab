@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 877786246134460342}
   - component: {fileID: 1315891730027498275}
   - component: {fileID: 2779393325064255514}
+  - component: {fileID: 7529557256519659883}
   m_Layer: 0
   m_Name: ----Manager----
   m_TagString: Untagged
@@ -308,3 +309,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FMODMusicEvents: {fileID: 11400000, guid: 3f81f2db90659904082c7dea9f63752b, type: 2}
   FMODSnapshotEvents: {fileID: 11400000, guid: 0f39827d2f8f14f4884c67cfbe4efe65, type: 2}
+--- !u!114 &7529557256519659883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573964937435694765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aba564ef413dde04b8e82e490c236809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundMeshFilter: {fileID: 0}
+  grassMesh: {fileID: -462981019419857548, guid: 300e291166125fe49a3a3f7818cc99fc, type: 3}
+  grassMaterial: {fileID: 2100000, guid: 4217f66e77e657b4d998524a0a7f8fbc, type: 2}
+  planetCenter: {fileID: 0}
+  instanceCount: 300000
+  visibleDistance: 70
+  scaleRange: {x: 0.7, y: 1.3}
+  uniformScaleMultiplier: 0.1
+  topFaceAngleThreshold: 15
+  showPositionGizmos: 0
+  positionGizmoColor: {r: 0, g: 1, b: 0, a: 1}
+  gizmoSphereSize: 0.5
+  showMeshGizmos: 0
+  meshOutlineColor: {r: 0, g: 1, b: 0, a: 0.1}
+  showCullingRange: 0
+  cullingRangeColor: {r: 1, g: 0.5, b: 0, a: 0.25}
