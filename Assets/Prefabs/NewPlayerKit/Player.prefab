@@ -17,8 +17,8 @@ GameObject:
   - component: {fileID: 6167654971802558385}
   - component: {fileID: 3479498097909473970}
   - component: {fileID: 4474099091498680961}
-  - component: {fileID: 1589093347444076295}
-  m_Layer: 0
+  - component: {fileID: 2206009394620906433}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -168,12 +168,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16543dbc1a95ab3419a9da7c8b9e6773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 0
-  moveSpeed: 0
-  sprintMultiplier: 0
-  aerialMultiplier: 0
-  stoppingRatio: 0
-  sideSpeedReductionRatio: 0
+  maxSpeed: 15
+  moveSpeed: 10
+  sprintMultiplier: 1.4
+  aerialMultiplier: 0.35
+  stoppingRatio: 0.8
+  sideSpeedReductionRatio: 0.35
   jumpForce: 0.5
   isSprinting: 0
   isStopping: 0
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8a827b30b0941f092e0a97d6e5237e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1589093347444076295
+--- !u!114 &2206009394620906433
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -726,7 +726,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8219967511922447140}
   - component: {fileID: 1182284999432994218}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AntiWallStick
   m_TagString: AntiStick
   m_Icon: {fileID: 0}
@@ -783,7 +783,7 @@ GameObject:
   - component: {fileID: 8039986925812613969}
   - component: {fileID: 6751658393248589937}
   - component: {fileID: 2275320485836375365}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerObj
   m_TagString: Player
   m_Icon: {fileID: 0}

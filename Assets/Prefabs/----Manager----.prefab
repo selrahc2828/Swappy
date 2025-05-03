@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 877786246134460342}
   - component: {fileID: 1315891730027498275}
   - component: {fileID: 2779393325064255514}
+  - component: {fileID: 4669680273125285513}
+  - component: {fileID: 6379858210635807379}
   m_Layer: 0
   m_Name: ----Manager----
   m_TagString: Untagged
@@ -58,7 +60,7 @@ MonoBehaviour:
   playerCamScript: {fileID: 0}
   moveCamScript: {fileID: 0}
   grabScript: {fileID: 0}
-  slowCoeff: 0.3
+  slowCoeff: 0.25
   slowMotion: 0
   slowTimerActive: 1
   slowTimer: 0
@@ -81,23 +83,23 @@ MonoBehaviour:
   playerFBX: {fileID: 0}
   playerAntiStick: {fileID: 13400000, guid: 7d0324e019535384a977d1652c3ca988, type: 2}
   mainCamera: {fileID: 0}
-  planeteCore: {fileID: 0}
-  constanteGravitationelle: 9.81
-  massePlanete: 100000
-  maxSpeed: 0
-  moveSpeed: 0
-  sprintMultiplier: 0
-  aerialMultiplier: 0
-  stoppingRatio: 0
-  sideSpeedReductionRatio: 0
+  planeteCores:
+  - {fileID: 0}
+  constanteGravitationelle: 8.5
+  maxSpeed: 7.5
+  moveSpeed: 30
+  sprintMultiplier: 1.5
+  aerialMultiplier: 0.25
+  stoppingRatio: 0.9
+  sideSpeedReductionRatio: 0.1
   groundDrag: 5
   orientation: {fileID: 0}
-  jumpForce: 50
+  jumpForce: 7.5
   jumpCooldown: 0.25
   airMultiplier: 0.2
   crouchSpeed: 20
   crouchYScale: 0.5
-  playerHeight: 2
+  playerHeight: 2.8
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -193,27 +195,30 @@ MonoBehaviour:
   magnetGenericPrefab: {fileID: 724591926826760339, guid: 9dff620a99e95a0489ddabbe4db1b50d, type: 3}
   impulseData:
     impulseTime: 5
-    doubleImpulseTime: 6
-    impulseRange: 10
-    impulseForce: 90
+    doubleImpulseTime: 7.5
+    impulseRange: 7.5
+    impulseForce: 66
     destroyOnUse: 0
-    impulseGradiantForce: 1
+    impulseGradiantForce: 0
     impulseFeedback: {fileID: 5997281712086689970, guid: d7e7b2fb81b45414cbff7f19ab5a5b62, type: 3}
     applyOnMe: 0
+    doubleRepulseForceMult: 1.5
+    doubleRepulseRangeMult: 1.33
   rocketData:
-    rocketForce: 75
-    rocketForceOnPlayer: 75
-    rocketForceWhenGrab: 75
-    rocketOnOffCouldown: 5
-    rocketMaxSpeed: 15
+    rocketForce: 250
+    rocketForceOnPlayer: 250
+    rocketForceWhenGrab: 12
+    rocketOnCooldown: 5
+    rocketOffCooldown: 3.5
+    rocketMaxSpeed: 6
   doubleRocketData:
-    rocketDoubleForce: 150
-    rocketDoubleForceOnPlayer: 150
-    rocketDoubleForceWhenGrab: 150
+    rocketDoubleForce: 175
+    rocketDoubleForceOnPlayer: 175
+    rocketDoubleForceWhenGrab: 175
     rocketDoubleCouldown: 10
   immuableRocketData:
-    rocketReleaseForce: 75
-    chargeTimeMax: 6
+    rocketReleaseForce: 250
+    chargeTimeMax: 30
   magnetRocketData:
     prefabMagnetRocketForcefield: {fileID: 7410193036753820761, guid: b9fbb057f1c335e42b1c4956f62c15db, type: 3}
     magnetRocketFlyTime: 4
@@ -224,46 +229,44 @@ MonoBehaviour:
     magnetTrailLerp: 1.5
     magnetTrailTimeBeforeMove: 5
   magnetData:
-    magnetRange: 8
-    magnetForce: 8
+    magnetRange: 7.5
+    magnetForce: 20
     magnetGradiantForce: 0
   doubleMagnetData:
     prefabDoubleMagnetForcefield: {fileID: 724591926826760339, guid: 9dff620a99e95a0489ddabbe4db1b50d, type: 3}
-    justePourDiffSimpleMagnet: {r: 0.3019608, g: 0.67058825, b: 0.9529412, a: 1}
-    doubleMagnetRange: 8
-    doubleMagnetForce: 80
-    doubleMagnetForceOnPlayer: 80
-    doubleMagnetForceWhenGrab: 80
+    justePourDiffSimpleMagnet: {r: 0.2988163, g: 0.55142236, b: 0.745283, a: 1}
+    doubleMagnetRange: 10
+    doubleMagnetForce: 35
+    doubleMagnetForceOnPlayer: 35
+    doubleMagnetForceWhenGrab: 35
   bounceData:
     bouncyMaterial: {fileID: 13400000, guid: 621a7ce6cc196df46ad286df13701f02, type: 2}
   doubleBounceData:
     doubleBouncyMaterial: {fileID: 13400000, guid: 16a76e54968c6cc48a861c0ace231bcd, type: 2}
   magnetBounceData:
-    magnetBounceForce: 60
-    magnetForceMultiplier: 1.5
-    magnetBounceForceOnPlayer: 60
-    magnetForceOnPlayerMultiplier: 1.5
-    magnetBounceForceWhenGrab: 60
-    magnetForceWhenGrabMultiplier: 1.5
-    magnetBounceRange: 8
-    intervalBetweenBurst: 2
+    magnetBounceForce: 10
+    magnetForceMultiplier: 2.5
+    magnetBounceForceOnPlayer: 10
+    magnetForceOnPlayerMultiplier: 2.5
+    magnetBounceForceWhenGrab: 10
+    magnetForceWhenGrabMultiplier: 2.5
+    magnetBounceRange: 7.5
+    intervalBetweenBurst: 1.5
     burstColor: {r: 0.5647059, g: 0.80784315, b: 0.5686275, a: 1}
     delayDisplay: 0.2
   impulseMagnetData:
-    zoneImpulseRange: 8
-    zoneImpulseForce: 25
+    zoneImpulseRange: 7.5
+    zoneImpulseForce: 20
     prefabImpulseMagnet: {fileID: 5997281712086689970, guid: 59fbb35a551b97d4597283825cbd8cf7, type: 3}
   impulseBounceData:
-    impulseBounceForce: 80
+    impulseBounceForce: 66
     impulseBounceRange: 10
-    impulseBounceTimer: 0.3
-    impulseForceMultiplier: 3
+    impulseBounceTimer: 0.5
+    impulseForceMultiplier: 1.25
   impulseRocketData:
-    impulseRocketExplosionForce: 6
-    impulseRocketExplosionRange: 4
-    impulseRocketFlyForce: 75
+    impulseRocketExplosionForce: 33
+    impulseRocketExplosionRange: 5
     impulseRocketFlyForceOnPlayer: 75
-    impulseRocketFlyTime: 5
     timeBetweenImpulses: 0.5
 --- !u!114 &877786246134460342
 MonoBehaviour:
@@ -308,3 +311,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FMODMusicEvents: {fileID: 11400000, guid: 3f81f2db90659904082c7dea9f63752b, type: 2}
   FMODSnapshotEvents: {fileID: 11400000, guid: 0f39827d2f8f14f4884c67cfbe4efe65, type: 2}
+--- !u!114 &4669680273125285513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573964937435694765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d90d5c845b417964f99ff97c0e17f638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6379858210635807379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573964937435694765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d8754822830e7b428d44d65cc086491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LightAngle: 0
+  CalculateSunPlayerAngle: {fileID: 0}
+  SkyboxMat: {fileID: 2100000, guid: 1cf6f4c6e6e0518419839d3f5448dd99, type: 2}
+  Sun: {fileID: 0}
+  rotationSpeed: 20
