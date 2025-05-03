@@ -22,18 +22,8 @@ public class C_Immuable_Magnet : ComportementState
         // sonMagnet = _sm.GetComponentInChildren<FMODUnity.StudioEventEmitter>().gameObject;
         isKinematic = true;
         stateValue = 36;
-        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
-        {
-            leftValue = 27;
-            rightValue = 9;
-        }
-        else  // Par défaut, initialisation pour la main gauche
-        {
-            leftValue = 9;
-            rightValue = 27;
-        }
-        // leftValue = 9;
-        // rightValue = 27;
+        leftValue = 9;
+        rightValue = 27;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.magnetColor);
         feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);

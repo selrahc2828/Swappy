@@ -31,18 +31,8 @@ public class C_Impulse_Bouncing : ComportementState
     public override void Enter()
     {
         stateValue = 4;
-        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
-        {
-            leftValue = 3;
-            rightValue = 1;
-        }
-        else  // Par défaut, initialisation pour la main gauche
-        {
-            leftValue = 1;
-            rightValue = 3;
-        }
-        // leftValue = 1;
-        // rightValue = 3;
+        leftValue = 1;
+        rightValue = 3;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.bouncingColor);
         

@@ -21,18 +21,8 @@ public class C_Solo_Immuable : ComportementState
         FMODEventManager.instance.PlayEventInstance(_immuableSoundInstance);
         isKinematic = true;
         stateValue = 9;
-        if (_sm.updateRight)  // Si on veut initialiser pour la main droite
-        {
-            leftValue = 0;
-            rightValue = 9;
-        }
-        else  // Par défaut, initialisation pour la main gauche
-        {
-            leftValue = 9;
-            rightValue = 0;
-        }
-        // leftValue = 9;
-        // rightValue = 0;
+        leftValue = 9;
+        rightValue = 0;
         base.Enter();
         
         ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.noComportementColor);

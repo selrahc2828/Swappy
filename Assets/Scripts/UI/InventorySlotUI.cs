@@ -8,26 +8,34 @@ public class InventorySlotUI : MonoBehaviour
     public TextMeshProUGUI quantityText;
 
     private ItemData itemData;
-
+    [SerializeField] Button button;
+    
     public void Initialize(ItemData item, int quantity, System.Action<ItemData> onClickCallback)
     {
-        if (item == null)
-        {
-            return;
-        }
-        
         itemData = item;
 
-        if (iconImage != null && item.itemSprite != null)
-            iconImage.sprite = item.itemSprite;
-
-        if (quantityText != null)
-            quantityText.text = quantity.ToString();
-
-        // Abonnement au clic sur le bouton
-        GetComponent<Button>().onClick.AddListener(() =>
+        if (itemData is not null)
         {
-            onClickCallback?.Invoke(itemData);
-        });
+            if (iconImage is not  null && item.itemSprite is not  null)
+                iconImage.sprite = item.itemSprite;
+
+            if (quantityText is not  null)
+                quantityText.text = quantity.ToString();
+
+            // Abonnement au clic sur le bouton
+            button.onClick.RemoveAllListeners();//clear pour éviter de faire plusieurs abonnement 
+            button.onClick.AddListener(() =>
+            {
+                onClickCallback?.Invoke(itemData);
+            });      
+        }
+        else
+        {
+            if (quantityText is not  null)
+                quantityText.text = "";
+            button.onClick.RemoveAllListeners();//GetComponent<Button>()
+        }
+        
+
     }
 }

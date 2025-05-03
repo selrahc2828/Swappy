@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -10,50 +11,51 @@ public class MenuManager : MonoBehaviour
     public bool isOpen = false;
     public GameObject menuGroup;
     
+    public GameObject firstButton;
+    
     [Header("Inventaire")]
     public GameObject inventoryGroup;
     [Header("Cassettes")]
     public GameObject tapeGroup;
-    
+    [Header("Map")]
+    public GameObject mapGroup;
     [Header("Options")]
     public GameObject optionGroup;
-
-    // public Slider mouseSensitivitySlider;
-    // public TextMeshProUGUI textSensiDisplay;
-    // [Header("Volume")]
-    // public Slider volumeSliderMaster;
-    // public Slider volumeSliderPlayer;
-    // public Slider volumeSliderSystem;
-    // public Slider volumeSliderMusic;
-    // public Slider volumeSliderMenu;
-
-    // Start is called before the first frame update
+    
+    [Header("Menus")]
+    public InventoryMenu inventoryMenu;
+    public TapeMenu tapeMenu;
+    public OptionMenu mapMenu;
+    public OptionMenu optionMenu;
+    
     void Start()
     {
         menuGroup.SetActive(false);
-
     }
 
     void OnEnable()
     {
         GameManager.controls.Player.PauseMenu.performed += PauseMenu;
-        GameManager.controls.Pause.Resume.performed += Resume;
+        GameManager.controls.Pause.Resume.performed += ResumeAction;
+        
+        
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstButton);
 
+        // Lancer le OnClick manuellement si tu veux
+        Button btn = firstButton?.GetComponent<Button>();
+        if (btn != null)
+        {
+            btn.onClick.Invoke();
+        }
     }
     
     void OnDisable()
     {
         GameManager.controls.Player.PauseMenu.performed -= PauseMenu;
-        GameManager.controls.Pause.Resume.performed -= Resume;
+        GameManager.controls.Pause.Resume.performed -= ResumeAction;
+    }
 
-    }
-    
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     public void PauseMenu(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -73,31 +75,36 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void Resume(InputAction.CallbackContext context)
+    public void ResumeAction(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            //changer quand on merge avec le multi scene
-
-            GameManager.controls.Pause.Disable();
-            GameManager.controls.Player.Enable();
-            GameManager.Instance.isPaused = false;
-            isOpen = false;
-            
-            menuGroup.SetActive(isOpen);
-            
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            GameManager.Instance.isPaused = false;
-            Time.timeScale = 1f;//verif avec le slowTime
+            Resume();
         }
     }
-    
+
+    public void Resume()
+    {
+        //changer quand on merge avec le multi scene
+
+        GameManager.controls.Pause.Disable();
+        GameManager.controls.Player.Enable();
+        GameManager.Instance.isPaused = false;
+        isOpen = false;
+            
+        menuGroup.SetActive(isOpen);
+            
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        GameManager.Instance.isPaused = false;
+        Time.timeScale = 1f;//verif avec le slowTime
+    }
     
     public void OpenInventory()
     {
         inventoryGroup.SetActive(true);
         tapeGroup.SetActive(false);
+        mapGroup.SetActive(false);
         optionGroup.SetActive(false);
     }
 
@@ -105,6 +112,7 @@ public class MenuManager : MonoBehaviour
     {
         inventoryGroup.SetActive(false);
         tapeGroup.SetActive(false);
+        mapGroup.SetActive(false);
         optionGroup.SetActive(true);
     }
 
@@ -112,6 +120,18 @@ public class MenuManager : MonoBehaviour
     {
         inventoryGroup.SetActive(false);
         tapeGroup.SetActive(true);
+        mapGroup.SetActive(false);
+        optionGroup.SetActive(false);
+        
+        tapeMenu.SetTapeButtons();
+        tapeMenu.CenterMiddleButtonIfNoneSelected();
+        tapeMenu.AdjustScrollPadding();
+    }
+    public void OpenMap()
+    {
+        inventoryGroup.SetActive(false);
+        tapeGroup.SetActive(false);
+        mapGroup.SetActive(true);
         optionGroup.SetActive(false);
     }
     

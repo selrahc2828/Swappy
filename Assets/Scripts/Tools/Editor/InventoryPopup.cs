@@ -8,7 +8,7 @@ public class InventoryPopup : EditorWindow {
     
     private InventorySystem inventoryPlayer;
 
-    private List<ItemData> itemDatas = new List<ItemData>();
+    private List<CollectibleData> itemDatas = new List<CollectibleData>();
     readonly string dataItemPath = "Assets/Data/Items/Collectibles";
     
     // Méthode pour afficher le pop-up
@@ -33,43 +33,48 @@ public class InventoryPopup : EditorWindow {
         GUILayout.Label("Dictionnaire de l'inventaire", EditorStyles.boldLabel);
 
         // Afficher chaque item du dictionnaire
-        foreach ( KeyValuePair<ItemData, InventorySlot> item in inventoryPlayer.InventoryItems) {
+        foreach ( CollectibleData item in itemDatas ) {
             
             GUILayout.BeginHorizontal();
 
             #region Sprite
 
-            if (item.Value.item.itemSprite != null)
+            if (item.itemSprite != null)
             {
-                Texture2D texture2D = item.Value.item.itemSprite.texture;
+                Texture2D texture2D = item.itemSprite.texture;
                 if (texture2D != null)
                 {
                     GUILayout.Label(texture2D, GUILayout.Width(50), GUILayout.Height(50));
                 }
                 else
                 {
-                    EditorGUILayout.HelpBox($"Aucun Sprite trouvé pour {item.Key}.", MessageType.Warning);
+                    EditorGUILayout.HelpBox($"Aucun Sprite trouvé pour {item.itemName}.", MessageType.Warning);
                 } 
             }
             else
             {
-                EditorGUILayout.HelpBox($"Aucun Sprite défini pour l'item {item.Key.itemName}.", MessageType.Warning);
+                EditorGUILayout.HelpBox($"Aucun Sprite défini pour l'item {item.itemName}.", MessageType.Warning);
             }
             
             #endregion
             
-            GUILayout.Label(item.Key.itemName, GUILayout.Width(100));
+            GUILayout.Label(item.itemName, GUILayout.Width(100));
 
             #region Quantity
             GUILayout.BeginHorizontal();
 
+            // recupere quantite actuelle (inventoryPlayer) ou met 0 si existe pas
+            int quantity = inventoryPlayer.InventoryItems.ContainsKey(item)
+                ? inventoryPlayer.InventoryItems[item].quantity
+                : 0;
+            
             if (GUILayout.Button("-", GUILayout.Width(30))) {
-                inventoryPlayer.RemoveItem(item.Key);
+                inventoryPlayer.RemoveItem(item);
             }
             
-            GUILayout.Label(item.Value.quantity.ToString(), GUILayout.Width(100));
+            GUILayout.Label(quantity.ToString(), GUILayout.Width(100));
             if (GUILayout.Button("+", GUILayout.Width(30))) { 
-                inventoryPlayer.AddItem(item.Key);
+                inventoryPlayer.AddItem(item);
             }
             
             GUILayout.EndHorizontal();
@@ -95,11 +100,11 @@ public class InventoryPopup : EditorWindow {
             Debug.LogWarning("Le dossier spécifié n'existe pas : " + folderPath);
         }
 
-        string[] guids = AssetDatabase.FindAssets("t:ItemData", new[] { folderPath });
+        string[] guids = AssetDatabase.FindAssets("t:CollectibleData", new[] { folderPath });
         foreach (string guid in guids)
         {
             string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-            ItemData itemData = AssetDatabase.LoadAssetAtPath<ItemData>(assetPath);
+            CollectibleData itemData = AssetDatabase.LoadAssetAtPath<CollectibleData>(assetPath);
             if (itemData != null)
             {
                 itemDatas.Add(itemData);

@@ -20,6 +20,23 @@ public class GlobalEventManager : MonoBehaviour
     public event Action<GameObject> OnJump;
     public event Action<GameObject> OnLand;
 
+    // Inventory
+    public event Action OnAddInventory;
+    public event Action OnRemoveInventory;
+    public event Action<ItemData, int> OnPopupInventory;
+    
+    // Tape
+    public event Action OnAddTape;
+    public event Action OnRemoveTape;
+    public event Action OnSetStateTape;
+    public event Action<TapeData> OnPopupTape;
+    
+    // Fragment
+    public event Action OnAddFragment;
+    public event Action OnRemoveFragment;
+
+
+
     private void Awake()
     {
         Instance = this;
@@ -74,4 +91,56 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnLand?.Invoke(groundObject);
     }
+
+    #region Inventaire
+    public void AddInventory() //appele quand on ajoute un item dans l'inventaire
+    {
+        OnAddInventory?.Invoke();
+    }
+    
+    public void RemoveInventory() //appele quand on retire un item de l'inventaire
+    {
+        OnRemoveInventory?.Invoke();
+    }
+    public void DisplayPopupPickUpItem(ItemData newItem, int quantity) //appele quand on ajoute un item dans l'inventaire
+    {
+        OnPopupInventory?.Invoke(newItem, quantity);
+    }
+    #endregion
+    
+    #region Tapes
+    public void AddTape() //appele quand on ajoute une nouvelle cassette
+    {
+        OnAddTape?.Invoke();
+    }
+    
+    public void RemoveTape() //appele quand on retire une cassette
+    {
+        OnRemoveTape?.Invoke();
+    }
+    
+    public void SetStateTape() //appele quand on ramasse/déebloque une nouvelle cassette
+    {
+        OnSetStateTape?.Invoke();
+    }
+    
+    public void DisplayPopupPickUpTape(TapeData newItem) //appele quand on ajoute un item dans l'inventaire
+    {
+        OnPopupTape?.Invoke(newItem);
+    }
+    #endregion
+
+    #region Fragment
+
+    public void AddFragment() //appele quand on ramasse un fragment
+    {
+        OnAddFragment?.Invoke();
+    }
+    
+    public void RemoveFragment() //appele quand on perd un fragment
+    {
+        OnRemoveFragment?.Invoke();
+    }
+
+    #endregion
 }
