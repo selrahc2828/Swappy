@@ -81,7 +81,6 @@ public class Slot_feedback : MonoBehaviour
         // si slot vide, on "detruit" la prefab donc sert pas de passer par le switch
         if (slot == 0)
         {
-            Debug.Log("ok");
             if (feedback_Act != null)
             {
                 FlareMoveTarget flare = feedback_Act.GetComponent<FlareMoveTarget>();
