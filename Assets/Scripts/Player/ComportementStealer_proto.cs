@@ -408,6 +408,7 @@ public class ComportementStealer_proto : MonoBehaviour
         }
         playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
         GlobalEventManager.Instance.ComportmentExchanged(this.gameObject,rightHand);
+        GlobalEventManager.Instance.UpdateHand(slot1, slot2);
     }
 
     void ExecuteChangeStateAdditive(ComportementState currentObjectState,ref int addedSlotValue, bool rightValue, bool rightHand)
@@ -415,6 +416,7 @@ public class ComportementStealer_proto : MonoBehaviour
         currentObjectState.CalculateNewtState(currentObjectState.stateValue + addedSlotValue);
         addedSlotValue = 0;
         GlobalEventManager.Instance.ComportmentAdded(currentObjectState.GetGameObject(), rightValue, rightHand);
+        GlobalEventManager.Instance.UpdateHand(slot1, slot2);
     }
     
     void ExecuteChangeStateSubtractive(ComportementState currentObjectState, ref int substractedSlotValue, bool rightValue, bool rightHand)
@@ -430,5 +432,6 @@ public class ComportementStealer_proto : MonoBehaviour
             substractedSlotValue = currentObjectState.leftValue;
         }
         GlobalEventManager.Instance.ComportmentExtracted(currentObjectState.GetGameObject(), rightValue, rightHand);
+        GlobalEventManager.Instance.UpdateHand(slot1, slot2);
     }
 }
