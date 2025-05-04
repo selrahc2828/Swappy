@@ -16,6 +16,8 @@ public class BiomeGrassInstancer : MonoBehaviour
     [Header("Grass Settings")]
     public int instanceCount = 10000;
     public float visibleDistance = 100f;
+    [Range(0f, 180f)]
+    public float cullingConeAngle = 120f;
     public Vector2 scaleRange = new Vector2(0.8f, 1.2f);
     public float uniformScaleMultiplier = 1f;
     public float topFaceAngleThreshold = 15f; // degrés
@@ -48,7 +50,7 @@ public class BiomeGrassInstancer : MonoBehaviour
 
         if (groundMeshFilter == null || groundMeshFilter.sharedMesh == null || planetCenter == null)
         {
-            Debug.LogError("Missing reference(s) for MeshGrassInstancer.");
+            Debug.LogError("Missing reference(s) for BiomeGrassInstancer.");
             return;
         }
 
@@ -107,13 +109,23 @@ public class BiomeGrassInstancer : MonoBehaviour
 
         visibleMatrices.Clear();
         Vector3 camPos = cam.position;
+        Vector3 camForward = cam.forward;
+        float cosAngleThreshold = Mathf.Cos(cullingConeAngle * Mathf.Deg2Rad * 0.5f);
 
         foreach (var matrix in allMatrices)
         {
             Vector3 pos = matrix.GetColumn(3);
-            if ((pos - camPos).sqrMagnitude < visibleDistance * visibleDistance)
+            Vector3 toGrass = pos - camPos;
+            float distanceSqr = toGrass.sqrMagnitude;
+
+            if (distanceSqr < visibleDistance * visibleDistance)
             {
-                visibleMatrices.Add(matrix);
+                Vector3 dir = toGrass.normalized;
+                float cosAngle = Vector3.Dot(camForward, dir);
+                if (cosAngle >= cosAngleThreshold)
+                {
+                    visibleMatrices.Add(matrix);
+                }
             }
         }
 
@@ -133,7 +145,11 @@ public class BiomeGrassInstancer : MonoBehaviour
         if (showCullingRange)
         {
             Gizmos.color = cullingRangeColor;
-            Gizmos.DrawWireSphere(cam.position, visibleDistance);
+            Quaternion rotation = Quaternion.LookRotation(cam.forward);
+            Matrix4x4 coneMatrix = Matrix4x4.TRS(cam.position, rotation, Vector3.one);
+            Gizmos.matrix = coneMatrix;
+            Gizmos.DrawFrustum(Vector3.zero, cullingConeAngle, visibleDistance, 0.1f, 1f);
+            Gizmos.matrix = Matrix4x4.identity;
         }
 
         if (allMatrices == null) return;
