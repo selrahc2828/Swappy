@@ -77,7 +77,7 @@ public class Slot_feedback : MonoBehaviour
         targetPosition ??= positionFB;
         
         int slot = right_Arm ? comp_steler_proto.slot2 : comp_steler_proto.slot1;
-        
+
         // si slot vide, on "detruit" la prefab donc sert pas de passer par le switch
         if (slot == 0)
         {
@@ -123,7 +123,6 @@ public class Slot_feedback : MonoBehaviour
                 flareColor = comportementManager.flareData.particleFlareColorRocket;
                 break;
         }
-        Debug.Log("ok");
         // instantie Feedback et attribution materail et couleur flare
         feedback_Act = SpawnFlare(comportementManager.flareData.prefabFlareSlotHand, spawnPosition, targetPosition);
         FlareMoveTarget flareMove = feedback_Act.GetComponent<FlareMoveTarget>();
