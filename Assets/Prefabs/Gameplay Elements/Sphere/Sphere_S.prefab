@@ -106,11 +106,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7a6870f499b3a41b76b84d1c8f626c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planeteRB: {fileID: 0}
+  planetesRB: []
   rb: {fileID: 0}
   offsetRotation: {x: 0, y: 0, z: 0}
   gravityConstant: 9.81
-  massePlanete: 0
   maxAngle: 30
 --- !u!114 &2034150672586619926
 MonoBehaviour:
@@ -138,21 +137,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   comportementManager: {fileID: 0}
-  soundManager: {fileID: 0}
-  bounce: {fileID: 0}
-  rocket: {fileID: 0}
-  immuable: {fileID: 0}
-  rien: {fileID: 0}
-  impulse: {fileID: 0}
-  magnet: {fileID: 0}
   rend: {fileID: 0}
-  player: {fileID: 0}
   isPlayer: 0
   rb: {fileID: 0}
   objectCollider: {fileID: 0}
-  displayComportementName: 
   initialState: 0
-  updateRight: 0
   inversion: 0
 --- !u!1 &7132886095279607641
 GameObject:
@@ -215,8 +204,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 2100000, guid: 3684ad1a10b5ef04780ad6edf118f2ba, type: 2}
+  - {fileID: 2100000, guid: 7d49eea8ef48dd04aa203c55ce5b021b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
