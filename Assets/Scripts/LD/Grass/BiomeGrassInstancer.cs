@@ -17,10 +17,13 @@ public class BiomeGrassInstancer : MonoBehaviour
     public int instanceCount = 10000;
     public float visibleDistance = 100f;
     [Range(0f, 180f)]
-    public float cullingConeAngle = 120f;
+    public float cullingConeAngle = 45f;
     public Vector2 scaleRange = new Vector2(0.8f, 1.2f);
     public float uniformScaleMultiplier = 1f;
     public float topFaceAngleThreshold = 15f; // degrés
+
+    [Header("Mode")]
+    public bool rocks = false;
 
     [Header("Debug")]
     public bool showPositionGizmos = true;
@@ -85,12 +88,28 @@ public class BiomeGrassInstancer : MonoBehaviour
             float angle = Vector3.Angle(worldNormal, toCenter);
             if (angle > topFaceAngleThreshold) continue;
 
-            // Random rotation around local Y (normal)
+            // Align to normal
             Quaternion alignToNormal = Quaternion.LookRotation(Vector3.Cross(worldNormal, Vector3.right), worldNormal);
-            float randomYRot = Random.Range(0f, 360f);
-            Quaternion randomY = Quaternion.AngleAxis(randomYRot, Vector3.up);
-            Quaternion finalRot = alignToNormal * randomY;
+            // Apply rock base rotation if needed
+            if (rocks)
+            {
+                alignToNormal *= Quaternion.Euler(-90f, 0f, 0f);
+            }
 
+            // Determine final rotation
+            Quaternion finalRot;
+            if (rocks)
+            {
+                finalRot = alignToNormal; // no additional random Y
+            }
+            else
+            {
+                float randomYRot = Random.Range(0f, 360f);
+                Quaternion randomY = Quaternion.AngleAxis(randomYRot, Vector3.up);
+                finalRot = alignToNormal * randomY;
+            }
+
+            // Random scale
             float randomScale = Random.Range(scaleRange.x, scaleRange.y) * uniformScaleMultiplier;
             Vector3 scale = Vector3.one * randomScale;
 
