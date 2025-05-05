@@ -9,9 +9,22 @@ public class Anim_manager : MonoBehaviour
     public Animator Right_Arm_Animator;
     
     private Transform Start_Local_Left_Transform;
-    
-    
 
+
+    private void OnEnable()
+    {
+        GlobalEventManager.Instance.OnComportmentExtracted += HandleComportmentExtraction;
+        GlobalEventManager.Instance.OnComportmentAdded += HandleComportmentAttribution;
+        GlobalEventManager.Instance.OnSelfImpactMod += HandleSelfImpactMod;
+    }
+
+    void Start()
+    {
+        
+        Left_Arm_Animator = GameObject.FindGameObjectWithTag("leftArm").GetComponent<Animator>();
+        Right_Arm_Animator = GameObject.FindGameObjectWithTag("rightArm").GetComponent<Animator>();
+        Start_Local_Left_Transform = Left_Arm_Animator.transform;
+    }
     private void OnDisable()
     {
         GlobalEventManager.Instance.OnComportmentExtracted -= HandleComportmentExtraction;
@@ -19,18 +32,7 @@ public class Anim_manager : MonoBehaviour
         GlobalEventManager.Instance.OnSelfImpactMod -= HandleSelfImpactMod;
     }
 
-    void Start()
-    {
-        GlobalEventManager.Instance.OnComportmentExtracted += HandleComportmentExtraction;
-        GlobalEventManager.Instance.OnComportmentAdded += HandleComportmentAttribution;
-        GlobalEventManager.Instance.OnSelfImpactMod += HandleSelfImpactMod;
-        
-        Left_Arm_Animator = GameObject.FindGameObjectWithTag("leftArm").GetComponent<Animator>();
-        Right_Arm_Animator = GameObject.FindGameObjectWithTag("rightArm").GetComponent<Animator>();
-        Start_Local_Left_Transform = Left_Arm_Animator.transform;
-    }
 
-    
 
     #region IDLE 
     //Pour l'instant inutil mais au cas ou pour plus tard

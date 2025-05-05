@@ -16,6 +16,9 @@ public class GlobalEventManager : MonoBehaviour
     public event Action<GameObject> OnComportementStateEnter;
     public event Action<GameObject> OnComportementStateExit;
     public event Action<GameObject, float> OnComportementStatePlay;
+
+    public event Action<int, int> OnHandValueUpdated;
+
     public event Action<GameObject> OnFootstep;
     public event Action<GameObject> OnJump;
     public event Action<GameObject> OnLand;
@@ -43,6 +46,8 @@ public class GlobalEventManager : MonoBehaviour
     {
         Instance = this;
     }
+
+    #region Comportement
 
     public void ComportmentExtracted(GameObject originOfComportment, bool rightValue, bool rightHand) //appele quand on vole un comportement a un objet
     {
@@ -78,6 +83,13 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnComportementStatePlay?.Invoke(comportableObject,force);
     }
+
+    public void UpdateHand(int leftHandValue, int rightHandValue)// appel des qu'il y a un changement dans les main ####A UPDATE####
+    {
+        OnHandValueUpdated?.Invoke(leftHandValue,rightHandValue);
+    }
+
+    #endregion
 
     public void Footstep(GameObject groundObject) // appele lors d'un pas du player
     {

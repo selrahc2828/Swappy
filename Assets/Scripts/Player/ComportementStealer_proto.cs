@@ -175,10 +175,6 @@ public class ComportementStealer_proto : MonoBehaviour
         _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(_ray, out var hit, Mathf.Infinity, hitLayer)) //mask
         {
-            if (hit.collider == null || hit.collider.CompareTag("NotInteract"))
-            {
-                return;
-            }
             var stateMachine = hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
             if (stateMachine != null)
             {
@@ -407,7 +403,8 @@ public class ComportementStealer_proto : MonoBehaviour
             (exchangedSlotValue, playerObjectState.leftValue) = (playerObjectState.leftValue, exchangedSlotValue);
         }
         playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
-        GlobalEventManager.Instance.ComportmentExchanged(this.gameObject,rightHand);
+        GlobalEventManager.Instance.ComportmentExchanged(this.gameObject, rightHand);
+        GlobalEventManager.Instance.UpdateHand(slot1, slot2);
     }
 
     void ExecuteChangeStateAdditive(ComportementState currentObjectState,ref int addedSlotValue, bool rightValue, bool rightHand)
@@ -430,5 +427,6 @@ public class ComportementStealer_proto : MonoBehaviour
             substractedSlotValue = currentObjectState.leftValue;
         }
         GlobalEventManager.Instance.ComportmentExtracted(currentObjectState.GetGameObject(), rightValue, rightHand);
+        GlobalEventManager.Instance.UpdateHand(slot1, slot2);
     }
 }

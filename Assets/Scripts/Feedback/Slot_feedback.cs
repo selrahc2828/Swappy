@@ -6,19 +6,61 @@ using UnityEngine;
 public class Slot_feedback : MonoBehaviour
 {
 
-    public bool left_Arm = false;
+    public bool right_Arm = false;
     public Transform positionFB;
     
     private ComportementManager comportementManager;
     private ComportementStealer_proto comp_steler_proto;
     private GameObject feedback_Act;
-    
+
     //public Transform Arm_transform;    c'est ce qui servira a faire que le feedback suive la main 
-    
+
+    private void OnEnable()
+    {
+        GlobalEventManager.Instance.OnComportmentAdded += RecieveAddedSignal;
+        GlobalEventManager.Instance.OnComportmentExtracted+= RecieveExtractedSignal;
+        GlobalEventManager.Instance.OnComportmentExchanged += RecieveExchangedSignal;
+    }
+
     private void Start()
     {
         comportementManager = ComportementManager.Instance;
         comp_steler_proto = GameManager.Instance.player.GetComponent<ComportementStealer_proto>();
+    }
+
+    private void OnDisable()
+    {
+        GlobalEventManager.Instance.OnComportmentAdded -= RecieveAddedSignal;
+        GlobalEventManager.Instance.OnComportmentExtracted -= RecieveExtractedSignal;
+        GlobalEventManager.Instance.OnComportmentExchanged -= RecieveExchangedSignal;
+    }
+
+    public void RecieveAddedSignal(GameObject objectToAddComportment, bool rightValue, bool rightHand)
+    {
+        if (rightHand == right_Arm)
+        {
+            if (objectToAddComportment.CompareTag("Player"))
+            {
+                Feedback_Slot_Changed(null, objectToAddComportment.transform, true);
+            }
+            else
+            {
+                Feedback_Slot_Changed(null, objectToAddComportment.transform, false);
+            }
+        }
+    }
+    
+    public void RecieveExtractedSignal(GameObject originOfComportment, bool rightValue, bool rightHand)
+    {
+        if (rightHand == right_Arm)
+        {
+            Feedback_Slot_Changed(originOfComportment.transform, null, false);
+        }
+    }
+
+    public void RecieveExchangedSignal(GameObject player, bool rightHand)
+    {
+        //je sais pas gérer l'échange
     }
 
     public void Feedback_Slot_Changed(Transform spawnPosition = null, Transform targetPosition = null, bool destroy = false)
@@ -34,8 +76,8 @@ public class Slot_feedback : MonoBehaviour
         spawnPosition ??= positionFB; 
         targetPosition ??= positionFB;
         
-        int slot = left_Arm ? comp_steler_proto.slot1 : comp_steler_proto.slot2;
-        
+        int slot = right_Arm ? comp_steler_proto.slot2 : comp_steler_proto.slot1;
+
         // si slot vide, on "detruit" la prefab donc sert pas de passer par le switch
         if (slot == 0)
         {
@@ -80,9 +122,7 @@ public class Slot_feedback : MonoBehaviour
                 material = comportementManager.flareData.matFlareRocket;
                 flareColor = comportementManager.flareData.particleFlareColorRocket;
                 break;
-
         }
-        
         // instantie Feedback et attribution materail et couleur flare
         feedback_Act = SpawnFlare(comportementManager.flareData.prefabFlareSlotHand, spawnPosition, targetPosition);
         FlareMoveTarget flareMove = feedback_Act.GetComponent<FlareMoveTarget>();
