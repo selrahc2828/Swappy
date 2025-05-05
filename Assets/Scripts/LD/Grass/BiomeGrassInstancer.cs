@@ -16,9 +16,14 @@ public class BiomeGrassInstancer : MonoBehaviour
     [Header("Grass Settings")]
     public int instanceCount = 10000;
     public float visibleDistance = 100f;
+    [Range(0f, 180f)]
+    public float cullingConeAngle = 45f;
     public Vector2 scaleRange = new Vector2(0.8f, 1.2f);
     public float uniformScaleMultiplier = 1f;
     public float topFaceAngleThreshold = 15f; // degrés
+
+    [Header("Mode")]
+    public bool rocks = false;
 
     [Header("Debug")]
     public bool showPositionGizmos = true;
@@ -48,7 +53,7 @@ public class BiomeGrassInstancer : MonoBehaviour
 
         if (groundMeshFilter == null || groundMeshFilter.sharedMesh == null || planetCenter == null)
         {
-            Debug.LogError("Missing reference(s) for MeshGrassInstancer.");
+            Debug.LogError("Missing reference(s) for BiomeGrassInstancer.");
             return;
         }
 
@@ -83,12 +88,28 @@ public class BiomeGrassInstancer : MonoBehaviour
             float angle = Vector3.Angle(worldNormal, toCenter);
             if (angle > topFaceAngleThreshold) continue;
 
-            // Random rotation around local Y (normal)
+            // Align to normal
             Quaternion alignToNormal = Quaternion.LookRotation(Vector3.Cross(worldNormal, Vector3.right), worldNormal);
-            float randomYRot = Random.Range(0f, 360f);
-            Quaternion randomY = Quaternion.AngleAxis(randomYRot, Vector3.up);
-            Quaternion finalRot = alignToNormal * randomY;
+            // Apply rock base rotation if needed
+            if (rocks)
+            {
+                alignToNormal *= Quaternion.Euler(-90f, 0f, 0f);
+            }
 
+            // Determine final rotation
+            Quaternion finalRot;
+            if (rocks)
+            {
+                finalRot = alignToNormal; // no additional random Y
+            }
+            else
+            {
+                float randomYRot = Random.Range(0f, 360f);
+                Quaternion randomY = Quaternion.AngleAxis(randomYRot, Vector3.up);
+                finalRot = alignToNormal * randomY;
+            }
+
+            // Random scale
             float randomScale = Random.Range(scaleRange.x, scaleRange.y) * uniformScaleMultiplier;
             Vector3 scale = Vector3.one * randomScale;
 
@@ -107,13 +128,23 @@ public class BiomeGrassInstancer : MonoBehaviour
 
         visibleMatrices.Clear();
         Vector3 camPos = cam.position;
+        Vector3 camForward = cam.forward;
+        float cosAngleThreshold = Mathf.Cos(cullingConeAngle * Mathf.Deg2Rad * 0.5f);
 
         foreach (var matrix in allMatrices)
         {
             Vector3 pos = matrix.GetColumn(3);
-            if ((pos - camPos).sqrMagnitude < visibleDistance * visibleDistance)
+            Vector3 toGrass = pos - camPos;
+            float distanceSqr = toGrass.sqrMagnitude;
+
+            if (distanceSqr < visibleDistance * visibleDistance)
             {
-                visibleMatrices.Add(matrix);
+                Vector3 dir = toGrass.normalized;
+                float cosAngle = Vector3.Dot(camForward, dir);
+                if (cosAngle >= cosAngleThreshold)
+                {
+                    visibleMatrices.Add(matrix);
+                }
             }
         }
 
@@ -133,7 +164,11 @@ public class BiomeGrassInstancer : MonoBehaviour
         if (showCullingRange)
         {
             Gizmos.color = cullingRangeColor;
-            Gizmos.DrawWireSphere(cam.position, visibleDistance);
+            Quaternion rotation = Quaternion.LookRotation(cam.forward);
+            Matrix4x4 coneMatrix = Matrix4x4.TRS(cam.position, rotation, Vector3.one);
+            Gizmos.matrix = coneMatrix;
+            Gizmos.DrawFrustum(Vector3.zero, cullingConeAngle, visibleDistance, 0.1f, 1f);
+            Gizmos.matrix = Matrix4x4.identity;
         }
 
         if (allMatrices == null) return;
