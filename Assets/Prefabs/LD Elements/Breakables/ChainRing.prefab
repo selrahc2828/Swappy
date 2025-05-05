@@ -11,11 +11,12 @@ GameObject:
   - component: {fileID: 4710000348985420619}
   - component: {fileID: 8287516053639486875}
   - component: {fileID: 2644716474713127921}
-  - component: {fileID: 8957877910976215019}
   - component: {fileID: 8240129667747829327}
   - component: {fileID: 6738792883934430700}
   - component: {fileID: 3302102521545688561}
-  m_Layer: 0
+  - component: {fileID: 321487178743760819}
+  - component: {fileID: 2244164765486731948}
+  m_Layer: 11
   m_Name: ChainRing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +66,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3a00a6305dc39d543aad0e0c9934cb56, type: 2}
+  - {fileID: 2100000, guid: 3a00a6305dc39d543aad0e0c9934cb56, type: 2}
+  - {fileID: 2100000, guid: 3a00a6305dc39d543aad0e0c9934cb56, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,20 +90,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8957877910976215019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6759476250763903002}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1717572f9242b04cb34173871865561, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shatteredVersion: {fileID: 652267618385516456, guid: fec7262f67d896a4db528f02ddc1c1cd, type: 3}
-  minShatterPower: 300
 --- !u!54 &8240129667747829327
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -159,10 +148,10 @@ HingeJoint:
   m_GameObject: {fileID: 6759476250763903002}
   m_ConnectedBody: {fileID: 0}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0, z: -1.12}
+  m_Anchor: {x: 0, y: 0, z: -0.12}
   m_Axis: {x: 1, y: 0, z: 0}
-  m_AutoConfigureConnectedAnchor: 0
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: -112.8, y: 740.37006, z: 258.4}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -179,9 +168,9 @@ HingeJoint:
   m_UseAcceleration: 0
   m_Limits:
     min: 0
-    max: 0
+    max: 2.6
     bounciness: 0
-    bounceMinVelocity: 0.2
+    bounceMinVelocity: 0
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -189,3 +178,34 @@ HingeJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &321487178743760819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759476250763903002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7a6870f499b3a41b76b84d1c8f626c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planetesRB: []
+  rb: {fileID: 0}
+  offsetRotation: {x: 0, y: 0, z: 0}
+  gravityConstant: 9.81
+  maxAngle: 30
+--- !u!114 &2244164765486731948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759476250763903002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1717572f9242b04cb34173871865561, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shatteredVersion: {fileID: 652267618385516456, guid: fec7262f67d896a4db528f02ddc1c1cd, type: 3}
+  minShatterPower: 500
