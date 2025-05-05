@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 4115375415084882723}
   - component: {fileID: 6651983340246493757}
   - component: {fileID: 8356411261492673277}
-  m_Layer: 0
+  - component: {fileID: 7526687035963051719}
+  m_Layer: 3
   m_Name: LargeVase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,14 +31,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7413534677113042310}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8739757780827190003}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &6738717561066390808
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -79,7 +80,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -168,6 +169,18 @@ MonoBehaviour:
   offsetRotation: {x: 0, y: 0, z: 0}
   gravityConstant: 9.81
   maxAngle: 30
+--- !u!114 &7526687035963051719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7413534677113042310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4585f984fe4230b40a49c19ae6c9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8104141944210158727
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +192,7 @@ GameObject:
   - component: {fileID: 8739757780827190003}
   - component: {fileID: 3495393120102724190}
   - component: {fileID: 5599184396499173733}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LargeLid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
