@@ -15,15 +15,11 @@ public class Slot_feedback : MonoBehaviour
 
     //public Transform Arm_transform;    c'est ce qui servira a faire que le feedback suive la main 
 
-    private void OnEnable()
+    private void Start()
     {
         GlobalEventManager.Instance.OnComportmentAdded += RecieveAddedSignal;
         GlobalEventManager.Instance.OnComportmentExtracted+= RecieveExtractedSignal;
         GlobalEventManager.Instance.OnComportmentExchanged += RecieveExchangedSignal;
-    }
-
-    private void Start()
-    {
         comportementManager = ComportementManager.Instance;
         comp_steler_proto = GameManager.Instance.player.GetComponent<ComportementStealer_proto>();
     }
