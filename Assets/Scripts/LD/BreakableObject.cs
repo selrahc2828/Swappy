@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class BreakableObject : MonoBehaviour
 {
-    [Tooltip("La copie scindée de l'objet a instantier lors de sa destruction")]
+    [Tooltip("La copie scindï¿½e de l'objet a instantier lors de sa destruction")]
     [SerializeField] private GameObject shatteredVersion;
-    [Tooltip("Énergie cinétique minimum à partir duquel une collision détruit l'objet (Ec = m/2 * v²)")]
+    [Tooltip("ï¿½nergie cinï¿½tique minimum ï¿½ partir duquel une collision dï¿½truit l'objet (Ec = m/2 * vï¿½)")]
     [SerializeField] private float minShatterPower;
 
     private Rigidbody thisRb;
     private Vector3 previousVelocity;
     private Vector3 currentVelocity;
+    private bool hasShattered;
 
     private void Start()
     {
@@ -23,7 +24,11 @@ public class BreakableObject : MonoBehaviour
 
         if (thisRb.mass * thisRb.velocity.magnitude * Vector3.Angle(currentVelocity, previousVelocity) / 3 >= minShatterPower)
         {
-            ShatterObject();
+            if (!hasShattered)
+            {
+                hasShattered = true;
+                ShatterObject();
+            }
         }
     }
 
@@ -39,7 +44,12 @@ public class BreakableObject : MonoBehaviour
 
         if (cineticForce >= minShatterPower)
         {
-            ShatterObject();
+            if (!hasShattered)
+            {
+                hasShattered = true;
+                Debug.Log("Shatter Enter from: " + collision.gameObject.name);
+                ShatterObject();
+            }
         }
     }
 

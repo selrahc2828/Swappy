@@ -7,10 +7,23 @@ public class Anim_manager : MonoBehaviour
 {
     public Animator Left_Arm_Animator;
     public Animator Right_Arm_Animator;
-    
+
     private Transform Start_Local_Left_Transform;
-    
-    
+
+
+    private void OnEnable()
+    {
+    }
+
+    void Start()
+    {
+        GlobalEventManager.Instance.OnComportmentExtracted += HandleComportmentExtraction;
+        GlobalEventManager.Instance.OnComportmentAdded += HandleComportmentAttribution;
+        GlobalEventManager.Instance.OnSelfImpactMod += HandleSelfImpactMod;
+        Left_Arm_Animator = GameObject.FindGameObjectWithTag("leftArm").GetComponent<Animator>();
+        Right_Arm_Animator = GameObject.FindGameObjectWithTag("rightArm").GetComponent<Animator>();
+        Start_Local_Left_Transform = Left_Arm_Animator.transform;
+    }
 
     private void OnDisable()
     {
@@ -19,32 +32,20 @@ public class Anim_manager : MonoBehaviour
         GlobalEventManager.Instance.OnSelfImpactMod -= HandleSelfImpactMod;
     }
 
-    void Start()
-    {
-        GlobalEventManager.Instance.OnComportmentExtracted += HandleComportmentExtraction;
-        GlobalEventManager.Instance.OnComportmentAdded += HandleComportmentAttribution;
-        GlobalEventManager.Instance.OnSelfImpactMod += HandleSelfImpactMod;
-        
-        Left_Arm_Animator = GameObject.FindGameObjectWithTag("leftArm").GetComponent<Animator>();
-        Right_Arm_Animator = GameObject.FindGameObjectWithTag("rightArm").GetComponent<Animator>();
-        Start_Local_Left_Transform = Left_Arm_Animator.transform;
-    }
 
-    
+    #region IDLE
 
-    #region IDLE 
     //Pour l'instant inutil mais au cas ou pour plus tard
     public void Left_Idle()
     {
-        
     }
+
     public void Right_Idle()
     {
-        
     }
 
     #endregion
-    
+
     #region Attribution
 
     public void HandleComportmentAttribution(GameObject target, bool rightValue, bool righthand)
@@ -72,39 +73,33 @@ public class Anim_manager : MonoBehaviour
             }
         }
     }
-    
+
     public void Left_Attribution()
     {
         Left_Arm_Animator.Play("Attribution_Left");
-        
-       
-        
     }
+
     public void Right_Attribution()
     {
         Right_Arm_Animator.Play("Attribution");
-        
-       
-        
     }
-    
+
     #region SelfAssign
 
     public void Left_SelfAssign()
     {
         Left_Arm_Animator.Play("Self_Assign_Left");
     }
+
     public void Right_SelfAssign()
     {
         Left_Arm_Animator.Play("Self_Assign");
     }
 
-    
+    #endregion
 
     #endregion
-    
-    #endregion
-    
+
     #region Aspiration
 
     public void HandleComportmentExtraction(GameObject target, bool rightValue, bool rightHand)
@@ -131,7 +126,7 @@ public class Anim_manager : MonoBehaviour
                 Left_Aspiration();
             }
         }
-        
+
         if (!target.CompareTag("Player"))
         {
             if (rightHand)
@@ -157,44 +152,37 @@ public class Anim_manager : MonoBehaviour
             }
         }
     }
-    
+
     public void Left_Aspiration()
     {
-        
         Left_Arm_Animator.Play("Aspiration_Left");
-        
-       
-        
     }
+
     public void Right_Aspiration()
     {
         Right_Arm_Animator.Play("Aspiration");
-        
-       
-        
     }
-    
+
     #region SelfAspiration
 
     public void Right_SelfAspiration()
     {
-        
         Right_Arm_Animator.Play("SelfSteal");
     }
+
     public void Left_SelfAspiration()
     {
-        
         Left_Arm_Animator.Play("SelfSteal_Left");
     }
-    
-    #endregion
-    
+
     #endregion
 
-    
+    #endregion
+
+
     #region SelfImpactMod
 
-    public void HandleSelfImpactMod(GameObject _gameObject,bool active)
+    public void HandleSelfImpactMod(GameObject _gameObject, bool active)
     {
         if (active)
         {
@@ -217,6 +205,6 @@ public class Anim_manager : MonoBehaviour
         Right_Arm_Animator.Play("SelfImpactMod_OUT");
         Left_Arm_Animator.Play("SelfImpactMod_OUT_Left");
     }
-    
+
     #endregion
 }

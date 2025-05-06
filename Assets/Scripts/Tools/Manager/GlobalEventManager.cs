@@ -17,8 +17,6 @@ public class GlobalEventManager : MonoBehaviour
     public event Action<GameObject> OnComportementStateExit;
     public event Action<GameObject, float> OnComportementStatePlay;
 
-    public event Action<int, int> OnHandValueUpdated;
-
     public event Action<GameObject> OnFootstep;
     public event Action<GameObject> OnJump;
     public event Action<GameObject> OnLand;
@@ -64,7 +62,7 @@ public class GlobalEventManager : MonoBehaviour
         OnComportmentExchanged?.Invoke(player, rightHand);
     }
     
-    public void SelfImpactMod(GameObject player, bool active) // appele quand on echange le comportement d'une main avec un comportement du player
+    public void SelfImpactMod(GameObject player, bool active)
     {
         OnSelfImpactMod?.Invoke(player, active);
     }
@@ -82,11 +80,6 @@ public class GlobalEventManager : MonoBehaviour
     public void ComportmentStatePlay(GameObject comportableObject, float force = 0.8f) // appele lorsque le comportement agit
     {
         OnComportementStatePlay?.Invoke(comportableObject,force);
-    }
-
-    public void UpdateHand(int leftHandValue, int rightHandValue)// appel des qu'il y a un changement dans les main ####A UPDATE####
-    {
-        OnHandValueUpdated?.Invoke(leftHandValue,rightHandValue);
     }
 
     #endregion

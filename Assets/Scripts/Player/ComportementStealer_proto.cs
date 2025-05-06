@@ -175,10 +175,6 @@ public class ComportementStealer_proto : MonoBehaviour
         _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(_ray, out var hit, Mathf.Infinity, hitLayer)) //mask
         {
-            if (hit.collider == null || hit.collider.CompareTag("NotInteract"))
-            {
-                return;
-            }
             var stateMachine = hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
             if (stateMachine != null)
             {
@@ -252,7 +248,6 @@ public class ComportementStealer_proto : MonoBehaviour
             {
                 if (playerObjectState.stateValue !=0) // le joueur a au moins 1 comportement sur lui  --> la left Value est forcement positive
                 {
-
                     if (_stateStolen.inversion)
                     {
                         if (playerObjectState.rightValue == 0)
@@ -291,6 +286,10 @@ public class ComportementStealer_proto : MonoBehaviour
                         }
                         _stateStolen.inversion = (originValueSlot1 <= playerObjectState.leftValue); //Le seul moment ou on change inversion c'est quand il y a une inversion naturelle.
                                                                                                     //une inversion naterelle ne se produit avec le slot1 que lorsque la valeur du slot1 est inferieur ou égale a left value avant l'echange
+                        if(playerObjectState.leftValue == playerObjectState.rightValue)
+                        {
+                            _stateStolen.inversion = false;
+                        }
                     }
                     else // le comportement sur le joueur n'est pas inversé
                     {
@@ -407,8 +406,7 @@ public class ComportementStealer_proto : MonoBehaviour
             (exchangedSlotValue, playerObjectState.leftValue) = (playerObjectState.leftValue, exchangedSlotValue);
         }
         playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
-        GlobalEventManager.Instance.ComportmentExchanged(this.gameObject,rightHand);
-        GlobalEventManager.Instance.UpdateHand(slot1, slot2);
+        GlobalEventManager.Instance.ComportmentExchanged(this.gameObject, rightHand);
     }
 
     void ExecuteChangeStateAdditive(ComportementState currentObjectState,ref int addedSlotValue, bool rightValue, bool rightHand)
@@ -416,7 +414,6 @@ public class ComportementStealer_proto : MonoBehaviour
         currentObjectState.CalculateNewtState(currentObjectState.stateValue + addedSlotValue);
         addedSlotValue = 0;
         GlobalEventManager.Instance.ComportmentAdded(currentObjectState.GetGameObject(), rightValue, rightHand);
-        GlobalEventManager.Instance.UpdateHand(slot1, slot2);
     }
     
     void ExecuteChangeStateSubtractive(ComportementState currentObjectState, ref int substractedSlotValue, bool rightValue, bool rightHand)
@@ -432,6 +429,5 @@ public class ComportementStealer_proto : MonoBehaviour
             substractedSlotValue = currentObjectState.leftValue;
         }
         GlobalEventManager.Instance.ComportmentExtracted(currentObjectState.GetGameObject(), rightValue, rightHand);
-        GlobalEventManager.Instance.UpdateHand(slot1, slot2);
     }
 }
