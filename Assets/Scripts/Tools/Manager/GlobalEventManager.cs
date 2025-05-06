@@ -17,8 +17,6 @@ public class GlobalEventManager : MonoBehaviour
     public event Action<GameObject> OnComportementStateExit;
     public event Action<GameObject, float> OnComportementStatePlay;
 
-    public event Action<int, int> OnHandValueUpdated;
-
     public event Action<GameObject> OnFootstep;
     public event Action<GameObject> OnJump;
     public event Action<GameObject> OnLand;
