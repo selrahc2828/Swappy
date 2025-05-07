@@ -36,7 +36,7 @@ public class FMODEventManager : MonoBehaviour
         // DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
+    private void OnEnable()
     {
         GlobalEventManager.Instance.OnComportmentExtracted += OnComportementExtracted;
         GlobalEventManager.Instance.OnComportmentAdded += OnComportementAdded;
@@ -558,17 +558,20 @@ public class FMODEventManager : MonoBehaviour
     {
         switch (_groundCollider.tag)
         {
-            case "Grass":
+            case "GRASS":
                 SetNamedParamEventInstance(eventInstance,"GROUND",1);
                 break;
-            case "Rock":
+            case "ROCK":
                 SetNamedParamEventInstance(eventInstance,"GROUND",2);
                 break;
-            case "Sand":
+            case "SAND":
                 SetNamedParamEventInstance(eventInstance,"GROUND",3);
                 break;
-            case "Wood":
+            case "WOOD":
                 SetNamedParamEventInstance(eventInstance,"GROUND",4);
+                break;
+            case "METAL":
+                SetNamedParamEventInstance(eventInstance,"GROUND",5);
                 break;
             default:
                 SetNamedParamEventInstance(eventInstance,"GROUND",0);
