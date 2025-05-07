@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 2375303393648797563}
   - component: {fileID: 784664269074066022}
   - component: {fileID: 4960501591873722036}
-  m_Layer: 0
+  - component: {fileID: 4307170594068773852}
+  - component: {fileID: 3695765292825996356}
+  m_Layer: 3
   m_Name: LongVase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,3 +152,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shatteredVersion: {fileID: 8990234046366441245, guid: 93d77c4de456e3e499fe1a89162d776f, type: 3}
   minShatterPower: 70
+--- !u!114 &4307170594068773852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8990234046366441245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7a6870f499b3a41b76b84d1c8f626c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planetesRB: []
+  rb: {fileID: 0}
+  offsetRotation: {x: 0, y: 0, z: 0}
+  gravityConstant: 9.81
+  maxAngle: 30
+--- !u!114 &3695765292825996356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8990234046366441245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4585f984fe4230b40a49c19ae6c9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

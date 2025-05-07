@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 5747696593589302836}
   - component: {fileID: 501121476434006370}
   - component: {fileID: 4063567230095838387}
-  m_Layer: 0
+  - component: {fileID: 3651575681821015158}
+  - component: {fileID: 817885256506619909}
+  m_Layer: 3
   m_Name: MediumUrn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,6 +152,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shatteredVersion: {fileID: 1059670007729215901, guid: 65defbd9d9fce224c9d6681e5748be3c, type: 3}
   minShatterPower: 50
+--- !u!114 &3651575681821015158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059670007729215901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7a6870f499b3a41b76b84d1c8f626c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planetesRB: []
+  rb: {fileID: 0}
+  offsetRotation: {x: 0, y: 0, z: 0}
+  gravityConstant: 9.81
+  maxAngle: 30
+--- !u!114 &817885256506619909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059670007729215901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4585f984fe4230b40a49c19ae6c9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1345832980651567297
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,7 +192,7 @@ GameObject:
   - component: {fileID: 4558300415533819676}
   - component: {fileID: 5756199443847459384}
   - component: {fileID: 3389836951785380869}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MediumUrnLid
   m_TagString: Untagged
   m_Icon: {fileID: 0}

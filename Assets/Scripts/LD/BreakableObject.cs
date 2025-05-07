@@ -10,6 +10,7 @@ public class BreakableObject : MonoBehaviour
     private Rigidbody thisRb;
     private Vector3 previousVelocity;
     private Vector3 currentVelocity;
+    private bool hasShattered;
 
     private void Start()
     {
@@ -23,7 +24,12 @@ public class BreakableObject : MonoBehaviour
 
         if (thisRb.mass * thisRb.velocity.magnitude * Vector3.Angle(currentVelocity, previousVelocity) / 3 >= minShatterPower)
         {
-            ShatterObject();
+            if (!hasShattered)
+            {
+                hasShattered = true;
+                Debug.Log("Shatter Update");
+                ShatterObject();
+            }
         }
     }
 
@@ -39,7 +45,12 @@ public class BreakableObject : MonoBehaviour
 
         if (cineticForce >= minShatterPower)
         {
-            ShatterObject();
+            if (!hasShattered)
+            {
+                hasShattered = true;
+                Debug.Log("Shatter Enter from: " + collision.gameObject.name);
+                ShatterObject();
+            }
         }
     }
 

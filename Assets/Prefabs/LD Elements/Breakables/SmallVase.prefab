@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 5474876571342272726}
   - component: {fileID: 3172819690433030106}
   - component: {fileID: 2782618436383909108}
-  m_Layer: 0
+  - component: {fileID: 1704789056405802106}
+  - component: {fileID: 8704591224986368013}
+  m_Layer: 3
   m_Name: SmallVase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,3 +151,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shatteredVersion: {fileID: 8219582610902418633, guid: 8ba85b5ce2baf654d939cebaac404aff, type: 3}
   minShatterPower: 70
+--- !u!114 &1704789056405802106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8219582610902418633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7a6870f499b3a41b76b84d1c8f626c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planetesRB: []
+  rb: {fileID: 0}
+  offsetRotation: {x: 0, y: 0, z: 0}
+  gravityConstant: 9.81
+  maxAngle: 30
+--- !u!114 &8704591224986368013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8219582610902418633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4585f984fe4230b40a49c19ae6c9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
