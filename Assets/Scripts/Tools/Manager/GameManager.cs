@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
     public float maxSpeed;
     public float moveSpeed;
     public float sprintMultiplier;
-    public float aerialMultiplier;
+    public float airControlMultiplier;
     public float stoppingRatio;
     public float sideSpeedReductionRatio;
     public float groundDrag;

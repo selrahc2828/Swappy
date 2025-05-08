@@ -22,11 +22,30 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private float maxSpeed;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float sprintMultiplier;
-    [SerializeField] private float aerialMultiplier;
+    [SerializeField] private float airControlMultiplier; //anciennement "airControlMultiplier"
     [SerializeField] private float stoppingRatio;
     [SerializeField] private float sideSpeedReductionRatio;
     [SerializeField] private float jumpForce;
-    
+
+    [Header("Feel Curves")]
+    [SerializeField] private float speedReductionOnJump;
+    [SerializeField] private AnimationCurve speedReductionOnJumpCurve;
+    [Space(8)]
+    [SerializeField] private float airControlMultiplierMinimum;
+    [SerializeField] private AnimationCurve airControlMultiplierCurve;
+
+    [Space(16)]
+    [SerializeField] private float cameraOffsetOnJump;
+    [SerializeField] private AnimationCurve cameraOffsetOnJumpCurve;
+    [Space(8)]
+    [SerializeField] private float cameraOffsetOnGround;
+    [SerializeField] private AnimationCurve cameraOffsetOnGroundCurve;
+    [Space(8)]
+    [SerializeField] private float cameraOffsetOnWall;
+    [SerializeField] private AnimationCurve cameraOffsetOnWallCurve;
+
+    [Space(16)]
+    [Header("Debug")]
     [SerializeField] private bool isSprinting;
     [SerializeField] private bool isStopping;
     [SerializeField] private bool grounded;
@@ -50,7 +69,7 @@ public class ControllerPlanete : MonoBehaviour
         maxSpeed = gameManager.maxSpeed;
         moveSpeed = gameManager.moveSpeed;
         sprintMultiplier = gameManager.sprintMultiplier;
-        aerialMultiplier = gameManager.aerialMultiplier;
+        airControlMultiplier = gameManager.airControlMultiplier;
         stoppingRatio = gameManager.stoppingRatio;
         sideSpeedReductionRatio = gameManager.sideSpeedReductionRatio;
         jumpForce = gameManager.jumpForce;
@@ -104,7 +123,7 @@ public class ControllerPlanete : MonoBehaviour
         Vector3 localHorizontalVelocity = Vector3.ProjectOnPlane(rb.velocity, transform.up);
         
         float orientationValue = 1;
-        float aerialMultiplierValue = grounded ? 1 : aerialMultiplier;
+        float aerialMultiplierValue = grounded ? 1 : airControlMultiplier;
         float sprintMultiplierValue = isSprinting ? sprintMultiplier : 1;
         
         if (grounded)
