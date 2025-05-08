@@ -79,17 +79,32 @@ public class GameManager : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
 
-    [Header("Player Crouching Parameters")]
-    public float crouchSpeed;
-    public float crouchYScale;
+    //[Header("Player Crouch Parameters")]
+    //public float crouchSpeed;
+    //public float crouchYScale;
 
-    [Header("Player Ground Check Parameters")]
+    [Header("Player Ground Parameters")]
     public float playerHeight;
     public LayerMask whatIsGround;
-
-    [Header("Player Slope Handeling Parameter")]
     public float maxSlopeAngle;
-    
+
+    [Header("Player Control Polish")]
+    public float speedReductionOnJump;
+    public AnimationCurve speedReductionOnJumpCurve;
+    [Space(8)]
+    public float airControlMultiplierMinimum;
+    public AnimationCurve airControlMultiplierCurve;
+
+    [Header("Player Camera Polish")]
+    public float cameraOffsetOnJump;
+    public AnimationCurve cameraOffsetOnJumpCurve;
+    [Space(8)]
+    public float cameraOffsetOnGround;
+    public AnimationCurve cameraOffsetOnGroundCurve;
+    [Space(8)]
+    public float cameraOffsetOnWall;
+    public AnimationCurve cameraOffsetOnWallCurve;
+
     private void OnEnable()
     {
         if (controls == null)

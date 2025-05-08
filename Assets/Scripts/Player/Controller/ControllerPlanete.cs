@@ -27,22 +27,17 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private float sideSpeedReductionRatio;
     [SerializeField] private float jumpForce;
 
-    [Header("Feel Curves")]
-    [SerializeField] private float speedReductionOnJump;
-    [SerializeField] private AnimationCurve speedReductionOnJumpCurve;
-    [Space(8)]
-    [SerializeField] private float airControlMultiplierMinimum;
-    [SerializeField] private AnimationCurve airControlMultiplierCurve;
+    private float speedReductionOnJump;
+    private AnimationCurve speedReductionOnJumpCurve;
+    private float airControlMultiplierMinimum;
+    private AnimationCurve airControlMultiplierCurve;
 
-    [Space(16)]
-    [SerializeField] private float cameraOffsetOnJump;
-    [SerializeField] private AnimationCurve cameraOffsetOnJumpCurve;
-    [Space(8)]
-    [SerializeField] private float cameraOffsetOnGround;
-    [SerializeField] private AnimationCurve cameraOffsetOnGroundCurve;
-    [Space(8)]
-    [SerializeField] private float cameraOffsetOnWall;
-    [SerializeField] private AnimationCurve cameraOffsetOnWallCurve;
+    private float cameraOffsetOnJump;
+    private AnimationCurve cameraOffsetOnJumpCurve;
+    private float cameraOffsetOnGround;
+    private AnimationCurve cameraOffsetOnGroundCurve;
+    private float cameraOffsetOnWall;
+    private AnimationCurve cameraOffsetOnWallCurve;
 
     [Space(16)]
     [Header("Debug")]
@@ -75,6 +70,18 @@ public class ControllerPlanete : MonoBehaviour
         jumpForce = gameManager.jumpForce;
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
+
+        speedReductionOnJump = gameManager.speedReductionOnJump;
+        speedReductionOnJumpCurve = gameManager.speedReductionOnJumpCurve;
+        airControlMultiplierMinimum = gameManager.airControlMultiplierMinimum;
+        airControlMultiplierCurve = gameManager.airControlMultiplierCurve;
+
+        cameraOffsetOnJump = gameManager.cameraOffsetOnJump;
+        cameraOffsetOnJumpCurve = gameManager.cameraOffsetOnJumpCurve;
+        cameraOffsetOnGround = gameManager.cameraOffsetOnGround;
+        cameraOffsetOnGroundCurve = gameManager.cameraOffsetOnGroundCurve;
+        cameraOffsetOnWall = gameManager.cameraOffsetOnWall;
+        cameraOffsetOnWallCurve = gameManager.cameraOffsetOnWallCurve;
     }
 
     private void OnDisable()
