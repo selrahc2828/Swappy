@@ -27,6 +27,8 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private float sideSpeedReductionRatio;
     [SerializeField] private float jumpForce;
 
+    private AnimationCurve walkSpeedOnMoveCurve;
+    private AnimationCurve walkSpeedOffMoveCurve;
     private float speedReductionOnJump;
     private AnimationCurve speedReductionOnJumpCurve;
     private AnimationCurve speedReductionOffJumpCurve;
@@ -73,6 +75,8 @@ public class ControllerPlanete : MonoBehaviour
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
 
+        walkSpeedOnMoveCurve = gameManager.walkSpeedOnMoveCurve;
+        walkSpeedOffMoveCurve = gameManager.walkSpeedOffMoveCurve;
         speedReductionOnJump = gameManager.speedReductionOnJump;
         speedReductionOnJumpCurve = gameManager.speedReductionOnJumpCurve;
         speedReductionOffJumpCurve = gameManager.speedReductionOffJumpCurve;

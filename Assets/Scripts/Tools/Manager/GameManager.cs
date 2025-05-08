@@ -89,6 +89,9 @@ public class GameManager : MonoBehaviour
     public float maxSlopeAngle;
 
     [Header("Player Control Polish")]
+    public AnimationCurve walkSpeedOnMoveCurve;
+    public AnimationCurve walkSpeedOffMoveCurve;
+    [Space(8)]
     public float speedReductionOnJump;
     public AnimationCurve speedReductionOnJumpCurve;
     public AnimationCurve speedReductionOffJumpCurve;
