@@ -78,7 +78,6 @@ public class GameManager : MonoBehaviour
     [Header("Player Jumping Parameters")]
     public float jumpForce;
     public float jumpCooldown;
-    public float airMultiplier;
 
     [Header("Player Crouching Parameters")]
     public float crouchSpeed;
