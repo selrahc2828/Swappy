@@ -29,11 +29,13 @@ public class ControllerPlanete : MonoBehaviour
 
     private float speedReductionOnJump;
     private AnimationCurve speedReductionOnJumpCurve;
+    private AnimationCurve speedReductionOffJumpCurve;
     private float airControlMultiplierMinimum;
     private AnimationCurve airControlMultiplierCurve;
 
     private float cameraOffsetOnJump;
     private AnimationCurve cameraOffsetOnJumpCurve;
+    private AnimationCurve cameraOffsetOffJumpCurve;
     private float cameraOffsetOnGround;
     private AnimationCurve cameraOffsetOnGroundCurve;
     private float cameraOffsetOnWall;
@@ -73,11 +75,13 @@ public class ControllerPlanete : MonoBehaviour
 
         speedReductionOnJump = gameManager.speedReductionOnJump;
         speedReductionOnJumpCurve = gameManager.speedReductionOnJumpCurve;
+        speedReductionOffJumpCurve = gameManager.speedReductionOffJumpCurve;
         airControlMultiplierMinimum = gameManager.airControlMultiplierMinimum;
         airControlMultiplierCurve = gameManager.airControlMultiplierCurve;
 
         cameraOffsetOnJump = gameManager.cameraOffsetOnJump;
         cameraOffsetOnJumpCurve = gameManager.cameraOffsetOnJumpCurve;
+        cameraOffsetOffJumpCurve = gameManager.cameraOffsetOffJumpCurve;
         cameraOffsetOnGround = gameManager.cameraOffsetOnGround;
         cameraOffsetOnGroundCurve = gameManager.cameraOffsetOnGroundCurve;
         cameraOffsetOnWall = gameManager.cameraOffsetOnWall;

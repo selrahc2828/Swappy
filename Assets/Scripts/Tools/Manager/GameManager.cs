@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
     [Header("Player Control Polish")]
     public float speedReductionOnJump;
     public AnimationCurve speedReductionOnJumpCurve;
+    public AnimationCurve speedReductionOffJumpCurve;
     [Space(8)]
     public float airControlMultiplierMinimum;
     public AnimationCurve airControlMultiplierCurve;
@@ -98,6 +99,7 @@ public class GameManager : MonoBehaviour
     [Header("Player Camera Polish")]
     public float cameraOffsetOnJump;
     public AnimationCurve cameraOffsetOnJumpCurve;
+    public AnimationCurve cameraOffsetOffJumpCurve;
     [Space(8)]
     public float cameraOffsetOnGround;
     public AnimationCurve cameraOffsetOnGroundCurve;
