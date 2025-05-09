@@ -126,14 +126,14 @@ public class GlobalEventManager : MonoBehaviour
         OnRemoveTape?.Invoke();
     }
     
-    public void SetStateTape() //appele quand on ramasse/déebloque une nouvelle cassette
+    public void SetStateTape() //appele quand on ramasse/débloque une nouvelle cassette
     {
         OnSetStateTape?.Invoke();
     }
     
-    public void DisplayPopupPickUpTape(TapeData newItem) //appele quand on ajoute un item dans l'inventaire
+    public void DisplayPopupPickUpTape(TapeData newTape) //appele quand on ramasse/débloque une nouvelle cassette
     {
-        OnPopupTape?.Invoke(newItem);
+        OnPopupTape?.Invoke(newTape);
     }
     #endregion
 
