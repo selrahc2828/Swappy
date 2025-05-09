@@ -27,6 +27,11 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private float sideSpeedReductionRatio;
     [SerializeField] private float jumpForce;
 
+    [Header("References")]
+    [SerializeField] private Camera playerCamera;
+    [SerializeField] private GameObject cameraHandle;
+    [SerializeField] private GameObject armsHandle;
+
     private AnimationCurve walkSpeedOnMoveCurve;
     private AnimationCurve walkSpeedOffMoveCurve;
     private float speedReductionOnJump;
