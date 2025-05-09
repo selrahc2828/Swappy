@@ -101,6 +101,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Player Camera Polish")]
     public float cameraOffsetOnJump;
+    public float cameraOffsetOnJumpTime;
     public AnimationCurve cameraOffsetOnJumpCurve;
     public AnimationCurve cameraOffsetOffJumpCurve;
     [Space(8)]

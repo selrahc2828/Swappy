@@ -1,10 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Windows;
 using UnityEngine.InputSystem;
 using Input = UnityEngine.Input;
 
@@ -41,6 +35,7 @@ public class ControllerPlanete : MonoBehaviour
     private AnimationCurve airControlMultiplierCurve;
 
     private float cameraOffsetOnJump;
+    private float cameraOffsetOnJumpTime;
     private AnimationCurve cameraOffsetOnJumpCurve;
     private AnimationCurve cameraOffsetOffJumpCurve;
     private float cameraOffsetOnGround;
@@ -89,8 +84,10 @@ public class ControllerPlanete : MonoBehaviour
         airControlMultiplierCurve = gameManager.airControlMultiplierCurve;
 
         cameraOffsetOnJump = gameManager.cameraOffsetOnJump;
+        cameraOffsetOnJumpTime = gameManager.cameraOffsetOnJumpTime;
         cameraOffsetOnJumpCurve = gameManager.cameraOffsetOnJumpCurve;
         cameraOffsetOffJumpCurve = gameManager.cameraOffsetOffJumpCurve;
+
         cameraOffsetOnGround = gameManager.cameraOffsetOnGround;
         cameraOffsetOnGroundCurve = gameManager.cameraOffsetOnGroundCurve;
         cameraOffsetOnWall = gameManager.cameraOffsetOnWall;
@@ -202,6 +199,19 @@ public class ControllerPlanete : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        GroundCheck();
+        if (grounded)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+
     private void MovementAttack(InputAction.CallbackContext context)
     {
         if(context.performed)
@@ -235,4 +245,13 @@ public class ControllerPlanete : MonoBehaviour
             rb.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
         }
     }
+
+    #region cameraPolish
+
+    private void CameraOffsetOnJumpStart()
+    {
+
+    }
+
+    #endregion
 }
