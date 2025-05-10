@@ -28,18 +28,24 @@ public class ControllerPlanete : MonoBehaviour
 
     private AnimationCurve walkSpeedOnMoveCurve;
     private AnimationCurve walkSpeedOffMoveCurve;
+
     private float speedReductionOnJump;
     private AnimationCurve speedReductionOnJumpCurve;
     private AnimationCurve speedReductionOffJumpCurve;
+
     private float airControlMultiplierMinimum;
     private AnimationCurve airControlMultiplierCurve;
 
     private float cameraOffsetOnJump;
     private float cameraOffsetOnJumpTime;
+    private float cameraOffsetOnJumpTimer;
     private AnimationCurve cameraOffsetOnJumpCurve;
     private AnimationCurve cameraOffsetOffJumpCurve;
+
     private float cameraOffsetOnGround;
     private AnimationCurve cameraOffsetOnGroundCurve;
+
+
     private float cameraOffsetOnWall;
     private AnimationCurve cameraOffsetOnWallCurve;
 
