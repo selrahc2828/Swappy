@@ -80,7 +80,7 @@ public class C_Double_Impulse : ComportementState
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
             shockWave.GetComponent<GrowToRadius>().targetRadius = trueImpulseRange;
         }
-
+        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueImpulseRange);
         if (objectsInRange.Length > 0)
         {

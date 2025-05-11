@@ -69,7 +69,7 @@ public class C_Solo_Rocket : ComportementState
 
         if (rocketOn)
         {
-
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
             if (_sm.isPlayer)
             {
                 _sm.rb.AddForce(_sm.transform.up * rocketForceOnPlayer, ForceMode.Force);

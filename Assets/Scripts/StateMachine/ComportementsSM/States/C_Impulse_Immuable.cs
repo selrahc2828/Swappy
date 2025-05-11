@@ -81,6 +81,7 @@ public class C_Impulse_Immuable : ComportementState
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
             shockWave.GetComponent<GrowToRadius>().targetRadius = trueRepulserRange;
         }
+        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueRepulserRange);
         if (objectsInRange.Length > 0)
         {

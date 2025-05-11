@@ -24,6 +24,8 @@ public class FMODEventManager : MonoBehaviour
     private Dictionary<GameObject, Dictionary<EventReference, EventInstance>> EncyclopediaInstance = new Dictionary<GameObject, Dictionary<EventReference, EventInstance>>();
 
     private ComportementsStateMachine _comportementState;
+
+    private float _maxValueMass;
     
     private void Awake()
     {
@@ -66,6 +68,17 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnCollide -= CollisionSound;
     }
 
+    private void Start()
+    {
+        foreach (Rigidbody rigidbody in FindObjectsByType<Rigidbody>(FindObjectsInactive.Include,FindObjectsSortMode.InstanceID))
+        {
+            if (_maxValueMass < rigidbody.mass)
+            {
+                _maxValueMass = rigidbody.mass;
+            }
+        }
+    }
+
     #endregion
     #region Play Once
     public void PlayOneShot(EventReference sound, Vector3 position)
@@ -82,7 +95,7 @@ public class FMODEventManager : MonoBehaviour
     public EventInstance CreateEventInstance(EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
-        //_eventPlaylist.Add(eventInstance);
+        _eventPlaylist.Add(eventInstance);
       
         return eventInstance;
     }
@@ -155,14 +168,14 @@ public class FMODEventManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Event instance not referenced yet in Encyclopedia"+_keyGameObject.name+_keyEventReference);
+                //Debug.Log("Event instance not referenced yet in Encyclopedia"+_keyGameObject.name+_keyEventReference);
                 eventInstance = default(EventInstance);
                 return false;
             }
         }
         else
         {
-            Debug.Log("GameObjet not referenced yet in Encyclopedia"+_keyGameObject.name);
+            //Debug.Log("GameObjet not referenced yet in Encyclopedia"+_keyGameObject.name);
             eventInstance = default(EventInstance);
             return false;
         }
@@ -261,6 +274,10 @@ public class FMODEventManager : MonoBehaviour
         {
             Debug.LogError("Event instance referenced in Encyclopedia but not exist");
         }
+        else
+        {
+            //Debug.Log("All Event instance is referenced in encyclopedia");
+        }
 
         if (encyclopediaSize == 0)
         {
@@ -292,13 +309,13 @@ public class FMODEventManager : MonoBehaviour
         bus.getMute(out bool busMuteState);
         if (busMuteState)
         { 
-            Debug.LogWarning(bus + "Unmute");
-            bus.setMute(false);
+            Debug.LogWarning(bus + " Unmute");
+            bus.setMute(!busMuteState);
         }
         else
         {
-            Debug.LogWarning(bus + "Mute");
-            bus.setMute(true);
+            Debug.LogWarning(bus + " Mute");
+            bus.setMute(!busMuteState);
         }
     }
 
@@ -312,6 +329,8 @@ public class FMODEventManager : MonoBehaviour
     private void CleanUpAllSound()
     {
         CheckAllInstanceInEncyclopedia();
+        //Debug.Log(GetEncyclopediaSize());
+        //Debug.Log(GetPlaylistEventSize());
         foreach (EventInstance eventInstance in _eventPlaylist)
         {
             eventInstance.stop(STOP_MODE.IMMEDIATE);
@@ -400,7 +419,7 @@ public class FMODEventManager : MonoBehaviour
         Step step = Step.Enter;
         GetComportementState(_gameObject,step,0.8f);
     }
-    private void OnComportementIsPlay(GameObject _gameObject,float force=0.8f)
+    private void OnComportementIsPlay(GameObject _gameObject,float force)
     {
         Step step = Step.Play;
         GetComportementState(_gameObject,step,force);
@@ -499,6 +518,13 @@ public class FMODEventManager : MonoBehaviour
                 PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),_gameObject,_gameObject.GetComponent<Rigidbody>());
                 break;
             case Step.Play:
+                if (force < 0)
+                {
+                    if (gameObject.GetComponent<Rigidbody>() != null)
+                    {
+                        force = _gameObject.GetComponent<Rigidbody>().mass / _maxValueMass;
+                    }
+                }
                 SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference), "POWER", force);
                 SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference), "Stinger",1);
                 break;

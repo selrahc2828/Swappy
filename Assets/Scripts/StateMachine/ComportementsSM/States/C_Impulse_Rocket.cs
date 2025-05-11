@@ -20,7 +20,7 @@ public class C_Impulse_Rocket : ComportementState
     private float maxSpeed;
     private bool rocketOn;
     private GameObject feedback;
-    private bool isSonOn;
+
     
     public C_Impulse_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -82,18 +82,14 @@ public class C_Impulse_Rocket : ComportementState
         if (onTimer > offCooldown && rocketOn)
         {
             rocketOn = false;
-            isSonOn = false;
+
             onTimer = 0f;
         }
 
 
         if (rocketOn)
         {
-            if (!isSonOn)
-            {
-                
-                isSonOn = true;
-            }
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
             impulseTimer += Time.fixedDeltaTime;
             if (impulseTimer > timeBetweenImpulses)
             {

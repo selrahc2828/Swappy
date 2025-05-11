@@ -79,8 +79,7 @@ public class C_Magnet_Rocket : ComportementState
             // gestion de la zone qui applique la force
             if (_rocketOn)
             {
-
-                
+                GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
                 SpawnForceField();//feebback et apply de force, mis dedans pour être conservé quand se sépare de la rocket
             }
             else

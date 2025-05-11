@@ -12,6 +12,8 @@ public class C_Solo_Magnet : ComportementState
     private float magnetForce;
     private bool magnetGradiantForce;
     
+    private List<Rigidbody> magnetedObjects = new List<Rigidbody>();
+    
 
 
     
@@ -87,7 +89,6 @@ public class C_Solo_Magnet : ComportementState
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
                         ApplyForce(magnetGradiantForce, objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-                        
                     }
                 }
             }
@@ -96,7 +97,11 @@ public class C_Solo_Magnet : ComportementState
     
     public void ApplyForce(bool isGradient, Rigidbody rbObj,GameObject objToApply, float force)
     {
-        
+        if (!magnetedObjects.Contains(rbObj))
+        {
+            magnetedObjects.Add(rbObj);
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,rbObj.mass);
+        }
         if (isGradient)
         {
             objToApply.GetComponent<Rigidbody>().AddExplosionForce(-force, _sm.transform.position, trueMagnetRange);
