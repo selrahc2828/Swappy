@@ -295,7 +295,7 @@ public class ControllerPlanete : MonoBehaviour
         float nextCamPos = Mathf.Lerp(0, cameraOffsetOnJump, cameraOffsetOnJumpCurve.Evaluate(cameraOffsetOnJumpTimer));
         float oldCamPos = cameraHandle.transform.localPosition.y;
 
-        cameraHandle.transform.localPosition -= new Vector3(0, nextCamPos-oldCamPos, 0);
+        cameraHandle.transform.localPosition += new Vector3(0, nextCamPos-oldCamPos, 0);
     }
     private void CameraOffsetOffJumpTick()
     {
