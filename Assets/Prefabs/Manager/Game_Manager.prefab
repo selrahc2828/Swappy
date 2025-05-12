@@ -80,13 +80,14 @@ MonoBehaviour:
   maxSpeed: 7.5
   moveSpeed: 25
   sprintMultiplier: 1.5
-  airControlMultiplier: 0.2
+  airControlMultiplier: 0.3
   stoppingRatio: 0.9
   sideSpeedReductionRatio: 0.1
   groundDrag: 5
   orientation: {fileID: 0}
-  jumpForce: 7.5
-  jumpCooldown: 0.25
+  jumpForceMIN: 6.5
+  jumpForceMAX: 9
+  jumpTime: 0.6
   playerHeight: 2.8
   whatIsGround:
     serializedVersion: 2
@@ -166,19 +167,19 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: 0
-      outSlope: 3.9858234
+      outSlope: 3.000003
       tangentMode: 0
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.269099
+      outWeight: 0.333333
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.013942328
+      inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 3
-      inWeight: 0.434789
+      inWeight: 0.33333302
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -250,8 +251,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 0
     m_RotationOrder: 4
-  cameraOffsetOnJump: 0.4
-  cameraOffsetOnJumpTime: 0.18
+  cameraOffsetOnJump: 0.5
+  cameraOffsetOnJumpTime: 1
   cameraOffsetOnJumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -259,7 +260,7 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: 0
-      outSlope: 3.000003
+      outSlope: 2.000003
       tangentMode: 0
       weightedMode: 3
       inWeight: 0

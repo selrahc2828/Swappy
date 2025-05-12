@@ -272,18 +272,23 @@ public class ControllerPlanete : MonoBehaviour
     }
     private void StartJump(InputAction.CallbackContext context)
     {
-        jumpTimer = 0;
-        isChargingJump = true;
+        if (context.performed && grounded)
+        {
+            jumpTimer = 0;
+            isChargingJump = true;
+            CameraOffsetOnJumpStart();
+        }
     }
 
     private void EndJump(InputAction.CallbackContext context)
     {
-        if (context.performed && grounded)
+        if (grounded)
         {
+            isCamOnJumpActive = false;
             Mathf.Max(jumpTimer, jumpTime);
             float jumpForce = Mathf.Lerp(jumpForceMIN, jumpForceMAX, jumpTimer/jumpTime);
             rb.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
-            CameraOffsetOnJumpStart();
+            CameraOffsetOffJumpStart();
         }
     }
 
@@ -314,6 +319,7 @@ public class ControllerPlanete : MonoBehaviour
 
     private Vector3 camOnJumpPointA;
     private Vector3 camOnJumpPointB;
+    private Vector3 camOnJumpLast;
     private float camOnJumpTimer;
     private bool isCamOnJumpActive;
     private void CameraOffsetOnJumpStart()
@@ -327,14 +333,9 @@ public class ControllerPlanete : MonoBehaviour
     private Vector3 CameraOffsetOnJumpTick()
     {
         camOnJumpTimer += Time.deltaTime;
-        if (camOnJumpTimer > camOnJumpTime)
-        {
-            isCamOnJumpActive = false;
-            CameraOffsetOffJumpStart();
-            return Vector3.zero;
-        }
-        Vector3 nextCamPos = Vector3.Lerp(camOnJumpPointA, camOnJumpPointB, camOnJumpCurve.Evaluate(camOnJumpTimer/camOnJumpTime));
-        return nextCamPos;
+        Mathf.Max(camOnJumpTimer, camOnJumpTime);
+        camOnJumpLast = Vector3.Lerp(camOnJumpPointA, camOnJumpPointB, camOnJumpCurve.Evaluate(camOnJumpTimer/camOnJumpTime));
+        return camOnJumpLast;
     }
 
     #endregion
@@ -349,7 +350,7 @@ public class ControllerPlanete : MonoBehaviour
     {
         isCamOffJumpActive = true;
         camOffJumpTimer = 0;
-        camOffJumpPointA = camOnJumpPointB;
+        camOffJumpPointA = camOnJumpLast;
         camOffJumpPointB = Vector3.zero;
     }
 
@@ -359,7 +360,6 @@ public class ControllerPlanete : MonoBehaviour
         if (camOffJumpTimer > camOnJumpTime)
         {
             isCamOffJumpActive = false;
-            return Vector3.zero;
         }
         Vector3 nextCamPos = Vector3.Lerp(camOffJumpPointA, camOffJumpPointB, camOffJumpCurve.Evaluate(camOffJumpTimer / camOnJumpTimer));
         return nextCamPos;
