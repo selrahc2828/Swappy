@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704b3d56c7fe82479953831776c1c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: -50
+  rotationSpeed: -15
 --- !u!1 &2020443811829115013
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704b3d56c7fe82479953831776c1c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: -50
+  rotationSpeed: -15
 --- !u!1 &5807883157319312750
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +222,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -121.403824, y: 894.5187, z: 20.863983}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.38133, y: 0.38133, z: 0.38133}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7007070820871862668}
@@ -319,8 +319,8 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
-  prewarm: 1
+  looping: 0
+  prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -387,7 +387,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -440,7 +440,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -3.5
+      scalar: -5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1141,7 +1141,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1244,8 +1244,66 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    m_BurstCount: 0
-    m_Bursts: []
+    m_BurstCount: 1
+    m_Bursts:
+    - serializedVersion: 2
+      time: 0
+      countCurve:
+        serializedVersion: 2
+        minMaxState: 0
+        scalar: 50
+        minScalar: 30
+        maxCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        minCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+      cycleCount: 5
+      repeatInterval: 1
+      probability: 1
   SizeModule:
     enabled: 1
     curve:
@@ -5039,6 +5097,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7901b6f43cfdb314e9feb25f7f772bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particleSystem: {fileID: 8864747286530266154}
+  couleur1: {r: 1, g: 0.3726415, b: 0.3726415, a: 1}
+  couleur2: {r: 1, g: 1, b: 1, a: 1}
+  ColorlerpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  NumberOfParticleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  burstCycleCount: 5
+  minParticles: 25
+  maxParticles: 75
 --- !u!114 &7028877815304116647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5062,7 +5174,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9003654543288795489}
-  - component: {fileID: 2104339236541883295}
   m_Layer: 0
   m_Name: Circles
   m_TagString: Untagged
@@ -5088,20 +5199,6 @@ Transform:
   - {fileID: 3341828129985975185}
   m_Father: {fileID: 39806026043330260}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2104339236541883295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6112758905294851212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e8487cd406c2024280b146f2a82046b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  planetesRB: []
-  offsetRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &6879300585327832267
 GameObject:
   m_ObjectHideFlags: 0
@@ -5150,7 +5247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9704b3d56c7fe82479953831776c1c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: -50
+  rotationSpeed: -15
 --- !u!1001 &1502237341488236792
 PrefabInstance:
   m_ObjectHideFlags: 0

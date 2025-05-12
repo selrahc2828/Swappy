@@ -22,6 +22,8 @@ public partial class ComportementManager : MonoBehaviour
     public FlareData flareData;
     
     [Header("A instancier pour chaque objet comportement")]
+    public GameObject feedBack_ImpulseSouffle;
+    public GameObject feedBack_ImpulseImpact;
     public GameObject feedBack_Impulse;
     public GameObject feedBack_Bouncing;
     public GameObject feedBack_Rocket;
