@@ -618,10 +618,9 @@ public class FMODEventManager : MonoBehaviour
 
     private void CollisionSound(GameObject _gameObject)
     {
-        var getReference = FMODEvents.Collision;
-        PlayOneShotAttached(getReference, _gameObject);
-        
+        PlayOneShotAttached(FMODEvents.Collision, _gameObject);
     }
+
     #endregion
     
     
