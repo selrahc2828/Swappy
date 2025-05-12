@@ -82,7 +82,7 @@ public class FMODEventManager : MonoBehaviour
     public EventInstance CreateEventInstance(EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
-        //_eventPlaylist.Add(eventInstance);
+        _eventPlaylist.Add(eventInstance);
       
         return eventInstance;
     }
