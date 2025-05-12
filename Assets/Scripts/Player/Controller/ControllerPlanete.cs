@@ -26,34 +26,34 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private GameObject cameraHandle;
     [SerializeField] private GameObject armsHandle;
 
-    private Vector3 originalCameraHandlePos;
+    private Vector3 baseCamHandlePos;
 
+    [Header("Physics Curves")]
     private AnimationCurve walkSpeedOnMoveCurve;
     private AnimationCurve walkSpeedOffMoveCurve;
 
     private float speedReductionOnJump;
-    private AnimationCurve speedReductionOnJumpCurve;
-    private AnimationCurve speedReductionOffJumpCurve;
+    private AnimationCurve speedReducOnJumpCurve;
+    private AnimationCurve speedReducOffJumpCurve;
 
-    private float airControlMultiplierMinimum;
-    private AnimationCurve airControlMultiplierCurve;
+    private float airControlMinimum;
+    private AnimationCurve airControlCurve;
 
-    private float cameraOffsetOnJump;
-    private float cameraOffsetOnJumpTime;
-    private float cameraOffsetOnJumpTimer;
-    private AnimationCurve cameraOffsetOnJumpCurve;
-    private bool isCameraOffsetOnJumpActive;
+    [Header("Camera Curves")]
+    private Vector3 mergedCamOffset;
 
-    private float cameraOffsetOffJumpTime;
-    private float cameraOffsetOffJumpTimer;
-    private AnimationCurve cameraOffsetOffJumpCurve;
-    private bool isCameraOffsetOffJumpActive;
+    [SerializeField] private float camOnJump;
+    [SerializeField] private float camOnJumpTime;
+    [SerializeField] private AnimationCurve camOnJumpCurve;
 
-    private float cameraOffsetOnGround;
-    private AnimationCurve cameraOffsetOnGroundCurve;
+    [SerializeField] private float camOffJumpTime;
+    [SerializeField] private AnimationCurve camOffJumpCurve;
 
-    private float cameraOffsetOnWall;
-    private AnimationCurve cameraOffsetOnWallCurve;
+    [SerializeField] private float camOnGround;
+    [SerializeField] private AnimationCurve camOnGroundCurve;
+
+    [SerializeField] private float camOnWall;
+    [SerializeField] private AnimationCurve camOnWallCurve;
 
     [Space(16)]
     [Header("Debug")]
@@ -90,23 +90,23 @@ public class ControllerPlanete : MonoBehaviour
         walkSpeedOnMoveCurve = gameManager.walkSpeedOnMoveCurve;
         walkSpeedOffMoveCurve = gameManager.walkSpeedOffMoveCurve;
         speedReductionOnJump = gameManager.speedReductionOnJump;
-        speedReductionOnJumpCurve = gameManager.speedReductionOnJumpCurve;
-        speedReductionOffJumpCurve = gameManager.speedReductionOffJumpCurve;
-        airControlMultiplierMinimum = gameManager.airControlMultiplierMinimum;
-        airControlMultiplierCurve = gameManager.airControlMultiplierCurve;
+        speedReducOnJumpCurve = gameManager.speedReductionOnJumpCurve;
+        speedReducOffJumpCurve = gameManager.speedReductionOffJumpCurve;
+        airControlMinimum = gameManager.airControlMultiplierMinimum;
+        airControlCurve = gameManager.airControlMultiplierCurve;
 
-        cameraOffsetOnJump = gameManager.cameraOffsetOnJump;
-        cameraOffsetOnJumpTime = gameManager.cameraOffsetOnJumpTime;
-        cameraOffsetOnJumpCurve = gameManager.cameraOffsetOnJumpCurve;
+        camOnJump = gameManager.cameraOffsetOnJump;
+        camOnJumpTime = gameManager.cameraOffsetOnJumpTime;
+        camOnJumpCurve = gameManager.cameraOffsetOnJumpCurve;
 
-        cameraOffsetOffJumpTime = gameManager.cameraOffsetOffJumpTime;
-        cameraOffsetOffJumpCurve = gameManager.cameraOffsetOffJumpCurve;
+        camOffJumpTime = gameManager.cameraOffsetOffJumpTime;
+        camOffJumpCurve = gameManager.cameraOffsetOffJumpCurve;
 
-        cameraOffsetOnGround = gameManager.cameraOffsetOnGround;
-        cameraOffsetOnGroundCurve = gameManager.cameraOffsetOnGroundCurve;
+        camOnGround = gameManager.cameraOffsetOnGround;
+        camOnGroundCurve = gameManager.cameraOffsetOnGroundCurve;
 
-        cameraOffsetOnWall = gameManager.cameraOffsetOnWall;
-        cameraOffsetOnWallCurve = gameManager.cameraOffsetOnWallCurve;
+        camOnWall = gameManager.cameraOffsetOnWall;
+        camOnWallCurve = gameManager.cameraOffsetOnWallCurve;
     }
 
     private void OnDisable()
@@ -118,14 +118,13 @@ public class ControllerPlanete : MonoBehaviour
         controls.Player.StopSprint.performed -= StopSprint;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         orientation = GameManager.Instance.orientation;
         isStopping = true;
         rb = GetComponent<Rigidbody>();
         gravityComponent = GetComponent<GravityPlanete>();
-        originalCameraHandlePos = cameraHandle.transform.localPosition;
+        baseCamHandlePos = cameraHandle.transform.localPosition;
     }
 
     private void Update()
@@ -261,57 +260,89 @@ public class ControllerPlanete : MonoBehaviour
         if (context.performed && grounded)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
-            isCameraOffsetOnJumpActive = true;
-            cameraOffsetOnJumpTimer = 0;
+            CameraOffsetOnJumpStart();
         }
     }
 
-    #region cameraPolish
+    #region CurvesPolish
 
     private void CurvesTickTest()
     {
-        if (isCameraOffsetOnJumpActive)
+        Vector3 cameraOffset1 = Vector3.zero;
+        Vector3 cameraOffset2 = Vector3.zero;
+        Vector3 cameraOffset3 = Vector3.zero;
+        Vector3 cameraOffset4 = Vector3.zero;
+        Vector3 cameraOffset5 = Vector3.zero;
+
+        if (isCamOnJumpActive)
         {
-            CameraOffsetOnJumpTick();
+            cameraOffset1 = CameraOffsetOnJumpTick();
         }
-        if (isCameraOffsetOffJumpActive)
+        if (isCamOffJumpActive)
         { 
-            CameraOffsetOffJumpTick(); 
+            cameraOffset2 = CameraOffsetOffJumpTick(); 
         }
+
+        mergedCamOffset = cameraOffset1 + cameraOffset2 + cameraOffset3 + cameraOffset4 + cameraOffset5;
+        cameraHandle.transform.localPosition = mergedCamOffset + baseCamHandlePos;
     }
 
-    private void CameraOffsetOnJumpTick()
+    #region CamOnJump
+
+    private Vector3 camOnJumpPointA;
+    private Vector3 camOnJumpPointB;
+    private float camOnJumpTimer;
+    private bool isCamOnJumpActive;
+    private void CameraOffsetOnJumpStart()
     {
-        cameraOffsetOnJumpTimer += Time.deltaTime;
-        if (cameraOffsetOnJumpTimer >= cameraOffsetOnJumpTime)
-        {
-            isCameraOffsetOnJumpActive = false;
-            isCameraOffsetOffJumpActive = true;
-            cameraHandle.transform.localPosition = originalCameraHandlePos;
-            Debug.Log("reset cam");
-            return;
-        }
-
-        float nextCamPos = Mathf.Lerp(0, cameraOffsetOnJump, cameraOffsetOnJumpCurve.Evaluate(cameraOffsetOnJumpTimer));
-        float oldCamPos = cameraHandle.transform.localPosition.y;
-
-        cameraHandle.transform.localPosition += new Vector3(0, nextCamPos-oldCamPos, 0);
+        isCamOnJumpActive = true;
+        camOnJumpTimer = 0;
+        camOnJumpPointA = Vector3.zero;
+        camOnJumpPointB = new Vector3(0, -camOnJump, 0);
     }
-    private void CameraOffsetOffJumpTick()
+
+    private Vector3 CameraOffsetOnJumpTick()
     {
-        cameraOffsetOffJumpTimer += Time.deltaTime;
-        if (cameraOffsetOffJumpTimer >= cameraOffsetOffJumpTime)
+        camOnJumpTimer += Time.deltaTime;
+        if (camOnJumpTimer > camOnJumpTime)
         {
-            isCameraOffsetOffJumpActive = false;
-            return;
+            isCamOnJumpActive = false;
+            CameraOffsetOffJumpStart();
+            return Vector3.zero;
         }
-
-        float nextCamPos = Mathf.Lerp(0, cameraOffsetOnJump, cameraOffsetOffJumpCurve.Evaluate(cameraOffsetOffJumpTimer));
-        float oldCamPos = cameraHandle.transform.position.y;
-
-        //cameraHandle.transform.localPosition = -Vector3.up * (nextCamPos - oldCamPos);
-
+        Vector3 nextCamPos = Vector3.Lerp(camOnJumpPointA, camOnJumpPointB, camOnJumpCurve.Evaluate(camOnJumpTimer/camOnJumpTime));
+        return nextCamPos;
     }
+
+    #endregion
+
+    #region CamOffJump
+
+    private Vector3 camOffJumpPointA;
+    private Vector3 camOffJumpPointB;
+    private float camOffJumpTimer;
+    private bool isCamOffJumpActive;
+    private void CameraOffsetOffJumpStart()
+    {
+        isCamOffJumpActive = true;
+        camOffJumpTimer = 0;
+        camOffJumpPointA = camOnJumpPointB;
+        camOffJumpPointB = Vector3.zero;
+    }
+
+    private Vector3 CameraOffsetOffJumpTick()
+    {
+        camOffJumpTimer += Time.deltaTime;
+        if (camOffJumpTimer > camOnJumpTime)
+        {
+            isCamOffJumpActive = false;
+            return Vector3.zero;
+        }
+        Vector3 nextCamPos = Vector3.Lerp(camOffJumpPointA, camOffJumpPointB, camOffJumpCurve.Evaluate(camOffJumpTimer / camOnJumpTimer));
+        return nextCamPos;
+    }
+
+    #endregion
 
     #endregion
 }
