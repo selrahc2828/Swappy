@@ -76,8 +76,9 @@ public class GameManager : MonoBehaviour
     public Transform orientation;
 
     [Header("Player Jumping Parameters")]
-    public float jumpForce;
-    public float jumpCooldown;
+    public float jumpForceMIN;
+    public float jumpForceMAX;
+    public float jumpTime;
 
     //[Header("Player Crouch Parameters")]
     //public float crouchSpeed;

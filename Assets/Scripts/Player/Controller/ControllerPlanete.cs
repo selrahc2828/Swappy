@@ -89,6 +89,10 @@ public class ControllerPlanete : MonoBehaviour
         airControlMultiplier = gameManager.airControlMultiplier;
         stoppingRatio = gameManager.stoppingRatio;
         sideSpeedReductionRatio = gameManager.sideSpeedReductionRatio;
+        jumpForceMAX = gameManager.jumpForceMAX;
+        jumpForceMIN = gameManager.jumpForceMIN;   
+        jumpTime = gameManager.jumpTime;
+
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
 
