@@ -103,6 +103,8 @@ public class GameManager : MonoBehaviour
     public float cameraOffsetOnJump;
     public float cameraOffsetOnJumpTime;
     public AnimationCurve cameraOffsetOnJumpCurve;
+    [Space(8)]
+    public float cameraOffsetOffJumpTime;
     public AnimationCurve cameraOffsetOffJumpCurve;
     [Space(8)]
     public float cameraOffsetOnGround;

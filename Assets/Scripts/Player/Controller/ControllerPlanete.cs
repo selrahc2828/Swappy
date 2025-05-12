@@ -26,6 +26,8 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private GameObject cameraHandle;
     [SerializeField] private GameObject armsHandle;
 
+    private Vector3 originalCameraHandlePos;
+
     private AnimationCurve walkSpeedOnMoveCurve;
     private AnimationCurve walkSpeedOffMoveCurve;
 
@@ -40,11 +42,15 @@ public class ControllerPlanete : MonoBehaviour
     private float cameraOffsetOnJumpTime;
     private float cameraOffsetOnJumpTimer;
     private AnimationCurve cameraOffsetOnJumpCurve;
+    private bool isCameraOffsetOnJumpActive;
+
+    private float cameraOffsetOffJumpTime;
+    private float cameraOffsetOffJumpTimer;
     private AnimationCurve cameraOffsetOffJumpCurve;
+    private bool isCameraOffsetOffJumpActive;
 
     private float cameraOffsetOnGround;
     private AnimationCurve cameraOffsetOnGroundCurve;
-
 
     private float cameraOffsetOnWall;
     private AnimationCurve cameraOffsetOnWallCurve;
@@ -59,12 +65,12 @@ public class ControllerPlanete : MonoBehaviour
     private LayerMask whatIsGround;
     private GravityPlanete gravityComponent;
     [SerializeField] private Vector3 touchingInclinedSurfaceDirection;
-    
+
     private void OnEnable()
     {
         gameManager = GameManager.Instance;
         controls = GameManager.controls;
-        
+
         controls.Player.Movement.performed += MovementAttack;
         controls.Player.Movement.canceled += MovementAttack;
         controls.Player.Jump.performed += Jump;
@@ -92,10 +98,13 @@ public class ControllerPlanete : MonoBehaviour
         cameraOffsetOnJump = gameManager.cameraOffsetOnJump;
         cameraOffsetOnJumpTime = gameManager.cameraOffsetOnJumpTime;
         cameraOffsetOnJumpCurve = gameManager.cameraOffsetOnJumpCurve;
+
+        cameraOffsetOffJumpTime = gameManager.cameraOffsetOffJumpTime;
         cameraOffsetOffJumpCurve = gameManager.cameraOffsetOffJumpCurve;
 
         cameraOffsetOnGround = gameManager.cameraOffsetOnGround;
         cameraOffsetOnGroundCurve = gameManager.cameraOffsetOnGroundCurve;
+
         cameraOffsetOnWall = gameManager.cameraOffsetOnWall;
         cameraOffsetOnWallCurve = gameManager.cameraOffsetOnWallCurve;
     }
@@ -116,6 +125,7 @@ public class ControllerPlanete : MonoBehaviour
         isStopping = true;
         rb = GetComponent<Rigidbody>();
         gravityComponent = GetComponent<GravityPlanete>();
+        originalCameraHandlePos = cameraHandle.transform.localPosition;
     }
 
     private void Update()
@@ -131,34 +141,36 @@ public class ControllerPlanete : MonoBehaviour
                 transform.up
             ).normalized;
         }
-        
+
         //est ce que je touche un mur et l'input de mouvement est vers le mur
         if (touchingInclinedSurface && Vector3.Dot(moveDirection, touchingInclinedSurfaceDirection) < 0)
         {
             moveDirection = Vector3.ProjectOnPlane(moveDirection, touchingInclinedSurfaceDirection);
         }
+
+        CurvesTickTest();
     }
 
     void FixedUpdate()
     {
         GroundCheck();
-        
+
         Vector3 localHorizontalVelocity = Vector3.ProjectOnPlane(rb.velocity, transform.up);
-        
+
         float orientationValue = 1;
         float aerialMultiplierValue = grounded ? 1 : airControlMultiplier;
         float sprintMultiplierValue = isSprinting ? sprintMultiplier : 1;
-        
+
         if (grounded)
         {
             if (rb.velocity.magnitude > 1f)
             {
-                orientationValue = ((Vector3.Dot(moveDirection.normalized, rb.velocity.normalized) -1) /-2) + 1;
+                orientationValue = ((Vector3.Dot(moveDirection.normalized, rb.velocity.normalized) - 1) / -2) + 1;
             }
             if (moveInputVector.y == 0)
             {
                 Vector3 velocityWithoutSides = Vector3.ProjectOnPlane(rb.velocity, orientation.right);
-                
+
                 rb.velocity = Vector3.Lerp(rb.velocity, velocityWithoutSides, sideSpeedReductionRatio);
             }
             if (isStopping)
@@ -195,7 +207,7 @@ public class ControllerPlanete : MonoBehaviour
             foreach (ContactPoint contact in collision.contacts)
             {
                 float slopeAngle = Vector3.Angle(contact.normal, -transform.up);
-                
+
                 if (slopeAngle > 90f && slopeAngle < 125f) // Surface inclin�e d�tect�e
                 {
                     touchingInclinedSurface = true;
@@ -220,11 +232,11 @@ public class ControllerPlanete : MonoBehaviour
 
     private void MovementAttack(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (context.performed)
         {
             isStopping = false;
         }
-        if(context.canceled)
+        if (context.canceled)
         {
             isStopping = true;
         }
@@ -249,13 +261,55 @@ public class ControllerPlanete : MonoBehaviour
         if (context.performed && grounded)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
+            isCameraOffsetOnJumpActive = true;
+            cameraOffsetOnJumpTimer = 0;
         }
     }
 
     #region cameraPolish
 
-    private void CameraOffsetOnJumpStart()
+    private void CurvesTickTest()
     {
+        if (isCameraOffsetOnJumpActive)
+        {
+            CameraOffsetOnJumpTick();
+        }
+        if (isCameraOffsetOffJumpActive)
+        { 
+            CameraOffsetOffJumpTick(); 
+        }
+    }
+
+    private void CameraOffsetOnJumpTick()
+    {
+        cameraOffsetOnJumpTimer += Time.deltaTime;
+        if (cameraOffsetOnJumpTimer >= cameraOffsetOnJumpTime)
+        {
+            isCameraOffsetOnJumpActive = false;
+            isCameraOffsetOffJumpActive = true;
+            cameraHandle.transform.localPosition = originalCameraHandlePos;
+            Debug.Log("reset cam");
+            return;
+        }
+
+        float nextCamPos = Mathf.Lerp(0, cameraOffsetOnJump, cameraOffsetOnJumpCurve.Evaluate(cameraOffsetOnJumpTimer));
+        float oldCamPos = cameraHandle.transform.localPosition.y;
+
+        cameraHandle.transform.localPosition -= new Vector3(0, nextCamPos-oldCamPos, 0);
+    }
+    private void CameraOffsetOffJumpTick()
+    {
+        cameraOffsetOffJumpTimer += Time.deltaTime;
+        if (cameraOffsetOffJumpTimer >= cameraOffsetOffJumpTime)
+        {
+            isCameraOffsetOffJumpActive = false;
+            return;
+        }
+
+        float nextCamPos = Mathf.Lerp(0, cameraOffsetOnJump, cameraOffsetOffJumpCurve.Evaluate(cameraOffsetOffJumpTimer));
+        float oldCamPos = cameraHandle.transform.position.y;
+
+        //cameraHandle.transform.localPosition = -Vector3.up * (nextCamPos - oldCamPos);
 
     }
 
