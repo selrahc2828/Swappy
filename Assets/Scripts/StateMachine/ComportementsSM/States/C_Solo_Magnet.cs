@@ -82,7 +82,7 @@ public class C_Solo_Magnet : ComportementState
         {
             foreach (Collider objectInRange in objectsInRange)
             {
-                if (!objectInRange.gameObject.CompareTag("Player") && objectInRange.gameObject != _sm.gameObject) // applique pas sur player et lui même
+                if (objectInRange.gameObject != _sm.gameObject) // applique pas sur player et lui même
                 {
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
