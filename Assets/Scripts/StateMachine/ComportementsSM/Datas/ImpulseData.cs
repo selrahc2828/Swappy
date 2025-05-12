@@ -6,7 +6,9 @@ public partial class ComportementManager
     public class ImpulseData
     {
         public float impulseTime = 5f;
+        public float impulseFirstTime = 2f;
         public float doubleImpulseTime = 6f;
+        public float doubleImpulseFirstTime = 2.5f;
         public float impulseRange = 10;
         public float impulseForce = 90;
         public bool destroyOnUse = false;

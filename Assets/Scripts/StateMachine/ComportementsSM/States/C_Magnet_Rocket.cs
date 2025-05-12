@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class C_Magnet_Rocket : ComportementState
 {
-    public float magnetRocketFlyTime = 4f;
-    public float rocketMagnetForce = 20f;
-    public float rocketMagnetForceOnPlayer = 20f;
-    public float rocketMagnetForceWhenGrab = 20f;
-    public float magnetTrailForce = 20f;
-    public float magnetTrailSpeedLerp = 1f;
-    public float magnetTrailTimeBeforeMove = 3f;
+    private float magnetRocketFlyTime = 4f;
+    private float rocketMagnetForce = 20f;
+    private float rocketMagnetForceOnPlayer = 20f;
+    private float rocketMagnetForceWhenGrab = 20f;
+    private float magnetTrailForce = 20f;
+    private float magnetTrailSpeedLerp = 1f;
+    private float magnetTrailTimeBeforeMove = 3f;
     private float _timer = 0f;
     private bool _rocketOn = true;
+    private bool firstRocket;
+    private float timerFirstRocket;
 
-    public GameObject prefabForceField;
+    private GameObject prefabForceField;
     private GameObject magnetFieldObject;
     
-    public Vector3 magnetPos;
+    private Vector3 magnetPos;
 
 
     
@@ -35,6 +37,7 @@ public class C_Magnet_Rocket : ComportementState
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
         magnetRocketFlyTime = _sm.comportementManager.magnetRocketData.magnetRocketFlyTime;
+        timerFirstRocket = _sm.comportementManager.magnetRocketData.rocketFirstTime;
         rocketMagnetForce = _sm.comportementManager.magnetRocketData.rocketMagnetForce;
         rocketMagnetForceOnPlayer = _sm.comportementManager.magnetRocketData.rocketMagnetForceOnPlayer;
         rocketMagnetForceWhenGrab = _sm.comportementManager.magnetRocketData.rocketMagnetForceWhenGrab;
@@ -71,6 +74,11 @@ public class C_Magnet_Rocket : ComportementState
         
         
         _timer += Time.deltaTime;
+        if (firstRocket)
+        {
+            _timer += magnetRocketFlyTime - timerFirstRocket;
+            firstRocket = false;
+        }
         if (_timer >= magnetRocketFlyTime)
         {
             _rocketOn = !_rocketOn;

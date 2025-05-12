@@ -8,6 +8,8 @@ public class C_Double_Rocket : ComportementState
     private float rocketForceOnPlayer = 20;
     private float rocketForceWhenGrab= 20;
     private float onOffCouldown;
+    private float onOffFirstCouldown;
+    private bool firstCouldown;
     private float timer;
     private bool isSonOn;
     
@@ -17,7 +19,7 @@ public class C_Double_Rocket : ComportementState
 
     public override void Enter()
     {
-        
+        firstCouldown = true;
         stateValue = 162;
         leftValue = 81;
         rightValue = 81;
@@ -30,6 +32,7 @@ public class C_Double_Rocket : ComportementState
         rocketForceOnPlayer = _sm.comportementManager.doubleRocketData.rocketDoubleForceOnPlayer;
         rocketForceWhenGrab = _sm.comportementManager.doubleRocketData.rocketDoubleForceWhenGrab;
         onOffCouldown = _sm.comportementManager.doubleRocketData.rocketDoubleCouldown;
+        onOffFirstCouldown = _sm.comportementManager.doubleRocketData.rocketDoubleFirstCouldown;
     }
 
     public override void TickLogic()
@@ -37,6 +40,11 @@ public class C_Double_Rocket : ComportementState
         base.TickLogic();
         
         timer += Time.deltaTime;
+        if (firstCouldown)
+        {
+            timer = timer + onOffCouldown-onOffFirstCouldown;
+            firstCouldown = false;
+        }
         if (timer > onOffCouldown)
         {
             timer = 0f;

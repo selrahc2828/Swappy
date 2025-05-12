@@ -9,5 +9,6 @@ public partial class ComportementManager
         public float rocketDoubleForceOnPlayer = 150f;
         public float rocketDoubleForceWhenGrab = 150f;
         public float rocketDoubleCouldown = 10f;
+        public float rocketDoubleFirstCouldown = 5f;
     }
 }
