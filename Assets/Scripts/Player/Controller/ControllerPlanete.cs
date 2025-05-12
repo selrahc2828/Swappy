@@ -19,7 +19,12 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private float airControlMultiplier; //anciennement "airControlMultiplier"
     [SerializeField] private float stoppingRatio;
     [SerializeField] private float sideSpeedReductionRatio;
-    [SerializeField] private float jumpForce;
+    [SerializeField] private float jumpForceMIN;
+    [SerializeField] private float jumpForceMAX;
+    [SerializeField] private float jumpTime;
+
+    private float jumpTimer;
+    private bool isChargingJump;
 
     [Header("References")]
     [SerializeField] private Camera playerCamera;
@@ -73,7 +78,8 @@ public class ControllerPlanete : MonoBehaviour
 
         controls.Player.Movement.performed += MovementAttack;
         controls.Player.Movement.canceled += MovementAttack;
-        controls.Player.Jump.performed += Jump;
+        controls.Player.Jump.performed += StartJump;
+        controls.Player.Jump.canceled += EndJump;
         controls.Player.StartSprint.performed += StartSprint;
         controls.Player.StopSprint.performed += StopSprint;
 
@@ -83,7 +89,6 @@ public class ControllerPlanete : MonoBehaviour
         airControlMultiplier = gameManager.airControlMultiplier;
         stoppingRatio = gameManager.stoppingRatio;
         sideSpeedReductionRatio = gameManager.sideSpeedReductionRatio;
-        jumpForce = gameManager.jumpForce;
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
 
@@ -113,7 +118,8 @@ public class ControllerPlanete : MonoBehaviour
     {
         controls.Player.Movement.performed -= MovementAttack;
         controls.Player.Movement.canceled -= MovementAttack;
-        controls.Player.Jump.performed -= Jump;
+        controls.Player.Jump.performed -= StartJump;
+        controls.Player.Jump.canceled -= EndJump;
         controls.Player.StartSprint.performed -= StartSprint;
         controls.Player.StopSprint.performed -= StopSprint;
     }
@@ -145,6 +151,11 @@ public class ControllerPlanete : MonoBehaviour
         if (touchingInclinedSurface && Vector3.Dot(moveDirection, touchingInclinedSurfaceDirection) < 0)
         {
             moveDirection = Vector3.ProjectOnPlane(moveDirection, touchingInclinedSurfaceDirection);
+        }
+
+        if (isChargingJump)
+        {
+            jumpTimer += Time.deltaTime;
         }
 
         CurvesTickTest();
@@ -255,10 +266,18 @@ public class ControllerPlanete : MonoBehaviour
             isSprinting = false;
         }
     }
-    private void Jump(InputAction.CallbackContext context)
+    private void StartJump(InputAction.CallbackContext context)
+    {
+        jumpTimer = 0;
+        isChargingJump = true;
+    }
+
+    private void EndJump(InputAction.CallbackContext context)
     {
         if (context.performed && grounded)
         {
+            Mathf.Max(jumpTimer, jumpTime);
+            float jumpForce = Mathf.Lerp(jumpForceMIN, jumpForceMAX, jumpTimer/jumpTime);
             rb.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
             CameraOffsetOnJumpStart();
         }
