@@ -7,6 +7,7 @@ public partial class ComportementManager
     {
         public float magnetRange = 8f;
         public float magnetForce = 8f;
-        [HideInInspector] public bool magnetGradiantForce;
+        public float equilibriumDistance = 2f;
+        public float dampingFactor = 2f;
     }
 }

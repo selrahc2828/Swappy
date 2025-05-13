@@ -10,10 +10,8 @@ public class C_Solo_Magnet : ComportementState
     private float magnetRange;
     private float trueMagnetRange;
     private float magnetForce;
-    private bool magnetGradiantForce;
-    
-
-
+    private float equilibriumDistance;
+    private float dampingFactor;
     
     public C_Solo_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
@@ -38,7 +36,8 @@ public class C_Solo_Magnet : ComportementState
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;
         }
         magnetForce = _sm.comportementManager.magnetData.magnetForce;
-        magnetGradiantForce = _sm.comportementManager.magnetData.magnetGradiantForce;
+        equilibriumDistance = _sm.comportementManager.magnetData.equilibriumDistance;
+        dampingFactor = _sm.comportementManager.magnetData.dampingFactor;
         
         // _sm.rend.material = _sm.magnet;
         ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.noComportementColor);
@@ -74,6 +73,12 @@ public class C_Solo_Magnet : ComportementState
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(_sm.transform.position, trueMagnetRange);   
     }
+    
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(_sm.transform.position, equilibriumDistance);
+    }
 
     public void Attract()
     {
@@ -86,26 +91,33 @@ public class C_Solo_Magnet : ComportementState
                 {
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
-                        ApplyForce(magnetGradiantForce, objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-                        
+                        ApplyForce( objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
                     }
                 }
             }
         }
     }
     
-    public void ApplyForce(bool isGradient, Rigidbody rbObj,GameObject objToApply, float force)
+    public void ApplyForce( Rigidbody rb,GameObject objToApply, float force)
     {
-        
-        if (isGradient)
-        {
-            objToApply.GetComponent<Rigidbody>().AddExplosionForce(-force, _sm.transform.position, trueMagnetRange);
-        }
-        else
-        {
+        if (rb == null) return;
 
-            Vector3 dir = (_sm.transform.position - objToApply.transform.position).normalized; // obj vers magnet
-            rbObj.AddForce(dir * force, ForceMode.Force);
-        }
+        Vector3 toObject = objToApply.transform.position - _sm.transform.position;
+        float currentDistance = toObject.magnitude;
+
+        // Si l'objet est exactement à la distance souhaitée, aucune force
+        if (Mathf.Approximately(currentDistance, equilibriumDistance)) return;
+
+        // Calcul du point sur la sphère (direction * rayon)
+        Vector3 targetPoint = _sm.transform.position + toObject.normalized * equilibriumDistance;
+
+        // Direction vers ce point d'équilibre
+        Vector3 forceDir = (targetPoint - objToApply.transform.position).normalized;
+
+        rb.AddForce(forceDir * force, ForceMode.Force);
+        
+        // --- Damping : freine la vitesse radiale (vers/depuis le centre) ---
+        Vector3 radialVelocity = Vector3.Project(rb.velocity, forceDir);
+        rb.velocity -= radialVelocity * (dampingFactor * Time.deltaTime);
     }
 }

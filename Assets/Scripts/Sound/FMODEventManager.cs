@@ -89,9 +89,7 @@ public class FMODEventManager : MonoBehaviour
 
     public void PlayEventInstance(EventInstance eventInstance)
     {
-
-            eventInstance.start();
-
+        eventInstance.start();
     }
 
     public void PlayEventInstance3DNotMoving(EventInstance eventInstance, Vector3 position)
