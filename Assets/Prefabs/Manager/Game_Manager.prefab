@@ -77,17 +77,18 @@ MonoBehaviour:
   planeteCores:
   - {fileID: 0}
   constanteGravitationelle: 8.5
-  maxSpeed: 7.5
+  maxSpeed: 7
   moveSpeed: 25
-  sprintMultiplier: 1.5
+  sprintMultiplier: 1.45
   airControlMultiplier: 0.25
   stoppingRatio: 0.9
   sideSpeedReductionRatio: 0.1
   groundDrag: 5
   orientation: {fileID: 0}
-  jumpForceMIN: 6.5
-  jumpForceMAX: 9
-  jumpTime: 0.6
+  jumpForceMIN: 6.3
+  jumpForceMAX: 8.6
+  jumpTime: 0.5
+  coyoteeTime: 0
   playerHeight: 2.8
   whatIsGround:
     serializedVersion: 2
@@ -167,11 +168,20 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: 0
-      outSlope: 2.000003
+      outSlope: 0
       tangentMode: 0
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.333333
+      outWeight: 0.33333337
+    - serializedVersion: 3
+      time: 0.075898714
+      value: 0.00011884025
+      inSlope: 0.0015657742
+      outSlope: 1.9495988
+      tangentMode: 5
+      weightedMode: 3
+      inWeight: 0.3333332
+      outWeight: 0.33333305
     - serializedVersion: 3
       time: 1
       value: 1
@@ -243,14 +253,23 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 0
     m_RotationOrder: 4
-  cameraOffsetOnJump: 0.5
-  cameraOffsetOnJumpTime: 1
+  cameraOffsetOnJump: 0.36
+  cameraOffsetOnJumpTime: 0.6
   cameraOffsetOnJumpCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
+      time: 0.0000000018626451
+      value: 0.00015833299
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.07355499
+      value: 0.000061035156
       inSlope: 2.3180504
       outSlope: 2.3180504
       tangentMode: 0
@@ -269,7 +288,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  cameraOffsetOffJumpTime: 1
+  cameraOffsetOffJumpTime: 0.5
   cameraOffsetOffJumpCurve:
     serializedVersion: 2
     m_Curve:
