@@ -32,14 +32,17 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private GameObject armsHandle;
 
     private Vector3 baseCamHandlePos;
+    private float baseCameraFOV;
+    private float baseMaxSpeed;
 
     [Header("Physics Curves")]
     private AnimationCurve walkSpeedOnMoveCurve;
     private AnimationCurve walkSpeedOffMoveCurve;
 
-    private float speedReductionOnJump;
-    private AnimationCurve speedReducOnJumpCurve;
-    private AnimationCurve speedReducOffJumpCurve;
+    private float maxSpeedOnJump;
+    private AnimationCurve maxSpeedOnJumpCurve;
+    private float maxSpeedOffJumpTime;
+    private AnimationCurve maxSpeedOffJumpCurve;
 
     private float airControlMinimum;
     private AnimationCurve airControlCurve;
@@ -98,9 +101,12 @@ public class ControllerPlanete : MonoBehaviour
 
         walkSpeedOnMoveCurve = gameManager.walkSpeedOnMoveCurve;
         walkSpeedOffMoveCurve = gameManager.walkSpeedOffMoveCurve;
-        speedReductionOnJump = gameManager.speedReductionOnJump;
-        speedReducOnJumpCurve = gameManager.speedReductionOnJumpCurve;
-        speedReducOffJumpCurve = gameManager.speedReductionOffJumpCurve;
+
+        maxSpeedOnJump = gameManager.maxSpeedOnJump;
+        maxSpeedOnJumpCurve = gameManager.maxSpeedOnJumpCurve;
+        maxSpeedOffJumpTime = gameManager.maxSpeedOffJumpTime;
+        maxSpeedOffJumpCurve = gameManager.maxSpeedOffJumpCurve;
+
         airControlMinimum = gameManager.airControlMultiplierMinimum;
         airControlCurve = gameManager.airControlMultiplierCurve;
 
@@ -134,7 +140,10 @@ public class ControllerPlanete : MonoBehaviour
         isStopping = true;
         rb = GetComponent<Rigidbody>();
         gravityComponent = GetComponent<GravityPlanete>();
+
         baseCamHandlePos = cameraHandle.transform.localPosition;
+        baseCameraFOV = Camera.main.fieldOfView;
+        baseMaxSpeed = maxSpeed;
     }
 
     private void Update()
@@ -162,7 +171,8 @@ public class ControllerPlanete : MonoBehaviour
             jumpTimer += Time.deltaTime;
         }
 
-        CurvesTickTest();
+        CameraCurvesTick();
+        ControllerCurvesTick();
     }
 
     void FixedUpdate()
@@ -277,6 +287,7 @@ public class ControllerPlanete : MonoBehaviour
             jumpTimer = 0;
             isChargingJump = true;
             CameraOffsetOnJumpStart();
+            MaxSpeedOnJumpStart();
         }
     }
 
@@ -285,16 +296,75 @@ public class ControllerPlanete : MonoBehaviour
         if (grounded)
         {
             isCamOnJumpActive = false;
+            maxSpeedOnJumpActive = false;
+
             Mathf.Max(jumpTimer, jumpTime);
             float jumpForce = Mathf.Lerp(jumpForceMIN, jumpForceMAX, jumpTimer/jumpTime);
             rb.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
+
             CameraOffsetOffJumpStart();
+            MaxSpeedOffJumpStart();
         }
     }
 
     #region CurvesPolish
 
-    private void CurvesTickTest()
+    private void ControllerCurvesTick()
+    {
+        if (maxSpeedOnJumpActive)
+        {
+           maxSpeed = MaxSpeedOnJumpTick();
+        }
+        if (maxSpeedOffJumpActive)
+        {
+           maxSpeed = MaxSpeedOffJumpTick();
+        }
+    }
+
+    #region SpeedReducOnJump
+    private float maxSpeedOnJumpTimer;
+    private bool maxSpeedOnJumpActive;
+    private void MaxSpeedOnJumpStart()
+    {
+        maxSpeedOnJumpActive = true;
+        maxSpeedOnJumpTimer = 0;
+    }
+
+    private float MaxSpeedOnJumpTick()
+    {
+        maxSpeedOnJumpTimer += Time.deltaTime;
+        Mathf.Max(maxSpeedOnJumpTimer, jumpTime);
+        float newMaxSpeed = Mathf.Lerp(baseMaxSpeed, maxSpeedOnJump, camOnJumpCurve.Evaluate(maxSpeedOnJumpTimer / jumpTime));
+        return newMaxSpeed;
+    }
+
+
+    #endregion
+
+    #region SpeedReducOffJump
+    private float maxSpeedOffJumpTimer;
+    private bool maxSpeedOffJumpActive;
+    private void MaxSpeedOffJumpStart()
+    {
+        maxSpeedOffJumpActive = true;
+        maxSpeedOffJumpTimer = 0;
+    }
+
+    private float MaxSpeedOffJumpTick()
+    {
+        maxSpeedOffJumpTimer += Time.deltaTime;
+        if (camOffJumpTimer > camOffJumpTime)
+        {
+            maxSpeedOffJumpActive = false;
+            return baseMaxSpeed;
+        }
+        Mathf.Max(maxSpeedOffJumpTimer, jumpTime);
+        float newMaxSpeed = Mathf.Lerp(maxSpeedOnJump, baseMaxSpeed, camOffJumpCurve.Evaluate(maxSpeedOffJumpTimer / jumpTime));
+        return newMaxSpeed;
+    }
+
+    #endregion
+    private void CameraCurvesTick()
     {
         Vector3 cameraOffset1 = Vector3.zero;
         Vector3 cameraOffset2 = Vector3.zero;

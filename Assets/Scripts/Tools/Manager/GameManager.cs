@@ -93,9 +93,10 @@ public class GameManager : MonoBehaviour
     public AnimationCurve walkSpeedOnMoveCurve;
     public AnimationCurve walkSpeedOffMoveCurve;
     [Space(8)]
-    public float speedReductionOnJump;
-    public AnimationCurve speedReductionOnJumpCurve;
-    public AnimationCurve speedReductionOffJumpCurve;
+    public float maxSpeedOnJump;
+    public AnimationCurve maxSpeedOnJumpCurve;
+    public float maxSpeedOffJumpTime;
+    public AnimationCurve maxSpeedOffJumpCurve;
     [Space(8)]
     public float airControlMultiplierMinimum;
     public AnimationCurve airControlMultiplierCurve;
