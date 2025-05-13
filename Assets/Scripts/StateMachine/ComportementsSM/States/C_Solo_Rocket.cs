@@ -9,10 +9,12 @@ public class C_Solo_Rocket : ComportementState
     private float rocketForceOnPlayer = 20;
     private float rocketForceWhenGrab= 20;
     private float onCooldown;
+    private float onFirstCooldown;
     private float offCooldown;
     private float timer;
     private float maxSpeed;
     private bool rocketOn;
+    private bool firstRocket;
     
     public C_Solo_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -28,11 +30,13 @@ public class C_Solo_Rocket : ComportementState
 
         timer = 0f;
         rocketOn = false;
+        firstRocket = true;
         maxSpeed = _sm.comportementManager.rocketData.rocketMaxSpeed;
         rocketForce = _sm.comportementManager.rocketData.rocketForce;
         rocketForceOnPlayer = _sm.comportementManager.rocketData.rocketForceOnPlayer;
         rocketForceWhenGrab = _sm.comportementManager.rocketData.rocketForceWhenGrab;
         onCooldown = _sm.comportementManager.rocketData.rocketOnCooldown;
+        onFirstCooldown = _sm.comportementManager.rocketData.rocketFirstOnCooldown;
         offCooldown = _sm.comportementManager.rocketData.rocketOffCooldown;
 
         // _sm.rend.material = _sm.rocket;
@@ -50,6 +54,11 @@ public class C_Solo_Rocket : ComportementState
     {
         base.TickPhysics();
         timer += Time.fixedDeltaTime;
+        if (firstRocket)
+        {
+            timer += onCooldown - onFirstCooldown;
+            firstRocket = false;
+        }
         if (timer > onCooldown && !rocketOn)
         {
             rocketOn = true;

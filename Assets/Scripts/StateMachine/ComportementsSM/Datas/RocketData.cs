@@ -9,6 +9,7 @@ public partial class ComportementManager
         public float rocketForceOnPlayer = 75f;
         public float rocketForceWhenGrab = 75f;
         public float rocketOnCooldown = 5f;
+        public float rocketFirstOnCooldown = 2f;
         public float rocketOffCooldown = 6f;
         public float rocketMaxSpeed = 15;
     }

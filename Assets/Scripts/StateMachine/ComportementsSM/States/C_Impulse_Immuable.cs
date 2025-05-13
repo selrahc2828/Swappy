@@ -5,6 +5,8 @@ using UnityEngine;
 public class C_Impulse_Immuable : ComportementState
 {
     private float repulserTime = 5f;
+    private float repulserFirstTime = 5f;
+    private bool firstRepulser = true;
     private float repulserTimer;
     private float repulserRange;
     private float trueRepulserRange;
@@ -19,6 +21,7 @@ public class C_Impulse_Immuable : ComportementState
 
     public override void Enter()
     {
+        firstRepulser = true;
         isKinematic = true;
         stateValue = 10;
         leftValue = 1;
@@ -28,6 +31,7 @@ public class C_Impulse_Immuable : ComportementState
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
         
         repulserTime = _sm.comportementManager.impulseData.impulseTime;
+        repulserFirstTime = _sm.comportementManager.impulseData.impulseFirstTime;
         repulserTimer = 0;
         repulserRange = _sm.comportementManager.impulseData.impulseRange;
 
@@ -52,6 +56,11 @@ public class C_Impulse_Immuable : ComportementState
     {
         base.TickLogic();
         repulserTimer += Time.deltaTime;
+        if (firstRepulser)
+        {
+            repulserTimer += repulserTime - repulserFirstTime;
+            firstRepulser = false;
+        }
         if (repulserTimer >= repulserTime)
         {
             Repulse();
