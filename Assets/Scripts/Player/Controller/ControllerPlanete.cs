@@ -22,9 +22,13 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private float jumpForceMIN;
     [SerializeField] private float jumpForceMAX;
     [SerializeField] private float jumpTime;
+    [SerializeField] private float coyoteeTime;
 
     private float jumpTimer;
     private bool isChargingJump;
+
+    private float coyoteeTimer;
+    private float isCoyoteeActive;
 
     [Header("References")]
     [SerializeField] private Camera playerCamera;
@@ -95,6 +99,7 @@ public class ControllerPlanete : MonoBehaviour
         jumpForceMAX = gameManager.jumpForceMAX;
         jumpForceMIN = gameManager.jumpForceMIN;   
         jumpTime = gameManager.jumpTime;
+        coyoteeTime = gameManager.coyoteeTime;
 
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
