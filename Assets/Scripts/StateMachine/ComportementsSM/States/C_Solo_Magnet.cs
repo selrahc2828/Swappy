@@ -106,17 +106,12 @@ public class C_Solo_Magnet : ComportementState
     public void ApplyForce( Rigidbody rb,GameObject objToApply, float force)
     {
 
-        if (!magnetedObjects.Contains(rbObj))
+        if (!magnetedObjects.Contains(rb))
         {
-            magnetedObjects.Add(rbObj);
-            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,rbObj.mass);
+            magnetedObjects.Add(rb);
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,rb.mass);
         }
-        if (isGradient)
-        {
-            objToApply.GetComponent<Rigidbody>().AddExplosionForce(-force, _sm.transform.position, trueMagnetRange);
-        }
-        else
-        {
+
 
         if (rb == null) return;
 

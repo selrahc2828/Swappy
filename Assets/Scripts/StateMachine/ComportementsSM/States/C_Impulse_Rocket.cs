@@ -99,12 +99,7 @@ public class C_Impulse_Rocket : ComportementState
         {
 
             GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
-
-            if (!isSonOn)
-            {
-                isSonOn = true;
-            }
-
+            
             impulseTimer += Time.fixedDeltaTime;
             if (impulseTimer > timeBetweenImpulses)
             {

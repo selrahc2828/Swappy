@@ -43,7 +43,7 @@ public class C_Immuable_Magnet : ComportementState
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;
         }
         magnetForce = _sm.comportementManager.magnetData.magnetForce;
-        magnetGradiantForce = _sm.comportementManager.magnetData.magnetGradiantForce;
+
         
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
         feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
