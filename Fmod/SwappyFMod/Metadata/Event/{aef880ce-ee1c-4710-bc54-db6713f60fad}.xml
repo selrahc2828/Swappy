@@ -169,6 +169,9 @@
 		<property name="maximumScatterDistance">
 			<value>0</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{629ba796-9a6f-4339-a21b-1eab7edf0c77}</destination>
+		</relationship>
 		<relationship name="sound">
 			<destination>{2a652893-46da-4bee-bc53-f7de47a6b8ff}</destination>
 		</relationship>
@@ -270,6 +273,14 @@
 	</object>
 	<object class="MixerBusPanner" id="{a9c138b8-40dd-4603-9253-6cd267c2def0}" />
 	<object class="MixerBusFader" id="{dc02599f-070d-4dde-ae4a-4b4973d8ffda}" />
+	<object class="RandomizerModulator" id="{629ba796-9a6f-4339-a21b-1eab7edf0c77}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>0.520833373</value>
+		</property>
+	</object>
 	<object class="MultiSound" id="{2a652893-46da-4bee-bc53-f7de47a6b8ff}">
 		<relationship name="sounds">
 			<destination>{99628ae9-8aa9-404e-a082-17814cc72365}</destination>
