@@ -23,12 +23,13 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private float jumpForceMAX;
     [SerializeField] private float jumpTime;
     [SerializeField] private float coyoteeTime;
+    [SerializeField] private float jumpCooldown;
 
     private float jumpTimer;
     private bool isChargingJump;
 
     private float coyoteeTimer;
-    private float isCoyoteeActive;
+    private bool hasJumped;
 
     [Header("References")]
     [SerializeField] private Camera playerCamera;
@@ -97,9 +98,10 @@ public class ControllerPlanete : MonoBehaviour
         stoppingRatio = gameManager.stoppingRatio;
         sideSpeedReductionRatio = gameManager.sideSpeedReductionRatio;
         jumpForceMAX = gameManager.jumpForceMAX;
-        jumpForceMIN = gameManager.jumpForceMIN;   
+        jumpForceMIN = gameManager.jumpForceMIN;
         jumpTime = gameManager.jumpTime;
         coyoteeTime = gameManager.coyoteeTime;
+        jumpCooldown = gameManager.jumpCooldown;
 
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
@@ -212,6 +214,8 @@ public class ControllerPlanete : MonoBehaviour
             moveDirection = Vector3.ProjectOnPlane(moveDirection, localHorizontalVelocity);
         }
         rb.AddForce(moveDirection * (moveSpeed * orientationValue * aerialMultiplierValue * sprintMultiplierValue), ForceMode.Acceleration);
+
+        coyoteeTimer += Time.fixedDeltaTime;
     }
 
     void GroundCheck()
@@ -227,8 +231,10 @@ public class ControllerPlanete : MonoBehaviour
             {
                 grounded = true;
             }
+            coyoteeTimer = 0;
         }
     }
+
     private void OnCollisionStay(Collision collision)
     {
         if (collision.GetContact(0).thisCollider.CompareTag("AntiStick"))
@@ -300,16 +306,27 @@ public class ControllerPlanete : MonoBehaviour
     {
         if (grounded)
         {
-            isCamOnJumpActive = false;
-            maxSpeedOnJumpActive = false;
-
-            Mathf.Max(jumpTimer, jumpTime);
-            float jumpForce = Mathf.Lerp(jumpForceMIN, jumpForceMAX, jumpTimer/jumpTime);
-            rb.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
-
-            CameraOffsetOffJumpStart();
-            MaxSpeedOffJumpStart();
+            JumpAction();
         }
+
+        if (coyoteeTimer < coyoteeTime)
+        {
+            JumpAction();
+        }
+    }
+
+    private void JumpAction()
+    {
+        isCamOnJumpActive = false;
+        maxSpeedOnJumpActive = false;
+
+        Mathf.Max(jumpTimer, jumpTime);
+        float jumpForce = Mathf.Lerp(jumpForceMIN, jumpForceMAX, jumpTimer / jumpTime);
+        rb.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
+
+        CameraOffsetOffJumpStart();
+        MaxSpeedOffJumpStart();
+        return;
     }
 
     #region CurvesPolish

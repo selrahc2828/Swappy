@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
     public float jumpForceMAX;
     public float jumpTime;
     public float coyoteeTime;
+    public float jumpCooldown;
 
     //[Header("Player Crouch Parameters")]
     //public float crouchSpeed;
