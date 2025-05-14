@@ -216,6 +216,7 @@ public class ControllerPlanete : MonoBehaviour
         rb.AddForce(moveDirection * (moveSpeed * orientationValue * aerialMultiplierValue * sprintMultiplierValue), ForceMode.Acceleration);
 
         coyoteeTimer += Time.fixedDeltaTime;
+        jumpCooldownTimer += Time.fixedDeltaTime;
     }
 
     void GroundCheck()
@@ -257,7 +258,7 @@ public class ControllerPlanete : MonoBehaviour
         GroundCheck();
         if (grounded)
         {
-
+            hasAlreadyJumped = false;
         }
         else
         {
@@ -291,8 +292,19 @@ public class ControllerPlanete : MonoBehaviour
             isSprinting = false;
         }
     }
+
     private void StartJump(InputAction.CallbackContext context)
     {
+        if (hasAlreadyJumped)
+        {
+            return;
+        }
+
+        if (jumpCooldownTimer < jumpCooldown)
+        {
+            return;
+        }
+
         if (context.performed && grounded)
         {
             jumpTimer = 0;
@@ -304,21 +316,38 @@ public class ControllerPlanete : MonoBehaviour
 
     private void EndJump(InputAction.CallbackContext context)
     {
+        if (hasAlreadyJumped)
+        {
+            return;
+        }
+
+        if (jumpCooldownTimer < jumpCooldown)
+        {
+            return;
+        }
+
         if (grounded)
         {
             JumpAction();
+            return;
         }
 
         if (coyoteeTimer < coyoteeTime)
         {
             JumpAction();
+            return;
         }
     }
+
+    private float jumpCooldownTimer;
+    private bool hasAlreadyJumped;
 
     private void JumpAction()
     {
         isCamOnJumpActive = false;
         maxSpeedOnJumpActive = false;
+        hasAlreadyJumped = true;
+        jumpCooldownTimer = 0;
 
         Mathf.Max(jumpTimer, jumpTime);
         float jumpForce = Mathf.Lerp(jumpForceMIN, jumpForceMAX, jumpTimer / jumpTime);
