@@ -12,7 +12,6 @@ public class ImpulseMagnetZone : MonoBehaviour
     public Transform followTransform;
     public bool isGrabbed;
     
-    private List<Rigidbody> repulsedObject = new List<Rigidbody>();
     public GameObject comportementableObject;
 
     private void Update()
@@ -42,12 +41,14 @@ public class ImpulseMagnetZone : MonoBehaviour
             // other.GetComponentInParent<Rigidbody>().AddForce(direction * force * attenuation, ForceMode.Acceleration);
             
             other.GetComponentInParent<Rigidbody>().AddForce(direction * force, ForceMode.Force);//Acceleration
-            if (!repulsedObject.Contains(other.GetComponentInParent<Rigidbody>()))
-            {
-                repulsedObject.Add(other.GetComponentInParent<Rigidbody>());
-                GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject);
-            }
-               
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponentInParent<Rigidbody>())
+        {
+            GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject,other.GetComponentInParent<Rigidbody>().mass);
         }
     }
 }

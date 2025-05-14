@@ -43,6 +43,11 @@ public class MagnetForceField : MonoBehaviour
         DisplayColor();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (affectedPlayer)//on va chercher le RB dans le parent pour le player
@@ -73,11 +78,6 @@ public class MagnetForceField : MonoBehaviour
         
         if (!burst)// magnet normal
         {
-            if (!magnetedObjects.Contains(rbObj))
-            {
-                magnetedObjects.Add(rbObj);
-                GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject);
-            }
 
             rbObj.AddForce(dir * force, ForceMode.Force);
             // Debug.DrawRay(objToApply.transform.position, dir*5, Color.green);
@@ -85,7 +85,7 @@ public class MagnetForceField : MonoBehaviour
         }
         else // magnet bounce => burst
         {
-            GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject);
+
             rbObj.AddForce(dir * burstForce, ForceMode.Impulse);
             Debug.DrawRay(objToApply.transform.position, dir*5, Color.red);
         }

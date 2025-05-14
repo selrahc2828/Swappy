@@ -86,6 +86,7 @@ public class C_Solo_Magnet : ComportementState
 
     public void Attract()
     {
+        List<Rigidbody> newMagnetedObjects = new List<Rigidbody>();
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueMagnetRange);
         if (objectsInRange.Length > 0)
         {
@@ -96,22 +97,20 @@ public class C_Solo_Magnet : ComportementState
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
                         ApplyForce( objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-
+                        if (!magnetedObjects.Contains(objectInRange.GetComponent<Rigidbody>()))
+                        {
+                            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,objectInRange.GetComponent<Rigidbody>().mass);
+                        }
+                        newMagnetedObjects.Add(objectInRange.GetComponent<Rigidbody>());
                     }
                 }
             }
         }
+        magnetedObjects = newMagnetedObjects;
     }
     
     public void ApplyForce( Rigidbody rb,GameObject objToApply, float force)
     {
-
-        if (!magnetedObjects.Contains(rb))
-        {
-            magnetedObjects.Add(rb);
-            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,rb.mass);
-        }
-
 
         if (rb == null) return;
 
