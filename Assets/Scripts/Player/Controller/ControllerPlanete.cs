@@ -28,7 +28,6 @@ public class ControllerPlanete : MonoBehaviour
     private bool isChargingJump;
 
     private float coyoteeTimer;
-    private float isCoyoteeActive;
 
     [Header("References")]
     [SerializeField] private Camera playerCamera;
