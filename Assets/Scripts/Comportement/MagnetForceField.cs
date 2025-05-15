@@ -30,7 +30,6 @@ public class MagnetForceField : MonoBehaviour
 
     private void Update()
     {
-       
         if (_timerBurst > 0)
         {
             _timerBurst -= Time.deltaTime;
@@ -42,12 +41,7 @@ public class MagnetForceField : MonoBehaviour
         
         DisplayColor();
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        
-    }
-
+    
     private void OnTriggerStay(Collider other)
     {
         if (affectedPlayer)//on va chercher le RB dans le parent pour le player
@@ -93,6 +87,8 @@ public class MagnetForceField : MonoBehaviour
 
     public void Bounce()
     {
+        
+        GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject);
         // boolBurst = false dans le comportement CollisionEnd
         if (_timerBurst <= 0)
         {
