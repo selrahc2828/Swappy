@@ -1,28 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class FragmentSystem : MonoBehaviour
 {
-    public FragmentSaveData fragmentData;
+    public FragmentBankData fragmentBankData;
 
-    public void AddFragment(int quantity) // quantity de FragmentData
+    public void AddFragment(int quantity)
     {
-        fragmentData.inventoryFragmentQuantity += quantity;
+        fragmentBankData.bankInventoryFragmentQuantity += quantity;
     }
 
     public void RemoveFragment(int quantity)
     {
-        if (fragmentData.inventoryFragmentQuantity - quantity < 0)
+        if (fragmentBankData.bankInventoryFragmentQuantity - quantity < 0)
         {
-            fragmentData.inventoryFragmentQuantity = 0;
+            fragmentBankData.bankInventoryFragmentQuantity = 0;
             return;
         }
-        fragmentData.inventoryFragmentQuantity -= quantity;
+        fragmentBankData.bankInventoryFragmentQuantity -= quantity;
     }
     
     public void SetFragment(int quantity)
     {
-        fragmentData.inventoryFragmentQuantity = quantity;
+        fragmentBankData.bankInventoryFragmentQuantity = quantity;
+    }
+
+    private void FixedUpdate()
+    {
+        // overlapSphere autour de player
+        // detecte fragment
+        // active le follow
+        
+        // comment detecte si plus en range ? 
+        
+        // si distance < X add fragment
     }
 }

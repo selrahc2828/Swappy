@@ -67,9 +67,6 @@ public class PickUpInteraction : InteractionSystem
             case TapeData tapeData:
                 tapeSystem.SetLockTape(tapeData, true);
                 break;
-            case FragmentData fragmentData:
-                fragmentSystem.AddFragment(fragmentData.quantity);
-                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(itemData));
         }

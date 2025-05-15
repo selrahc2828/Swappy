@@ -7,7 +7,11 @@ using UnityEngine.UI;
 
 public class InventoryMenu : MonoBehaviour
 {
+    [Header("Fragments")]
+    public FragmentSystem fragmentSystem;
+    public GameObject fragmentSlotPrefab;
 
+    [Header("Items")]
     public InventorySystem inventorySystem;
     
     public Transform inventoryContent;
@@ -27,25 +31,42 @@ public class InventoryMenu : MonoBehaviour
     
     void Start()
     {
-        RefreshUI();
+        // première initialisation
+        RefreshItemUI();
+        RefreshFragmentUI();
     }
 
     void OnEnable()
     {
         inventorySystem = FindObjectOfType<InventorySystem>();
-        GlobalEventManager.Instance.OnAddInventory += RefreshUI;
+        fragmentSystem = FindObjectOfType<FragmentSystem>();
+        
+        // abonné aux events sinon n'est pas actualisé car le canvas est déjà ouvert quand on rammasse des items/fragments
+        if (inventorySystem != null)
+        {
+            GlobalEventManager.Instance.OnAddInventory += RefreshItemUI;
+        }
+
+        if (fragmentSystem != null)
+        {
+            GlobalEventManager.Instance.OnAddFragment += RefreshFragmentUI;
+        }
     }
 
     void OnDisable()
     {
         if (inventorySystem != null)
         {
-            // Désabonnement de l'event pour éviter les erreurs de références invalides
-            GlobalEventManager.Instance.OnAddInventory -= RefreshUI;
+            GlobalEventManager.Instance.OnAddInventory -= RefreshItemUI;
+        }
+
+        if (fragmentSystem != null)
+        {
+            GlobalEventManager.Instance.OnAddFragment -= RefreshFragmentUI;
         }
     } 
     
-    public void RefreshUI()
+    public void RefreshItemUI()
     {
         // On supprime tous les slots existants
         foreach (Transform child in inventoryContent)
@@ -98,9 +119,15 @@ public class InventoryMenu : MonoBehaviour
             currentPreviewInstance.transform.localScale = Vector3.one * 1f;
         }
     }
+
+    void RefreshFragmentUI()
+    {
+        // fait au plus simple ici, on pas du principe qu'on en a qu'un seul donc pas besoin de gérer une instantiation automatique comme les RefreshItem
+        fragmentSlotPrefab.GetComponent<FragmentSlotUI>().Initialize(fragmentSystem.fragmentBankData);
+    }
     
     public void UpdateInventory()
     {
-        RefreshUI();
+        RefreshItemUI();
     }
 }
