@@ -77,6 +77,7 @@ public class FMODEventManager : MonoBehaviour
                 _maxValueMass = rigidbody.mass;
             }
         }
+        SetUpBusVolumeStart();
     }
 
     #endregion
@@ -321,6 +322,15 @@ public class FMODEventManager : MonoBehaviour
     {
         Bus bus = RuntimeManager.GetBus(busRef);
         bus.setVolume(volume);
+    }
+
+    private void SetUpBusVolumeStart()
+    {
+        ChangeVolume(Fmodbus.busMaster,GameManager.Instance.parameters.volumeMaster);
+        ChangeVolume(Fmodbus.busPlayer,GameManager.Instance.parameters.volumePlayer);
+        ChangeVolume(Fmodbus.busSystem,GameManager.Instance.parameters.volumeSystem);
+        ChangeVolume(Fmodbus.busMusic,GameManager.Instance.parameters.volumeMusic);
+        ChangeVolume(Fmodbus.busMenu,GameManager.Instance.parameters.volumeMenu);
     }
     #endregion
     #region On destroy

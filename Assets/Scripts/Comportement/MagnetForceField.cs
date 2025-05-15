@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,7 +21,7 @@ public class MagnetForceField : MonoBehaviour
     public float delayDisplay;
     [SerializeField] float _timerDisplay;
 
-    private List<Rigidbody> magnetedObjects = new List<Rigidbody>();
+    public bool _isDoubleMagnet;
     public GameObject comportementableObject;
 
     private void Start()
@@ -41,7 +42,15 @@ public class MagnetForceField : MonoBehaviour
         
         DisplayColor();
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_isDoubleMagnet)
+        {
+            GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject,other.GetComponent<Rigidbody>().mass);
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (affectedPlayer)//on va chercher le RB dans le parent pour le player
