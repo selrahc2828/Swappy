@@ -47,7 +47,11 @@ public class MagnetForceField : MonoBehaviour
     {
         if (_isDoubleMagnet)
         {
-            GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject,other.GetComponent<Rigidbody>().mass);
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject,rb.mass);
+            }
         }
     }
 
