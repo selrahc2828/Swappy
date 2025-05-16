@@ -1,3 +1,5 @@
+using AmplifyShaderEditor;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Input = UnityEngine.Input;
@@ -16,7 +18,7 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private float maxSpeed;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float sprintMultiplier;
-    [SerializeField] private float airControlMultiplier; //anciennement "airControlMultiplier"
+    [SerializeField] private float airControlMultiplier;
     [SerializeField] private float stoppingRatio;
     [SerializeField] private float sideSpeedReductionRatio;
     [SerializeField] private float jumpForceMIN;
@@ -39,6 +41,7 @@ public class ControllerPlanete : MonoBehaviour
     private Vector3 baseCamHandlePos;
     private float baseCameraFOV;
     private float baseMaxSpeed;
+    private Vector3 baseArmHandlePos;
 
     [Header("Physics Curves")]
     private AnimationCurve walkSpeedOnMoveCurve;
@@ -61,6 +64,10 @@ public class ControllerPlanete : MonoBehaviour
 
     [SerializeField] private float camOffJumpTime;
     [SerializeField] private AnimationCurve camOffJumpCurve;
+
+    [SerializeField] private float armRailRatio;
+    [SerializeField] private float armRailMaxOffset;
+    [SerializeField] private AnimationCurve armRailCurve;
 
     [SerializeField] private float camOnGround;
     [SerializeField] private AnimationCurve camOnGroundCurve;
@@ -129,6 +136,10 @@ public class ControllerPlanete : MonoBehaviour
 
         camOnWall = gameManager.cameraOffsetOnWall;
         camOnWallCurve = gameManager.cameraOffsetOnWallCurve;
+
+        armRailRatio = gameManager.armRailRatio;
+        armRailMaxOffset = gameManager.armRailMaxOffset;
+        armRailCurve = gameManager.armRailCurve;
     }
 
     private void OnDisable()
@@ -151,6 +162,7 @@ public class ControllerPlanete : MonoBehaviour
         baseCamHandlePos = cameraHandle.transform.localPosition;
         baseCameraFOV = Camera.main.fieldOfView;
         baseMaxSpeed = maxSpeed;
+        baseArmHandlePos = armsHandle.transform.localPosition;
     }
 
     private void Update()
@@ -180,7 +192,11 @@ public class ControllerPlanete : MonoBehaviour
 
         CameraCurvesTick();
         ControllerCurvesTick();
+        ArmCurvesTick();
     }
+
+    private Vector3 lastVelocity;
+    private Vector3 currentVelocity;
 
     void FixedUpdate()
     {
@@ -217,6 +233,9 @@ public class ControllerPlanete : MonoBehaviour
 
         coyoteeTimer += Time.fixedDeltaTime;
         jumpCooldownTimer += Time.fixedDeltaTime;
+
+        lastVelocity = currentVelocity;
+        currentVelocity = rb.velocity;
     }
 
     void GroundCheck()
@@ -346,6 +365,7 @@ public class ControllerPlanete : MonoBehaviour
     {
         isCamOnJumpActive = false;
         maxSpeedOnJumpActive = false;
+        isChargingJump = false;
         hasAlreadyJumped = true;
         jumpCooldownTimer = 0;
 
@@ -358,7 +378,7 @@ public class ControllerPlanete : MonoBehaviour
         return;
     }
 
-    #region CurvesPolish
+    #region ControllerCurves
 
     private void ControllerCurvesTick()
     {
@@ -415,6 +435,13 @@ public class ControllerPlanete : MonoBehaviour
     }
 
     #endregion
+
+    #endregion
+
+
+    #region CameraCurves
+
+    private Vector3 lastCameraPos;
     private void CameraCurvesTick()
     {
         Vector3 cameraOffset1 = Vector3.zero;
@@ -432,6 +459,7 @@ public class ControllerPlanete : MonoBehaviour
             cameraOffset2 = CameraOffsetOffJumpTick(); 
         }
 
+        lastCameraPos = cameraHandle.transform.localPosition;
         mergedCamOffset = cameraOffset1 + cameraOffset2 + cameraOffset3 + cameraOffset4 + cameraOffset5;
         cameraHandle.transform.localPosition = mergedCamOffset + baseCamHandlePos;
     }
@@ -487,6 +515,44 @@ public class ControllerPlanete : MonoBehaviour
     }
 
     #endregion
+
+    #endregion
+
+    #region ArmCurves
+
+    private void ArmCurvesTick()
+    {
+        float armOffset1 = 0;
+        float armOffset2 = 0;
+
+        armOffset1 = ArmHandlePhysicsTick();
+        armOffset2 = ArmHandleCameraTick();
+
+        float mergedArmOffset = armsHandle.transform.localPosition.y + armOffset1 + armOffset2;
+        float finalArmRatio = armRailCurve.Evaluate(mergedArmOffset / armRailMaxOffset);
+        float finalArmPos = armRailMaxOffset * finalArmRatio;
+
+        Debug.Log("mergedArmOffset: " + mergedArmOffset);
+        Debug.Log("finalArmRatio:" + finalArmRatio);
+        Debug.Log("finalArmPos: " + finalArmPos);
+
+        armsHandle.transform.localPosition = (Vector3.up * finalArmPos) + baseArmHandlePos;
+    }
+
+    private float ArmHandlePhysicsTick()
+    {
+        float physicsRange = lastVelocity.y - rb.velocity.y;
+        float pullForce = physicsRange * armRailRatio * Time.deltaTime;
+        return 0;
+    }
+
+    private float ArmHandleCameraTick()
+    { 
+        float camRange = lastCameraPos.y - cameraHandle.transform.localPosition.y;
+        float pullForce = camRange * armRailRatio * Time.deltaTime;
+        return 0; 
+    }
+
 
     #endregion
 }

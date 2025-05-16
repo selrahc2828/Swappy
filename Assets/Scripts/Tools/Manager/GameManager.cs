@@ -119,6 +119,11 @@ public class GameManager : MonoBehaviour
     public float cameraOffsetOnWallTime;
     public AnimationCurve cameraOffsetOnWallCurve;
 
+    [Header("Player Arm Polish")]
+    public float armRailRatio;
+    public float armRailMaxOffset;
+    public AnimationCurve armRailCurve;
+
     private void OnEnable()
     {
         if (controls == null)
