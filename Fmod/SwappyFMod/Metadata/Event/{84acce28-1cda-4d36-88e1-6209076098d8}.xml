@@ -73,15 +73,8 @@
 			<destination>{87848ffe-01d2-415d-9f91-5bdfa6f20164}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{52ee0763-bf85-475d-ac91-5d7cdddc5ee6}">
-		<relationship name="markers">
-			<destination>{79b34a5f-5427-4139-8d03-d0bb1be40490}</destination>
-		</relationship>
-	</object>
+	<object class="Timeline" id="{52ee0763-bf85-475d-ac91-5d7cdddc5ee6}" />
 	<object class="EventMixerMaster" id="{55c431ab-79ce-4e89-b31b-4db82dabe431}">
-		<property name="color">
-			<value>Blue</value>
-		</property>
 		<relationship name="modulators">
 			<destination>{5bc6efb9-bdb6-47ef-9904-ee9c1384cc91}</destination>
 		</relationship>
@@ -102,14 +95,11 @@
 	</object>
 	<object class="MixerBusPanner" id="{651ebfa5-9996-4185-8233-ab0007a3a136}" />
 	<object class="EventMixerGroup" id="{87848ffe-01d2-415d-9f91-5bdfa6f20164}">
-		<property name="color">
-			<value>Blue</value>
-		</property>
 		<property name="volume">
 			<value>-11.5</value>
 		</property>
 		<property name="name">
-			<value>Magnet</value>
+			<value>Idle</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{6fc0cee3-c6df-49ff-839e-2e663c492c2a}</destination>
@@ -119,20 +109,6 @@
 		</relationship>
 		<relationship name="output">
 			<destination>{55c431ab-79ce-4e89-b31b-4db82dabe431}</destination>
-		</relationship>
-	</object>
-	<object class="LoopRegion" id="{79b34a5f-5427-4139-8d03-d0bb1be40490}">
-		<property name="position">
-			<value>0</value>
-		</property>
-		<property name="length">
-			<value>8</value>
-		</property>
-		<relationship name="timeline">
-			<destination>{52ee0763-bf85-475d-ac91-5d7cdddc5ee6}</destination>
-		</relationship>
-		<relationship name="markerTrack">
-			<destination>{2b9cc30b-f297-470a-bc7c-84b22f6075a3}</destination>
 		</relationship>
 	</object>
 	<object class="ADSRModulator" id="{5bc6efb9-bdb6-47ef-9904-ee9c1384cc91}">
