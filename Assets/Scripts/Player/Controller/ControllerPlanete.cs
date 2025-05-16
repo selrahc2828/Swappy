@@ -543,8 +543,8 @@ public class ControllerPlanete : MonoBehaviour
     private void CameraOffsetOnGroundStart(Collision collision)
     {
         isCamOnGroundActive = true;
-        camOnGroundForce = Mathf.Clamp(collision.relativeVelocity.magnitude * 0.2f, 1f, 2f);
-        camOnGroundTimer = camOnGroundTime * Mathf.Clamp(camOnGroundForce * 0.2f, 0.5f, 2f);
+        camOnGroundForce = Mathf.Clamp(collision.relativeVelocity.magnitude * 0.1f, 1f, 2f);
+        camOnGroundTimer = camOnGroundTime * Mathf.Clamp(camOnGroundForce * 0.1f, 0.5f, 2f);
         camOnGroundPointA = Vector3.zero;
         camOnGroundPointB = -Vector3.Lerp(collision.contacts[0].normal, transform.up, 0.8f).normalized * camOnGround;
     }
