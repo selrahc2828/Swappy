@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
     public float playerHeight;
     public LayerMask whatIsGround;
     public float maxSlopeAngle;
+    public float wallBumpRatio;
 
     [Header("Player Control Polish")]
     public AnimationCurve walkSpeedOnMoveCurve;

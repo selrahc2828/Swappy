@@ -26,6 +26,7 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private float jumpTime;
     [SerializeField] private float coyoteeTime;
     [SerializeField] private float jumpCooldown;
+    [SerializeField] private float wallBumpRatio;
 
     private float jumpTimer;
     private bool isChargingJump;
@@ -70,9 +71,11 @@ public class ControllerPlanete : MonoBehaviour
     [SerializeField] private AnimationCurve armRailCurve;
 
     [SerializeField] private float camOnGround;
+    [SerializeField] private float camOnGroundTime;
     [SerializeField] private AnimationCurve camOnGroundCurve;
 
     [SerializeField] private float camOnWall;
+    [SerializeField] private float camOnWallTime;
     [SerializeField] private AnimationCurve camOnWallCurve;
 
     [Space(16)]
@@ -109,6 +112,7 @@ public class ControllerPlanete : MonoBehaviour
         jumpTime = gameManager.jumpTime;
         coyoteeTime = gameManager.coyoteeTime;
         jumpCooldown = gameManager.jumpCooldown;
+        wallBumpRatio = gameManager.wallBumpRatio;
 
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
@@ -132,9 +136,11 @@ public class ControllerPlanete : MonoBehaviour
         camOffJumpCurve = gameManager.cameraOffsetOffJumpCurve;
 
         camOnGround = gameManager.cameraOffsetOnGround;
+        camOnGroundTime = gameManager.cameraOffsetOnGroundTime;
         camOnGroundCurve = gameManager.cameraOffsetOnGroundCurve;
 
         camOnWall = gameManager.cameraOffsetOnWall;
+        camOnWallTime = gameManager.cameraOffsetOnWallTime;
         camOnWallCurve = gameManager.cameraOffsetOnWallCurve;
 
         armRailRatio = gameManager.armRailRatio;
@@ -192,11 +198,11 @@ public class ControllerPlanete : MonoBehaviour
 
         CameraCurvesTick();
         ControllerCurvesTick();
-        ArmCurvesTick();
     }
 
     private Vector3 lastVelocity;
     private Vector3 currentVelocity;
+    private Vector3 wallBumpVelocity;
 
     void FixedUpdate()
     {
@@ -224,12 +230,13 @@ public class ControllerPlanete : MonoBehaviour
             {
                 rb.velocity *= stoppingRatio;
             }
+            wallBumpVelocity = wallBumpVelocity * 0.01f;
         }
         if (localHorizontalVelocity.magnitude > maxSpeed * sprintMultiplierValue && Vector3.Dot(moveDirection, localHorizontalVelocity) > 0)
         {
             moveDirection = Vector3.ProjectOnPlane(moveDirection, localHorizontalVelocity);
         }
-        rb.AddForce(moveDirection * (moveSpeed * orientationValue * aerialMultiplierValue * sprintMultiplierValue), ForceMode.Acceleration);
+        rb.AddForce(moveDirection * (moveSpeed * orientationValue * aerialMultiplierValue * sprintMultiplierValue) + wallBumpVelocity, ForceMode.Acceleration);
 
         coyoteeTimer += Time.fixedDeltaTime;
         jumpCooldownTimer += Time.fixedDeltaTime;
@@ -278,10 +285,12 @@ public class ControllerPlanete : MonoBehaviour
         if (grounded)
         {
             hasAlreadyJumped = false;
+            CameraOffsetOnGroundStart(collision);
         }
         else
         {
-
+            CameraOffsetOnWallStart(collision);
+            wallBumpVelocity = Vector3.Reflect(rb.velocity, collision.contacts[0].normal) * wallBumpRatio;
         }
     }
 
@@ -458,6 +467,14 @@ public class ControllerPlanete : MonoBehaviour
         { 
             cameraOffset2 = CameraOffsetOffJumpTick(); 
         }
+        if (isCamOnWallActive)
+        {
+            cameraOffset3 = CameraOffsetOnWallTick();
+        }
+        if (isCamOnGroundActive)
+        {
+            cameraOffset4 = CameraOffsetOnGroundTick();
+        }
 
         lastCameraPos = cameraHandle.transform.localPosition;
         mergedCamOffset = cameraOffset1 + cameraOffset2 + cameraOffset3 + cameraOffset4 + cameraOffset5;
@@ -516,11 +533,69 @@ public class ControllerPlanete : MonoBehaviour
 
     #endregion
 
+    #region CamOnGround
+
+    private Vector3 camOnGroundPointA;
+    private Vector3 camOnGroundPointB;
+    private float camOnGroundTimer;
+    private float camOnGroundForce;
+    private bool isCamOnGroundActive;
+    private void CameraOffsetOnGroundStart(Collision collision)
+    {
+        isCamOnGroundActive = true;
+        camOnGroundForce = Mathf.Clamp(collision.relativeVelocity.magnitude * 0.2f, 1f, 2f);
+        camOnGroundTimer = camOnGroundTime * Mathf.Clamp(camOnGroundForce * 0.2f, 0.5f, 2f);
+        camOnGroundPointA = Vector3.zero;
+        camOnGroundPointB = -Vector3.Lerp(collision.contacts[0].normal, transform.up, 0.8f).normalized * camOnGround;
+    }
+
+    private Vector3 CameraOffsetOnGroundTick()
+    {
+        camOnGroundTimer -= Time.deltaTime;
+        if (camOnGroundTimer < 0)
+        {
+            isCamOnGroundActive = false;
+        }
+        Mathf.Max(camOnGroundTimer, camOnGroundTime);
+        Vector3 camOnGroundLast = Vector3.Lerp(camOnGroundPointA, camOnGroundPointB, camOnGroundCurve.Evaluate(Mathf.Abs(1-camOnGroundTimer) / camOnGroundTime));
+        return camOnGroundLast * camOnGroundForce;
+    }
+
+    #region CamOnWall
+
+    private Vector3 camOnWallPointA;
+    private Vector3 camOnWallPointB;
+    private float camOnWallTimer;
+    private float camOnWallForce;
+    private bool isCamOnWallActive;
+    private void CameraOffsetOnWallStart(Collision collision)
+    {
+        isCamOnWallActive = true;
+        camOnWallTimer = 0;
+        camOnWallForce = collision.relativeVelocity.magnitude;
+        camOnWallPointB = collision.contacts[0].normal.normalized * camOnWall;
+        camOnWallPointA = -collision.contacts[0].normal.normalized * camOnWall;
+    }
+
+    private Vector3 CameraOffsetOnWallTick()
+    {
+        camOnWallTimer += Time.deltaTime;
+        if ( camOnWallTimer > camOnWallTime) 
+        {
+            isCamOnWallActive = false; 
+        }
+        Mathf.Max(camOnWallTimer, camOnWallTime);
+        Vector3 camOnWallLast = Vector3.Lerp(camOnWallPointA, camOnWallPointB, camOnWallCurve.Evaluate(camOnWallTimer / camOnWallTime));
+        return camOnWallLast * camOnWallForce;
+    }
+
+    #endregion
+
     #endregion
 
     #region ArmCurves
 
-    private void ArmCurvesTick()
+    private void ArmCurvesTick() //fonctionne pas, je garde au cas ou
     {
         float armOffset1 = 0;
         float armOffset2 = 0;
@@ -553,6 +628,7 @@ public class ControllerPlanete : MonoBehaviour
         return 0; 
     }
 
+    #endregion
 
     #endregion
 }
