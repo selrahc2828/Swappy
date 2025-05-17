@@ -1,5 +1,3 @@
-using AmplifyShaderEditor;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Input = UnityEngine.Input;
@@ -72,6 +70,9 @@ public class ControllerPlanete : MonoBehaviour
 
     [SerializeField] private float camOnGround;
     [SerializeField] private float camOnGroundTime;
+    [SerializeField] private float camOnGroundMax;
+    [SerializeField] private float camOnGroundMin;
+    [SerializeField] private float camOnGroundForceRatio;
     [SerializeField] private AnimationCurve camOnGroundCurve;
 
     [SerializeField] private float camOnWall;
@@ -548,22 +549,27 @@ public class ControllerPlanete : MonoBehaviour
     {
         isCamOnGroundActive = true;
         camOnGroundForce = Mathf.Clamp(collision.relativeVelocity.magnitude * 0.1f, 1f, 2f);
-        camOnGroundTimer = camOnGroundTime * Mathf.Clamp(camOnGroundForce * 0.1f, 0.5f, 2f);
+        camOnGroundTimer = 0;
         camOnGroundPointA = Vector3.zero;
         camOnGroundPointB = -Vector3.Lerp(collision.contacts[0].normal, transform.up, 0.8f).normalized * camOnGround;
+
+        Debug.Log("VelocityForce: " + collision.relativeVelocity.magnitude);
+        Debug.Log("CamForce: " + camOnGroundForce);
     }
 
     private Vector3 CameraOffsetOnGroundTick()
     {
-        camOnGroundTimer -= Time.deltaTime;
-        if (camOnGroundTimer < 0)
+        camOnGroundTimer += Time.deltaTime;
+        if (camOnGroundTimer > camOnGroundTime * Mathf.Clamp(camOnGroundForce * 0.1f, 0.5f, 2f))
         {
             isCamOnGroundActive = false;
         }
         Mathf.Max(camOnGroundTimer, camOnGroundTime);
-        Vector3 camOnGroundLast = Vector3.Lerp(camOnGroundPointA, camOnGroundPointB, camOnGroundCurve.Evaluate(Mathf.Abs(1-camOnGroundTimer) / camOnGroundTime));
+        Vector3 camOnGroundLast = Vector3.Lerp(camOnGroundPointA, camOnGroundPointB, camOnGroundCurve.Evaluate(camOnGroundTimer / camOnGroundTime));
         return camOnGroundLast * camOnGroundForce;
     }
+
+    #endregion
 
     #region CamOnWall
 
@@ -592,8 +598,6 @@ public class ControllerPlanete : MonoBehaviour
         Vector3 camOnWallLast = Vector3.Lerp(camOnWallPointA, camOnWallPointB, camOnWallCurve.Evaluate(camOnWallTimer / camOnWallTime));
         return camOnWallLast * camOnWallForce;
     }
-
-    #endregion
 
     #endregion
 
