@@ -264,6 +264,7 @@
 		<relationship name="effects">
 			<destination>{7c42d449-e211-4218-ab51-1cb07314f1be}</destination>
 			<destination>{78a81dcc-7223-4d96-91a0-dfdf7db8c642}</destination>
+			<destination>{7c51ed33-350d-4061-a36a-127f149cacfa}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{fd2e25cf-498f-40d8-8955-7e11a17195fc}" />
@@ -415,22 +416,27 @@
 			<value>1</value>
 		</property>
 		<property name="frequencyA">
-			<value>1024.91663</value>
+			<value>1150</value>
 		</property>
 		<property name="frequencyE">
 			<value>1988.98267</value>
 		</property>
 		<property name="qualityA">
-			<value>0.476758599</value>
+			<value>0.399999976</value>
 		</property>
 		<property name="qualityE">
 			<value>0.100000001</value>
 		</property>
 		<property name="gainA">
-			<value>26.8965511</value>
+			<value>13.5</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{78a81dcc-7223-4d96-91a0-dfdf7db8c642}" />
+	<object class="DelayEffect" id="{7c51ed33-350d-4061-a36a-127f149cacfa}">
+		<property name="delay">
+			<value>250</value>
+		</property>
+	</object>
 	<object class="AutomationCurve" id="{c3b58564-6926-400b-a9b0-2989ada61843}">
 		<relationship name="parameter">
 			<destination>{11020fc1-a955-4157-8e48-b26b7b4b048b}</destination>
