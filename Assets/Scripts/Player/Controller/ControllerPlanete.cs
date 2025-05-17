@@ -479,6 +479,10 @@ public class ControllerPlanete : MonoBehaviour
         lastCameraPos = cameraHandle.transform.localPosition;
         mergedCamOffset = cameraOffset1 + cameraOffset2 + cameraOffset3 + cameraOffset4 + cameraOffset5;
         cameraHandle.transform.localPosition = mergedCamOffset + baseCamHandlePos;
+
+        Vector3 mergedArmOffset = new Vector3(0, mergedCamOffset.y * armRailRatio, 0);
+        armsHandle.transform.localPosition = -mergedArmOffset;
+        
     }
 
     #region CamOnJump
