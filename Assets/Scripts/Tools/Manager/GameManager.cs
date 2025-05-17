@@ -92,39 +92,6 @@ public class GameManager : MonoBehaviour
     public float maxSlopeAngle;
     public float wallBumpRatio;
 
-    [Header("Player Control Polish")]
-    public AnimationCurve walkSpeedOnMoveCurve;
-    public AnimationCurve walkSpeedOffMoveCurve;
-    [Space(8)]
-    public float maxSpeedOnJump;
-    public AnimationCurve maxSpeedOnJumpCurve;
-    public float maxSpeedOffJumpTime;
-    public AnimationCurve maxSpeedOffJumpCurve;
-    [Space(8)]
-    public float airControlMultiplierMinimum;
-    public AnimationCurve airControlMultiplierCurve;
-
-    [Header("Player Camera Polish")]
-    public float cameraOffsetOnJump;
-    public float cameraOffsetOnJumpTime;
-    public AnimationCurve cameraOffsetOnJumpCurve;
-    [Space(8)]
-    public float cameraOffsetOffJumpTime;
-    public AnimationCurve cameraOffsetOffJumpCurve;
-    [Space(8)]
-    public float cameraOffsetOnGround;
-    public float cameraOffsetOnGroundTime;
-    public AnimationCurve cameraOffsetOnGroundCurve;
-    [Space(8)]
-    public float cameraOffsetOnWall;
-    public float cameraOffsetOnWallTime;
-    public AnimationCurve cameraOffsetOnWallCurve;
-
-    [Header("Player Arm Polish")]
-    public float armRailRatio;
-    public float armRailMaxOffset;
-    public AnimationCurve armRailCurve;
-
     private void OnEnable()
     {
         if (controls == null)

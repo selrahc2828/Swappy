@@ -61,6 +61,12 @@ public class PlayerCamPolish : MonoBehaviour
         currentVelocity = playerRb.velocity;
     }
 
+    private void Update()
+    {
+        CameraCurvesTick();
+    }
+
+
     private void CameraCurvesTick()
     {
         Vector3 cameraOffset1 = Vector3.zero;
@@ -95,6 +101,7 @@ public class PlayerCamPolish : MonoBehaviour
 
     }
 
+
     #region CamOnJump
 
     private Vector3 camOnJumpPointA;
@@ -118,7 +125,12 @@ public class PlayerCamPolish : MonoBehaviour
         return camOnJumpLast;
     }
 
+    public void CameraOffsetOnJumpEnd()
+    {
+        isCamOnJumpActive = false;
+    }
     #endregion
+
 
     #region CamOffJump
 
@@ -145,7 +157,12 @@ public class PlayerCamPolish : MonoBehaviour
         return nextCamPos;
     }
 
+    public void CameraOffsetOffJumpEnd()
+    {
+        isCamOffJumpActive = false;
+    }
     #endregion
+
 
     #region CamOnGround
 
@@ -178,7 +195,12 @@ public class PlayerCamPolish : MonoBehaviour
         return camOnGroundLast * camOnGroundForce;
     }
 
+    public void CameraOffsetOnGroundEnd()
+    {
+        isCamOnGroundActive = false;
+    }
     #endregion
+
 
     #region CamOnWall
 
@@ -208,5 +230,9 @@ public class PlayerCamPolish : MonoBehaviour
         return camOnWallLast * camOnWallForce;
     }
 
+    public void CameraOffsetOnWallEnd()
+    {
+        isCamOnWallActive = false;
+    }
     #endregion
 }

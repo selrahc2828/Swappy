@@ -13,18 +13,18 @@ public class ControllerPlanete : MonoBehaviour
     private Transform orientation;
     private float playerHeight;
 
-    [SerializeField] private float maxSpeed;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float sprintMultiplier;
-    [SerializeField] private float airControlMultiplier;
-    [SerializeField] private float stoppingRatio;
-    [SerializeField] private float sideSpeedReductionRatio;
-    [SerializeField] private float jumpForceMIN;
-    [SerializeField] private float jumpForceMAX;
-    [SerializeField] private float jumpTime;
-    [SerializeField] private float coyoteeTime;
-    [SerializeField] private float jumpCooldown;
-    [SerializeField] private float wallBumpRatio;
+    public float maxSpeed;
+    public float moveSpeed;
+    public float sprintMultiplier;
+    public float airControlMultiplier;
+    public float stoppingRatio;
+    public float sideSpeedReductionRatio;
+    public float jumpForceMIN;
+    public float jumpForceMAX;
+    public float jumpTime;
+    public float coyoteeTime;
+    public float jumpCooldown;
+    public float wallBumpRatio;
 
     private float jumpTimer;
     private bool isChargingJump;
@@ -33,51 +33,11 @@ public class ControllerPlanete : MonoBehaviour
     private bool hasJumped;
 
     [Header("References")]
+    [SerializeField] private PlayerCamPolish cameraPolish;
+    [SerializeField] private PlayerPhysicsPolish physicsPolish;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private GameObject cameraHandle;
     [SerializeField] private GameObject armsHandle;
-
-    private Vector3 baseCamHandlePos;
-    private float baseCameraFOV;
-    private float baseMaxSpeed;
-    private Vector3 baseArmHandlePos;
-
-    [Header("Physics Curves")]
-    private AnimationCurve walkSpeedOnMoveCurve;
-    private AnimationCurve walkSpeedOffMoveCurve;
-
-    private float maxSpeedOnJump;
-    private AnimationCurve maxSpeedOnJumpCurve;
-    private float maxSpeedOffJumpTime;
-    private AnimationCurve maxSpeedOffJumpCurve;
-
-    private float airControlMinimum;
-    private AnimationCurve airControlCurve;
-
-    [Header("Camera Curves")]
-    private Vector3 mergedCamOffset;
-
-    [SerializeField] private float camOnJump;
-    [SerializeField] private float camOnJumpTime;
-    [SerializeField] private AnimationCurve camOnJumpCurve;
-
-    [SerializeField] private float camOffJumpTime;
-    [SerializeField] private AnimationCurve camOffJumpCurve;
-
-    [SerializeField] private float armRailRatio;
-    [SerializeField] private float armRailMaxOffset;
-    [SerializeField] private AnimationCurve armRailCurve;
-
-    [SerializeField] private float camOnGround;
-    [SerializeField] private float camOnGroundTime;
-    [SerializeField] private float camOnGroundMax;
-    [SerializeField] private float camOnGroundMin;
-    [SerializeField] private float camOnGroundForceRatio;
-    [SerializeField] private AnimationCurve camOnGroundCurve;
-
-    [SerializeField] private float camOnWall;
-    [SerializeField] private float camOnWallTime;
-    [SerializeField] private AnimationCurve camOnWallCurve;
 
     [Space(16)]
     [Header("Debug")]
@@ -117,36 +77,6 @@ public class ControllerPlanete : MonoBehaviour
 
         playerHeight = gameManager.playerHeight;
         whatIsGround = gameManager.whatIsGround;
-
-        walkSpeedOnMoveCurve = gameManager.walkSpeedOnMoveCurve;
-        walkSpeedOffMoveCurve = gameManager.walkSpeedOffMoveCurve;
-
-        maxSpeedOnJump = gameManager.maxSpeedOnJump;
-        maxSpeedOnJumpCurve = gameManager.maxSpeedOnJumpCurve;
-        maxSpeedOffJumpTime = gameManager.maxSpeedOffJumpTime;
-        maxSpeedOffJumpCurve = gameManager.maxSpeedOffJumpCurve;
-
-        airControlMinimum = gameManager.airControlMultiplierMinimum;
-        airControlCurve = gameManager.airControlMultiplierCurve;
-
-        camOnJump = gameManager.cameraOffsetOnJump;
-        camOnJumpTime = gameManager.cameraOffsetOnJumpTime;
-        camOnJumpCurve = gameManager.cameraOffsetOnJumpCurve;
-
-        camOffJumpTime = gameManager.cameraOffsetOffJumpTime;
-        camOffJumpCurve = gameManager.cameraOffsetOffJumpCurve;
-
-        camOnGround = gameManager.cameraOffsetOnGround;
-        camOnGroundTime = gameManager.cameraOffsetOnGroundTime;
-        camOnGroundCurve = gameManager.cameraOffsetOnGroundCurve;
-
-        camOnWall = gameManager.cameraOffsetOnWall;
-        camOnWallTime = gameManager.cameraOffsetOnWallTime;
-        camOnWallCurve = gameManager.cameraOffsetOnWallCurve;
-
-        armRailRatio = gameManager.armRailRatio;
-        armRailMaxOffset = gameManager.armRailMaxOffset;
-        armRailCurve = gameManager.armRailCurve;
     }
 
     private void OnDisable()
@@ -165,11 +95,6 @@ public class ControllerPlanete : MonoBehaviour
         isStopping = true;
         rb = GetComponent<Rigidbody>();
         gravityComponent = GetComponent<GravityPlanete>();
-
-        baseCamHandlePos = cameraHandle.transform.localPosition;
-        baseCameraFOV = Camera.main.fieldOfView;
-        baseMaxSpeed = maxSpeed;
-        baseArmHandlePos = armsHandle.transform.localPosition;
     }
 
     private void Update()
@@ -196,9 +121,6 @@ public class ControllerPlanete : MonoBehaviour
         {
             jumpTimer += Time.deltaTime;
         }
-
-        CameraCurvesTick();
-        ControllerCurvesTick();
     }
 
     private Vector3 lastVelocity;
@@ -286,11 +208,11 @@ public class ControllerPlanete : MonoBehaviour
         if (grounded)
         {
             hasAlreadyJumped = false;
-            CameraOffsetOnGroundStart(collision);
+            cameraPolish.CameraOffsetOnGroundStart(collision);
         }
         else
         {
-            CameraOffsetOnWallStart(collision);
+            cameraPolish.CameraOffsetOnWallStart(collision);
             wallBumpVelocity = Vector3.Reflect(rb.velocity, collision.contacts[0].normal) * wallBumpRatio;
         }
     }
@@ -338,8 +260,8 @@ public class ControllerPlanete : MonoBehaviour
         {
             jumpTimer = 0;
             isChargingJump = true;
-            CameraOffsetOnJumpStart();
-            MaxSpeedOnJumpStart();
+            cameraPolish.CameraOffsetOnJumpStart();
+            physicsPolish.MaxSpeedOnJumpStart();
         }
     }
 
@@ -373,8 +295,6 @@ public class ControllerPlanete : MonoBehaviour
 
     private void JumpAction()
     {
-        isCamOnJumpActive = false;
-        maxSpeedOnJumpActive = false;
         isChargingJump = false;
         hasAlreadyJumped = true;
         jumpCooldownTimer = 0;
@@ -383,260 +303,8 @@ public class ControllerPlanete : MonoBehaviour
         float jumpForce = Mathf.Lerp(jumpForceMIN, jumpForceMAX, jumpTimer / jumpTime);
         rb.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
 
-        CameraOffsetOffJumpStart();
-        MaxSpeedOffJumpStart();
+        cameraPolish.CameraOffsetOffJumpStart();
+        physicsPolish.MaxSpeedOffJumpStart();
         return;
     }
-
-    #region ControllerCurves
-
-    private void ControllerCurvesTick()
-    {
-        if (maxSpeedOnJumpActive)
-        {
-           maxSpeed = MaxSpeedOnJumpTick();
-        }
-        if (maxSpeedOffJumpActive)
-        {
-           maxSpeed = MaxSpeedOffJumpTick();
-        }
-    }
-
-    #region SpeedReducOnJump
-    private float maxSpeedOnJumpTimer;
-    private bool maxSpeedOnJumpActive;
-    private void MaxSpeedOnJumpStart()
-    {
-        maxSpeedOnJumpActive = true;
-        maxSpeedOnJumpTimer = 0;
-    }
-
-    private float MaxSpeedOnJumpTick()
-    {
-        maxSpeedOnJumpTimer += Time.deltaTime;
-        Mathf.Max(maxSpeedOnJumpTimer, jumpTime);
-        float newMaxSpeed = Mathf.Lerp(baseMaxSpeed, maxSpeedOnJump, camOnJumpCurve.Evaluate(maxSpeedOnJumpTimer / jumpTime));
-        return newMaxSpeed;
-    }
-
-
-    #endregion
-
-    #region SpeedReducOffJump
-    private float maxSpeedOffJumpTimer;
-    private bool maxSpeedOffJumpActive;
-    private void MaxSpeedOffJumpStart()
-    {
-        maxSpeedOffJumpActive = true;
-        maxSpeedOffJumpTimer = 0;
-    }
-
-    private float MaxSpeedOffJumpTick()
-    {
-        maxSpeedOffJumpTimer += Time.deltaTime;
-        if (camOffJumpTimer > camOffJumpTime)
-        {
-            maxSpeedOffJumpActive = false;
-            return baseMaxSpeed;
-        }
-        Mathf.Max(maxSpeedOffJumpTimer, jumpTime);
-        float newMaxSpeed = Mathf.Lerp(maxSpeedOnJump, baseMaxSpeed, camOffJumpCurve.Evaluate(maxSpeedOffJumpTimer / jumpTime));
-        return newMaxSpeed;
-    }
-
-    #endregion
-
-    #endregion
-
-
-    #region CameraCurves
-
-    private Vector3 lastCameraPos;
-    private void CameraCurvesTick()
-    {
-        Vector3 cameraOffset1 = Vector3.zero;
-        Vector3 cameraOffset2 = Vector3.zero;
-        Vector3 cameraOffset3 = Vector3.zero;
-        Vector3 cameraOffset4 = Vector3.zero;
-        Vector3 cameraOffset5 = Vector3.zero;
-
-        if (isCamOnJumpActive)
-        {
-            cameraOffset1 = CameraOffsetOnJumpTick();
-        }
-        if (isCamOffJumpActive)
-        { 
-            cameraOffset2 = CameraOffsetOffJumpTick(); 
-        }
-        if (isCamOnWallActive)
-        {
-            cameraOffset3 = CameraOffsetOnWallTick();
-        }
-        if (isCamOnGroundActive)
-        {
-            cameraOffset4 = CameraOffsetOnGroundTick();
-        }
-
-        lastCameraPos = cameraHandle.transform.localPosition;
-        mergedCamOffset = cameraOffset1 + cameraOffset2 + cameraOffset3 + cameraOffset4 + cameraOffset5;
-        cameraHandle.transform.localPosition = mergedCamOffset + baseCamHandlePos;
-
-        Vector3 mergedArmOffset = new Vector3(0, mergedCamOffset.y * armRailRatio, 0);
-        armsHandle.transform.localPosition = -mergedArmOffset;
-        
-    }
-
-    #region CamOnJump
-
-    private Vector3 camOnJumpPointA;
-    private Vector3 camOnJumpPointB;
-    private Vector3 camOnJumpLast;
-    private float camOnJumpTimer;
-    private bool isCamOnJumpActive;
-    private void CameraOffsetOnJumpStart()
-    {
-        isCamOnJumpActive = true;
-        camOnJumpTimer = 0;
-        camOnJumpPointA = Vector3.zero;
-        camOnJumpPointB = new Vector3(0, -camOnJump, 0);
-    }
-
-    private Vector3 CameraOffsetOnJumpTick()
-    {
-        camOnJumpTimer += Time.deltaTime;
-        Mathf.Max(camOnJumpTimer, camOnJumpTime);
-        camOnJumpLast = Vector3.Lerp(camOnJumpPointA, camOnJumpPointB, camOnJumpCurve.Evaluate(camOnJumpTimer/camOnJumpTime));
-        return camOnJumpLast;
-    }
-
-    #endregion
-
-    #region CamOffJump
-
-    private Vector3 camOffJumpPointA;
-    private Vector3 camOffJumpPointB;
-    private float camOffJumpTimer;
-    private bool isCamOffJumpActive;
-    private void CameraOffsetOffJumpStart()
-    {
-        isCamOffJumpActive = true;
-        camOffJumpTimer = 0;
-        camOffJumpPointA = camOnJumpLast;
-        camOffJumpPointB = Vector3.zero;
-    }
-
-    private Vector3 CameraOffsetOffJumpTick()
-    {
-        camOffJumpTimer += Time.deltaTime;
-        if (camOffJumpTimer > camOnJumpTime)
-        {
-            isCamOffJumpActive = false;
-        }
-        Vector3 nextCamPos = Vector3.Lerp(camOffJumpPointA, camOffJumpPointB, camOffJumpCurve.Evaluate(camOffJumpTimer / camOnJumpTimer));
-        return nextCamPos;
-    }
-
-    #endregion
-
-    #region CamOnGround
-
-    private Vector3 camOnGroundPointA;
-    private Vector3 camOnGroundPointB;
-    private float camOnGroundTimer;
-    private float camOnGroundForce;
-    private bool isCamOnGroundActive;
-    private void CameraOffsetOnGroundStart(Collision collision)
-    {
-        isCamOnGroundActive = true;
-        camOnGroundForce = Mathf.Clamp(collision.relativeVelocity.magnitude * 0.1f, 1f, 2f);
-        camOnGroundTimer = 0;
-        camOnGroundPointA = Vector3.zero;
-        camOnGroundPointB = -Vector3.Lerp(collision.contacts[0].normal, transform.up, 0.8f).normalized * camOnGround;
-
-        Debug.Log("VelocityForce: " + collision.relativeVelocity.magnitude);
-        Debug.Log("CamForce: " + camOnGroundForce);
-    }
-
-    private Vector3 CameraOffsetOnGroundTick()
-    {
-        camOnGroundTimer += Time.deltaTime;
-        if (camOnGroundTimer > camOnGroundTime * Mathf.Clamp(camOnGroundForce * 0.1f, 0.5f, 2f))
-        {
-            isCamOnGroundActive = false;
-        }
-        Mathf.Max(camOnGroundTimer, camOnGroundTime);
-        Vector3 camOnGroundLast = Vector3.Lerp(camOnGroundPointA, camOnGroundPointB, camOnGroundCurve.Evaluate(camOnGroundTimer / camOnGroundTime));
-        return camOnGroundLast * camOnGroundForce;
-    }
-
-    #endregion
-
-    #region CamOnWall
-
-    private Vector3 camOnWallPointA;
-    private Vector3 camOnWallPointB;
-    private float camOnWallTimer;
-    private float camOnWallForce;
-    private bool isCamOnWallActive;
-    private void CameraOffsetOnWallStart(Collision collision)
-    {
-        isCamOnWallActive = true;
-        camOnWallTimer = 0;
-        camOnWallForce = collision.relativeVelocity.magnitude;
-        camOnWallPointB = collision.contacts[0].normal.normalized * camOnWall;
-        camOnWallPointA = -collision.contacts[0].normal.normalized * camOnWall;
-    }
-
-    private Vector3 CameraOffsetOnWallTick()
-    {
-        camOnWallTimer += Time.deltaTime;
-        if ( camOnWallTimer > camOnWallTime) 
-        {
-            isCamOnWallActive = false; 
-        }
-        Mathf.Max(camOnWallTimer, camOnWallTime);
-        Vector3 camOnWallLast = Vector3.Lerp(camOnWallPointA, camOnWallPointB, camOnWallCurve.Evaluate(camOnWallTimer / camOnWallTime));
-        return camOnWallLast * camOnWallForce;
-    }
-
-    #endregion
-
-    #region ArmCurves
-
-    private void ArmCurvesTick() //fonctionne pas, je garde au cas ou
-    {
-        float armOffset1 = 0;
-        float armOffset2 = 0;
-
-        armOffset1 = ArmHandlePhysicsTick();
-        armOffset2 = ArmHandleCameraTick();
-
-        float mergedArmOffset = armsHandle.transform.localPosition.y + armOffset1 + armOffset2;
-        float finalArmRatio = armRailCurve.Evaluate(mergedArmOffset / armRailMaxOffset);
-        float finalArmPos = armRailMaxOffset * finalArmRatio;
-
-        Debug.Log("mergedArmOffset: " + mergedArmOffset);
-        Debug.Log("finalArmRatio:" + finalArmRatio);
-        Debug.Log("finalArmPos: " + finalArmPos);
-
-        armsHandle.transform.localPosition = (Vector3.up * finalArmPos) + baseArmHandlePos;
-    }
-
-    private float ArmHandlePhysicsTick()
-    {
-        float physicsRange = lastVelocity.y - rb.velocity.y;
-        float pullForce = physicsRange * armRailRatio * Time.deltaTime;
-        return 0;
-    }
-
-    private float ArmHandleCameraTick()
-    { 
-        float camRange = lastCameraPos.y - cameraHandle.transform.localPosition.y;
-        float pullForce = camRange * armRailRatio * Time.deltaTime;
-        return 0; 
-    }
-
-    #endregion
-
-    #endregion
 }

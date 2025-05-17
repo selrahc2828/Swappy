@@ -18,24 +18,44 @@ public class PlayerPhysicsPolish : MonoBehaviour
     [SerializeField] private float airControlMinimum;
     [SerializeField] private AnimationCurve airControlCurve;
 
-    private ControllerPlanete playerController;
-    private Rigidbody playerRb;
+    private ControllerPlanete pControler;
+    private Rigidbody pRb;
     private Vector3 lastVelocity;
     private Vector3 currentVelocity;
 
+    private float baseMaxSpeed;
+
     private void Start()
     {
-        playerController = player.GetComponent<ControllerPlanete>();
-        playerRb = player.GetComponent<Rigidbody>();
+        pControler = player.GetComponent<ControllerPlanete>();
+        pRb = player.GetComponent<Rigidbody>();
+        baseMaxSpeed = pControler.maxSpeed;
     }
 
     private void FixedUpdate()
     {
         lastVelocity = currentVelocity;
-        currentVelocity = playerRb.velocity;
+        currentVelocity = pRb.velocity;
+    }
+    private void Update()
+    {
+        ControllerCurvesTick();
+    }
+
+    private void ControllerCurvesTick()
+    {
+        if (maxSpeedOnJumpActive)
+        {
+            pControler.maxSpeed = MaxSpeedOnJumpTick(pControler.jumpTime);
+        }
+        if (maxSpeedOffJumpActive)
+        {
+            pControler.maxSpeed = MaxSpeedOffJumpTick(pControler.jumpTime);
+        }
     }
 
     #region SpeedReducOnJump
+
     private float maxSpeedOnJumpTimer;
     private bool maxSpeedOnJumpActive;
     public void MaxSpeedOnJumpStart()
@@ -44,14 +64,20 @@ public class PlayerPhysicsPolish : MonoBehaviour
         maxSpeedOnJumpTimer = 0;
     }
 
-    public float MaxSpeedOnJumpTick(float jumpTime, float baseMaxSpeed)
+    public float MaxSpeedOnJumpTick(float jumpTime)
     {
         maxSpeedOnJumpTimer += Time.deltaTime;
         Mathf.Max(maxSpeedOnJumpTimer, jumpTime);
         float newMaxSpeed = Mathf.Lerp(baseMaxSpeed, maxSpeedOnJump, maxSpeedOnJumpCurve.Evaluate(maxSpeedOnJumpTimer / jumpTime));
         return newMaxSpeed;
     }
+
+    public void MaxSpeedOnJumpEnd()
+    {
+        maxSpeedOnJumpActive = false;
+    }
     #endregion
+
 
     #region SpeedReducOffJump
     private float maxSpeedOffJumpTimer;
@@ -62,7 +88,7 @@ public class PlayerPhysicsPolish : MonoBehaviour
         maxSpeedOffJumpTimer = 0;
     }
 
-    public float MaxSpeedOffJumpTick(float jumpTime, float baseMaxSpeed)
+    public float MaxSpeedOffJumpTick(float jumpTime)
     {
         maxSpeedOffJumpTimer += Time.deltaTime;
         if (maxSpeedOffJumpTimer > maxSpeedOffJumpTime)
@@ -73,6 +99,11 @@ public class PlayerPhysicsPolish : MonoBehaviour
         Mathf.Max(maxSpeedOffJumpTimer, jumpTime);
         float newMaxSpeed = Mathf.Lerp(maxSpeedOnJump, baseMaxSpeed, maxSpeedOffJumpCurve.Evaluate(maxSpeedOffJumpTimer / jumpTime));
         return newMaxSpeed;
+    }
+
+    public void MaxSpeedOffJumpEnd()
+    {
+        maxSpeedOffJumpActive = false;
     }
     #endregion
 }
