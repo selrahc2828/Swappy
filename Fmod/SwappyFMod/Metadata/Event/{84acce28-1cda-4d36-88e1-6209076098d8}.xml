@@ -8,7 +8,7 @@
 			<value>MagnetIdle</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{ae6cd3c1-66b2-45d1-abd9-c8d841ee2dc6}</destination>
@@ -207,7 +207,6 @@
 	<object class="MixerBusEffectChain" id="{fe4bfcce-f39a-4ff5-a9ca-ee79281b4585}">
 		<relationship name="effects">
 			<destination>{2794cd25-aa98-41af-8bc1-f35fc9e727d1}</destination>
-			<destination>{0c6521e5-85bd-4cf4-b17d-97b55f90ba66}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{ddae1087-6b4f-4dd0-8867-95ffc0c8199f}" />
@@ -269,14 +268,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{73edc852-6940-48ac-aed3-46f4d08aaca3}" />
 	<object class="MixerBusFader" id="{2794cd25-aa98-41af-8bc1-f35fc9e727d1}" />
-	<object class="ProxyEffect" id="{0c6521e5-85bd-4cf4-b17d-97b55f90ba66}">
-		<property name="inputFormat">
-			<value>1</value>
-		</property>
-		<relationship name="preset">
-			<destination>{2e8efaa2-e3ce-46a4-b9c1-b23949d7083e}</destination>
-		</relationship>
-	</object>
 	<object class="AutomationPoint" id="{d26e338f-b62d-48de-9bc8-be073106cd0e}">
 		<property name="position">
 			<value>0</value>
