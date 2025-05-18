@@ -96,8 +96,7 @@ public class C_Bouncing_Immuable : ComportementState
                 _baseVelocity = _sm.rb.velocity;
                 _baseAngularVelocity = _sm.rb.angularVelocity;
                 _sm.rb.isKinematic = true;
-                //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.immuableHit,_sm.gameObject);
-                //SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit,_sm.gameObject);
+                GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
                 
                 _sm.GetComponent<Collider>().material = _bouncyMaterial;
             }

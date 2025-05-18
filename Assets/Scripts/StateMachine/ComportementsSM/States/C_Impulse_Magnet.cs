@@ -11,8 +11,7 @@ public class C_Impulse_Magnet : ComportementState
     
     private GameObject feedback;
     private GameObject zone;
-
-    private GameObject prefabSonMagnet;
+    
     
     public C_Impulse_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
@@ -43,6 +42,7 @@ public class C_Impulse_Magnet : ComportementState
         
         //zone qui repousse constamment
         ConstantRepulse();
+        zone.GetComponent<ImpulseMagnetZone>().comportementableObject = _sm.gameObject;
 
     }
 
@@ -55,9 +55,7 @@ public class C_Impulse_Magnet : ComportementState
             zone.GetComponent<ImpulseMagnetZone>().followTransform = _sm.transform;
             zone.GetComponent<ImpulseMagnetZone>().isGrabbed = isGrabbed;
 
-        }
-
-
+        } 
         // comme impusle ou faire collider stay
     }
 
@@ -69,7 +67,6 @@ public class C_Impulse_Magnet : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.comportementManager.DestroyObj(prefabSonMagnet);
         if (zone != null)
         {
             _sm.comportementManager.DestroyObj(zone);

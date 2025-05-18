@@ -78,7 +78,7 @@ public class GlobalEventManager : MonoBehaviour
         OnComportementStateExit?.Invoke(comportableObject);
     }
 
-    public void ComportmentStatePlay(GameObject comportableObject, float force = 0.8f) // appele lorsque le comportement agit
+    public void ComportmentStatePlay(GameObject comportableObject, float force = -1) // appele lorsque le comportement agit
     {
         OnComportementStatePlay?.Invoke(comportableObject,force);
     }

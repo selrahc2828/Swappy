@@ -63,6 +63,6 @@ public class C_Double_Bouncing : ComportementState
 
     public override void CollisionStart(Collision other)
     {
-        
+        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
     }
 }

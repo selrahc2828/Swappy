@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{566dbfa1-0a1c-4d20-b3bc-f29a363e5133}">
 		<property name="color">
-			<value>Red Light 1</value>
+			<value>Red Light 2</value>
 		</property>
 		<property name="name">
 			<value>Collision</value>
@@ -117,7 +117,7 @@
 	<object class="MixerBusEffectChain" id="{e372210d-cbe7-47e0-93bd-c74538cacc2f}">
 		<relationship name="effects">
 			<destination>{ccabbbfc-3059-4862-9eb0-74bc306bb689}</destination>
-			<destination>{6d6d1aaa-6cc6-4835-b103-3acbbac07f8a}</destination>
+			<destination>{8f2f6262-85bc-448b-83ac-fdeddfb9f4b2}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{9a2a6ac3-1427-40c6-a9bf-9495a2ab1744}" />
@@ -129,6 +129,13 @@
 	</object>
 	<object class="MixerBusPanner" id="{afed86a6-ca67-473a-bea1-105fed04acf5}" />
 	<object class="MixerBusFader" id="{ccabbbfc-3059-4862-9eb0-74bc306bb689}" />
-	<object class="SpatialiserEffect" id="{6d6d1aaa-6cc6-4835-b103-3acbbac07f8a}" />
+	<object class="ProxyEffect" id="{8f2f6262-85bc-448b-83ac-fdeddfb9f4b2}">
+		<property name="inputFormat">
+			<value>0</value>
+		</property>
+		<relationship name="preset">
+			<destination>{2e8efaa2-e3ce-46a4-b9c1-b23949d7083e}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{185d8944-566f-46d1-8abb-21f9d3ed4d5c}" />
 </objects>
