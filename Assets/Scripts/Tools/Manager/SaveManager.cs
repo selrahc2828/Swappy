@@ -41,50 +41,22 @@ public class SaveManager : MonoBehaviour
     }
 
     void SaveData()
-    { 
-        SpawnPot[] spawners = FindObjectsOfType<SpawnPot>();
+    {
+        SaveSpawnerPotData();
+        SaveFragment();
 
-        foreach (SpawnPot spawner in spawners)
-        {
-            // Chercher s'il existe déjà dans la sauvegarde
-            var existing = saveData.spawnerPots.Find(p => p.id == spawner.UniqueID);
-
-            if (existing is not null) // met a jour
-            {
-                existing.isBroken = spawner.isBroken;
-            }
-            else // creer un nouveau
-            {
-                saveData.spawnerPots.Add(new SpawnPotSaveData
-                    {
-                        id = spawner.UniqueID,
-                        isBroken = spawner.isBroken,
-                    }
-                ); 
-            }
-        }
-        
         // GameObject player = GameManager.Instance.player;
         // saveData.player.playerPosition = player.transform.position;
         // saveData.player.playerRotation = player.transform.rotation;
     }
 
+
     private void Start()
     {
         LoadFileGame();
-        
-        SpawnPot[] spawners = FindObjectsOfType<SpawnPot>();
 
-        foreach (SpawnPot spawner in spawners)
-        {
-            // Chercher s'il existe déjà dans la sauvegarde
-            SpawnPotSaveData existing = saveData.spawnerPots.Find(p => p.id == spawner.UniqueID);
-
-            if (existing is not null) // met a jour
-            {
-                spawner.isBroken = existing.isBroken;
-            }
-        }
+        LoadSpawner();
+        LoadFragment();
 
         // PB : position bien récupéré et set (testé sur un cube) mais doit être overide ailleurs
         // GameObject player = GameManager.Instance.player;
@@ -111,5 +83,69 @@ public class SaveManager : MonoBehaviour
     {
         SaveData();
         SaveFileGame();
+    }
+    
+    
+    private void SaveSpawnerPotData()
+    {
+        SpawnPot[] spawners = FindObjectsOfType<SpawnPot>();
+
+        foreach (SpawnPot spawner in spawners)
+        {
+            // Chercher s'il existe déjà dans la sauvegarde
+            var existing = saveData.spawnerPots.Find(p => p.id == spawner.UniqueID);
+
+            if (existing is not null) // met a jour
+            {
+                existing.isBroken = spawner.isBroken;
+            }
+            else // creer un nouveau
+            {
+                saveData.spawnerPots.Add(new SpawnPotSaveData
+                    {
+                        id = spawner.UniqueID,
+                        isBroken = spawner.isBroken,
+                    }
+                );
+            }
+        }    }
+
+    private void LoadSpawner()
+    {
+        SpawnPot[] spawners = FindObjectsOfType<SpawnPot>();
+
+        foreach (SpawnPot spawner in spawners)
+        {
+            // Chercher s'il existe déjà dans la sauvegarde
+            SpawnPotSaveData existing = saveData.spawnerPots.Find(p => p.id == spawner.UniqueID);
+
+            if (existing is not null) // met a jour
+            {
+                spawner.isBroken = existing.isBroken;
+            }
+        }
+    }
+
+    private void SaveFragment()
+    {
+        saveData.fragment.fragmentBank = FragmentSystem.Instance.fragmentBankData.bankInventoryFragmentQuantity;
+
+        int hasCollectCurrent = saveData.fragment.hasCollect;
+        
+        foreach (FragmentObject frag in FindObjectsOfType<FragmentObject>())
+        {
+            hasCollectCurrent += frag.Quantity;
+        }
+        
+        saveData.fragment.hasCollect = hasCollectCurrent;
+    }
+
+    private void LoadFragment()
+    {
+        Debug.LogWarning($"loadFragment : {saveData.fragment.fragmentBank} : {saveData.fragment.hasCollect}");
+        FragmentSystem.Instance.SetFragment(saveData.fragment.fragmentBank);
+        FragmentSystem.Instance.SetFragmentHasCollect(saveData.fragment.hasCollect);
+        Debug.LogWarning($"scriptable  : {FragmentSystem.Instance.fragmentBankData.bankInventoryFragmentQuantity} : {FragmentSystem.Instance.fragmentBankData.hasCollect}");
+
     }
 }

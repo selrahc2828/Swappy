@@ -8,5 +8,6 @@ public class FragmentBankData : ScriptableObject
 {
     public string fragmentBankName;
     public Sprite fragmentBankIcon;
-    public int bankInventoryFragmentQuantity; // incremente avec la quantity 
+    public int bankInventoryFragmentQuantity; // incremente avec la quantity
+    public int hasCollect; // stock les frgaments non recupere => recupere cette valeur de la sauvegarde au chargement
 }

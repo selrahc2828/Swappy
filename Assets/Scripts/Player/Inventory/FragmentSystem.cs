@@ -5,8 +5,21 @@ using UnityEngine.Serialization;
 
 public class FragmentSystem : MonoBehaviour
 {
+    
     public FragmentBankData fragmentBankData;
-
+    public static FragmentSystem Instance { get; private set; }
+    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);//détuit le doublon
+            return;
+        }
+        Instance = this;
+        // DontDestroyOnLoad(gameObject);
+    }
+    
     public void AddFragment(int quantity)
     {
         fragmentBankData.bankInventoryFragmentQuantity += quantity;
@@ -30,5 +43,10 @@ public class FragmentSystem : MonoBehaviour
     public void SetFragment(int quantity)
     {
         fragmentBankData.bankInventoryFragmentQuantity = quantity;
+    }
+    
+    public void SetFragmentHasCollect(int quantity)
+    {
+        fragmentBankData.hasCollect = quantity;
     }
 }
