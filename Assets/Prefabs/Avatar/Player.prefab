@@ -254,6 +254,20 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  maxSpeedOnFall: 0
+  maxSpeedOnFallTime: 0
+  maxSpeedOnFallCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxSpeedOnFallRepartitionCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   airControlMinimum: 0.1
   airControlCurve:
     serializedVersion: 2
@@ -304,6 +318,43 @@ MonoBehaviour:
   playerCamera: {fileID: 4551566662917278316}
   cameraHandle: {fileID: 709902461892241047}
   armsHandle: {fileID: 365990034600856803}
+  speedToFovMin: 4
+  speedToFovMax: 45
+  fovToSpeedMin: 70
+  fovToSpeedMax: 90
+  speedToFovSmoothCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.028070169
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.5
+      inSlope: 2.9999938
+      outSlope: 2.9999938
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.33333403
+      outWeight: 0.33333397
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.19688527
+      outSlope: 0.19688527
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.01754427
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   camOnJump: 0.36
   camOnJumpTime: 0.6
   camOnJumpCurve:

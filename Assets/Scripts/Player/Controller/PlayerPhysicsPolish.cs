@@ -122,15 +122,7 @@ public class PlayerPhysicsPolish : MonoBehaviour
 
     public float MaxSpeedOnFallTick(float jumpTime)
     {
-        maxSpeedOnFallTimer += Time.deltaTime;
-        if (maxSpeedOnFallTimer > maxSpeedOffJumpTime)
-        {
-            maxSpeedOnFallActive = false;
-            return baseMaxSpeed;
-        }
-        Mathf.Max(maxSpeedOnFallTimer, jumpTime);
-        float newMaxSpeed = Mathf.Lerp(maxSpeedOnFall, baseMaxSpeed, maxSpeedOnFallCurve.Evaluate(maxSpeedOnFallTimer / jumpTime));
-        return newMaxSpeed;
+        return 0;
     }
 
     public void MaxSpeedOnFallEnd()

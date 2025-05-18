@@ -8,6 +8,15 @@ public class PlayerCamPolish : MonoBehaviour
     [SerializeField] private GameObject cameraHandle;
     [SerializeField] private GameObject armsHandle;
 
+    [Header("Walk Curves")]
+    [SerializeField] private float speedToFovMin;
+    [SerializeField] private float speedToFovMax;
+    [Space(4)]
+    [SerializeField] private float fovToSpeedMin;
+    [SerializeField] private float fovToSpeedMax;
+    [Space(4)]
+    [SerializeField] private AnimationCurve speedToFovSmoothCurve;
+
     [Header("Jump Curves")]
     [SerializeField] private float camOnJump;
     [SerializeField] private float camOnJumpTime;
@@ -66,6 +75,7 @@ public class PlayerCamPolish : MonoBehaviour
 
     private void Update()
     {
+        SpeedToFovTick();
         CameraCurvesTick();
     }
 
@@ -239,6 +249,21 @@ public class PlayerCamPolish : MonoBehaviour
     public void CameraOffsetOnWallEnd()
     {
         isCamOnWallActive = false;
+    }
+    #endregion
+
+
+    #region SpeedToFov
+
+    public void SpeedToFovTick()
+    {
+        float speed = Mathf.Clamp(playerRb.velocity.magnitude, speedToFovMin, speedToFovMax);
+        float normalizedSpeed = Mathf.InverseLerp(speedToFovMin, speedToFovMax, speed);
+        float multiplier = speedToFovSmoothCurve.Evaluate(normalizedSpeed);
+        float fov = Mathf.Lerp(fovToSpeedMin, fovToSpeedMax, multiplier);
+
+        Debug.Log(Mathf.RoundToInt(playerRb.velocity.magnitude));
+        playerCamera.fieldOfView = fov;
     }
     #endregion
 }
