@@ -20,6 +20,9 @@ public class MagnetForceField : MonoBehaviour
     public float delayDisplay;
     [SerializeField] float _timerDisplay;
 
+    private List<Rigidbody> magnetedObjects = new List<Rigidbody>();
+    public GameObject comportementableObject;
+
     private void Start()
     {
         normalColor = magnetFeedbackMaterial.material.GetColor("_Color0");
@@ -27,6 +30,7 @@ public class MagnetForceField : MonoBehaviour
 
     private void Update()
     {
+       
         if (_timerBurst > 0)
         {
             _timerBurst -= Time.deltaTime;
@@ -69,12 +73,19 @@ public class MagnetForceField : MonoBehaviour
         
         if (!burst)// magnet normal
         {
+            if (!magnetedObjects.Contains(rbObj))
+            {
+                magnetedObjects.Add(rbObj);
+                GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject);
+            }
+
             rbObj.AddForce(dir * force, ForceMode.Force);
             // Debug.DrawRay(objToApply.transform.position, dir*5, Color.green);
 
         }
         else // magnet bounce => burst
         {
+            GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject);
             rbObj.AddForce(dir * burstForce, ForceMode.Impulse);
             Debug.DrawRay(objToApply.transform.position, dir*5, Color.red);
         }

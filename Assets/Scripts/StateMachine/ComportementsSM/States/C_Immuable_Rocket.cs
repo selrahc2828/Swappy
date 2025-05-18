@@ -53,7 +53,6 @@ public class C_Immuable_Rocket : ComportementState
 
     public override void Exit()
     {
-        base.Exit();
         _sm.comportementManager.DestroyObj(feedBack_GO_Left);
         _sm.comportementManager.DestroyObj(feedBack_GO_Right);
 
@@ -61,5 +60,7 @@ public class C_Immuable_Rocket : ComportementState
         float effectiveReleaseForce = rocketReleaseForce * (chargeTime / chargeTimeMax);
         
         _sm.rb.AddForce(_sm.transform.up * effectiveReleaseForce, ForceMode.Impulse);
+        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
+        base.Exit();
     }
 }

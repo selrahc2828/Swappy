@@ -104,13 +104,15 @@ public class C_Impulse_Bouncing : ComportementState
 
     public override void CollisionStart(Collision other)
     {
-        base.CollisionStart(other);
+
         if (other!= null && canBounce)
         {
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
             trueImpulseBounceForce = impulseBounceForce + _sm.rb.velocity.magnitude * impulseForceMultiplier;
             // Debug.LogWarning($"dans enter: {trueImpulseBounceForce}");
             Repulse();
             canBounce = false;
+            
         }
         
     }

@@ -1,16 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using TMPro;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class GrabObject : MonoBehaviour
 {
     public Controls controls;
     public Transform handlerPosition;
+    public Transform handlerPosition_Horizontal;
+    public Transform handlerPosition_Vertical;
 
     // private Collider playerCollider;
     [HideInInspector] public Collider[] playerCollider; // on a 2 colliders
@@ -41,7 +38,7 @@ public class GrabObject : MonoBehaviour
         controls.Player.LaunchAction.performed += ActionLancer;//clic gauche
         controls.Player.DropAction.performed += ActionLacher;//clic droit
         
-        handlerPosition = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
+        //handlerPosition_Vertical = GameObject.FindGameObjectWithTag("HandlerPosition").transform;
         playerCollider = GetComponentsInChildren<Collider>();
         
         grabUI = GameObject.FindGameObjectWithTag("GrabUI"); 
@@ -59,6 +56,8 @@ public class GrabObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float value_Lerp = Mathf.Abs(Vector3.Dot(transform.up, GameManager.Instance.mainCamera.transform.forward));
+        handlerPosition.position = Vector3.Lerp(handlerPosition_Horizontal.position, handlerPosition_Vertical.position, value_Lerp);
         // suivi de l'objet dans les bras et lache si bloque trops
         if (carriedObject != null)
         {

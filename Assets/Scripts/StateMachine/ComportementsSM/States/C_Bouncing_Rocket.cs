@@ -117,6 +117,7 @@ public class C_Bouncing_Rocket : ComportementState
     {
         base.CollisionStart(other);
         rocketDirection = -rocketDirection;
+        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
 
     }
 }

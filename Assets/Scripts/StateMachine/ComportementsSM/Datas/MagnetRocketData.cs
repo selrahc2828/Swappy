@@ -7,6 +7,7 @@ public partial class ComportementManager
     {
         public GameObject prefabMagnetRocketForcefield;
         public float magnetRocketFlyTime = 4;
+        public float rocketFirstTime = 2;
         public float rocketMagnetForce = 7f;
         public float rocketMagnetForceOnPlayer = 7f;
         public float rocketMagnetForceWhenGrab = 7f;
