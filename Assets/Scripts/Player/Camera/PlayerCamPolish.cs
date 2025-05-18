@@ -22,11 +22,14 @@ public class PlayerCamPolish : MonoBehaviour
     [SerializeField] private AnimationCurve armRailCurve;
 
     [Header ("Collision Curves")]
-    [SerializeField] private float camOnGround;
-    [SerializeField] private float camOnGroundTime;
-    [SerializeField] private float camOnGroundMax;
-    [SerializeField] private float camOnGroundMin;
+    [SerializeField] private float camOnGroundMaxForce;
+    [SerializeField] private float camOnGroundMinForce;
     [SerializeField] private float camOnGroundForceRatio;
+    [Space(4)]
+    [SerializeField] private float camOnGroundMaxTime;
+    [SerializeField] private float camOnGroundMinTime;
+    [SerializeField] private float camOnGroundTimeRatio;
+    [Space(4)]
     [SerializeField] private AnimationCurve camOnGroundCurve;
     [Space(8)]
     [SerializeField] private float camOnWall;
@@ -98,7 +101,6 @@ public class PlayerCamPolish : MonoBehaviour
 
         Vector3 mergedArmOffset = new Vector3(0, mergedCamOffset.y * armRailRatio, 0);
         armsHandle.transform.localPosition = -mergedArmOffset;
-
     }
 
 
@@ -122,6 +124,7 @@ public class PlayerCamPolish : MonoBehaviour
         camOnJumpTimer += Time.deltaTime;
         Mathf.Max(camOnJumpTimer, camOnJumpTime);
         camOnJumpLast = Vector3.Lerp(camOnJumpPointA, camOnJumpPointB, camOnJumpCurve.Evaluate(camOnJumpTimer / camOnJumpTime));
+        Debug.Log("camOnJumpLast: " + camOnJumpLast);
         return camOnJumpLast;
     }
 
@@ -154,6 +157,7 @@ public class PlayerCamPolish : MonoBehaviour
             isCamOffJumpActive = false;
         }
         Vector3 nextCamPos = Vector3.Lerp(camOffJumpPointA, camOffJumpPointB, camOffJumpCurve.Evaluate(camOffJumpTimer / camOffJumpTimer));
+        Debug.Log("camOffJump: " + nextCamPos);
         return nextCamPos;
     }
 
@@ -170,29 +174,33 @@ public class PlayerCamPolish : MonoBehaviour
     private Vector3 camOnGroundPointB;
     private float camOnGroundTimer;
     private float camOnGroundForce;
+    private float camOnGroundTime;
     private bool isCamOnGroundActive;
     public void CameraOffsetOnGroundStart(Collision collision)
     {
+        if (isCamOnGroundActive)
+        {
+            return;
+        }
         isCamOnGroundActive = true;
-        camOnGroundForce = Mathf.Clamp(collision.relativeVelocity.magnitude * 0.1f, 1f, 2f);
+        camOnGroundForce = Mathf.Clamp(collision.relativeVelocity.magnitude * camOnGroundForceRatio, camOnGroundMinForce, camOnGroundMaxForce);
+        camOnGroundTime = Mathf.Clamp(collision.relativeVelocity.magnitude * camOnGroundTimeRatio, camOnGroundMinTime, camOnGroundMaxTime);
         camOnGroundTimer = 0;
-        camOnGroundPointA = Vector3.zero;
-        camOnGroundPointB = -Vector3.Lerp(collision.contacts[0].normal, transform.up, 0.8f).normalized * camOnGround;
 
-        Debug.Log("VelocityForce: " + collision.relativeVelocity.magnitude);
-        Debug.Log("CamForce: " + camOnGroundForce);
+        camOnGroundPointA = Vector3.zero;
+        camOnGroundPointB = -Vector3.Lerp(collision.contacts[0].normal, transform.up, 0.8f).normalized * camOnGroundForce;
     }
 
     private Vector3 CameraOffsetOnGroundTick()
     {
         camOnGroundTimer += Time.deltaTime;
-        if (camOnGroundTimer > camOnGroundTime * Mathf.Clamp(camOnGroundForce * 0.1f, 0.5f, 2f))
+        if (camOnGroundTimer > camOnGroundTime)
         {
             isCamOnGroundActive = false;
         }
         Mathf.Max(camOnGroundTimer, camOnGroundTime);
         Vector3 camOnGroundLast = Vector3.Lerp(camOnGroundPointA, camOnGroundPointB, camOnGroundCurve.Evaluate(camOnGroundTimer / camOnGroundTime));
-        return camOnGroundLast * camOnGroundForce;
+        return camOnGroundLast;
     }
 
     public void CameraOffsetOnGroundEnd()

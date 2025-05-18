@@ -303,6 +303,7 @@ public class ControllerPlanete : MonoBehaviour
         float jumpForce = Mathf.Lerp(jumpForceMIN, jumpForceMAX, jumpTimer / jumpTime);
         rb.AddForce(transform.up * jumpForce, ForceMode.VelocityChange);
 
+        cameraPolish.CameraOffsetOnJumpEnd();
         cameraPolish.CameraOffsetOffJumpStart();
         physicsPolish.MaxSpeedOffJumpStart();
         return;

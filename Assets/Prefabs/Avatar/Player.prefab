@@ -130,7 +130,7 @@ MonoBehaviour:
   isCarrying: 0
   carriedObject: {fileID: 0}
   launchForce: 100
-  grabForce: 250
+  grabForce: 1000
   toleranceRange: 2
 --- !u!114 &7736433207440124267
 MonoBehaviour:
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 15
   moveSpeed: 10
-  sprintMultiplier: 1.4
+  sprintMultiplier: 1.3
   airControlMultiplier: 0
   stoppingRatio: 0.8
   sideSpeedReductionRatio: 0.35
@@ -465,11 +465,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  camOnGround: 0.2
-  camOnGroundTime: 1
-  camOnGroundMax: 0
-  camOnGroundMin: 0
+  camOnGroundMaxForce: 0
+  camOnGroundMinForce: 0
   camOnGroundForceRatio: 0
+  camOnGroundMaxTime: 0
+  camOnGroundMinTime: 0
+  camOnGroundTimeRatio: 0
   camOnGroundCurve:
     serializedVersion: 2
     m_Curve:

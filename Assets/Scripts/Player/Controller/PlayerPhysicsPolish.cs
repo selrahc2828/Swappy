@@ -6,9 +6,6 @@ public class PlayerPhysicsPolish : MonoBehaviour
     [SerializeField] private GameObject player;
 
     [Header("Speed Curves")]
-    [SerializeField] private AnimationCurve walkSpeedOnMoveCurve;
-    [SerializeField] private AnimationCurve walkSpeedOffMoveCurve;
-    [Space(8)]
     [SerializeField] private float maxSpeedOnJump;
     [SerializeField] private AnimationCurve maxSpeedOnJumpCurve;
     [SerializeField] private float maxSpeedOffJumpTime;
