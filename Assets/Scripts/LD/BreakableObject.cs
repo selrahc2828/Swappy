@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class BreakableObject : MonoBehaviour
 {
-    [Tooltip("La copie scind�e de l'objet a instantier lors de sa destruction")]
+    [Tooltip("La copie scindee de l'objet a instantier lors de sa destruction")]
     [SerializeField] private GameObject shatteredVersion;
-    [Tooltip("�nergie cin�tique minimum � partir duquel une collision d�truit l'objet (Ec = m/2 * v�)")]
+    [Tooltip("energie cinetique minimum a partir duquel une collision detruit l'objet (Ec = m/2 * v�)")]
     [SerializeField] private float minShatterPower;
 
     private Rigidbody thisRb;
@@ -12,6 +12,13 @@ public class BreakableObject : MonoBehaviour
     private Vector3 currentVelocity;
     private bool hasShattered;
 
+    private SpawnPot _spawner;
+
+    public SpawnPot Spawner
+    {
+        set => _spawner = value;
+    }
+    
     private void Start()
     {
         thisRb = GetComponent<Rigidbody>();
@@ -55,7 +62,7 @@ public class BreakableObject : MonoBehaviour
 
     private void ShatterObject()
     {
-        GameObject shatteredObject = GameObject.Instantiate(shatteredVersion, transform.position, transform.rotation);
+        GameObject shatteredObject = Instantiate(shatteredVersion, transform.position, transform.rotation);
         Rigidbody[] shatteredRbs = shatteredObject.GetComponentsInChildren<Rigidbody>();
 
         foreach (Rigidbody rb in shatteredRbs)
@@ -63,6 +70,8 @@ public class BreakableObject : MonoBehaviour
             rb.velocity = currentVelocity;
         }
 
-        GameObject.Destroy(gameObject);
+        GlobalEventManager.Instance.BrokenPot(_spawner);
+
+        Destroy(gameObject);
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,6 +10,8 @@ public class FragmentSystem : MonoBehaviour
     public void AddFragment(int quantity)
     {
         fragmentBankData.bankInventoryFragmentQuantity += quantity;
+        
+        GlobalEventManager.Instance.AddFragment();
     }
 
     public void RemoveFragment(int quantity)
@@ -19,21 +22,12 @@ public class FragmentSystem : MonoBehaviour
             return;
         }
         fragmentBankData.bankInventoryFragmentQuantity -= quantity;
+        GlobalEventManager.Instance.RemoveFragment();
+
     }
     
     public void SetFragment(int quantity)
     {
         fragmentBankData.bankInventoryFragmentQuantity = quantity;
-    }
-
-    private void FixedUpdate()
-    {
-        // overlapSphere autour de player
-        // detecte fragment
-        // active le follow
-        
-        // comment detecte si plus en range ? 
-        
-        // si distance < X add fragment
     }
 }

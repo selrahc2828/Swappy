@@ -10,7 +10,6 @@ public class PickUpInteraction : InteractionSystem
     public ItemData itemData;
     private InventorySystem inventory;
     private TapeSystem tapeSystem;
-    private FragmentSystem fragmentSystem;
 
     public override void Initialize()
     {
@@ -33,7 +32,6 @@ public class PickUpInteraction : InteractionSystem
         
         inventory = FindObjectOfType<InventorySystem>(); // voir pour ref ailleur
         tapeSystem = FindObjectOfType<TapeSystem>(); // voir pour ref ailleur
-        fragmentSystem = FindObjectOfType<FragmentSystem>(); // voir pour ref ailleur
             
         Instantiate(itemData.itemPrefab, transform.position, Quaternion.identity, transform);
     }
