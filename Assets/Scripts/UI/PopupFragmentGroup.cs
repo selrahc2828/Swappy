@@ -41,27 +41,27 @@ public class PopupFragmentGroup : MonoBehaviour
         
         while (_elapsedTime < duration)
         {
-            // n'a pas encore fait de fade in
-            if (!_hasFadedIn & _elapsedTime < fadeInDuration)
-            {
-                float t = _elapsedTime / fadeInDuration;
-                canvasGroup.alpha = fadeInCurve.Evaluate(t);
-            }
-            else
-            {
-                if (!_hasFadedIn)
-                {
-                    // fade in fini, on s'assure que les valeur son bonne
-                    _hasFadedIn = true;
-                    canvasGroup.alpha = 1f;
-                }
-                
-                float t = (_elapsedTime - fadeInDuration) / (duration - fadeInDuration);
-                canvasGroup.alpha = fadeOutCurve.Evaluate(1f - t);
-            }
+            // // n'a pas encore fait de fade in
+            // if (!_hasFadedIn & _elapsedTime < fadeInDuration)
+            // {
+            //     float t = _elapsedTime / fadeInDuration;
+            //     canvasGroup.alpha = fadeInCurve.Evaluate(t);
+            // }
+            // else
+            // {
+            //     if (!_hasFadedIn)
+            //     {
+            //         // fade in fini, on s'assure que les valeur son bonne
+            //         _hasFadedIn = true;
+            //         canvasGroup.alpha = 1f;
+            //     }
+            //     
+            //     float t = (_elapsedTime - fadeInDuration) / (duration - fadeInDuration);
+            //     canvasGroup.alpha = fadeOutCurve.Evaluate(1f - t);
+            // }
 
             _elapsedTime += Time.deltaTime;
-
+            canvasGroup.alpha = 1f;
             yield return null;
         }
         
