@@ -124,7 +124,6 @@ public class PlayerCamPolish : MonoBehaviour
         camOnJumpTimer += Time.deltaTime;
         Mathf.Max(camOnJumpTimer, camOnJumpTime);
         camOnJumpLast = Vector3.Lerp(camOnJumpPointA, camOnJumpPointB, camOnJumpCurve.Evaluate(camOnJumpTimer / camOnJumpTime));
-        Debug.Log("camOnJumpLast: " + camOnJumpLast);
         return camOnJumpLast;
     }
 
@@ -156,8 +155,7 @@ public class PlayerCamPolish : MonoBehaviour
         {
             isCamOffJumpActive = false;
         }
-        Vector3 nextCamPos = Vector3.Lerp(camOffJumpPointA, camOffJumpPointB, camOffJumpCurve.Evaluate(camOffJumpTimer / camOffJumpTimer));
-        Debug.Log("camOffJump: " + nextCamPos);
+        Vector3 nextCamPos = Vector3.Lerp(camOffJumpPointA, camOffJumpPointB, camOffJumpCurve.Evaluate(camOffJumpTimer / camOffJumpTime));
         return nextCamPos;
     }
 

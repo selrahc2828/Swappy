@@ -153,7 +153,7 @@ public class ControllerPlanete : MonoBehaviour
             {
                 rb.velocity *= stoppingRatio;
             }
-            wallBumpVelocity = wallBumpVelocity * 0.01f;
+            wallBumpVelocity = wallBumpVelocity / 1.05f;
         }
         if (localHorizontalVelocity.magnitude > maxSpeed * sprintMultiplierValue && Vector3.Dot(moveDirection, localHorizontalVelocity) > 0)
         {
