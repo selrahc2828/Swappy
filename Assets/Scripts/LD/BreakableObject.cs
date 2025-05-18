@@ -13,11 +13,12 @@ public class BreakableObject : MonoBehaviour
     private bool hasShattered;
 
     private SpawnPot _spawner;
-
     public SpawnPot Spawner
     {
         set => _spawner = value;
     }
+
+    public GameObject fragmentPrefab;
     
     private void Start()
     {
@@ -70,8 +71,21 @@ public class BreakableObject : MonoBehaviour
             rb.velocity = currentVelocity;
         }
 
-        GlobalEventManager.Instance.BrokenPot(_spawner);
+        if (_spawner is not null)
+        {
+            GlobalEventManager.Instance.BrokenPot(_spawner);
+            ExplodeFragments();
+        }
 
         Destroy(gameObject);
+    }
+
+
+    private void ExplodeFragments()
+    {
+        for (int i = 0; i < (int)_spawner.potData.tier; i++)
+        {
+            Instantiate(fragmentPrefab, transform.position + new Vector3(0f,0.5f,0f), Quaternion.identity);
+        }
     }
 }

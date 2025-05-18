@@ -31,7 +31,7 @@ public class SpawnPot : MonoBehaviour
     {
         if (potData is null)
         {
-            Debug.Log("Aucun PotData assigné");
+            Debug.Log("Aucun PotData assigne");
             return;
         }
         
@@ -39,7 +39,7 @@ public class SpawnPot : MonoBehaviour
 
         if (prefabToSpawn is null)
         {
-            Debug.Log("Le prefab sélectionné est nul");
+            Debug.Log("Le prefab selectionne est nul");
             return;
         }
         
@@ -47,9 +47,6 @@ public class SpawnPot : MonoBehaviour
         
         Vector3 position = transform.position;
 
-        //raycast vers centre monde, hitposition => position
-        // RaycastHit raycastHit;
-        // Physics.Raycast(transform.position, planete, out raycastHit);
         if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, rangeDetect))
         {
             Vector3 groundNormal = hit.normal;
@@ -58,10 +55,6 @@ public class SpawnPot : MonoBehaviour
             // Calculer la rotation cible pour que le joueur "colle" à la planète
             Quaternion surfaceAlignRotation = Quaternion.FromToRotation(Vector3.up, groundNormal);
             targetRotation = surfaceAlignRotation * prefabToSpawn.transform.rotation;
-            // targetRotation = Quaternion.FromToRotation(Vector3.up, groundNormal);
-            
-            // // Appliquer un offset si nécessaire
-            // targetRotation *= Quaternion.Euler(offsetRotation);
         }
         
         pot = Instantiate(prefabToSpawn, position, targetRotation);
@@ -83,8 +76,8 @@ public class SpawnPot : MonoBehaviour
         }
     }
     
-    private void OnDrawGizmos() {
-
+    private void OnDrawGizmos() 
+    {
         Gizmos.DrawWireCube(transform.position, Vector3.one * size);
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, -transform.up * rangeDetect);
