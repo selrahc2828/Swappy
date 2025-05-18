@@ -10,6 +10,11 @@ public class PlayerPhysicsPolish : MonoBehaviour
     [SerializeField] private AnimationCurve maxSpeedOnJumpCurve;
     [SerializeField] private float maxSpeedOffJumpTime;
     [SerializeField] private AnimationCurve maxSpeedOffJumpCurve;
+    [Space(8)]
+    [SerializeField] private float maxSpeedOnFall;
+    [SerializeField] private float maxSpeedOnFallTime;
+    [SerializeField] private AnimationCurve maxSpeedOnFallCurve;
+    [SerializeField] private AnimationCurve maxSpeedOnFallRepartitionCurve;
 
     [Header("Air Curves")]
     [SerializeField] private float airControlMinimum;
@@ -102,5 +107,36 @@ public class PlayerPhysicsPolish : MonoBehaviour
     {
         maxSpeedOffJumpActive = false;
     }
+    #endregion
+
+
+    #region MaxSpeedOnFall
+
+    private float maxSpeedOnFallTimer;
+    private bool maxSpeedOnFallActive;
+    public void MaxSpeedOnFallStart()
+    {
+        maxSpeedOnFallActive = true;
+        maxSpeedOnFallTimer = 0;
+    }
+
+    public float MaxSpeedOnFallTick(float jumpTime)
+    {
+        maxSpeedOnFallTimer += Time.deltaTime;
+        if (maxSpeedOnFallTimer > maxSpeedOffJumpTime)
+        {
+            maxSpeedOnFallActive = false;
+            return baseMaxSpeed;
+        }
+        Mathf.Max(maxSpeedOnFallTimer, jumpTime);
+        float newMaxSpeed = Mathf.Lerp(maxSpeedOnFall, baseMaxSpeed, maxSpeedOnFallCurve.Evaluate(maxSpeedOnFallTimer / jumpTime));
+        return newMaxSpeed;
+    }
+
+    public void MaxSpeedOnFallEnd()
+    {
+        maxSpeedOnFallActive = false;
+    }
+
     #endregion
 }
