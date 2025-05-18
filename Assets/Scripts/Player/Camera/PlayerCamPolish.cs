@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class PlayerCamPolish : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class PlayerCamPolish : MonoBehaviour
     [SerializeField] private float fovToSpeedMin;
     [SerializeField] private float fovToSpeedMax;
     [Space(4)]
+    [SerializeField] private float speedToFovSmoothFrames;
     [SerializeField] private AnimationCurve speedToFovSmoothCurve;
 
     [Header("Jump Curves")]
@@ -65,6 +68,11 @@ public class PlayerCamPolish : MonoBehaviour
         baseCamHandlePos = cameraHandle.transform.localPosition;
         baseArmHandlePos = armsHandle.transform.localPosition;
         baseCameraFOV = playerCamera.fieldOfView;
+
+        for (int i = 0; i <= speedToFovSmoothFrames; i++)
+        {
+            speedToFovSmoothList.Add(fovToSpeedMin);
+        }
     }
 
     private void FixedUpdate()
@@ -255,15 +263,28 @@ public class PlayerCamPolish : MonoBehaviour
 
     #region SpeedToFov
 
+    private List<float> speedToFovSmoothList = new List<float>();
     public void SpeedToFovTick()
     {
+
         float speed = Mathf.Clamp(playerRb.velocity.magnitude, speedToFovMin, speedToFovMax);
         float normalizedSpeed = Mathf.InverseLerp(speedToFovMin, speedToFovMax, speed);
         float multiplier = speedToFovSmoothCurve.Evaluate(normalizedSpeed);
         float fov = Mathf.Lerp(fovToSpeedMin, fovToSpeedMax, multiplier);
 
         Debug.Log(Mathf.RoundToInt(playerRb.velocity.magnitude));
-        playerCamera.fieldOfView = fov;
+
+        speedToFovSmoothList.Add(fov);
+        speedToFovSmoothList.RemoveAt(0);
+
+        float fovMerge = 0;
+        for (int i = 0; i <= speedToFovSmoothFrames; i++)
+        {
+            fovMerge += speedToFovSmoothList[i];
+        }
+        fovMerge /= speedToFovSmoothList.Count;
+
+        playerCamera.fieldOfView = fovMerge;
     }
     #endregion
 }
