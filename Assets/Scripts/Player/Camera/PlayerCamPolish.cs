@@ -149,11 +149,11 @@ public class PlayerCamPolish : MonoBehaviour
     private Vector3 CameraOffsetOffJumpTick()
     {
         camOffJumpTimer += Time.deltaTime;
-        if (camOffJumpTimer > camOnJumpTime)
+        if (camOffJumpTimer > camOffJumpTime)
         {
             isCamOffJumpActive = false;
         }
-        Vector3 nextCamPos = Vector3.Lerp(camOffJumpPointA, camOffJumpPointB, camOffJumpCurve.Evaluate(camOffJumpTimer / camOnJumpTimer));
+        Vector3 nextCamPos = Vector3.Lerp(camOffJumpPointA, camOffJumpPointB, camOffJumpCurve.Evaluate(camOffJumpTimer / camOffJumpTimer));
         return nextCamPos;
     }
 
