@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [InitializeOnLoad]
@@ -60,13 +59,10 @@ public class UniqueIDEditor
         // Récupérer tous les objets SpawnPot dans la scene active
         SpawnPot[] all = UnityEngine.Object.FindObjectsOfType<SpawnPot>();
         
-        Debug.Log($"all lenght : {all.Length}");
-
         foreach (SpawnPot spawner in all)
         {
             if (string.IsNullOrEmpty(spawner.UniqueID))
             {
-                Debug.Log($"IsNullOrEmpty");
                 SetUniqueID(spawner);
                 tupleID[spawner.UniqueID] = spawner.GetInstanceID();
                 continue;
@@ -75,13 +71,11 @@ public class UniqueIDEditor
             //on test si on a déjà une instance pour le uniqueID
             if (!tupleID.TryGetValue(spawner.UniqueID, out var knownInstanceID))
             {
-                Debug.Log($"premiere fois");
                 // premiere fois qu'on voit cet ID → on l’enregistre
                 tupleID[spawner.UniqueID] = spawner.GetInstanceID();
             }
             else if (knownInstanceID != spawner.GetInstanceID())
             {
-                Debug.Log($"duplicata");
                 // si on a déjà une instance ET qu'elle est differente de la valeur stocke, alors c'est une duplication
                 SetUniqueID(spawner);
                 tupleID[spawner.UniqueID] = spawner.GetInstanceID();
@@ -99,7 +93,6 @@ public class UniqueIDEditor
         // BindingFlags.Instance => on veut un chap d'instance, qui est a un objet et non a une classe static
         
         EditorUtility.SetDirty(spawner);
-        //Debug.Log($"Nouvel ID généré pour {spawner.name}: {spawner.UniqueID}");
     }
 }
 #endif

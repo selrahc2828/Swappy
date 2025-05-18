@@ -22,7 +22,11 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private GameObject tapePopupPrefab;
     [SerializeField] private Transform popupTapeParent; 
 
-    
+    [Header("Fragment")]
+    [SerializeField] private GameObject fragmentPopupPrefab;
+    [SerializeField] private Transform fragmentParent; 
+    private GameObject _activeFragmentPopup;
+
     private void Awake()
     {
         // Debug.Log("awake CanvasManager");
@@ -42,7 +46,8 @@ public class CanvasManager : MonoBehaviour
     private void OnEnable()
     {
         GlobalEventManager.Instance.OnPopupInventory += ShowPopupItem;
-        
+        GlobalEventManager.Instance.OnPopupFragment += ShowPopupFragment;
+
         if (tapeSystem != null)
         {
             GlobalEventManager.Instance.OnPopupTape += ShowPopupTape;
@@ -54,7 +59,8 @@ public class CanvasManager : MonoBehaviour
     private void OnDisable()
     {
         GlobalEventManager.Instance.OnPopupInventory -= ShowPopupItem;
-        
+        GlobalEventManager.Instance.OnPopupFragment -= ShowPopupFragment;
+
         if (tapeSystem != null)
         {
             GlobalEventManager.Instance.OnPopupTape -= ShowPopupTape;
@@ -73,7 +79,8 @@ public class CanvasManager : MonoBehaviour
 
     public void ShowPopupItem(ItemData item, int amount = 1)
     {
-        if (itemPopupPrefab is null || popupItemParent is null) return;
+        if (itemPopupPrefab is null || popupItemParent is null) 
+            return;
 
         GameObject popup = Instantiate(itemPopupPrefab, popupItemParent);
 
@@ -87,11 +94,34 @@ public class CanvasManager : MonoBehaviour
 
     public void ShowPopupTape(TapeData tape)
     {
-        if (tapePopupPrefab == null || popupTapeParent == null) return;
+        if (tapePopupPrefab == null || popupTapeParent == null) 
+            return;
         
         GameObject popup = Instantiate(tapePopupPrefab, popupTapeParent);
         PopupTapeGroup popupTapeGroup = popup.GetComponent<PopupTapeGroup>();
         popupTapeGroup.icon.sprite = tape.itemSprite;
         popupTapeGroup.textName.text = tape.itemName;
+    }
+    
+    public void ShowPopupFragment(FragmentBankData fragmentData)
+    {
+        if (fragmentPopupPrefab == null || fragmentParent == null) 
+            return;
+
+        
+        //si déjà affiche, on reset juste son timer d'affichage
+        if (_activeFragmentPopup is null)
+        {
+            _activeFragmentPopup = Instantiate(fragmentPopupPrefab, fragmentParent);
+        }
+        
+        PopupFragmentGroup popupFragmentGroup = _activeFragmentPopup.GetComponent<PopupFragmentGroup>();
+
+        if (popupFragmentGroup is not null)
+        {
+            popupFragmentGroup?.IncreaseQuantityAmount();
+            popupFragmentGroup.icon.sprite = fragmentData.fragmentBankIcon;
+            popupFragmentGroup.OnEndDisplay = () => _activeFragmentPopup = null;
+        }
     }
 }

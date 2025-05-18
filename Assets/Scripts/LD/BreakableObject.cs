@@ -55,7 +55,7 @@ public class BreakableObject : MonoBehaviour
             if (!hasShattered)
             {
                 hasShattered = true;
-                Debug.Log("Shatter Enter from: " + collision.gameObject.name);
+                // Debug.Log("Shatter Enter from: " + collision.gameObject.name);
                 ShatterObject();
             }
         }

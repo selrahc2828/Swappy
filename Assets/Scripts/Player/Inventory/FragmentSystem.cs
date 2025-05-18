@@ -12,6 +12,7 @@ public class FragmentSystem : MonoBehaviour
         fragmentBankData.bankInventoryFragmentQuantity += quantity;
         
         GlobalEventManager.Instance.AddFragment();
+        GlobalEventManager.Instance.DisplayPopupAddFragment(fragmentBankData);
     }
 
     public void RemoveFragment(int quantity)

@@ -37,7 +37,7 @@ public class GlobalEventManager : MonoBehaviour
     // Fragment
     public event Action OnAddFragment;
     public event Action OnRemoveFragment;
-
+    public event Action<FragmentBankData> OnPopupFragment;
     public event Action<SpawnPot> OnShattered;
 
 
@@ -149,7 +149,11 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnRemoveFragment?.Invoke();
     }
-
+    
+    public void DisplayPopupAddFragment(FragmentBankData fragmentBank)
+    {
+        OnPopupFragment?.Invoke(fragmentBank);
+    }
     #endregion
 
     public void BrokenPot(SpawnPot originSpawner)
