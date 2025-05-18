@@ -204,72 +204,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 55948801783339615}
-  walkSpeedOnMoveCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.333334
-    - serializedVersion: 3
-      time: 0.5
-      value: 0.5
-      inSlope: 2.9999938
-      outSlope: 2.9999943
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.33333403
-      outWeight: 0.33333397
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.33333397
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  walkSpeedOffMoveCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.333334
-    - serializedVersion: 3
-      time: 0.5
-      value: 0.5
-      inSlope: 2.9999938
-      outSlope: 2.9999943
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.33333403
-      outWeight: 0.33333397
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.33333397
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   maxSpeedOnJump: 6
   maxSpeedOnJumpCurve:
     serializedVersion: 2
@@ -465,41 +399,50 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  camOnGroundMaxForce: 0
-  camOnGroundMinForce: 0
-  camOnGroundForceRatio: 0
-  camOnGroundMaxTime: 0
-  camOnGroundMinTime: 0
-  camOnGroundTimeRatio: 0
+  camOnGroundMaxForce: 0.7
+  camOnGroundMinForce: 0.05
+  camOnGroundForceRatio: 0.015
+  camOnGroundMaxTime: 2
+  camOnGroundMinTime: 0.1
+  camOnGroundTimeRatio: 0.025
   camOnGroundCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 104.173546
-      outSlope: 104.173546
+      value: 0.0017089844
+      inSlope: 3.287258
+      outSlope: 3.287258
       tangentMode: 0
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.02109239
+      outWeight: 0.25877187
     - serializedVersion: 3
-      time: 0.40416685
-      value: 0.99980927
-      inSlope: -0.0000015127827
-      outSlope: -0.0000015127827
+      time: 0.3333191
+      value: 0.99827003
+      inSlope: -0.009250394
+      outSlope: -0.009250394
       tangentMode: 0
       weightedMode: 3
-      inWeight: 0.29245842
-      outWeight: 0.6024461
+      inWeight: 0.29385984
+      outWeight: 0.3768138
+    - serializedVersion: 3
+      time: 0.4666748
+      value: 1
+      inSlope: 0.005585921
+      outSlope: 0.005585921
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.07509217
+      outWeight: 0.49122775
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0.01771142
-      outSlope: 0.01771142
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 3
-      inWeight: 0.6123394
+      inWeight: 0.35052922
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
