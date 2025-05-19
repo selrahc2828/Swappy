@@ -158,7 +158,6 @@ public class PlayerPhysicsPolish : MonoBehaviour
         }
         Mathf.Max(airControlOnAirTimer, airControlOnAirTime);
         float newAirControl = Mathf.Lerp(airControlOnAirMin, airControlOnAirMax, airControlOnAirCurve.Evaluate(airControlOnAirTimer / airControlOnAirTime));
-        Debug.Log("AirControl: " + newAirControl);
         return newAirControl;
     }
 
