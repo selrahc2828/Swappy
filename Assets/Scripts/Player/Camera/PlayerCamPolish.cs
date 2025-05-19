@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿    using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -79,11 +79,11 @@ public class PlayerCamPolish : MonoBehaviour
     {
         lastVelocity = currentVelocity;
         currentVelocity = playerRb.velocity;
+        SpeedToFovTick();
     }
 
     private void Update()
     {
-        SpeedToFovTick();
         CameraCurvesTick();
     }
 
