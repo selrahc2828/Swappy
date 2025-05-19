@@ -17,8 +17,10 @@ public class PlayerPhysicsPolish : MonoBehaviour
     [SerializeField] private AnimationCurve maxSpeedOnFallRepartitionCurve;
 
     [Header("Air Curves")]
-    [SerializeField] private float airControlMinimum;
-    [SerializeField] private AnimationCurve airControlCurve;
+    [SerializeField] private float airControlOnAirMin;
+    [SerializeField] private float airControlOnAirMax;
+    [SerializeField] private float airControlOnAirTime;
+    [SerializeField] private AnimationCurve airControlOnAirCurve;
 
     private ControllerPlanete pControler;
     private Rigidbody pRb;
@@ -53,6 +55,10 @@ public class PlayerPhysicsPolish : MonoBehaviour
         if (maxSpeedOffJumpActive)
         {
             pControler.maxSpeed = MaxSpeedOffJumpTick(pControler.jumpTime);
+        }
+        if (airControlOnAirActive)
+        {
+            pControler.airControlMultiplier = AirControlOnAirTick();
         }
     }
 
@@ -130,5 +136,36 @@ public class PlayerPhysicsPolish : MonoBehaviour
         maxSpeedOnFallActive = false;
     }
 
+    #endregion
+
+
+    #region AirControlOnAir
+
+    private bool airControlOnAirActive;
+    private float airControlOnAirTimer;
+    public void AirControlOnAirStart()
+    {
+        airControlOnAirActive = true;
+        airControlOnAirTimer = 0;
+    }
+
+    public float AirControlOnAirTick()
+    {
+        airControlOnAirTimer += Time.deltaTime;
+        if (airControlOnAirTimer > airControlOnAirTime)
+        {
+            airControlOnAirActive = false;
+        }
+        Mathf.Max(airControlOnAirTimer, airControlOnAirTime);
+        float newAirControl = Mathf.Lerp(airControlOnAirMin, airControlOnAirMax, airControlOnAirCurve.Evaluate(airControlOnAirTimer / airControlOnAirTime));
+        Debug.Log("AirControl: " + newAirControl);
+        return newAirControl;
+    }
+
+    public void AirControlOnAirEnd()
+    {
+        airControlOnAirActive = false;
+        pControler.airControlMultiplier = airControlOnAirMin;
+    }
     #endregion
 }

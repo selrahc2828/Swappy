@@ -209,6 +209,7 @@ public class ControllerPlanete : MonoBehaviour
         {
             hasAlreadyJumped = false;
             cameraPolish.CameraOffsetOnGroundStart(collision);
+            physicsPolish.AirControlOnAirEnd();
         }
         else
         {
@@ -306,6 +307,7 @@ public class ControllerPlanete : MonoBehaviour
         cameraPolish.CameraOffsetOnJumpEnd();
         cameraPolish.CameraOffsetOffJumpStart();
         physicsPolish.MaxSpeedOffJumpStart();
+        physicsPolish.AirControlOnAirStart();
         return;
     }
 }

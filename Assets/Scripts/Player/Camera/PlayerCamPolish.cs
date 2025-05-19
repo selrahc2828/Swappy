@@ -272,8 +272,6 @@ public class PlayerCamPolish : MonoBehaviour
         float multiplier = speedToFovSmoothCurve.Evaluate(normalizedSpeed);
         float fov = Mathf.Lerp(fovToSpeedMin, fovToSpeedMax, multiplier);
 
-        Debug.Log(Mathf.RoundToInt(playerRb.velocity.magnitude));
-
         speedToFovSmoothList.Add(fov);
         speedToFovSmoothList.RemoveAt(0);
 
