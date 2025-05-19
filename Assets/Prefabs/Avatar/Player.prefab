@@ -268,39 +268,32 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  airControlMinimum: 0.1
-  airControlCurve:
+  airControlOnAirMin: 0.2
+  airControlOnAirMax: 0.3
+  airControlOnAirTime: 3
+  airControlOnAirCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.49723756
-      inSlope: 87.82004
-      outSlope: 87.82004
+      value: 1
+      inSlope: -0.009038772
+      outSlope: -0.009038772
       tangentMode: 0
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.0089877285
-    - serializedVersion: 3
-      time: 0.19892704
-      value: 0.9936722
-      inSlope: 0.010732971
-      outSlope: 0.010732971
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.7118516
-      outWeight: 0.6524574
+      outWeight: 0.50248134
     - serializedVersion: 3
       time: 1
-      value: 0.0007575229
-      inSlope: 0.0052945255
-      outSlope: 0.0052945255
+      value: 0
+      inSlope: -1.8373587
+      outSlope: -1.8373587
       tangentMode: 0
       weightedMode: 3
-      inWeight: 0.6335732
+      inWeight: 0.019851208
       outWeight: 0
     m_PreInfinity: 2
-    m_PostInfinity: 0
+    m_PostInfinity: 2
     m_RotationOrder: 4
 --- !u!114 &2426108279472809210
 MonoBehaviour:
@@ -318,10 +311,11 @@ MonoBehaviour:
   playerCamera: {fileID: 4551566662917278316}
   cameraHandle: {fileID: 709902461892241047}
   armsHandle: {fileID: 365990034600856803}
-  speedToFovMin: 4
-  speedToFovMax: 45
+  speedToFovMin: 0
+  speedToFovMax: 40
   fovToSpeedMin: 70
   fovToSpeedMax: 85
+  speedToFovSmoothFrames: 4
   speedToFovSmoothCurve:
     serializedVersion: 2
     m_Curve:
