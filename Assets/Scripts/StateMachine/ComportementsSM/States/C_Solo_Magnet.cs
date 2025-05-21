@@ -133,5 +133,5 @@ public class C_Solo_Magnet : ComportementState
         // --- Damping : freine la vitesse radiale (vers/depuis le centre) ---
         Vector3 radialVelocity = Vector3.Project(rb.velocity, forceDir);
         rb.velocity -= radialVelocity * (dampingFactor * Time.deltaTime);
-        }
+    }
 }
