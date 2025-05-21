@@ -19,6 +19,8 @@ public class GlobalEventManager : MonoBehaviour
     public event Action<GameObject> OnComportementStateEnter;
     public event Action<GameObject> OnComportementStateExit;
     public event Action<GameObject, float> OnComportementStatePlay;
+    public event Action<GameObject, float, bool> OnExplosion;
+    public event Action<GameObject> OnJustBeforeExplosion;
 
     public event Action<GameObject> OnFootstep;
     public event Action<GameObject> OnJump;
@@ -83,6 +85,16 @@ public class GlobalEventManager : MonoBehaviour
     public void ComportmentStatePlay(GameObject comportableObject, float force = -1) // appele lorsque le comportement agit
     {
         OnComportementStatePlay?.Invoke(comportableObject,force);
+    }
+
+    public void Explosion(GameObject explodingGameObject, float timeBeforeNextExplosion, bool isStartingState)
+    {
+        OnExplosion?.Invoke(explodingGameObject,timeBeforeNextExplosion, isStartingState);
+    }
+
+    public void JustBeforeExplosion(GameObject explodingGameObjec)
+    {
+        OnJustBeforeExplosion?.Invoke(explodingGameObjec);
     }
 
     #endregion

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,6 +7,7 @@ using UnityEngine;
 public class C_Solo_Impulse : ComportementState
 {
     private float repulserTime = 5f;
+    private float repulserFirstTime;
     private float repulserTimer;
     private float repulserRange;
     private float trueRepulserRange;
@@ -15,7 +17,7 @@ public class C_Solo_Impulse : ComportementState
     [Tooltip("Si Rigidbody sur lui")]
     private bool applyOnMe = false;
     private GameObject feedback;
-    
+    private bool explodingSoonSignalSended;
     
     
     public C_Solo_Impulse(StateMachine stateMachine) : base(stateMachine)
@@ -31,10 +33,10 @@ public class C_Solo_Impulse : ComportementState
         base.Enter();
         
         repulserTime = _sm.comportementManager.impulseData.impulseTime;
+        repulserFirstTime = _sm.comportementManager.impulseData.impulseFirstTime;
         repulserTimer = 0f;
         repulserRange = _sm.comportementManager.impulseData.impulseRange;
 
-        // trueRepulserRange = repulserRange;
         if (_sm.isPlayer)
         {
             trueRepulserRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + repulserRange;//toujours des pb de range trop grande car prend pas la scale en compte mais mieux
@@ -49,10 +51,10 @@ public class C_Solo_Impulse : ComportementState
         impulseGradiantForce = _sm.comportementManager.impulseData.impulseGradiantForce;
         applyOnMe= _sm.comportementManager.impulseData.applyOnMe;
         feedback = _sm.comportementManager.impulseData.impulseFeedback;
-        
-        // Debug.Log("Solo impulse enter");
-        //_sm.rend.material = _sm.impulse;
+        explodingSoonSignalSended = false;
+
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.noComportementColor);
+        GlobalEventManager.Instance.Explosion(GetGameObject(), repulserFirstTime, true);
     }
 
     public override void TickLogic()
@@ -64,6 +66,12 @@ public class C_Solo_Impulse : ComportementState
             
             Repulse();
             repulserTimer = 0;
+            explodingSoonSignalSended = false;
+        }
+        if(repulserTimer >= (repulserTime-1.5f) && explodingSoonSignalSended == false)
+        {
+            explodingSoonSignalSended=true;
+            GlobalEventManager.Instance.JustBeforeExplosion(GetGameObject());
         }
     }
 
@@ -86,6 +94,7 @@ public class C_Solo_Impulse : ComportementState
  
     public void Repulse()
     {
+        GlobalEventManager.Instance.Explosion(GetGameObject(), repulserTime, false);
         GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         if (feedback)
         {
