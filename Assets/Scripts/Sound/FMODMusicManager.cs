@@ -28,7 +28,8 @@ public class FMODMusicManager : MonoBehaviour
     private EventInstance musictest;
     
     private EventInstance snapshotWalkman;
-    private EventInstance musicTape;
+
+    
     
     
     private void Awake()
@@ -50,10 +51,10 @@ public class FMODMusicManager : MonoBehaviour
     }
     #endregion
     #region Param Music Instance
-    public EventInstance CreateMusicInstance(EventReference musicReference)
+    public EventInstance CreateMusicInstance(EventReference musicReference, bool addToList = true)
     {
         EventInstance musicInstance = RuntimeManager.CreateInstance(musicReference);
-        musicPlaylist.Add(musicInstance);
+        if(addToList)musicPlaylist.Add(musicInstance);
         return musicInstance;
     }
 
@@ -114,29 +115,30 @@ public class FMODMusicManager : MonoBehaviour
     {
         return musicPlaylist.Count;
     }
-
     public EventInstance GetMusicPlaylistInstance(EventReference musicReference)
     {
-        bool isFound = false;
-        EventInstance musicTarget = CreateMusicInstance(musicReference);
+        EventInstance musicTarget = CreateMusicInstance(musicReference,false);
         musicTarget.getDescription(out EventDescription target);
         target.getID(out GUID targetID);
-        foreach (EventInstance musicInstance in musicPlaylist)
+        if (GetPlaylistMusicSize() > 0)
         {
-            musicInstance.getDescription(out EventDescription eventDescription);
-            eventDescription.getID(out GUID eventID);
-            if ( targetID == eventID)
+            foreach (EventInstance musicInstance in musicPlaylist)
             {
-                isFound = true;
-                return musicInstance;
+                musicInstance.getDescription(out EventDescription eventDescription);
+                eventDescription.getID(out GUID eventID);
+                if (targetID == eventID)
+                {
+                    ReleaseMusicInstance(musicTarget);
+                    Debug.Log("musicfound");
+                    return musicInstance;
+                }
             }
         }
-        if (!isFound)
-        {
-            return musicTarget;
-        }
-        return default;
+        Debug.Log("newmusicmade");
+        return CreateMusicInstance(musicReference);
+
     }
+
 
     #endregion
     #region Param Music Walkman
@@ -153,62 +155,54 @@ public class FMODMusicManager : MonoBehaviour
         ChooseMusicWalkMan(musicTape, newMusicName);
         musicTape.start();
     }
+
+    public void PlayMusicWalkman(string musicName)
+    {
+        GetMusicPlaylistInstance(FMODMusicEvents.Walkman).getPlaybackState(out PLAYBACK_STATE musicState);
+        if (musicState == PLAYBACK_STATE.PLAYING)
+        {
+            SwitchMusicWalkman(musicName);
+        }
+        else
+        {
+            ChooseMusicWalkMan(GetMusicPlaylistInstance(FMODMusicEvents.Walkman), musicName);
+            GetMusicPlaylistInstance(FMODMusicEvents.Walkman).start();
+        }
+    }
+
+    public void StopMusicWalkman()
+    {
+        GetMusicPlaylistInstance(FMODMusicEvents.Walkman).stop(STOP_MODE.ALLOWFADEOUT);
+        GetMusicPlaylistInstance(FMODMusicEvents.Walkman).release();
+    }
+
+    public void SwitchMusicWalkman(string newMusicName)
+    {
+        ChangeMusicWalkman(GetMusicPlaylistInstance(FMODMusicEvents.Walkman), newMusicName);
+    }
     #endregion
     #region Param Music Test 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad9))
+        if(Input.GetKeyDown(KeyCode.Keypad1))
         {
-            musictest = CreateMusicInstance(FMODMusicEvents.TestMusic1);
-            PlayMusicInstance(musictest);
-            SetMusicNameParamInstance(musictest, "Layer", 1,false);
-            Debug.Log(GetMusicNameParamInstance(musictest, "Layer"));
+            PlayMusicWalkman("CassetteClassique");   
+        }
+        if(Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            PlayMusicWalkman("CassetteJazzFilmNoir");   
+        }
+        if(Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            PlayMusicWalkman("CassetteOrchestral");   
         }
 
-        if (Input.GetKeyDown(KeyCode.Keypad8))
+        if (Input.GetKeyDown(KeyCode.Keypad0))
         {
-            StopMusic(musictest);
-            ReleaseMusicInstance(musictest);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            musicTape = CreateMusicInstance(FMODMusicEvents.TestMusic6);
-            
-            ChooseMusicWalkMan(musicTape, "CassetteJazzFilmNoir");
-            PlayMusicInstance(musicTape);
-            
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-           
-            ChooseMusicWalkMan(musicTape, "CassetteOrchestral");
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad5))
-        {
-            ChooseMusicWalkMan(musicTape, "CassetteJazzFilm");
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad6))
-        {
-            PlayMusicInstance(musicTape);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            StopMusic(musicTape);
-            
+            StopMusicWalkman();
         }
 
         if (Input.GetKeyDown(KeyCode.Keypad4))
-        {
-            ReleaseMusicInstance(musicTape);
-        }
-     
-        if (Input.GetKeyDown(KeyCode.KeypadMultiply))
         {
             Debug.Log(GetPlaylistMusicSize());
         }
