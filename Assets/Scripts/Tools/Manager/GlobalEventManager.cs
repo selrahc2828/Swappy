@@ -41,6 +41,8 @@ public class GlobalEventManager : MonoBehaviour
     public event Action OnAddFragment;
     public event Action OnRemoveFragment;
 
+    public event Action<bool> OnSlowMotionInput;
+
     private void Awake()
     {
         Instance = this;
@@ -151,6 +153,11 @@ public class GlobalEventManager : MonoBehaviour
     }
 
     #endregion
+
+    public void SlowMotionInput(bool activeSlowMo)
+    {
+        OnSlowMotionInput?.Invoke(activeSlowMo);
+    }
 
     public void Collision(GameObject gameObject) // appele lors d'un collision d'un objet
     {

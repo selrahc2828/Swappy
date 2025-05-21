@@ -15,16 +15,26 @@ public class SlowTimeFeedback : MonoBehaviour
         MainVolume.profile = MainProfile;
     }
 
+    private void OnEnable()
+    {
+        GlobalEventManager.Instance.OnSlowMotionInput += ChangeProfiles;
+    }
+    private void OnDisable()
+    {
+        GlobalEventManager.Instance.OnSlowMotionInput -= ChangeProfiles;
+    }
+
     void ChangeProfiles(bool slow)
     {
+        Debug.Log(MainVolume.profile.name  );
         if (slow == true)
         {
             MainVolume.profile = SlowProfile;
         }
-
-        if (slow == false)
+        else
         {
             MainVolume.profile = MainProfile;
+
         }
     }
 }
