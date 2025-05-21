@@ -392,13 +392,17 @@ public class FMODEventManager : MonoBehaviour
     {
         if (isActive)
         {
-            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactMode,CreateEventInstance(FMODEvents.PlayerSelfImpactMode));
-            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactMode));
+            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeIN,CreateEventInstance(FMODEvents.PlayerSelfImpactModeIN));
+            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeIN));
+            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeIN));
+            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeIN);
         }
         else
         {
-            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactMode));
-            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactMode);
+            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT,CreateEventInstance(FMODEvents.PlayerSelfImpactModeOUT));
+            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
+            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
+            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT);
         }
     }
 
@@ -635,4 +639,18 @@ public class FMODEventManager : MonoBehaviour
     
     #endregion
 
+    #region NON C# events
+
+    public void PlaySoundFlare(GameObject gameObject,EventReference eventReference)
+    {
+        AddInstanceInEncyclopedia(gameObject,eventReference,CreateEventInstance(eventReference));
+        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(gameObject,eventReference),gameObject,gameObject.GetComponent<Rigidbody>());
+    }
+
+    public void StopSoundFlare(GameObject gameObject,EventReference eventReference)
+    {
+        StopEventInstance(GetInstanceFromEncyclopediaKey(gameObject,eventReference));
+        RemoveInstanceInEncyclopedia(gameObject,eventReference);
+    }
+    #endregion
 }
