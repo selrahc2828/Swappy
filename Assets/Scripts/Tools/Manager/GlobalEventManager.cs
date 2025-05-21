@@ -7,12 +7,15 @@ public class GlobalEventManager : MonoBehaviour
 {
     public static GlobalEventManager Instance;
 
+    // Manipoulation de comportement
     public event Action<GameObject, bool, bool> OnComportmentExtracted;
     public event Action<GameObject, bool, bool> OnComportmentAdded;
     public event Action<GameObject,bool> OnComportmentExchanged;
 
+    //SIM
     public event Action<GameObject,bool> OnSelfImpactMod;
 
+    //Comportement States
     public event Action<GameObject> OnComportementStateEnter;
     public event Action<GameObject> OnComportementStateExit;
     public event Action<GameObject, float> OnComportementStatePlay;
@@ -37,8 +40,6 @@ public class GlobalEventManager : MonoBehaviour
     // Fragment
     public event Action OnAddFragment;
     public event Action OnRemoveFragment;
-
-
 
     private void Awake()
     {
