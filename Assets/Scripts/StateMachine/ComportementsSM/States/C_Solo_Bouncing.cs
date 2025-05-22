@@ -10,8 +10,6 @@ public class C_Solo_Bouncing : ComportementState
     private PhysicMaterial _basePlayerMaterial;
     private PhysicMaterial _basePlayerSlideMaterial;
     
-    
-
     public C_Solo_Bouncing(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -73,5 +71,6 @@ public class C_Solo_Bouncing : ComportementState
     public override void CollisionStart(Collision other)
     {
         GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
+        GlobalEventManager.Instance.BounceLocation(other.contacts);
     }
 }

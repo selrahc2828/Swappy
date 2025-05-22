@@ -15,7 +15,9 @@ public class C_Solo_Rocket : ComportementState
     private float maxSpeed;
     private bool rocketOn;
     private bool firstRocket;
-    
+    private bool startingSoonSignalSended;
+
+
     public C_Solo_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -31,6 +33,7 @@ public class C_Solo_Rocket : ComportementState
         timer = 0f;
         rocketOn = false;
         firstRocket = true;
+        startingSoonSignalSended = false;
         maxSpeed = _sm.comportementManager.rocketData.rocketMaxSpeed;
         rocketForce = _sm.comportementManager.rocketData.rocketForce;
         rocketForceOnPlayer = _sm.comportementManager.rocketData.rocketForceOnPlayer;
@@ -61,24 +64,31 @@ public class C_Solo_Rocket : ComportementState
         }
         if (timer > onCooldown && !rocketOn)
         {
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
             rocketOn = true;
             timer = 0f;
+        }
+        if(timer >  (onCooldown -1) && !rocketOn && startingSoonSignalSended == false)
+        {
+            startingSoonSignalSended = true;
+            GlobalEventManager.Instance.JustBeforeRocketStart(GetGameObject());
         }
 
         if (timer > offCooldown && rocketOn)
         {
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
             rocketOn = false;
             timer = 0f;
         }
 
-        if (_sm.rb.velocity.magnitude > maxSpeed && rocketOn)
+        if (_sm.transform.InverseTransformDirection(_sm.rb.velocity).y > maxSpeed && rocketOn)// compare la velocity local y a la max speed
         {
-            _sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
+            //_sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
+            return;
         }
 
         if (rocketOn)
         {
-            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
             if (_sm.isPlayer)
             {
                 _sm.rb.AddForce(_sm.transform.up * rocketForceOnPlayer, ForceMode.Force);

@@ -21,6 +21,8 @@ public class GlobalEventManager : MonoBehaviour
     public event Action<GameObject, float> OnComportementStatePlay;
     public event Action<GameObject, float, bool> OnExplosion;
     public event Action<GameObject> OnJustBeforeExplosion;
+    public event Action<ContactPoint[]> OnBounceLocation;
+    public event Action<GameObject> OnJustBeforeRocketStart;
 
     public event Action<GameObject> OnFootstep;
     public event Action<GameObject> OnJump;
@@ -97,7 +99,18 @@ public class GlobalEventManager : MonoBehaviour
         OnJustBeforeExplosion?.Invoke(explodingGameObjec);
     }
 
+    public void BounceLocation(ContactPoint[] locations) // appelé quand un comportement bounce rebondit
+    {
+        OnBounceLocation?.Invoke(locations);
+    }
+    public void JustBeforeRocketStart(GameObject rocketGameObject)
+    {
+        OnJustBeforeRocketStart?.Invoke(rocketGameObject);
+    }
+
     #endregion
+
+    #region player
 
     public void Footstep(GameObject groundObject) // appele lors d'un pas du player
     {
@@ -113,6 +126,8 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnLand?.Invoke(groundObject);
     }
+
+    #endregion
 
     #region Inventaire
     public void AddInventory() //appele quand on ajoute un item dans l'inventaire
