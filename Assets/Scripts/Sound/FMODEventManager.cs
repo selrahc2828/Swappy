@@ -498,7 +498,9 @@ public class FMODEventManager : MonoBehaviour
         {
             case Step.Enter:
                 AddInstanceInEncyclopedia(_gameObject, _eventReference,CreateEventInstance(_eventReference));
+                if(_gameObject.CompareTag("Player"))SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),"ISPLAYER",1);
                 PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),_gameObject,_gameObject.GetComponent<Rigidbody>());
+                
                 break;
             case Step.Play:
                 if (force < 0)

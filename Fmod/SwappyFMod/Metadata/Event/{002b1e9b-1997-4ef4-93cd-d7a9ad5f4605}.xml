@@ -32,6 +32,9 @@
 		<relationship name="timeline">
 			<destination>{a00af3ab-453f-4f30-b520-6788ec899fb7}</destination>
 		</relationship>
+		<relationship name="parameters">
+			<destination>{72033dfd-1791-49b9-8dec-f5ecc1699552}</destination>
+		</relationship>
 		<relationship name="banks">
 			<destination>{6a859000-15af-4f92-b4b4-8283d92128f1}</destination>
 		</relationship>
@@ -91,6 +94,11 @@
 			<destination>{7d4c1c3b-cf21-4979-8b2e-e0bccdfe8041}</destination>
 		</relationship>
 	</object>
+	<object class="ParameterProxy" id="{72033dfd-1791-49b9-8dec-f5ecc1699552}">
+		<relationship name="preset">
+			<destination>{eda7885d-bae0-48ae-b05c-c7c73b54d558}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{f1a546c3-f13d-4bfb-9edf-2e735a77b84f}">
 		<property name="volume">
 			<value>-12</value>
@@ -146,6 +154,9 @@
 		<property name="name">
 			<value>Idle</value>
 		</property>
+		<relationship name="automators">
+			<destination>{c6b13930-5949-49db-83ef-42da62197114}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{7893133a-6261-4ec2-9c95-86cc32ae0e5d}</destination>
 		</relationship>
@@ -252,6 +263,15 @@
 			<value>1.04166675</value>
 		</property>
 	</object>
+	<object class="Automator" id="{c6b13930-5949-49db-83ef-42da62197114}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>volume</value>
+		</property>
+		<relationship name="automationCurves">
+			<destination>{3f5cb185-0fbc-4ce9-a67f-960df98f00e5}</destination>
+			<destination>{719dded1-391b-4df3-b88a-82907832136c}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusEffectChain" id="{7893133a-6261-4ec2-9c95-86cc32ae0e5d}">
 		<relationship name="effects">
 			<destination>{3764bb42-4319-407c-aa4f-41d096bdb967}</destination>
@@ -292,6 +312,24 @@
 		</property>
 		<relationship name="preset">
 			<destination>{2e8efaa2-e3ce-46a4-b9c1-b23949d7083e}</destination>
+		</relationship>
+	</object>
+	<object class="AutomationCurve" id="{3f5cb185-0fbc-4ce9-a67f-960df98f00e5}">
+		<relationship name="parameter">
+			<destination>{8c424e5b-61a0-4dcf-a0ea-ce1703da0818}</destination>
+		</relationship>
+		<relationship name="automationPoints">
+			<destination>{5efdf5f5-b1b4-4ca7-b50c-52cef7b375a5}</destination>
+			<destination>{84760095-b79c-4852-804f-7404f611dbec}</destination>
+		</relationship>
+	</object>
+	<object class="AutomationCurve" id="{719dded1-391b-4df3-b88a-82907832136c}">
+		<relationship name="parameter">
+			<destination>{eda7885d-bae0-48ae-b05c-c7c73b54d558}</destination>
+		</relationship>
+		<relationship name="automationPoints">
+			<destination>{fa01ed26-3dba-4020-b1b1-552fd25afe95}</destination>
+			<destination>{2fa58059-b59d-4c24-9aa3-0c553607dc25}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{3764bb42-4319-407c-aa4f-41d096bdb967}" />
@@ -344,6 +382,38 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{49ffea44-82da-429a-8855-f6580e88d2a8}" />
+	<object class="AutomationPoint" id="{5efdf5f5-b1b4-4ca7-b50c-52cef7b375a5}">
+		<property name="position">
+			<value>0.0042372881355932203</value>
+		</property>
+		<property name="value">
+			<value>3.81469727e-06</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{84760095-b79c-4852-804f-7404f611dbec}">
+		<property name="position">
+			<value>1</value>
+		</property>
+		<property name="value">
+			<value>-46</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{fa01ed26-3dba-4020-b1b1-552fd25afe95}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="value">
+			<value>3.81469727e-06</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{2fa58059-b59d-4c24-9aa3-0c553607dc25}">
+		<property name="position">
+			<value>1</value>
+		</property>
+		<property name="value">
+			<value>-80</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{a063567a-c716-4f4f-9edd-b3d13b8b7f3e}">
 		<property name="position">
 			<value>0.99293785310734461</value>
