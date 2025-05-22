@@ -100,7 +100,6 @@ public class FMODEventManager : MonoBehaviour
       
         return eventInstance;
     }
-
     public void PlayEventInstance(EventInstance eventInstance)
     {
         eventInstance.start();
@@ -123,12 +122,10 @@ public class FMODEventManager : MonoBehaviour
         eventInstance.getParameterByName(name, out float value);
         return value;
     }
-    
     public void SetNamedParamEventInstance(EventInstance eventInstance, string name, float value)
     {
         eventInstance.setParameterByName(name, value);
     }
-    
     public void Set3DparamEventInstance(EventInstance eventInstance,Vector3 position)
     {
         eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
@@ -142,7 +139,6 @@ public class FMODEventManager : MonoBehaviour
             eventInstance.stop(STOP_MODE.ALLOWFADEOUT);
         }
     }
-    
     public void ReleaseEventInstance(EventInstance eventInstance)
     {
             eventInstance.release();
@@ -157,7 +153,6 @@ public class FMODEventManager : MonoBehaviour
     
     public bool CheckInstanceInEncylopedia(GameObject _keyGameObject, EventReference _keyEventReference, out EventInstance eventInstance)
     {
-
         if (EncyclopediaInstance.ContainsKey(_keyGameObject))
         {
             if (EncyclopediaInstance[_keyGameObject].ContainsKey(_keyEventReference))
@@ -165,19 +160,9 @@ public class FMODEventManager : MonoBehaviour
                 eventInstance = EncyclopediaInstance[_keyGameObject][_keyEventReference];
                 return true;
             }
-            else
-            {
-                //Debug.Log("Event instance not referenced yet in Encyclopedia"+_keyGameObject.name+_keyEventReference);
-                eventInstance = default(EventInstance);
-                return false;
-            }
         }
-        else
-        {
-            //Debug.Log("GameObjet not referenced yet in Encyclopedia"+_keyGameObject.name);
-            eventInstance = default(EventInstance);
-            return false;
-        }
+        eventInstance = default;
+        return default;
     }
 
     public EventInstance GetInstanceFromEncyclopediaKey(GameObject _keyGameObject, EventReference _keyEventReference)
@@ -229,7 +214,7 @@ public class FMODEventManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Event instance not referenced yet in Encyclopedia");
+            Debug.LogWarning("Parameter of an Event instance can't be change from Encyclopedia, because the instance can't be found");
         }
     }
 
@@ -244,14 +229,10 @@ public class FMODEventManager : MonoBehaviour
                 EncyclopediaInstance[_keyGameObject] = null;
                 EncyclopediaInstance.Remove(_keyGameObject);
             }
-            else
-            {
-                Debug.LogWarning("Event instance not registered in Encyclopedia"+_keyEventReference+_keyGameObject.name);
-            }
         }
         else
         {
-            Debug.Log("Game objet not referenced yet in Encyclopedia");
+            Debug.LogWarning("Event instance can't be removed from Encyclopedia, because it can't be found");
         }
     }
 
@@ -273,10 +254,6 @@ public class FMODEventManager : MonoBehaviour
         {
             Debug.LogError("Event instance referenced in Encyclopedia but not exist");
         }
-        else
-        {
-            //Debug.Log("All Event instance is referenced in encyclopedia");
-        }
 
         if (encyclopediaSize == 0)
         {
@@ -288,10 +265,6 @@ public class FMODEventManager : MonoBehaviour
             if (eventInstanceRateByGameObject < 1)
             {
                 Debug.LogError("More Game objects found in Encyclopedia than Event instance");
-            }
-            else if (eventInstanceRateByGameObject == 1)
-            {
-                //Debug.Log("Every Game objects found in Encyclopedia got only one Event instance");
             }
             else if (eventInstanceRateByGameObject > 1)
             {
@@ -337,8 +310,6 @@ public class FMODEventManager : MonoBehaviour
     private void CleanUpAllSound()
     {
         CheckAllInstanceInEncyclopedia();
-        //Debug.Log(GetEncyclopediaSize());
-        //Debug.Log(GetPlaylistEventSize());
         foreach (EventInstance eventInstance in _eventPlaylist)
         {
             eventInstance.stop(STOP_MODE.IMMEDIATE);
