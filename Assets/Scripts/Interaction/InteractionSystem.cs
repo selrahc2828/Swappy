@@ -21,4 +21,10 @@ public abstract class InteractionSystem : MonoBehaviour
         
     }
 
+    public virtual string InteractionText(string key)
+    { 
+        string textInteraction = "Press";
+        return $"{textInteraction} {key} to {interactionText}";
+    }
+
 }

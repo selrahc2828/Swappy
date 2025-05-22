@@ -103,7 +103,7 @@ public class CanvasManager : MonoBehaviour
         popupTapeGroup.textName.text = tape.itemName;
     }
     
-    public void ShowPopupFragment(FragmentBankData fragmentData)
+    public void ShowPopupFragment(FragmentBankData fragmentData, int quantity)
     {
         if (fragmentPopupPrefab == null || fragmentParent == null) 
             return;
@@ -119,7 +119,7 @@ public class CanvasManager : MonoBehaviour
 
         if (popupFragmentGroup is not null)
         {
-            popupFragmentGroup?.IncreaseQuantityAmount();
+            popupFragmentGroup?.IncreaseQuantityAmount(quantity);
             popupFragmentGroup.icon.sprite = fragmentData.fragmentBankIcon;
             popupFragmentGroup.OnEndDisplay = () => _activeFragmentPopup = null;
         }

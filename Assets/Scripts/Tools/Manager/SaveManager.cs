@@ -77,14 +77,21 @@ public class SaveManager : MonoBehaviour
     {
         SaveData();
         SaveFileGame();
+        Debug.LogWarning("dans OnDisable");
     }
     
     void OnApplicationQuit()
     {
-        SaveData();
-        SaveFileGame();
+        // SaveData();
+        // SaveFileGame();
+        // Debug.LogWarning("dans OnApplicationQuit");
+
     }
-    
+
+    public void SaveOnce()
+    {
+        //evite de faire la save dans OnDisable et OnApplicationQuit
+    }
     
     private void SaveSpawnerPotData()
     {
@@ -108,7 +115,8 @@ public class SaveManager : MonoBehaviour
                     }
                 );
             }
-        }    }
+        }
+    }
 
     private void LoadSpawner()
     {
@@ -129,23 +137,22 @@ public class SaveManager : MonoBehaviour
     private void SaveFragment()
     {
         saveData.fragment.fragmentBank = FragmentSystem.Instance.fragmentBankData.bankInventoryFragmentQuantity;
-
-        int hasCollectCurrent = saveData.fragment.hasCollect;
+        saveData.fragment.hasCollect = FragmentSystem.Instance.fragmentBankData.hasCollect; 
         
-        foreach (FragmentObject frag in FindObjectsOfType<FragmentObject>())
+        int hasCollectCurrent = saveData.fragment.hasCollect;// valeur initiale
+        
+        foreach (FragmentObject frag in FindObjectsOfType<FragmentObject>())//puis on ajoute ce qu'il y a dans la scene
         {
             hasCollectCurrent += frag.Quantity;
         }
-        
+
         saveData.fragment.hasCollect = hasCollectCurrent;
+        FragmentSystem.Instance.fragmentBankData.hasCollect = hasCollectCurrent;
     }
 
     private void LoadFragment()
     {
-        Debug.LogWarning($"loadFragment : {saveData.fragment.fragmentBank} : {saveData.fragment.hasCollect}");
         FragmentSystem.Instance.SetFragment(saveData.fragment.fragmentBank);
         FragmentSystem.Instance.SetFragmentHasCollect(saveData.fragment.hasCollect);
-        Debug.LogWarning($"scriptable  : {FragmentSystem.Instance.fragmentBankData.bankInventoryFragmentQuantity} : {FragmentSystem.Instance.fragmentBankData.hasCollect}");
-
     }
 }

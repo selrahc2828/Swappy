@@ -70,9 +70,9 @@ public class PopupFragmentGroup : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void IncreaseQuantityAmount()
+    public void IncreaseQuantityAmount(int quantity)
     {
-        _quantityAddAmount++;
+        _quantityAddAmount += quantity;
         textQuantity.text = $"+ " + _quantityAddAmount;
 
         _elapsedTime = 0;

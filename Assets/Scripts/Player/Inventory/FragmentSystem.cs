@@ -22,10 +22,13 @@ public class FragmentSystem : MonoBehaviour
     
     public void AddFragment(int quantity)
     {
-        fragmentBankData.bankInventoryFragmentQuantity += quantity;
+        if (quantity > 0)
+        {
+            fragmentBankData.bankInventoryFragmentQuantity += quantity;
         
-        GlobalEventManager.Instance.AddFragment();
-        GlobalEventManager.Instance.DisplayPopupAddFragment(fragmentBankData);
+            GlobalEventManager.Instance.AddFragment();
+            GlobalEventManager.Instance.DisplayPopupAddFragment(fragmentBankData, quantity);
+        }
     }
 
     public void RemoveFragment(int quantity)

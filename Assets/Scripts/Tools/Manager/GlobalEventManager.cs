@@ -37,7 +37,7 @@ public class GlobalEventManager : MonoBehaviour
     // Fragment
     public event Action OnAddFragment;
     public event Action OnRemoveFragment;
-    public event Action<FragmentBankData> OnPopupFragment;
+    public event Action<FragmentBankData, int> OnPopupFragment;
     public event Action<SpawnPot> OnShattered;
 
 
@@ -150,9 +150,9 @@ public class GlobalEventManager : MonoBehaviour
         OnRemoveFragment?.Invoke();
     }
     
-    public void DisplayPopupAddFragment(FragmentBankData fragmentBank)
+    public void DisplayPopupAddFragment(FragmentBankData fragmentBank, int quantity)
     {
-        OnPopupFragment?.Invoke(fragmentBank);
+        OnPopupFragment?.Invoke(fragmentBank, quantity);
     }
     #endregion
 
