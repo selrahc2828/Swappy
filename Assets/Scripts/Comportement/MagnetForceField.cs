@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,7 +21,7 @@ public class MagnetForceField : MonoBehaviour
     public float delayDisplay;
     [SerializeField] float _timerDisplay;
 
-    private List<Rigidbody> magnetedObjects = new List<Rigidbody>();
+    public bool _isDoubleMagnet;
     public GameObject comportementableObject;
 
     private void Start()
@@ -30,7 +31,6 @@ public class MagnetForceField : MonoBehaviour
 
     private void Update()
     {
-       
         if (_timerBurst > 0)
         {
             _timerBurst -= Time.deltaTime;
@@ -41,6 +41,18 @@ public class MagnetForceField : MonoBehaviour
         }
         
         DisplayColor();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_isDoubleMagnet)
+        {
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject,rb.mass);
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -73,11 +85,6 @@ public class MagnetForceField : MonoBehaviour
         
         if (!burst)// magnet normal
         {
-            if (!magnetedObjects.Contains(rbObj))
-            {
-                magnetedObjects.Add(rbObj);
-                GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject);
-            }
 
             rbObj.AddForce(dir * force, ForceMode.Force);
             // Debug.DrawRay(objToApply.transform.position, dir*5, Color.green);
@@ -85,7 +92,7 @@ public class MagnetForceField : MonoBehaviour
         }
         else // magnet bounce => burst
         {
-            GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject);
+
             rbObj.AddForce(dir * burstForce, ForceMode.Impulse);
             Debug.DrawRay(objToApply.transform.position, dir*5, Color.red);
         }
@@ -93,6 +100,8 @@ public class MagnetForceField : MonoBehaviour
 
     public void Bounce()
     {
+        
+        GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject);
         // boolBurst = false dans le comportement CollisionEnd
         if (_timerBurst <= 0)
         {

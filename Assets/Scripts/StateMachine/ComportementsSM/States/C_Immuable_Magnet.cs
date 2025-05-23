@@ -76,6 +76,7 @@ public class C_Immuable_Magnet : ComportementState
 
     public void Attract()
     {
+        List<Rigidbody> newMagnetedObjects = new List<Rigidbody>();
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueMagnetRange);
         if (objectsInRange.Length > 0)
         {
@@ -86,20 +87,21 @@ public class C_Immuable_Magnet : ComportementState
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
                         ApplyForce(magnetGradiantForce, objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-                        
+                        if (!magnetedObjects.Contains(objectInRange.GetComponent<Rigidbody>()))
+                        {
+                            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,objectInRange.GetComponent<Rigidbody>().mass);
+                            newMagnetedObjects.Add(objectInRange.GetComponent<Rigidbody>());
+                        }
                     }
                 }
             }
         }
+        magnetedObjects = newMagnetedObjects;
     }
     
     public void ApplyForce(bool isGradient, Rigidbody rbObj,GameObject objToApply, float force)
     {
-        if (!magnetedObjects.Contains(rbObj))
-        {
-            magnetedObjects.Add(rbObj);
-            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
-        }
+
         if (isGradient)
         {
             objToApply.GetComponent<Rigidbody>().AddExplosionForce(-force, _sm.transform.position, trueMagnetRange);

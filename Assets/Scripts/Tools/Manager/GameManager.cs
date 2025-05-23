@@ -69,28 +69,29 @@ public class GameManager : MonoBehaviour
     public float maxSpeed;
     public float moveSpeed;
     public float sprintMultiplier;
-    public float aerialMultiplier;
+    public float airControlMultiplier;
     public float stoppingRatio;
     public float sideSpeedReductionRatio;
     public float groundDrag;
     public Transform orientation;
 
     [Header("Player Jumping Parameters")]
-    public float jumpForce;
+    public float jumpForceMIN;
+    public float jumpForceMAX;
+    public float jumpTime;
+    public float coyoteeTime;
     public float jumpCooldown;
-    public float airMultiplier;
 
-    [Header("Player Crouching Parameters")]
-    public float crouchSpeed;
-    public float crouchYScale;
+    //[Header("Player Crouch Parameters")]
+    //public float crouchSpeed;
+    //public float crouchYScale;
 
-    [Header("Player Ground Check Parameters")]
+    [Header("Player Ground Parameters")]
     public float playerHeight;
     public LayerMask whatIsGround;
-
-    [Header("Player Slope Handeling Parameter")]
     public float maxSlopeAngle;
-    
+    public float wallBumpRatio;
+
     private void OnEnable()
     {
         if (controls == null)

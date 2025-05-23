@@ -95,6 +95,7 @@ public class C_Bouncing_Magnet : ComportementState
         forceFieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
         forceFieldObj.GetComponent<GrowToRadius>().atDestroy = false;
         forceFieldObj.GetComponent<MagnetForceField>().comportementableObject = _sm.gameObject;
+        forceFieldObj.GetComponent<MagnetForceField>()._isDoubleMagnet = false;
     }
 
     public override void TickLogic()
