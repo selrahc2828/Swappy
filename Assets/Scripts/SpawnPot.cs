@@ -5,18 +5,25 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(UniqueID))]
 public class SpawnPot : MonoBehaviour
 {
+    [Header("Info")]
     public PotData potData; 
     public bool isBroken;
-
+    [Header("SpawnerSetUp")]
     public float size;
-    private GameObject pot;
     public float rangeDetect;
+    
+    private GameObject pot;
     [SerializeField]
     private string uniqueID;
-    public string UniqueID => uniqueID;
-    
+    public string UniqueID
+    {
+        get => uniqueID;
+        set => uniqueID = value;
+    }
+
     private void Start()
     {
         Spawn();

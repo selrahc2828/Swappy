@@ -1,65 +1,52 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [ExecuteInEditMode]
 [DisallowMultipleComponent] // empeche le componenet d'etre ajoute plusieurs fois a l'objet
 public class UniqueID : MonoBehaviour
 {
-    [FormerlySerializedAs("uniqueID")] [SerializeField]
+    [SerializeField]
     private string uniqueId;
     public string UniqueId => uniqueId;
-
-    private static HashSet<string> _existingIds;
-    private static Dictionary<string, UniqueID> allIDs = new Dictionary<string, UniqueID>();
-    // cache / reference des IDs, id et nombre de fois qu'elle apparait
-    // clé => ID, value => l'objet qui le possède
-
+    
+    private void Awake()
+    {
+        #if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            CheckUniqueID();
+        }
+        #endif
+    }
+    
     private void OnValidate()
     {
-        RefreshExistingIDs();
+        #if UNITY_EDITOR
 
-        // Si l'ID est vide ou deja assigne, on en fait un nouveau
-        if (string.IsNullOrEmpty(uniqueId) || IsDuplicate(uniqueId))
+        if (!Application.isPlaying)
         {
-            // uniqueId = GenerateUniqueID();
-            Debug.Log($"{gameObject.name}: GenerateNewUniqueID");
+            CheckUniqueID();
         }
-    }
-    
-    void Start()
-    {
-        
+        #endif
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
-    private static void  RefreshExistingIDs()
+    public void CheckUniqueID()
     {
-        // Réinitialiser la liste des IDs
-        allIDs.Clear();
-        
-        foreach (UniqueID objID in FindObjectsOfType<UniqueID>(true))
+        if (string.IsNullOrEmpty(uniqueId) || !UniqueIDManagerEditor.RegisterID(uniqueId, this))
         {
-            if (string.IsNullOrEmpty(objID.uniqueId)) continue;
-
-            if (!allIDs.ContainsKey(objID.uniqueId))
-                allIDs.Add(objID.uniqueId, objID);
-                // ID : Obj
+            uniqueId = UniqueIDManagerEditor.GenerateNewID(this);
+            
+            // Mettre à jour SpawnPot si présent
+            SpawnPot spawner = GetComponent<SpawnPot>();
+            if (spawner != null)
+            {
+                spawner.UniqueID = uniqueId;
+            }
         }
-    }
-    
-    public bool IsDuplicate(string id)
-    {
-        if (!allIDs.ContainsKey(id)) return false; // si l'id n'est pas dans la liste, pas de double
-
-        return allIDs[id] != this; // retourne true si l'id est sur l'objet qui test, sinon l'id est sur un autre et c'est donc un doubon
+        else
+        {
+            UniqueIDManagerEditor.RegisterID(uniqueId, this); // Redondant mais sûr
+        }
     }
 }

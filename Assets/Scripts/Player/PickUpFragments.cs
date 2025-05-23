@@ -18,21 +18,11 @@ public class PickUpFragments : MonoBehaviour
     private Collider[] fragcolliders; // set pour réutiliser, mon de mémoire utilisé
     
     private List<GameObject> _fragmentPulling = new List<GameObject>(); // liste des fragments en train d'être attiré
-
-    
-    // overlapSphere autour de player
-    // detecte fragment
-    // active le follow
-
-    // comment detecte si plus en range ? 
-
-    // si distance < X add fragment
     
     private void Start()
     {
         fragcolliders = new Collider[30];//30 pour "voir large", mieux vaut trop de palce que pas assez
         fragmentSystem = FindObjectOfType<FragmentSystem>(); // voir pour ref ailleur
-
     }
 
     private void Update()
@@ -86,8 +76,6 @@ public class PickUpFragments : MonoBehaviour
             yield return null; // attend prochaine frame
         }
         
-        Debug.Log($"TEST je suis ramassé");
-        
         _fragmentPulling.Remove(fragment.gameObject);
         fragment.gameObject.SetActive(false);
         fragmentSystem.AddFragment(fragment.GetComponent<FragmentObject>().Quantity);
@@ -97,6 +85,5 @@ public class PickUpFragments : MonoBehaviour
     {
         Gizmos.DrawWireSphere(transform.position, rangeDetection);
         Gizmos.DrawWireSphere(transform.position, pickUpDistance);
-
     }
 }

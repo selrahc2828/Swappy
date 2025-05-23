@@ -38,7 +38,7 @@ public class GlobalEventManager : MonoBehaviour
     public event Action OnAddFragment;
     public event Action OnRemoveFragment;
     public event Action<FragmentBankData, int> OnPopupFragment;
-    public event Action<SpawnPot> OnShattered;
+    public event Action<SpawnPot> OnShattered;// pot brisé
 
 
     private void Awake()

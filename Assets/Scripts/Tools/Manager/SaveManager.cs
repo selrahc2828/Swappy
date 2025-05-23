@@ -1,10 +1,24 @@
+using System;
 using System.IO; // travaille avec fichier et dossier, accès en lecture et ecriture
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
     public GameSaveData saveData;
-    public GameObject test;
+    
+    public static SaveManager Instance { get; private set; }
+    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);//détuit le doublon
+            return;
+        }
+        Instance = this;
+        // DontDestroyOnLoad(gameObject);
+    }
+    
     public string SaveFileName()
     {
         // persistentDataPath = chemin dossier avec droit d'acces en ecriture
@@ -15,14 +29,15 @@ public class SaveManager : MonoBehaviour
             Directory.CreateDirectory(dir);
         }
         
-        return dir + "/SaveData.txt";;
+        return dir + "/SaveData.json";
     }
 
     public void SaveFileGame()
     {
-        string jsonFile = JsonUtility.ToJson(saveData); // conversion d'une classe au format JSON
+        string jsonFile = JsonUtility.ToJson(saveData, true); // conversion d'une classe au format JSON, true => on ne compresse pas en ligne
         // jsonFile == donnee de la sauvegarde
-        File.WriteAllText(SaveFileName(), jsonFile);
+        string filePath = SaveFileName();
+        File.WriteAllText(filePath, jsonFile);
         //File = acces a un fichier
         //WriteAllText = ecriture de texte, parametre (chemin, donnees)
     }
@@ -31,8 +46,15 @@ public class SaveManager : MonoBehaviour
     {
         if (File.Exists(SaveFileName()))
         {
-            string jsonFile = File.ReadAllText(SaveFileName());
-            saveData = JsonUtility.FromJson<GameSaveData>(jsonFile);
+            try
+            {
+                string jsonFile = File.ReadAllText(SaveFileName());
+                saveData = JsonUtility.FromJson<GameSaveData>(jsonFile);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Erreur lors du chargement du fichier : {e.Message}");
+            }
         }
         else
         {
@@ -54,49 +76,36 @@ public class SaveManager : MonoBehaviour
     private void Start()
     {
         LoadFileGame();
+        LoadAll();
+    }
 
+    void OnApplicationQuit()
+    {
+        SaveAll();
+    }
+
+    public void SaveAll()
+    {
+        Debug.Log($"Save Datas");
+        SaveData();
+        SaveFileGame();
+    }
+
+    private void LoadAll()
+    {
         LoadSpawner();
         LoadFragment();
-
-        // PB : position bien récupéré et set (testé sur un cube) mais doit être overide ailleurs
+        
+        // PB : position bien récupéré et set (testé sur un cube) mais doit être override ailleurs
         // GameObject player = GameManager.Instance.player;
         // player.transform.position = saveData.player.playerPosition;
         // player.transform.rotation = saveData.player.playerRotation;
-
-        if (test)
-        {
-            test.transform.position = saveData.player.playerPosition;
-        }
-        else
-        {
-            Debug.Log($"Tu as oublié de mettre l'objet test :)");
-        }
-    }
-
-    void OnDisable()
-    {
-        SaveData();
-        SaveFileGame();
-        Debug.LogWarning("dans OnDisable");
-    }
-    
-    void OnApplicationQuit()
-    {
-        // SaveData();
-        // SaveFileGame();
-        // Debug.LogWarning("dans OnApplicationQuit");
-
-    }
-
-    public void SaveOnce()
-    {
-        //evite de faire la save dans OnDisable et OnApplicationQuit
     }
     
     private void SaveSpawnerPotData()
     {
-        SpawnPot[] spawners = FindObjectsOfType<SpawnPot>();
-
+        SpawnPot[] spawners = FindObjectsOfType<SpawnPot>(true);
+        
         foreach (SpawnPot spawner in spawners)
         {
             // Chercher s'il existe déjà dans la sauvegarde
@@ -120,7 +129,8 @@ public class SaveManager : MonoBehaviour
 
     private void LoadSpawner()
     {
-        SpawnPot[] spawners = FindObjectsOfType<SpawnPot>();
+        SpawnPot[] spawners = FindObjectsOfType<SpawnPot>(true);
+        Debug.Log($"load SPAWNERPOT : {spawners.Length}");
 
         foreach (SpawnPot spawner in spawners)
         {
