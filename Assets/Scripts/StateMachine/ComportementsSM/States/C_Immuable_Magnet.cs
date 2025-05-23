@@ -11,6 +11,8 @@ public class C_Immuable_Magnet : ComportementState
     private float magnetForce;
     private bool magnetGradiantForce;
 
+    private List<Rigidbody> magnetedObjects;
+
     //private GameObject sonMagnet;
     public C_Immuable_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
@@ -41,7 +43,7 @@ public class C_Immuable_Magnet : ComportementState
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;
         }
         magnetForce = _sm.comportementManager.magnetData.magnetForce;
-        magnetGradiantForce = _sm.comportementManager.magnetData.magnetGradiantForce;
+
         
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
         feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
@@ -72,32 +74,34 @@ public class C_Immuable_Magnet : ComportementState
 
     }
 
-    public void OncollisionEnter(Collision collision)
-    {
-        
-    }
     public void Attract()
     {
+        List<Rigidbody> newMagnetedObjects = new List<Rigidbody>();
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueMagnetRange);
         if (objectsInRange.Length > 0)
         {
             foreach (Collider objectInRange in objectsInRange)
             {
-                if (!objectInRange.gameObject.CompareTag("Player") && objectInRange.gameObject != _sm.gameObject) // applique pas sur player et lui même
+                if (objectInRange.gameObject != _sm.gameObject) // applique pas sur player et lui même
                 {
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
                         ApplyForce(magnetGradiantForce, objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-                        
+                        if (!magnetedObjects.Contains(objectInRange.GetComponent<Rigidbody>()))
+                        {
+                            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,objectInRange.GetComponent<Rigidbody>().mass);
+                            newMagnetedObjects.Add(objectInRange.GetComponent<Rigidbody>());
+                        }
                     }
                 }
             }
         }
+        magnetedObjects = newMagnetedObjects;
     }
     
     public void ApplyForce(bool isGradient, Rigidbody rbObj,GameObject objToApply, float force)
     {
-        
+
         if (isGradient)
         {
             objToApply.GetComponent<Rigidbody>().AddExplosionForce(-force, _sm.transform.position, trueMagnetRange);

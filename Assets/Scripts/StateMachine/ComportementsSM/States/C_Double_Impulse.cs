@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class C_Double_Impulse : ComportementState
 {
-    private float impulseTime = 5f;
+    private float impulseTime;
+    private float impulseFirstTime;
+    private bool firstImpulse;
     private float impulseTimer;
     private float impulseRange;
     private float trueImpulseRange;
@@ -22,10 +24,12 @@ public class C_Double_Impulse : ComportementState
         stateValue = 2;
         leftValue = 1;
         rightValue = 1;
+        firstImpulse = true;
         base.Enter();
         ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.impulseColor);
         
         impulseTime = _sm.comportementManager.impulseData.doubleImpulseTime;
+        impulseFirstTime = _sm.comportementManager.impulseData.doubleImpulseFirstTime;
         impulseTimer = 0f;
         impulseRange = _sm.comportementManager.impulseData.doubleRepulseRangeMult * _sm.comportementManager.impulseData.impulseRange;
 
@@ -49,10 +53,22 @@ public class C_Double_Impulse : ComportementState
         base.TickLogic();
         
         impulseTimer += Time.deltaTime;
-        if (impulseTimer >= impulseTime)
+        if (firstImpulse) 
         {
-            Impulse();
-            impulseTimer = 0;
+            if (impulseTimer >= impulseFirstTime)
+            {
+                Impulse();
+                impulseTimer = 0;
+                firstImpulse = false;
+            }
+        }
+        else
+        {
+            if (impulseTimer >= impulseTime)
+            {
+                Impulse();
+                impulseTimer = 0;
+            }
         }
     }
 
@@ -80,7 +96,7 @@ public class C_Double_Impulse : ComportementState
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
             shockWave.GetComponent<GrowToRadius>().targetRadius = trueImpulseRange;
         }
-
+        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueImpulseRange);
         if (objectsInRange.Length > 0)
         {

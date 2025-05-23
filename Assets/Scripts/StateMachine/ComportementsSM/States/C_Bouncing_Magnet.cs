@@ -33,7 +33,7 @@ public class C_Bouncing_Magnet : ComportementState
     // avec mat bounce, rebond direct quand grab et touche surface, collisionEnter/exit s'enchaine trop vite pour range upsacle
     private float delayScale;
     private float timeSinceCollisionStrat;
-    private bool collisionStart = false;//pour pas appeler plusieurs en même temps
+    //private bool collisionStart = false;//pour pas appeler plusieurs en même temps
     
     //grab
     private bool _rescaleRangeOnce;
@@ -94,6 +94,8 @@ public class C_Bouncing_Magnet : ComportementState
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
         forceFieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
         forceFieldObj.GetComponent<GrowToRadius>().atDestroy = false;
+        forceFieldObj.GetComponent<MagnetForceField>().comportementableObject = _sm.gameObject;
+        forceFieldObj.GetComponent<MagnetForceField>()._isDoubleMagnet = false;
     }
 
     public override void TickLogic()
@@ -163,8 +165,6 @@ public class C_Bouncing_Magnet : ComportementState
             // Debug.Log($"Collision Start boolburst {forceFieldObj.GetComponent<MagnetForceField>().boolBurst}");
 
             //il y a des cas où le apply burst passe pas dans grab
-            // SoundManager.Instance.PlaySoundComponenent(SoundManager.SoundComp.bounceHit,_sm.gameObject);
-            // SoundManager.Instance.PlaysoundCompAimaint(_sm.gameObject);
             if (isGrabbed)
             {
                 //boolBurst jamais true ici

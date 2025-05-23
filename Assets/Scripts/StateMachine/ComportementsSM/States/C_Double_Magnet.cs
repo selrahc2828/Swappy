@@ -52,6 +52,8 @@ public class C_Double_Magnet : ComportementState
         
         forceFieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
         forceFieldObj.GetComponent<GrowToRadius>().atDestroy = false;
+        forceFieldObj.GetComponent<MagnetForceField>().comportementableObject = _sm.gameObject;
+        forceFieldObj.GetComponent<MagnetForceField>()._isDoubleMagnet = true;
     }
 
     public override void TickLogic()

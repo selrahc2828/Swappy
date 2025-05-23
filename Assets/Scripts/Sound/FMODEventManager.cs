@@ -24,6 +24,8 @@ public class FMODEventManager : MonoBehaviour
     private Dictionary<GameObject, Dictionary<EventReference, EventInstance>> EncyclopediaInstance = new Dictionary<GameObject, Dictionary<EventReference, EventInstance>>();
 
     private ComportementsStateMachine _comportementState;
+
+    private float _maxValueMass;
     
     private void Awake()
     {
@@ -36,7 +38,7 @@ public class FMODEventManager : MonoBehaviour
         // DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
+    private void OnEnable()
     {
         GlobalEventManager.Instance.OnComportmentExtracted += OnComportementExtracted;
         GlobalEventManager.Instance.OnComportmentAdded += OnComportementAdded;
@@ -66,6 +68,18 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnCollide -= CollisionSound;
     }
 
+    private void Start()
+    {
+        foreach (Rigidbody rigidbody in FindObjectsByType<Rigidbody>(FindObjectsInactive.Include,FindObjectsSortMode.InstanceID))
+        {
+            if (_maxValueMass < rigidbody.mass)
+            {
+                _maxValueMass = rigidbody.mass;
+            }
+        }
+        SetUpBusVolumeStart();
+    }
+
     #endregion
     #region Play Once
     public void PlayOneShot(EventReference sound, Vector3 position)
@@ -82,16 +96,13 @@ public class FMODEventManager : MonoBehaviour
     public EventInstance CreateEventInstance(EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
-        //_eventPlaylist.Add(eventInstance);
+        _eventPlaylist.Add(eventInstance);
       
         return eventInstance;
     }
-
     public void PlayEventInstance(EventInstance eventInstance)
     {
-
-            eventInstance.start();
-
+        eventInstance.start();
     }
 
     public void PlayEventInstance3DNotMoving(EventInstance eventInstance, Vector3 position)
@@ -111,12 +122,10 @@ public class FMODEventManager : MonoBehaviour
         eventInstance.getParameterByName(name, out float value);
         return value;
     }
-    
     public void SetNamedParamEventInstance(EventInstance eventInstance, string name, float value)
     {
         eventInstance.setParameterByName(name, value);
     }
-    
     public void Set3DparamEventInstance(EventInstance eventInstance,Vector3 position)
     {
         eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
@@ -130,7 +139,6 @@ public class FMODEventManager : MonoBehaviour
             eventInstance.stop(STOP_MODE.ALLOWFADEOUT);
         }
     }
-    
     public void ReleaseEventInstance(EventInstance eventInstance)
     {
             eventInstance.release();
@@ -145,7 +153,6 @@ public class FMODEventManager : MonoBehaviour
     
     public bool CheckInstanceInEncylopedia(GameObject _keyGameObject, EventReference _keyEventReference, out EventInstance eventInstance)
     {
-
         if (EncyclopediaInstance.ContainsKey(_keyGameObject))
         {
             if (EncyclopediaInstance[_keyGameObject].ContainsKey(_keyEventReference))
@@ -153,19 +160,9 @@ public class FMODEventManager : MonoBehaviour
                 eventInstance = EncyclopediaInstance[_keyGameObject][_keyEventReference];
                 return true;
             }
-            else
-            {
-                Debug.Log("Event instance not referenced yet in Encyclopedia"+_keyGameObject.name+_keyEventReference);
-                eventInstance = default(EventInstance);
-                return false;
-            }
         }
-        else
-        {
-            Debug.Log("GameObjet not referenced yet in Encyclopedia"+_keyGameObject.name);
-            eventInstance = default(EventInstance);
-            return false;
-        }
+        eventInstance = default;
+        return default;
     }
 
     public EventInstance GetInstanceFromEncyclopediaKey(GameObject _keyGameObject, EventReference _keyEventReference)
@@ -217,7 +214,7 @@ public class FMODEventManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Event instance not referenced yet in Encyclopedia");
+            Debug.LogWarning("Parameter of an Event instance can't be change from Encyclopedia, because the instance can't be found");
         }
     }
 
@@ -232,14 +229,10 @@ public class FMODEventManager : MonoBehaviour
                 EncyclopediaInstance[_keyGameObject] = null;
                 EncyclopediaInstance.Remove(_keyGameObject);
             }
-            else
-            {
-                Debug.LogWarning("Event instance not registered in Encyclopedia"+_keyEventReference+_keyGameObject.name);
-            }
         }
         else
         {
-            Debug.Log("Game objet not referenced yet in Encyclopedia");
+            Debug.LogWarning("Event instance can't be removed from Encyclopedia, because it can't be found");
         }
     }
 
@@ -273,10 +266,6 @@ public class FMODEventManager : MonoBehaviour
             {
                 Debug.LogError("More Game objects found in Encyclopedia than Event instance");
             }
-            else if (eventInstanceRateByGameObject == 1)
-            {
-                //Debug.Log("Every Game objects found in Encyclopedia got only one Event instance");
-            }
             else if (eventInstanceRateByGameObject > 1)
             {
                 Debug.Log("Average number of Event instance per Game Objects in Encyclopedia"+ Mathf.Round(eventInstanceRateByGameObject));
@@ -292,13 +281,13 @@ public class FMODEventManager : MonoBehaviour
         bus.getMute(out bool busMuteState);
         if (busMuteState)
         { 
-            Debug.LogWarning(bus + "Unmute");
-            bus.setMute(false);
+            Debug.LogWarning(bus + " Unmute");
+            bus.setMute(!busMuteState);
         }
         else
         {
-            Debug.LogWarning(bus + "Mute");
-            bus.setMute(true);
+            Debug.LogWarning(bus + " Mute");
+            bus.setMute(!busMuteState);
         }
     }
 
@@ -306,6 +295,15 @@ public class FMODEventManager : MonoBehaviour
     {
         Bus bus = RuntimeManager.GetBus(busRef);
         bus.setVolume(volume);
+    }
+
+    private void SetUpBusVolumeStart()
+    {
+        ChangeVolume(Fmodbus.busMaster,GameManager.Instance.parameters.volumeMaster);
+        ChangeVolume(Fmodbus.busPlayer,GameManager.Instance.parameters.volumePlayer);
+        ChangeVolume(Fmodbus.busSystem,GameManager.Instance.parameters.volumeSystem);
+        ChangeVolume(Fmodbus.busMusic,GameManager.Instance.parameters.volumeMusic);
+        ChangeVolume(Fmodbus.busMenu,GameManager.Instance.parameters.volumeMenu);
     }
     #endregion
     #region On destroy
@@ -365,13 +363,17 @@ public class FMODEventManager : MonoBehaviour
     {
         if (isActive)
         {
-            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactMode,CreateEventInstance(FMODEvents.PlayerSelfImpactMode));
-            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactMode));
+            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeIN,CreateEventInstance(FMODEvents.PlayerSelfImpactModeIN));
+            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeIN));
+            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeIN));
+            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeIN);
         }
         else
         {
-            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactMode));
-            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactMode);
+            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT,CreateEventInstance(FMODEvents.PlayerSelfImpactModeOUT));
+            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
+            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
+            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT);
         }
     }
 
@@ -400,7 +402,7 @@ public class FMODEventManager : MonoBehaviour
         Step step = Step.Enter;
         GetComportementState(_gameObject,step,0.8f);
     }
-    private void OnComportementIsPlay(GameObject _gameObject,float force=0.8f)
+    private void OnComportementIsPlay(GameObject _gameObject,float force)
     {
         Step step = Step.Play;
         GetComportementState(_gameObject,step,force);
@@ -496,9 +498,18 @@ public class FMODEventManager : MonoBehaviour
         {
             case Step.Enter:
                 AddInstanceInEncyclopedia(_gameObject, _eventReference,CreateEventInstance(_eventReference));
+                if(_gameObject.CompareTag("Player"))SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),"ISPLAYER",1);
                 PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),_gameObject,_gameObject.GetComponent<Rigidbody>());
+                
                 break;
             case Step.Play:
+                if (force < 0)
+                {
+                    if (gameObject.GetComponent<Rigidbody>() != null)
+                    {
+                        force = _gameObject.GetComponent<Rigidbody>().mass / _maxValueMass;
+                    }
+                }
                 SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference), "POWER", force);
                 SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference), "Stinger",1);
                 break;
@@ -558,17 +569,20 @@ public class FMODEventManager : MonoBehaviour
     {
         switch (_groundCollider.tag)
         {
-            case "Grass":
+            case "GRASS":
                 SetNamedParamEventInstance(eventInstance,"GROUND",1);
                 break;
-            case "Rock":
+            case "ROCK":
                 SetNamedParamEventInstance(eventInstance,"GROUND",2);
                 break;
-            case "Sand":
+            case "SAND":
                 SetNamedParamEventInstance(eventInstance,"GROUND",3);
                 break;
-            case "Wood":
+            case "WOOD":
                 SetNamedParamEventInstance(eventInstance,"GROUND",4);
+                break;
+            case "METAL":
+                SetNamedParamEventInstance(eventInstance,"GROUND",5);
                 break;
             default:
                 SetNamedParamEventInstance(eventInstance,"GROUND",0);
@@ -589,14 +603,27 @@ public class FMODEventManager : MonoBehaviour
 
     private void CollisionSound(GameObject _gameObject)
     {
-        var getReference = FMODEvents.Collision;
-        PlayOneShotAttached(getReference, _gameObject);
-        
+        PlayOneShotAttached(FMODEvents.Collision, _gameObject);
     }
+
     #endregion
     
     
     
     #endregion
 
+    #region NON C# events
+
+    public void PlaySoundFlare(GameObject gameObject,EventReference eventReference)
+    {
+        AddInstanceInEncyclopedia(gameObject,eventReference,CreateEventInstance(eventReference));
+        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(gameObject,eventReference),gameObject,gameObject.GetComponent<Rigidbody>());
+    }
+
+    public void StopSoundFlare(GameObject gameObject,EventReference eventReference)
+    {
+        StopEventInstance(GetInstanceFromEncyclopediaKey(gameObject,eventReference));
+        RemoveInstanceInEncyclopedia(gameObject,eventReference);
+    }
+    #endregion
 }

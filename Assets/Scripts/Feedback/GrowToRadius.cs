@@ -35,14 +35,16 @@ public class GrowToRadius : MonoBehaviour
         }
         else if (atDestroy)
         {
-            Destroy(gameObject);
+            transform.localScale = Vector3.Lerp(_targetScale, new Vector3(0.1f, 0.1f, 0.1f), (elapsedTime - durationScaling) / (durationScaling/2));
+
+            if (transform.localScale.x <=0.2f)
+            {
+                Destroy(gameObject);
+            }
         }
     }
-    
     public void SetTargetScale(float radius)
     {
         _targetScale = new Vector3(radius * 2, radius * 2, radius * 2); //* 2 pour appliquer le diametre pas le rayon
     }
-
-
 }
