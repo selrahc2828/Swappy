@@ -45,5 +45,10 @@ public class FMODEvents : ScriptableObject
     [field: SerializeField] public EventReference Hover { get; private set; }
     [field: SerializeField] public EventReference Validated { get; private set; }
     [field: SerializeField] public EventReference Back { get; private set; }
+    [field: Space]
+    [field: Header("Cinematic")]
+    [field: SerializeField] public EventReference LargageIntro { get; private set; }
+    [field: SerializeField] public EventReference TransistionCrash { get; private set; }
+    
 
 }
