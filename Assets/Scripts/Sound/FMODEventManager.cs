@@ -641,26 +641,23 @@ public class FMODEventManager : MonoBehaviour
 
     #region NON C# events
 
-    public void PlaySoundFlare(GameObject gameObject,EventReference eventReference)
+    public void PlayHover()
     {
-        AddInstanceInEncyclopedia(gameObject,eventReference,CreateEventInstance(eventReference));
-        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(gameObject,eventReference),gameObject,gameObject.GetComponent<Rigidbody>());
+        PlayOneShot(FMODEvents.Hover,transform.position);
     }
-
-    public void PauseSoundFlare(GameObject _gameObject, EventReference eventReference)
+    public void PlaySelect()
     {
-        StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,eventReference));
+        PlayOneShot(FMODEvents.Validated,transform.position);
     }
-
-    public void StartSoundFlare(GameObject _gameObject, EventReference eventReference)
+    public void PlayBack()
     {
-        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(gameObject,eventReference),gameObject,gameObject.GetComponent<Rigidbody>());
+        PlayOneShot(FMODEvents.Back,transform.position);
     }
-
-    public void StopSoundFlare(GameObject gameObject,EventReference eventReference)
+    
+    public void PlayTransistionIntro()
     {
-        StopEventInstance(GetInstanceFromEncyclopediaKey(gameObject,eventReference));
-        RemoveInstanceInEncyclopedia(gameObject,eventReference);
+        PlayOneShot(FMODEvents.TransistionCrash,transform.position);
     }
+    
     #endregion
 }

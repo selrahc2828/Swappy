@@ -21,6 +21,7 @@ public class LargageCapsuleINTRO : MonoBehaviour
     public void LargageCapsule()
     {
         playActived = true;
+        FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.LargageIntro,this.transform.position);
         Capsule.GetComponent<Rigidbody>().useGravity = true;
         Capsule.GetComponent<Rigidbody>().isKinematic = false;
 
