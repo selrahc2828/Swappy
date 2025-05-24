@@ -37,12 +37,6 @@ public class FMODEvents : ScriptableObject
     [field: SerializeField] public EventReference ImmuableMagnet { get; private set; }
     [field: SerializeField] public EventReference MagnetRocket { get; private set; }
     [field: Space]
-    [field: SerializeField] public EventReference FlareImpulse { get; private set; }
-    [field: SerializeField] public EventReference FlareBounce { get; private set; }
-    [field: SerializeField] public EventReference FlareImmuable{ get; private set; }
-    [field: SerializeField] public EventReference FlareMagnet{ get; private set; }
-    [field: SerializeField] public EventReference FlareRocket { get; private set; }
-    [field: Space]
     [field: SerializeField] public EventReference Collision { get; private set; }
     [field: SerializeField] public EventReference BreakingPot { get; private set; }
     [field: Space]

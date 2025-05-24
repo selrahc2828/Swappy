@@ -620,6 +620,16 @@ public class FMODEventManager : MonoBehaviour
         PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(gameObject,eventReference),gameObject,gameObject.GetComponent<Rigidbody>());
     }
 
+    public void PauseSoundFlare(GameObject _gameObject, EventReference eventReference)
+    {
+        StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,eventReference));
+    }
+
+    public void StartSoundFlare(GameObject _gameObject, EventReference eventReference)
+    {
+        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(gameObject,eventReference),gameObject,gameObject.GetComponent<Rigidbody>());
+    }
+
     public void StopSoundFlare(GameObject gameObject,EventReference eventReference)
     {
         StopEventInstance(GetInstanceFromEncyclopediaKey(gameObject,eventReference));
