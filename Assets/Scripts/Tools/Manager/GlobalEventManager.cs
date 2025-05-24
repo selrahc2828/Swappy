@@ -38,7 +38,7 @@ public class GlobalEventManager : MonoBehaviour
     public event Action OnAddFragment;
     public event Action OnRemoveFragment;
     public event Action<FragmentBankData, int> OnPopupFragment;
-    public event Action<SpawnPot> OnShattered;// pot brisé
+    public event Action OnShattered;// pot brisé
 
 
     private void Awake()
@@ -156,9 +156,9 @@ public class GlobalEventManager : MonoBehaviour
     }
     #endregion
 
-    public void BrokenPot(SpawnPot originSpawner)
+    public void BrokenPot()
     {
-        OnShattered?.Invoke(originSpawner);
+        OnShattered?.Invoke();
     }
     
     public void Collision(GameObject gameObject) // appele lors d'un collision d'un objet

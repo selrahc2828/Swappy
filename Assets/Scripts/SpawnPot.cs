@@ -29,10 +29,10 @@ public class SpawnPot : MonoBehaviour
         Spawn();
     }
 
-    private void OnEnable()
-    {
-        GlobalEventManager.Instance.OnShattered -= HandleShattered;
-    }
+    // private void OnEnable()
+    // {
+    //     GlobalEventManager.Instance.OnShattered -= HandleShattered;
+    // }
 
     void Spawn()
     {
@@ -71,17 +71,17 @@ public class SpawnPot : MonoBehaviour
         if (breakable is not null)
         {
             breakable.Spawner = this; // pour savoir quel abonné est à modifier dans HandleShattered
-            GlobalEventManager.Instance.OnShattered += HandleShattered;
+            // GlobalEventManager.Instance.OnShattered += HandleShattered;
         }
     }
-    
-    void HandleShattered(SpawnPot origin)
-    {
-        if (origin == this)
-        {
-            isBroken = true;
-        }
-    }
+    //
+    // void HandleShattered(SpawnPot origin)
+    // {
+    //     if (origin == this)
+    //     {
+    //         isBroken = true;
+    //     }
+    // }
     
     private void OnDrawGizmos() 
     {
