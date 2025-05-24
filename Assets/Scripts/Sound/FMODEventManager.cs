@@ -332,7 +332,7 @@ public class FMODEventManager : MonoBehaviour
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerStealComp);
         PickHand(eventInstance,righthand);
-        
+        //DefineCompPickType(_gameObject,eventInstance);
         if (_gameObject.CompareTag("Player"))
         {
             SetNamedParamEventInstance(eventInstance,"SIM",1);
