@@ -29,7 +29,6 @@ public class C_Immuable_Magnet : ComportementState
         leftValue = 9;
         rightValue = 27;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.magnetColor);
         feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
         baseVelocity = _sm.rb.velocity;
@@ -43,6 +42,7 @@ public class C_Immuable_Magnet : ComportementState
         }
         else
         {
+            ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.magnetColor);
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;
         }
         magnetForce = _sm.comportementManager.magnetData.magnetForce;

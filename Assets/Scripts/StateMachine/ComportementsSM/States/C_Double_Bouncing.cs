@@ -21,7 +21,6 @@ public class C_Double_Bouncing : ComportementState
         
         doubleBouncyMaterial = _sm.comportementManager.doubleBounceData.doubleBouncyMaterial;
         
-        ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.bouncingColor);
         if (_sm.isPlayer)
         {
             basePlayerMaterial = _sm.comportementManager.playerBouncingCollider.material;
@@ -29,6 +28,7 @@ public class C_Double_Bouncing : ComportementState
         }
         else
         {
+            ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.bouncingColor);
             _sm.objectCollider.material = doubleBouncyMaterial;
         }
 

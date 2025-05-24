@@ -20,7 +20,10 @@ public class C_Immuable_Rocket : ComportementState
         leftValue = 9;
         rightValue = 81;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.rocketColor);
+        if (!_sm.isPlayer)
+        {
+            ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.rocketColor);
+        }
         _sm.rb.isKinematic = true;
 
         rocketReleaseForce = _sm.comportementManager.immuableRocketData.rocketReleaseForce;

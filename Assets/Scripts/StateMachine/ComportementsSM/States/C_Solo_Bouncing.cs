@@ -25,7 +25,6 @@ public class C_Solo_Bouncing : ComportementState
 
         _bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
         // _sm.rend.material = _sm.bounce;
-        ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.noComportementColor);
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
         
         if (_sm.isPlayer)
@@ -35,6 +34,7 @@ public class C_Solo_Bouncing : ComportementState
         }
         else
         {
+            ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.noComportementColor);
             _sm.GetComponent<Collider>().material = _bouncyMaterial;
         }
     }

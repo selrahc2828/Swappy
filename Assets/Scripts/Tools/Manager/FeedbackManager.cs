@@ -20,7 +20,14 @@ public class FeedbackManager : MonoBehaviour
 
     public void FeedbackEnterState(GameObject sender)
     {
-        int stateValue = sender.GetComponent<ComportementState>().stateValue;
+        int stateValue = 0;
+        ComportementsStateMachine stateMachine = sender.GetComponent<ComportementsStateMachine>();
+        if (stateMachine.currentState is ComportementState)
+        {
+            ComportementState currentObjectState = (ComportementState)stateMachine.currentState;
+            stateValue = currentObjectState.stateValue;
+        }
+
         switch (stateValue)
         {
             case 0: // pas de comportement
@@ -259,7 +266,14 @@ public class FeedbackManager : MonoBehaviour
 
     public void FeedbackPlayState(GameObject sender, float value)
     {
-        int stateValue = sender.GetComponent<ComportementState>().stateValue;
+        int stateValue = 0;
+        ComportementsStateMachine stateMachine = sender.GetComponent<ComportementsStateMachine>();
+        if (stateMachine.currentState is ComportementState)
+        {
+            ComportementState currentObjectState = (ComportementState)stateMachine.currentState;
+            stateValue = currentObjectState.stateValue;
+        }
+        
         switch (stateValue)
         {
             case 0: // pas de comportement
@@ -498,7 +512,14 @@ public class FeedbackManager : MonoBehaviour
 
     public void FeedbackExitState(GameObject sender)
     {
-        int stateValue = sender.GetComponent<ComportementState>().stateValue;
+        int stateValue = 0;
+        ComportementsStateMachine stateMachine = sender.GetComponent<ComportementsStateMachine>();
+        if (stateMachine.currentState is ComportementState)
+        {
+            ComportementState currentObjectState = (ComportementState)stateMachine.currentState;
+            stateValue = currentObjectState.stateValue;
+        }
+        
         switch (stateValue)
         {
             case 0 : // pas de comportement

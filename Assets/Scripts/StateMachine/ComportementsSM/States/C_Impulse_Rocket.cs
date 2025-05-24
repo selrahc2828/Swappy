@@ -48,6 +48,7 @@ public class C_Impulse_Rocket : ComportementState
         }
         else
         {
+            ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.rocketColor);
             explosionTrueRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + explosionRange;
         }
         // pb si obj n'a pas de collider direct (ax Player)
@@ -62,7 +63,6 @@ public class C_Impulse_Rocket : ComportementState
         impulseTimer = 0f;
         rocketOn = false;
         
-        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.rocketColor);
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
     }

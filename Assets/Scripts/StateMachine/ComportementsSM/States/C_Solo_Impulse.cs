@@ -44,6 +44,7 @@ public class C_Solo_Impulse : ComportementState
         else
         {
             trueRepulserRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + repulserRange;
+            ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.noComportementColor);
         }
         // pb si obj n'a pas de collider direct (ax Player)
         repulserForce = _sm.comportementManager.impulseData.impulseForce;
@@ -53,7 +54,6 @@ public class C_Solo_Impulse : ComportementState
         feedback = _sm.comportementManager.impulseData.impulseFeedback;
         explodingSoonSignalSended = false;
 
-        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.noComportementColor);
         GlobalEventManager.Instance.Explosion(GetGameObject(), repulserFirstTime, true);
     }
 

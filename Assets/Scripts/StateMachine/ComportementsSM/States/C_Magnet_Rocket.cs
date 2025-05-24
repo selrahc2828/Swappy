@@ -33,7 +33,6 @@ public class C_Magnet_Rocket : ComportementState
         leftValue = 27;
         rightValue = 81;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.rocketColor);
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
         magnetRocketFlyTime = _sm.comportementManager.magnetRocketData.magnetRocketFlyTime;
@@ -55,6 +54,7 @@ public class C_Magnet_Rocket : ComportementState
         }
         else
         {
+            ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.rocketColor);
             magnetPos.y -= _sm.GetComponent<Collider>().bounds.extents.magnitude;
         }
         

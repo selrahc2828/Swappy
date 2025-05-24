@@ -55,7 +55,6 @@ public class C_Bouncing_Magnet : ComportementState
         leftValue = 3;
         rightValue = 27;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.magnetColor);
 
         bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
         magnetRange = _sm.comportementManager.magnetBounceData.magnetBounceRange;
@@ -70,6 +69,7 @@ public class C_Bouncing_Magnet : ComportementState
         }
         else
         {
+            ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.magnetColor);
             _sm.GetComponent<Collider>().material = bouncyMaterial;
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;//toujours des pb de range trop grande mais mieux
         }

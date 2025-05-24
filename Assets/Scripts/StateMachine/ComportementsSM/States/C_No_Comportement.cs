@@ -17,7 +17,10 @@ public class C_No_Comportement : ComportementState
         rightValue = 0;
         base.Enter();
         // _sm.rend.material = _sm.rien;
-        ColorShaderOutline(_sm.comportementManager.noComportementColor, _sm.comportementManager.noComportementColor);
+        if (!_sm.isPlayer)
+        {
+            ColorShaderOutline(_sm.comportementManager.noComportementColor, _sm.comportementManager.noComportementColor);
+        }
     }
 
     public override void TickLogic()
