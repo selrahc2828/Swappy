@@ -11,7 +11,7 @@ public class C_Immuable_Magnet : ComportementState
     private float magnetForce;
     private bool magnetGradiantForce;
 
-    private List<Rigidbody> magnetedObjects;
+    private List<Rigidbody> magnetedObjects = new List<Rigidbody>() ;
 
     //private GameObject sonMagnet;
     public C_Immuable_Magnet(StateMachine stateMachine) : base(stateMachine)
@@ -90,8 +90,9 @@ public class C_Immuable_Magnet : ComportementState
                         if (!magnetedObjects.Contains(objectInRange.GetComponent<Rigidbody>()))
                         {
                             GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,objectInRange.GetComponent<Rigidbody>().mass);
-                            newMagnetedObjects.Add(objectInRange.GetComponent<Rigidbody>());
+                            
                         }
+                        newMagnetedObjects.Add(objectInRange.GetComponent<Rigidbody>());
                     }
                 }
             }
