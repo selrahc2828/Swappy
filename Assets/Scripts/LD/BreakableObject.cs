@@ -73,7 +73,7 @@ public class BreakableObject : MonoBehaviour
 
         if (_spawner is not null)
         {
-            GlobalEventManager.Instance.BrokenPot(_spawner);
+            GlobalEventManager.Instance.BrokenPot();
             ExplodeFragments();
         }
 

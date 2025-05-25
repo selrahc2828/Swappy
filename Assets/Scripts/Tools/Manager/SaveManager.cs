@@ -93,6 +93,11 @@ public class SaveManager : MonoBehaviour
 
     private void LoadAll()
     {
+        if (saveData is null)
+        {
+            return;
+        }
+        
         LoadSpawner();
         LoadFragment();
         
@@ -130,7 +135,6 @@ public class SaveManager : MonoBehaviour
     private void LoadSpawner()
     {
         SpawnPot[] spawners = FindObjectsOfType<SpawnPot>(true);
-        Debug.Log($"load SPAWNERPOT : {spawners.Length}");
 
         foreach (SpawnPot spawner in spawners)
         {
