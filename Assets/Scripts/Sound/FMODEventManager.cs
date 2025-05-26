@@ -332,11 +332,11 @@ public class FMODEventManager : MonoBehaviour
     #region C# Event
     
     #region Player Interact
-    private void OnComportementExtracted(GameObject _gameObject, bool rightvalue, bool righthand)
+    private void OnComportementExtracted(GameObject _gameObject, float stateValue, bool rightvalue, bool righthand)
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerStealComp);
         PickHand(eventInstance,righthand);
-        DefineCompPickType(_gameObject,eventInstance);
+        DefineCompPickType(_gameObject,eventInstance,stateValue);
         if (_gameObject.CompareTag("Player"))
         {
             SetNamedParamEventInstance(eventInstance,"SIM",1);
@@ -395,14 +395,16 @@ public class FMODEventManager : MonoBehaviour
         }
     }
 
-    private void DefineCompPickType(GameObject _gameObject, EventInstance eventInstance)
+    private void DefineCompPickType(GameObject _gameObject, EventInstance eventInstance, float stateValue = -1f)
     {
-        int stateValue = 0;
-        ComportementsStateMachine stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
-        if (stateMachine.currentState is ComportementState)
+        if (stateValue < 0)
         {
-            ComportementState currentObjectState = (ComportementState)stateMachine.currentState;
-            stateValue = currentObjectState.stateValue;
+            ComportementsStateMachine stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
+            if (stateMachine.currentState is ComportementState)
+            {
+                ComportementState currentObjectState = (ComportementState)stateMachine.currentState;
+                stateValue = currentObjectState.stateValue;
+            }
         }
         switch (stateValue)
         {

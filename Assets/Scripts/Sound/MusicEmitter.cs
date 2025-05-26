@@ -65,7 +65,7 @@ namespace FMODUnity
                     }
             }
         }
-
+        
         private void OnTriggerExit(Collider other)
         {
             if (other.CompareTag("Player") && When == FMODMusicManager.OnWhat.OnTriggerExit)

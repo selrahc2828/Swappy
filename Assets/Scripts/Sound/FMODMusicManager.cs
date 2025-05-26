@@ -129,14 +129,11 @@ public class FMODMusicManager : MonoBehaviour
                 if (targetID == eventID)
                 {
                     ReleaseMusicInstance(musicTarget);
-                    Debug.Log("musicfound");
                     return musicInstance;
                 }
             }
         }
-        Debug.Log("newmusicmade");
         return CreateMusicInstance(musicReference);
-
     }
 
 

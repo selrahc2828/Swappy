@@ -8,7 +8,7 @@ public class GlobalEventManager : MonoBehaviour
     public static GlobalEventManager Instance;
 
     // Manipoulation de comportement
-    public event Action<GameObject, bool, bool> OnComportmentExtracted;
+    public event Action<GameObject,float, bool, bool> OnComportmentExtracted;
     public event Action<GameObject, bool, bool> OnComportmentAdded;
     public event Action<GameObject,bool> OnComportmentExchanged;
 
@@ -65,9 +65,9 @@ public class GlobalEventManager : MonoBehaviour
 
     #region Comportement
 
-    public void ComportmentExtracted(GameObject originOfComportment, bool rightValue, bool rightHand) //appele quand on vole un comportement a un objet
+    public void ComportmentExtracted(GameObject originOfComportment,float stateValue, bool rightValue, bool rightHand) //appele quand on vole un comportement a un objet
     {
-        OnComportmentExtracted?.Invoke(originOfComportment, rightValue, rightHand);
+        OnComportmentExtracted?.Invoke(originOfComportment, stateValue, rightValue, rightHand);
     }
 
     public void ComportmentAdded(GameObject objectToAddComportment, bool rightValue, bool rightHand) //appele quand on donne un comportement a un objet
