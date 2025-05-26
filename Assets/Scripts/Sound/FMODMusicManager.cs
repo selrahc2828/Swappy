@@ -328,5 +328,28 @@ public class FMODMusicManager : MonoBehaviour
         Stop,
         Switch
     }
+    
+    public enum OnWhat : int
+    {
+        None,
+        OnStart,
+        OnDestroy,
+        OnTriggerEnter,
+        OnTriggerExit,
+    }
+    public enum Biomes : int
+    {
+        None,
+        Biome1,
+        Biome2,
+        Biome3,
+    }
+    public enum Layer : int
+    {
+        None,
+        Layer1,
+        Layer2,
+        Layer3,
+    }
 
 }
