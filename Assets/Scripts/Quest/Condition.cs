@@ -12,7 +12,7 @@ public class Condition : MonoBehaviour
     }
 
     [SerializeField] private ConditionRedundancyType ConditionRedudancy = ConditionRedundancyType.OneOf;
-    public UnityEvent<bool, Condition> ConditionOutput;
+    public UnityEvent<bool> ConditionOutput;
     [Space(16)]
 
     private bool hasBeenTrueOnce = false;
@@ -30,7 +30,7 @@ public class Condition : MonoBehaviour
                 if (state)
                 {
                     hasBeenTrueOnce = true;
-                    ConditionOutput.Invoke(state, this);
+                    ConditionOutput.Invoke(state);
                 }
                 return;
                 
@@ -40,11 +40,11 @@ public class Condition : MonoBehaviour
                     return;
                 }
                 lastConditionState = state;
-                ConditionOutput.Invoke(state, this);
+                ConditionOutput.Invoke(state);
                 return;
 
             case ConditionRedundancyType.MultipleContinuous:
-                ConditionOutput.Invoke(state, this);
+                ConditionOutput.Invoke(state);
                 return;
 
             default:
