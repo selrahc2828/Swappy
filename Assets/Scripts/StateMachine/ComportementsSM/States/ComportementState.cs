@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Polybrush;
 using UnityEngine;
 
 public class ComportementState : State
