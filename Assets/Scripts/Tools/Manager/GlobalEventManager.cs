@@ -43,9 +43,11 @@ public class GlobalEventManager : MonoBehaviour
     
     // Fragment
     public event Action OnAddFragment;
+    
+    public event Action<GameObject> OnAddFragmentSound;
     public event Action OnRemoveFragment;
     public event Action<FragmentBankData, int> OnPopupFragment;
-    public event Action OnShattered;// pot brisé
+    public event Action<GameObject> OnShattered;// pot brisé
 
 
     public event Action<bool> OnSlowMotionInput;
@@ -182,6 +184,11 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnAddFragment?.Invoke();
     }
+
+    public void AddFragmentSound(GameObject gameObject)
+    {
+        OnAddFragmentSound?.Invoke(gameObject);
+    }
     
     public void RemoveFragment() //appele quand on perd un fragment
     {
@@ -201,9 +208,9 @@ public class GlobalEventManager : MonoBehaviour
     }
 
 
-    public void BrokenPot()
+    public void BrokenPot(GameObject gameObject)
     {
-        OnShattered?.Invoke();
+        OnShattered?.Invoke(gameObject);
     }
     
 

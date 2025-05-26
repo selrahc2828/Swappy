@@ -51,6 +51,8 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnJump += OnJump;
         GlobalEventManager.Instance.OnLand += OnLand;
         GlobalEventManager.Instance.OnCollide += CollisionSound;
+        GlobalEventManager.Instance.OnShattered += BreakingPot;
+        GlobalEventManager.Instance.OnAddFragmentSound += AddFragment;
     }
 
     private void OnDisable()
@@ -66,6 +68,8 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnJump -= OnJump;
         GlobalEventManager.Instance.OnLand -= OnLand;
         GlobalEventManager.Instance.OnCollide -= CollisionSound;
+        GlobalEventManager.Instance.OnShattered -= BreakingPot;
+        GlobalEventManager.Instance.OnAddFragmentSound -= AddFragment;
     }
 
     private void Start()
@@ -633,7 +637,17 @@ public class FMODEventManager : MonoBehaviour
         PlayOneShotAttached(FMODEvents.Collision, _gameObject);
     }
 
+    private void BreakingPot(GameObject _gameObject)
+    {
+        PlayOneShotAttached(FMODEvents.BreakingPot, _gameObject);
+    }
+
+    private void AddFragment(GameObject _gameObject)
+    {
+        PlayOneShotAttached(FMODEvents.AddFragment, _gameObject);
+    }
     #endregion
+    
     
     
     

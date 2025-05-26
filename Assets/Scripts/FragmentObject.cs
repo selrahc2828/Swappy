@@ -33,4 +33,9 @@ public class FragmentObject : MonoBehaviour
             rb.AddForce(randomDirection * force, ForceMode.VelocityChange);
         }
     }
+
+    private void OnDisable()
+    {
+        GlobalEventManager.Instance.AddFragmentSound(gameObject);
+    }
 }
