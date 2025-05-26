@@ -185,6 +185,7 @@ public class GameManager : MonoBehaviour
         // Vérifier si la touche pour la scène 1 est pressée.
         if (Input.GetKeyDown(keyForScene1))
         {
+            SaveManager.Instance.SaveAll();
             ChangeScene(scene1);
         }
         // Vérifier si la touche pour la scène 2 est pressée.

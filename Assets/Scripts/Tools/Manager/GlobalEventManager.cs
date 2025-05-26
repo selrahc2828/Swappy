@@ -44,8 +44,17 @@ public class GlobalEventManager : MonoBehaviour
     // Fragment
     public event Action OnAddFragment;
     public event Action OnRemoveFragment;
+    public event Action<FragmentBankData, int> OnPopupFragment;
+    public event Action OnShattered;// pot brisé
+
 
     public event Action<bool> OnSlowMotionInput;
+
+    // Menu
+    public event Action<string> OnPlaySelected;
+    public event Action<string> OnStopSelected;
+    public event Action<bool> OnMute;
+
 
     private void Awake()
     {
@@ -156,14 +165,14 @@ public class GlobalEventManager : MonoBehaviour
         OnRemoveTape?.Invoke();
     }
     
-    public void SetStateTape() //appele quand on ramasse/déebloque une nouvelle cassette
+    public void SetStateTape() //appele quand on ramasse/débloque une nouvelle cassette
     {
         OnSetStateTape?.Invoke();
     }
     
-    public void DisplayPopupPickUpTape(TapeData newItem) //appele quand on ajoute un item dans l'inventaire
+    public void DisplayPopupPickUpTape(TapeData newTape) //appele quand on ramasse/débloque une nouvelle cassette
     {
-        OnPopupTape?.Invoke(newItem);
+        OnPopupTape?.Invoke(newTape);
     }
     #endregion
 
@@ -178,17 +187,51 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnRemoveFragment?.Invoke();
     }
-
+    
+    public void DisplayPopupAddFragment(FragmentBankData fragmentBank, int quantity)
+    {
+        OnPopupFragment?.Invoke(fragmentBank, quantity);
+    }
     #endregion
+
 
     public void SlowMotionInput(bool activeSlowMo)
     {
         OnSlowMotionInput?.Invoke(activeSlowMo);
     }
 
+
+    public void BrokenPot()
+    {
+        OnShattered?.Invoke();
+    }
+    
+
     public void Collision(GameObject gameObject) // appele lors d'un collision d'un objet
     {
         OnCollide?.Invoke(gameObject);
     }
+
+    #region  Menu Tape
+
+    public void PlayTape(string musicFmodName)
+    {
+        OnPlaySelected?.Invoke(musicFmodName);
+        Debug.Log("Play tape");
+    }
+
+    public void StopTape(string musicFmodName)
+    {
+        OnStopSelected?.Invoke(musicFmodName);
+        Debug.Log("Stop tape");
+    }
+
+    public void MuteEnviro(bool isMuted)
+    {
+        OnMute?.Invoke(isMuted);
+        Debug.Log("Mute enviro");
+    }
+    
+    #endregion
 
 }

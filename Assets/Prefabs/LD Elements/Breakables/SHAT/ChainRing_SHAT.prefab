@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 5041189576489658321}
   - component: {fileID: 1972047189564720276}
   - component: {fileID: 6310709227710535246}
+  - component: {fileID: 1596454765570252816}
   m_Layer: 0
   m_Name: ChainRing_SHAT_cell
   m_TagString: Untagged
@@ -186,6 +187,20 @@ MonoBehaviour:
   offsetRotation: {x: 0, y: 0, z: 0}
   gravityConstant: 9.81
   maxAngle: 30
+--- !u!114 &1596454765570252816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2843601419834559744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 577de888e790072428df7b51f1203d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceSleepThreshold: 0.05
+  fallbackSleepTime: 1
 --- !u!1 &2907633749455176583
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +215,7 @@ GameObject:
   - component: {fileID: 3937528357924278490}
   - component: {fileID: 6836903812344283736}
   - component: {fileID: 7758780776739849247}
+  - component: {fileID: 3454420585336123190}
   m_Layer: 0
   m_Name: ChainRing_SHAT_cell_002
   m_TagString: Untagged
@@ -338,6 +354,20 @@ MonoBehaviour:
   offsetRotation: {x: 0, y: 0, z: 0}
   gravityConstant: 9.81
   maxAngle: 30
+--- !u!114 &3454420585336123190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2907633749455176583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 577de888e790072428df7b51f1203d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceSleepThreshold: 0.05
+  fallbackSleepTime: 1
 --- !u!1 &6487454078757196895
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,6 +382,7 @@ GameObject:
   - component: {fileID: 778264316506962724}
   - component: {fileID: 1004706008431391692}
   - component: {fileID: 4793424313064289752}
+  - component: {fileID: 7542204445074247697}
   m_Layer: 0
   m_Name: ChainRing_SHAT_cell_001
   m_TagString: Untagged
@@ -490,3 +521,17 @@ MonoBehaviour:
   offsetRotation: {x: 0, y: 0, z: 0}
   gravityConstant: 9.81
   maxAngle: 30
+--- !u!114 &7542204445074247697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6487454078757196895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 577de888e790072428df7b51f1203d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceSleepThreshold: 0.05
+  fallbackSleepTime: 1

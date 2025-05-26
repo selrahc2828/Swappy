@@ -29,8 +29,7 @@ public class BoxInteraction : MonoBehaviour
     [SerializeField] private GrabObject _grabScript;
     
     [Header("Texte")]
-    public InputActionReference actionReference; // Référence à l'action d'interaction
-    public string textInteraction = "Press";
+    public InputActionReference actionReference; // Reference à l'action pour interagir
     
     private void Start()
     {
@@ -52,8 +51,7 @@ public class BoxInteraction : MonoBehaviour
         NearObject();
         // SetTextInteraction();
     }
-
-
+    
     private void OnEnable()
     {
         GameManager.controls.Player.Interaction.performed += InteractAction;
@@ -175,7 +173,7 @@ public class BoxInteraction : MonoBehaviour
             interactText?.gameObject.SetActive(true);
             
             string key = actionReference.action.GetBindingDisplayString();
-            interactText.text = $"{textInteraction} {key} to {interaction.interactionText}";
+            interactText.text = interaction.InteractionText(key);
         }
         else
         {
