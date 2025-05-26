@@ -101,7 +101,7 @@
 	</object>
 	<object class="EventMixerMaster" id="{f1a546c3-f13d-4bfb-9edf-2e735a77b84f}">
 		<property name="volume">
-			<value>-12</value>
+			<value>-24</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{01e5f8b8-f2f9-4994-861d-5c8ad6a7edaa}</destination>
@@ -138,13 +138,16 @@
 			<value>true</value>
 		</property>
 		<property name="start">
-			<value>0.25</value>
+			<value>0.40000000000000002</value>
 		</property>
 		<property name="length">
-			<value>4.7499999999999982</value>
+			<value>4.9999999999999973</value>
 		</property>
 		<relationship name="modulators">
 			<destination>{ea5f65b7-35e3-4243-bc22-e9bda493a327}</destination>
+		</relationship>
+		<relationship name="fadeOutCurve">
+			<destination>{3cae10a7-2363-42d6-a7e1-e4f9cf21453d}</destination>
 		</relationship>
 		<relationship name="event">
 			<destination>{3c1de87f-02cc-4ce0-a229-64f1103f3473}</destination>
@@ -263,6 +266,14 @@
 			<value>1.04166675</value>
 		</property>
 	</object>
+	<object class="FadeCurve" id="{3cae10a7-2363-42d6-a7e1-e4f9cf21453d}">
+		<relationship name="startPoint">
+			<destination>{0040d08d-e54c-4732-b522-d53cc7f26e37}</destination>
+		</relationship>
+		<relationship name="endPoint">
+			<destination>{84517d23-20e0-476e-9628-424cd34bfb96}</destination>
+		</relationship>
+	</object>
 	<object class="Automator" id="{c6b13930-5949-49db-83ef-42da62197114}">
 		<property name="nameOfPropertyBeingAutomated">
 			<value>volume</value>
@@ -313,6 +324,25 @@
 		<relationship name="preset">
 			<destination>{2e8efaa2-e3ce-46a4-b9c1-b23949d7083e}</destination>
 		</relationship>
+	</object>
+	<object class="AutomationPoint" id="{0040d08d-e54c-4732-b522-d53cc7f26e37}">
+		<property name="position">
+			<value>4.4000000000000004</value>
+		</property>
+		<property name="value">
+			<value>1</value>
+		</property>
+		<property name="curveShape">
+			<value>0.392851174</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{84517d23-20e0-476e-9628-424cd34bfb96}">
+		<property name="position">
+			<value>5.3999999999999977</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
 	</object>
 	<object class="AutomationCurve" id="{3f5cb185-0fbc-4ce9-a67f-960df98f00e5}">
 		<relationship name="parameter">

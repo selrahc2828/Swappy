@@ -332,11 +332,11 @@ public class FMODEventManager : MonoBehaviour
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerStealComp);
         PickHand(eventInstance,righthand);
+        //DefineCompPickType(_gameObject,eventInstance);
         if (_gameObject.CompareTag("Player"))
         {
             SetNamedParamEventInstance(eventInstance,"SIM",1);
         }
-        
         PlayEventInstance(eventInstance);
         ReleaseEventInstance(eventInstance);
     }
@@ -344,6 +344,7 @@ public class FMODEventManager : MonoBehaviour
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerGiveComp);
         PickHand(eventInstance,righthand);
+        //DefineCompPickType(_gameObject,eventInstance);
         if (_gameObject.CompareTag("Player"))
         {
             SetNamedParamEventInstance(eventInstance,"SIM",1);
@@ -356,6 +357,7 @@ public class FMODEventManager : MonoBehaviour
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerSelfSwitch);
         PickHand(eventInstance,righthand);
+        //DefineCompPickType(_gameObject,eventInstance);
         PlayEventInstance(eventInstance);
         ReleaseEventInstance(eventInstance);
     }
@@ -386,6 +388,31 @@ public class FMODEventManager : MonoBehaviour
         else
         {
             SetNamedParamEventInstance(eventInstance,"HAND",0);
+        }
+    }
+
+    private void DefineCompPickType(GameObject _gameObject, EventInstance eventInstance)
+    {
+        if (gameObject.GetComponent<ComportementState>() != null)
+        {
+            switch (_gameObject.GetComponent<ComportementState>().stateValue)
+            {
+                case 1:
+                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",1);
+                    break;
+                case 3:
+                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",2);
+                    break;
+                case 9:
+                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",3);
+                    break;
+                case 27:
+                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",4);
+                    break;
+                case 81:
+                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",5);
+                    break;
+            }
         }
     }
     #endregion
@@ -614,16 +641,23 @@ public class FMODEventManager : MonoBehaviour
 
     #region NON C# events
 
-    public void PlaySoundFlare(GameObject gameObject,EventReference eventReference)
+    public void PlayHover()
     {
-        AddInstanceInEncyclopedia(gameObject,eventReference,CreateEventInstance(eventReference));
-        PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(gameObject,eventReference),gameObject,gameObject.GetComponent<Rigidbody>());
+        PlayOneShot(FMODEvents.Hover,transform.position);
     }
-
-    public void StopSoundFlare(GameObject gameObject,EventReference eventReference)
+    public void PlaySelect()
     {
-        StopEventInstance(GetInstanceFromEncyclopediaKey(gameObject,eventReference));
-        RemoveInstanceInEncyclopedia(gameObject,eventReference);
+        PlayOneShot(FMODEvents.Validated,transform.position);
     }
+    public void PlayBack()
+    {
+        PlayOneShot(FMODEvents.Back,transform.position);
+    }
+    
+    public void PlayTransistionIntro()
+    {
+        PlayOneShot(FMODEvents.TransistionCrash,transform.position);
+    }
+    
     #endregion
 }

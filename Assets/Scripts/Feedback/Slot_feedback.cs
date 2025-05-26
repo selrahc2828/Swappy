@@ -99,42 +99,35 @@ public class Slot_feedback : MonoBehaviour
             case 1:
                 material = comportementManager.flareData.matFlareImpulse;
                 flareColor = comportementManager.flareData.particleFlareColorImpulse;
-                soundEvent = FMODEventManager.instance.FMODEvents.FlareImpulse;
                 break;
 
             case 3:
                 material = comportementManager.flareData.matFlareBounce;
                 flareColor = comportementManager.flareData.particleFlareColorBounce;
-                soundEvent = FMODEventManager.instance.FMODEvents.FlareBounce;
                 break;
 
             case 9:
                 material = comportementManager.flareData.matFlareImmuable;
                 flareColor = comportementManager.flareData.particleFlareColorImmuable;
-                soundEvent = FMODEventManager.instance.FMODEvents.FlareImmuable;
                 break;
 
             case 27:
                 material = comportementManager.flareData.matFlareMagnet;
                 flareColor = comportementManager.flareData.particleFlareColorMagnet;
-                soundEvent = FMODEventManager.instance.FMODEvents.FlareMagnet;
                 break;
 
             case 81:
                 material = comportementManager.flareData.matFlareRocket;
                 flareColor = comportementManager.flareData.particleFlareColorRocket;
-                soundEvent = FMODEventManager.instance.FMODEvents.FlareRocket;
                 break;
         }
         // instantie Feedback et attribution materail et couleur flare
         feedback_Act = SpawnFlare(comportementManager.flareData.prefabFlareSlotHand, spawnPosition, targetPosition);
         FlareMoveTarget flareMove = feedback_Act.GetComponent<FlareMoveTarget>();
-        FlareMoveSound flareSound = feedback_Act.GetComponent<FlareMoveSound>();
         
         flareMove.flareRenderer.material = material;
         var mainModule = flareMove.flare.main;
         mainModule.startColor = flareColor;
-        flareSound.eventRef = soundEvent;
         
     }
 
