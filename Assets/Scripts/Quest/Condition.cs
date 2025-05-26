@@ -59,8 +59,8 @@ public class Condition : MonoBehaviour
         {
             if (ConditionOutput.GetPersistentTarget(i))
             {
-                Gizmos.DrawLine(GetConditionLineStart(), ConditionOutput.GetPersistentTarget(i).GetComponent<Transform>().position + Vector3.up * 2.5f);
-                Gizmos.DrawCube(transform.position + Vector3.up, Vector3.one * 0.7f);
+                Gizmos.DrawLine(GetConditionLineStart(), ConditionOutput.GetPersistentTarget(i).GetComponent<Transform>().position + Vector3.up);
+                //Gizmos.DrawCube(transform.position + Vector3.up, Vector3.one * 0.7f);
             }
         }
     }

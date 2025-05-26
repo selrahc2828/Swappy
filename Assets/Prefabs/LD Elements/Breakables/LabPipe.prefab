@@ -162,7 +162,6 @@ GameObject:
   - component: {fileID: 6136451304918897740}
   - component: {fileID: 331311365417206971}
   - component: {fileID: 7558686599322168846}
-  - component: {fileID: 3920978661392534808}
   m_Layer: 0
   m_Name: Slab_Down
   m_TagString: Untagged
@@ -257,33 +256,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6050571896524089946, guid: 3f36976bc2b67af4c9ba3298576b469e, type: 3}
---- !u!54 &3920978661392534808
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2232058951539834890}
-  serializedVersion: 4
-  m_Mass: 10
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!1 &3939351970454301039
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,18 +592,6 @@ MonoBehaviour:
   ConditionOutput:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3920978661392534808}
-        m_TargetAssemblyTypeName: UnityEngine.Rigidbody, UnityEngine
-        m_MethodName: set_isKinematic
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 5514875380827849088}
         m_TargetAssemblyTypeName: BreakableObject, Assembly-CSharp
         m_MethodName: ShatterObject
