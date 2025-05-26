@@ -27,17 +27,19 @@ public class BreakableObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-        previousVelocity = currentVelocity;
-        currentVelocity = thisRb.velocity;
 
-        if (thisRb.mass * thisRb.velocity.magnitude * Vector3.Angle(currentVelocity, previousVelocity) / 3 >= minShatterPower)
-        {
-            if (!hasShattered)
+
+            previousVelocity = currentVelocity;
+            currentVelocity = thisRb.velocity;
+
+            if (thisRb.mass * thisRb.velocity.magnitude * Vector3.Angle(currentVelocity, previousVelocity) / 3 >= minShatterPower)
             {
-                hasShattered = true;
-                ShatterObject();
-            }
-        }
+                if (!hasShattered)
+                {
+                    hasShattered = true;
+                    ShatterObject();
+                }
+            } 
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -61,7 +63,7 @@ public class BreakableObject : MonoBehaviour
         }
     }
 
-    private void ShatterObject()
+    public void ShatterObject()
     {
         GameObject shatteredObject = Instantiate(shatteredVersion, transform.position, transform.rotation);
         Rigidbody[] shatteredRbs = shatteredObject.GetComponentsInChildren<Rigidbody>();
