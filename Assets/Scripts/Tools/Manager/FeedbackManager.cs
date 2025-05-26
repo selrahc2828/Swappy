@@ -7,29 +7,45 @@ using UnityEngine.Serialization;
 public class FeedbackManager : MonoBehaviour
 {
     public static FeedbackManager Instance;
-
-    [Header("PlayerInfo")] public GameObject SIMGauche;
-    public GameObject SIMDroite;
-
+    public ComportementsStateMachine playerStateMachine;
+    
+    [Header("SIM")]
+    public GameObject ImpulseSIMGauche;
+    public GameObject ImpulseSIMDroite;
+    
+    public GameObject BounceSIMGauche;
+    public GameObject BounceSIMDroite;
+    
+    public GameObject ImmuSIMGauche;
+    public GameObject ImmuSIMDroite;
+    
+    public GameObject MagnetSIMGauche;
+    public GameObject MagnetSIMDroite;
+    
+    public GameObject RocketSIMGauche;
+    public GameObject RocketSIMDroite;
+    
+    
     [Header("Impulse")] 
     public GameObject ImpulseConstantFeedback;
     public GameObject ImpulseTimer;
     public GameObject ImpulseImpactFeedback;
-    public GameObject ImpulseSIMFeedback;
+    
 
-    [Header("Bounce")] public GameObject BounceConstantFeedback;
+    [Header("Bounce")] 
+    public GameObject BounceConstantFeedback;
     public GameObject BounceActiveFeedback;
-    public GameObject BounceSIMFeedback;
 
-    [Header("Immuable")] public GameObject ImmuConstantFeedback;
-    public GameObject ImmuSIMFeedback;
+    [Header("Immuable")] 
+    public GameObject ImmuConstantFeedback;
 
-    [Header("Magnet")] public GameObject MagnetConstantFeedback;
-    public GameObject MagnetSIMFeedback;
+    [Header("Magnet")] 
+    public GameObject MagnetConstantFeedback;
 
-    [Header("Rocket")] public GameObject RocketConstantFeedback;
+    [Header("Rocket")] 
+    public GameObject RocketConstantFeedback;
+    public GameObject RocketImpact;
     public GameObject RocketOnFeedback;
-    public GameObject RocketSIMFeedback;
 
     private void OnEnable()
     {
@@ -57,16 +73,35 @@ public class FeedbackManager : MonoBehaviour
             case 0: // pas de comportement
                 if (sender.CompareTag("Player"))
                 {
+                    ImpulseSIMDroite.SetActive(false);
+                    ImpulseSIMGauche.SetActive(false);
+                    BounceSIMDroite.SetActive(false);
+                    BounceSIMGauche.SetActive(false);
+                    ImmuSIMDroite.SetActive(false);
+                    ImmuSIMGauche.SetActive(false);
+                    MagnetSIMDroite.SetActive(false);
+                    MagnetSIMGauche.SetActive(false);
+                    RocketSIMDroite.SetActive(false);
+                    RocketSIMGauche.SetActive(false);
                 }
                 else
                 {
+                    //NO COMP
                 }
 
                 break;
             case 1: // solo impulse
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Impulse
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImpulseSIMDroite.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        ImpulseSIMGauche.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -77,7 +112,15 @@ public class FeedbackManager : MonoBehaviour
             case 3: // solo bouncing
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Bounce
+                    if (playerStateMachine.inversion == true)
+                    {
+                        BounceSIMDroite.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        BounceSIMGauche.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -88,7 +131,15 @@ public class FeedbackManager : MonoBehaviour
             case 9: // solo immuable
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Immu
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImmuSIMDroite.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        ImmuSIMGauche.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -99,7 +150,15 @@ public class FeedbackManager : MonoBehaviour
             case 27: // solo magnet
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Magnet
+                    if (playerStateMachine.inversion == true)
+                    {
+                        MagnetSIMDroite.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        MagnetSIMGauche.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -110,7 +169,15 @@ public class FeedbackManager : MonoBehaviour
             case 81: // solo rocket
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Rocket
+                    if (playerStateMachine.inversion == true)
+                    {
+                        RocketSIMDroite.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        RocketSIMGauche.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -121,7 +188,8 @@ public class FeedbackManager : MonoBehaviour
             case 2: // double impulse
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM 2XImpulse
+                    ImpulseSIMDroite.SetActive(true);
+                    ImpulseSIMGauche.SetActive(true);
                 }
                 else
                 {
@@ -132,7 +200,8 @@ public class FeedbackManager : MonoBehaviour
             case 6: // double bouncing
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM2XBounce
+                    BounceSIMDroite.SetActive(true);
+                    BounceSIMGauche.SetActive(true);
                 }
                 else
                 {
@@ -143,7 +212,8 @@ public class FeedbackManager : MonoBehaviour
             case 18: // double immuable
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM2XImmu
+                    ImmuSIMDroite.SetActive(true);
+                    ImmuSIMGauche.SetActive(true);
                 }
                 else
                 {
@@ -154,7 +224,8 @@ public class FeedbackManager : MonoBehaviour
             case 54: // double magnet
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM2XMagnet
+                    MagnetSIMDroite.SetActive(true);
+                    MagnetSIMGauche.SetActive(true);
                 }
                 else
                 {
@@ -165,7 +236,8 @@ public class FeedbackManager : MonoBehaviour
             case 162: // double rocket
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM2XRocket
+                    RocketSIMDroite.SetActive(true);
+                    RocketSIMGauche.SetActive(true);
                 }
                 else
                 {
@@ -176,7 +248,17 @@ public class FeedbackManager : MonoBehaviour
             case 4: // Impulse - Bouncing
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Impulse / Bounce
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImpulseSIMDroite.SetActive(true);
+                        BounceSIMGauche.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        ImpulseSIMGauche.SetActive(true);
+                        BounceSIMDroite.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -187,7 +269,17 @@ public class FeedbackManager : MonoBehaviour
             case 10: // Impulse - Immuable
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Impulse / Immu
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImpulseSIMDroite.SetActive(true);
+                        ImmuSIMGauche.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        ImpulseSIMGauche.SetActive(true);
+                        ImmuSIMDroite.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -198,7 +290,17 @@ public class FeedbackManager : MonoBehaviour
             case 28: // Impulse - Magnet
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Impulse / Magnet
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImpulseSIMDroite.SetActive(true);
+                        MagnetSIMGauche.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        ImpulseSIMGauche.SetActive(true);
+                        MagnetSIMDroite.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -209,7 +311,17 @@ public class FeedbackManager : MonoBehaviour
             case 82: // Impulse - Rocket
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Impulse / Rocket
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImpulseSIMDroite.SetActive(true);
+                        RocketSIMGauche.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        ImpulseSIMGauche.SetActive(true);
+                        RocketSIMDroite.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -220,7 +332,17 @@ public class FeedbackManager : MonoBehaviour
             case 12: // Bouncing - Immuable
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Bounce / Immu
+                    if (playerStateMachine.inversion == true)
+                    {
+                        BounceSIMDroite.SetActive(true);
+                        ImmuSIMGauche.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        BounceSIMGauche.SetActive(true);
+                        ImmuSIMDroite.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -231,7 +353,17 @@ public class FeedbackManager : MonoBehaviour
             case 30: // Bouncing - Magnet
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Bounce / Magnet
+                    if (playerStateMachine.inversion == true)
+                    {
+                        BounceSIMDroite.SetActive(true);
+                        ImmuSIMGauche.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        BounceSIMGauche.SetActive(true);
+                        ImmuSIMDroite.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -242,7 +374,17 @@ public class FeedbackManager : MonoBehaviour
             case 84: // Bouncing - Rocket
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Bounce / Rocket
+                    if (playerStateMachine.inversion == true)
+                    {
+                        BounceSIMDroite.SetActive(true);
+                        RocketSIMGauche.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        BounceSIMGauche.SetActive(true);
+                        RocketSIMDroite.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -253,7 +395,17 @@ public class FeedbackManager : MonoBehaviour
             case 36: // Immuable - Magnet
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Immu / Magnet
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImmuSIMDroite.SetActive(true);
+                        MagnetSIMGauche.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        ImmuSIMGauche.SetActive(true);
+                        MagnetSIMDroite.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -264,7 +416,17 @@ public class FeedbackManager : MonoBehaviour
             case 90: // Immuable - Rocket
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Immu / Rocket
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImmuSIMDroite.SetActive(true);
+                        RocketSIMGauche.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        ImmuSIMGauche.SetActive(true);
+                        RocketSIMDroite.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -275,7 +437,17 @@ public class FeedbackManager : MonoBehaviour
             case 108: // Magnet - Rocket
                 if (sender.CompareTag("Player"))
                 {
-                    //SIM Magnet / Rocket
+                    if (playerStateMachine.inversion == true)
+                    {
+                        MagnetSIMDroite.SetActive(true);
+                        RocketSIMGauche.SetActive(true);
+                    }
+                    
+                    else
+                    {
+                        MagnetSIMGauche.SetActive(true);
+                        RocketSIMDroite.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -505,189 +677,385 @@ public class FeedbackManager : MonoBehaviour
             case 0: // pas de comportement
                 if (sender.CompareTag("Player"))
                 {
+                    ImpulseSIMDroite.SetActive(false);
+                    ImpulseSIMGauche.SetActive(false);
+                    BounceSIMDroite.SetActive(false);
+                    BounceSIMGauche.SetActive(false);
+                    ImmuSIMDroite.SetActive(false);
+                    ImmuSIMGauche.SetActive(false);
+                    MagnetSIMDroite.SetActive(false);
+                    MagnetSIMGauche.SetActive(false);
+                    RocketSIMDroite.SetActive(false);
+                    RocketSIMGauche.SetActive(false);
                 }
                 else
                 {
+                    //NO COMP
                 }
 
                 break;
             case 1: // solo impulse
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImpulseSIMDroite.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        ImpulseSIMGauche.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Impulse
                 }
 
                 break;
             case 3: // solo bouncing
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        BounceSIMDroite.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        BounceSIMGauche.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Bounce
                 }
 
                 break;
             case 9: // solo immuable
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImmuSIMDroite.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        ImmuSIMGauche.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Immu
                 }
 
                 break;
             case 27: // solo magnet
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        MagnetSIMDroite.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        MagnetSIMGauche.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Magnet
                 }
 
                 break;
             case 81: // solo rocket
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        RocketSIMDroite.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        RocketSIMGauche.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Rocket
                 }
 
                 break;
             case 2: // double impulse
                 if (sender.CompareTag("Player"))
                 {
+                    ImpulseSIMDroite.SetActive(false);
+                    ImpulseSIMGauche.SetActive(false);
                 }
                 else
                 {
+                    //Feedback Constant Impulse
                 }
 
                 break;
             case 6: // double bouncing
                 if (sender.CompareTag("Player"))
                 {
+                    BounceSIMDroite.SetActive(false);
+                    BounceSIMGauche.SetActive(false);
                 }
                 else
                 {
+                    //Feedback Constant Bounce
                 }
 
                 break;
             case 18: // double immuable
                 if (sender.CompareTag("Player"))
                 {
+                    ImmuSIMDroite.SetActive(false);
+                    ImmuSIMGauche.SetActive(false);
                 }
                 else
                 {
+                    //Feedback Constant Immu
                 }
 
                 break;
             case 54: // double magnet
                 if (sender.CompareTag("Player"))
                 {
+                    MagnetSIMDroite.SetActive(false);
+                    MagnetSIMGauche.SetActive(false);
                 }
                 else
                 {
+                    //Feedback Constant Magnet
                 }
 
                 break;
             case 162: // double rocket
                 if (sender.CompareTag("Player"))
                 {
+                    RocketSIMDroite.SetActive(false);
+                    RocketSIMGauche.SetActive(false);
                 }
                 else
                 {
+                    //Feedback Constant Impulse
                 }
 
                 break;
             case 4: // Impulse - Bouncing
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Impulse + Bounce
                 }
 
                 break;
             case 10: // Impulse - Immuable
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImpulseSIMDroite.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        ImpulseSIMGauche.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Impulse + Immu
                 }
 
                 break;
             case 28: // Impulse - Magnet
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImpulseSIMDroite.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        ImpulseSIMGauche.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Impulse + Magnet
                 }
 
                 break;
             case 82: // Impulse - Rocket
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImpulseSIMDroite.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        ImpulseSIMGauche.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Impulse + Rocket
                 }
 
                 break;
             case 12: // Bouncing - Immuable
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Bounce + Immu
                 }
 
                 break;
             case 30: // Bouncing - Magnet
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Bounce + Magnet
                 }
 
                 break;
             case 84: // Bouncing - Rocket
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        BounceSIMDroite.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        BounceSIMGauche.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Bounce / Rocket
                 }
 
                 break;
             case 36: // Immuable - Magnet
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Immu + Magnet
                 }
 
                 break;
             case 90: // Immuable - Rocket
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        ImmuSIMDroite.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        ImmuSIMGauche.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Immu + Rocket
                 }
 
                 break;
             case 108: // Magnet - Rocket
                 if (sender.CompareTag("Player"))
                 {
+                    if (playerStateMachine.inversion == true)
+                    {
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
+                    }
+                    
+                    else
+                    {
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                    }
                 }
                 else
                 {
+                    //Feedback Constant Magnet + Rocket
                 }
 
                 break;
@@ -717,5 +1085,8 @@ public class FeedbackManager : MonoBehaviour
     public void FeedbackSIM(float leftValue, float rightValue, bool inverse)
     {
         //instantie/active les comportements à gauche et à droite en fonction des comportements sur le player.
+        
+        
+        
     }
 }
