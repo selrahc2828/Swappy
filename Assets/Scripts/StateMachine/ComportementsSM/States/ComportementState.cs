@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Polybrush;
 using UnityEngine;
 
 public class ComportementState : State
@@ -28,7 +29,7 @@ public class ComportementState : State
 
     public override void Enter()
     {
-        GlobalEventManager.Instance.ComportmentStateEnter(_sm.gameObject);
+        GlobalEventManager.Instance.ComportmentStateEnter(GetGameObject());
     }
 
     public override void TickLogic()
@@ -49,7 +50,7 @@ public class ComportementState : State
 
     public override void Exit()
     {
-        GlobalEventManager.Instance.ComportmentStateExit(_sm.gameObject);
+        GlobalEventManager.Instance.ComportmentStateExit(GetGameObject());
         // Debug.Log(_sm.currentState + " exit");
 
         // if (feedBack_GO_Left != null)
@@ -173,13 +174,13 @@ public class ComportementState : State
         {
             colorSlot2 = _sm.comportementManager.noComportementColor;
         }
-
+        
         // Debug.Log($"Change color {_sm.name} into slot 1: {colorSlot1} and slot2: {colorSlot2}");
         if (_sm.rend.materials.Length >1)//verif si on a plus de 2 materials
         {
             // on part du principe que le mat index 1 est le shader outline
-            _sm.rend.materials[1].SetColor("_Color2", colorSlot1);
-            _sm.rend.materials[1].SetColor("_Color3", colorSlot2);
+            _sm.rend.materials[0].SetColor("_Color1", colorSlot1);
+            _sm.rend.materials[0].SetColor("_Color2", colorSlot2);
         }
     }
 

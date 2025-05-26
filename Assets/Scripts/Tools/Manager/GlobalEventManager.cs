@@ -7,15 +7,22 @@ public class GlobalEventManager : MonoBehaviour
 {
     public static GlobalEventManager Instance;
 
+    // Manipoulation de comportement
     public event Action<GameObject, bool, bool> OnComportmentExtracted;
     public event Action<GameObject, bool, bool> OnComportmentAdded;
     public event Action<GameObject,bool> OnComportmentExchanged;
 
+    //SIM
     public event Action<GameObject,bool> OnSelfImpactMod;
 
+    //Comportement States
     public event Action<GameObject> OnComportementStateEnter;
     public event Action<GameObject> OnComportementStateExit;
     public event Action<GameObject, float> OnComportementStatePlay;
+    public event Action<GameObject, float, bool> OnExplosion;
+    public event Action<GameObject> OnJustBeforeExplosion;
+    public event Action<ContactPoint[]> OnBounceLocation;
+    public event Action<GameObject> OnJustBeforeRocketStart;
 
     public event Action<GameObject> OnFootstep;
     public event Action<GameObject> OnJump;
@@ -38,7 +45,7 @@ public class GlobalEventManager : MonoBehaviour
     public event Action OnAddFragment;
     public event Action OnRemoveFragment;
 
-
+    public event Action<bool> OnSlowMotionInput;
 
     private void Awake()
     {
@@ -82,7 +89,28 @@ public class GlobalEventManager : MonoBehaviour
         OnComportementStatePlay?.Invoke(comportableObject,force);
     }
 
+    public void Explosion(GameObject explodingGameObject, float timeBeforeNextExplosion, bool isStartingState)
+    {
+        OnExplosion?.Invoke(explodingGameObject,timeBeforeNextExplosion, isStartingState);
+    }
+
+    public void JustBeforeExplosion(GameObject explodingGameObjec)
+    {
+        OnJustBeforeExplosion?.Invoke(explodingGameObjec);
+    }
+
+    public void BounceLocation(ContactPoint[] locations) // appelé quand un comportement bounce rebondit
+    {
+        OnBounceLocation?.Invoke(locations);
+    }
+    public void JustBeforeRocketStart(GameObject rocketGameObject)
+    {
+        OnJustBeforeRocketStart?.Invoke(rocketGameObject);
+    }
+
     #endregion
+
+    #region player
 
     public void Footstep(GameObject groundObject) // appele lors d'un pas du player
     {
@@ -98,6 +126,8 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnLand?.Invoke(groundObject);
     }
+
+    #endregion
 
     #region Inventaire
     public void AddInventory() //appele quand on ajoute un item dans l'inventaire
@@ -150,6 +180,11 @@ public class GlobalEventManager : MonoBehaviour
     }
 
     #endregion
+
+    public void SlowMotionInput(bool activeSlowMo)
+    {
+        OnSlowMotionInput?.Invoke(activeSlowMo);
+    }
 
     public void Collision(GameObject gameObject) // appele lors d'un collision d'un objet
     {

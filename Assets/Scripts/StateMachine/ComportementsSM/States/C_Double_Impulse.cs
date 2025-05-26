@@ -26,7 +26,6 @@ public class C_Double_Impulse : ComportementState
         rightValue = 1;
         firstImpulse = true;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.impulseColor);
         
         impulseTime = _sm.comportementManager.impulseData.doubleImpulseTime;
         impulseFirstTime = _sm.comportementManager.impulseData.doubleImpulseFirstTime;
@@ -39,6 +38,7 @@ public class C_Double_Impulse : ComportementState
         }
         else
         {
+            ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.impulseColor);
             trueImpulseRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + impulseRange;
         }
         

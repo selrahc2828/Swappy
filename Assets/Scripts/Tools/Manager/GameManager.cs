@@ -260,6 +260,7 @@ public class GameManager : MonoBehaviour
         {
             // if bool == true set false et vice versa
             slowMotion = !slowMotion;
+            GlobalEventManager.Instance.SlowMotionInput(slowMotion);
             SlowMotion(slowMotion, slowCoeff);
         }
     }

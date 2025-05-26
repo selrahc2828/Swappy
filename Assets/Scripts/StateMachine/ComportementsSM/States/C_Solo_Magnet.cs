@@ -38,13 +38,13 @@ public class C_Solo_Magnet : ComportementState
         else
         {
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;
+            ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.noComportementColor);
         }
         magnetForce = _sm.comportementManager.magnetData.magnetForce;
         equilibriumDistance = _sm.comportementManager.magnetData.equilibriumDistance;
         dampingFactor = _sm.comportementManager.magnetData.dampingFactor;
         
         // _sm.rend.material = _sm.magnet;
-        ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.noComportementColor);
 
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
         feedBack_GO_Left.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
@@ -132,5 +132,5 @@ public class C_Solo_Magnet : ComportementState
         // --- Damping : freine la vitesse radiale (vers/depuis le centre) ---
         Vector3 radialVelocity = Vector3.Project(rb.velocity, forceDir);
         rb.velocity -= radialVelocity * (dampingFactor * Time.deltaTime);
-        }
+    }
 }

@@ -34,7 +34,6 @@ public class C_Impulse_Bouncing : ComportementState
         leftValue = 1;
         rightValue = 3;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.bouncingColor);
         
         impulseBounceTimer = _sm.comportementManager.impulseBounceData.impulseBounceTimer;
         impulseBounceCooldown = impulseBounceTimer;
@@ -50,6 +49,7 @@ public class C_Impulse_Bouncing : ComportementState
         }
         else
         {
+            ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.bouncingColor);
             trueImpulseBounceRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + impulseBounceRange;
             
             _sm.GetComponent<Collider>().material = _bouncyMaterial;

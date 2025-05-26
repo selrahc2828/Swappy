@@ -15,11 +15,11 @@ public class C_Double_Immuable : ComportementState
         leftValue = 9;
         rightValue = 9;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.immuableColor);
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
         if (!_sm.isPlayer)
         {
+            ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.immuableColor);
             saveTag = _sm.gameObject.tag;
             _sm.gameObject.tag = "Untagged";
         }

@@ -23,9 +23,12 @@ public class C_Double_Rocket : ComportementState
         leftValue = 81;
         rightValue = 81;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.rocketColor);
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
+        if (!_sm.isPlayer)
+        {
+            ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.rocketColor);
+        }
         timer = 0f;
         rocketForce = _sm.comportementManager.doubleRocketData.rocketDoubleForce;
         rocketForceOnPlayer = _sm.comportementManager.doubleRocketData.rocketDoubleForceOnPlayer;

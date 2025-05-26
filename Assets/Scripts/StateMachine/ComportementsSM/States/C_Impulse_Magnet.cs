@@ -24,7 +24,6 @@ public class C_Impulse_Magnet : ComportementState
         leftValue = 1;
         rightValue = 27;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.magnetColor);
         
         zoneImpulseRange = _sm.comportementManager.impulseMagnetData.zoneImpulseRange;
 
@@ -34,6 +33,7 @@ public class C_Impulse_Magnet : ComportementState
         }
         else
         {
+            ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.magnetColor);
             trueZoneImpulseRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + zoneImpulseRange;
         }
         
