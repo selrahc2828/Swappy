@@ -8,6 +8,7 @@ public class SkyboxManager : MonoBehaviour
     public float LightAngle;
     public CalculateSunPlayerAngle CalculateSunPlayerAngle;
     public Material SkyboxMat;
+    public Material WaterSkyEffect;
     public GameObject Sun;
     public float NumberOfMinuteForOneDay;
 
@@ -16,5 +17,6 @@ public class SkyboxManager : MonoBehaviour
         Sun.transform.Rotate((360 / (NumberOfMinuteForOneDay * 60)) * Time.deltaTime, 0, 0);
         LightAngle = CalculateSunPlayerAngle.valueToUseInShader;
         SkyboxMat.SetFloat("_CubemapTransition", Mathf.Abs(LightAngle));
+        WaterSkyEffect.SetFloat("_OpacityTransition", Mathf.Abs(LightAngle));
     }
 }
