@@ -4,6 +4,7 @@ using UnityEngine;
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class BiomeGrassInstancer : MonoBehaviour
 {
@@ -152,7 +153,15 @@ public class BiomeGrassInstancer : MonoBehaviour
         for (int i = 0; i < visibleMatrices.Count; i += batchSize)
         {
             int size = Mathf.Min(batchSize, visibleMatrices.Count - i);
-            Graphics.DrawMeshInstanced(grassMesh, 0, grassMaterial, visibleMatrices.GetRange(i, size));
+            Graphics.DrawMeshInstanced(
+                grassMesh,
+                0,
+                grassMaterial,
+                visibleMatrices.GetRange(i, size),
+                null,
+                ShadowCastingMode.Off,
+                false
+            );
         }
     }
 
