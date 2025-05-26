@@ -8,7 +8,6 @@ public class VelocityCondition : AdditionalCondition
         AngularVelocity,
     }
 
-    [Space(16)]
     public GameObject targetObject;
     [SerializeField] private VelocityType validationType;
     [SerializeField] private float targetVelocityMin;

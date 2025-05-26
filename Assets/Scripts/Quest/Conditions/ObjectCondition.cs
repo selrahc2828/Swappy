@@ -8,11 +8,10 @@ public class ObjectCondition : AdditionalCondition
         Layer
     }
 
-    [Space(16)]
     public GameObject targetObject;
     [SerializeField] private ValidationTypes validationType;
 
-    [Space(16)]
+    [Space(8)]
     [SerializeField] private string targetTag;
     [SerializeField] private LayerMask targetLayer;
 

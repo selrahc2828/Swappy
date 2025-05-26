@@ -18,12 +18,11 @@ public class CompCondition: AdditionalCondition
         StrictFusion
     }
 
-    [Space(16)]
     [Tooltip("Si targetObject vide, le script checkera à chaque vol / réattribution de comportement")]
     public GameObject targetObject;
     [SerializeField] private ValidationTypes validationType;
 
-    [Space(16)]
+    [Space(8)]
     [SerializeField] private FirstState targetComportment;
     [SerializeField] private CompCategory targetCompCategory;
 

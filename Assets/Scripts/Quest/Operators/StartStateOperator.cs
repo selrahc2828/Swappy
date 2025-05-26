@@ -6,7 +6,7 @@ public class StartStateOperator : OperatorCondition
 
     private void Start()
     {
-        ConditionOutput.Invoke(startState, this);
+        ConditionOutput.Invoke(startState);
     }
 
     public override void OperatorInput(bool state, Condition source)
