@@ -27,7 +27,6 @@ public class C_Double_Magnet : ComportementState
         leftValue = 27;
         rightValue = 27;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.magnetColor);
 
         magnetRange = _sm.comportementManager.doubleMagnetData.doubleMagnetRange;
         if (_sm.isPlayer)
@@ -36,6 +35,7 @@ public class C_Double_Magnet : ComportementState
         }
         else
         {
+            ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.magnetColor);
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;
         }
         
@@ -52,6 +52,8 @@ public class C_Double_Magnet : ComportementState
         
         forceFieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
         forceFieldObj.GetComponent<GrowToRadius>().atDestroy = false;
+        forceFieldObj.GetComponent<MagnetForceField>().comportementableObject = _sm.gameObject;
+        forceFieldObj.GetComponent<MagnetForceField>()._isDoubleMagnet = true;
     }
 
     public override void TickLogic()

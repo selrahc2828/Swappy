@@ -33,7 +33,6 @@ public class PopupItemGroup : MonoBehaviour
         while (elapsed < duration)
         {
             float t = elapsed / duration;
-
             
             // Fade out
             canvasGroup.alpha = 1f - fadeCurve.Evaluate(t);

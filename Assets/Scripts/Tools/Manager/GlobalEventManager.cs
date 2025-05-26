@@ -7,17 +7,22 @@ public class GlobalEventManager : MonoBehaviour
 {
     public static GlobalEventManager Instance;
 
+    // Manipoulation de comportement
     public event Action<GameObject, bool, bool> OnComportmentExtracted;
     public event Action<GameObject, bool, bool> OnComportmentAdded;
     public event Action<GameObject,bool> OnComportmentExchanged;
 
+    //SIM
     public event Action<GameObject,bool> OnSelfImpactMod;
 
+    //Comportement States
     public event Action<GameObject> OnComportementStateEnter;
     public event Action<GameObject> OnComportementStateExit;
     public event Action<GameObject, float> OnComportementStatePlay;
-
-    public event Action<int, int> OnHandValueUpdated;
+    public event Action<GameObject, float, bool> OnExplosion;
+    public event Action<GameObject> OnJustBeforeExplosion;
+    public event Action<ContactPoint[]> OnBounceLocation;
+    public event Action<GameObject> OnJustBeforeRocketStart;
 
     public event Action<GameObject> OnFootstep;
     public event Action<GameObject> OnJump;
@@ -39,7 +44,16 @@ public class GlobalEventManager : MonoBehaviour
     // Fragment
     public event Action OnAddFragment;
     public event Action OnRemoveFragment;
+    public event Action<FragmentBankData, int> OnPopupFragment;
+    public event Action OnShattered;// pot brisé
 
+
+    public event Action<bool> OnSlowMotionInput;
+
+    // Menu
+    public event Action<string> OnPlaySelected;
+    public event Action<string> OnStopSelected;
+    public event Action<bool> OnMute;
 
 
     private void Awake()
@@ -64,7 +78,7 @@ public class GlobalEventManager : MonoBehaviour
         OnComportmentExchanged?.Invoke(player, rightHand);
     }
     
-    public void SelfImpactMod(GameObject player, bool active) // appele quand on echange le comportement d'une main avec un comportement du player
+    public void SelfImpactMod(GameObject player, bool active)
     {
         OnSelfImpactMod?.Invoke(player, active);
     }
@@ -79,17 +93,33 @@ public class GlobalEventManager : MonoBehaviour
         OnComportementStateExit?.Invoke(comportableObject);
     }
 
-    public void ComportmentStatePlay(GameObject comportableObject, float force = 0.8f) // appele lorsque le comportement agit
+    public void ComportmentStatePlay(GameObject comportableObject, float force = -1) // appele lorsque le comportement agit
     {
         OnComportementStatePlay?.Invoke(comportableObject,force);
     }
 
-    public void UpdateHand(int leftHandValue, int rightHandValue)// appel des qu'il y a un changement dans les main ####A UPDATE####
+    public void Explosion(GameObject explodingGameObject, float timeBeforeNextExplosion, bool isStartingState)
     {
-        OnHandValueUpdated?.Invoke(leftHandValue,rightHandValue);
+        OnExplosion?.Invoke(explodingGameObject,timeBeforeNextExplosion, isStartingState);
+    }
+
+    public void JustBeforeExplosion(GameObject explodingGameObjec)
+    {
+        OnJustBeforeExplosion?.Invoke(explodingGameObjec);
+    }
+
+    public void BounceLocation(ContactPoint[] locations) // appelé quand un comportement bounce rebondit
+    {
+        OnBounceLocation?.Invoke(locations);
+    }
+    public void JustBeforeRocketStart(GameObject rocketGameObject)
+    {
+        OnJustBeforeRocketStart?.Invoke(rocketGameObject);
     }
 
     #endregion
+
+    #region player
 
     public void Footstep(GameObject groundObject) // appele lors d'un pas du player
     {
@@ -105,6 +135,8 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnLand?.Invoke(groundObject);
     }
+
+    #endregion
 
     #region Inventaire
     public void AddInventory() //appele quand on ajoute un item dans l'inventaire
@@ -133,14 +165,14 @@ public class GlobalEventManager : MonoBehaviour
         OnRemoveTape?.Invoke();
     }
     
-    public void SetStateTape() //appele quand on ramasse/déebloque une nouvelle cassette
+    public void SetStateTape() //appele quand on ramasse/débloque une nouvelle cassette
     {
         OnSetStateTape?.Invoke();
     }
     
-    public void DisplayPopupPickUpTape(TapeData newItem) //appele quand on ajoute un item dans l'inventaire
+    public void DisplayPopupPickUpTape(TapeData newTape) //appele quand on ramasse/débloque une nouvelle cassette
     {
-        OnPopupTape?.Invoke(newItem);
+        OnPopupTape?.Invoke(newTape);
     }
     #endregion
 
@@ -155,12 +187,51 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnRemoveFragment?.Invoke();
     }
-
+    
+    public void DisplayPopupAddFragment(FragmentBankData fragmentBank, int quantity)
+    {
+        OnPopupFragment?.Invoke(fragmentBank, quantity);
+    }
     #endregion
+
+
+    public void SlowMotionInput(bool activeSlowMo)
+    {
+        OnSlowMotionInput?.Invoke(activeSlowMo);
+    }
+
+
+    public void BrokenPot()
+    {
+        OnShattered?.Invoke();
+    }
+    
 
     public void Collision(GameObject gameObject) // appele lors d'un collision d'un objet
     {
         OnCollide?.Invoke(gameObject);
     }
+
+    #region  Menu Tape
+
+    public void PlayTape(string musicFmodName)
+    {
+        OnPlaySelected?.Invoke(musicFmodName);
+        Debug.Log("Play tape");
+    }
+
+    public void StopTape(string musicFmodName)
+    {
+        OnStopSelected?.Invoke(musicFmodName);
+        Debug.Log("Stop tape");
+    }
+
+    public void MuteEnviro(bool isMuted)
+    {
+        OnMute?.Invoke(isMuted);
+        Debug.Log("Mute enviro");
+    }
+    
+    #endregion
 
 }

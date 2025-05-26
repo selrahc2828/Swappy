@@ -14,13 +14,15 @@ public class C_Impulse_Rocket : ComportementState
     private float flyTime;
     private float onTimer;
     private float onCooldown;
+    private float onFirstCooldown;
     private float offCooldown;
     private float impulseTimer;
     private float timeBetweenImpulses;
     private float maxSpeed;
     private bool rocketOn;
     private GameObject feedback;
-    private bool isSonOn;
+    private bool firstRocketOn;
+
     
     public C_Impulse_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -37,6 +39,7 @@ public class C_Impulse_Rocket : ComportementState
         explosionForce = _sm.comportementManager.impulseRocketData.impulseRocketExplosionForce;
         explosionRange = _sm.comportementManager.impulseRocketData.impulseRocketExplosionRange;
         feedback = _sm.comportementManager.impulseData.impulseFeedback;
+        firstRocketOn = true;
 
         // trueRepulserRange = repulserRange;
         if (_sm.isPlayer)
@@ -45,6 +48,7 @@ public class C_Impulse_Rocket : ComportementState
         }
         else
         {
+            ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.rocketColor);
             explosionTrueRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + explosionRange;
         }
         // pb si obj n'a pas de collider direct (ax Player)
@@ -52,13 +56,13 @@ public class C_Impulse_Rocket : ComportementState
         rocketForceOnPlayer = _sm.comportementManager.rocketData.rocketForceOnPlayer;
         rocketForceWhenGrab = _sm.comportementManager.rocketData.rocketForceWhenGrab;
         onCooldown = _sm.comportementManager.rocketData.rocketOnCooldown;
+        onFirstCooldown = _sm.comportementManager.rocketData.rocketFirstOnCooldown;
         offCooldown = _sm.comportementManager.rocketData.rocketOffCooldown;
         timeBetweenImpulses = _sm.comportementManager.impulseRocketData.timeBetweenImpulses;
         onTimer = 0f;
         impulseTimer = 0f;
         rocketOn = false;
         
-        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.rocketColor);
         feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
     }
@@ -72,6 +76,11 @@ public class C_Impulse_Rocket : ComportementState
     {
         base.TickPhysics();
         onTimer += Time.fixedDeltaTime;
+        if (firstRocketOn)
+        {
+            onTimer += onCooldown - onFirstCooldown;
+            firstRocketOn = false;
+        }
 
         if (onTimer > onCooldown && !rocketOn)
         {
@@ -82,18 +91,15 @@ public class C_Impulse_Rocket : ComportementState
         if (onTimer > offCooldown && rocketOn)
         {
             rocketOn = false;
-            isSonOn = false;
+
             onTimer = 0f;
         }
 
-
         if (rocketOn)
         {
-            if (!isSonOn)
-            {
-                
-                isSonOn = true;
-            }
+
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
+            
             impulseTimer += Time.fixedDeltaTime;
             if (impulseTimer > timeBetweenImpulses)
             {

@@ -35,26 +35,31 @@ public class OptionMenu : MonoBehaviour
     public void SetVolumeMaster()
     {
         GameManager.Instance.parameters.volumeMaster = volumeSliderMaster.value;
+        FMODEventManager.instance.ChangeVolume(FMODEventManager.instance.Fmodbus.busMaster,GameManager.Instance.parameters.volumeMaster);
     }
 
     public void SetVolumePlayer()
     {
         GameManager.Instance.parameters.volumePlayer = volumeSliderPlayer.value;
+        FMODEventManager.instance.ChangeVolume(FMODEventManager.instance.Fmodbus.busPlayer,GameManager.Instance.parameters.volumePlayer);
     }
 
     public void SetVolumeSystem()
     {
         GameManager.Instance.parameters.volumeSystem = volumeSliderSystem.value;
+        FMODEventManager.instance.ChangeVolume(FMODEventManager.instance.Fmodbus.busSystem,GameManager.Instance.parameters.volumeSystem);
     }
 
     public void SetVolumeMusic()
     {
         GameManager.Instance.parameters.volumeMusic = volumeSliderMusic.value;
+        FMODEventManager.instance.ChangeVolume(FMODEventManager.instance.Fmodbus.busMusic,GameManager.Instance.parameters.volumeMusic);
     }
 
     public void SetVolumeMenu()
     {
         GameManager.Instance.parameters.volumeMenu = volumeSliderMenu.value;
+        FMODEventManager.instance.ChangeVolume(FMODEventManager.instance.Fmodbus.busMenu,GameManager.Instance.parameters.volumeMenu);
     }
     #endregion
     

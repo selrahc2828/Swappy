@@ -62,7 +62,7 @@ public class ComportementsStateMachine : StateMachine
     [HideInInspector] public GameManager gameManager;
     [HideInInspector] public ComportementManager comportementManager;
 
-    [HideInInspector] public MeshRenderer rend;
+    public MeshRenderer rend;
 
     public bool isPlayer;
     [HideInInspector] public Rigidbody rb;
@@ -105,7 +105,7 @@ public class ComportementsStateMachine : StateMachine
         GoToInitialState(initialState);
         gameManager = GameManager.Instance;
         comportementManager = ComportementManager.Instance;
-        rend = GetComponentInChildren<MeshRenderer>();//cherche dans lui même et enfant, les prefabs de comportement on le mesh en enfant
+        //rend = GetComponentInChildren<CubeTagShader>().gameObject.GetComponent<MeshRenderer>();//cherche dans lui même et enfant, les prefabs de comportement on le mesh en enfant
         rb = GetComponent<Rigidbody>();
         //surtout pour Player qui a 2 collider en enfant
         objectCollider = GetComponentInChildren<Collider>();

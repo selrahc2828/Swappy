@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class BreakableObject : MonoBehaviour
 {
-    [Tooltip("La copie scindée de l'objet a instantier lors de sa destruction")]
+    [Tooltip("La copie scindee de l'objet a instantier lors de sa destruction")]
     [SerializeField] private GameObject shatteredVersion;
-    [Tooltip("Énergie cinétique minimum à partir duquel une collision détruit l'objet (Ec = m/2 * v²)")]
+    [Tooltip("energie cinetique minimum a partir duquel une collision detruit l'objet (Ec = m/2 * vï¿½)")]
     [SerializeField] private float minShatterPower;
 
     private Rigidbody thisRb;
@@ -12,6 +12,14 @@ public class BreakableObject : MonoBehaviour
     private Vector3 currentVelocity;
     private bool hasShattered;
 
+    private SpawnPot _spawner;
+    public SpawnPot Spawner
+    {
+        set => _spawner = value;
+    }
+
+    public GameObject fragmentPrefab;
+    
     private void Start()
     {
         thisRb = GetComponent<Rigidbody>();
@@ -27,7 +35,6 @@ public class BreakableObject : MonoBehaviour
             if (!hasShattered)
             {
                 hasShattered = true;
-                Debug.Log("Shatter Update");
                 ShatterObject();
             }
         }
@@ -48,7 +55,7 @@ public class BreakableObject : MonoBehaviour
             if (!hasShattered)
             {
                 hasShattered = true;
-                Debug.Log("Shatter Enter from: " + collision.gameObject.name);
+                // Debug.Log("Shatter Enter from: " + collision.gameObject.name);
                 ShatterObject();
             }
         }
@@ -56,7 +63,7 @@ public class BreakableObject : MonoBehaviour
 
     private void ShatterObject()
     {
-        GameObject shatteredObject = GameObject.Instantiate(shatteredVersion, transform.position, transform.rotation);
+        GameObject shatteredObject = Instantiate(shatteredVersion, transform.position, transform.rotation);
         Rigidbody[] shatteredRbs = shatteredObject.GetComponentsInChildren<Rigidbody>();
 
         foreach (Rigidbody rb in shatteredRbs)
@@ -64,6 +71,21 @@ public class BreakableObject : MonoBehaviour
             rb.velocity = currentVelocity;
         }
 
-        GameObject.Destroy(gameObject);
+        if (_spawner is not null)
+        {
+            GlobalEventManager.Instance.BrokenPot();
+            ExplodeFragments();
+        }
+
+        Destroy(gameObject);
+    }
+
+
+    private void ExplodeFragments()
+    {
+        for (int i = 0; i < (int)_spawner.potData.tier; i++)
+        {
+            Instantiate(fragmentPrefab, transform.position + new Vector3(0f,0.5f,0f), Quaternion.identity);
+        }
     }
 }

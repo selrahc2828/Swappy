@@ -34,7 +34,6 @@ public class C_Impulse_Bouncing : ComportementState
         leftValue = 1;
         rightValue = 3;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.bouncingColor);
         
         impulseBounceTimer = _sm.comportementManager.impulseBounceData.impulseBounceTimer;
         impulseBounceCooldown = impulseBounceTimer;
@@ -50,6 +49,7 @@ public class C_Impulse_Bouncing : ComportementState
         }
         else
         {
+            ColorShaderOutline(_sm.comportementManager.impulseColor, _sm.comportementManager.bouncingColor);
             trueImpulseBounceRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + impulseBounceRange;
             
             _sm.GetComponent<Collider>().material = _bouncyMaterial;
@@ -104,13 +104,15 @@ public class C_Impulse_Bouncing : ComportementState
 
     public override void CollisionStart(Collision other)
     {
-        base.CollisionStart(other);
+
         if (other!= null && canBounce)
         {
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
             trueImpulseBounceForce = impulseBounceForce + _sm.rb.velocity.magnitude * impulseForceMultiplier;
             // Debug.LogWarning($"dans enter: {trueImpulseBounceForce}");
             Repulse();
             canBounce = false;
+            
         }
         
     }

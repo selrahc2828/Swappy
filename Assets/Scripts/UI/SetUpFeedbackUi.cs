@@ -15,8 +15,8 @@ public class SetUpFeedbackUi : MonoBehaviour
     
     [Header("Objet")]
     public GameObject knobIndicationParent;
-    public Image knobIndicationLeft;
-    public Image knobIndicationRight;
+    public GameObject[] feedbackIndicationLeft;
+    public GameObject[] feedbackIndicationRight;
         
     // Start is called before the first frame update
     void Start()
@@ -52,46 +52,22 @@ public class SetUpFeedbackUi : MonoBehaviour
                     {
                         return;
                     }
-                    
-                    if (currentObjectState.rightValue == 0)
-                    {
-                        if (stealerProto.slot1 != 0)
-                        {
-                            ColorFeedback(knobIndicationLeft, currentObjectState.rightValue);
-                            ColorFeedback(knobIndicationRight, currentObjectState.leftValue);
-                        }
-                        else
-                        {
-                            ColorFeedback(knobIndicationLeft, currentObjectState.leftValue);
-                            ColorFeedback(knobIndicationRight, currentObjectState.rightValue);
-                            
-                        }
-                    }
-                    else
-                    {
-                        ColorFeedback(knobIndicationLeft, currentObjectState.leftValue);
-                        ColorFeedback(knobIndicationRight, currentObjectState.rightValue);  
-                    }
-                    
-                    // objet right est vide
-                    // objet left a quelque chose
-                    // main gauche a quelque chose
-                    // main droite est vide
-                    
+
+                    SymboleFeedback(currentObjectState.leftValue, currentObjectState.rightValue);                    
                 }
                 else
                 {
-                    ParentIndicationActive();
+                    SymboleFeedback(0, 0);
                 }
             }
             else
             {
-                ParentIndicationActive();
+                SymboleFeedback(0, 0);
             }
         }
         else
         {
-            ParentIndicationActive();
+            SymboleFeedback(0, 0);
         }  
     }
 
@@ -157,6 +133,117 @@ public class SetUpFeedbackUi : MonoBehaviour
                 break;
             case 81 : // SoloRocket
                 i.color = ComportementManager.Instance.rocketColor;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void SymboleFeedback(int leftValue, int rightValue)
+    {
+        switch(leftValue)
+        {
+            case 0: // NoComportement
+                feedbackIndicationLeft[0].SetActive(false);
+                feedbackIndicationLeft[1].SetActive(false);
+                feedbackIndicationLeft[2].SetActive(false);
+                feedbackIndicationLeft[3].SetActive(false);
+                feedbackIndicationLeft[4].SetActive(false);
+
+                break;
+            case 1: // SoloImpulse
+                feedbackIndicationLeft[0].SetActive(true);
+                feedbackIndicationLeft[1].SetActive(false);
+                feedbackIndicationLeft[2].SetActive(false);
+                feedbackIndicationLeft[3].SetActive(false);
+                feedbackIndicationLeft[4].SetActive(false);
+
+                break;
+            case 3: // SoloBouncing
+                feedbackIndicationLeft[0].SetActive(false);
+                feedbackIndicationLeft[1].SetActive(true);
+                feedbackIndicationLeft[2].SetActive(false);
+                feedbackIndicationLeft[3].SetActive(false);
+                feedbackIndicationLeft[4].SetActive(false);
+
+                break;
+            case 9: // SoloImmuable
+                feedbackIndicationLeft[0].SetActive(false);
+                feedbackIndicationLeft[1].SetActive(false);
+                feedbackIndicationLeft[2].SetActive(true);
+                feedbackIndicationLeft[3].SetActive(false);
+                feedbackIndicationLeft[4].SetActive(false);
+
+                break;
+            case 27: // SoloMagnet
+                feedbackIndicationLeft[0].SetActive(false);
+                feedbackIndicationLeft[1].SetActive(false);
+                feedbackIndicationLeft[2].SetActive(false);
+                feedbackIndicationLeft[3].SetActive(true);
+                feedbackIndicationLeft[4].SetActive(false);
+
+                break;
+            case 81: // SoloRocket
+                feedbackIndicationLeft[0].SetActive(false);
+                feedbackIndicationLeft[1].SetActive(false);
+                feedbackIndicationLeft[2].SetActive(false);
+                feedbackIndicationLeft[3].SetActive(false);
+                feedbackIndicationLeft[4].SetActive(true);
+
+                break;
+            default:
+                break;
+        }
+
+        switch (rightValue)
+        {
+            case 0: // NoComportement
+                feedbackIndicationRight[0].SetActive(false);
+                feedbackIndicationRight[1].SetActive(false);
+                feedbackIndicationRight[2].SetActive(false);
+                feedbackIndicationRight[3].SetActive(false);
+                feedbackIndicationRight[4].SetActive(false);
+
+                break;
+            case 1: // SoloImpulse
+                feedbackIndicationRight[0].SetActive(true);
+                feedbackIndicationRight[1].SetActive(false);
+                feedbackIndicationRight[2].SetActive(false);
+                feedbackIndicationRight[3].SetActive(false);
+                feedbackIndicationRight[4].SetActive(false);
+
+                break;
+            case 3: // SoloBouncing
+                feedbackIndicationRight[0].SetActive(false);
+                feedbackIndicationRight[1].SetActive(true);
+                feedbackIndicationRight[2].SetActive(false);
+                feedbackIndicationRight[3].SetActive(false);
+                feedbackIndicationRight[4].SetActive(false);
+
+                break;
+            case 9: // SoloImmuable
+                feedbackIndicationRight[0].SetActive(false);
+                feedbackIndicationRight[1].SetActive(false);
+                feedbackIndicationRight[2].SetActive(true);
+                feedbackIndicationRight[3].SetActive(false);
+                feedbackIndicationRight[4].SetActive(false);
+
+                break;
+            case 27: // SoloMagnet
+                feedbackIndicationRight[0].SetActive(false);
+                feedbackIndicationRight[1].SetActive(false);
+                feedbackIndicationRight[2].SetActive(false);
+                feedbackIndicationRight[3].SetActive(true);
+                feedbackIndicationRight[4].SetActive(false);
+
+                break;
+            case 81: // SoloRocket
+                feedbackIndicationRight[0].SetActive(false);
+                feedbackIndicationRight[1].SetActive(false);
+                feedbackIndicationRight[2].SetActive(false);
+                feedbackIndicationRight[3].SetActive(false);
+                feedbackIndicationRight[4].SetActive(true);
+
                 break;
             default:
                 break;

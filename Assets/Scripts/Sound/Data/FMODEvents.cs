@@ -13,7 +13,8 @@ public class FMODEvents : ScriptableObject
     [field: SerializeField] public EventReference PlayerStealComp { get; private set; }
     [field: SerializeField] public EventReference PlayerGiveComp { get; private set; }
     [field: SerializeField] public EventReference PlayerSelfSwitch { get; private set; }
-    [field: SerializeField] public EventReference PlayerSelfImpactMode { get; private set; }
+    [field: SerializeField] public EventReference PlayerSelfImpactModeIN { get; private set; }
+    [field: SerializeField] public EventReference PlayerSelfImpactModeOUT { get; private set; }
     [field: Header("SFX Comp")]
     [field: SerializeField] public EventReference Impulse { get; private set; }
     [field: SerializeField] public EventReference Bounce { get; private set; }
@@ -37,11 +38,17 @@ public class FMODEvents : ScriptableObject
     [field: SerializeField] public EventReference MagnetRocket { get; private set; }
     [field: Space]
     [field: SerializeField] public EventReference Collision { get; private set; }
+    [field: SerializeField] public EventReference BreakingPot { get; private set; }
     [field: Space]
     [field: Space]
     [field: Header("Menu")]
     [field: SerializeField] public EventReference Hover { get; private set; }
     [field: SerializeField] public EventReference Validated { get; private set; }
     [field: SerializeField] public EventReference Back { get; private set; }
+    [field: Space]
+    [field: Header("Cinematic")]
+    [field: SerializeField] public EventReference LargageIntro { get; private set; }
+    [field: SerializeField] public EventReference TransistionCrash { get; private set; }
+    
 
 }

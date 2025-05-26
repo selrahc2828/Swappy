@@ -10,7 +10,6 @@ public class CollideCondition : Condition
         BothSpecific
     }
 
-    [Space(16)]
     [SerializeField] private ValidationTypes validationType;
     [SerializeField] private AdditionalCondition additionalCondition;
     [SerializeField] private float minVelocity;

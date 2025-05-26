@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,6 +21,9 @@ public class MagnetForceField : MonoBehaviour
     public float delayDisplay;
     [SerializeField] float _timerDisplay;
 
+    public bool _isDoubleMagnet;
+    public GameObject comportementableObject;
+
     private void Start()
     {
         normalColor = magnetFeedbackMaterial.material.GetColor("_Color0");
@@ -37,6 +41,18 @@ public class MagnetForceField : MonoBehaviour
         }
         
         DisplayColor();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_isDoubleMagnet)
+        {
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject,rb.mass);
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -69,12 +85,14 @@ public class MagnetForceField : MonoBehaviour
         
         if (!burst)// magnet normal
         {
+
             rbObj.AddForce(dir * force, ForceMode.Force);
             // Debug.DrawRay(objToApply.transform.position, dir*5, Color.green);
 
         }
         else // magnet bounce => burst
         {
+
             rbObj.AddForce(dir * burstForce, ForceMode.Impulse);
             Debug.DrawRay(objToApply.transform.position, dir*5, Color.red);
         }
@@ -82,6 +100,8 @@ public class MagnetForceField : MonoBehaviour
 
     public void Bounce()
     {
+        
+        GlobalEventManager.Instance.ComportmentStatePlay(comportementableObject);
         // boolBurst = false dans le comportement CollisionEnd
         if (_timerBurst <= 0)
         {
