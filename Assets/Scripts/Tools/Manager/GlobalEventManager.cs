@@ -40,6 +40,10 @@ public class GlobalEventManager : MonoBehaviour
     public event Action<FragmentBankData, int> OnPopupFragment;
     public event Action OnShattered;// pot brisé
 
+    // Menu
+    public event Action<string> OnPlaySelected;
+    public event Action<string> OnStopSelected;
+    public event Action<bool> OnMute;
 
     private void Awake()
     {
@@ -165,5 +169,27 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnCollide?.Invoke(gameObject);
     }
+
+    #region  Menu Tape
+
+    public void PlayTape(string musicFmodName)
+    {
+        OnPlaySelected?.Invoke(musicFmodName);
+        Debug.Log("Play tape");
+    }
+
+    public void StopTape(string musicFmodName)
+    {
+        OnStopSelected?.Invoke(musicFmodName);
+        Debug.Log("Stop tape");
+    }
+
+    public void MuteEnviro(bool isMuted)
+    {
+        OnMute?.Invoke(isMuted);
+        Debug.Log("Mute enviro");
+    }
+    
+    #endregion
 
 }

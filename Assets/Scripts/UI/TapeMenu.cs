@@ -86,7 +86,7 @@ public class TapeMenu : MonoBehaviour
         if (selectedTape == null)
             return;
 
-        onPlaySelected?.Invoke(selectedTape.musicFmodName);// emet le nom du son pour FMOD
+        GlobalEventManager.Instance.PlayTape(selectedTape.musicFmodName);// emet le nom du son pour FMOD
     }
     
     public void StopTape()
@@ -94,14 +94,14 @@ public class TapeMenu : MonoBehaviour
         if (selectedTape == null)
             return;
         
-        onStopSelected?.Invoke(selectedTape.itemName);
+        GlobalEventManager.Instance.StopTape(selectedTape.musicFmodName);
     }
 
     public void MuteEnvironment()
     {
         isMuted = !isMuted;
         
-        onMute?.Invoke(isMuted);
+        GlobalEventManager.Instance.MuteEnviro(isMuted);
 
         if (isMuted)
         {
