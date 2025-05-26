@@ -9,12 +9,7 @@ using UnityEngine.UI;
 public class TapeSlotUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI nameText;
-     [SerializeField] private Button button;
-
-     private void OnEnable()// pour test en inspecteur si on le set et pas ajout dynamique
-    {
-       
-    }
+    [SerializeField] private Button button;
     
     public void Initialize(TapeData tapeData, Action<TapeData> onClickCallback, Action<RectTransform> onClickCallback2)
     {
