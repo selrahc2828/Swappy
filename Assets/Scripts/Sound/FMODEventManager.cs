@@ -336,7 +336,7 @@ public class FMODEventManager : MonoBehaviour
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerStealComp);
         PickHand(eventInstance,righthand);
-        //DefineCompPickType(_gameObject,eventInstance);
+        DefineCompPickType(_gameObject,eventInstance);
         if (_gameObject.CompareTag("Player"))
         {
             SetNamedParamEventInstance(eventInstance,"SIM",1);
@@ -348,7 +348,7 @@ public class FMODEventManager : MonoBehaviour
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerGiveComp);
         PickHand(eventInstance,righthand);
-        //DefineCompPickType(_gameObject,eventInstance);
+        DefineCompPickType(_gameObject,eventInstance);
         if (_gameObject.CompareTag("Player"))
         {
             SetNamedParamEventInstance(eventInstance,"SIM",1);
@@ -361,7 +361,7 @@ public class FMODEventManager : MonoBehaviour
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerSelfSwitch);
         PickHand(eventInstance,righthand);
-        //DefineCompPickType(_gameObject,eventInstance);
+        DefineCompPickType(_gameObject,eventInstance);
         PlayEventInstance(eventInstance);
         ReleaseEventInstance(eventInstance);
     }
@@ -397,10 +397,15 @@ public class FMODEventManager : MonoBehaviour
 
     private void DefineCompPickType(GameObject _gameObject, EventInstance eventInstance)
     {
-        if (gameObject.GetComponent<ComportementState>() != null)
+        int stateValue = 0;
+        ComportementsStateMachine stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
+        if (stateMachine.currentState is ComportementState)
         {
-            switch (_gameObject.GetComponent<ComportementState>().stateValue)
-            {
+            ComportementState currentObjectState = (ComportementState)stateMachine.currentState;
+            stateValue = currentObjectState.stateValue;
+        }
+        switch (stateValue)
+        {
                 case 1:
                     SetNamedParamEventInstance(eventInstance,"COMPTYPE",1);
                     break;
@@ -416,8 +421,11 @@ public class FMODEventManager : MonoBehaviour
                 case 81:
                     SetNamedParamEventInstance(eventInstance,"COMPTYPE",5);
                     break;
-            }
+                default:
+                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",0);
+                    break;
         }
+        
     }
     #endregion
 
