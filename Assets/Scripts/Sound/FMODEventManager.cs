@@ -577,10 +577,10 @@ public class FMODEventManager : MonoBehaviour
         MovingTypeSound _movingType = MovingTypeSound.Jump;
         ActionOnPlayerMove(_groundCollider,_movingType);
     }
-    private void OnLand(GameObject _groundCollider)
+    private void OnLand(GameObject _groundCollider, float fallForce)
     {
         MovingTypeSound _movingType = MovingTypeSound.Land;
-        ActionOnPlayerMove(_groundCollider,_movingType);
+        ActionOnPlayerMove(_groundCollider,_movingType, fallForce);
     }
     private enum MovingTypeSound
     {
@@ -630,11 +630,12 @@ public class FMODEventManager : MonoBehaviour
                 break;
         }
     }
-    private void ActionOnPlayerMove(GameObject _gameObject, MovingTypeSound _movingType)
+    private void ActionOnPlayerMove(GameObject _gameObject, MovingTypeSound _movingType, float fallForce=-1)
     {
         MovingRef(_movingType, out EventReference _eventReference);
          var _eventInstance = CreateEventInstance(_eventReference);
         SwitchGround(_gameObject,_eventInstance);
+        if(fallForce > 0) SetNamedParamEventInstance(_eventInstance,"FALLFORCE",fallForce);
         PlayEventInstance(_eventInstance);
         ReleaseEventInstance(_eventInstance);
     }
