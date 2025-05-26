@@ -16,7 +16,7 @@ public class TapeSlotUI : MonoBehaviour
        
     }
     
-    public void Initialize(TapeData tapeData, TapeMenu menu, Action<TapeData> onClickCallback, Action<RectTransform> onClickCallback2)
+    public void Initialize(TapeData tapeData, Action<TapeData> onClickCallback, Action<RectTransform> onClickCallback2)
     {
         if (tapeData == null)
         {

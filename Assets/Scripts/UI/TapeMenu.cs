@@ -51,7 +51,7 @@ public class TapeMenu : MonoBehaviour
         {
             GameObject tapeButton = Instantiate(tapeSlotPrefab, tapesContent);
             TapeSlotUI tapeSlotUI = tapeButton.GetComponent<TapeSlotUI>();
-            tapeSlotUI.Initialize(tape, this,SetSelectedTape, CenterButton);
+            tapeSlotUI.Initialize(tape,SetSelectedTape, CenterButton);
         } 
     }
 
@@ -85,8 +85,8 @@ public class TapeMenu : MonoBehaviour
     {
         if (selectedTape == null)
             return;
-        
-        onPlaySelected?.Invoke(selectedTape.itemName);// emet le nom du son pour FMOD
+        Debug.Log($"play {selectedTape.musicFmodName}");
+        onPlaySelected?.Invoke(selectedTape.musicFmodName);// emet le nom du son pour FMOD
     }
     
     public void StopTape()
