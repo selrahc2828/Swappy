@@ -85,7 +85,7 @@ public class TapeMenu : MonoBehaviour
     {
         if (selectedTape == null)
             return;
-        Debug.Log($"play {selectedTape.musicFmodName}");
+
         onPlaySelected?.Invoke(selectedTape.musicFmodName);// emet le nom du son pour FMOD
     }
     
