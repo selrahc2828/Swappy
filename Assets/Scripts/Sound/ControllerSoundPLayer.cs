@@ -13,9 +13,9 @@ public class ControllerSoundPLayer : MonoBehaviour
     [SerializeField] private float actualValueStep;
     [SerializeField] private float maxValueStep;
 
-    private float actualAirTime;
-    private float maxAirTime;
-    private float fallForce;
+    [SerializeField] private float actualAirTime;
+    [SerializeField] private float maxAirTime;
+    [SerializeField] private float fallForce;
     
     
     // Start is called before the first frame update
