@@ -13,7 +13,6 @@ public class C_Immuable_Magnet : ComportementState
 
     private List<Rigidbody> magnetedObjects = new List<Rigidbody>() ;
 
-    //private GameObject sonMagnet;
     public C_Immuable_Magnet(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -26,9 +25,7 @@ public class C_Immuable_Magnet : ComportementState
         leftValue = 9;
         rightValue = 27;
         base.Enter();
-        ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.magnetColor);
-        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-
+        
         baseVelocity = _sm.rb.velocity;
         baseAngularVelocity = _sm.rb.angularVelocity;
         _sm.rb.isKinematic = true;
@@ -41,6 +38,7 @@ public class C_Immuable_Magnet : ComportementState
         else
         {
             trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;
+            ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.magnetColor);
         }
         magnetForce = _sm.comportementManager.magnetData.magnetForce;
 
