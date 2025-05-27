@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AoeCondition: Condition
 {
-    [HideInInspector] private enum AoeCategory
+    private enum AoeCategory
     {
         Repulse,
         DoubleRepulse,
@@ -21,7 +21,7 @@ public class AoeCondition: Condition
         AnyMagnet,
     }
 
-    private AoeCategory AoeType;
+    [SerializeField] private AoeCategory AoeType;
     [Tooltip("Facultatif. Si l'objet doit être détruit, le lien vers le script de destruction pour l'application de la vélocité")]
     private BreakableObject breakableScript;
 
