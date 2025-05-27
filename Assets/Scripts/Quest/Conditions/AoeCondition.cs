@@ -1,102 +1,146 @@
 using System.Collections;
 using UnityEngine;
 
-public class AoeCondition: AdditionalCondition
+public class AoeCondition: Condition
 {
-    private enum CompCategory
+    [HideInInspector] private enum AoeCategory
     {
         Repulse,
-        ForceRepulse,
+        DoubleRepulse,
+        RepulseBounce,
+        RepulseImmuable,
+        RepulseRocket,
+        AnyRepulse,
         Magnet,
-        MagnetRepulse
+        DoubleMagnet,
+        MagnetRepulse,
+        MagnetBounce,
+        MagnetImmuable,
+        MagnetRocket,
+        AnyMagnet,
     }
 
-    [Tooltip("Si targetObject vide, le script checkera à chaque vol / réattribution de comportement")]
-    public GameObject targetObject;
-    [SerializeField] private CompCategory AoeType;
+    private AoeCategory AoeType;
 
-    [Space(8)]
-    [SerializeField] private FirstState targetComportment;
-    [SerializeField] private CompCategory targetCompCategory;
-
-    private void Update()
+    public void CheckRepulseAoeCondition()
     {
-        //A remplacer par une activation lorsque le joueur input un vol / réattribution de comportement
-        if (targetObject != null)
+        if (AoeType == AoeCategory.Repulse || AoeType == AoeCategory.AnyRepulse)
         {
-            SetConditionState(CheckObjectParameters(targetObject));
+            SetConditionState(true);
+        }
+        else
+        {
+            SetConditionState(false);
         }
     }
-
-    public override bool CheckObjectParameters(GameObject target)
+    public void CheckDoubleRepulseAoeCondition()
     {
-        if (target.GetComponent<ComportementsStateMachine>() == null)
+        if (AoeType == AoeCategory.DoubleRepulse || AoeType == AoeCategory.AnyRepulse)
         {
-            return false;
+            SetConditionState(true);
         }
-
-        ComportementState compState = (ComportementState)target.GetComponent<ComportementsStateMachine>().currentState;
-      
-        switch (AoeType)
+        else
         {
-            case ValidationTypes.Comportment:
-
-                if (compState.stateValue == (int)targetComportment)
-                {
-                    return(true);
-                }
-                return (false);
-
-            case ValidationTypes.CompCategory:
-
-                int leftComp = compState.leftValue;
-                int rightComp = compState.rightValue;
-
-                switch (targetCompCategory)
-                {
-                    case CompCategory.None:
-                        if (rightComp == 0 && leftComp == 0)
-                        {
-                            return (true);
-                        }
-                        break;
-
-                    case CompCategory.Solo:
-                        if (rightComp == 0 && leftComp != 0)
-                        {
-                            return (true);
-                        }
-                        break;
-
-                    case CompCategory.Duo:
-                        if (rightComp != 0 && rightComp == leftComp)
-                        {
-                            return (true);
-                        }
-                        break;
-
-                    case CompCategory.Fusion:
-                        if (rightComp != 0)
-                        {
-                            return (true);
-                        }
-                        break;
-
-                    case CompCategory.StrictFusion:
-                        if (rightComp != 0 && rightComp != leftComp)
-                        {
-                            return (true);
-                        }
-                        break;
-                
-                    default:
-                        return(false);
-
-                }
-                break;
-            default:
-                return (false);
+            SetConditionState(false);
         }
-        return(false);
+    }
+    public void CheckRepulseBounceAoeCondition()
+    {
+        if (AoeType == AoeCategory.RepulseBounce || AoeType == AoeCategory.AnyRepulse)
+        {
+            SetConditionState(true);
+        }
+        else
+        {
+            SetConditionState(false);
+        }
+    }
+    public void CheckRepulseImmuableAoeCondition()
+    {
+        if (AoeType == AoeCategory.RepulseImmuable || AoeType == AoeCategory.AnyRepulse)
+        {
+            SetConditionState(true);
+        }
+        else
+        {
+            SetConditionState(false);
+        }
+    }
+    public void CheckRepulseRocketAoeCondition()
+    {
+        if (AoeType == AoeCategory.RepulseRocket || AoeType == AoeCategory.AnyRepulse)
+        {
+            SetConditionState(true);
+        }
+        else
+        {
+            SetConditionState(false);
+        }
+    }
+    public void CheckMagnetAoeCondition()
+    {
+        if (AoeType == AoeCategory.Magnet || AoeType == AoeCategory.AnyMagnet)
+        {
+            SetConditionState(true);
+        }
+        else
+        {
+            SetConditionState(false);
+        }
+    }
+    public void CheckDoubleMagnetAoeCondition()
+    {
+        if (AoeType == AoeCategory.DoubleMagnet || AoeType == AoeCategory.AnyMagnet)
+        {
+            SetConditionState(true);
+        }
+        else
+        {
+            SetConditionState(false);
+        }
+    }
+    public void CheckMagnetRepulseAoeCondition()
+    {
+        if (AoeType == AoeCategory.MagnetRepulse || AoeType == AoeCategory.AnyMagnet)
+        {
+            SetConditionState(true);
+        }
+        else
+        {
+            SetConditionState(false);
+        }
+    }
+    public void CheckMagnetBounceAoeCondition()
+    {
+        if (AoeType == AoeCategory.MagnetBounce || AoeType == AoeCategory.AnyMagnet)
+        {
+            SetConditionState(true);
+        }
+        else
+        {
+            SetConditionState(false);
+        }
+    }
+    public void CheckMagnetImmuableAoeCondition()
+    {
+        if (AoeType == AoeCategory.MagnetImmuable || AoeType == AoeCategory.AnyMagnet)
+        {
+            SetConditionState(true);
+        }
+        else
+        {
+            SetConditionState(false);
+        }
+    }
+    public void CheckMagnetRocketAoeCondition()
+    {
+        if (AoeType == AoeCategory.MagnetRocket || AoeType == AoeCategory.AnyMagnet)
+        {
+            SetConditionState(true);
+        }
+        else
+        {
+            SetConditionState(false);
+        }
     }
 }
