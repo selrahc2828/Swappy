@@ -105,6 +105,25 @@ public class C_Immuable_Magnet : ComportementState
                         }
                         newMagnetedObjects.Add(objectInRange.GetComponent<Rigidbody>());
                     }
+
+                    #region AoeChecks
+                    BreakableObject breakableScript = null;
+                    try
+                    {
+                        breakableScript = objectInRange.GetComponent<AoeCondition>().CheckMagnetImmuableAoeCondition();
+                    }
+                    catch { }
+                    finally
+                    {
+                        if (breakableScript != null)
+                        {
+                            foreach (Rigidbody rb in breakableScript.ShatterObject())
+                            {
+                                ApplyForce(rb, rb.gameObject, magnetForce);
+                            }
+                        }
+                    }
+                    #endregion
                 }
             }
         }
