@@ -6,6 +6,7 @@ using FMODUnity;
 using FMOD.Studio;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEngine.Playables;
 using Debug = UnityEngine.Debug;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
@@ -53,6 +54,7 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnCollide += CollisionSound;
         GlobalEventManager.Instance.OnShattered += BreakingPot;
         GlobalEventManager.Instance.OnAddFragmentSound += AddFragment;
+        GlobalEventManager.Instance.OnSlowMotionInput += SlowMotionSoundStart;
     }
 
     private void OnDisable()
@@ -70,6 +72,7 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnCollide -= CollisionSound;
         GlobalEventManager.Instance.OnShattered -= BreakingPot;
         GlobalEventManager.Instance.OnAddFragmentSound -= AddFragment;
+        GlobalEventManager.Instance.OnSlowMotionInput -= SlowMotionSoundStart;
     }
 
     private void Start()
@@ -369,16 +372,26 @@ public class FMODEventManager : MonoBehaviour
     {
         if (isActive)
         {
-            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeIN,CreateEventInstance(FMODEvents.PlayerSelfImpactModeIN));
-            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeIN));
-            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeIN));
-            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeIN);
+            if (CheckInstanceInEncylopedia(_gameObject, FMODEvents.PlayerSelfImpactModeOUT,
+                    out EventInstance instanceOUT))
+            {
+                instanceOUT.getPlaybackState(out PLAYBACK_STATE stateOUT);
+                if (stateOUT == PLAYBACK_STATE.PLAYING||stateOUT==PLAYBACK_STATE.STARTING) instanceOUT.stop(STOP_MODE.IMMEDIATE);
+            }
+            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT,CreateEventInstance(FMODEvents.PlayerSelfImpactModeOUT));
+            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
+            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT);
         }
         else
         {
+            if (CheckInstanceInEncylopedia(_gameObject, FMODEvents.PlayerSelfImpactModeIN,
+                    out EventInstance instanceIN))
+            {
+                instanceIN.getPlaybackState(out PLAYBACK_STATE stateIN);
+                if (stateIN == PLAYBACK_STATE.PLAYING||stateIN==PLAYBACK_STATE.STARTING) instanceIN.stop(STOP_MODE.IMMEDIATE);
+            }
             AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT,CreateEventInstance(FMODEvents.PlayerSelfImpactModeOUT));
             PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
-            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
             RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT);
         }
     }
@@ -428,6 +441,26 @@ public class FMODEventManager : MonoBehaviour
                     break;
         }
         
+    }
+
+    private void SlowMotionSoundStart(bool isSlowMotion)
+    {
+        if (isSlowMotion)
+        {
+            AddInstanceInEncyclopedia(gameObject,FMODEvents.PlayerSlowingtime,CreateEventInstance(FMODEvents.PlayerSlowingtime));
+            GetInstanceFromEncyclopediaKey(gameObject,FMODEvents.PlayerSlowingtime).getPlaybackState(out PLAYBACK_STATE playingState );
+            if (playingState == PLAYBACK_STATE.PLAYING) GetInstanceFromEncyclopediaKey(gameObject, FMODEvents.PlayerSlowingtime).stop(STOP_MODE.IMMEDIATE);
+            PlayEventInstance(GetInstanceFromEncyclopediaKey(gameObject,FMODEvents.PlayerSlowingtime));
+        }
+        else
+        {
+            if (CheckInstanceInEncylopedia(gameObject, FMODEvents.PlayerSlowingtime, out EventInstance eventInstance))
+            {
+                SetNamedParamEventInstance(eventInstance,"SlowTime",1);
+                RemoveInstanceInEncyclopedia(gameObject,FMODEvents.PlayerSlowingtime);
+            }
+        }
+            
     }
     #endregion
 
