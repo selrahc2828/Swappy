@@ -25,8 +25,6 @@ public class C_Solo_Immuable : ComportementState
         {
             ColorShaderOutline(_sm.comportementManager.immuableColor, _sm.comportementManager.noComportementColor);
         }
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-        
         _baseVelocity = _sm.rb.velocity;
         _baseAngularVelocity = _sm.rb.angularVelocity;
         _sm.rb.isKinematic = true;

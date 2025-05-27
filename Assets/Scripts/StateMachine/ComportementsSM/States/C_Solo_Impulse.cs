@@ -66,7 +66,7 @@ public class C_Solo_Impulse : ComportementState
             repulserTimer = 0;
             explodingSoonSignalSended = false;
         }
-        if(repulserTimer >= (repulserTime-1.5f) && explodingSoonSignalSended == false)
+        if(repulserTimer > (repulserTime-1.5f) && explodingSoonSignalSended == false)
         {
             explodingSoonSignalSended=true;
             GlobalEventManager.Instance.JustBeforeExplosion(GetGameObject());

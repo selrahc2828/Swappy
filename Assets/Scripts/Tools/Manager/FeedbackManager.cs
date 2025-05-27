@@ -11,6 +11,9 @@ public class FeedbackManager : MonoBehaviour
 
     private GameObject FeedbackPref1;
     private GameObject FeedbackPref2;
+    private GameObject SpawnPoint;
+    private bool rocketOn = false;
+    private GameObject rocketTrail;
     
     [Header("SIM")]
     public GameObject ImpulseSIMGauche;
@@ -31,7 +34,7 @@ public class FeedbackManager : MonoBehaviour
     
     [Header("Impulse")] 
     public GameObject ImpulseConstantFeedback;
-    public GameObject ImpulseTimer;
+    public GameObject ImpulseTimerFeedback;
     public GameObject ImpulseImpactFeedback;
     
 
@@ -70,7 +73,13 @@ public class FeedbackManager : MonoBehaviour
             ComportementState currentObjectState = (ComportementState)stateMachine.currentState;
             stateValue = currentObjectState.stateValue;
         }
-
+        
+        if(sender.CompareTag("Player")){}
+        else
+        {
+            SpawnPoint = sender.GetComponentInChildren<CubeTagFeedback>().gameObject;
+        }
+        
         switch (stateValue)
         {
             case 0: // pas de comportement
@@ -109,7 +118,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, sender.transform);
+                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -128,7 +137,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(BounceConstantFeedback, sender.transform);
+                    FeedbackPref1 = Instantiate(BounceConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -147,7 +156,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Already Working elsewhere
+                    FeedbackPref1 = Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -166,7 +175,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(MagnetConstantFeedback, sender.transform);
+                    FeedbackPref1 = Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -185,7 +194,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //already done elsewhere
+                    FeedbackPref1 = Instantiate(RocketConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -197,7 +206,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse
+                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -209,7 +218,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Bounce
+                    FeedbackPref1 = Instantiate(BounceConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -221,7 +230,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Immu
+                    FeedbackPref1 = Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -233,7 +242,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Magnet
+                    FeedbackPref1 = Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -245,7 +254,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse
+                    FeedbackPref1 = Instantiate(RocketConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -266,7 +275,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse + Bounce
+                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
+                    FeedbackPref2 = Instantiate(BounceConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -287,7 +297,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse + Immu
+                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
+                    FeedbackPref2 = Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -308,7 +319,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse + Magnet
+                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
+                    FeedbackPref2 = Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -329,7 +341,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse + Rocket
+                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
+                    FeedbackPref2 = Instantiate(RocketConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -350,7 +363,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Bounce + Immu
+                    FeedbackPref1 = Instantiate(BounceConstantFeedback, SpawnPoint.transform);
+                    FeedbackPref2 = Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -371,7 +385,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Bounce + Magnet
+                    FeedbackPref1 = Instantiate(BounceConstantFeedback, SpawnPoint.transform);
+                    FeedbackPref2 = Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -392,7 +407,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Bounce / Rocket
+                    FeedbackPref1 = Instantiate(BounceConstantFeedback, SpawnPoint.transform);
+                    FeedbackPref2 = Instantiate(RocketConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -413,7 +429,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Immu + Magnet
+                    FeedbackPref1 = Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
+                    FeedbackPref2 = Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -434,7 +451,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Immu + Rocket
+                    FeedbackPref1 = Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
+                    FeedbackPref2 = Instantiate(RocketConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -455,7 +473,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Magnet + Rocket
+                    FeedbackPref1 = Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
+                    FeedbackPref2 = Instantiate(RocketConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -522,9 +541,36 @@ public class FeedbackManager : MonoBehaviour
             case 81: // solo rocket
                 if (sender.CompareTag("Player"))
                 {
+                    if (rocketOn == false)
+                    {
+                        rocketTrail = Instantiate(RocketOnFeedback, sender.transform);
+                        rocketOn = true;
+                        Debug.Log("jevol");
+                    }
+
+                    else if (rocketOn == true)
+                    {
+                        Destroy(rocketTrail);
+                        rocketOn = false;
+                        Debug.Log("jvolpa");
+                    }
                 }
                 else
                 {
+                    if (rocketOn == false)
+                    {
+                      rocketTrail = Instantiate(RocketOnFeedback, sender.transform);
+                      rocketOn = true;
+                      Debug.Log("jevol");
+                    }
+
+                    else if (rocketOn == true)
+                    {
+                        Destroy(rocketTrail);
+                        rocketOn = false;
+                        Debug.Log("jvolpa");
+                    }
+                    
                 }
 
                 break;
@@ -781,11 +827,15 @@ public class FeedbackManager : MonoBehaviour
                     if (playerStateMachine.inversion == true)
                     {
                         RocketSIMDroite.SetActive(false);
+                        rocketOn = false;
+                        Destroy(rocketTrail);
                     }
                     
                     else
                     {
                         RocketSIMGauche.SetActive(false);
+                        rocketOn = false;
+                        Destroy(rocketTrail);
                     }
                 }
                 else
@@ -851,6 +901,8 @@ public class FeedbackManager : MonoBehaviour
                 else
                 {
                     Destroy(FeedbackPref1);
+                    rocketOn = false;
+                    Destroy(rocketTrail);
                 }
 
                 break;
@@ -927,12 +979,16 @@ public class FeedbackManager : MonoBehaviour
                     {
                         ImpulseSIMDroite.SetActive(false);
                         RocketSIMGauche.SetActive(false);
+                        rocketOn = false;
+                        Destroy(rocketTrail);
                     }
                     
                     else
                     {
                         ImpulseSIMGauche.SetActive(false);
                         RocketSIMDroite.SetActive(false);
+                        rocketOn = false;
+                        Destroy(rocketTrail);
                     }
                 }
                 else
@@ -993,12 +1049,16 @@ public class FeedbackManager : MonoBehaviour
                     {
                         BounceSIMDroite.SetActive(false);
                         RocketSIMGauche.SetActive(false);
+                        rocketOn = false;
+                        Destroy(rocketTrail);
                     }
                     
                     else
                     {
                         BounceSIMGauche.SetActive(false);
                         RocketSIMDroite.SetActive(false);
+                        rocketOn = false;
+                        Destroy(rocketTrail);
                     }
                 }
                 else
@@ -1059,12 +1119,16 @@ public class FeedbackManager : MonoBehaviour
                     {
                         MagnetSIMDroite.SetActive(false);
                         RocketSIMGauche.SetActive(false);
+                        rocketOn = false;
+                        Destroy(rocketTrail);
                     }
                     
                     else
                     {
                         MagnetSIMGauche.SetActive(false);
                         RocketSIMDroite.SetActive(false);
+                        rocketOn = false;
+                        Destroy(rocketTrail);
                     }
                 }
                 else
@@ -1080,11 +1144,23 @@ public class FeedbackManager : MonoBehaviour
     public void FeedbackExplosion(GameObject explodingGameObject, float timeBeforeNextExplosion, bool isStartingState)
     {
         // feedback au moment de l'explosion et au start de l'etat impulse, le float est le temps avant la prochaine explosion et le bool est vrai uniquement au start du state
+        if(explodingGameObject.CompareTag("Player")){}
+        else
+        {
+            GameObject ImpulseTime =Instantiate(ImpulseTimerFeedback, explodingGameObject.transform);
+            ImpulseTime.GetComponent<ImpulseTimer>().burstCycleCount = Mathf.RoundToInt(timeBeforeNextExplosion);
+            ImpulseTime.GetComponent<ImpulseTimer>().repulserTime = timeBeforeNextExplosion;
+        }
     }
 
     public void FeedbackJustBeforeExplosion(GameObject explodingGameObjec)
     {
         // feedback 1.5s avant l'explosion (valeur modifiable dans le script du state)
+        if(explodingGameObjec.CompareTag("Player")){}
+        else
+        {
+            Instantiate(ImpulseImpactFeedback, explodingGameObjec.transform);
+        }
     }
 
     public void FeedbackBounceLocation(ContactPoint[] locations) // appelé quand un comportement bounce rebondit
@@ -1095,10 +1171,12 @@ public class FeedbackManager : MonoBehaviour
     public void FeedbackJustBeforeRocketStart(GameObject rocketGameObject)
     {
         // feedback 1s avant l'explosion (valeur modifiable dans le script du state)
-    }
-
-    public void FeedbackSIM(float leftValue, float rightValue, bool inverse)
-    {
-        //instantie/active les comportements à gauche et à droite en fonction des comportements sur le player.
+        
+        if(rocketGameObject.CompareTag("Player")){}
+        else
+        {
+            Instantiate(RocketImpact, rocketGameObject.transform);
+        }
+        
     }
 }
