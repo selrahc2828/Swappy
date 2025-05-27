@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BreakableObject : MonoBehaviour
@@ -13,7 +14,7 @@ public class BreakableObject : MonoBehaviour
     private Vector3 previousVelocity;
     private Vector3 currentVelocity;
     private Vector3 previousAngularVelocity;
-    private Vector3 currentAngularVelocity;
+    private Vector3 currentAngular;
     private bool hasShattered;
 
     private SpawnPot _spawner;
@@ -31,7 +32,7 @@ public class BreakableObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-        currentAngularVelocity = thisRb.angularVelocity;
+        currentAngular = thisRb.angularVelocity;
         previousAngularVelocity = thisRb.angularVelocity;
 
         previousVelocity = currentVelocity;
@@ -44,7 +45,7 @@ public class BreakableObject : MonoBehaviour
                 if (!hasShattered)
                 {
                     hasShattered = true;
-                    ShatterObject(currentVelocity, currentAngularVelocity);
+                    ShatterObject(Vector3.zero, Vector3.zero);
                 }
             }
         }
@@ -67,21 +68,22 @@ public class BreakableObject : MonoBehaviour
                 if (!hasShattered)
                 {
                     hasShattered = true;
-                    ShatterObject(currentVelocity, currentAngularVelocity);
+                    ShatterObject(Vector3.zero, Vector3.zero);
                 }
             }
         }
     }
 
-    public void ShatterObject(Vector3 newVelocity, Vector3 newAngular)
+    public Rigidbody[] ShatterObject(Vector3 additionalVelocity, Vector3 additionalAngular)
     {
         GameObject shatteredObject = Instantiate(shatteredVersion, transform.position, transform.rotation);
         Rigidbody[] shatteredRbs = shatteredObject.GetComponentsInChildren<Rigidbody>();
+        return shatteredRbs;
 
         foreach (Rigidbody rb in shatteredRbs)
         {
-            rb.velocity = newVelocity;
-            rb.angularVelocity = newAngular;
+            rb.velocity = currentVelocity + additionalVelocity;
+            rb.angularVelocity = currentAngular + additionalAngular;
         }
 
         if (_spawner is not null)
@@ -91,6 +93,11 @@ public class BreakableObject : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private void ApplyCurrentVelocity(Rigidbody[] rbs)
+    {
+
     }
 
 
