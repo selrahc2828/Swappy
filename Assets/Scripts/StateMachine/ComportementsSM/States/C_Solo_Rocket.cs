@@ -46,8 +46,6 @@ public class C_Solo_Rocket : ComportementState
         {
             ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
         }
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-
     }
 
     public override void TickLogic()
@@ -70,7 +68,7 @@ public class C_Solo_Rocket : ComportementState
             rocketOn = true;
             timer = 0f;
         }
-        if(timer >  (onCooldown -1) && !rocketOn && startingSoonSignalSended == false)
+        if(timer > (onCooldown -1) && !rocketOn && startingSoonSignalSended == false)
         {
             startingSoonSignalSended = true;
             GlobalEventManager.Instance.JustBeforeRocketStart(GetGameObject());
