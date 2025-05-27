@@ -13,7 +13,6 @@ public class C_Solo_Impulse : ComportementState
     private float trueRepulserRange;
     private float repulserForce;
     private bool destroyOnUse = false;
-    private bool impulseGradiantForce = false;
     [Tooltip("Si Rigidbody sur lui")]
     private bool applyOnMe = false;
     private GameObject feedback;
@@ -49,7 +48,6 @@ public class C_Solo_Impulse : ComportementState
         // pb si obj n'a pas de collider direct (ax Player)
         repulserForce = _sm.comportementManager.impulseData.impulseForce;
         destroyOnUse = _sm.comportementManager.impulseData.destroyOnUse;
-        impulseGradiantForce = _sm.comportementManager.impulseData.impulseGradiantForce;
         applyOnMe= _sm.comportementManager.impulseData.applyOnMe;
         feedback = _sm.comportementManager.impulseData.impulseFeedback;
         explodingSoonSignalSended = false;
@@ -145,15 +143,7 @@ public class C_Solo_Impulse : ComportementState
             // si rigid body sur objet, on applique pas la force sur lui pour le lancer par exemple
             return;
         }
-
-        if (impulseGradiantForce)
-        {
-            rbObj.AddExplosionForce(force, _sm.transform.position, trueRepulserRange,1f,ForceMode.Impulse);
-        }
-        else
-        {
-            Vector3 direction = (objToApply.transform.position - _sm.transform.position).normalized;
-            rbObj.AddForce( direction * force, ForceMode.Impulse);
-        }
+        Vector3 direction = (objToApply.transform.position - _sm.transform.position).normalized;
+        rbObj.AddForce( direction * force, ForceMode.Impulse);
     }
 }
