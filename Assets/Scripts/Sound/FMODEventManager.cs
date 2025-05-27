@@ -6,6 +6,7 @@ using FMODUnity;
 using FMOD.Studio;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEngine.Playables;
 using Debug = UnityEngine.Debug;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
@@ -371,16 +372,26 @@ public class FMODEventManager : MonoBehaviour
     {
         if (isActive)
         {
-            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeIN,CreateEventInstance(FMODEvents.PlayerSelfImpactModeIN));
-            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeIN));
-            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeIN));
-            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeIN);
+            if (CheckInstanceInEncylopedia(_gameObject, FMODEvents.PlayerSelfImpactModeOUT,
+                    out EventInstance instanceOUT))
+            {
+                instanceOUT.getPlaybackState(out PLAYBACK_STATE stateOUT);
+                if (stateOUT == PLAYBACK_STATE.PLAYING||stateOUT==PLAYBACK_STATE.STARTING) instanceOUT.stop(STOP_MODE.IMMEDIATE);
+            }
+            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT,CreateEventInstance(FMODEvents.PlayerSelfImpactModeOUT));
+            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
+            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT);
         }
         else
         {
+            if (CheckInstanceInEncylopedia(_gameObject, FMODEvents.PlayerSelfImpactModeIN,
+                    out EventInstance instanceIN))
+            {
+                instanceIN.getPlaybackState(out PLAYBACK_STATE stateIN);
+                if (stateIN == PLAYBACK_STATE.PLAYING||stateIN==PLAYBACK_STATE.STARTING) instanceIN.stop(STOP_MODE.IMMEDIATE);
+            }
             AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT,CreateEventInstance(FMODEvents.PlayerSelfImpactModeOUT));
             PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
-            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
             RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT);
         }
     }

@@ -47,7 +47,7 @@ public class ControllerSoundPLayer : MonoBehaviour
                 if (fallingState == PLAYBACK_STATE.PLAYING)
                 {
                     FMODEventManager.instance.StopEventInstance(FMODEventManager.instance.GetInstanceFromEncyclopediaKey(gameObject,FMODEventManager.instance.FMODEvents.PlayerFall));
-                    FMODEventManager.instance.ReleaseEventInstance(FMODEventManager.instance.GetInstanceFromEncyclopediaKey(gameObject,FMODEventManager.instance.FMODEvents.PlayerFall));
+                    FMODEventManager.instance.RemoveInstanceInEncyclopedia(gameObject, FMODEventManager.instance.FMODEvents.PlayerFall);
                 }
                 if (actualValueStep < maxValueStep) fallForce = actualAirTime/maxAirTime;
                 else fallForce = 1;
