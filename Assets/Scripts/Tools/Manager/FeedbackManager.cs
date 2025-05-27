@@ -8,6 +8,9 @@ public class FeedbackManager : MonoBehaviour
 {
     public static FeedbackManager Instance;
     public ComportementsStateMachine playerStateMachine;
+
+    private GameObject FeedbackPref1;
+    private GameObject FeedbackPref2;
     
     [Header("SIM")]
     public GameObject ImpulseSIMGauche;
@@ -86,7 +89,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //NO COMP
+                    Destroy(FeedbackPref1);
+                    Destroy(FeedbackPref2);
                 }
 
                 break;
@@ -105,8 +109,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    var feedback = Instantiate(ImpulseConstantFeedback, sender.transform);
-                    feedback.transform.localScale *= 0.9f;
+                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, sender.transform);
                 }
 
                 break;
@@ -125,7 +128,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Bounce
+                    FeedbackPref1 = Instantiate(BounceConstantFeedback, sender.transform);
                 }
 
                 break;
@@ -144,7 +147,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Immu
+                    //Already Working elsewhere
                 }
 
                 break;
@@ -163,7 +166,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Magnet
+                    FeedbackPref1 = Instantiate(MagnetConstantFeedback, sender.transform);
                 }
 
                 break;
@@ -182,7 +185,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Rocket
+                    //already done elsewhere
                 }
 
                 break;
@@ -691,7 +694,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //NO COMP
+                    Destroy(FeedbackPref1);
+                    Destroy(FeedbackPref2);
                 }
 
                 break;
@@ -710,7 +714,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse
+                    Destroy(FeedbackPref1);
                 }
 
                 break;
@@ -729,7 +733,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Bounce
+                    Destroy(FeedbackPref1);
                 }
 
                 break;
@@ -748,7 +752,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Immu
+                    Destroy(FeedbackPref1);
                 }
 
                 break;
@@ -767,7 +771,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Magnet
+                    Destroy(FeedbackPref1);
                 }
 
                 break;
@@ -786,7 +790,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Rocket
+                    Destroy(FeedbackPref1);
                 }
 
                 break;
@@ -798,7 +802,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse
+                    Destroy(FeedbackPref1);
                 }
 
                 break;
@@ -810,7 +814,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Bounce
+                    Destroy(FeedbackPref1);
                 }
 
                 break;
@@ -822,7 +826,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Immu
+                    Destroy(FeedbackPref1);
                 }
 
                 break;
@@ -834,7 +838,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Magnet
+                    Destroy(FeedbackPref1);
                 }
 
                 break;
@@ -846,7 +850,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse
+                    Destroy(FeedbackPref1);
                 }
 
                 break;
@@ -867,7 +871,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse + Bounce
+                    Destroy(FeedbackPref1);
+                    Destroy(FeedbackPref2);
                 }
 
                 break;
@@ -888,7 +893,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse + Immu
+                    Destroy(FeedbackPref1);
+                    Destroy(FeedbackPref2);
                 }
 
                 break;
@@ -909,7 +915,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse + Magnet
+                    Destroy(FeedbackPref1);
+                    Destroy(FeedbackPref2);
                 }
 
                 break;
@@ -930,7 +937,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse + Rocket
+                    Destroy(FeedbackPref1);
+                    Destroy(FeedbackPref2);
                 }
 
                 break;
@@ -951,7 +959,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Bounce + Immu
+                    Destroy(FeedbackPref1);
+                    Destroy(FeedbackPref2);
                 }
 
                 break;
@@ -972,7 +981,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Bounce + Magnet
+                    Destroy(FeedbackPref1);
+                    Destroy(FeedbackPref2);
                 }
 
                 break;
@@ -993,7 +1003,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Bounce / Rocket
+                    Destroy(FeedbackPref1);
+                    Destroy(FeedbackPref2);
                 }
 
                 break;
@@ -1014,7 +1025,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Immu + Magnet
+                    Destroy(FeedbackPref1);
+                    Destroy(FeedbackPref2);
                 }
 
                 break;
@@ -1035,7 +1047,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Immu + Rocket
+                    Destroy(FeedbackPref1);
+                    Destroy(FeedbackPref2);
                 }
 
                 break;
@@ -1056,7 +1069,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Magnet + Rocket
+                    Destroy(FeedbackPref1);
+                    Destroy(FeedbackPref2);
                 }
 
                 break;
@@ -1086,8 +1100,5 @@ public class FeedbackManager : MonoBehaviour
     public void FeedbackSIM(float leftValue, float rightValue, bool inverse)
     {
         //instantie/active les comportements à gauche et à droite en fonction des comportements sur le player.
-        
-        
-        
     }
 }
