@@ -13,7 +13,7 @@ public class FMODMusicEvents : ScriptableObject
     [field: SerializeField] public EventReference TestMusic4 { get; private set; }
     
     [field: Header("Walkman")]
-    [field: SerializeField] public EventReference TestMusic5 { get; private set; }
+    [field: SerializeField] public EventReference INTRO { get; private set; }
     [field: SerializeField] public EventReference Walkman { get; private set; }
 
 

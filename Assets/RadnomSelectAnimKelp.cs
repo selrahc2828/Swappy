@@ -13,7 +13,6 @@ public class RadnomSelectAnimKelp : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         animator.SetInteger("RandomFollowAnim", Random.RandomRange(0, 5));
-        Debug.Log(animator.GetFloat("RandomFollowAnim"));
     }
 
     // Update is called once per frame
