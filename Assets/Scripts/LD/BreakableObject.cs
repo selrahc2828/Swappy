@@ -3,9 +3,11 @@ using UnityEngine;
 public class BreakableObject : MonoBehaviour
 {
     [Tooltip("La copie scindee de l'objet a instantier lors de sa destruction")]
-    [SerializeField] private GameObject shatteredVersion;
+    public GameObject shatteredVersion;
     [Tooltip("energie cinetique minimum a partir duquel une collision detruit l'objet (Ec = m/2 * v�)")]
     [SerializeField] private float minShatterPower;
+    [Tooltip("Avoid breaking object with regular collisions and force")]
+    [SerializeField] private bool avoidCollisionBreak;
 
     private Rigidbody thisRb;
     private Vector3 previousVelocity;
@@ -32,49 +34,54 @@ public class BreakableObject : MonoBehaviour
         currentAngularVelocity = thisRb.angularVelocity;
         previousAngularVelocity = thisRb.angularVelocity;
 
-            previousVelocity = currentVelocity;
-            currentVelocity = thisRb.velocity;
+        previousVelocity = currentVelocity;
+        currentVelocity = thisRb.velocity;
 
+        if (!avoidCollisionBreak)
+        {
             if (thisRb.mass * thisRb.velocity.magnitude * Vector3.Angle(currentVelocity, previousVelocity) / 3 >= minShatterPower)
             {
                 if (!hasShattered)
                 {
                     hasShattered = true;
-                    ShatterObject();
+                    ShatterObject(currentVelocity, currentAngularVelocity);
                 }
-            } 
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.rigidbody == null)
-        {
-            return;
-        }
-
-        Rigidbody rb = collision.rigidbody;
-        float cineticForce = (rb.mass / 2) * (rb.velocity.magnitude * rb.velocity.magnitude);
-
-        if (cineticForce >= minShatterPower)
-        {
-            if (!hasShattered)
-            {
-                hasShattered = true;
-                // Debug.Log("Shatter Enter from: " + collision.gameObject.name);
-                ShatterObject();
             }
         }
     }
 
-    public void ShatterObject()
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!avoidCollisionBreak)
+        {
+            if (collision.rigidbody == null)
+            {
+                return;
+            }
+
+            Rigidbody rb = collision.rigidbody;
+            float cineticForce = (rb.mass / 2) * (rb.velocity.magnitude * rb.velocity.magnitude);
+
+            if (cineticForce >= minShatterPower)
+            {
+                if (!hasShattered)
+                {
+                    hasShattered = true;
+                    ShatterObject(currentVelocity, currentAngularVelocity);
+                }
+            }
+        }
+    }
+
+    public void ShatterObject(Vector3 newVelocity, Vector3 newAngular)
     {
         GameObject shatteredObject = Instantiate(shatteredVersion, transform.position, transform.rotation);
         Rigidbody[] shatteredRbs = shatteredObject.GetComponentsInChildren<Rigidbody>();
 
         foreach (Rigidbody rb in shatteredRbs)
         {
-            rb.velocity = currentVelocity;
-            rb.angularVelocity = 
+            rb.velocity = newVelocity;
+            rb.angularVelocity = newAngular;
         }
 
         if (_spawner is not null)
