@@ -123,7 +123,24 @@ public class C_Solo_Impulse : ComportementState
                         objectAffected.GetComponent<GrabObject>().Release(true);
                     }
                 }
-                else if (objectInRange.GetComponent<Rigidbody>() != null)
+
+                BreakableObject breakableScript = null;
+                try
+                {
+                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckRepulseAoeCondition();
+                }
+                finally
+                {
+                    if (breakableScript != null)
+                    {
+                        foreach (Rigidbody rb in breakableScript.ShatterObject())
+                        {
+                            ApplyForce(rb, rb.gameObject, repulserForce);
+                        }
+                    }
+                }
+
+                if (objectInRange.GetComponent<Rigidbody>() != null)
                 {
                     ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, repulserForce);
                 }  
