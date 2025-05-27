@@ -37,7 +37,7 @@ public class IntroSceneSwitch: MonoBehaviour
 
     private void Start()
     {
-        NextScene = SceneManager.GetSceneByBuildIndex(1);
+        NextScene = SceneManager.GetSceneByBuildIndex(0);
         FMODMusicManager.instance.CreateMusicInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO);
         FMODMusicManager.instance.PlayMusicInstance(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
         
@@ -49,46 +49,63 @@ public class IntroSceneSwitch: MonoBehaviour
 
     private void FixedUpdate()
     {
-        
-        
-        if (_t / fadeINTimeRange <= 1)
-        {
-            
-            BlackFadeIn();
-        }
-        else
-        {
-            title.SetActive(true);
-            _tForButtons += Time.deltaTime;
-
-            if (_tForButtons / timeRangeToButton >= 1)
-            {
-                playButton.SetActive(true);
-                parameterButton.SetActive(true);
-                quitButton.SetActive(true);
-            }
-            
-            // todo apparition progressive des buttons
-            
-        }
-
-        
-
         if (playClicked)
         {
-            BlackFadeOut();
-            if (blackFadeOUTCurve.Evaluate(_t / fadeOUTTimeRange) >= fadeOUTTimeRange)
+            if (_t / fadeOUTTimeRange <= 1 )
+            {
+            
+                BlackFadeOut();
+            }
+            else
             {
                 var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
                 SceneManager.UnloadSceneAsync(currentScene);
                 SceneManager.LoadScene(NextScene.name);
             }
+            
+            
         }
+        else
+        {
+            if (_t / fadeINTimeRange <= 1 )
+            {
+            
+                BlackFadeIn();
+            }
+            else
+            {
+                title.SetActive(true);
+                _tForButtons += Time.deltaTime;
+
+                if (_tForButtons / timeRangeToButton >= 1)
+                {
+                    playButton.SetActive(true);
+                    parameterButton.SetActive(true);
+                    quitButton.SetActive(true);
+                }
+            
+                // todo apparition progressive des buttons
+            
+            }
+        }
+        
+
+        
+
+       
+        
+        
         
     }
 
     public void OnPlayButtonClicked()
     {
+        playButton.SetActive(false);
+        parameterButton.SetActive(false);
+        quitButton.SetActive(false);
+        title.SetActive(false);
+        
+        _t = 0;
         playClicked = true;
         BlackScreen.SetActive(true);
         // Stop la zic en fade de 5sec
