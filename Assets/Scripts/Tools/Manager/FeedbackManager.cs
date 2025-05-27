@@ -105,7 +105,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    //Feedback Constant Impulse
+                    var feedback = Instantiate(ImpulseConstantFeedback, sender.transform);
+                    feedback.transform.localScale *= 0.9f;
                 }
 
                 break;
