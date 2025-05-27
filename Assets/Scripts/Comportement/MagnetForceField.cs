@@ -66,7 +66,7 @@ public class MagnetForceField : MonoBehaviour
                 ApplyForce(_rbPlayer,other.gameObject);
             }
         }
-        
+
         Rigidbody _rb = other.GetComponent<Rigidbody>();
         if (_rb != null)
         {
@@ -77,6 +77,25 @@ public class MagnetForceField : MonoBehaviour
                 ApplyForce(_rb,other.gameObject, true);
             }
         }
+
+        #region AoeChecks
+        BreakableObject breakableScript = null;
+        try
+        {
+            breakableScript = other.GetComponent<AoeCondition>().CheckMagnetBounceAoeCondition();
+        }
+        catch { }
+        finally
+        {
+            if (breakableScript != null)
+            {
+                foreach (Rigidbody rb in breakableScript.ShatterObject())
+                {
+                    ApplyForce(rb, rb.gameObject);
+                }
+            }
+        }
+        #endregion
     }
 
     void ApplyForce(Rigidbody rbObj,GameObject objToApply, bool burst = false)

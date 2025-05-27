@@ -94,6 +94,25 @@ public class C_Solo_Magnet : ComportementState
             {
                 if (objectInRange.gameObject != _sm.gameObject) // applique pas sur player et lui même
                 {
+                    #region AoeChecks
+                    BreakableObject breakableScript = null;
+                    try
+                    {
+                        breakableScript = objectInRange.GetComponent<AoeCondition>().CheckMagnetAoeCondition();
+                    }
+                    catch { }
+                    finally
+                    {
+                        if (breakableScript != null)
+                        {
+                            foreach (Rigidbody rb in breakableScript.ShatterObject())
+                            {
+                                ApplyForce(rb, rb.gameObject, magnetForce);
+                            }
+                        }
+                    }
+                    #endregion
+
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
                         if (_sm.isPlayer)

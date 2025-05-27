@@ -123,6 +123,7 @@
 		</relationship>
 		<relationship name="modules">
 			<destination>{6863296f-41d7-4a37-918e-9157a7d93e7b}</destination>
+			<destination>{bd285b8f-38ce-4023-af60-59dd2b4ce8a3}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{48f2364f-88c7-4a31-aa2b-5b001ddc1163}</destination>
@@ -132,6 +133,7 @@
 		<relationship name="modules">
 			<destination>{584395ea-90f3-4a54-82a1-cb0fd1d3f030}</destination>
 			<destination>{cd171c2f-f184-4e14-ade6-9a4dad26db86}</destination>
+			<destination>{bd285b8f-38ce-4023-af60-59dd2b4ce8a3}</destination>
 		</relationship>
 	</object>
 	<object class="ParameterProxy" id="{123ddead-6d35-4821-8de1-8fc11fd51d61}">
@@ -377,6 +379,21 @@
 			<destination>{30002b53-9556-4160-b6ef-045e7e10bf1b}</destination>
 		</relationship>
 	</object>
+	<object class="MultiSound" id="{bd285b8f-38ce-4023-af60-59dd2b4ce8a3}">
+		<property name="length">
+			<value>0.5</value>
+		</property>
+		<relationship name="fadeOutCurve">
+			<destination>{c834453d-600c-4c3d-ba53-b2a02e174879}</destination>
+		</relationship>
+		<relationship name="sounds">
+			<destination>{b64bcf59-1c93-46f9-9b73-5935d57d41f5}</destination>
+			<destination>{e76f71f1-2649-4234-89a4-701a64f8141a}</destination>
+			<destination>{18a3e689-c9b8-48e0-9626-89cb52287dea}</destination>
+			<destination>{a0aa367e-968a-4a73-8a03-933bff2e689b}</destination>
+			<destination>{4d6a1b58-5e15-4805-9b92-a82100d8726f}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{48f2364f-88c7-4a31-aa2b-5b001ddc1163}">
 		<property name="name">
 			<value>LandMetal</value>
@@ -553,6 +570,39 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{fdf01b9e-255b-42ff-99ac-402bb651e5b4}" />
+	<object class="FadeCurve" id="{c834453d-600c-4c3d-ba53-b2a02e174879}">
+		<relationship name="startPoint">
+			<destination>{7b007995-e9bd-4f09-b096-6adb17536992}</destination>
+		</relationship>
+		<relationship name="endPoint">
+			<destination>{cabd6240-26fd-4b17-a1c9-4ab43dd2216a}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{b64bcf59-1c93-46f9-9b73-5935d57d41f5}">
+		<relationship name="audioFile">
+			<destination>{10751e8b-23ec-44de-8b75-18226555c1a7}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{e76f71f1-2649-4234-89a4-701a64f8141a}">
+		<relationship name="audioFile">
+			<destination>{6cf53989-bedc-450c-b670-603c345ea962}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{18a3e689-c9b8-48e0-9626-89cb52287dea}">
+		<relationship name="audioFile">
+			<destination>{708cd384-4e8d-45e2-b351-6895911d9dd8}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{a0aa367e-968a-4a73-8a03-933bff2e689b}">
+		<relationship name="audioFile">
+			<destination>{a966056f-61f1-4a0f-b1bb-1ae3626d45fa}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{4d6a1b58-5e15-4805-9b92-a82100d8726f}">
+		<relationship name="audioFile">
+			<destination>{eaaf54ed-6e31-4faa-a5ef-8d631c1b9434}</destination>
+		</relationship>
+	</object>
 	<object class="Automator" id="{67295243-b5b5-4435-9660-8d88d3680498}">
 		<property name="nameOfPropertyBeingAutomated">
 			<value>volume</value>
@@ -679,6 +729,25 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{f1b946a8-a2f6-43d4-968c-e6e833c7c9bb}" />
+	<object class="AutomationPoint" id="{7b007995-e9bd-4f09-b096-6adb17536992}">
+		<property name="position">
+			<value>0.47999999999999998</value>
+		</property>
+		<property name="value">
+			<value>1</value>
+		</property>
+		<property name="curveShape">
+			<value>0.25471893</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{cabd6240-26fd-4b17-a1c9-4ab43dd2216a}">
+		<property name="position">
+			<value>0.5</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+	</object>
 	<object class="AutomationCurve" id="{530b9a2a-d4e4-4f59-8e8d-64e638ef8485}">
 		<relationship name="parameter">
 			<destination>{8dfa71af-a39f-4ba0-b02d-872f934f64a7}</destination>

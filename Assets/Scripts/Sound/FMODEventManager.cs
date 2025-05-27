@@ -347,11 +347,11 @@ public class FMODEventManager : MonoBehaviour
         PlayEventInstance(eventInstance);
         ReleaseEventInstance(eventInstance);
     }
-    private void OnComportementAdded(GameObject _gameObject, bool rightvalue, bool righthand)
+    private void OnComportementAdded(GameObject _gameObject, float stateValue, bool rightvalue, bool righthand)
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerGiveComp);
         PickHand(eventInstance,righthand);
-        DefineCompPickType(_gameObject,eventInstance);
+        DefineCompPickType(_gameObject,eventInstance,stateValue);
         if (_gameObject.CompareTag("Player"))
         {
             SetNamedParamEventInstance(eventInstance,"SIM",1);
@@ -360,11 +360,19 @@ public class FMODEventManager : MonoBehaviour
         PlayEventInstance(eventInstance);
         ReleaseEventInstance(eventInstance);
     }
-    private void OnComportmentExchanged(GameObject _gameObject, bool righthand)
+    private void OnComportmentExchanged(GameObject _gameObject, float stateValue, bool righthand)
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerSelfSwitch);
         PickHand(eventInstance,righthand);
-        DefineCompPickType(_gameObject,eventInstance);
+        if (righthand)
+        {
+            DefineCompPickType(_gameObject,eventInstance,stateValue,1);
+        }
+        else
+        {
+            DefineCompPickType(_gameObject,eventInstance,stateValue,0);
+        }
+        
         PlayEventInstance(eventInstance);
         ReleaseEventInstance(eventInstance);
     }
@@ -408,39 +416,156 @@ public class FMODEventManager : MonoBehaviour
         }
     }
 
-    private void DefineCompPickType(GameObject _gameObject, EventInstance eventInstance, float stateValue = -1f)
+    private void DefineCompPickType(GameObject _gameObject, EventInstance eventInstance, float stateValue, int rightHand = -1)
     {
-        if (stateValue < 0)
+        if (rightHand > -1)
         {
+            float exchangedStateValue = 0;
             ComportementsStateMachine stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
             if (stateMachine.currentState is ComportementState)
             {
                 ComportementState currentObjectState = (ComportementState)stateMachine.currentState;
-                stateValue = currentObjectState.stateValue;
+                if (rightHand == 0)
+                {
+                    exchangedStateValue = currentObjectState.leftValue;
+                }
+                else
+                {
+                    exchangedStateValue = currentObjectState.rightValue;
+                }
             }
-        }
-        switch (stateValue)
-        {
+
+            switch (stateValue)
+            {
                 case 1:
-                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",1);
+                    switch (exchangedStateValue)
+                    {
+                        case 1:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",1);
+                            break;
+                        case 3:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",2);
+                            break;
+                        case 9:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",3);
+                            break;
+                        case 27:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",4);
+                            break;
+                        case 81:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",5);
+                            break;
+                    }
                     break;
                 case 3:
-                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",2);
+                    switch (exchangedStateValue)
+                    {
+                        case 1:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",2);
+                            break;
+                        case 3:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",6);
+                            break;
+                        case 9:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",7);
+                            break;
+                        case 27:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",8);
+                            break;
+                        case 81:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",9);
+                            break;
+                    }
                     break;
                 case 9:
-                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",3);
+                    switch (exchangedStateValue)
+                    {
+                        case 1:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",3);
+                            break;
+                        case 3:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",7);
+                            break;
+                        case 9:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",10);
+                            break;
+                        case 27:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",11);
+                            break;
+                        case 81:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",12);
+                            break;
+                    }
                     break;
                 case 27:
-                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",4);
+                    switch (exchangedStateValue)
+                    {
+                        case 1:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",16);
+                            break;
+                        case 3:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",17);
+                            break;
+                        case 9:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",18);
+                            break;
+                        case 27:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",13);
+                            break;
+                        case 81:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",14);
+                            break;
+                    }
                     break;
                 case 81:
-                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",5);
+                    switch (exchangedStateValue)
+                    {
+                        case 1:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",5);
+                            break;
+                        case 3:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",9);
+                            break;
+                        case 9:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",12);
+                            break;
+                        case 27:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",14);
+                            break;
+                        case 81:
+                            SetNamedParamEventInstance(eventInstance,"COMPTYPEEXCHANGE",15);
+                            break;
+                    }
+                    break;
+                
+            }
+            Debug.Log("Excgange value:" + stateValue);
+        }
+        else
+        {
+            switch (stateValue)
+            {
+                case 1:
+                    SetNamedParamEventInstance(eventInstance, "COMPTYPE", 1);
+                    break;
+                case 3:
+                    SetNamedParamEventInstance(eventInstance, "COMPTYPE", 2);
+                    break;
+                case 9:
+                    SetNamedParamEventInstance(eventInstance, "COMPTYPE", 3);
+                    break;
+                case 27:
+                    SetNamedParamEventInstance(eventInstance, "COMPTYPE", 4);
+                    break;
+                case 81:
+                    SetNamedParamEventInstance(eventInstance, "COMPTYPE", 5);
                     break;
                 default:
-                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",0);
+                    SetNamedParamEventInstance(eventInstance, "COMPTYPE", 0);
                     break;
+            }
         }
-        
+        Debug.Log("State value:" + stateValue);
     }
 
     private void SlowMotionSoundStart(bool isSlowMotion)

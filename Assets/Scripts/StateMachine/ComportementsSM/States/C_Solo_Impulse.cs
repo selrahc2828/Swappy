@@ -66,7 +66,7 @@ public class C_Solo_Impulse : ComportementState
             repulserTimer = 0;
             explodingSoonSignalSended = false;
         }
-        if(repulserTimer >= (repulserTime-1.5f) && explodingSoonSignalSended == false)
+        if(repulserTimer > (repulserTime-1.5f) && explodingSoonSignalSended == false)
         {
             explodingSoonSignalSended=true;
             GlobalEventManager.Instance.JustBeforeExplosion(GetGameObject());
@@ -123,7 +123,25 @@ public class C_Solo_Impulse : ComportementState
                         objectAffected.GetComponent<GrabObject>().Release(true);
                     }
                 }
-                else if (objectInRange.GetComponent<Rigidbody>() != null)
+
+                BreakableObject breakableScript = null;
+                try
+                {
+                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckImpulseAoeCondition();
+                }
+                catch {}
+                finally
+                {
+                    if (breakableScript != null)
+                    {
+                        foreach (Rigidbody rb in breakableScript.ShatterObject())
+                        {
+                            ApplyForce(rb, rb.gameObject, repulserForce);
+                        }
+                    }
+                }
+
+                if (objectInRange.GetComponent<Rigidbody>() != null)
                 {
                     ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, repulserForce);
                 }  
