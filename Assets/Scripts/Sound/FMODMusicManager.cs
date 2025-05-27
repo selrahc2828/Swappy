@@ -77,6 +77,12 @@ public class FMODMusicManager : MonoBehaviour
         return (value);
     }
 
+    public int GetMusicTimelineValue(EventInstance musicInstance)
+    {
+        musicInstance.getTimelinePosition(out int position);
+        return (position);
+    }
+
     public void SetMusicNameParamInstance(EventInstance musicInstance, string paramName, float value, bool seekSpeed = true)
     {
         musicInstance.setParameterByName(paramName, value, seekSpeed);
@@ -202,6 +208,11 @@ public class FMODMusicManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
             Debug.Log(GetPlaylistMusicSize());
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad7))
+        {
+            Debug.Log(GetMusicTimelineValue(GetMusicPlaylistInstance(FMODMusicEvents.Walkman)));
         }
     }
     #endregion
