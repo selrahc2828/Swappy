@@ -125,7 +125,25 @@ public class C_Double_Impulse : ComportementState
                         objectAffected.GetComponent<GrabObject>().Release(true);
                     }
                 }
-                else if (objectInRange.GetComponent<Rigidbody>() != null)
+
+                BreakableObject breakableScript = null;
+                try
+                {
+                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckDoubleImpulseAoeCondition();
+                }
+                catch { }
+                finally
+                {
+                    if (breakableScript != null)
+                    {
+                        foreach (Rigidbody rb in breakableScript.ShatterObject())
+                        {
+                            ApplyForce(rb, rb.gameObject, impulseForce);
+                        }
+                    }
+                }
+
+                if (objectInRange.GetComponent<Rigidbody>() != null)
                 {
                     ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, impulseForce);
                 }  

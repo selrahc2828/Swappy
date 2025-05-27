@@ -29,14 +29,14 @@ public class ObjectCondition : AdditionalCondition
         switch (validationType)
         {
             case ValidationTypes.Tag:
-                if (targetObject.CompareTag(targetTag))
+                if (target.CompareTag(targetTag))
                 {
                     return true;
                 }
                 break;
 
             case ValidationTypes.Layer:
-                if (targetObject.layer == targetLayer)
+                if (target.layer == targetLayer)
                 {
                     return true;
                 }
