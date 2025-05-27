@@ -1,10 +1,11 @@
-
 using UnityEngine;
 
 [ExecuteInEditMode]
 [DisallowMultipleComponent] // empeche le componenet d'etre ajoute plusieurs fois a l'objet
 public class UniqueID : MonoBehaviour
 {
+    #if UNITY_EDITOR
+
     [SerializeField]
     private string uniqueId;
     public string UniqueId => uniqueId;
@@ -49,4 +50,5 @@ public class UniqueID : MonoBehaviour
             UniqueIDManagerEditor.RegisterID(uniqueId, this); // Redondant mais sûr
         }
     }
+    #endif
 }

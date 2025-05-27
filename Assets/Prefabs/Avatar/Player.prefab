@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: 2426108279472809210}
   - component: {fileID: 3479498097909473970}
   - component: {fileID: 2206009394620906433}
+  - component: {fileID: 321084061108809858}
+  - component: {fileID: 613138276182239671}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -157,7 +159,6 @@ MonoBehaviour:
   _closestObj: {fileID: 0}
   _grabScript: {fileID: 0}
   actionReference: {fileID: 7356602388404604888, guid: bbfefb33d9dff604899c456bbfaf6b62, type: 3}
-  textInteraction: Press
 --- !u!114 &6167654971802558385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,6 +568,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seuilVitesse: 50
+--- !u!114 &321084061108809858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55948801783339615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 190d82132bca5a6458d02566b5d9f99e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actualValueStep: 0
+  maxValueStep: 10
+  actualAirTime: 0
+  maxAirTime: 10
+  fallForce: 0
+--- !u!114 &613138276182239671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55948801783339615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 096eb32e1fe84e54aa3bd2ceac0dbe6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeDetection: 5
+  attractionSpeed: 8
+  pickUpDistance: 0.5
+  pickupMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  checkInterval: 0.2
 --- !u!1 &312993634636169864
 GameObject:
   m_ObjectHideFlags: 0

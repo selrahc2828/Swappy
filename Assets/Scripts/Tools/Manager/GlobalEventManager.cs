@@ -8,7 +8,7 @@ public class GlobalEventManager : MonoBehaviour
     public static GlobalEventManager Instance;
 
     // Manipoulation de comportement
-    public event Action<GameObject, bool, bool> OnComportmentExtracted;
+    public event Action<GameObject,float, bool, bool> OnComportmentExtracted;
     public event Action<GameObject, bool, bool> OnComportmentAdded;
     public event Action<GameObject,bool> OnComportmentExchanged;
 
@@ -26,7 +26,7 @@ public class GlobalEventManager : MonoBehaviour
 
     public event Action<GameObject> OnFootstep;
     public event Action<GameObject> OnJump;
-    public event Action<GameObject> OnLand;
+    public event Action<GameObject,float> OnLand;
     
     public event Action<GameObject> OnCollide;
 
@@ -43,9 +43,11 @@ public class GlobalEventManager : MonoBehaviour
     
     // Fragment
     public event Action OnAddFragment;
+    
+    public event Action<GameObject> OnAddFragmentSound;
     public event Action OnRemoveFragment;
     public event Action<FragmentBankData, int> OnPopupFragment;
-    public event Action OnShattered;// pot brisé
+    public event Action<GameObject> OnShattered;// pot brisé
 
 
     public event Action<bool> OnSlowMotionInput;
@@ -63,9 +65,9 @@ public class GlobalEventManager : MonoBehaviour
 
     #region Comportement
 
-    public void ComportmentExtracted(GameObject originOfComportment, bool rightValue, bool rightHand) //appele quand on vole un comportement a un objet
+    public void ComportmentExtracted(GameObject originOfComportment,float stateValue, bool rightValue, bool rightHand) //appele quand on vole un comportement a un objet
     {
-        OnComportmentExtracted?.Invoke(originOfComportment, rightValue, rightHand);
+        OnComportmentExtracted?.Invoke(originOfComportment, stateValue, rightValue, rightHand);
     }
 
     public void ComportmentAdded(GameObject objectToAddComportment, bool rightValue, bool rightHand) //appele quand on donne un comportement a un objet
@@ -131,9 +133,9 @@ public class GlobalEventManager : MonoBehaviour
         OnJump?.Invoke(groundObject);
     }
 
-    public void Land(GameObject groundObject) // appele lors d'un atterissage du player
+    public void Land(GameObject groundObject,float fallForce=-1) // appele lors d'un atterissage du player
     {
-        OnLand?.Invoke(groundObject);
+        OnLand?.Invoke(groundObject,fallForce);
     }
 
     #endregion
@@ -182,6 +184,11 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnAddFragment?.Invoke();
     }
+
+    public void AddFragmentSound(GameObject gameObject)
+    {
+        OnAddFragmentSound?.Invoke(gameObject);
+    }
     
     public void RemoveFragment() //appele quand on perd un fragment
     {
@@ -201,9 +208,9 @@ public class GlobalEventManager : MonoBehaviour
     }
 
 
-    public void BrokenPot()
+    public void BrokenPot(GameObject gameObject)
     {
-        OnShattered?.Invoke();
+        OnShattered?.Invoke(gameObject);
     }
     
 

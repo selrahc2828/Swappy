@@ -5,14 +5,17 @@ public partial class ComportementManager
     [System.Serializable]
     public class MagnetRocketData
     {
-        public GameObject prefabMagnetRocketForcefield;
-        public float magnetRocketFlyTime = 4;
-        public float rocketFirstTime = 2;
-        public float rocketMagnetForce = 7f;
-        public float rocketMagnetForceOnPlayer = 7f;
-        public float rocketMagnetForceWhenGrab = 7f;
-        public float magnetTrailForce = 5f;
-        public float magnetTrailLerp = 1.5f;
-        public float magnetTrailTimeBeforeMove = 5f;
+        public float magnetRange = 8f;
+        public float magnetForce = 8f;
+        public float equilibriumDistance = 2f;
+        public float dampingFactor = 2f;
+        
+        public float rocketForce = 75f;
+        public float rocketForceOnPlayer = 75f;
+        public float rocketForceWhenGrab = 75f;
+        public float rocketOnCooldown = 5f;
+        public float rocketFirstOnCooldown = 2f;
+        public float rocketOffCooldown = 6f;
+        public float rocketMaxSpeed = 15;
     }
 }
