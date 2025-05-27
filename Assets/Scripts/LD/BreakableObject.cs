@@ -13,7 +13,6 @@ public class BreakableObject : MonoBehaviour
     private Vector3 currentVelocity;
     private bool hasShattered;
 
-    [SerializeField]
     private SpawnPot _spawner;
     public SpawnPot Spawner
     {
@@ -76,6 +75,7 @@ public class BreakableObject : MonoBehaviour
         if (_spawner is not null)
         {
             GlobalEventManager.Instance.BrokenPot(gameObject);
+            _spawner.isBroken = true;
             ExplodeFragments();
         }
 
