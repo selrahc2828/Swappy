@@ -9,7 +9,8 @@ public class C_Immuable_Magnet : ComportementState
     private float magnetRange;
     private float trueMagnetRange;
     private float magnetForce;
-    private bool magnetGradiantForce;
+    private float equilibriumDistance;
+    private float dampingFactor;
 
     private List<Rigidbody> magnetedObjects = new List<Rigidbody>() ;
 
@@ -31,6 +32,8 @@ public class C_Immuable_Magnet : ComportementState
         _sm.rb.isKinematic = true;
         
         magnetRange = _sm.comportementManager.magnetData.magnetRange;
+        equilibriumDistance = _sm.comportementManager.magnetData.equilibriumDistance;
+        dampingFactor = _sm.comportementManager.magnetData.dampingFactor;
         if (_sm.isPlayer)
         {
             trueMagnetRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + magnetRange;
@@ -84,7 +87,17 @@ public class C_Immuable_Magnet : ComportementState
                 {
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
-                        ApplyForce(magnetGradiantForce, objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+                        if (_sm.isPlayer)
+                        {
+                            if (!objectInRange.CompareTag("Player"))
+                            {
+                                ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+                            }
+                        }
+                        else
+                        {
+                            ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+                        }
                         if (!magnetedObjects.Contains(objectInRange.GetComponent<Rigidbody>()))
                         {
                             GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,objectInRange.GetComponent<Rigidbody>().mass);
@@ -98,18 +111,28 @@ public class C_Immuable_Magnet : ComportementState
         magnetedObjects = newMagnetedObjects;
     }
     
-    public void ApplyForce(bool isGradient, Rigidbody rbObj,GameObject objToApply, float force)
+    public void ApplyForce( Rigidbody rb,GameObject objToApply, float force)
     {
 
-        if (isGradient)
-        {
-            objToApply.GetComponent<Rigidbody>().AddExplosionForce(-force, _sm.transform.position, trueMagnetRange);
-        }
-        else
-        {
+        if (rb == null) return;
 
-            Vector3 dir = (_sm.transform.position - objToApply.transform.position).normalized; // obj vers magnet
-            rbObj.AddForce(dir * force, ForceMode.Force);
-        }
+
+        Vector3 toObject = objToApply.transform.position - _sm.transform.position;
+        float currentDistance = toObject.magnitude;
+
+        // Si l'objet est exactement à la distance souhaitée, aucune force
+        if (Mathf.Approximately(currentDistance, equilibriumDistance)) return;
+
+        // Calcul du point sur la sphère (direction * rayon)
+        Vector3 targetPoint = _sm.transform.position + toObject.normalized * equilibriumDistance;
+
+        // Direction vers ce point d'équilibre
+        Vector3 forceDir = (targetPoint - objToApply.transform.position).normalized;
+
+        rb.AddForce(forceDir * force, ForceMode.Force);
+        
+        // --- Damping : freine la vitesse radiale (vers/depuis le centre) ---
+        Vector3 radialVelocity = Vector3.Project(rb.velocity, forceDir);
+        rb.velocity -= radialVelocity * (dampingFactor * Time.deltaTime);
     }
 }
