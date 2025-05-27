@@ -176,7 +176,7 @@ public class C_Impulse_Rocket : ComportementState
                 BreakableObject breakableScript = null;
                 try
                 {
-                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckRepulseRocketAoeCondition();
+                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckImpulseRocketAoeCondition();
                 }
                 catch {}
                 finally

@@ -118,7 +118,7 @@ public class C_Impulse_Immuable : ComportementState
                 BreakableObject breakableScript = null;
                 try
                 {
-                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckRepulseImmuableAoeCondition();
+                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckImpulseImmuableAoeCondition();
                 }
                 catch { }
                 finally

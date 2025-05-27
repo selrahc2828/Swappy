@@ -6,15 +6,15 @@ public class AoeCondition: Condition
 {
     private enum AoeCategory
     {
-        Repulse,
-        DoubleRepulse,
-        RepulseBounce,
-        RepulseImmuable,
-        RepulseRocket,
-        AnyRepulse,
+        Impulse,
+        DoubleImpulse,
+        ImpulseBounce,
+        ImpulseImmuable,
+        ImpulseRocket,
+        AnyImpulse,
         Magnet,
         DoubleMagnet,
-        MagnetRepulse,
+        MagnetImpulse,
         MagnetBounce,
         MagnetImmuable,
         MagnetRocket,
@@ -25,9 +25,9 @@ public class AoeCondition: Condition
     [Tooltip("Facultatif. Si l'objet doit être détruit, le lien vers le script de destruction pour l'application de la vélocité")]
     [SerializeField] private BreakableObject breakableScript;
 
-    public BreakableObject CheckRepulseAoeCondition()
+    public BreakableObject CheckImpulseAoeCondition()
     {
-        if (AoeType == AoeCategory.Repulse || AoeType == AoeCategory.AnyRepulse)
+        if (AoeType == AoeCategory.Impulse || AoeType == AoeCategory.AnyImpulse)
         {
             SetConditionState(true);
             return breakableScript;
@@ -38,9 +38,9 @@ public class AoeCondition: Condition
             return null;
         }
     }
-    public BreakableObject CheckDoubleRepulseAoeCondition()
+    public BreakableObject CheckDoubleImpulseAoeCondition()
     {
-        if (AoeType == AoeCategory.DoubleRepulse || AoeType == AoeCategory.AnyRepulse)
+        if (AoeType == AoeCategory.DoubleImpulse || AoeType == AoeCategory.AnyImpulse)
         {
             SetConditionState(true);
             return breakableScript;
@@ -51,9 +51,9 @@ public class AoeCondition: Condition
             return null;
         }
     }
-    public BreakableObject CheckRepulseBounceAoeCondition()
+    public BreakableObject CheckImpulseBounceAoeCondition()
     {
-        if (AoeType == AoeCategory.RepulseBounce || AoeType == AoeCategory.AnyRepulse)
+        if (AoeType == AoeCategory.ImpulseBounce || AoeType == AoeCategory.AnyImpulse)
         {
             SetConditionState(true);
             return breakableScript;
@@ -64,9 +64,9 @@ public class AoeCondition: Condition
             return null;
         }
     }
-    public BreakableObject CheckRepulseImmuableAoeCondition()
+    public BreakableObject CheckImpulseImmuableAoeCondition()
     {
-        if (AoeType == AoeCategory.RepulseImmuable || AoeType == AoeCategory.AnyRepulse)
+        if (AoeType == AoeCategory.ImpulseImmuable || AoeType == AoeCategory.AnyImpulse)
         {
             SetConditionState(true);
             return breakableScript;
@@ -77,9 +77,9 @@ public class AoeCondition: Condition
             return null;
         }
     }
-    public BreakableObject CheckRepulseRocketAoeCondition()
+    public BreakableObject CheckImpulseRocketAoeCondition()
     {
-        if (AoeType == AoeCategory.RepulseRocket || AoeType == AoeCategory.AnyRepulse)
+        if (AoeType == AoeCategory.ImpulseRocket || AoeType == AoeCategory.AnyImpulse)
         {
             SetConditionState(true);
             return breakableScript;
@@ -116,9 +116,9 @@ public class AoeCondition: Condition
             return null;
         }
     }
-    public BreakableObject CheckMagnetRepulseAoeCondition()
+    public BreakableObject CheckMagnetImpulseAoeCondition()
     {
-        if (AoeType == AoeCategory.MagnetRepulse || AoeType == AoeCategory.AnyMagnet)
+        if (AoeType == AoeCategory.MagnetImpulse || AoeType == AoeCategory.AnyImpulse)
         {
             SetConditionState(true);
             return breakableScript;

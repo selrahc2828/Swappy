@@ -124,7 +124,7 @@ public class C_Double_Impulse : ComportementState
                 BreakableObject breakableScript = null;
                 try
                 {
-                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckDoubleRepulseAoeCondition();
+                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckDoubleImpulseAoeCondition();
                 }
                 catch { }
                 finally

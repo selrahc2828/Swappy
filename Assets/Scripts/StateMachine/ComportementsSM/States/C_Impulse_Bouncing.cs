@@ -169,7 +169,7 @@ public class C_Impulse_Bouncing : ComportementState
                 BreakableObject breakableScript = null;
                 try
                 {
-                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckRepulseBounceAoeCondition();
+                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckImpulseBounceAoeCondition();
                 }
                 catch { }
                 finally
