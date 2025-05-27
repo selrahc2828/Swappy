@@ -42,7 +42,6 @@ public class C_Solo_Rocket : ComportementState
         onFirstCooldown = _sm.comportementManager.rocketData.rocketFirstOnCooldown;
         offCooldown = _sm.comportementManager.rocketData.rocketOffCooldown;
 
-        // _sm.rend.material = _sm.rocket;
         if (!_sm.isPlayer)
         {
             ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
@@ -86,7 +85,6 @@ public class C_Solo_Rocket : ComportementState
 
         if (_sm.transform.InverseTransformDirection(_sm.rb.velocity).y > maxSpeed && rocketOn)// compare la velocity local y a la max speed
         {
-            //_sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
             return;
         }
 
@@ -106,13 +104,11 @@ public class C_Solo_Rocket : ComportementState
                 _sm.rb.AddForce(_sm.transform.up * rocketForce, ForceMode.Force);
             }
         }
-
     }
 
     public override void Exit()
     {
         base.Exit();
         _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-
     }
 }

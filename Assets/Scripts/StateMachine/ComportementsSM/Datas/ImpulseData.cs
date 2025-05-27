@@ -12,7 +12,6 @@ public partial class ComportementManager
         public float impulseRange = 10;
         public float impulseForce = 90;
         public bool destroyOnUse = false;
-        public bool impulseGradiantForce = false;
         public GameObject impulseFeedback;
         [Tooltip("Si Rigidbody sur lui")]
         public bool applyOnMe = false;

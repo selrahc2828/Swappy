@@ -31,6 +31,7 @@ public class InventoryMenu : MonoBehaviour
     
     void Start()
     {
+        previewControl = FindObjectOfType<PreviewInventoryControl>();
         // première initialisation
         RefreshItemUI();
         RefreshFragmentUI();

@@ -93,6 +93,7 @@ public class SaveManager : MonoBehaviour
 
     private void LoadAll()
     {
+        Debug.Log("Load Datas");
         if (saveData is null)
         {
             return;

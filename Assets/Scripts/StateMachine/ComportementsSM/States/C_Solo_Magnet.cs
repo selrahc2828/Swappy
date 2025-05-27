@@ -96,7 +96,17 @@ public class C_Solo_Magnet : ComportementState
                 {
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
-                        ApplyForce( objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+                        if (_sm.isPlayer)
+                        {
+                            if (!objectInRange.CompareTag("Player"))
+                            {
+                                ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+                            }
+                        }
+                        else
+                        {
+                            ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+                        }
                         if (!magnetedObjects.Contains(objectInRange.GetComponent<Rigidbody>()))
                         {
                             GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,objectInRange.GetComponent<Rigidbody>().mass);
