@@ -37,7 +37,8 @@ public class IntroSceneSwitch: MonoBehaviour
 
     private void Start()
     {
-        NextScene = SceneManager.GetSceneByBuildIndex(0);
+        NextScene = SceneManager.GetSceneByBuildIndex(1);
+        Debug.Log(NextScene.name);
         FMODMusicManager.instance.CreateMusicInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO);
         FMODMusicManager.instance.PlayMusicInstance(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
         
@@ -72,21 +73,50 @@ public class IntroSceneSwitch: MonoBehaviour
             
                 BlackFadeIn();
             }
-            else
-            {
-                title.SetActive(true);
-                _tForButtons += Time.deltaTime;
+            // else
+            // {
+            //     title.SetActive(true);
+            //     _tForButtons += Time.deltaTime;
+            //
+            //     if (_tForButtons / timeRangeToButton >= 1)
+            //     {
+            //         playButton.SetActive(true);
+            //         parameterButton.SetActive(true);
+            //         quitButton.SetActive(true);
+            //     }
+            //
+            //     // todo apparition progressive des buttons
+            //
+            // }
+        }
 
-                if (_tForButtons / timeRangeToButton >= 1)
-                {
-                    playButton.SetActive(true);
-                    parameterButton.SetActive(true);
-                    quitButton.SetActive(true);
-                }
-            
-                // todo apparition progressive des buttons
-            
-            }
+        if (FMODMusicManager.instance.GetMusicTimelineValue(
+                FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO)) >
+            8823)
+        {
+            title.SetActive(true);
+        }
+        if (FMODMusicManager.instance.GetMusicTimelineValue(
+                FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO)) >
+            11971 )
+        {
+            playButton.SetActive(true);
+            //parameterButton.SetActive(true);
+            //quitButton.SetActive(true);
+        }
+
+        if (FMODMusicManager.instance.GetMusicTimelineValue(
+                FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO)) >
+            15313)
+        {
+            parameterButton.SetActive(true);
+        }
+        
+        if (FMODMusicManager.instance.GetMusicTimelineValue(
+                FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO)) >
+            18424)
+        {
+            quitButton.SetActive(true);
         }
         
 
