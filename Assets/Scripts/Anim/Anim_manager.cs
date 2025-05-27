@@ -119,7 +119,6 @@ public class Anim_manager : MonoBehaviour
         }
         else
         {
-            Debug.Log("ok4");
             if (!target.CompareTag("Player"))
             {
                 Left_SelfAspiration();
@@ -143,7 +142,6 @@ public class Anim_manager : MonoBehaviour
         }
         else
         {
-            Debug.Log("ok2");
             if (rightHand)
             {
                 Right_SelfAspiration();

@@ -119,7 +119,7 @@ public class BiomeGrassInstancer : MonoBehaviour
             placed++;
         }
 
-        Debug.Log($"Placed {allMatrices.Count} grass instances (attempts: {attempts}).");
+        //Debug.Log($"Placed {allMatrices.Count} grass instances (attempts: {attempts}).");
     }
 
     void Update()
