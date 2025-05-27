@@ -46,7 +46,7 @@ public class BreakableObject : MonoBehaviour
                 if (!hasShattered)
                 {
                     hasShattered = true;
-                    ShatterObject(Vector3.zero, Vector3.zero);
+                    ApplyCurrentVelocity(ShatterObject());
                 }
             }
         }
@@ -69,23 +69,16 @@ public class BreakableObject : MonoBehaviour
                 if (!hasShattered)
                 {
                     hasShattered = true;
-                    ShatterObject(Vector3.zero, Vector3.zero);
+                    ApplyCurrentVelocity(ShatterObject());
                 }
             }
         }
     }
 
-    public Rigidbody[] ShatterObject(Vector3 additionalVelocity, Vector3 additionalAngular)
+    public Rigidbody[] ShatterObject()
     {
         GameObject shatteredObject = Instantiate(shatteredVersion, transform.position, transform.rotation);
         Rigidbody[] shatteredRbs = shatteredObject.GetComponentsInChildren<Rigidbody>();
-        return shatteredRbs;
-
-        foreach (Rigidbody rb in shatteredRbs)
-        {
-            rb.velocity = currentVelocity + additionalVelocity;
-            rb.angularVelocity = currentAngular + additionalAngular;
-        }
 
         if (_spawner is not null)
         {
@@ -95,13 +88,17 @@ public class BreakableObject : MonoBehaviour
         }
 
         Destroy(gameObject);
+        return shatteredRbs;
     }
 
     private void ApplyCurrentVelocity(Rigidbody[] rbs)
     {
-
+        foreach (Rigidbody rb in rbs)
+        {
+            rb.velocity = currentVelocity;
+            rb.angularVelocity = currentAngular;
+        }
     }
-
 
     private void ExplodeFragments()
     {
