@@ -179,10 +179,7 @@ public class C_Impulse_Bouncing : ComportementState
             // si rigid body sur objet, on applique pas la force sur lui pour le lancer par exemple
             return;
         }
-        else
-        {
-            Vector3 direction = (objToApply.transform.position - _sm.transform.position).normalized;
-            rbObj.AddForce(direction * force, ForceMode.Impulse);
-        }
+        Vector3 direction = (objToApply.transform.position - _sm.transform.position).normalized;
+        rbObj.AddForce(direction * force, ForceMode.Impulse);
     }    
 }
