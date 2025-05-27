@@ -172,11 +172,11 @@ public class ComportementState : State
         }
         
         // Debug.Log($"Change color {_sm.name} into slot 1: {colorSlot1} and slot2: {colorSlot2}");
-        if (_sm.rend.materials.Length >1)//verif si on a plus de 2 materials
+        if (_sm.rend.materials.Length >0)//verif si on a plus de 2 materials
         {
             // on part du principe que le mat index 1 est le shader outline
-            _sm.rend.materials[0].SetColor("_Color1", colorSlot1);
-            _sm.rend.materials[0].SetColor("_Color2", colorSlot2);
+            _sm.rend.materials[0].SetColor("_Color_1", colorSlot1);
+            _sm.rend.materials[0].SetColor("_Color_2", colorSlot2);
         }
     }
 
