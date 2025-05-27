@@ -75,6 +75,11 @@ public class BreakableObject : MonoBehaviour
         }
     }
 
+    public void BreakObjectNoReturn()
+    {
+        ShatterObject();
+    }
+
     public Rigidbody[] ShatterObject()
     {
         GameObject shatteredObject = Instantiate(shatteredVersion, transform.position, transform.rotation);
