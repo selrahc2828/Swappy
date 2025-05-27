@@ -129,14 +129,11 @@ public class FMODMusicManager : MonoBehaviour
                 if (targetID == eventID)
                 {
                     ReleaseMusicInstance(musicTarget);
-                    Debug.Log("musicfound");
                     return musicInstance;
                 }
             }
         }
-        Debug.Log("newmusicmade");
         return CreateMusicInstance(musicReference);
-
     }
 
 
@@ -327,6 +324,29 @@ public class FMODMusicManager : MonoBehaviour
         Play,
         Stop,
         Switch
+    }
+    
+    public enum OnWhat : int
+    {
+        None,
+        OnStart,
+        OnDestroy,
+        OnTriggerEnter,
+        OnTriggerExit,
+    }
+    public enum Biomes : int
+    {
+        None,
+        Biome1,
+        Biome2,
+        Biome3,
+    }
+    public enum Layer : int
+    {
+        None,
+        Layer1,
+        Layer2,
+        Layer3,
     }
 
 }

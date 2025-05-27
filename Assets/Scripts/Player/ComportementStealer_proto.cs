@@ -428,6 +428,6 @@ public class ComportementStealer_proto : MonoBehaviour
             currentObjectState.CalculateNewtState(currentObjectState.stateValue - currentObjectState.leftValue);
             substractedSlotValue = currentObjectState.leftValue;
         }
-        GlobalEventManager.Instance.ComportmentExtracted(currentObjectState.GetGameObject(), rightValue, rightHand);
+        GlobalEventManager.Instance.ComportmentExtracted(currentObjectState.GetGameObject(),substractedSlotValue, rightValue, rightHand);
     }
 }

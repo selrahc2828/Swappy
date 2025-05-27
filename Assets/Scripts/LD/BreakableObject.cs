@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BreakableObject : MonoBehaviour
@@ -20,7 +21,7 @@ public class BreakableObject : MonoBehaviour
     }
 
     public GameObject fragmentPrefab;
-    
+
     private void Start()
     {
         thisRb = GetComponent<Rigidbody>();
@@ -74,7 +75,7 @@ public class BreakableObject : MonoBehaviour
 
         if (_spawner is not null)
         {
-            GlobalEventManager.Instance.BrokenPot();
+            GlobalEventManager.Instance.BrokenPot(gameObject);
             ExplodeFragments();
         }
 

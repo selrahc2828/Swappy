@@ -13,10 +13,10 @@ namespace FMODUnity
     {
         public EventReference Music;
         private EventInstance _musicInstance;
-        public FMODMusicManager.MusicAction Action = FMODMusicManager.MusicAction.None;
-        public OnWhat When;
-        [SerializeField] private string musicNameParameter;
-        [SerializeField] private int musicValueParameter;
+        [SerializeField] private FMODMusicManager.MusicAction Action = FMODMusicManager.MusicAction.None;
+        [SerializeField] private FMODMusicManager.OnWhat When =FMODMusicManager.OnWhat.None;
+        [SerializeField] private FMODMusicManager.Biomes biomes = FMODMusicManager.Biomes.None;
+        [SerializeField] private FMODMusicManager.Layer layers = FMODMusicManager.Layer.None;
 
         private void Reset()
         {
@@ -30,7 +30,7 @@ namespace FMODUnity
         {
             _musicInstance = FMODMusicManager.instance.GetMusicPlaylistInstance(Music);
 
-            if (When == OnWhat.OnStart )
+            if (When == FMODMusicManager.OnWhat.OnStart )
             {
                 if (Action == FMODMusicManager.MusicAction.Play)
                 {
@@ -42,14 +42,14 @@ namespace FMODUnity
                 }
                 else if (Action == FMODMusicManager.MusicAction.Switch)
                 {
-                    FMODMusicManager.instance.SetMusicNameParamInstance(_musicInstance, musicNameParameter,musicValueParameter);
+                    SetParameter(biomes , layers);
                 }
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player")&& When == OnWhat.OnTriggerEnter)
+            if (other.CompareTag("Player")&& When == FMODMusicManager.OnWhat.OnTriggerEnter)
             {
                     if (Action == FMODMusicManager.MusicAction.Play)
                     {
@@ -61,14 +61,14 @@ namespace FMODUnity
                     }
                     else if (Action == FMODMusicManager.MusicAction.Switch)
                     {
-                        FMODMusicManager.instance.SetMusicNameParamInstance(_musicInstance, musicNameParameter,musicValueParameter);
+                        SetParameter(biomes, layers);
                     }
             }
         }
-
+        
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player") && When == OnWhat.OnTriggerExit)
+            if (other.CompareTag("Player") && When == FMODMusicManager.OnWhat.OnTriggerExit)
             {
                 if (Action == FMODMusicManager.MusicAction.Play)
                 {
@@ -82,14 +82,14 @@ namespace FMODUnity
 
                 if (Action == FMODMusicManager.MusicAction.Switch)
                 {
-                    FMODMusicManager.instance.SetMusicNameParamInstance(_musicInstance, musicNameParameter,musicValueParameter);
+                    SetParameter(biomes, layers);
                 }
             }
         }
 
         private void OnDestroy()
         {
-            if (When == OnWhat.OnDestroy)
+            if (When == FMODMusicManager.OnWhat.OnDestroy)
             {
                 if (Action == FMODMusicManager.MusicAction.Play)
                 {
@@ -101,20 +101,105 @@ namespace FMODUnity
                 }
                 else if (Action == FMODMusicManager.MusicAction.Switch)
                 {
-                    FMODMusicManager.instance.SetMusicNameParamInstance(_musicInstance, musicNameParameter,musicValueParameter);
+                    SetParameter(biomes, layers);
                 }
             }
         }
+        
 
-
-        public enum OnWhat : int
+        private void SetParameter(FMODMusicManager.Biomes biome, FMODMusicManager.Layer layer)
         {
-            None,
-            OnStart,
-            OnDestroy,
-            OnTriggerEnter,
-            OnTriggerExit,
+            float newValueParam = -1;
+            float actualValueParam = FMODMusicManager.instance.GetMusicNameParamInstance(_musicInstance, "Layer");
+            
+            switch (biome)
+            {
+                case FMODMusicManager.Biomes.Biome1:
+                    if (actualValueParam > 6)
+                    {
+                        FMODMusicManager.instance.SetMusicNameParamInstance(_musicInstance, "Layer",3,false);
+                    }
+                    switch (layers)
+                    {
+                        case FMODMusicManager.Layer.Layer1:
+                            newValueParam = 2;
+                            break;
+                        case FMODMusicManager.Layer.Layer2:
+                            newValueParam = 1;
+                            break;
+                        case FMODMusicManager.Layer.Layer3:
+                            newValueParam = 0;
+                            break;
+                        default:
+                            newValueParam = 3;
+                            break;
+                    }
+                    break;
+                
+                case FMODMusicManager.Biomes.Biome2:
+                    if (actualValueParam > 6)
+                    {
+                        switch (layers)
+                        {
+                            case FMODMusicManager.Layer.Layer1:
+                                newValueParam = 8;
+                                break;
+                            case FMODMusicManager.Layer.Layer2:
+                                newValueParam = 7;
+                                break;
+                            case FMODMusicManager.Layer.Layer3:
+                                newValueParam = 6;
+                                break;
+                            default:
+                                newValueParam = 9;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (layers)
+                        {
+                            case FMODMusicManager.Layer.Layer1:
+                                newValueParam = 4;
+                                break;
+                            case FMODMusicManager.Layer.Layer2:
+                                newValueParam = 5;
+                                break;
+                            case FMODMusicManager.Layer.Layer3:
+                                newValueParam = 6;
+                                break;
+                            default:
+                                newValueParam = 3;
+                                break;
+                        }
+                    }
+                    break;
+                
+                case FMODMusicManager.Biomes.Biome3:
+                    if (actualValueParam < 6)
+                    {
+                        FMODMusicManager.instance.SetMusicNameParamInstance(_musicInstance, "Layer",9,false);
+                    }
+                    switch (layers)
+                    {
+                        case FMODMusicManager.Layer.Layer1:
+                            newValueParam = 10;
+                            break;
+                        case FMODMusicManager.Layer.Layer2:
+                            newValueParam = 11;
+                            break;
+                        case FMODMusicManager.Layer.Layer3:
+                            newValueParam = 12;
+                            break;
+                        default:
+                            newValueParam = 9;
+                            break;
+                    }
+                    break;
+            }
+            FMODMusicManager.instance.SetMusicNameParamInstance(_musicInstance, "Layer", newValueParam);
         }
+
     }
     
 }
