@@ -32,6 +32,7 @@
 			<destination>{fefa4de8-4e02-48ec-81c5-8beddc3b995c}</destination>
 			<destination>{42f4bde6-ff65-4df4-a995-e72823741084}</destination>
 			<destination>{1034c5f0-10f3-49f6-adef-4fa991b092c9}</destination>
+			<destination>{f3976462-c147-4076-8519-ac04e15c660a}</destination>
 		</relationship>
 		<relationship name="timeline">
 			<destination>{bcca6e69-d67a-414d-92d4-7dd5242b16eb}</destination>
@@ -109,12 +110,21 @@
 			<destination>{5f681b14-3b25-48d3-ba52-2ac974fbaa3f}</destination>
 		</relationship>
 	</object>
+	<object class="GroupTrack" id="{f3976462-c147-4076-8519-ac04e15c660a}">
+		<relationship name="modules">
+			<destination>{ff1c34bf-f34e-42d1-9504-8a7deb397b9a}</destination>
+		</relationship>
+		<relationship name="mixerGroup">
+			<destination>{9e7f536d-ae80-48ab-95c7-6ffc3cd477f9}</destination>
+		</relationship>
+	</object>
 	<object class="Timeline" id="{bcca6e69-d67a-414d-92d4-7dd5242b16eb}">
 		<relationship name="modules">
 			<destination>{bcce31a9-9588-4198-ba7f-868010585506}</destination>
 			<destination>{7f678c85-ea33-4397-9e30-d631457d734c}</destination>
 			<destination>{10f667b5-afaa-40a3-9cdc-5faa735d66f0}</destination>
 			<destination>{31284d48-8487-4f9b-8a92-45052f9f0a22}</destination>
+			<destination>{ff1c34bf-f34e-42d1-9504-8a7deb397b9a}</destination>
 		</relationship>
 		<relationship name="markers">
 			<destination>{e0f9bf39-a3e4-4ecb-b951-e6442fe6d37f}</destination>
@@ -256,7 +266,7 @@
 			<value>Red Light 1</value>
 		</property>
 		<property name="volume">
-			<value>-13</value>
+			<value>-18.5</value>
 		</property>
 		<property name="name">
 			<value>ImpulseBoom</value>
@@ -318,6 +328,31 @@
 		</relationship>
 		<relationship name="panner">
 			<destination>{2b22b231-d0c3-418f-8a9e-7e3e4f7e4ceb}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{b5cc3397-6873-450f-a951-cac994f0d77d}</destination>
+		</relationship>
+	</object>
+	<object class="EventSound" id="{ff1c34bf-f34e-42d1-9504-8a7deb397b9a}">
+		<property name="length">
+			<value>5</value>
+		</property>
+		<relationship name="triggerConditions">
+			<destination>{f0d6f4b4-b5bb-4335-b23d-71936c101dec}</destination>
+		</relationship>
+		<relationship name="event">
+			<destination>{120427e1-9156-4ae0-bdde-e8edad46a25c}</destination>
+		</relationship>
+	</object>
+	<object class="EventMixerGroup" id="{9e7f536d-ae80-48ab-95c7-6ffc3cd477f9}">
+		<property name="name">
+			<value>Audio 1</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{35ffbf29-a7f7-46e7-9fa3-238c167f4d5a}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{2f6a5162-5c88-40fe-9ec5-4298b7b4a60a}</destination>
 		</relationship>
 		<relationship name="output">
 			<destination>{b5cc3397-6873-450f-a951-cac994f0d77d}</destination>
@@ -446,6 +481,23 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{2b22b231-d0c3-418f-8a9e-7e3e4f7e4ceb}" />
+	<object class="ParameterCondition" id="{f0d6f4b4-b5bb-4335-b23d-71936c101dec}">
+		<property name="minimum">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>1</value>
+		</property>
+		<relationship name="parameter">
+			<destination>{8c424e5b-61a0-4dcf-a0ea-ce1703da0818}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{35ffbf29-a7f7-46e7-9fa3-238c167f4d5a}">
+		<relationship name="effects">
+			<destination>{a5dc1716-cd1c-4a89-b5b8-7da41a5acba0}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{2f6a5162-5c88-40fe-9ec5-4298b7b4a60a}" />
 	<object class="MixerBusFader" id="{3a665dd3-2891-4806-99d3-d209884c376a}" />
 	<object class="ProxyEffect" id="{c16b7dd7-ea97-484a-9400-779c7dba343a}">
 		<property name="inputFormat">
@@ -546,6 +598,7 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{ea8d06b0-736a-4d22-9686-05b13824972f}" />
+	<object class="MixerBusFader" id="{a5dc1716-cd1c-4a89-b5b8-7da41a5acba0}" />
 	<object class="AutomationPoint" id="{6cad30db-360a-4f82-814e-9542d61569a6}">
 		<property name="position">
 			<value>0.0042372881355932203</value>
