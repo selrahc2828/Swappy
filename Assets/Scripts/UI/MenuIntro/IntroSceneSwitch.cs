@@ -11,9 +11,10 @@ using Image = UnityEngine.UI.Image;
 
 public class IntroSceneSwitch: MonoBehaviour
 {
-    
+    [Header("scene")]
     public Scene NextScene;
 
+    [Header("Transition Black Screen")]
     public GameObject BlackScreen;
     public AnimationCurve blackFadeINCurve;
     public float fadeINTimeRange = 9;
@@ -24,10 +25,14 @@ public class IntroSceneSwitch: MonoBehaviour
 
     private bool playClicked = false;
     
+    [Header("Transition UI menu")]
+    public AnimationCurve UIFadeINCurve;
     public GameObject playButton;
     public GameObject parameterButton;
     public GameObject quitButton;
     public GameObject title;
+    public float timeRangeToButton = 2.3f;
+    private float _tForButtons = 0;
     
 
     private void Start()
@@ -44,18 +49,26 @@ public class IntroSceneSwitch: MonoBehaviour
 
     private void FixedUpdate()
     {
+        
+        
         if (_t / fadeINTimeRange <= 1)
         {
-            Debug.Log(blackFadeINCurve.Evaluate(_t / fadeINTimeRange));
+            
             BlackFadeIn();
         }
         else
         {
-            Debug.Log("finig");
-            playButton.SetActive(true);
-            parameterButton.SetActive(true);
-            quitButton.SetActive(true);
             title.SetActive(true);
+            _tForButtons += Time.deltaTime;
+
+            if (_tForButtons / timeRangeToButton >= 1)
+            {
+                playButton.SetActive(true);
+                parameterButton.SetActive(true);
+                quitButton.SetActive(true);
+            }
+            
+            // todo apparition progressive des buttons
             
         }
 
