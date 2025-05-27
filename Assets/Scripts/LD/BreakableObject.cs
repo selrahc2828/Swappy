@@ -10,6 +10,8 @@ public class BreakableObject : MonoBehaviour
     private Rigidbody thisRb;
     private Vector3 previousVelocity;
     private Vector3 currentVelocity;
+    private Vector3 previousAngularVelocity;
+    private Vector3 currentAngularVelocity;
     private bool hasShattered;
 
     private SpawnPot _spawner;
@@ -27,7 +29,8 @@ public class BreakableObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        currentAngularVelocity = thisRb.angularVelocity;
+        previousAngularVelocity = thisRb.angularVelocity;
 
             previousVelocity = currentVelocity;
             currentVelocity = thisRb.velocity;
@@ -71,6 +74,7 @@ public class BreakableObject : MonoBehaviour
         foreach (Rigidbody rb in shatteredRbs)
         {
             rb.velocity = currentVelocity;
+            rb.angularVelocity = 
         }
 
         if (_spawner is not null)
