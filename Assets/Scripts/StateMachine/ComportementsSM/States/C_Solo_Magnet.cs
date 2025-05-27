@@ -92,7 +92,8 @@ public class C_Solo_Magnet : ComportementState
         {
             foreach (Collider objectInRange in objectsInRange)
             {
-                if (objectInRange.gameObject != _sm.gameObject) // applique pas sur player et lui même
+                
+                if (objectInRange.gameObject != _sm.gameObject) // applique pas sur lui même
                 {
                     #region AoeChecks
                     BreakableObject breakableScript = null;
@@ -113,19 +114,15 @@ public class C_Solo_Magnet : ComportementState
                     }
                     #endregion
 
+                    if (objectInRange.CompareTag("Player"))
+                    {
+                        ApplyForce(objectInRange.GetComponentInParent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+                    }
+
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
-                        if (_sm.isPlayer)
-                        {
-                            if (!objectInRange.CompareTag("Player"))
-                            {
-                                ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-                            }
-                        }
-                        else
-                        {
-                            ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-                        }
+                        ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+                                                
                         if (!magnetedObjects.Contains(objectInRange.GetComponent<Rigidbody>()))
                         {
                             GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,objectInRange.GetComponent<Rigidbody>().mass);
