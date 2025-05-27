@@ -48,11 +48,11 @@ public class Anim_manager : MonoBehaviour
 
     #region Attribution
 
-    public void HandleComportmentAttribution(GameObject target, bool rightValue, bool righthand)
+    public void HandleComportmentAttribution(GameObject target, bool rightValue, bool rightHand)
     {
         if (!target.CompareTag("Player"))
         {
-            if (righthand)
+            if (rightHand)
             {
                 Right_Attribution();
             }
@@ -63,7 +63,7 @@ public class Anim_manager : MonoBehaviour
         }
         else
         {
-            if (righthand)
+            if (rightHand)
             {
                 Right_SelfAssign();
             }
@@ -93,7 +93,7 @@ public class Anim_manager : MonoBehaviour
 
     public void Right_SelfAssign()
     {
-        Left_Arm_Animator.Play("Self_Assign");
+        Right_Arm_Animator.Play("Self_Assign");
     }
 
     #endregion
@@ -104,6 +104,8 @@ public class Anim_manager : MonoBehaviour
 
     public void HandleComportmentExtraction(GameObject target,float stateValueUSELESSHERE, bool rightValue, bool rightHand)
     {
+        Debug.Log(rightValue + " right value");
+        Debug.Log(rightHand + " right Hand");
         if (rightHand)
         {
             if (!target.CompareTag("Player"))
@@ -117,6 +119,7 @@ public class Anim_manager : MonoBehaviour
         }
         else
         {
+            Debug.Log("ok4");
             if (!target.CompareTag("Player"))
             {
                 Left_SelfAspiration();
@@ -131,17 +134,16 @@ public class Anim_manager : MonoBehaviour
         {
             if (rightHand)
             {
-                Debug.Log("droite");
                 Right_Aspiration();
             }
             else
             {
-                Debug.Log("gauche");
                 Left_Aspiration();
             }
         }
         else
         {
+            Debug.Log("ok2");
             if (rightHand)
             {
                 Right_SelfAspiration();
