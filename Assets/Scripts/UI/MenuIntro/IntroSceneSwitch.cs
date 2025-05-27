@@ -34,11 +34,12 @@ public class IntroSceneSwitch: MonoBehaviour
     public float timeRangeToButton = 2.3f;
     private float _tForButtons = 0;
     
+    public float timerCinematicBeforePlay = 10;
+    public float timerCinematic = 0;
+    private bool isCinematicPlayed = false;
 
     private void Start()
     {
-        NextScene = SceneManager.GetSceneByBuildIndex(1);
-        Debug.Log(NextScene.name);
         FMODMusicManager.instance.CreateMusicInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO);
         FMODMusicManager.instance.PlayMusicInstance(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
         
@@ -59,9 +60,15 @@ public class IntroSceneSwitch: MonoBehaviour
             }
             else
             {
-                var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-                SceneManager.UnloadSceneAsync(currentScene);
-                SceneManager.LoadScene(NextScene.name);
+                if (!isCinematicPlayed)
+                {
+                    FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.TransistionCrash, transform.position);
+                    isCinematicPlayed = true;
+                }
+                timerCinematic += Time.fixedDeltaTime;
+                if (timerCinematic >= timerCinematicBeforePlay) SceneManager.LoadScene(1, LoadSceneMode.Single);
+                
+                
             }
             
             
