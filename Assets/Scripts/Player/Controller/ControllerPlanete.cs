@@ -41,9 +41,9 @@ public class ControllerPlanete : MonoBehaviour
 
     [Space(16)]
     [Header("Debug")]
-    [SerializeField] private bool isSprinting;
+    [SerializeField] public bool isSprinting;
     [SerializeField] private bool isStopping;
-    [SerializeField] private bool grounded;
+    [SerializeField] public bool grounded;
     [SerializeField] private bool touchingInclinedSurface;
 
     private LayerMask whatIsGround;

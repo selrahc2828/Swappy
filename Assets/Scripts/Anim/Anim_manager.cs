@@ -102,7 +102,7 @@ public class Anim_manager : MonoBehaviour
 
     #region Aspiration
 
-    public void HandleComportmentExtraction(GameObject target, bool rightValue, bool rightHand)
+    public void HandleComportmentExtraction(GameObject target,float stateValueUSELESSHERE, bool rightValue, bool rightHand)
     {
         if (rightHand)
         {

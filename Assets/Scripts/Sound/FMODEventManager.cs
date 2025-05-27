@@ -6,6 +6,7 @@ using FMODUnity;
 using FMOD.Studio;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEngine.Playables;
 using Debug = UnityEngine.Debug;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
@@ -51,6 +52,9 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnJump += OnJump;
         GlobalEventManager.Instance.OnLand += OnLand;
         GlobalEventManager.Instance.OnCollide += CollisionSound;
+        GlobalEventManager.Instance.OnShattered += BreakingPot;
+        GlobalEventManager.Instance.OnAddFragmentSound += AddFragment;
+        GlobalEventManager.Instance.OnSlowMotionInput += SlowMotionSoundStart;
     }
 
     private void OnDisable()
@@ -66,6 +70,9 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnJump -= OnJump;
         GlobalEventManager.Instance.OnLand -= OnLand;
         GlobalEventManager.Instance.OnCollide -= CollisionSound;
+        GlobalEventManager.Instance.OnShattered -= BreakingPot;
+        GlobalEventManager.Instance.OnAddFragmentSound -= AddFragment;
+        GlobalEventManager.Instance.OnSlowMotionInput -= SlowMotionSoundStart;
     }
 
     private void Start()
@@ -328,11 +335,11 @@ public class FMODEventManager : MonoBehaviour
     #region C# Event
     
     #region Player Interact
-    private void OnComportementExtracted(GameObject _gameObject, bool rightvalue, bool righthand)
+    private void OnComportementExtracted(GameObject _gameObject, float stateValue, bool rightvalue, bool righthand)
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerStealComp);
         PickHand(eventInstance,righthand);
-        //DefineCompPickType(_gameObject,eventInstance);
+        DefineCompPickType(_gameObject,eventInstance,stateValue);
         if (_gameObject.CompareTag("Player"))
         {
             SetNamedParamEventInstance(eventInstance,"SIM",1);
@@ -344,7 +351,7 @@ public class FMODEventManager : MonoBehaviour
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerGiveComp);
         PickHand(eventInstance,righthand);
-        //DefineCompPickType(_gameObject,eventInstance);
+        DefineCompPickType(_gameObject,eventInstance);
         if (_gameObject.CompareTag("Player"))
         {
             SetNamedParamEventInstance(eventInstance,"SIM",1);
@@ -357,7 +364,7 @@ public class FMODEventManager : MonoBehaviour
     {
         var eventInstance = CreateEventInstance(FMODEvents.PlayerSelfSwitch);
         PickHand(eventInstance,righthand);
-        //DefineCompPickType(_gameObject,eventInstance);
+        DefineCompPickType(_gameObject,eventInstance);
         PlayEventInstance(eventInstance);
         ReleaseEventInstance(eventInstance);
     }
@@ -365,16 +372,26 @@ public class FMODEventManager : MonoBehaviour
     {
         if (isActive)
         {
-            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeIN,CreateEventInstance(FMODEvents.PlayerSelfImpactModeIN));
-            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeIN));
-            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeIN));
-            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeIN);
+            if (CheckInstanceInEncylopedia(_gameObject, FMODEvents.PlayerSelfImpactModeOUT,
+                    out EventInstance instanceOUT))
+            {
+                instanceOUT.getPlaybackState(out PLAYBACK_STATE stateOUT);
+                if (stateOUT == PLAYBACK_STATE.PLAYING||stateOUT==PLAYBACK_STATE.STARTING) instanceOUT.stop(STOP_MODE.IMMEDIATE);
+            }
+            AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT,CreateEventInstance(FMODEvents.PlayerSelfImpactModeOUT));
+            PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
+            RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT);
         }
         else
         {
+            if (CheckInstanceInEncylopedia(_gameObject, FMODEvents.PlayerSelfImpactModeIN,
+                    out EventInstance instanceIN))
+            {
+                instanceIN.getPlaybackState(out PLAYBACK_STATE stateIN);
+                if (stateIN == PLAYBACK_STATE.PLAYING||stateIN==PLAYBACK_STATE.STARTING) instanceIN.stop(STOP_MODE.IMMEDIATE);
+            }
             AddInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT,CreateEventInstance(FMODEvents.PlayerSelfImpactModeOUT));
             PlayEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
-            StopEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,FMODEvents.PlayerSelfImpactModeOUT));
             RemoveInstanceInEncyclopedia(_gameObject,FMODEvents.PlayerSelfImpactModeOUT);
         }
     }
@@ -391,12 +408,19 @@ public class FMODEventManager : MonoBehaviour
         }
     }
 
-    private void DefineCompPickType(GameObject _gameObject, EventInstance eventInstance)
+    private void DefineCompPickType(GameObject _gameObject, EventInstance eventInstance, float stateValue = -1f)
     {
-        if (gameObject.GetComponent<ComportementState>() != null)
+        if (stateValue < 0)
         {
-            switch (_gameObject.GetComponent<ComportementState>().stateValue)
+            ComportementsStateMachine stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
+            if (stateMachine.currentState is ComportementState)
             {
+                ComportementState currentObjectState = (ComportementState)stateMachine.currentState;
+                stateValue = currentObjectState.stateValue;
+            }
+        }
+        switch (stateValue)
+        {
                 case 1:
                     SetNamedParamEventInstance(eventInstance,"COMPTYPE",1);
                     break;
@@ -412,8 +436,31 @@ public class FMODEventManager : MonoBehaviour
                 case 81:
                     SetNamedParamEventInstance(eventInstance,"COMPTYPE",5);
                     break;
+                default:
+                    SetNamedParamEventInstance(eventInstance,"COMPTYPE",0);
+                    break;
+        }
+        
+    }
+
+    private void SlowMotionSoundStart(bool isSlowMotion)
+    {
+        if (isSlowMotion)
+        {
+            AddInstanceInEncyclopedia(gameObject,FMODEvents.PlayerSlowingtime,CreateEventInstance(FMODEvents.PlayerSlowingtime));
+            GetInstanceFromEncyclopediaKey(gameObject,FMODEvents.PlayerSlowingtime).getPlaybackState(out PLAYBACK_STATE playingState );
+            if (playingState == PLAYBACK_STATE.PLAYING) GetInstanceFromEncyclopediaKey(gameObject, FMODEvents.PlayerSlowingtime).stop(STOP_MODE.IMMEDIATE);
+            PlayEventInstance(GetInstanceFromEncyclopediaKey(gameObject,FMODEvents.PlayerSlowingtime));
+        }
+        else
+        {
+            if (CheckInstanceInEncylopedia(gameObject, FMODEvents.PlayerSlowingtime, out EventInstance eventInstance))
+            {
+                SetNamedParamEventInstance(eventInstance,"SlowTime",1);
+                RemoveInstanceInEncyclopedia(gameObject,FMODEvents.PlayerSlowingtime);
             }
         }
+            
     }
     #endregion
 
@@ -563,10 +610,10 @@ public class FMODEventManager : MonoBehaviour
         MovingTypeSound _movingType = MovingTypeSound.Jump;
         ActionOnPlayerMove(_groundCollider,_movingType);
     }
-    private void OnLand(GameObject _groundCollider)
+    private void OnLand(GameObject _groundCollider, float fallForce)
     {
         MovingTypeSound _movingType = MovingTypeSound.Land;
-        ActionOnPlayerMove(_groundCollider,_movingType);
+        ActionOnPlayerMove(_groundCollider,_movingType, fallForce);
     }
     private enum MovingTypeSound
     {
@@ -616,11 +663,12 @@ public class FMODEventManager : MonoBehaviour
                 break;
         }
     }
-    private void ActionOnPlayerMove(GameObject _gameObject, MovingTypeSound _movingType)
+    private void ActionOnPlayerMove(GameObject _gameObject, MovingTypeSound _movingType, float fallForce=-1)
     {
         MovingRef(_movingType, out EventReference _eventReference);
          var _eventInstance = CreateEventInstance(_eventReference);
         SwitchGround(_gameObject,_eventInstance);
+        if(fallForce > 0) SetNamedParamEventInstance(_eventInstance,"FALLFORCE",fallForce);
         PlayEventInstance(_eventInstance);
         ReleaseEventInstance(_eventInstance);
     }
@@ -633,7 +681,17 @@ public class FMODEventManager : MonoBehaviour
         PlayOneShotAttached(FMODEvents.Collision, _gameObject);
     }
 
+    private void BreakingPot(GameObject _gameObject)
+    {
+        PlayOneShotAttached(FMODEvents.BreakingPot, _gameObject);
+    }
+
+    private void AddFragment(GameObject _gameObject)
+    {
+        PlayOneShotAttached(FMODEvents.AddFragment, _gameObject);
+    }
     #endregion
+    
     
     
     

@@ -20,7 +20,8 @@ public class IntroSceneSwitch: MonoBehaviour
             fonduAuNoir.SetActive(true);
         }
         var currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(NextScene.name);
         SceneManager.UnloadSceneAsync(currentScene);
+        SceneManager.LoadScene(NextScene.name);
+        
     }
 }

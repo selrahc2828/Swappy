@@ -243,6 +243,9 @@ public class GameManager : MonoBehaviour
                 slowMotion = false;
                 slowTimer = 0f;
                 SlowMotion(false);
+                
+                //Oui j'ai mis une ligne FMOD dans le Game Manager, c'est le seul moyen efficace que j'ai trouver de faire ça sans creer un chier d'event qui serve à rien, la ligne fonctionne et il n'y a aucun bug si vous ne changer rien ici, théoriquement.
+                FMODEventManager.instance.SetNamedParamEventInstance(FMODEventManager.instance.GetInstanceFromEncyclopediaKey(FindObjectOfType<FMODEventManager>().gameObject,FMODEventManager.instance.FMODEvents.PlayerSlowingtime),"SlowTime",1);
             }
         }
         else

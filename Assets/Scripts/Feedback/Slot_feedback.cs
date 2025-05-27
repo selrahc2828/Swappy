@@ -47,7 +47,7 @@ public class Slot_feedback : MonoBehaviour
         }
     }
     
-    public void RecieveExtractedSignal(GameObject originOfComportment, bool rightValue, bool rightHand)
+    public void RecieveExtractedSignal(GameObject originOfComportment, float stateValueUSELESSHERE, bool rightValue, bool rightHand)
     {
         if (rightHand == right_Arm)
         {
