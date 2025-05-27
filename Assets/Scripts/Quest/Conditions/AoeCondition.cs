@@ -53,6 +53,7 @@ public class AoeCondition: Condition
     }
     public BreakableObject CheckRepulseBounceAoeCondition()
     {
+        if (AoeType == AoeCategory.RepulseBounce || AoeType == AoeCategory.AnyRepulse)
         {
             SetConditionState(true);
             return breakableScript;
