@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 4327980737577414413}
   - component: {fileID: 8278207124183443112}
   - component: {fileID: 4233130309594573131}
+  - component: {fileID: 2256444961704244773}
   - component: {fileID: 7586625849983570379}
   - component: {fileID: 4255094201231333142}
   m_Layer: 0
@@ -131,8 +132,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shatteredVersion: {fileID: 7597309494073759306, guid: af2584b3f0076cb489619cd3b71a2902, type: 3}
-  minShatterPower: 300
+  minShatterPower: 0
+  avoidCollisionBreak: 1
   fragmentPrefab: {fileID: 0}
+--- !u!114 &2256444961704244773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5136452746074006934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f40efd36aa3bfb4a979daf657e2391e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConditionRedudancy: 0
+  ConditionOutput:
+    m_PersistentCalls:
+      m_Calls: []
+  AoeType: 0
+  breakableScript: {fileID: 4233130309594573131}
 --- !u!54 &7586625849983570379
 Rigidbody:
   m_ObjectHideFlags: 0

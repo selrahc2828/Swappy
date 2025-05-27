@@ -129,6 +129,7 @@ public class C_Solo_Impulse : ComportementState
                 {
                     breakableScript = objectInRange.GetComponent<AoeCondition>().CheckRepulseAoeCondition();
                 }
+                catch {}
                 finally
                 {
                     if (breakableScript != null)
