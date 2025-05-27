@@ -53,6 +53,7 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnCollide += CollisionSound;
         GlobalEventManager.Instance.OnShattered += BreakingPot;
         GlobalEventManager.Instance.OnAddFragmentSound += AddFragment;
+        GlobalEventManager.Instance.OnSlowMotionInput += SlowMotionSoundStart;
     }
 
     private void OnDisable()
@@ -70,6 +71,7 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnCollide -= CollisionSound;
         GlobalEventManager.Instance.OnShattered -= BreakingPot;
         GlobalEventManager.Instance.OnAddFragmentSound -= AddFragment;
+        GlobalEventManager.Instance.OnSlowMotionInput -= SlowMotionSoundStart;
     }
 
     private void Start()
@@ -428,6 +430,26 @@ public class FMODEventManager : MonoBehaviour
                     break;
         }
         
+    }
+
+    private void SlowMotionSoundStart(bool isSlowMotion)
+    {
+        if (isSlowMotion)
+        {
+            AddInstanceInEncyclopedia(gameObject,FMODEvents.PlayerSlowingtime,CreateEventInstance(FMODEvents.PlayerSlowingtime));
+            GetInstanceFromEncyclopediaKey(gameObject,FMODEvents.PlayerSlowingtime).getPlaybackState(out PLAYBACK_STATE playingState );
+            if (playingState == PLAYBACK_STATE.PLAYING) GetInstanceFromEncyclopediaKey(gameObject, FMODEvents.PlayerSlowingtime).stop(STOP_MODE.IMMEDIATE);
+            PlayEventInstance(GetInstanceFromEncyclopediaKey(gameObject,FMODEvents.PlayerSlowingtime));
+        }
+        else
+        {
+            if (CheckInstanceInEncylopedia(gameObject, FMODEvents.PlayerSlowingtime, out EventInstance eventInstance))
+            {
+                SetNamedParamEventInstance(eventInstance,"SlowTime",1);
+                RemoveInstanceInEncyclopedia(gameObject,FMODEvents.PlayerSlowingtime);
+            }
+        }
+            
     }
     #endregion
 
