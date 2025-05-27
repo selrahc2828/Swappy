@@ -23,7 +23,7 @@ public class AoeCondition: Condition
 
     [SerializeField] private AoeCategory AoeType;
     [Tooltip("Facultatif. Si l'objet doit être détruit, le lien vers le script de destruction pour l'application de la vélocité")]
-    private BreakableObject breakableScript;
+    [SerializeField] private BreakableObject breakableScript;
 
     public BreakableObject CheckRepulseAoeCondition()
     {
