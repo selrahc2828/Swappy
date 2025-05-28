@@ -185,8 +185,11 @@ public class IntroSceneSwitch: MonoBehaviour
 
     public void OnQuitButtonClicked()
     {
+        
         FMODMusicManager.instance.StopMusic(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
         FMODMusicManager.instance.ReleaseMusicInstance(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
+
+        //Application.Quit();
     }
 
     public void BlackFadeIn()
@@ -237,4 +240,6 @@ public class IntroSceneSwitch: MonoBehaviour
         GameManager.Instance.parameters.volumeMenu = volumeSliderMenu.value;
         FMODEventManager.instance.ChangeVolume(FMODEventManager.instance.Fmodbus.busMenu,GameManager.Instance.parameters.volumeMenu);
     }
+    
+    
 }
