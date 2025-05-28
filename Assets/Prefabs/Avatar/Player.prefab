@@ -617,13 +617,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d49a626f336d2346adb723e03577991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 15
-  maxAngleDetection: 30
+  radius: 20
+  maxAngleDetection: 2.7
   origin: {fileID: 3534123727131700791}
   detectionLayer:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 8193
   cible: {fileID: 0}
+  angleToleranceByDistance:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  dotMax: 0
 --- !u!1 &312993634636169864
 GameObject:
   m_ObjectHideFlags: 0
