@@ -32,7 +32,7 @@ public class ControllerSoundPLayer : MonoBehaviour
         
         if (isGrounded)
         {
-            actualAirTime = 0;
+            actualAirTime = 0f;
             if (isSprinting)
             {
                 actualValueStep += Time.deltaTime*gameObject.GetComponent<Rigidbody>().velocity.magnitude*1.5f;  
@@ -53,7 +53,7 @@ public class ControllerSoundPLayer : MonoBehaviour
                         FMODEventManager.instance.RemoveInstanceInEncyclopedia(gameObject, FMODEventManager.instance.FMODEvents.PlayerFall);
                     }
                     if (actualValueStep < maxValueStep) fallForce = actualAirTime/maxAirTime;
-                    else fallForce = 1;
+                    else fallForce = 1f;
                 }
                 PerformActionSound(MovingSound.Land,fallForce);
             }
@@ -68,7 +68,7 @@ public class ControllerSoundPLayer : MonoBehaviour
             else
             {
                 
-                if (transform.InverseTransformDirection(gameObject.GetComponent<Rigidbody>().velocity).y < 0)
+                if (transform.InverseTransformDirection(gameObject.GetComponent<Rigidbody>().velocity).y < 0f)
                 {
                     actualAirTime += Time.deltaTime;
                     if (!FMODEventManager.instance.CheckInstanceInEncylopedia(gameObject, FMODEventManager.instance.FMODEvents.PlayerFall, out EventInstance PlayerSoundFalling))
@@ -90,7 +90,7 @@ public class ControllerSoundPLayer : MonoBehaviour
         isGroundedLastFrame = isGrounded;
     }
 
-    private void PerformActionSound(MovingSound mocingAction,float fallForce = -1)
+    private void PerformActionSound(MovingSound mocingAction,float fallForce = -1f)
     {
         Physics.Raycast(transform.position, -transform.up, out RaycastHit hit);
         switch (mocingAction)
@@ -102,6 +102,7 @@ public class ControllerSoundPLayer : MonoBehaviour
                 GlobalEventManager.Instance.Jump(hit.collider.gameObject);
                 break;
             case MovingSound.Land:
+                if (fallForce < 0f) fallForce = 0f;
                 GlobalEventManager.Instance.Land(hit.collider.gameObject, fallForce);
                 break;
             default:
