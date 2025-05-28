@@ -25,13 +25,14 @@ public class ControllerSoundPLayer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         isGrounded = gameObject.GetComponent<ControllerPlanete>().grounded;
         isSprinting = gameObject.GetComponent<ControllerPlanete>().isSprinting;
         
         if (isGrounded)
         {
+            actualAirTime = 0;
             if (isSprinting)
             {
                 actualValueStep += Time.deltaTime*gameObject.GetComponent<Rigidbody>().velocity.magnitude*1.5f;  

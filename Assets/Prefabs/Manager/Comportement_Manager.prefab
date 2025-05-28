@@ -106,15 +106,17 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     matFlareImpulse: {fileID: 2100000, guid: 4e96bcd7fe631434f9adf302c3cf5245, type: 2}
-    particleFlareColorImpulse: {r: 0.8784314, g: 0.15686275, b: 0.14509805, a: 1}
+    particleFlareColorImpulse: {r: 1, g: 0.56078434, b: 0.56078434, a: 1}
     matFlareBounce: {fileID: 2100000, guid: 944edcf9dce1fbb40b28482c23dae3a9, type: 2}
-    particleFlareColorBounce: {r: 0.14509805, g: 0.8784314, b: 0.18039216, a: 1}
+    particleFlareColorBounce: {r: 0.5647059, g: 0.8078432, b: 0.5686275, a: 1}
     matFlareImmuable: {fileID: 2100000, guid: 920dfde4a9c09c04580af7426987ed04, type: 2}
-    particleFlareColorImmuable: {r: 0.7372549, g: 0.14509805, b: 0.8784314, a: 1}
+    particleFlareColorImmuable: {r: 0.7960785, g: 0.7137255, b: 0.9607844, a: 1}
     matFlareMagnet: {fileID: 2100000, guid: b7019ea9112d62a4eaeae3c626fa0a37, type: 2}
-    particleFlareColorMagnet: {r: 0.14509805, g: 0.36862746, b: 0.8784314, a: 1}
+    particleFlareColorMagnet: {r: 0.69411767, g: 0.86274517, b: 0.9921569, a: 1}
     matFlareRocket: {fileID: 2100000, guid: e5746f8cfaef4ed49a55234f9963186b, type: 2}
-    particleFlareColorRocket: {r: 0.8784314, g: 0.76862746, b: 0.14509805, a: 1}
+    particleFlareColorRocket: {r: 0.9921569, g: 0.90196085, b: 0.5568628, a: 1}
+  feedBack_ImpulseSouffle: {fileID: 0}
+  feedBack_ImpulseImpact: {fileID: 0}
   feedBack_Impulse: {fileID: 1838528298772245979, guid: 7062a1bbabe855741b3ad50f34e91064, type: 3}
   feedBack_Bouncing: {fileID: 7521130485353488716, guid: 72c3313dcb76fbd4db0cf9480d39a220, type: 3}
   feedBack_Rocket: {fileID: 7314418752963487225, guid: 084074985ced6f74baf880cb96bbf23e, type: 3}
@@ -123,11 +125,12 @@ MonoBehaviour:
   magnetGenericPrefab: {fileID: 724591926826760339, guid: 9dff620a99e95a0489ddabbe4db1b50d, type: 3}
   impulseData:
     impulseTime: 5
+    impulseFirstTime: 2
     doubleImpulseTime: 7
+    doubleImpulseFirstTime: 2.5
     impulseRange: 7.5
     impulseForce: 66
     destroyOnUse: 0
-    impulseGradiantForce: 0
     impulseFeedback: {fileID: 5997281712086689970, guid: d7e7b2fb81b45414cbff7f19ab5a5b62, type: 3}
     applyOnMe: 0
     doubleRepulseForceMult: 1.5
@@ -135,8 +138,9 @@ MonoBehaviour:
   rocketData:
     rocketForce: 250
     rocketForceOnPlayer: 250
-    rocketForceWhenGrab: 12
+    rocketForceWhenGrab: 10
     rocketOnCooldown: 5
+    rocketFirstOnCooldown: 2
     rocketOffCooldown: 3.5
     rocketMaxSpeed: 6
   doubleRocketData:
@@ -144,22 +148,27 @@ MonoBehaviour:
     rocketDoubleForceOnPlayer: 175
     rocketDoubleForceWhenGrab: 175
     rocketDoubleCouldown: 10
+    rocketDoubleFirstCouldown: 5
   immuableRocketData:
     rocketReleaseForce: 250
     chargeTimeMax: 30
   magnetRocketData:
-    prefabMagnetRocketForcefield: {fileID: 7410193036753820761, guid: b9fbb057f1c335e42b1c4956f62c15db, type: 3}
-    magnetRocketFlyTime: 4
-    rocketMagnetForce: 7
-    rocketMagnetForceOnPlayer: 7
-    rocketMagnetForceWhenGrab: 7
-    magnetTrailForce: 5
-    magnetTrailLerp: 1.5
-    magnetTrailTimeBeforeMove: 5
+    magnetRange: 8
+    magnetForce: 8
+    equilibriumDistance: 2
+    dampingFactor: 2
+    rocketForce: 75
+    rocketForceOnPlayer: 75
+    rocketForceWhenGrab: 10
+    rocketOnCooldown: 5
+    rocketFirstOnCooldown: 2
+    rocketOffCooldown: 6
+    rocketMaxSpeed: 6
   magnetData:
     magnetRange: 7.5
     magnetForce: 20
-    magnetGradiantForce: 0
+    equilibriumDistance: 2
+    dampingFactor: 2
   doubleMagnetData:
     prefabDoubleMagnetForcefield: {fileID: 724591926826760339, guid: 9dff620a99e95a0489ddabbe4db1b50d, type: 3}
     justePourDiffSimpleMagnet: {r: 0.2988163, g: 0.55142236, b: 0.745283, a: 1}

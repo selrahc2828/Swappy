@@ -24,10 +24,12 @@
 			<destination>{aadd82e8-0615-4d2b-84dc-3d4065870ba0}</destination>
 			<destination>{e214787a-3359-4277-9fa6-0bed2ad793a6}</destination>
 			<destination>{3fbf8e2e-ea42-4267-bd28-fe9fe674ff17}</destination>
+			<destination>{738fdfaf-be1d-4b67-b5d0-f1023cb45b68}</destination>
 		</relationship>
 		<relationship name="snapshotTracks">
 			<destination>{13abd5f8-000b-4d55-b32a-1e7b0cda3d8b}</destination>
 			<destination>{bd3f1c0a-55c0-466e-960a-5dca98aca6d2}</destination>
+			<destination>{cbf5ba6b-8c71-4c92-96a3-8bac02b511da}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{0680074e-4a18-4125-8223-62fa6bc90675}" />
@@ -61,7 +63,7 @@
 			<value>pitch</value>
 		</property>
 		<property name="value">
-			<value>-10.5</value>
+			<value>-24</value>
 		</property>
 		<relationship name="automatableObject">
 			<destination>{f5d6e3a0-388e-4542-81fa-2c30c2a51fab}</destination>
@@ -72,10 +74,21 @@
 			<value>pitch</value>
 		</property>
 		<property name="value">
-			<value>-10.5</value>
+			<value>-24</value>
 		</property>
 		<relationship name="automatableObject">
 			<destination>{884aa9e8-8a8c-41e2-8b53-2b61f2bc12e8}</destination>
+		</relationship>
+	</object>
+	<object class="SnapshotProperty" id="{738fdfaf-be1d-4b67-b5d0-f1023cb45b68}">
+		<property name="propertyName">
+			<value>cutoff</value>
+		</property>
+		<property name="value">
+			<value>1300</value>
+		</property>
+		<relationship name="automatableObject">
+			<destination>{2cad612e-dc99-4f1e-ba83-5d166d78c34f}</destination>
 		</relationship>
 	</object>
 	<object class="SnapshotTrack" id="{13abd5f8-000b-4d55-b32a-1e7b0cda3d8b}">
@@ -86,6 +99,11 @@
 	<object class="SnapshotTrack" id="{bd3f1c0a-55c0-466e-960a-5dca98aca6d2}">
 		<relationship name="mixerStrip">
 			<destination>{884aa9e8-8a8c-41e2-8b53-2b61f2bc12e8}</destination>
+		</relationship>
+	</object>
+	<object class="SnapshotTrack" id="{cbf5ba6b-8c71-4c92-96a3-8bac02b511da}">
+		<relationship name="mixerStrip">
+			<destination>{15e955d6-f926-49fd-be9e-b4d173dfcb5a}</destination>
 		</relationship>
 	</object>
 </objects>

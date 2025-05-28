@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 290091699da15494fb7ea3e9b60a79a5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.90278
+      value: 0.72
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 290091699da15494fb7ea3e9b60a79a5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.90278
+      value: 0.72
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 290091699da15494fb7ea3e9b60a79a5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.90278
+      value: 0.72
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 290091699da15494fb7ea3e9b60a79a5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 290091699da15494fb7ea3e9b60a79a5, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8391222552659086748, guid: 290091699da15494fb7ea3e9b60a79a5, type: 3}
       propertyPath: m_Layer
       value: 2
@@ -87,11 +91,36 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: 290091699da15494fb7ea3e9b60a79a5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8915246873132623842}
   m_SourcePrefab: {fileID: 100100000, guid: 290091699da15494fb7ea3e9b60a79a5, type: 3}
 --- !u!4 &197699966978203871 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 290091699da15494fb7ea3e9b60a79a5, type: 3}
+  m_PrefabInstance: {fileID: 375178037444658996}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1060744926358730064 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: 290091699da15494fb7ea3e9b60a79a5, type: 3}
+  m_PrefabInstance: {fileID: 375178037444658996}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8915246873132623842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060744926358730064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc55da657b60db41b060ce8490aec41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!23 &4194159653903110651 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4683669308469848369, guid: 290091699da15494fb7ea3e9b60a79a5, type: 3}
   m_PrefabInstance: {fileID: 375178037444658996}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4877742571466907023
@@ -104,15 +133,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0aa79c95aed42e6448c9dabee423f453, type: 3}
       propertyPath: m_LocalPosition.x
@@ -224,8 +253,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0.000010654795, y: -0.0000094701545, z: -0.00003286871}
+  m_Size: {x: 0.8305311, y: 0.8164806, z: 0.8144528}
+  m_Center: {x: 0.00018644333, y: -0.0013431907, z: -0.00000071525574}
 --- !u!54 &4806007975114580271
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -267,7 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   comportementManager: {fileID: 0}
-  rend: {fileID: 0}
+  rend: {fileID: 4194159653903110651}
   isPlayer: 0
   rb: {fileID: 0}
   objectCollider: {fileID: 0}

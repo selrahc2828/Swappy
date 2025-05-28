@@ -158,19 +158,15 @@ public class C_Magnet_Rocket : ComportementState
                     }
                     #endregion
 
+                    if (objectInRange.CompareTag("Player"))
+                    {
+                        ApplyForce(objectInRange.GetComponentInParent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+                    }
+
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
-                        if (_sm.isPlayer)
-                        {
-                            if (!objectInRange.CompareTag("Player"))
-                            {
-                                ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-                            }
-                        }
-                        else
-                        {
-                            ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-                        }
+                        ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+
                         if (!magnetedObjects.Contains(objectInRange.GetComponent<Rigidbody>()))
                         {
                             GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,objectInRange.GetComponent<Rigidbody>().mass);
