@@ -43,12 +43,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FullOpaqueEffect:
+        m_Texture: {fileID: 2800000, guid: 8db5a943bd039514bbf58e35999bd325, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MidOpaqueEffect:
+        m_Texture: {fileID: 2800000, guid: 134b1e13ae26bf94d9569f2bf60806b8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -63,8 +71,12 @@ Material:
         m_Texture: {fileID: 2800000, guid: 134b1e13ae26bf94d9569f2bf60806b8, type: 3}
         m_Scale: {x: 0.5, y: 0.5}
         m_Offset: {x: 0, y: 0}
+    - _YJE1z3:
+        m_Texture: {fileID: 2800000, guid: 134b1e13ae26bf94d9569f2bf60806b8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _perlin3:
-        m_Texture: {fileID: 2800000, guid: a8fa98faa07dfda4996f52c6aaca4feb, type: 3}
+        m_Texture: {fileID: 2800000, guid: aec738f429fa4ab4a8b574c7c804886c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -77,28 +89,33 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Float0: 4
+    - _Float0: 5
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OpacityTransition: 0.7736337
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _TilingSky: 4
-    - _TilingSkyEffect: 10
+    - _TilingSkyEffect: 8
     - _TimeScale: 0.05
-    - _TimeScale1: 0.005
+    - _TimeScale1: -0.035
+    - _TimeScale2: 0.05
+    - _TimeScaleMid: 0.1
+    - _TimeScaleOpaque: 0.05
     - _UVSec: 0
     - _ZWrite: 1
-    - __dirty: 0
+    - __dirty: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MainColor: {r: 0.6552599, g: 0.8962264, b: 0.8689904, a: 0}
     - _MainColor1: {r: 0.6552599, g: 0.8962264, b: 0.8689904, a: 0}
-    - _MainColor2: {r: 0.32854217, g: 0.5643938, b: 0.6509434, a: 0}
+    - _MainColor2: {r: 0.3285416, g: 0.5643938, b: 0.6509434, a: 0}
+    - _Opacity: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 0}
   m_BuildTextureStacks: []

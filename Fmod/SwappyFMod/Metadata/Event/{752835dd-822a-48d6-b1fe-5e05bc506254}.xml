@@ -60,7 +60,7 @@
 			<destination>{c0568e44-bb6e-4530-a182-c3fa4244c3f4}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{884aa9e8-8a8c-41e2-8b53-2b61f2bc12e8}</destination>
+			<destination>{fbe03aa7-6df1-4c2f-8fe4-35dd405854ba}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{5b80ab3d-406f-41d3-9aaf-de5f50810457}">
@@ -105,6 +105,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{85d4a265-d01f-4942-80e3-c9e5b3da4cd6}">
+		<property name="volume">
+			<value>-18</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{d2c12f31-ff9d-462f-af25-e21389c04a8d}</destination>
 		</relationship>
@@ -123,10 +126,10 @@
 	<object class="MixerBusPanner" id="{c0568e44-bb6e-4530-a182-c3fa4244c3f4}" />
 	<object class="SnapshotModule" id="{2662fa68-2fc0-4abb-856b-537fb8174fc2}">
 		<property name="start">
-			<value>1.125</value>
+			<value>0.10000000000000001</value>
 		</property>
 		<property name="length">
-			<value>3.375</value>
+			<value>4.4999999999999982</value>
 		</property>
 		<relationship name="event">
 			<destination>{345c3d44-ca08-40b8-a0ae-783b107e9d0c}</destination>
@@ -159,7 +162,7 @@
 	</object>
 	<object class="CommandSound" id="{c222cf9b-f2fe-41f2-bd88-851de8c5c336}">
 		<property name="length">
-			<value>0.125</value>
+			<value>0</value>
 		</property>
 		<property name="commandType">
 			<value>3</value>
@@ -187,7 +190,7 @@
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>2.1000000000000001</value>
+			<value>2.5000000000000004</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{d7ed14d8-f0e1-4973-8765-690f0b8668f2}</destination>
@@ -215,7 +218,7 @@
 			<value>0.5</value>
 		</property>
 		<property name="length">
-			<value>3.75</value>
+			<value>4</value>
 		</property>
 		<property name="triggerConditionMode">
 			<value>1</value>

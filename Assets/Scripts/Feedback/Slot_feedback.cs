@@ -32,7 +32,7 @@ public class Slot_feedback : MonoBehaviour
         GlobalEventManager.Instance.OnComportmentExchanged -= RecieveExchangedSignal;
     }
 
-    public void RecieveAddedSignal(GameObject objectToAddComportment, bool rightValue, bool rightHand)
+    public void RecieveAddedSignal(GameObject objectToAddComportment, float valueStateUSELESSHERE, bool rightValue, bool rightHand)
     {
         if (rightHand == right_Arm)
         {
@@ -55,7 +55,7 @@ public class Slot_feedback : MonoBehaviour
         }
     }
 
-    public void RecieveExchangedSignal(GameObject player, bool rightHand)
+    public void RecieveExchangedSignal(GameObject player, float stateValueUSELESSHERE, bool rightHand)
     {
         //je sais pas gérer l'échange
     }

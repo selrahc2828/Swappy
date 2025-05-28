@@ -42,6 +42,26 @@ public class ImpulseMagnetZone : MonoBehaviour
             
             other.GetComponentInParent<Rigidbody>().AddForce(direction * force, ForceMode.Force);//Acceleration
         }
+
+        #region AoeChecks
+        BreakableObject breakableScript = null;
+        try
+        {
+            breakableScript = other.GetComponent<AoeCondition>().CheckMagnetBounceAoeCondition();
+        }
+        catch { }
+        finally
+        {
+            if (breakableScript != null)
+            {
+                foreach (Rigidbody rb in breakableScript.ShatterObject())
+                {
+                    Vector3 direction = rb.transform.position - transform.position;
+                    rb.GetComponentInParent<Rigidbody>().AddForce(direction * force, ForceMode.Force);//Acceleration
+                }
+            }
+        }
+        #endregion
     }
 
     private void OnTriggerEnter(Collider other)

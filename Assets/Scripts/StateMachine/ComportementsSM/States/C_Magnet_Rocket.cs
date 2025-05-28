@@ -4,24 +4,25 @@ using UnityEngine;
 
 public class C_Magnet_Rocket : ComportementState
 {
-    private float magnetRocketFlyTime = 4f;
-    private float rocketMagnetForce = 20f;
-    private float rocketMagnetForceOnPlayer = 20f;
-    private float rocketMagnetForceWhenGrab = 20f;
-    private float magnetTrailForce = 20f;
-    private float magnetTrailSpeedLerp = 1f;
-    private float magnetTrailTimeBeforeMove = 3f;
-    private float _timer = 0f;
-    private bool _rocketOn = true;
-    private bool firstRocket;
-    private float timerFirstRocket;
-
-    private GameObject prefabForceField;
-    private GameObject magnetFieldObject;
+    private float magnetRange;
+    private float trueMagnetRange;
+    private float magnetForce;
+    private float equilibriumDistance;
+    private float dampingFactor;
     
-    private Vector3 magnetPos;
+    private float rocketForce;
+    private float rocketForceOnPlayer;
+    private float rocketForceWhenGrab;
+    private float onCooldown;
+    private float onFirstCooldown;
+    private float offCooldown;
+    private float timer;
+    private float maxSpeed;
+    private bool rocketOn;
+    private bool startingSoonSignalSended;
 
-
+    private List<Rigidbody> magnetedObjects = new List<Rigidbody>();
+    
     
     public C_Magnet_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -29,144 +30,176 @@ public class C_Magnet_Rocket : ComportementState
 
     public override void Enter()
     {
+        isKinematic = false;
         stateValue = 108;
         leftValue = 27;
         rightValue = 81;
         base.Enter();
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-
-        magnetRocketFlyTime = _sm.comportementManager.magnetRocketData.magnetRocketFlyTime;
-        timerFirstRocket = _sm.comportementManager.magnetRocketData.rocketFirstTime;
-        rocketMagnetForce = _sm.comportementManager.magnetRocketData.rocketMagnetForce;
-        rocketMagnetForceOnPlayer = _sm.comportementManager.magnetRocketData.rocketMagnetForceOnPlayer;
-        rocketMagnetForceWhenGrab = _sm.comportementManager.magnetRocketData.rocketMagnetForceWhenGrab;
-        magnetTrailForce = _sm.comportementManager.magnetRocketData.magnetTrailForce; 
-            
-        magnetTrailSpeedLerp = _sm.comportementManager.magnetRocketData.magnetTrailLerp;
-        magnetTrailTimeBeforeMove = _sm.comportementManager.magnetRocketData.magnetTrailTimeBeforeMove;
-        prefabForceField = _sm.comportementManager.magnetRocketData.prefabMagnetRocketForcefield;
         
-        // spawn de la zone de magnet
-        magnetPos = _sm.transform.position;
+        rocketOn = false;
+        startingSoonSignalSended = false;
+        maxSpeed = _sm.comportementManager.magnetRocketData.rocketMaxSpeed;
+        rocketForce = _sm.comportementManager.magnetRocketData.rocketForce;
+        rocketForceOnPlayer = _sm.comportementManager.magnetRocketData.rocketForceOnPlayer;
+        rocketForceWhenGrab = _sm.comportementManager.magnetRocketData.rocketForceWhenGrab;
+        onCooldown = _sm.comportementManager.magnetRocketData.rocketOnCooldown;
+        onFirstCooldown = _sm.comportementManager.magnetRocketData.rocketFirstOnCooldown;
+        offCooldown = _sm.comportementManager.magnetRocketData.rocketOffCooldown;
+        
+        magnetRange = _sm.comportementManager.magnetRocketData.magnetRange;
         if (_sm.isPlayer)
         {
-            magnetPos.y = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude;
+            trueMagnetRange = _sm.comportementManager.playerBouncingCollider.bounds.extents.magnitude + magnetRange;
         }
         else
         {
+            trueMagnetRange = _sm.GetComponent<Collider>().bounds.extents.magnitude + magnetRange;
             ColorShaderOutline(_sm.comportementManager.magnetColor, _sm.comportementManager.rocketColor);
-            magnetPos.y -= _sm.GetComponent<Collider>().bounds.extents.magnitude;
         }
+        magnetForce = _sm.comportementManager.magnetRocketData.magnetForce;
+        equilibriumDistance = _sm.comportementManager.magnetRocketData.equilibriumDistance;
+        dampingFactor = _sm.comportementManager.magnetRocketData.dampingFactor;
         
-        SpawnForceField();
+        timer = 0f;
+        timer += onCooldown - onFirstCooldown;
+
+        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+        feedBack_GO_Left.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
+        feedBack_GO_Left.GetComponent<GrowToRadius>().atDestroy = false;
+        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
     }
 
     public override void TickLogic()
     {
         base.TickLogic();
-        /*
-         * toutes les X seconde fait spawn prefab "forcefield" OU on le detache (la rocket se stop mais sa trainée perdure
-         * vu qu'on en a plusieurs généré par 1 seul comportement, les addForce sont géré dans RocketMagnetEffect
-         * dans RocketMagnetEffect, on récupère les force (normal, onPlayer et whenGrab)
-         * on doit géré 
-         */
-        
-        
-        _timer += Time.deltaTime;
-        if (firstRocket)
-        {
-            _timer += magnetRocketFlyTime - timerFirstRocket;
-            firstRocket = false;
-        }
-        if (_timer >= magnetRocketFlyTime)
-        {
-            _rocketOn = !_rocketOn;
-            _timer = 0f;
-            
-            // gestion de la zone qui applique la force
-            if (_rocketOn)
-            {
-                GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
-                SpawnForceField();//feebback et apply de force, mis dedans pour être conservé quand se sépare de la rocket
-            }
-            else
-            {
-                
-                // on met atDetachAndDestroy à true
-                if (magnetFieldObject != null)
-                {
-                    RocketMagnetEffect effect = magnetFieldObject.GetComponent<RocketMagnetEffect>();
-                    if (effect != null)
-                    {
-                        effect.atDetachAndDestroy = true; 
-                        // Passe le booléen à true, il sort du parent et sera détruit quand les 2 extrémités seront proche
-                    }
-                }
-            }
-        }
-        
-        if (_rocketOn)
-        {
-            ApplyForce();
-        }
+        Attract();
     }
 
     public override void TickPhysics()
     {
         base.TickPhysics();
-        
+        timer += Time.fixedDeltaTime;
+        if (timer > onCooldown && !rocketOn)
+        {
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
+            rocketOn = true;
+            timer = 0f;
+        }
+        if(timer >  (onCooldown -1) && !rocketOn && startingSoonSignalSended == false)
+        {
+            startingSoonSignalSended = true;
+            GlobalEventManager.Instance.JustBeforeRocketStart(GetGameObject());
+        }
+
+        if (timer > offCooldown && rocketOn)
+        {
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
+            rocketOn = false;
+            timer = 0f;
+        }
+
+        if (_sm.transform.InverseTransformDirection(_sm.rb.velocity).y > maxSpeed && rocketOn)// compare la velocity local y a la max speed
+        {
+            return;
+        }
+
+        if (rocketOn)
+        {
+            if (_sm.isPlayer)
+            {
+                _sm.rb.AddForce(_sm.transform.up * rocketForceOnPlayer, ForceMode.Force);
+            }
+            else if (isGrabbed)
+            {
+                _sm.gameManager.player.GetComponent<Rigidbody>()
+                    .AddForce(_sm.transform.up * rocketForceWhenGrab, ForceMode.Acceleration);
+            }
+            else
+            {
+                _sm.rb.AddForce(_sm.transform.up * rocketForce, ForceMode.Force);
+            }
+        }
     }
 
     public override void Exit()
     {
         base.Exit();
-        if (magnetFieldObject)
+        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
+        _sm.comportementManager.DestroyObj(feedBack_GO_Right);
+    }
+    
+    public void Attract()
+    {
+        List<Rigidbody> newMagnetedObjects = new List<Rigidbody>();
+        Collider[] objectsInRange = Physics.OverlapSphere(_sm.transform.position, trueMagnetRange);
+        if (objectsInRange.Length > 0)
         {
-            RocketMagnetEffect effect = magnetFieldObject?.GetComponent<RocketMagnetEffect>();
-            if (effect != null)
+            foreach (Collider objectInRange in objectsInRange)
             {
-                effect.atDetachAndDestroy = true; 
-                // Passe le booléen à true, il sort du parent et sera détruit quand les 2 extrémités seront proche
+                if (objectInRange.gameObject != _sm.gameObject) // applique pas sur player et lui même
+                {
+                    #region AoeChecks
+                    BreakableObject breakableScript = null;
+                    try
+                    {
+                        breakableScript = objectInRange.GetComponent<AoeCondition>().CheckMagnetRocketAoeCondition();
+                    }
+                    catch { }
+                    finally
+                    {
+                        if (breakableScript != null)
+                        {
+                            foreach (Rigidbody rb in breakableScript.ShatterObject())
+                            {
+                                ApplyForce(rb, rb.gameObject, magnetForce);
+                            }
+                        }
+                    }
+                    #endregion
+
+                    if (objectInRange.CompareTag("Player"))
+                    {
+                        ApplyForce(objectInRange.GetComponentInParent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+                    }
+
+                    if (objectInRange.GetComponent<Rigidbody>() != null)
+                    {
+                        ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+
+                        if (!magnetedObjects.Contains(objectInRange.GetComponent<Rigidbody>()))
+                        {
+                            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,objectInRange.GetComponent<Rigidbody>().mass);
+                        }
+                        newMagnetedObjects.Add(objectInRange.GetComponent<Rigidbody>());
+                    }
+                }
             }
         }
-        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-
-      
+        magnetedObjects = newMagnetedObjects;
     }
 
-    public void ApplyForce()
+    public void ApplyForce( Rigidbody rb,GameObject objToApply, float force)
     {
-        if (_sm.isPlayer)
-        {
-            _sm.rb.AddForce(Vector3.up * rocketMagnetForceOnPlayer, ForceMode.Force);
-        }
-        else if(isGrabbed)
-        {
-            _sm.gameManager.player.GetComponent<Rigidbody>().AddForce(_sm.transform.up * rocketMagnetForceWhenGrab, ForceMode.Force);
-        }
-        else
-        {
-            _sm.rb.AddForce(_sm.transform.up * rocketMagnetForce, ForceMode.Force);
-        }
-    }
 
-    public void SpawnForceField()
-    {
-        if (magnetFieldObject)//si on en avait déjà instancié un, on dit de le retirer du parent et de le détruire
-        {
-            magnetFieldObject.GetComponent<RocketMagnetEffect>().atDetachAndDestroy = true;
-            magnetFieldObject = null;
-        }
+        if (rb == null) return;
         
-        magnetFieldObject = _sm.comportementManager.InstantiateFeedback(prefabForceField,magnetPos, Quaternion.identity);//, _sm.transform => parent mais pose des pb
-        RocketMagnetEffect effect = magnetFieldObject.GetComponent<RocketMagnetEffect>();
-        effect.rocketObject = _sm.gameObject.transform;
-        effect.delay = magnetTrailSpeedLerp;//delay
-        effect.isPlayer = _sm.isPlayer;
-        effect.timeBeforeMove = magnetTrailTimeBeforeMove;
-        effect.effectForce = magnetTrailForce;
-        effect.effectForceOnPlayer = rocketMagnetForceOnPlayer;
-        effect.effectForceWhenGrab = rocketMagnetForceWhenGrab;
+        Vector3 toObject = objToApply.transform.position - _sm.transform.position;
+        float currentDistance = toObject.magnitude;
+
+        // Si l'objet est exactement à la distance souhaitée, aucune force
+        if (Mathf.Approximately(currentDistance, equilibriumDistance)) return;
+
+        // Calcul du point sur la sphère (direction * rayon)
+        Vector3 targetPoint = _sm.transform.position + toObject.normalized * equilibriumDistance;
+
+        // Direction vers ce point d'équilibre
+        Vector3 forceDir = (targetPoint - objToApply.transform.position).normalized;
+
+        rb.AddForce(forceDir * force, ForceMode.Force);
+        
+        // --- Damping : freine la vitesse radiale (vers/depuis le centre) ---
+        Vector3 radialVelocity = Vector3.Project(rb.velocity, forceDir);
+        rb.velocity -= radialVelocity * (dampingFactor * Time.deltaTime);
     }
 }

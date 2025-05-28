@@ -165,7 +165,25 @@ public class C_Impulse_Bouncing : ComportementState
                         objectAffected.GetComponent<GrabObject>().Release(true);
                     }
                 }
-                else if (objectInRange.GetComponent<Rigidbody>() != null)
+
+                BreakableObject breakableScript = null;
+                try
+                {
+                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckImpulseBounceAoeCondition();
+                }
+                catch { }
+                finally
+                {
+                    if (breakableScript != null)
+                    {
+                        foreach (Rigidbody rb in breakableScript.ShatterObject())
+                        {
+                            ApplyForce(rb, rb.gameObject, impulseBounceForce);
+                        }
+                    }
+                }
+
+                if (objectInRange.GetComponent<Rigidbody>() != null)
                 {
                     ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, impulseBounceForce);
                 }
@@ -179,10 +197,7 @@ public class C_Impulse_Bouncing : ComportementState
             // si rigid body sur objet, on applique pas la force sur lui pour le lancer par exemple
             return;
         }
-        else
-        {
-            Vector3 direction = (objToApply.transform.position - _sm.transform.position).normalized;
-            rbObj.AddForce(direction * force, ForceMode.Impulse);
-        }
+        Vector3 direction = (objToApply.transform.position - _sm.transform.position).normalized;
+        rbObj.AddForce(direction * force, ForceMode.Impulse);
     }    
 }

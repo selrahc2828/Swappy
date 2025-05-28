@@ -42,13 +42,10 @@ public class C_Solo_Rocket : ComportementState
         onFirstCooldown = _sm.comportementManager.rocketData.rocketFirstOnCooldown;
         offCooldown = _sm.comportementManager.rocketData.rocketOffCooldown;
 
-        // _sm.rend.material = _sm.rocket;
         if (!_sm.isPlayer)
         {
             ColorShaderOutline(_sm.comportementManager.rocketColor, _sm.comportementManager.noComportementColor);
         }
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-
     }
 
     public override void TickLogic()
@@ -71,7 +68,7 @@ public class C_Solo_Rocket : ComportementState
             rocketOn = true;
             timer = 0f;
         }
-        if(timer >  (onCooldown -1) && !rocketOn && startingSoonSignalSended == false)
+        if(timer > (onCooldown -1) && !rocketOn && startingSoonSignalSended == false)
         {
             startingSoonSignalSended = true;
             GlobalEventManager.Instance.JustBeforeRocketStart(GetGameObject());
@@ -86,7 +83,6 @@ public class C_Solo_Rocket : ComportementState
 
         if (_sm.transform.InverseTransformDirection(_sm.rb.velocity).y > maxSpeed && rocketOn)// compare la velocity local y a la max speed
         {
-            //_sm.rb.velocity = _sm.rb.velocity.normalized * maxSpeed;
             return;
         }
 
@@ -106,13 +102,11 @@ public class C_Solo_Rocket : ComportementState
                 _sm.rb.AddForce(_sm.transform.up * rocketForce, ForceMode.Force);
             }
         }
-
     }
 
     public override void Exit()
     {
         base.Exit();
         _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-
     }
 }

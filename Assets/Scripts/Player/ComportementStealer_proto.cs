@@ -330,7 +330,7 @@ public class ComportementStealer_proto : MonoBehaviour
                         {
                             return;
                         }
-                        ExecuteChangeStateSubtractive(playerObjectState, ref slot2, false, false);
+                        ExecuteChangeStateSubtractive(playerObjectState, ref slot2, false, true);
                     }
                     else
                     {
@@ -408,14 +408,14 @@ public class ComportementStealer_proto : MonoBehaviour
             (exchangedSlotValue, playerObjectState.leftValue) = (playerObjectState.leftValue, exchangedSlotValue);
         }
         playerObjectState.CalculateNewtState(playerObjectState.leftValue + playerObjectState.rightValue);
-        GlobalEventManager.Instance.ComportmentExchanged(this.gameObject, rightHand);
+        GlobalEventManager.Instance.ComportmentExchanged(this.gameObject, exchangedSlotValue, rightHand);
     }
 
     void ExecuteChangeStateAdditive(ComportementState currentObjectState,ref int addedSlotValue, bool rightValue, bool rightHand)
     {
         currentObjectState.CalculateNewtState(currentObjectState.stateValue + addedSlotValue);
         addedSlotValue = 0;
-        GlobalEventManager.Instance.ComportmentAdded(currentObjectState.GetGameObject(), rightValue, rightHand);
+        GlobalEventManager.Instance.ComportmentAdded(currentObjectState.GetGameObject(), addedSlotValue, rightValue, rightHand);
     }
     
     void ExecuteChangeStateSubtractive(ComportementState currentObjectState, ref int substractedSlotValue, bool rightValue, bool rightHand)

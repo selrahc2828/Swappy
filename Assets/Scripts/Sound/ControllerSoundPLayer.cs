@@ -25,13 +25,14 @@ public class ControllerSoundPLayer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         isGrounded = gameObject.GetComponent<ControllerPlanete>().grounded;
         isSprinting = gameObject.GetComponent<ControllerPlanete>().isSprinting;
         
         if (isGrounded)
         {
+            actualAirTime = 0;
             if (isSprinting)
             {
                 actualValueStep += Time.deltaTime*gameObject.GetComponent<Rigidbody>().velocity.magnitude*1.5f;  
@@ -43,14 +44,17 @@ public class ControllerSoundPLayer : MonoBehaviour
 
             if (!isGroundedLastFrame)
             {
-                FMODEventManager.instance.GetInstanceFromEncyclopediaKey(gameObject, FMODEventManager.instance.FMODEvents.PlayerFall).getPlaybackState(out PLAYBACK_STATE fallingState);
-                if (fallingState == PLAYBACK_STATE.PLAYING)
+                if (FMODEventManager.instance.CheckInstanceInEncylopedia(gameObject, FMODEventManager.instance.FMODEvents.PlayerFall, out EventInstance eventInstance))
                 {
-                    FMODEventManager.instance.StopEventInstance(FMODEventManager.instance.GetInstanceFromEncyclopediaKey(gameObject,FMODEventManager.instance.FMODEvents.PlayerFall));
-                    FMODEventManager.instance.ReleaseEventInstance(FMODEventManager.instance.GetInstanceFromEncyclopediaKey(gameObject,FMODEventManager.instance.FMODEvents.PlayerFall));
+                    eventInstance.getPlaybackState(out PLAYBACK_STATE fallingState);
+                    if (fallingState == PLAYBACK_STATE.PLAYING)
+                    {
+                        FMODEventManager.instance.StopEventInstance(eventInstance);
+                        FMODEventManager.instance.RemoveInstanceInEncyclopedia(gameObject, FMODEventManager.instance.FMODEvents.PlayerFall);
+                    }
+                    if (actualValueStep < maxValueStep) fallForce = actualAirTime/maxAirTime;
+                    else fallForce = 1;
                 }
-                if (actualValueStep < maxValueStep) fallForce = actualAirTime/maxAirTime;
-                else fallForce = 1;
                 PerformActionSound(MovingSound.Land,fallForce);
             }
         }
@@ -59,12 +63,20 @@ public class ControllerSoundPLayer : MonoBehaviour
             if (isGroundedLastFrame)
             {
                 PerformActionSound(MovingSound.Jump);
-                FMODEventManager.instance.AddInstanceInEncyclopedia(gameObject, FMODEventManager.instance.FMODEvents.PlayerFall,FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.PlayerFall));
-                FMODEventManager.instance.PlayEventInstance(FMODEventManager.instance.GetInstanceFromEncyclopediaKey(gameObject,FMODEventManager.instance.FMODEvents.PlayerFall));
+                
             }
             else
             {
-                actualAirTime += Time.deltaTime;
+                
+                if (transform.InverseTransformDirection(gameObject.GetComponent<Rigidbody>().velocity).y < 0)
+                {
+                    actualAirTime += Time.deltaTime;
+                    if (!FMODEventManager.instance.CheckInstanceInEncylopedia(gameObject, FMODEventManager.instance.FMODEvents.PlayerFall, out EventInstance PlayerSoundFalling))
+                    {
+                        FMODEventManager.instance.AddInstanceInEncyclopedia(gameObject, FMODEventManager.instance.FMODEvents.PlayerFall,FMODEventManager.instance.CreateEventInstance(FMODEventManager.instance.FMODEvents.PlayerFall));
+                        FMODEventManager.instance.PlayEventInstance(FMODEventManager.instance.GetInstanceFromEncyclopediaKey(gameObject,FMODEventManager.instance.FMODEvents.PlayerFall));
+                    }
+                }
             }
             
         }

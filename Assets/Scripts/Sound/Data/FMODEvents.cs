@@ -15,6 +15,8 @@ public class FMODEvents : ScriptableObject
     [field: SerializeField] public EventReference PlayerSelfSwitch { get; private set; }
     [field: SerializeField] public EventReference PlayerSelfImpactModeIN { get; private set; }
     [field: SerializeField] public EventReference PlayerSelfImpactModeOUT { get; private set; }
+    [field:Space]
+    [field: SerializeField] public EventReference PlayerSlowingtime { get; private set; }
     [field: Header("SFX Comp")]
     [field: SerializeField] public EventReference Impulse { get; private set; }
     [field: SerializeField] public EventReference Bounce { get; private set; }

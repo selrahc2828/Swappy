@@ -46,6 +46,8 @@ public class C_Double_Impulse : ComportementState
         impulseForce = _sm.comportementManager.impulseData.doubleRepulseForceMult * _sm.comportementManager.impulseData.impulseForce;
         destroyOnUse = _sm.comportementManager.impulseData.destroyOnUse;
         feedback = _sm.comportementManager.impulseData.impulseFeedback;
+        
+        GlobalEventManager.Instance.Explosion(GetGameObject(), impulseFirstTime, true);
     }
 
     public override void TickLogic()
@@ -91,6 +93,9 @@ public class C_Double_Impulse : ComportementState
     
     public void Impulse()
     {
+        Debug.Log(impulseTime);
+        GlobalEventManager.Instance.Explosion(GetGameObject(), impulseTime, false);
+        
         if (feedback)
         {
             GameObject shockWave = _sm.comportementManager.InstantiateFeedback(feedback, _sm.transform.position, Quaternion.identity);
@@ -120,7 +125,25 @@ public class C_Double_Impulse : ComportementState
                         objectAffected.GetComponent<GrabObject>().Release(true);
                     }
                 }
-                else if (objectInRange.GetComponent<Rigidbody>() != null)
+
+                BreakableObject breakableScript = null;
+                try
+                {
+                    breakableScript = objectInRange.GetComponent<AoeCondition>().CheckDoubleImpulseAoeCondition();
+                }
+                catch { }
+                finally
+                {
+                    if (breakableScript != null)
+                    {
+                        foreach (Rigidbody rb in breakableScript.ShatterObject())
+                        {
+                            ApplyForce(rb, rb.gameObject, impulseForce);
+                        }
+                    }
+                }
+
+                if (objectInRange.GetComponent<Rigidbody>() != null)
                 {
                     ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, impulseForce);
                 }  
