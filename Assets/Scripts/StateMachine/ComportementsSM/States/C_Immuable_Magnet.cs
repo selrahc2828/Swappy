@@ -85,19 +85,15 @@ public class C_Immuable_Magnet : ComportementState
             {
                 if (objectInRange.gameObject != _sm.gameObject) // applique pas sur player et lui même
                 {
+                    if (objectInRange.CompareTag("Player"))
+                    {
+                        ApplyForce(objectInRange.GetComponentInParent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+                    }
+
                     if (objectInRange.GetComponent<Rigidbody>() != null)
                     {
-                        if (_sm.isPlayer)
-                        {
-                            if (!objectInRange.CompareTag("Player"))
-                            {
-                                ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-                            }
-                        }
-                        else
-                        {
-                            ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
-                        }
+                        ApplyForce(objectInRange.GetComponent<Rigidbody>(), objectInRange.gameObject, magnetForce);
+
                         if (!magnetedObjects.Contains(objectInRange.GetComponent<Rigidbody>()))
                         {
                             GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject,objectInRange.GetComponent<Rigidbody>().mass);
