@@ -31,6 +31,7 @@ public class IntroSceneSwitch: MonoBehaviour
     public GameObject parameterButton;
     public GameObject quitButton;
     public GameObject title;
+    public GameObject parametrePanel;
     public float timeRangeToButton = 2.3f;
     private float _tForButtons = 0;
     
@@ -47,6 +48,8 @@ public class IntroSceneSwitch: MonoBehaviour
         parameterButton.SetActive(false);
         quitButton.SetActive(false);
         title.SetActive(false);
+        parametrePanel.SetActive(false);
+        BlackScreen.SetActive(true);
     }
 
     private void FixedUpdate()
@@ -148,8 +151,29 @@ public class IntroSceneSwitch: MonoBehaviour
         // Stop la zic en fade de 5sec
         FMODMusicManager.instance.StopMusic(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
         FMODMusicManager.instance.ReleaseMusicInstance(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
-        
-        
+    }
+
+    public void OnParameterButtonClicked()
+    {
+        parametrePanel.SetActive(true);
+        playButton.SetActive(false);
+        parameterButton.SetActive(false);
+        quitButton.SetActive(false);
+    }
+
+    public void OnParameterPanelClose()
+    {
+        FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.Back, transform.position);
+        parametrePanel.SetActive(false);
+        playButton.SetActive(true);
+        parameterButton.SetActive(true);
+        quitButton.SetActive(true);
+    }
+
+    public void OnQuitButtonClicked()
+    {
+        FMODMusicManager.instance.StopMusic(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
+        FMODMusicManager.instance.ReleaseMusicInstance(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
     }
 
     public void BlackFadeIn()
