@@ -7,8 +7,8 @@ using UnityEngine.Serialization;
 public class AimAssist : MonoBehaviour
 {
 
-    public float radius;
-    public float maxAngleDetection;
+    public float radius = 20f;
+    public float maxAngleDetection = 1.5f;
     public Transform origin;
     
     public LayerMask detectionLayer;
@@ -185,7 +185,7 @@ public class AimAssist : MonoBehaviour
     }
     
     
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         if (origin == null) 
             return;
