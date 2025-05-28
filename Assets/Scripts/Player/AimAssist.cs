@@ -187,7 +187,8 @@ public class AimAssist : MonoBehaviour
     
     void OnDrawGizmos()
     {
-        if (origin is null) return;
+        if (origin == null) 
+            return;
 
         float rangeView = 100f;
         
