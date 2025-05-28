@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 2206009394620906433}
   - component: {fileID: 321084061108809858}
   - component: {fileID: 613138276182239671}
+  - component: {fileID: 8823139708101282873}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -604,6 +605,25 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   checkInterval: 0.2
+--- !u!114 &8823139708101282873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55948801783339615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d49a626f336d2346adb723e03577991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 15
+  maxAngleDetection: 30
+  origin: {fileID: 3534123727131700791}
+  detectionLayer:
+    serializedVersion: 2
+    m_Bits: 8192
+  cible: {fileID: 0}
 --- !u!1 &312993634636169864
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,6 +657,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3534123727131700791}
   - {fileID: 2233478243351578539}
   m_Father: {fileID: 8242482544930831946}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -672,14 +693,14 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 3000
+  far clip plane: 150000
   field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 127
+    m_Bits: 14463
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -853,6 +874,37 @@ Transform:
   - {fileID: 842407777698870362}
   - {fileID: 8216746400015342573}
   - {fileID: 8279937208589630779}
+  m_Father: {fileID: 43866311391341790}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &635977573181263539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3534123727131700791}
+  m_Layer: 0
+  m_Name: EyesPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3534123727131700791
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635977573181263539}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.815}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 43866311391341790}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &688393288675030706

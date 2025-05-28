@@ -185,7 +185,7 @@ public class GrabObject : MonoBehaviour
                 }
                 
                 // on remet le layer pour pouvoir marcher dessus
-                carriedObject.layer = LayerMask.NameToLayer("Ground");
+                carriedObject.layer = LayerMask.NameToLayer("Ground"); // modif ici pour cas BehaviorCarriers
                 
             }
             //reset

@@ -38,7 +38,7 @@ public class UniqueID : MonoBehaviour
         {
             uniqueId = UniqueIDManagerEditor.GenerateNewID(this);
             
-            // Mettre à jour SpawnPot si présent
+            // Si script SpawnPot present sur l'objet, on met a jour son ID
             SpawnPot spawner = GetComponent<SpawnPot>();
             if (spawner != null)
             {
