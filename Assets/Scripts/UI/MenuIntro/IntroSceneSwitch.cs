@@ -8,6 +8,8 @@ using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Image = UnityEngine.UI.Image;
+using UnityEngine.UI;
+using TMPro;
 
 public class IntroSceneSwitch: MonoBehaviour
 {
@@ -38,6 +40,17 @@ public class IntroSceneSwitch: MonoBehaviour
     public float timerCinematicBeforePlay = 10;
     public float timerCinematic = 0;
     private bool isCinematicPlayed = false;
+    
+    [Header("Option Menu Slider")]
+    [SerializeField] private Slider mouseSensitivitySlider;
+    [SerializeField] private Slider volumeSliderMaster;
+    [SerializeField] private Slider volumeSliderPlayer;
+    [SerializeField] private Slider volumeSliderSystem;
+    [SerializeField] private Slider volumeSliderMusic;
+    [SerializeField] private Slider volumeSliderMenu;
+    [SerializeField] private TextMeshProUGUI textSensiDisplay;
+    
+    
 
     private void Start()
     {
@@ -172,8 +185,11 @@ public class IntroSceneSwitch: MonoBehaviour
 
     public void OnQuitButtonClicked()
     {
+        
         FMODMusicManager.instance.StopMusic(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
         FMODMusicManager.instance.ReleaseMusicInstance(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
+
+        //Application.Quit();
     }
 
     public void BlackFadeIn()
@@ -189,5 +205,41 @@ public class IntroSceneSwitch: MonoBehaviour
         
         BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, blackFadeOUTCurve.Evaluate(_t / fadeOUTTimeRange));
     }
+    public void SetSensitivity()
+    {
+        GameManager.Instance.parameters.sensitivity = mouseSensitivitySlider.value;
+        textSensiDisplay.text = mouseSensitivitySlider.value.ToString("F2");
+    }
+
+    public void SetVolumeMaster()
+    {
+        GameManager.Instance.parameters.volumeMaster = volumeSliderMaster.value;
+        FMODEventManager.instance.ChangeVolume(FMODEventManager.instance.Fmodbus.busMaster,GameManager.Instance.parameters.volumeMaster);
+    }
+
+    public void SetVolumePlayer()
+    {
+        GameManager.Instance.parameters.volumePlayer = volumeSliderPlayer.value;
+        FMODEventManager.instance.ChangeVolume(FMODEventManager.instance.Fmodbus.busPlayer,GameManager.Instance.parameters.volumePlayer);
+    }
+
+    public void SetVolumeSystem()
+    {
+        GameManager.Instance.parameters.volumeSystem = volumeSliderSystem.value;
+        FMODEventManager.instance.ChangeVolume(FMODEventManager.instance.Fmodbus.busSystem,GameManager.Instance.parameters.volumeSystem);
+    }
+
+    public void SetVolumeMusic()
+    {
+        GameManager.Instance.parameters.volumeMusic = volumeSliderMusic.value;
+        FMODEventManager.instance.ChangeVolume(FMODEventManager.instance.Fmodbus.busMusic,GameManager.Instance.parameters.volumeMusic);
+    }
+
+    public void SetVolumeMenu()
+    {
+        GameManager.Instance.parameters.volumeMenu = volumeSliderMenu.value;
+        FMODEventManager.instance.ChangeVolume(FMODEventManager.instance.Fmodbus.busMenu,GameManager.Instance.parameters.volumeMenu);
+    }
+    
     
 }
