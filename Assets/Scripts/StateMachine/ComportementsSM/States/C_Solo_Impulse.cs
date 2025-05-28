@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class C_Solo_Impulse : ComportementState
 {
+    
     private float repulserTime = 5f;
     private float repulserFirstTime;
     private float repulserTimer;
@@ -30,7 +31,6 @@ public class C_Solo_Impulse : ComportementState
         leftValue = 1;
         rightValue = 0;
         base.Enter();
-        
         repulserTime = _sm.comportementManager.impulseData.impulseTime;
         repulserFirstTime = _sm.comportementManager.impulseData.impulseFirstTime;
         repulserTimer = 0f;
@@ -51,7 +51,8 @@ public class C_Solo_Impulse : ComportementState
         applyOnMe= _sm.comportementManager.impulseData.applyOnMe;
         feedback = _sm.comportementManager.impulseData.impulseFeedback;
         explodingSoonSignalSended = false;
-
+        
+        
         GlobalEventManager.Instance.Explosion(GetGameObject(), repulserFirstTime, true);
     }
 
@@ -59,9 +60,9 @@ public class C_Solo_Impulse : ComportementState
     {
         base.TickLogic();
         repulserTimer += Time.deltaTime;
+
         if (repulserTimer >= repulserTime)
         {
-            
             Repulse();
             repulserTimer = 0;
             explodingSoonSignalSended = false;

@@ -64,7 +64,7 @@ public class FeedbackManager : MonoBehaviour
         GlobalEventManager.Instance.OnJustBeforeRocketStart += FeedbackJustBeforeRocketStart;
     }
 
-    public void FeedbackEnterState(GameObject sender)
+    public void FeedbackEnterState(GameObject sender,bool haveEarlyStartUSELESSHERE, float defaultValueBetweenHitUSELESSHERE, float startingValueBetweenHitUSELESSHERE)
     {
         int stateValue = 0;
         ComportementsStateMachine stateMachine = sender.GetComponent<ComportementsStateMachine>();
