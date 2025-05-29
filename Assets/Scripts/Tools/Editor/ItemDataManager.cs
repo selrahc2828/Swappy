@@ -181,7 +181,7 @@ public class ItemDataManager : EditorWindow
         
         GUILayout.EndHorizontal();
         
-        if (GUILayout.Button("Create Pattern Data", GUILayout.Width(350)))
+        if (GUILayout.Button("Create Collectable Data", GUILayout.Width(350)))
         {
             CreateItemData();
         }

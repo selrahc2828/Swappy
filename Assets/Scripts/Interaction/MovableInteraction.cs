@@ -10,8 +10,6 @@ public class MovableInteraction : InteractionSystem
     {
         base.Interact();
         
-        Debug.Log("MovableInteraction Interact");
-        
         if (!GameManager.Instance.grabScript.isCarrying)
         {
             if (gameObject.GetComponent<Rigidbody>())//on est closestObject ici

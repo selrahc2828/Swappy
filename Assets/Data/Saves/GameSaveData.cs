@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable] // permet de retranscrire pour format json
+[System.Serializable]
 public class GameSaveData
 {
-    public List<SpawnPotSaveData> spawnerPots = new();//liste des spawner de pots de la scène qui sont cassé
+    public List<SpawnPotSaveData> spawnerPots = new();
     public PlayerSaveData player = new();
     public FragmentSaveData fragment;
 }
@@ -12,7 +12,7 @@ public class GameSaveData
 [System.Serializable]
 public class SpawnPotSaveData
 {
-    public string id;// identifiant unique du spawner
+    public string id;
     public bool isBroken;
 }
 

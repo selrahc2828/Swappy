@@ -187,7 +187,7 @@ public class ControllerPlanete : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.GetContact(0).thisCollider.CompareTag("AntiStick"))
+        if (collision.GetContact(0).thisCollider.CompareTag("AntiStick") && !collision.gameObject.CompareTag("Movable"))
         {
             foreach (ContactPoint contact in collision.contacts)
             {
