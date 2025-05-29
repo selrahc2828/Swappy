@@ -127,14 +127,18 @@ public class GrabObject : MonoBehaviour
             
             //dire a l'objet qu'il est grab au niveau FSM
             var FSM_OfObject = carriedObject.GetComponent<ComportementsStateMachine>();
-            ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
-            FSM_ObjectState.isGrabbed = true;
-            
-            //desactive la kinematic pour avoir les collisions
-            if (FSM_ObjectState.isKinematic)
+            if( FSM_OfObject != null )
             {
-                carriedObject.GetComponent<Rigidbody>().isKinematic = false;
+                ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
+                FSM_ObjectState.isGrabbed = true;
+                
+                //desactive la kinematic pour avoir les collisions
+                if (FSM_ObjectState.isKinematic)
+                {
+                    carriedObject.GetComponent<Rigidbody>().isKinematic = false;
+                }
             }
+            
             
             // deplace obj
             SetCarringPosition(carriedObject, true);
@@ -161,13 +165,16 @@ public class GrabObject : MonoBehaviour
                 
                 //dire a l'objet qu'il est grab au niveau FSM
                 var FSM_OfObject = carriedObject.GetComponent<ComportementsStateMachine>();
-                ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
-                FSM_ObjectState.isGrabbed = false;
-                
-                // réactive le kinematic des immuables
-                if (FSM_ObjectState.isKinematic)
+                if( FSM_OfObject != null )
                 {
-                    carriedObject.GetComponent<Rigidbody>().isKinematic = true;
+                    ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
+                    FSM_ObjectState.isGrabbed = false;
+
+                    // réactive le kinematic des immuables
+                    if (FSM_ObjectState.isKinematic)
+                    {
+                        carriedObject.GetComponent<Rigidbody>().isKinematic = true;
+                    }
                 }
                 
                 SetCarringPosition(carriedObject, false);
@@ -179,10 +186,18 @@ public class GrabObject : MonoBehaviour
                 //si action lance sinon on lache a ses pieds
                 if (isLaunched)
                 {
-                    if (!FSM_ObjectState.isGrabbed && !FSM_ObjectState.isKinematic)
+                    if(FSM_OfObject != null)
                     {
-                        FSM_ObjectState.GetThrown(handlerPosition.forward * launchForce);
-                        //carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
+                        ComportementState FSM_ObjectState = (ComportementState)FSM_OfObject.currentState;
+                        if (!FSM_ObjectState.isGrabbed && !FSM_ObjectState.isKinematic)
+                        {
+                            FSM_ObjectState.GetThrown(handlerPosition.forward * launchForce);
+                            //carriedObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
+                        }
+                    }
+                    else
+                    {
+                        carriedObject.gameObject.GetComponent<Rigidbody>().AddForce(handlerPosition.forward * launchForce, ForceMode.Impulse);
                     }
                 }
                 
