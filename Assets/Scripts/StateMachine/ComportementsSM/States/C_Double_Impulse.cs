@@ -47,7 +47,7 @@ public class C_Double_Impulse : ComportementState
 
         impulseTimer = 0f;
 
-        GlobalEventManager.Instance.Explosion(GetGameObject(), impulseFirstTime, true);
+        GlobalEventManager.Instance.Explosion(GetGameObject(), impulseTime, true);
     }
 
     public override void TickLogic()
