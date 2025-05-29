@@ -104,8 +104,6 @@ public class Anim_manager : MonoBehaviour
 
     public void HandleComportmentExtraction(GameObject target,float stateValueUSELESSHERE, bool rightValue, bool rightHand)
     {
-        Debug.Log(rightValue + " right value");
-        Debug.Log(rightHand + " right Hand");
         if (rightHand)
         {
             if (!target.CompareTag("Player"))
