@@ -596,10 +596,10 @@ public class FMODEventManager : MonoBehaviour
         Play,
         Exit
     }
-    private void OnEnterComportement(GameObject _gameObject)
+    private void OnEnterComportement(GameObject _gameObject, bool haveEarlyStart, float defaultValueBetweenHit, float startingValueBetweenHit)
     {
         Step step = Step.Enter;
-        GetComportementState(_gameObject,step,0.8f);
+        GetComportementState(_gameObject,step,0.8f,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
     }
     private void OnComportementIsPlay(GameObject _gameObject,float force)
     {
@@ -611,94 +611,104 @@ public class FMODEventManager : MonoBehaviour
         Step step = Step.Exit;
         GetComportementState(_gameObject,step,0.8f);
     }
-    private void GetComportementState(GameObject _gameObject, Step step, float force)
+    private void GetComportementState(GameObject _gameObject, Step step, float force,bool haveEarlyStart = false, float defaultValueBetweenHit = -1f, float startingValueBetweenHit = -1f)
     {
         var stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
         if (stateMachine.currentState is ComportementState)
         {
             ComportementState gameObjectCurrenState = (ComportementState)stateMachine.currentState;
-            FindStateComportement(_gameObject, gameObjectCurrenState.stateValue,step,force);
+            FindStateComportement(_gameObject, gameObjectCurrenState.stateValue,step,force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
         }
     }
-    private void FindStateComportement(GameObject _gameObject, int stateValue, Step step, float force)
+    private void FindStateComportement(GameObject _gameObject, int stateValue, Step step, float force,bool haveEarlyStart, float defaultValueBetweenHit, float startingValueBetweenHit)
     {
         switch (stateValue)
         {
             case 0:
                 break;
             case 1:
-                ActionOnStateComportement(_gameObject, FMODEvents.Impulse, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.Impulse, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 2:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleImpulse, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.DoubleImpulse, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 3:
-                ActionOnStateComportement(_gameObject, FMODEvents.Bounce, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.Bounce, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 4:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseBounce, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseBounce, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 6:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleBounce, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.DoubleBounce, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 9:
-                ActionOnStateComportement(_gameObject, FMODEvents.Immuable, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.Immuable, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 10:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseImmuable, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseImmuable, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 12:
-                ActionOnStateComportement(_gameObject, FMODEvents.BounceImmuable, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.BounceImmuable, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 18:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleImmuable, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.DoubleImmuable, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 27:
-                ActionOnStateComportement(_gameObject, FMODEvents.Magnet, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.Magnet, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 28:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseMagnet, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseMagnet, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 30:
-                ActionOnStateComportement(_gameObject, FMODEvents.BounceMagnet, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.BounceMagnet, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 36:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImmuableMagnet, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.ImmuableMagnet, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 54:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleMagnet, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.DoubleMagnet, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 81:
-                ActionOnStateComportement(_gameObject, FMODEvents.Rocket, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.Rocket, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 82:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseRocket, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseRocket, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 84:
-                ActionOnStateComportement(_gameObject, FMODEvents.BounceRocket, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.BounceRocket, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 90:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImmuableRocket, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.ImmuableRocket, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 108:
-                ActionOnStateComportement(_gameObject, FMODEvents.MagnetRocket, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.MagnetRocket, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             case 162:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleRocket, step, force);
+                ActionOnStateComportement(_gameObject, FMODEvents.DoubleRocket, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
                 break;
             default:
                 Debug.LogError("Si tu fais apparaitre ça c'est que t'es vraiment for");
                 break;
         }
     }
-    private void ActionOnStateComportement(GameObject _gameObject, EventReference _eventReference, Step step, float force)
+    private void ActionOnStateComportement(GameObject _gameObject, EventReference _eventReference, Step step, float force, bool haveEarlyStart, float defaultValueBetweenHit, float startingValueBetweenHit)
     {
         switch (step)
         {
             case Step.Enter:
                 AddInstanceInEncyclopedia(_gameObject, _eventReference,CreateEventInstance(_eventReference));
                 if(_gameObject.CompareTag("Player"))SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),"ISPLAYER",1);
-                PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),_gameObject,_gameObject.GetComponent<Rigidbody>());
+                if (defaultValueBetweenHit > -1f && startingValueBetweenHit > -1f && haveEarlyStart)
+                {
+                    int startingValue = Mathf.RoundToInt((defaultValueBetweenHit - startingValueBetweenHit) * 1000f);
+                    PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),_gameObject,_gameObject.GetComponent<Rigidbody>());
+                    GetInstanceFromEncyclopediaKey(_gameObject,_eventReference).setTimelinePosition(startingValue);
+                }
+                else
+                {
+                    PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),_gameObject,_gameObject.GetComponent<Rigidbody>());
+                }
+                
                 
                 break;
             case Step.Play:

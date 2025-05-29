@@ -117,7 +117,7 @@ namespace FMODUnity
                 case FMODMusicManager.Biomes.Biome1:
                     if (actualValueParam > 6)
                     {
-                        FMODMusicManager.instance.SetMusicNameParamInstance(_musicInstance, "Layer",3,false);
+                        FMODMusicManager.instance.SetMusicNameParamInstance(_musicInstance, "Layer",3,true);
                     }
                     switch (layers)
                     {
@@ -178,7 +178,7 @@ namespace FMODUnity
                 case FMODMusicManager.Biomes.Biome3:
                     if (actualValueParam < 6)
                     {
-                        FMODMusicManager.instance.SetMusicNameParamInstance(_musicInstance, "Layer",9,false);
+                        FMODMusicManager.instance.SetMusicNameParamInstance(_musicInstance, "Layer",9,true);
                     }
                     switch (layers)
                     {

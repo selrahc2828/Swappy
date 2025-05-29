@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{e666ed68-1b8e-4f1d-afda-eb85b43cd5f8}">
+		<property name="color">
+			<value>Magenta Light 1</value>
+		</property>
 		<property name="name">
 			<value>EnterGrotte</value>
 		</property>
@@ -76,8 +79,11 @@
 	</object>
 	<object class="EventMixerMaster" id="{f96314b8-77c7-4204-8012-1c52ce10b7da}">
 		<property name="volume">
-			<value>10</value>
+			<value>-18</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{f8cff6fe-c940-4119-89d4-e611eda708d7}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{07b2d2ab-d4cd-46b7-a0bf-2448644b056b}</destination>
 		</relationship>
@@ -129,6 +135,20 @@
 		<relationship name="markerTrack">
 			<destination>{6320c8fd-2eaf-46c9-a0ea-5aaf1386b377}</destination>
 		</relationship>
+	</object>
+	<object class="ADSRModulator" id="{f8cff6fe-c940-4119-89d4-e611eda708d7}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="attackTime">
+			<value>0</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{07b2d2ab-d4cd-46b7-a0bf-2448644b056b}">
 		<relationship name="effects">
