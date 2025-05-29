@@ -19,9 +19,8 @@ public class C_Impulse_Rocket : ComportementState
     private float impulseTimer;
     private float timeBetweenImpulses;
     private float maxSpeed;
-    private bool rocketOn;
+    public bool rocketOn;
     private GameObject feedback;
-    private bool firstRocketOn;
 
     
     public C_Impulse_Rocket(StateMachine stateMachine) : base(stateMachine)
@@ -39,7 +38,6 @@ public class C_Impulse_Rocket : ComportementState
         explosionForce = _sm.comportementManager.impulseRocketData.impulseRocketExplosionForce;
         explosionRange = _sm.comportementManager.impulseRocketData.impulseRocketExplosionRange;
         feedback = _sm.comportementManager.impulseData.impulseFeedback;
-        firstRocketOn = true;
 
         // trueRepulserRange = repulserRange;
         if (_sm.isPlayer)
@@ -59,7 +57,10 @@ public class C_Impulse_Rocket : ComportementState
         onFirstCooldown = _sm.comportementManager.rocketData.rocketFirstOnCooldown;
         offCooldown = _sm.comportementManager.rocketData.rocketOffCooldown;
         timeBetweenImpulses = _sm.comportementManager.impulseRocketData.timeBetweenImpulses;
+
         onTimer = 0f;
+        //onTimer += onCooldown - onFirstCooldown; // a activer pour early start
+
         impulseTimer = 0f;
         rocketOn = false;
         
@@ -76,32 +77,25 @@ public class C_Impulse_Rocket : ComportementState
     {
         base.TickPhysics();
         onTimer += Time.fixedDeltaTime;
-        if (firstRocketOn)
-        {
-            onTimer += onCooldown - onFirstCooldown;
-            firstRocketOn = false;
-        }
 
-        if (onTimer > onCooldown && !rocketOn)
+        if (onTimer > onCooldown && !rocketOn)// la fusée décolle
         {
             rocketOn = true;
             onTimer = 0f;
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         }
 
-        if (onTimer > offCooldown && rocketOn)
+        if (onTimer > offCooldown && rocketOn)// la fusée s'arrete
         {
             rocketOn = false;
-
             onTimer = 0f;
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         }
 
         if (rocketOn)
-        {
-
-            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
-            
+        {            
             impulseTimer += Time.fixedDeltaTime;
-            if (impulseTimer > timeBetweenImpulses)
+            if (impulseTimer > timeBetweenImpulses)//une impulsion se produit
             {
                 Repulse();
                 impulseTimer = 0f;
