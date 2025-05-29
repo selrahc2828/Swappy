@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class C_Magnet_Rocket : ComportementState
 {
+    private GameObject ForcefieldObj;
     private float magnetRange;
     private float trueMagnetRange;
     private float magnetForce;
@@ -63,10 +64,9 @@ public class C_Magnet_Rocket : ComportementState
         timer = 0f;
         //timer += onCooldown - onFirstCooldown; // a activer pour early start
 
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-        feedBack_GO_Left.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
-        feedBack_GO_Left.GetComponent<GrowToRadius>().atDestroy = false;
-        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+        ForcefieldObj = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+        ForcefieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
+        ForcefieldObj.GetComponent<GrowToRadius>().atDestroy = false;
 
     }
 
@@ -125,8 +125,7 @@ public class C_Magnet_Rocket : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-        _sm.comportementManager.DestroyObj(feedBack_GO_Right);
+        _sm.comportementManager.DestroyObj(ForcefieldObj);
     }
     
     public void Attract()

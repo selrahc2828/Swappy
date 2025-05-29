@@ -523,7 +523,14 @@ public class FeedbackManager : MonoBehaviour
                     }
                     else
                     {
-                        Destroy(sender.GetComponentInChildren<CubeTagFeedbackToDestroy>().gameObject);
+                        foreach (Transform child in sender.transform) // recherche dans les enfants directes
+                        {
+                            CubeTagFeedbackToDestroy feedback = child.gameObject.GetComponent<CubeTagFeedbackToDestroy>(); // on cherche le script qui marcque les feedback a détruire
+                            if (feedback != null)
+                            {
+                                Destroy(feedback.gameObject);
+                            }
+                        }
                     }
 
                     if (sender.CompareTag("Player"))
@@ -617,7 +624,14 @@ public class FeedbackManager : MonoBehaviour
                     }
                     else
                     {
-                        Destroy(sender.GetComponentInChildren<CubeTagFeedbackToDestroy>().gameObject);
+                        foreach (Transform child in sender.transform) // recherche dans les enfants directes
+                        {
+                            CubeTagFeedbackToDestroy feedback = child.gameObject.GetComponent<CubeTagFeedbackToDestroy>(); // on cherche le script qui marcque les feedback a détruire
+                            if (feedback != null)
+                            {
+                                Destroy(feedback.gameObject);
+                            }
+                        }
                     }
 
                     if (sender.CompareTag("Player"))
@@ -648,14 +662,20 @@ public class FeedbackManager : MonoBehaviour
                     break;
                 case 84: // Bouncing - Rocket
                     C_Bouncing_Rocket bouncingRocketState = currentObjectState as C_Bouncing_Rocket;
-
                     if (bouncingRocketState.rocketOn)
                     {
                         rocketTrail = Instantiate(RocketOnFeedback, sender.transform);
                     }
                     else
                     {
-                        Destroy(sender.GetComponentInChildren<CubeTagFeedbackToDestroy>().gameObject);
+                        foreach(Transform child in sender.transform) // recherche dans les enfants directes
+                        {
+                            CubeTagFeedbackToDestroy feedback = child.gameObject.GetComponent<CubeTagFeedbackToDestroy>(); // on cherche le script qui marcque les feedback a détruire
+                            if (feedback != null)
+                            {
+                                Destroy(feedback.gameObject);
+                            }
+                        }
                     }
 
                     if (sender.CompareTag("Player"))
@@ -693,7 +713,14 @@ public class FeedbackManager : MonoBehaviour
                     }
                     else
                     {
-                        Destroy(sender.GetComponentInChildren<CubeTagFeedbackToDestroy>().gameObject);
+                        foreach (Transform child in sender.transform) // recherche dans les enfants directes
+                        {
+                            CubeTagFeedbackToDestroy feedback = child.gameObject.GetComponent<CubeTagFeedbackToDestroy>(); // on cherche le script qui marcque les feedback a détruire
+                            if (feedback != null)
+                            {
+                                Destroy(feedback.gameObject);
+                            }
+                        }
                     }
 
                     if (sender.CompareTag("Player"))
@@ -817,7 +844,10 @@ public class FeedbackManager : MonoBehaviour
 
                     if (rocketState.rocketOn)
                     {
-                        Destroy(sender.GetComponentInChildren<CubeTagFeedbackToDestroy>().gameObject);
+                        foreach(CubeTagFeedbackToDestroy feedback in sender.GetComponentsInChildren<CubeTagFeedbackToDestroy>())
+                        {
+                            Destroy(feedback.gameObject);
+                        }
                     }
 
                     if (sender.CompareTag("Player"))
@@ -962,7 +992,10 @@ public class FeedbackManager : MonoBehaviour
 
                     if (impulseRocketState.rocketOn)
                     {
-                        Destroy(sender.GetComponentInChildren<CubeTagFeedbackToDestroy>().gameObject);
+                        foreach (CubeTagFeedbackToDestroy feedback in sender.GetComponentsInChildren<CubeTagFeedbackToDestroy>())
+                        {
+                            Destroy(feedback.gameObject);
+                        }
                     }
                     if (sender.CompareTag("Player"))
                     {
@@ -1028,8 +1061,12 @@ public class FeedbackManager : MonoBehaviour
 
                     if (bouncingRocketState.rocketOn)
                     {
-                        Destroy(sender.GetComponentInChildren<CubeTagFeedbackToDestroy>().gameObject);
+                        foreach (CubeTagFeedbackToDestroy feedback in sender.GetComponentsInChildren<CubeTagFeedbackToDestroy>())
+                        {
+                            Destroy(feedback.gameObject);
+                        }
                     }
+
                     if (sender.CompareTag("Player"))
                     {
                         if (playerStateMachine.inversion == true)
@@ -1094,8 +1131,12 @@ public class FeedbackManager : MonoBehaviour
 
                     if (magnetRocketState.rocketOn)
                     {
-                        Destroy(sender.GetComponentInChildren<CubeTagFeedbackToDestroy>().gameObject);
+                        foreach (CubeTagFeedbackToDestroy feedback in sender.GetComponentsInChildren<CubeTagFeedbackToDestroy>())
+                        {
+                            Destroy(feedback.gameObject);
+                        }
                     }
+
                     if (sender.CompareTag("Player"))
                     {
                         if (playerStateMachine.inversion == true)

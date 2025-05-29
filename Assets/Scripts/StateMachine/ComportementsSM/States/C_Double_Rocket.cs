@@ -21,7 +21,6 @@ public class C_Double_Rocket : ComportementState
         leftValue = 81;
         rightValue = 81;
         base.Enter();
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
         if (!_sm.isPlayer)
         {
@@ -70,7 +69,5 @@ public class C_Double_Rocket : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-
     }
 }

@@ -28,8 +28,6 @@ public class C_Bouncing_Rocket : ComportementState
         leftValue = 3;
         rightValue = 81;
         base.Enter();
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
         rocketOn = false;
         rocketDirection = _sm.transform.up;
@@ -123,7 +121,7 @@ public class C_Bouncing_Rocket : ComportementState
     {
         base.CollisionStart(other);
         rocketDirection = -rocketDirection;
-        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
+        GlobalEventManager.Instance.BounceLocation(other.contacts);
 
     }
 }
