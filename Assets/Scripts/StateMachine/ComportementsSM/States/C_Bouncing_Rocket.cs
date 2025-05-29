@@ -12,10 +12,11 @@ public class C_Bouncing_Rocket : ComportementState
     private float rocketForceOnPlayer = 20;
     private float rocketForceWhenGrab= 20;
     private float onCooldown;
+    private float onFirstCooldown;
     private float offCooldown;
     private float timer;
     private float maxSpeed;
-    private bool rocketOn;
+    public bool rocketOn;
     private Vector3 rocketDirection;
     public C_Bouncing_Rocket(StateMachine stateMachine) : base(stateMachine)
     {
@@ -27,18 +28,19 @@ public class C_Bouncing_Rocket : ComportementState
         leftValue = 3;
         rightValue = 81;
         base.Enter();
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
 
-        timer = 0f;
         rocketOn = false;
-        rocketDirection = Vector3.up;
+        rocketDirection = _sm.transform.up;
         maxSpeed = _sm.comportementManager.rocketData.rocketMaxSpeed;
         rocketForce = _sm.comportementManager.rocketData.rocketForce;
         rocketForceOnPlayer = _sm.comportementManager.rocketData.rocketForceOnPlayer;
         rocketForceWhenGrab = _sm.comportementManager.rocketData.rocketForceWhenGrab;
         onCooldown = _sm.comportementManager.rocketData.rocketOnCooldown;
+        onFirstCooldown = _sm.comportementManager.rocketData.rocketFirstOnCooldown;
         offCooldown = _sm.comportementManager.rocketData.rocketOffCooldown;
+
+        timer = 0f;
+        //timer += onCooldown - onFirstCooldown; // a activer pour early start
 
         bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
         if (_sm.isPlayer)
@@ -62,17 +64,19 @@ public class C_Bouncing_Rocket : ComportementState
     {
         base.TickPhysics();
         timer += Time.fixedDeltaTime;
-        if (timer > onCooldown && !rocketOn)
+        if (timer > onCooldown && !rocketOn)//la fusée décolle
         {
             rocketOn = true;
-            rocketDirection = Vector3.up;
+            rocketDirection = _sm.transform.up;
             timer = 0f;
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         }
 
-        if (timer > offCooldown && rocketOn)
+        if (timer > offCooldown && rocketOn)// la fusée s'arrette
         {
             rocketOn = false;
             timer = 0f;
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         }
 
         if (_sm.rb.velocity.magnitude > maxSpeed && rocketOn)
@@ -117,7 +121,7 @@ public class C_Bouncing_Rocket : ComportementState
     {
         base.CollisionStart(other);
         rocketDirection = -rocketDirection;
-        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
+        GlobalEventManager.Instance.BounceLocation(other.contacts);
 
     }
 }

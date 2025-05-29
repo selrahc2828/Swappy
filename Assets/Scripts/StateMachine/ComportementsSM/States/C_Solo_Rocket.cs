@@ -13,7 +13,7 @@ public class C_Solo_Rocket : ComportementState
     private float offCooldown;
     private float timer;
     private float maxSpeed;
-    private bool rocketOn;
+    public bool rocketOn;
     private bool firstRocket;
     private bool startingSoonSignalSended;
 
@@ -30,9 +30,7 @@ public class C_Solo_Rocket : ComportementState
         rightValue = 0;
         base.Enter();
 
-        timer = 0f;
         rocketOn = false;
-        firstRocket = true;
         startingSoonSignalSended = false;
         maxSpeed = _sm.comportementManager.rocketData.rocketMaxSpeed;
         rocketForce = _sm.comportementManager.rocketData.rocketForce;
@@ -41,6 +39,9 @@ public class C_Solo_Rocket : ComportementState
         onCooldown = _sm.comportementManager.rocketData.rocketOnCooldown;
         onFirstCooldown = _sm.comportementManager.rocketData.rocketFirstOnCooldown;
         offCooldown = _sm.comportementManager.rocketData.rocketOffCooldown;
+
+        timer = 0f;
+        //timer += onCooldown - onFirstCooldown; // a activer pour early start
 
         if (!_sm.isPlayer)
         {
@@ -57,28 +58,23 @@ public class C_Solo_Rocket : ComportementState
     {
         base.TickPhysics();
         timer += Time.fixedDeltaTime;
-        if (firstRocket)
+        if (timer > onCooldown && !rocketOn)// la fusée décole
         {
-            timer += onCooldown - onFirstCooldown;
-            firstRocket = false;
-        }
-        if (timer > onCooldown && !rocketOn)
-        {
-            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
             rocketOn = true;
             timer = 0f;
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         }
-        if(timer > (onCooldown -1) && !rocketOn && startingSoonSignalSended == false)
+        if(timer > (onCooldown -1) && !rocketOn && startingSoonSignalSended == false)// envoie du signal, la fusée décole bientot
         {
             startingSoonSignalSended = true;
             GlobalEventManager.Instance.JustBeforeRocketStart(GetGameObject());
         }
 
-        if (timer > offCooldown && rocketOn)
+        if (timer > offCooldown && rocketOn)// la fusée s'arrete
         {
-            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
             rocketOn = false;
             timer = 0f;
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         }
 
         if (_sm.transform.InverseTransformDirection(_sm.rb.velocity).y > maxSpeed && rocketOn)// compare la velocity local y a la max speed
