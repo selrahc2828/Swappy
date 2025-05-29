@@ -25,9 +25,6 @@ public class C_Bouncing_Immuable : ComportementState
         leftValue = 3;
         rightValue = 9;
         base.Enter();
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-
        
         _bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
 
@@ -64,8 +61,6 @@ public class C_Bouncing_Immuable : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-        _sm.comportementManager.DestroyObj(feedBack_GO_Right);
         
         if (_sm.isPlayer)
         {
@@ -100,7 +95,8 @@ public class C_Bouncing_Immuable : ComportementState
                 _baseAngularVelocity = _sm.rb.angularVelocity;
                 _sm.rb.isKinematic = true;
                 GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
-                
+                GlobalEventManager.Instance.BounceLocation(other.contacts);
+
                 _sm.GetComponent<Collider>().material = _bouncyMaterial;
             }
         }

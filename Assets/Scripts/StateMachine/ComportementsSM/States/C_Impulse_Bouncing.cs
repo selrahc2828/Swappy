@@ -62,9 +62,6 @@ public class C_Impulse_Bouncing : ComportementState
         impulseForceMultiplier = _sm.comportementManager.impulseBounceData.impulseForceMultiplier;
         applyOnMe = _sm.comportementManager.impulseData.applyOnMe;
         impulseBounceFeedback = _sm.comportementManager.impulseData.impulseFeedback;
-        
-        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-
     }
 
     public override void TickLogic()
@@ -89,7 +86,6 @@ public class C_Impulse_Bouncing : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.comportementManager.DestroyObj(feedBack_GO_Right);
         
         if (_sm.isPlayer)
         {
@@ -108,6 +104,7 @@ public class C_Impulse_Bouncing : ComportementState
         if (other!= null && canBounce)
         {
             GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
+            GlobalEventManager.Instance.BounceLocation(other.contacts);
             trueImpulseBounceForce = impulseBounceForce + _sm.rb.velocity.magnitude * impulseForceMultiplier;
             // Debug.LogWarning($"dans enter: {trueImpulseBounceForce}");
             Repulse();
