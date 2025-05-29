@@ -5,6 +5,7 @@ public class ComportementStealer_proto : MonoBehaviour
 {
     private Controls controls;
     private GameManager gameManager;
+    private AimAssist aimAssist;
 
     [Header("Raycast")]
     public LayerMask hitLayer;
@@ -24,6 +25,7 @@ public class ComportementStealer_proto : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
+        aimAssist = GameManager.Instance.player.GetComponent<AimAssist>();
         controls = GameManager.controls;
         
         controls.Player.ActionSlot1.performed += ActionSlot1;//clic gauche
@@ -101,10 +103,10 @@ public class ComportementStealer_proto : MonoBehaviour
     
     void Slot1()
     {
-        _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(_ray, out var hit, Mathf.Infinity, hitLayer)) //mask
+        // if (Physics.Raycast(_ray, out var hit, Mathf.Infinity, hitLayer)) //mask
+        if (aimAssist.cible is not null)
         {
-            var stateMachine = hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
+            var stateMachine = aimAssist.cible; // hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
             if (stateMachine != null)
             {
                 //On verifie si slot1 est superieur a 0, s'il l'est, on cherche alors a donner un comportement a l'objet vise, sinon on cherche a prelever un comportement a l'objet vise
@@ -172,10 +174,10 @@ public class ComportementStealer_proto : MonoBehaviour
 
     void Slot2()
     {
-        _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(_ray, out var hit, Mathf.Infinity, hitLayer)) //mask
+        // if (Physics.Raycast(_ray, out var hit, Mathf.Infinity, hitLayer)) //mask
+        if (aimAssist.cible is not null)
         {
-            var stateMachine = hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
+            var stateMachine = aimAssist.cible; // hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
             if (stateMachine != null)
             {
                 //On verifie si slot2 est superieur a 0, s'il l'est, on cherche alors a donner un comportement a l'objet vise, sinon on cherche � pr�lever un comportement a l'objet vise

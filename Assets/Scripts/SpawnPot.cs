@@ -74,14 +74,6 @@ public class SpawnPot : MonoBehaviour
             // GlobalEventManager.Instance.OnShattered += HandleShattered;
         }
     }
-    //
-    // void HandleShattered(SpawnPot origin)
-    // {
-    //     if (origin == this)
-    //     {
-    //         isBroken = true;
-    //     }
-    // }
     
     private void OnDrawGizmos() 
     {
