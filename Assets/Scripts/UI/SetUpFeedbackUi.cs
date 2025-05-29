@@ -18,12 +18,14 @@ public class SetUpFeedbackUi : MonoBehaviour
     public GameObject knobIndicationParent;
     public GameObject[] feedbackIndicationLeft;
     public GameObject[] feedbackIndicationRight;
+    public ComportementStealer_proto playerSlots;
         
     // Start is called before the first frame update
     void Start()
     {
         _aimAssist = GameManager.Instance.player.GetComponent<AimAssist>();
         ParentIndicationActive();
+        playerSlots = GameManager.Instance.player.GetComponent<ComportementStealer_proto>();
     }
 
     // Update is called once per frame
@@ -143,6 +145,71 @@ public class SetUpFeedbackUi : MonoBehaviour
 
     public void SymboleFeedback(int leftValue, int rightValue)
     {
+        if(rightValue == 0 && leftValue != 0) // si le cube a un comportement seulement a gauche
+        {
+            if(playerSlots.slot1 != 0 && playerSlots.slot2 == 0) // si seule la main gauche a un comportement stoqué
+            {
+                switch (leftValue)
+                {
+                    case 0: // NoComportement
+                        feedbackIndicationRight[0].SetActive(false);
+                        feedbackIndicationRight[1].SetActive(false);
+                        feedbackIndicationRight[2].SetActive(false);
+                        feedbackIndicationRight[3].SetActive(false);
+                        feedbackIndicationRight[4].SetActive(false);
+
+                        break;
+                    case 1: // SoloImpulse
+                        feedbackIndicationRight[0].SetActive(true);
+                        feedbackIndicationRight[1].SetActive(false);
+                        feedbackIndicationRight[2].SetActive(false);
+                        feedbackIndicationRight[3].SetActive(false);
+                        feedbackIndicationRight[4].SetActive(false);
+
+                        break;
+                    case 3: // SoloBouncing
+                        feedbackIndicationRight[0].SetActive(false);
+                        feedbackIndicationRight[1].SetActive(true);
+                        feedbackIndicationRight[2].SetActive(false);
+                        feedbackIndicationRight[3].SetActive(false);
+                        feedbackIndicationRight[4].SetActive(false);
+
+                        break;
+                    case 9: // SoloImmuable
+                        feedbackIndicationRight[0].SetActive(false);
+                        feedbackIndicationRight[1].SetActive(false);
+                        feedbackIndicationRight[2].SetActive(true);
+                        feedbackIndicationRight[3].SetActive(false);
+                        feedbackIndicationRight[4].SetActive(false);
+
+                        break;
+                    case 27: // SoloMagnet
+                        feedbackIndicationRight[0].SetActive(false);
+                        feedbackIndicationRight[1].SetActive(false);
+                        feedbackIndicationRight[2].SetActive(false);
+                        feedbackIndicationRight[3].SetActive(true);
+                        feedbackIndicationRight[4].SetActive(false);
+
+                        break;
+                    case 81: // SoloRocket
+                        feedbackIndicationRight[0].SetActive(false);
+                        feedbackIndicationRight[1].SetActive(false);
+                        feedbackIndicationRight[2].SetActive(false);
+                        feedbackIndicationRight[3].SetActive(false);
+                        feedbackIndicationRight[4].SetActive(true);
+
+                        break;
+                    default:
+                        break;
+                }
+                feedbackIndicationLeft[0].SetActive(false);
+                feedbackIndicationLeft[1].SetActive(false);
+                feedbackIndicationLeft[2].SetActive(false);
+                feedbackIndicationLeft[3].SetActive(false);
+                feedbackIndicationLeft[4].SetActive(false);
+                return;
+            }
+        }
         switch(leftValue)
         {
             case 0: // NoComportement
