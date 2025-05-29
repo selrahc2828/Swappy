@@ -67,7 +67,7 @@
 	<object class="MarkerTrack" id="{f9877f57-b9eb-4d03-a05a-3ddc0b19108a}" />
 	<object class="GroupTrack" id="{0190d937-3a3c-43aa-a90d-7356f65fd815}">
 		<relationship name="modules">
-			<destination>{6d57a38d-bfee-4263-885c-399a47491773}</destination>
+			<destination>{4b2dc953-e388-4042-87c0-4e586531d531}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{e5b75afe-b028-49d6-b9b4-5f4ddee93adc}</destination>
@@ -83,8 +83,8 @@
 	</object>
 	<object class="Timeline" id="{0890bedc-fe73-4283-8a0f-2723ad1a64df}">
 		<relationship name="modules">
-			<destination>{6d57a38d-bfee-4263-885c-399a47491773}</destination>
 			<destination>{ea1e3429-f5bd-4496-b38a-5c8e4a413154}</destination>
+			<destination>{4b2dc953-e388-4042-87c0-4e586531d531}</destination>
 		</relationship>
 		<relationship name="markers">
 			<destination>{1acf6b6e-b033-42d7-997b-f6b938f9e898}</destination>
@@ -115,13 +115,10 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{6fb8b4e9-4c3f-490c-b444-079b643f8cbb}" />
-	<object class="EventSound" id="{6d57a38d-bfee-4263-885c-399a47491773}">
+	<object class="EventSound" id="{4b2dc953-e388-4042-87c0-4e586531d531}">
 		<property name="length">
-			<value>5.1000000000000005</value>
+			<value>5.0092402982348556</value>
 		</property>
-		<relationship name="fadeOutCurve">
-			<destination>{0446d0e7-53e0-4d87-95a1-cc3f0abd1c60}</destination>
-		</relationship>
 		<relationship name="event">
 			<destination>{8ffb9dd3-c571-47a6-96e4-e085287deebe}</destination>
 		</relationship>
@@ -145,10 +142,10 @@
 	</object>
 	<object class="EventSound" id="{ea1e3429-f5bd-4496-b38a-5c8e4a413154}">
 		<property name="start">
-			<value>4.9000000000000004</value>
+			<value>5.0036406454256488</value>
 		</property>
 		<property name="length">
-			<value>3.5999999999999996</value>
+			<value>3.4963593545743512</value>
 		</property>
 		<relationship name="fadeInCurve">
 			<destination>{edc59068-2045-4b0b-9300-315b57dcfcdf}</destination>
@@ -196,14 +193,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{af2cad78-9a9c-4c98-a216-a688fb0cafd5}" />
 	<object class="MixerBusFader" id="{97420f26-08f1-45d9-a4a4-1e18a6693557}" />
-	<object class="FadeCurve" id="{0446d0e7-53e0-4d87-95a1-cc3f0abd1c60}">
-		<relationship name="startPoint">
-			<destination>{6c6c1b0e-646d-42f1-aa70-db4f89d06305}</destination>
-		</relationship>
-		<relationship name="endPoint">
-			<destination>{486685a8-2ac7-4ad3-a845-a8cc8530d87b}</destination>
-		</relationship>
-	</object>
 	<object class="Automator" id="{acdc5228-7c84-4a3a-ba2f-6d1a87beb439}">
 		<property name="nameOfPropertyBeingAutomated">
 			<value>volume</value>
@@ -252,25 +241,6 @@
 			<destination>{2e8efaa2-e3ce-46a4-b9c1-b23949d7083e}</destination>
 		</relationship>
 	</object>
-	<object class="AutomationPoint" id="{6c6c1b0e-646d-42f1-aa70-db4f89d06305}">
-		<property name="position">
-			<value>4.9000000000000004</value>
-		</property>
-		<property name="value">
-			<value>1</value>
-		</property>
-		<property name="curveShape">
-			<value>0.25471893</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{486685a8-2ac7-4ad3-a845-a8cc8530d87b}">
-		<property name="position">
-			<value>5.1000000000000005</value>
-		</property>
-		<property name="value">
-			<value>0</value>
-		</property>
-	</object>
 	<object class="AutomationCurve" id="{9db083c2-4afb-4a80-906a-deffa2311297}">
 		<relationship name="parameter">
 			<destination>{8c424e5b-61a0-4dcf-a0ea-ce1703da0818}</destination>
@@ -300,7 +270,7 @@
 	<object class="MixerBusFader" id="{b9e50a30-7622-47ce-8cdd-8ba9c7a01c8d}" />
 	<object class="AutomationPoint" id="{16c952ef-85e3-42fe-a300-f632d22204e6}">
 		<property name="position">
-			<value>4.9000000000000004</value>
+			<value>5.0036406454256488</value>
 		</property>
 		<property name="value">
 			<value>0</value>
@@ -311,7 +281,7 @@
 	</object>
 	<object class="AutomationPoint" id="{fc100437-9334-421a-a270-998b178792cd}">
 		<property name="position">
-			<value>5</value>
+			<value>5.1036406454256484</value>
 		</property>
 		<property name="value">
 			<value>1</value>
