@@ -7,8 +7,8 @@ public class ComportementStealer_proto : MonoBehaviour
     private GameManager gameManager;
     private AimAssist aimAssist;
 
-    [Header("Raycast")]
-    public LayerMask hitLayer;
+    // [Header("Raycast")]
+    // public LayerMask hitLayer;
     private Ray _ray;
     [HideInInspector] public Camera mainCam;
 
@@ -103,10 +103,9 @@ public class ComportementStealer_proto : MonoBehaviour
     
     void Slot1()
     {
-        // if (Physics.Raycast(_ray, out var hit, Mathf.Infinity, hitLayer)) //mask
         if (aimAssist.cible is not null)
         {
-            var stateMachine = aimAssist.cible; // hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
+            var stateMachine = aimAssist.cible;
             if (stateMachine != null)
             {
                 //On verifie si slot1 est superieur a 0, s'il l'est, on cherche alors a donner un comportement a l'objet vise, sinon on cherche a prelever un comportement a l'objet vise
@@ -174,10 +173,9 @@ public class ComportementStealer_proto : MonoBehaviour
 
     void Slot2()
     {
-        // if (Physics.Raycast(_ray, out var hit, Mathf.Infinity, hitLayer)) //mask
         if (aimAssist.cible is not null)
         {
-            var stateMachine = aimAssist.cible; // hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
+            var stateMachine = aimAssist.cible;
             if (stateMachine != null)
             {
                 //On verifie si slot2 est superieur a 0, s'il l'est, on cherche alors a donner un comportement a l'objet vise, sinon on cherche � pr�lever un comportement a l'objet vise
