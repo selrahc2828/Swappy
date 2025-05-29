@@ -12,6 +12,7 @@ public class FeedbackManager : MonoBehaviour
     private GameObject FeedbackPref1;
     private GameObject FeedbackPref2;
     private GameObject SpawnPoint;
+    private CubeTagFeedbackToDestroy[] feedbacksToDestroy;
     private bool rocketOn = false;
     private GameObject rocketTrail;
     
@@ -74,8 +75,7 @@ public class FeedbackManager : MonoBehaviour
             stateValue = currentObjectState.stateValue;
         }
         
-        if(sender.CompareTag("Player")){}
-        else
+        if(!sender.CompareTag("Player"))
         {
             SpawnPoint = sender.GetComponentInChildren<CubeTagFeedback>().gameObject;
         }
@@ -722,6 +722,16 @@ public class FeedbackManager : MonoBehaviour
             stateValue = currentObjectState.stateValue;
         }
 
+        if (!sender.CompareTag("Player"))
+        {
+            feedbacksToDestroy = sender.GetComponentInChildren<CubeTagFeedback>().gameObject.GetComponentsInChildren<CubeTagFeedbackToDestroy>();
+
+            foreach (CubeTagFeedbackToDestroy feedback in feedbacksToDestroy)
+            {
+                Destroy(feedback.gameObject);
+            }
+        }
+
         switch (stateValue)
         {
             case 0: // pas de comportement
@@ -740,8 +750,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
+
                 }
 
                 break;
@@ -760,7 +769,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
+
                 }
 
                 break;
@@ -779,7 +788,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
+
                 }
 
                 break;
@@ -798,7 +807,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
+
                 }
 
                 break;
@@ -817,7 +826,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
+
                 }
 
                 break;
@@ -840,7 +849,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
+
                 }
 
                 break;
@@ -852,7 +861,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
+
                 }
 
                 break;
@@ -864,7 +873,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
+
                 }
 
                 break;
@@ -876,7 +885,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
+
                 }
 
                 break;
@@ -888,7 +897,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
+
                 }
 
                 break;
@@ -900,9 +909,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    rocketOn = false;
-                    Destroy(rocketTrail);
+
                 }
 
                 break;
@@ -923,8 +930,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
+
                 }
 
                 break;
@@ -945,8 +951,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
+
                 }
 
                 break;
@@ -967,8 +972,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
+
                 }
 
                 break;
@@ -993,8 +997,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
+
                 }
 
                 break;
@@ -1015,8 +1018,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
+
                 }
 
                 break;
@@ -1037,8 +1039,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
+
                 }
 
                 break;
@@ -1063,8 +1064,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
+
                 }
 
                 break;
@@ -1085,8 +1085,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
+
                 }
 
                 break;
@@ -1107,8 +1106,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
+
                 }
 
                 break;
@@ -1133,8 +1131,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
+
                 }
 
                 break;
