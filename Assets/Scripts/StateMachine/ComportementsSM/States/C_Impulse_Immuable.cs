@@ -30,7 +30,6 @@ public class C_Impulse_Immuable : ComportementState
         
         repulserTime = _sm.comportementManager.impulseData.impulseTime;
         repulserFirstTime = _sm.comportementManager.impulseData.impulseFirstTime;
-        repulserTimer = 0;
         repulserRange = _sm.comportementManager.impulseData.impulseRange;
 
         if (_sm.isPlayer)
@@ -49,17 +48,17 @@ public class C_Impulse_Immuable : ComportementState
         _baseVelocity = _sm.rb.velocity;
         _baseAngularVelocity = _sm.rb.angularVelocity;
         _sm.rb.isKinematic = true;
+
+        repulserTimer = 0;
+        //repulserTimer += repulserTime - repulserFirstTime;
+
+        GlobalEventManager.Instance.Explosion(GetGameObject(), repulserTime, true);
     }
 
     public override void TickLogic()
     {
         base.TickLogic();
         repulserTimer += Time.deltaTime;
-        if (firstRepulser)
-        {
-            repulserTimer += repulserTime - repulserFirstTime;
-            firstRepulser = false;
-        }
         if (repulserTimer >= repulserTime)
         {
             Repulse();

@@ -148,4 +148,10 @@ public class C_Immuable_Magnet : ComportementState
         Vector3 radialVelocity = Vector3.Project(rb.velocity, forceDir);
         rb.velocity -= radialVelocity * (dampingFactor * Time.deltaTime);
     }
+
+    public override void CollisionStart(Collision other)
+    {
+        base.CollisionStart(other);
+        GlobalEventManager.Instance.ImmuableCollision(GetGameObject());
+    }
 }
