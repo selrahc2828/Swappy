@@ -59,4 +59,10 @@ public class C_Immuable_Rocket : ComportementState
         GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         base.Exit();
     }
+
+    public override void CollisionStart(Collision other)
+    {
+        base.CollisionStart(other);
+        GlobalEventManager.Instance.ImmuableCollision(GetGameObject());
+    }
 }
