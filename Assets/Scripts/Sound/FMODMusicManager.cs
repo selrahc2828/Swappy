@@ -83,9 +83,9 @@ public class FMODMusicManager : MonoBehaviour
         return (position);
     }
 
-    public void SetMusicNameParamInstance(EventInstance musicInstance, string paramName, float value, bool seekSpeed = true)
+    public void SetMusicNameParamInstance(EventInstance musicInstance, string paramName, float value, bool ignoreSeekSpeed = false)
     {
-        musicInstance.setParameterByName(paramName, value, seekSpeed);
+        musicInstance.setParameterByName(paramName, value, ignoreSeekSpeed);
     }
 
     public void StopMusic(EventInstance musicInstance)

@@ -16,14 +16,17 @@ public class GlobalEventManager : MonoBehaviour
     public event Action<GameObject,bool> OnSelfImpactMod;
 
     //Comportement States
-    public event Action<GameObject> OnComportementStateEnter;
+    public event Action<GameObject,bool,float,float> OnComportementStateEnter;
     public event Action<GameObject> OnComportementStateExit;
     public event Action<GameObject, float> OnComportementStatePlay;
     public event Action<GameObject, float, bool> OnExplosion;
     public event Action<GameObject> OnJustBeforeExplosion;
     public event Action<ContactPoint[]> OnBounceLocation;
     public event Action<GameObject> OnJustBeforeRocketStart;
+    
 
+
+    //Player Movement
     public event Action<GameObject> OnFootstep;
     public event Action<GameObject> OnJump;
     public event Action<GameObject,float> OnLand;
@@ -85,9 +88,9 @@ public class GlobalEventManager : MonoBehaviour
         OnSelfImpactMod?.Invoke(player, active);
     }
 
-    public void ComportmentStateEnter(GameObject comportableObject) // appele dans le Enter des comportements
+    public void ComportmentStateEnter(GameObject comportableObject, bool haveEarlyStart = false , float defaultValueBetweenHit = -1f, float starterValueBetweenHit = -1f) // appele dans le Enter des comportements
     {
-        OnComportementStateEnter?.Invoke(comportableObject);
+        OnComportementStateEnter?.Invoke(comportableObject,haveEarlyStart,defaultValueBetweenHit,starterValueBetweenHit);
     }
 
     public void ComportmentStateExit(GameObject comportableObject) // appele dans le Exit des comportements
