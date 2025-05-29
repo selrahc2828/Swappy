@@ -49,6 +49,8 @@ public class C_Impulse_Immuable : ComportementState
         _baseVelocity = _sm.rb.velocity;
         _baseAngularVelocity = _sm.rb.angularVelocity;
         _sm.rb.isKinematic = true;
+
+        GlobalEventManager.Instance.Explosion(GetGameObject(), repulserTime, true);
     }
 
     public override void TickLogic()
