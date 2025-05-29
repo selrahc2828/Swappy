@@ -52,8 +52,7 @@ public class C_Solo_Impulse : ComportementState
         feedback = _sm.comportementManager.impulseData.impulseFeedback;
         explodingSoonSignalSended = false;
         
-        
-        GlobalEventManager.Instance.Explosion(GetGameObject(), repulserFirstTime, true);
+        GlobalEventManager.Instance.Explosion(GetGameObject(), repulserTime, true);
     }
 
     public override void TickLogic()
