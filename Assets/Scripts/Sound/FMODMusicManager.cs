@@ -191,6 +191,9 @@ public class FMODMusicManager : MonoBehaviour
 
     public void StopMusicWalkman(string musicName = default)
     {
+        GetMusicPlaylistInstance(FMODSnapshotEvents.CasqueWalkman).getPlaybackState(out PLAYBACK_STATE snapshotState);
+        if(snapshotState == PLAYBACK_STATE.PLAYING) GetMusicPlaylistInstance(FMODSnapshotEvents.CasqueWalkman).stop(STOP_MODE.ALLOWFADEOUT);
+        
         GetMusicPlaylistInstance(FMODMusicEvents.Walkman).stop(STOP_MODE.ALLOWFADEOUT);
         GetMusicPlaylistInstance(FMODMusicEvents.Walkman).release();
     }
