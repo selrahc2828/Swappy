@@ -42,6 +42,20 @@ public class FMODMusicManager : MonoBehaviour
         instance = this;
         // DontDestroyOnLoad(gameObject);
     }
+
+    private void OnEnable()
+    {
+        GlobalEventManager.Instance.OnPlaySelected += PlayMusicWalkman;
+        GlobalEventManager.Instance.OnStopSelected += StopMusicWalkman;
+        GlobalEventManager.Instance.OnMute += CasqueOnOff;
+    }
+    
+    private void OnDisable()
+    {
+        GlobalEventManager.Instance.OnPlaySelected -= PlayMusicWalkman;
+        GlobalEventManager.Instance.OnStopSelected -= StopMusicWalkman;
+        GlobalEventManager.Instance.OnMute -= CasqueOnOff;
+    }
     
     void Start()
     {
@@ -161,6 +175,8 @@ public class FMODMusicManager : MonoBehaviour
 
     public void PlayMusicWalkman(string musicName)
     {
+        GetMusicPlaylistInstance(FMODSnapshotEvents.CasqueWalkman).getPlaybackState(out PLAYBACK_STATE snapshotState);
+        if(snapshotState != PLAYBACK_STATE.PLAYING) GetMusicPlaylistInstance(FMODSnapshotEvents.CasqueWalkman).start();
         GetMusicPlaylistInstance(FMODMusicEvents.Walkman).getPlaybackState(out PLAYBACK_STATE musicState);
         if (musicState == PLAYBACK_STATE.PLAYING)
         {
@@ -173,7 +189,7 @@ public class FMODMusicManager : MonoBehaviour
         }
     }
 
-    public void StopMusicWalkman()
+    public void StopMusicWalkman(string musicName = default)
     {
         GetMusicPlaylistInstance(FMODMusicEvents.Walkman).stop(STOP_MODE.ALLOWFADEOUT);
         GetMusicPlaylistInstance(FMODMusicEvents.Walkman).release();
@@ -185,36 +201,36 @@ public class FMODMusicManager : MonoBehaviour
     }
     #endregion
     #region Param Music Test 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            PlayMusicWalkman("CassetteClassique");   
-        }
-        if(Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            PlayMusicWalkman("CassetteJazzFilmNoir");   
-        }
-        if(Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            PlayMusicWalkman("CassetteOrchestral");   
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad0))
-        {
-            StopMusicWalkman();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad4))
-        {
-            Debug.Log(GetPlaylistMusicSize());
-        }
-
-        if (Input.GetKeyDown(KeyCode.Keypad7))
-        {
-            Debug.Log(GetMusicTimelineValue(GetMusicPlaylistInstance(FMODMusicEvents.Walkman)));
-        }
-    }
+    // private void Update()
+    // {
+    //     if(Input.GetKeyDown(KeyCode.Keypad1))
+    //     {
+    //         PlayMusicWalkman("CassetteClassique");   
+    //     }
+    //     if(Input.GetKeyDown(KeyCode.Keypad2))
+    //     {
+    //         PlayMusicWalkman("CassetteJazzFilmNoir");   
+    //     }
+    //     if(Input.GetKeyDown(KeyCode.Keypad3))
+    //     {
+    //         PlayMusicWalkman("CassetteOrchestral");   
+    //     }
+    //
+    //     if (Input.GetKeyDown(KeyCode.Keypad0))
+    //     {
+    //         StopMusicWalkman();
+    //     }
+    //
+    //     if (Input.GetKeyDown(KeyCode.Keypad4))
+    //     {
+    //         Debug.Log(GetPlaylistMusicSize());
+    //     }
+    //
+    //     if (Input.GetKeyDown(KeyCode.Keypad7))
+    //     {
+    //         Debug.Log(GetMusicTimelineValue(GetMusicPlaylistInstance(FMODMusicEvents.Walkman)));
+    //     }
+    // }
     #endregion
     #region On destroy
     private void CleanUpMusic()
@@ -324,6 +340,23 @@ public class FMODMusicManager : MonoBehaviour
     }
     #endregion
 
+    
+    #region C#event
+
+
+    private void CasqueOnOff(bool isCasqueOn)
+    {
+        if (isCasqueOn)
+        {
+            GetMusicPlaylistInstance(FMODSnapshotEvents.CasqueWalkman).stop(STOP_MODE.IMMEDIATE);
+            GetMusicPlaylistInstance(FMODSnapshotEvents.CasqueWalkman).release();
+        }
+        else
+        {
+            CreateMusicInstance(FMODSnapshotEvents.CasqueWalkman).start();
+        }
+    }
+    #endregion
 
 
 

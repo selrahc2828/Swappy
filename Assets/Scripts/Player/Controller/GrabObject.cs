@@ -16,6 +16,7 @@ public class GrabObject : MonoBehaviour
     private Transform _originParent;//pour replacer l'objet une fois lâché
     
     private GameObject _objToCarry;
+    private LayerMask _origineLayerMask;
     public GameObject objToCarry
     {
         get { return _objToCarry; }
@@ -121,6 +122,7 @@ public class GrabObject : MonoBehaviour
             _originParent = carriedObject.transform.parent;
 
             // empeche de pouvoir sauter dessus quand on le porte
+            _origineLayerMask = carriedObject.layer;
             carriedObject.layer = LayerMask.NameToLayer("Water");
             
             //dire a l'objet qu'il est grab au niveau FSM
@@ -199,9 +201,8 @@ public class GrabObject : MonoBehaviour
                     }
                 }
                 
-                // on remet le layer pour pouvoir marcher dessus
-                carriedObject.layer = LayerMask.NameToLayer("Ground"); // modif ici pour cas BehaviorCarriers
-                
+                // on remet le layer d'origine
+                carriedObject.layer = _origineLayerMask;
             }
             //reset
             grabUI?.SetActive(false);
