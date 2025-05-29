@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-[DisallowMultipleComponent] // empeche le componenet d'etre ajoute plusieurs fois a l'objet
+[DisallowMultipleComponent] // empeche le component d'etre ajoute plusieurs fois a l'objet
 public class UniqueID : MonoBehaviour
 {
     #if UNITY_EDITOR
