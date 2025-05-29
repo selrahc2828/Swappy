@@ -52,7 +52,7 @@ public static class UniqueIDManagerEditor
             }
             return true; // on ne fait rien
         }
-        idMap.Add(id, component); // existe pas donc on l'ajoute
+        idMap.Add(id, component); // n'existe pas donc on l'ajoute
         return true;
     }
     

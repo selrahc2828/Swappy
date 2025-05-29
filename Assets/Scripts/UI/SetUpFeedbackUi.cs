@@ -7,6 +7,7 @@ public class SetUpFeedbackUi : MonoBehaviour
 {
     public LayerMask hitLayer;
     private Ray _ray;
+    private AimAssist _aimAssist;
     
     [Header("Player")]
     public GameObject vignetteParent;
@@ -22,6 +23,7 @@ public class SetUpFeedbackUi : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _aimAssist = GameManager.Instance.player.GetComponent<AimAssist>();
         ParentIndicationActive();
         playerSlots = GameManager.Instance.player.GetComponent<ComportementStealer_proto>();
     }
@@ -38,10 +40,10 @@ public class SetUpFeedbackUi : MonoBehaviour
     {
         RaycastHit _hit;
 
-        _ray = GameManager.Instance.mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, hitLayer)) //mask
+        // if (Physics.Raycast(_ray, out var hit, Mathf.Infinity, hitLayer)) //mask
+        if (_aimAssist.cible is not null)
         {
-            var stateMachine = _hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
+            var stateMachine = _aimAssist.cible; // hit.collider.gameObject.GetComponent<ComportementsStateMachine>();
             if (stateMachine != null)
             {
                 if (stateMachine.currentState is ComportementState)
