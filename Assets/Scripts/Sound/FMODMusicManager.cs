@@ -23,7 +23,7 @@ public class FMODMusicManager : MonoBehaviour
     
     //private PLAYBACK_STATE musicState;
 
-    FMOD.Studio.EVENT_CALLBACK walkmanCallback;
+    EVENT_CALLBACK walkmanCallback;
     
     private EventInstance musictest;
     
@@ -61,7 +61,7 @@ public class FMODMusicManager : MonoBehaviour
     {
         // Cr�e explicitement un d�l�gu� pour le callback et le stocke afin d'�viter 
         // qu'il ne soit lib�r� par le garbage collector pendant son utilisation.
-        walkmanCallback = new FMOD.Studio.EVENT_CALLBACK(WalkmanEventCallback);
+        walkmanCallback = WalkmanEventCallback;
     }
     #endregion
     #region Param Music Instance
