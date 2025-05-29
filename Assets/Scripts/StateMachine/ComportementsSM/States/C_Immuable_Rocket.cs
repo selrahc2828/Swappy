@@ -29,10 +29,6 @@ public class C_Immuable_Rocket : ComportementState
         rocketReleaseForce = _sm.comportementManager.immuableRocketData.rocketReleaseForce;
         chargeTimeMax = _sm.comportementManager.immuableRocketData.chargeTimeMax;
         chargeTime = 0;
-        
-        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-
     }
 
     public override void TickLogic()
@@ -56,14 +52,18 @@ public class C_Immuable_Rocket : ComportementState
 
     public override void Exit()
     {
-        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-        _sm.comportementManager.DestroyObj(feedBack_GO_Right);
-
         _sm.rb.isKinematic = false;
         float effectiveReleaseForce = rocketReleaseForce * (chargeTime / chargeTimeMax);
         
         _sm.rb.AddForce(_sm.transform.up * effectiveReleaseForce, ForceMode.Impulse);
-        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
-        base.Exit();
+        FMODEventManager.instance
+            .GetInstanceFromEncyclopediaKey(_sm.gameObject, FMODEventManager.instance.FMODEvents.ImmuableRocket)
+            .setParameterByName("Stinger", 1);
+        FMODEventManager.instance.GetInstanceFromEncyclopediaKey(_sm.gameObject, FMODEventManager.instance.FMODEvents.ImmuableRocket).release();
+    }
+
+    public override void CollisionStart(Collision other)
+    {
+        GlobalEventManager.Instance.ImmuableCollision(GetGameObject());
     }
 }

@@ -31,8 +31,6 @@ public class C_Double_Bouncing : ComportementState
             ColorShaderOutline(_sm.comportementManager.bouncingColor, _sm.comportementManager.bouncingColor);
             _sm.objectCollider.material = doubleBouncyMaterial;
         }
-
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
     }
 
     public override void TickLogic()

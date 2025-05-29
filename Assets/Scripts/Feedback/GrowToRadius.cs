@@ -24,9 +24,9 @@ public class GrowToRadius : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        elapsedTime += Time.deltaTime;
+        elapsedTime += Time.fixedDeltaTime;
         float progress = elapsedTime / durationScaling;
 
         if (elapsedTime < durationScaling)

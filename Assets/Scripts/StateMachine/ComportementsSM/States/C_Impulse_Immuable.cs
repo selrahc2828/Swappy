@@ -27,11 +27,9 @@ public class C_Impulse_Immuable : ComportementState
         leftValue = 1;
         rightValue = 9;
         base.Enter();
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
         
         repulserTime = _sm.comportementManager.impulseData.impulseTime;
         repulserFirstTime = _sm.comportementManager.impulseData.impulseFirstTime;
-        repulserTimer = 0;
         repulserRange = _sm.comportementManager.impulseData.impulseRange;
 
         if (_sm.isPlayer)
@@ -50,17 +48,17 @@ public class C_Impulse_Immuable : ComportementState
         _baseVelocity = _sm.rb.velocity;
         _baseAngularVelocity = _sm.rb.angularVelocity;
         _sm.rb.isKinematic = true;
+
+        repulserTimer = 0;
+        //repulserTimer += repulserTime - repulserFirstTime;
+
+        GlobalEventManager.Instance.Explosion(GetGameObject(), repulserTime, true);
     }
 
     public override void TickLogic()
     {
         base.TickLogic();
         repulserTimer += Time.deltaTime;
-        if (firstRepulser)
-        {
-            repulserTimer += repulserTime - repulserFirstTime;
-            firstRepulser = false;
-        }
         if (repulserTimer >= repulserTime)
         {
             Repulse();
@@ -76,7 +74,6 @@ public class C_Impulse_Immuable : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
 
         _sm.rb.isKinematic = false;
         _sm.rb.velocity = _baseVelocity;
@@ -144,5 +141,10 @@ public class C_Impulse_Immuable : ComportementState
     {
         Vector3 direction = (objToApply.transform.position - _sm.transform.position).normalized;
         rbObj.AddForce(direction * force, ForceMode.Impulse);
+    }
+
+    public override void CollisionStart(Collision other)
+    {
+        GlobalEventManager.Instance.ImmuableCollision(_sm.gameObject);
     }
 }

@@ -23,8 +23,7 @@ public class GlobalEventManager : MonoBehaviour
     public event Action<GameObject> OnJustBeforeExplosion;
     public event Action<ContactPoint[]> OnBounceLocation;
     public event Action<GameObject> OnJustBeforeRocketStart;
-    
-
+    public event Action<GameObject> OnImmuableCollision;
 
     //Player Movement
     public event Action<GameObject> OnFootstep;
@@ -117,6 +116,12 @@ public class GlobalEventManager : MonoBehaviour
     {
         OnBounceLocation?.Invoke(locations);
     }
+
+    public void ImmuableCollision(GameObject collidingGameObject)
+    {
+        OnImmuableCollision?.Invoke(collidingGameObject);
+    }
+
     public void JustBeforeRocketStart(GameObject rocketGameObject)
     {
         OnJustBeforeRocketStart?.Invoke(rocketGameObject);

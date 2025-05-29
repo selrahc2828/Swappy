@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class C_Magnet_Rocket : ComportementState
 {
+    private GameObject ForcefieldObj;
     private float magnetRange;
     private float trueMagnetRange;
     private float magnetForce;
@@ -18,7 +19,7 @@ public class C_Magnet_Rocket : ComportementState
     private float offCooldown;
     private float timer;
     private float maxSpeed;
-    private bool rocketOn;
+    public bool rocketOn;
     private bool startingSoonSignalSended;
 
     private List<Rigidbody> magnetedObjects = new List<Rigidbody>();
@@ -61,12 +62,11 @@ public class C_Magnet_Rocket : ComportementState
         dampingFactor = _sm.comportementManager.magnetRocketData.dampingFactor;
         
         timer = 0f;
-        timer += onCooldown - onFirstCooldown;
+        //timer += onCooldown - onFirstCooldown; // a activer pour early start
 
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-        feedBack_GO_Left.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
-        feedBack_GO_Left.GetComponent<GrowToRadius>().atDestroy = false;
-        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Rocket, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+        ForcefieldObj = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+        ForcefieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
+        ForcefieldObj.GetComponent<GrowToRadius>().atDestroy = false;
 
     }
 
@@ -80,23 +80,23 @@ public class C_Magnet_Rocket : ComportementState
     {
         base.TickPhysics();
         timer += Time.fixedDeltaTime;
-        if (timer > onCooldown && !rocketOn)
+        if (timer > onCooldown && !rocketOn) // la fusée décole
         {
-            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
             rocketOn = true;
             timer = 0f;
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         }
-        if(timer >  (onCooldown -1) && !rocketOn && startingSoonSignalSended == false)
+        if(timer >  (onCooldown -1) && !rocketOn && startingSoonSignalSended == false)// la fusée décole dans 1s
         {
             startingSoonSignalSended = true;
             GlobalEventManager.Instance.JustBeforeRocketStart(GetGameObject());
         }
 
-        if (timer > offCooldown && rocketOn)
+        if (timer > offCooldown && rocketOn) // la fusée s'arrete
         {
-            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
             rocketOn = false;
             timer = 0f;
+            GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
         }
 
         if (_sm.transform.InverseTransformDirection(_sm.rb.velocity).y > maxSpeed && rocketOn)// compare la velocity local y a la max speed
@@ -125,8 +125,7 @@ public class C_Magnet_Rocket : ComportementState
     public override void Exit()
     {
         base.Exit();
-        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-        _sm.comportementManager.DestroyObj(feedBack_GO_Right);
+        _sm.comportementManager.DestroyObj(ForcefieldObj);
     }
     
     public void Attract()

@@ -9,10 +9,8 @@ public class FeedbackManager : MonoBehaviour
     public static FeedbackManager Instance;
     public ComportementsStateMachine playerStateMachine;
 
-    private GameObject FeedbackPref1;
-    private GameObject FeedbackPref2;
     private GameObject SpawnPoint;
-    private bool rocketOn = false;
+    private CubeTagFeedbackToDestroy[] feedbacksToDestroy;
     private GameObject rocketTrail;
     
     [Header("SIM")]
@@ -74,8 +72,7 @@ public class FeedbackManager : MonoBehaviour
             stateValue = currentObjectState.stateValue;
         }
         
-        if(sender.CompareTag("Player")){}
-        else
+        if(!sender.CompareTag("Player"))
         {
             SpawnPoint = sender.GetComponentInChildren<CubeTagFeedback>().gameObject;
         }
@@ -85,21 +82,11 @@ public class FeedbackManager : MonoBehaviour
             case 0: // pas de comportement
                 if (sender.CompareTag("Player"))
                 {
-                    ImpulseSIMDroite.SetActive(false);
-                    ImpulseSIMGauche.SetActive(false);
-                    BounceSIMDroite.SetActive(false);
-                    BounceSIMGauche.SetActive(false);
-                    ImmuSIMDroite.SetActive(false);
-                    ImmuSIMGauche.SetActive(false);
-                    MagnetSIMDroite.SetActive(false);
-                    MagnetSIMGauche.SetActive(false);
-                    RocketSIMDroite.SetActive(false);
-                    RocketSIMGauche.SetActive(false);
+
                 }
                 else
                 {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
+
                 }
 
                 break;
@@ -110,7 +97,6 @@ public class FeedbackManager : MonoBehaviour
                     {
                         ImpulseSIMDroite.SetActive(true);
                     }
-                    
                     else
                     {
                         ImpulseSIMGauche.SetActive(true);
@@ -118,7 +104,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
+                    Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -129,7 +115,6 @@ public class FeedbackManager : MonoBehaviour
                     {
                         BounceSIMDroite.SetActive(true);
                     }
-                    
                     else
                     {
                         BounceSIMGauche.SetActive(true);
@@ -137,7 +122,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(BounceConstantFeedback, SpawnPoint.transform);
+                    Instantiate(BounceConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -148,7 +133,6 @@ public class FeedbackManager : MonoBehaviour
                     {
                         ImmuSIMDroite.SetActive(true);
                     }
-                    
                     else
                     {
                         ImmuSIMGauche.SetActive(true);
@@ -156,7 +140,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
+                    Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -167,7 +151,6 @@ public class FeedbackManager : MonoBehaviour
                     {
                         MagnetSIMDroite.SetActive(true);
                     }
-                    
                     else
                     {
                         MagnetSIMGauche.SetActive(true);
@@ -175,7 +158,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
+                    Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -186,7 +169,6 @@ public class FeedbackManager : MonoBehaviour
                     {
                         RocketSIMDroite.SetActive(true);
                     }
-                    
                     else
                     {
                         RocketSIMGauche.SetActive(true);
@@ -194,7 +176,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(RocketConstantFeedback, SpawnPoint.transform);
+                    Instantiate(RocketConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -206,7 +188,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
+                    Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -218,7 +200,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(BounceConstantFeedback, SpawnPoint.transform);
+                    Instantiate(BounceConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -230,7 +212,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
+                    Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -242,7 +224,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
+                    Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -254,7 +236,7 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(RocketConstantFeedback, SpawnPoint.transform);
+                    Instantiate(RocketConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -266,7 +248,6 @@ public class FeedbackManager : MonoBehaviour
                         ImpulseSIMDroite.SetActive(true);
                         BounceSIMGauche.SetActive(true);
                     }
-                    
                     else
                     {
                         ImpulseSIMGauche.SetActive(true);
@@ -275,8 +256,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
-                    FeedbackPref2 = Instantiate(BounceConstantFeedback, SpawnPoint.transform);
+                    Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
+                    Instantiate(BounceConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -288,7 +269,6 @@ public class FeedbackManager : MonoBehaviour
                         ImpulseSIMDroite.SetActive(true);
                         ImmuSIMGauche.SetActive(true);
                     }
-                    
                     else
                     {
                         ImpulseSIMGauche.SetActive(true);
@@ -297,8 +277,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
-                    FeedbackPref2 = Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
+                    Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
+                    Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -310,7 +290,6 @@ public class FeedbackManager : MonoBehaviour
                         ImpulseSIMDroite.SetActive(true);
                         MagnetSIMGauche.SetActive(true);
                     }
-                    
                     else
                     {
                         ImpulseSIMGauche.SetActive(true);
@@ -319,8 +298,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
-                    FeedbackPref2 = Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
+                    Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
+                    Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -332,7 +311,6 @@ public class FeedbackManager : MonoBehaviour
                         ImpulseSIMDroite.SetActive(true);
                         RocketSIMGauche.SetActive(true);
                     }
-                    
                     else
                     {
                         ImpulseSIMGauche.SetActive(true);
@@ -341,8 +319,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(ImpulseConstantFeedback, SpawnPoint.transform);
-                    FeedbackPref2 = Instantiate(RocketConstantFeedback, SpawnPoint.transform);
+                    Instantiate(ImpulseConstantFeedback, SpawnPoint.transform); 
+                    Instantiate(RocketConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -354,7 +332,6 @@ public class FeedbackManager : MonoBehaviour
                         BounceSIMDroite.SetActive(true);
                         ImmuSIMGauche.SetActive(true);
                     }
-                    
                     else
                     {
                         BounceSIMGauche.SetActive(true);
@@ -363,8 +340,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(BounceConstantFeedback, SpawnPoint.transform);
-                    FeedbackPref2 = Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
+                    Instantiate(BounceConstantFeedback, SpawnPoint.transform);
+                    Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -376,7 +353,6 @@ public class FeedbackManager : MonoBehaviour
                         BounceSIMDroite.SetActive(true);
                         ImmuSIMGauche.SetActive(true);
                     }
-                    
                     else
                     {
                         BounceSIMGauche.SetActive(true);
@@ -385,8 +361,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(BounceConstantFeedback, SpawnPoint.transform);
-                    FeedbackPref2 = Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
+                    Instantiate(BounceConstantFeedback, SpawnPoint.transform);
+                    Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -398,7 +374,6 @@ public class FeedbackManager : MonoBehaviour
                         BounceSIMDroite.SetActive(true);
                         RocketSIMGauche.SetActive(true);
                     }
-                    
                     else
                     {
                         BounceSIMGauche.SetActive(true);
@@ -407,8 +382,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(BounceConstantFeedback, SpawnPoint.transform);
-                    FeedbackPref2 = Instantiate(RocketConstantFeedback, SpawnPoint.transform);
+                    Instantiate(BounceConstantFeedback, SpawnPoint.transform);
+                    Instantiate(RocketConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -420,7 +395,6 @@ public class FeedbackManager : MonoBehaviour
                         ImmuSIMDroite.SetActive(true);
                         MagnetSIMGauche.SetActive(true);
                     }
-                    
                     else
                     {
                         ImmuSIMGauche.SetActive(true);
@@ -429,8 +403,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
-                    FeedbackPref2 = Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
+                    Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
+                    Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -442,7 +416,6 @@ public class FeedbackManager : MonoBehaviour
                         ImmuSIMDroite.SetActive(true);
                         RocketSIMGauche.SetActive(true);
                     }
-                    
                     else
                     {
                         ImmuSIMGauche.SetActive(true);
@@ -451,8 +424,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
-                    FeedbackPref2 = Instantiate(RocketConstantFeedback, SpawnPoint.transform);
+                    Instantiate(ImmuConstantFeedback, SpawnPoint.transform);
+                    Instantiate(RocketConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -464,7 +437,6 @@ public class FeedbackManager : MonoBehaviour
                         MagnetSIMDroite.SetActive(true);
                         RocketSIMGauche.SetActive(true);
                     }
-                    
                     else
                     {
                         MagnetSIMGauche.SetActive(true);
@@ -473,8 +445,8 @@ public class FeedbackManager : MonoBehaviour
                 }
                 else
                 {
-                    FeedbackPref1 = Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
-                    FeedbackPref2 = Instantiate(RocketConstantFeedback, SpawnPoint.transform);
+                    Instantiate(MagnetConstantFeedback, SpawnPoint.transform);
+                    Instantiate(RocketConstantFeedback, SpawnPoint.transform);
                 }
 
                 break;
@@ -489,226 +461,277 @@ public class FeedbackManager : MonoBehaviour
         {
             ComportementState currentObjectState = (ComportementState)stateMachine.currentState;
             stateValue = currentObjectState.stateValue;
-        }
 
-        switch (stateValue)
-        {
-            case 0: // pas de comportement
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+            if (!sender.CompareTag("Player"))
+            {
+                SpawnPoint = sender.GetComponentInChildren<CubeTagFeedback>().gameObject;
+            }
 
-                break;
-            case 1: // solo impulse
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+            switch (stateValue)
+            {
+                case 0: // pas de comportement
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 3: // solo bouncing
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 1: // solo impulse
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 9: // solo immuable
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 3: // solo bouncing
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 27: // solo magnet
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 9: // solo immuable
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 81: // solo rocket
-                if (sender.CompareTag("Player"))
-                {
-                    if (rocketOn == false)
+                    break;
+                case 27: // solo magnet
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
+
+                    break;
+                case 81: // solo rocket
+                    C_Solo_Rocket rocketState = currentObjectState as C_Solo_Rocket;
+
+                    if (rocketState.rocketOn)
                     {
                         rocketTrail = Instantiate(RocketOnFeedback, sender.transform);
-                        rocketOn = true;
-                        Debug.Log("jevol");
                     }
-
-                    else if (rocketOn == true)
+                    else
                     {
-                        Destroy(rocketTrail);
-                        rocketOn = false;
-                        Debug.Log("jvolpa");
+                        foreach (Transform child in sender.transform) // recherche dans les enfants directes
+                        {
+                            CubeTagFeedbackToDestroy feedback = child.gameObject.GetComponent<CubeTagFeedbackToDestroy>(); // on cherche le script qui marcque les feedback a détruire
+                            if (feedback != null)
+                            {
+                                Destroy(feedback.gameObject);
+                            }
+                        }
                     }
-                }
-                else
-                {
-                    if (rocketOn == false)
+
+                    if (sender.CompareTag("Player"))
                     {
-                      rocketTrail = Instantiate(RocketOnFeedback, sender.transform);
-                      rocketOn = true;
-                      Debug.Log("jevol");
-                    }
 
-                    else if (rocketOn == true)
+                    }
+                    else
                     {
-                        Destroy(rocketTrail);
-                        rocketOn = false;
-                        Debug.Log("jvolpa");
+
                     }
-                    
-                }
 
-                break;
-            case 2: // double impulse
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 2: // double impulse
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 6: // double bouncing
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 6: // double bouncing
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 18: // double immuable
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 18: // double immuable
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 54: // double magnet
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 54: // double magnet
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 162: // double rocket
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 162: // double rocket
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 4: // Impulse - Bouncing
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 4: // Impulse - Bouncing
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 10: // Impulse - Immuable
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 10: // Impulse - Immuable
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 28: // Impulse - Magnet
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 28: // Impulse - Magnet
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 82: // Impulse - Rocket
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 82: // Impulse - Rocket
+                    C_Impulse_Rocket impulseRocketState = currentObjectState as C_Impulse_Rocket;
 
-                break;
-            case 12: // Bouncing - Immuable
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    if (impulseRocketState.rocketOn)
+                    {
+                        rocketTrail = Instantiate(RocketOnFeedback, sender.transform);
+                    }
+                    else
+                    {
+                        foreach (Transform child in sender.transform) // recherche dans les enfants directes
+                        {
+                            CubeTagFeedbackToDestroy feedback = child.gameObject.GetComponent<CubeTagFeedbackToDestroy>(); // on cherche le script qui marcque les feedback a détruire
+                            if (feedback != null)
+                            {
+                                Destroy(feedback.gameObject);
+                            }
+                        }
+                    }
 
-                break;
-            case 30: // Bouncing - Magnet
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 84: // Bouncing - Rocket
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 12: // Bouncing - Immuable
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 36: // Immuable - Magnet
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 30: // Bouncing - Magnet
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
-            case 90: // Immuable - Rocket
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    break;
+                case 84: // Bouncing - Rocket
+                    C_Bouncing_Rocket bouncingRocketState = currentObjectState as C_Bouncing_Rocket;
+                    if (bouncingRocketState.rocketOn)
+                    {
+                        rocketTrail = Instantiate(RocketOnFeedback, sender.transform);
+                    }
+                    else
+                    {
+                        foreach(Transform child in sender.transform) // recherche dans les enfants directes
+                        {
+                            CubeTagFeedbackToDestroy feedback = child.gameObject.GetComponent<CubeTagFeedbackToDestroy>(); // on cherche le script qui marcque les feedback a détruire
+                            if (feedback != null)
+                            {
+                                Destroy(feedback.gameObject);
+                            }
+                        }
+                    }
 
-                break;
-            case 108: // Magnet - Rocket
-                if (sender.CompareTag("Player"))
-                {
-                }
-                else
-                {
-                }
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
 
-                break;
+                    break;
+                case 36: // Immuable - Magnet
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
+
+                    break;
+                case 90: // Immuable - Rocket
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
+
+                    break;
+                case 108: // Magnet - Rocket
+                    C_Magnet_Rocket magnetRocketState = currentObjectState as C_Magnet_Rocket;
+
+                    if (magnetRocketState.rocketOn)
+                    {
+                        rocketTrail = Instantiate(RocketOnFeedback, sender.transform);
+                    }
+                    else
+                    {
+                        foreach (Transform child in sender.transform) // recherche dans les enfants directes
+                        {
+                            CubeTagFeedbackToDestroy feedback = child.gameObject.GetComponent<CubeTagFeedbackToDestroy>(); // on cherche le script qui marcque les feedback a détruire
+                            if (feedback != null)
+                            {
+                                Destroy(feedback.gameObject);
+                            }
+                        }
+                    }
+
+                    if (sender.CompareTag("Player"))
+                    {
+                    }
+                    else
+                    {
+                    }
+
+                    break;
+            }
         }
     }
 
@@ -720,424 +743,420 @@ public class FeedbackManager : MonoBehaviour
         {
             ComportementState currentObjectState = (ComportementState)stateMachine.currentState;
             stateValue = currentObjectState.stateValue;
-        }
 
-        switch (stateValue)
-        {
-            case 0: // pas de comportement
-                if (sender.CompareTag("Player"))
-                {
-                    ImpulseSIMDroite.SetActive(false);
-                    ImpulseSIMGauche.SetActive(false);
-                    BounceSIMDroite.SetActive(false);
-                    BounceSIMGauche.SetActive(false);
-                    ImmuSIMDroite.SetActive(false);
-                    ImmuSIMGauche.SetActive(false);
-                    MagnetSIMDroite.SetActive(false);
-                    MagnetSIMGauche.SetActive(false);
-                    RocketSIMDroite.SetActive(false);
-                    RocketSIMGauche.SetActive(false);
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
-                }
+            if (!sender.CompareTag("Player"))
+            {
+                feedbacksToDestroy = sender.GetComponentInChildren<CubeTagFeedback>().gameObject.GetComponentsInChildren<CubeTagFeedbackToDestroy>();
 
-                break;
-            case 1: // solo impulse
-                if (sender.CompareTag("Player"))
+                foreach (CubeTagFeedbackToDestroy feedback in feedbacksToDestroy)
                 {
-                    if (playerStateMachine.inversion == true)
+                    Destroy(feedback.gameObject);
+                }
+            }
+
+            switch (stateValue)
+            {
+                case 0: // pas de comportement
+                    if (sender.CompareTag("Player"))
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 1: // solo impulse
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            ImpulseSIMDroite.SetActive(false);
+                        }
+                        else
+                        {
+                            ImpulseSIMGauche.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 3: // solo bouncing
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            BounceSIMDroite.SetActive(false);
+                        }
+                        else
+                        {
+                            BounceSIMGauche.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 9: // solo immuable
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            ImmuSIMDroite.SetActive(false);
+                        }
+                        else
+                        {
+                            ImmuSIMGauche.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 27: // solo magnet
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            MagnetSIMDroite.SetActive(false);
+                        }
+                        else
+                        {
+                            MagnetSIMGauche.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 81: // solo rocket
+                    C_Solo_Rocket rocketState = currentObjectState as C_Solo_Rocket;
+
+                    if (rocketState.rocketOn)
+                    {
+                        foreach(CubeTagFeedbackToDestroy feedback in sender.GetComponentsInChildren<CubeTagFeedbackToDestroy>())
+                        {
+                            Destroy(feedback.gameObject);
+                        }
+                    }
+
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            RocketSIMDroite.SetActive(false);
+                        }
+                        else
+                        {
+                            RocketSIMGauche.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 2: // double impulse
+                    if (sender.CompareTag("Player"))
                     {
                         ImpulseSIMDroite.SetActive(false);
-                    }
-                    
-                    else
-                    {
                         ImpulseSIMGauche.SetActive(false);
                     }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                }
+                    else
+                    {
 
-                break;
-            case 3: // solo bouncing
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
+                    }
+
+                    break;
+                case 6: // double bouncing
+                    if (sender.CompareTag("Player"))
                     {
                         BounceSIMDroite.SetActive(false);
-                    }
-                    
-                    else
-                    {
                         BounceSIMGauche.SetActive(false);
                     }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                }
-
-                break;
-            case 9: // solo immuable
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
-                    {
-                        ImmuSIMDroite.SetActive(false);
-                    }
-                    
                     else
                     {
+
+                    }
+
+                    break;
+                case 18: // double immuable
+                    if (sender.CompareTag("Player"))
+                    {
+                        ImmuSIMDroite.SetActive(false);
                         ImmuSIMGauche.SetActive(false);
                     }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                }
+                    else
+                    {
 
-                break;
-            case 27: // solo magnet
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
+                    }
+
+                    break;
+                case 54: // double magnet
+                    if (sender.CompareTag("Player"))
                     {
                         MagnetSIMDroite.SetActive(false);
-                    }
-                    
-                    else
-                    {
                         MagnetSIMGauche.SetActive(false);
                     }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                }
+                    else
+                    {
 
-                break;
-            case 81: // solo rocket
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
+                    }
+
+                    break;
+                case 162: // double rocket
+                    if (sender.CompareTag("Player"))
                     {
                         RocketSIMDroite.SetActive(false);
-                        rocketOn = false;
-                        Destroy(rocketTrail);
-                    }
-                    
-                    else
-                    {
-                        RocketSIMGauche.SetActive(false);
-                        rocketOn = false;
-                        Destroy(rocketTrail);
-                    }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                }
-
-                break;
-            case 2: // double impulse
-                if (sender.CompareTag("Player"))
-                {
-                    ImpulseSIMDroite.SetActive(false);
-                    ImpulseSIMGauche.SetActive(false);
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                }
-
-                break;
-            case 6: // double bouncing
-                if (sender.CompareTag("Player"))
-                {
-                    BounceSIMDroite.SetActive(false);
-                    BounceSIMGauche.SetActive(false);
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                }
-
-                break;
-            case 18: // double immuable
-                if (sender.CompareTag("Player"))
-                {
-                    ImmuSIMDroite.SetActive(false);
-                    ImmuSIMGauche.SetActive(false);
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                }
-
-                break;
-            case 54: // double magnet
-                if (sender.CompareTag("Player"))
-                {
-                    MagnetSIMDroite.SetActive(false);
-                    MagnetSIMGauche.SetActive(false);
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                }
-
-                break;
-            case 162: // double rocket
-                if (sender.CompareTag("Player"))
-                {
-                    RocketSIMDroite.SetActive(false);
-                    RocketSIMGauche.SetActive(false);
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                    rocketOn = false;
-                    Destroy(rocketTrail);
-                }
-
-                break;
-            case 4: // Impulse - Bouncing
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
-                    {
-                        ImpulseSIMDroite.SetActive(false);
-                        BounceSIMGauche.SetActive(false);
-                    }
-                    
-                    else
-                    {
-                        ImpulseSIMGauche.SetActive(false);
-                        BounceSIMDroite.SetActive(false);
-                    }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
-                }
-
-                break;
-            case 10: // Impulse - Immuable
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
-                    {
-                        ImpulseSIMDroite.SetActive(false);
-                        ImmuSIMGauche.SetActive(false);
-                    }
-                    
-                    else
-                    {
-                        ImpulseSIMGauche.SetActive(false);
-                        ImmuSIMDroite.SetActive(false);
-                    }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
-                }
-
-                break;
-            case 28: // Impulse - Magnet
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
-                    {
-                        ImpulseSIMDroite.SetActive(false);
-                        MagnetSIMGauche.SetActive(false);
-                    }
-                    
-                    else
-                    {
-                        ImpulseSIMGauche.SetActive(false);
-                        MagnetSIMDroite.SetActive(false);
-                    }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
-                }
-
-                break;
-            case 82: // Impulse - Rocket
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
-                    {
-                        ImpulseSIMDroite.SetActive(false);
-                        RocketSIMGauche.SetActive(false);
-                        rocketOn = false;
-                        Destroy(rocketTrail);
-                    }
-                    
-                    else
-                    {
-                        ImpulseSIMGauche.SetActive(false);
-                        RocketSIMDroite.SetActive(false);
-                        rocketOn = false;
-                        Destroy(rocketTrail);
-                    }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
-                }
-
-                break;
-            case 12: // Bouncing - Immuable
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
-                    {
-                        BounceSIMDroite.SetActive(false);
-                        ImmuSIMGauche.SetActive(false);
-                    }
-                    
-                    else
-                    {
-                        BounceSIMGauche.SetActive(false);
-                        ImmuSIMDroite.SetActive(false);
-                    }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
-                }
-
-                break;
-            case 30: // Bouncing - Magnet
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
-                    {
-                        BounceSIMDroite.SetActive(false);
-                        ImmuSIMGauche.SetActive(false);
-                    }
-                    
-                    else
-                    {
-                        BounceSIMGauche.SetActive(false);
-                        ImmuSIMDroite.SetActive(false);
-                    }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
-                }
-
-                break;
-            case 84: // Bouncing - Rocket
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
-                    {
-                        BounceSIMDroite.SetActive(false);
-                        RocketSIMGauche.SetActive(false);
-                        rocketOn = false;
-                        Destroy(rocketTrail);
-                    }
-                    
-                    else
-                    {
-                        BounceSIMGauche.SetActive(false);
-                        RocketSIMDroite.SetActive(false);
-                        rocketOn = false;
-                        Destroy(rocketTrail);
-                    }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
-                }
-
-                break;
-            case 36: // Immuable - Magnet
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
-                    {
-                        ImmuSIMDroite.SetActive(false);
-                        MagnetSIMGauche.SetActive(false);
-                    }
-                    
-                    else
-                    {
-                        ImmuSIMGauche.SetActive(false);
-                        MagnetSIMDroite.SetActive(false);
-                    }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
-                }
-
-                break;
-            case 90: // Immuable - Rocket
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
-                    {
-                        ImmuSIMDroite.SetActive(false);
                         RocketSIMGauche.SetActive(false);
                     }
-                    
                     else
                     {
-                        ImmuSIMGauche.SetActive(false);
-                        RocketSIMDroite.SetActive(false);
-                    }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
-                }
 
-                break;
-            case 108: // Magnet - Rocket
-                if (sender.CompareTag("Player"))
-                {
-                    if (playerStateMachine.inversion == true)
-                    {
-                        MagnetSIMDroite.SetActive(false);
-                        RocketSIMGauche.SetActive(false);
-                        rocketOn = false;
-                        Destroy(rocketTrail);
                     }
-                    
+
+                    break;
+                case 4: // Impulse - Bouncing
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            ImpulseSIMDroite.SetActive(false);
+                            BounceSIMGauche.SetActive(false);
+                        }
+                        else
+                        {
+                            ImpulseSIMGauche.SetActive(false);
+                            BounceSIMDroite.SetActive(false);
+                        }
+                    }
                     else
                     {
-                        MagnetSIMGauche.SetActive(false);
-                        RocketSIMDroite.SetActive(false);
-                        rocketOn = false;
-                        Destroy(rocketTrail);
-                    }
-                }
-                else
-                {
-                    Destroy(FeedbackPref1);
-                    Destroy(FeedbackPref2);
-                }
 
-                break;
+                    }
+
+                    break;
+                case 10: // Impulse - Immuable
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            ImpulseSIMDroite.SetActive(false);
+                            ImmuSIMGauche.SetActive(false);
+                        }
+                        else
+                        {
+                            ImpulseSIMGauche.SetActive(false);
+                            ImmuSIMDroite.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 28: // Impulse - Magnet
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            ImpulseSIMDroite.SetActive(false);
+                            MagnetSIMGauche.SetActive(false);
+                        }
+                        else
+                        {
+                            ImpulseSIMGauche.SetActive(false);
+                            MagnetSIMDroite.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 82: // Impulse - Rocket
+                    C_Impulse_Rocket impulseRocketState = currentObjectState as C_Impulse_Rocket;
+
+                    if (impulseRocketState.rocketOn)
+                    {
+                        foreach (CubeTagFeedbackToDestroy feedback in sender.GetComponentsInChildren<CubeTagFeedbackToDestroy>())
+                        {
+                            Destroy(feedback.gameObject);
+                        }
+                    }
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            ImpulseSIMDroite.SetActive(false);
+                            RocketSIMGauche.SetActive(false);
+                        }
+                        else
+                        {
+                            ImpulseSIMGauche.SetActive(false);
+                            RocketSIMDroite.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 12: // Bouncing - Immuable
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            BounceSIMDroite.SetActive(false);
+                            ImmuSIMGauche.SetActive(false);
+                        }
+                        else
+                        {
+                            BounceSIMGauche.SetActive(false);
+                            ImmuSIMDroite.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 30: // Bouncing - Magnet
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            BounceSIMDroite.SetActive(false);
+                            ImmuSIMGauche.SetActive(false);
+                        }
+                        else
+                        {
+                            BounceSIMGauche.SetActive(false);
+                            ImmuSIMDroite.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 84: // Bouncing - Rocket
+                    C_Bouncing_Rocket bouncingRocketState = currentObjectState as C_Bouncing_Rocket;
+
+                    if (bouncingRocketState.rocketOn)
+                    {
+                        foreach (CubeTagFeedbackToDestroy feedback in sender.GetComponentsInChildren<CubeTagFeedbackToDestroy>())
+                        {
+                            Destroy(feedback.gameObject);
+                        }
+                    }
+
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            BounceSIMDroite.SetActive(false);
+                            RocketSIMGauche.SetActive(false);
+                        }
+                        else
+                        {
+                            BounceSIMGauche.SetActive(false);
+                            RocketSIMDroite.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 36: // Immuable - Magnet
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            ImmuSIMDroite.SetActive(false);
+                            MagnetSIMGauche.SetActive(false);
+                        }
+                        else
+                        {
+                            ImmuSIMGauche.SetActive(false);
+                            MagnetSIMDroite.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 90: // Immuable - Rocket
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            ImmuSIMDroite.SetActive(false);
+                            RocketSIMGauche.SetActive(false);
+                        }
+                        else
+                        {
+                            ImmuSIMGauche.SetActive(false);
+                            RocketSIMDroite.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+                case 108: // Magnet - Rocket
+                    C_Magnet_Rocket magnetRocketState = currentObjectState as C_Magnet_Rocket;
+
+                    if (magnetRocketState.rocketOn)
+                    {
+                        foreach (CubeTagFeedbackToDestroy feedback in sender.GetComponentsInChildren<CubeTagFeedbackToDestroy>())
+                        {
+                            Destroy(feedback.gameObject);
+                        }
+                    }
+
+                    if (sender.CompareTag("Player"))
+                    {
+                        if (playerStateMachine.inversion == true)
+                        {
+                            MagnetSIMDroite.SetActive(false);
+                            RocketSIMGauche.SetActive(false);
+                        }
+                        else
+                        {
+                            MagnetSIMGauche.SetActive(false);
+                            RocketSIMDroite.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    break;
+            }
         }
     }
 
@@ -1177,6 +1196,5 @@ public class FeedbackManager : MonoBehaviour
         {
             Instantiate(RocketImpact, rocketGameObject.transform);
         }
-        
     }
 }

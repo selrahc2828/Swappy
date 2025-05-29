@@ -24,8 +24,6 @@ public class C_Solo_Bouncing : ComportementState
         base.Enter();
 
         _bouncyMaterial = _sm.comportementManager.bounceData.bouncyMaterial;
-        // _sm.rend.material = _sm.bounce;
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
         
         if (_sm.isPlayer)
         {

@@ -86,14 +86,17 @@ public class C_Bouncing_Magnet : ComportementState
         
         // set la prefab qui va appliquer la force
         forceFieldObj = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.magnetGenericPrefab,_sm.transform.position, Quaternion.identity, _sm.transform);//, _sm.transform => parent mais pose des pb
-        forceFieldObj.GetComponent<MagnetForceField>().force = trueMagnetForce;
-        forceFieldObj.GetComponent<MagnetForceField>().intervalBetweenBurst = _sm.comportementManager.magnetBounceData.intervalBetweenBurst;
-        forceFieldObj.GetComponent<MagnetForceField>().burstColor = _sm.comportementManager.magnetBounceData.burstColor;
-        forceFieldObj.GetComponent<MagnetForceField>().delayDisplay = _sm.comportementManager.magnetBounceData.delayDisplay;
-        
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Bouncing, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-        forceFieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
-        forceFieldObj.GetComponent<GrowToRadius>().atDestroy = false;
+        MagnetForceField magnetField = forceFieldObj.GetComponent<MagnetForceField>();
+        magnetField.force = trueMagnetForce;
+        magnetField.intervalBetweenBurst = _sm.comportementManager.magnetBounceData.intervalBetweenBurst;
+        magnetField.burstColor = _sm.comportementManager.magnetBounceData.burstColor;
+        magnetField.delayDisplay = _sm.comportementManager.magnetBounceData.delayDisplay;
+
+        GrowToRadius growingField = forceFieldObj.GetComponent<GrowToRadius>();
+        growingField.targetRadius = trueMagnetRange;
+        growingField.elapsedTime = 0;
+        growingField.atDestroy = false;
+
         forceFieldObj.GetComponent<MagnetForceField>().comportementableObject = _sm.gameObject;
         forceFieldObj.GetComponent<MagnetForceField>()._isDoubleMagnet = false;
     }
@@ -117,13 +120,7 @@ public class C_Bouncing_Magnet : ComportementState
                 // Désactive le timer
                 isCollisionTimerActive = false;
             }
-            else
-            {
-                
-                
-            }
         }
-
         ScaleGrab();
     }
 
@@ -134,14 +131,9 @@ public class C_Bouncing_Magnet : ComportementState
 
     public override void Exit()
     {
-        
         base.Exit();
-        //_sm.comportementManager.DestroyObj(sonMagnet);
-        _sm.GetComponentInChildren<Collider>().material = null;
-        
+        _sm.GetComponentInChildren<Collider>().material = null; 
         _sm.comportementManager.DestroyObj(forceFieldObj);
-        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-
     }
     
     public override void DisplayGizmos()
@@ -159,10 +151,6 @@ public class C_Bouncing_Magnet : ComportementState
         {
             Rigidbody rb = _sm.GetComponent<Rigidbody>();
             float impact = rb.velocity.magnitude;
-            //Debug.LogWarning($"impact velo {impact}");
-
-            // forceFieldObj.GetComponent<MagnetForceField>().Bounce();
-            // Debug.Log($"Collision Start boolburst {forceFieldObj.GetComponent<MagnetForceField>().boolBurst}");
 
             //il y a des cas où le apply burst passe pas dans grab
             if (isGrabbed)
@@ -174,10 +162,7 @@ public class C_Bouncing_Magnet : ComportementState
                 // peut pas utiliser boolBurst de MagnetForceField car il est déjà passé false
                 // et si je mets Bounce au début ça "décale" le moment où l'impulsion est fait
                 if (!isCollisionTimerActive)//si unScale est lancé, on le refait pas
-                {
-                    // collisionStart = true; // start rescale magnet
-                    // timeSinceCollisionEnd = 0f;//reset "scale timer"
-                    
+                {                    
                     //aggrandi la range
                     trueMagnetRange = saveMagnetRange;
                     forceFieldObj.GetComponent<GrowToRadius>().SetTargetScale(saveMagnetRange);
@@ -204,8 +189,8 @@ public class C_Bouncing_Magnet : ComportementState
             }
             // ne se fait pas dans MagnetForceField si en cooldown, 
             forceFieldObj.GetComponent<MagnetForceField>().Bounce();
-            // Debug.Log($"Collision Start boolburst {forceFieldObj.GetComponent<MagnetForceField>().boolBurst} \n" +
-            //           $"timer burst {forceFieldObj.GetComponent<MagnetForceField>()._timerBurst}");
+
+            GlobalEventManager.Instance.BounceLocation(other.contacts);
         }
     }
 
