@@ -12,11 +12,8 @@ public class ComportementState : State
     public GameObject feedBack_GO_Right;
 
     protected ComportementsStateMachine _sm;
-    public ComportementsStateMachine smGet => _sm; // get
-    // public ComportementsStateMachine smGet
-    // {
-    //     get { return _sm; }
-    // }
+    public ComportementsStateMachine smGet => _sm; 
+
 
     public ComportementState(StateMachine stateMachine) : base(stateMachine)
     {
@@ -30,39 +27,21 @@ public class ComportementState : State
 
     public override void TickLogic()
     {
-        // Debug.Log(_sm.currentState + " logic uppdate");
-        
+                
     }
 
     public override void TickPhysics()
     {
-        // Debug.Log(_sm.currentState + " physic update");
-        
-        // if (!isKinematic)
-        // {
-        //     _sm.rb.isKinematic = isGrabbed;
-        // }
+
     }
 
     public override void Exit()
     {
         GlobalEventManager.Instance.ComportmentStateExit(GetGameObject());
-        // Debug.Log(_sm.currentState + " exit");
-
-        // if (feedBack_GO_Left != null)
-        // {
-        //     _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-        // }
-        //
-        // if (feedBack_GO_Right != null)
-        // {
-        //     _sm.comportementManager.DestroyObj(feedBack_GO_Right);
-        // }
     }
 
     public override void CollisionStart(Collision other)
     {
-        // Debug.Log($"{_sm.name } collision start/enter with {other.collider.name}");
         if (!_sm.gameObject.CompareTag("Player")) GlobalEventManager.Instance.Collision(_sm.gameObject);
     }
 

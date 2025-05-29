@@ -6,7 +6,6 @@ public class C_Double_Impulse : ComportementState
 {
     private float impulseTime;
     private float impulseFirstTime;
-    private bool firstImpulse;
     private float impulseTimer;
     private float impulseRange;
     private float trueImpulseRange;
@@ -24,12 +23,11 @@ public class C_Double_Impulse : ComportementState
         stateValue = 2;
         leftValue = 1;
         rightValue = 1;
-        firstImpulse = true;
+
         base.Enter();
         
         impulseTime = _sm.comportementManager.impulseData.doubleImpulseTime;
         impulseFirstTime = _sm.comportementManager.impulseData.doubleImpulseFirstTime;
-        impulseTimer = 0f;
         impulseRange = _sm.comportementManager.impulseData.doubleRepulseRangeMult * _sm.comportementManager.impulseData.impulseRange;
 
         if (_sm.isPlayer)
@@ -46,7 +44,9 @@ public class C_Double_Impulse : ComportementState
         impulseForce = _sm.comportementManager.impulseData.doubleRepulseForceMult * _sm.comportementManager.impulseData.impulseForce;
         destroyOnUse = _sm.comportementManager.impulseData.destroyOnUse;
         feedback = _sm.comportementManager.impulseData.impulseFeedback;
-        
+
+        impulseTimer = 0f;
+
         GlobalEventManager.Instance.Explosion(GetGameObject(), impulseFirstTime, true);
     }
 
@@ -55,23 +55,12 @@ public class C_Double_Impulse : ComportementState
         base.TickLogic();
         
         impulseTimer += Time.deltaTime;
-        if (firstImpulse) 
+        if (impulseTimer >= impulseTime)
         {
-            if (impulseTimer >= impulseFirstTime)
-            {
-                Impulse();
-                impulseTimer = 0;
-                firstImpulse = false;
-            }
+            Impulse();
+            impulseTimer = 0;
         }
-        else
-        {
-            if (impulseTimer >= impulseTime)
-            {
-                Impulse();
-                impulseTimer = 0;
-            }
-        }
+        
     }
 
     public override void TickPhysics()

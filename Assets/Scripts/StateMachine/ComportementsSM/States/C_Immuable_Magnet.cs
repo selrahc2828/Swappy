@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class C_Immuable_Magnet : ComportementState
 {
+    private GameObject forcefieldObj;
     private Vector3 baseVelocity;
     private Vector3 baseAngularVelocity;
     private float magnetRange;
@@ -45,11 +46,9 @@ public class C_Immuable_Magnet : ComportementState
         }
         magnetForce = _sm.comportementManager.magnetData.magnetForce;
 
-        
-        feedBack_GO_Left = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Immuable, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-        feedBack_GO_Right = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
-        feedBack_GO_Right.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
-        feedBack_GO_Right.GetComponent<GrowToRadius>().atDestroy = false;
+        forcefieldObj = _sm.comportementManager.InstantiateFeedback(_sm.comportementManager.feedBack_Magnet, _sm.transform.position, _sm.transform.rotation, _sm.transform);
+        forcefieldObj.GetComponent<GrowToRadius>().targetRadius = trueMagnetRange;
+        forcefieldObj.GetComponent<GrowToRadius>().atDestroy = false;
     }
 
     public override void TickLogic()
@@ -69,9 +68,8 @@ public class C_Immuable_Magnet : ComportementState
         _sm.rb.isKinematic = false;
         _sm.rb.velocity = baseVelocity;
         _sm.rb.angularVelocity = baseAngularVelocity;
-        //_sm.comportementManager.DestroyObj(sonMagnet);
-        _sm.comportementManager.DestroyObj(feedBack_GO_Left);
-        _sm.comportementManager.DestroyObj(feedBack_GO_Right);
+
+        _sm.comportementManager.DestroyObj(forcefieldObj);
 
     }
 
