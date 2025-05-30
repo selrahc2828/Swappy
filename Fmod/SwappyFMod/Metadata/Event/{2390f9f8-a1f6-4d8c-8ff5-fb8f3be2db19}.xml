@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{2390f9f8-a1f6-4d8c-8ff5-fb8f3be2db19}">
-		<property name="note" />
 		<property name="color">
 			<value>Magenta Light 2</value>
 		</property>
@@ -129,6 +128,9 @@
 		<property name="volume">
 			<value>-30</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{4b2c6edb-72e3-4790-b803-3798e1f86c6a}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{1ad23cb6-7d99-4f00-86d6-b75a76d44d48}</destination>
 		</relationship>
@@ -264,6 +266,20 @@
 		<relationship name="markerTrack">
 			<destination>{24b2b608-d8d0-410f-a93e-d43821c1c2d9}</destination>
 		</relationship>
+	</object>
+	<object class="ADSRModulator" id="{4b2c6edb-72e3-4790-b803-3798e1f86c6a}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="initialValue">
+			<value>-80</value>
+		</property>
+		<property name="attackTime">
+			<value>2500</value>
+		</property>
+		<property name="finalValue">
+			<value>-80</value>
+		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{1ad23cb6-7d99-4f00-86d6-b75a76d44d48}">
 		<relationship name="effects">
