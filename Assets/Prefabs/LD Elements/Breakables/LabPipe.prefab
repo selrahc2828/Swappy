@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shatteredVersion: {fileID: 5026889020820063628, guid: ccbdbf26dc6c5b947a44a1294f321b5c, type: 3}
   minShatterPower: 1000000
+  avoidCollisionBreak: 0
   fragmentPrefab: {fileID: 0}
 --- !u!54 &2583385458023741903
 Rigidbody:
@@ -548,6 +549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shatteredVersion: {fileID: 3329975194433794275, guid: a817e6f071b396445802cf655a3212a9, type: 3}
   minShatterPower: 200
+  avoidCollisionBreak: 0
   fragmentPrefab: {fileID: 0}
 --- !u!54 &1641766790126119079
 Rigidbody:
@@ -658,6 +660,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3944521277677567426, guid: e9b1bfbc82c7c644d9c88667ec18e832, type: 3}
       propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4574198618335145264, guid: e9b1bfbc82c7c644d9c88667ec18e832, type: 3}
+      propertyPath: initialState
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
