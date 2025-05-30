@@ -5095,6 +5095,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlowerBounce_GROUND
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 39822f04ec226a742b69ece6638b943c, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -5107,10 +5111,40 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 39822f04ec226a742b69ece6638b943c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1684048893215055891}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 39822f04ec226a742b69ece6638b943c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1838422828610529456}
   m_SourcePrefab: {fileID: 100100000, guid: 39822f04ec226a742b69ece6638b943c, type: 3}
 --- !u!4 &56446094741437455 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 39822f04ec226a742b69ece6638b943c, type: 3}
   m_PrefabInstance: {fileID: 523033360272464868}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &829605437680985781 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 39822f04ec226a742b69ece6638b943c, type: 3}
+  m_PrefabInstance: {fileID: 523033360272464868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1838422828610529456
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829605437680985781}
+  m_Material: {fileID: 13400000, guid: 16a76e54968c6cc48a861c0ace231bcd, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2534964839176971238, guid: 39822f04ec226a742b69ece6638b943c, type: 3}
