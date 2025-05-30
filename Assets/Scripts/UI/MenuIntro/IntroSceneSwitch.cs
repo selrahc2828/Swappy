@@ -1,10 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.Mime;
-using FMOD.Studio;
-using FMODUnity;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Image = UnityEngine.UI.Image;
@@ -13,9 +6,6 @@ using TMPro;
 
 public class IntroSceneSwitch: MonoBehaviour
 {
-    [Header("scene")]
-    public Scene NextScene;
-
     [Header("Transition Black Screen")]
     public GameObject BlackScreen;
     public AnimationCurve blackFadeINCurve;
@@ -28,13 +18,11 @@ public class IntroSceneSwitch: MonoBehaviour
     private bool playClicked = false;
     
     [Header("Transition UI menu")]
-    public AnimationCurve UIFadeINCurve;
     public GameObject playButton;
     public GameObject parameterButton;
     public GameObject quitButton;
     public GameObject title;
     public GameObject parametrePanel;
-    public float timeRangeToButton = 2.3f;
     private float _tForButtons = 0;
     
     public float timerCinematicBeforePlay = 10;
@@ -49,8 +37,6 @@ public class IntroSceneSwitch: MonoBehaviour
     [SerializeField] private Slider volumeSliderMusic;
     [SerializeField] private Slider volumeSliderMenu;
     [SerializeField] private TextMeshProUGUI textSensiDisplay;
-    
-    
 
     private void Start()
     {
@@ -189,7 +175,7 @@ public class IntroSceneSwitch: MonoBehaviour
         FMODMusicManager.instance.StopMusic(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
         FMODMusicManager.instance.ReleaseMusicInstance(FMODMusicManager.instance.GetMusicPlaylistInstance(FMODMusicManager.instance.FMODMusicEvents.INTRO));
 
-        //Application.Quit();
+        Application.Quit();
     }
 
     public void BlackFadeIn()
