@@ -20,7 +20,7 @@ public class SkyboxManager : MonoBehaviour
     {
         Sun.transform.Rotate((360 / (NumberOfMinuteForOneDay * 60)) * Time.deltaTime, 0, 0);
         LightAngle = CalculateSunPlayerAngle.valueToUseInShader;
-        SkyboxMat.SetFloat("_CubemapTransition", Mathf.Abs(LightAngle)+17f);
+        SkyboxMat.SetFloat("_CubemapTransition", Mathf.Abs(LightAngle));
         WaterSkyEffect.SetFloat("_OpacityTransition", Mathf.Abs(LightAngle));
         
         Grass1.SetFloat("_EmissiveMult", Mathf.Abs(LightAngle));
