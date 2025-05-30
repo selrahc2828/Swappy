@@ -380,9 +380,8 @@ public class ComportementStealer_proto : MonoBehaviour
                 }
                 else // le joueur n'a aucun comportement sur lui
                 {
-                    ExecuteChangeStateAdditive(playerObjectState, ref slot2, false, true);
-
                     _stateStolen.inversion = true;
+                    ExecuteChangeStateAdditive(playerObjectState, ref slot2, false, true);
                 }
             }
         }
