@@ -22,9 +22,12 @@ public class TapeMenu : MonoBehaviour
         set => tapeList = value;
     }
     
-    public event Action<string> onPlaySelected;
-    public event Action<string> onStopSelected;
-    public event Action<bool> onMute;
+    [Header("PlayButton")]
+    public GameObject playImage;
+    public GameObject stopImage;
+    public bool isPlayed;
+
+    [Header("MuteMode")]
     public bool isMuted;
     public GameObject muteImage;
     public GameObject notMuteImage;
@@ -37,6 +40,8 @@ public class TapeMenu : MonoBehaviour
         SetTapeButtons();
         CenterMiddleButtonIfNoneSelected();
         AdjustScrollPadding();
+        
+        stopImage.SetActive(false);
     }
 
     public void SetTapeButtons()
@@ -81,6 +86,29 @@ public class TapeMenu : MonoBehaviour
         nameSelectedTape.text = tape.itemName;
     }
 
+    public void ActionButton()
+    {
+        if (selectedTape == null)
+            return;
+        
+        isPlayed = !isPlayed;
+        if (isPlayed)
+        {
+            playImage.SetActive(false);
+            stopImage.SetActive(true);
+            
+            GlobalEventManager.Instance.PlayTape(selectedTape.musicFmodName);// emet le nom du son pour FMOD
+
+        }
+        else
+        {
+            playImage.SetActive(true);
+            stopImage.SetActive(false);
+            
+            GlobalEventManager.Instance.StopTape(selectedTape.musicFmodName);
+        }
+    }
+    
     public void PlayTape()
     {
         if (selectedTape == null)
