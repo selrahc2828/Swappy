@@ -34,6 +34,7 @@ namespace FMODUnity
             {
                 if (Action == FMODMusicManager.MusicAction.Play)
                 {
+                    SetParameter(layers);
                     FMODMusicManager.instance.PlayMusicInstance(_musicInstance);
                 }
                 else if (Action == FMODMusicManager.MusicAction.Stop)
@@ -53,6 +54,7 @@ namespace FMODUnity
             {
                     if (Action == FMODMusicManager.MusicAction.Play)
                     {
+                        SetParameter(layers);
                         FMODMusicManager.instance.PlayMusicInstance(_musicInstance);
                     }
                     else if (Action == FMODMusicManager.MusicAction.Stop)
@@ -72,6 +74,7 @@ namespace FMODUnity
             {
                 if (Action == FMODMusicManager.MusicAction.Play)
                 {
+                    SetParameter(layers);
                     FMODMusicManager.instance.PlayMusicInstance(_musicInstance);
                 }
 
@@ -93,6 +96,7 @@ namespace FMODUnity
             {
                 if (Action == FMODMusicManager.MusicAction.Play)
                 {
+                    SetParameter(layers);
                     FMODMusicManager.instance.PlayMusicInstance(_musicInstance);
                 }
                 else if (Action == FMODMusicManager.MusicAction.Stop)
