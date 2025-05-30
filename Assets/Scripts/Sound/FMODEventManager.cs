@@ -55,6 +55,7 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnShattered += BreakingPot;
         GlobalEventManager.Instance.OnAddFragmentSound += AddFragment;
         GlobalEventManager.Instance.OnSlowMotionInput += SlowMotionSoundStart;
+        GlobalEventManager.Instance.OnImmuableCollision += OnImmuableCollision;
     }
 
     private void OnDisable()
@@ -73,6 +74,7 @@ public class FMODEventManager : MonoBehaviour
         GlobalEventManager.Instance.OnShattered -= BreakingPot;
         GlobalEventManager.Instance.OnAddFragmentSound -= AddFragment;
         GlobalEventManager.Instance.OnSlowMotionInput -= SlowMotionSoundStart;
+        GlobalEventManager.Instance.OnImmuableCollision -= OnImmuableCollision;
     }
 
     private void Start()
@@ -617,79 +619,84 @@ public class FMODEventManager : MonoBehaviour
         if (stateMachine.currentState is ComportementState)
         {
             ComportementState gameObjectCurrenState = (ComportementState)stateMachine.currentState;
-            FindStateComportement(_gameObject, gameObjectCurrenState.stateValue,step,force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+            EventReference _eventReference = FindStateComportement(gameObjectCurrenState.stateValue);
+            ActionOnStateComportement(_gameObject,_eventReference,step,force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
         }
     }
-    private void FindStateComportement(GameObject _gameObject, int stateValue, Step step, float force,bool haveEarlyStart, float defaultValueBetweenHit, float startingValueBetweenHit)
+    private EventReference FindStateComportement( int stateValue)
     {
+        EventReference _eventReference = default(EventReference);
         switch (stateValue)
         {
             case 0:
                 break;
             case 1:
-                ActionOnStateComportement(_gameObject, FMODEvents.Impulse, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.Impulse;
                 break;
+               
             case 2:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleImpulse, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.DoubleImpulse;
+                
                 break;
             case 3:
-                ActionOnStateComportement(_gameObject, FMODEvents.Bounce, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.Bounce;
                 break;
             case 4:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseBounce, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.ImpulseBounce;
                 break;
             case 6:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleBounce, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.DoubleBounce;
                 break;
             case 9:
-                ActionOnStateComportement(_gameObject, FMODEvents.Immuable, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.Immuable;
                 break;
             case 10:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseImmuable, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.ImpulseImmuable;
                 break;
             case 12:
-                ActionOnStateComportement(_gameObject, FMODEvents.BounceImmuable, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.BounceImmuable;
                 break;
             case 18:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleImmuable, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.DoubleImmuable;
                 break;
             case 27:
-                ActionOnStateComportement(_gameObject, FMODEvents.Magnet, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.Magnet;
                 break;
             case 28:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseMagnet, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.ImpulseMagnet;
                 break;
             case 30:
-                ActionOnStateComportement(_gameObject, FMODEvents.BounceMagnet, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.BounceMagnet;
                 break;
             case 36:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImmuableMagnet, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.ImmuableMagnet;
                 break;
             case 54:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleMagnet, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.DoubleMagnet;
                 break;
             case 81:
-                ActionOnStateComportement(_gameObject, FMODEvents.Rocket, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.Rocket;
                 break;
             case 82:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImpulseRocket, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.ImpulseRocket;
                 break;
             case 84:
-                ActionOnStateComportement(_gameObject, FMODEvents.BounceRocket, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.BounceRocket;
                 break;
             case 90:
-                ActionOnStateComportement(_gameObject, FMODEvents.ImmuableRocket, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.ImmuableRocket;
                 break;
             case 108:
-                ActionOnStateComportement(_gameObject, FMODEvents.MagnetRocket, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.MagnetRocket;
                 break;
             case 162:
-                ActionOnStateComportement(_gameObject, FMODEvents.DoubleRocket, step, force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+                _eventReference =  FMODEvents.DoubleRocket;
                 break;
             default:
                 Debug.LogError("Si tu fais apparaitre ça c'est que t'es vraiment for");
                 break;
         }
+        return _eventReference;
     }
     private void ActionOnStateComportement(GameObject _gameObject, EventReference _eventReference, Step step, float force, bool haveEarlyStart, float defaultValueBetweenHit, float startingValueBetweenHit)
     {
@@ -730,8 +737,20 @@ public class FMODEventManager : MonoBehaviour
                 break;
         }
     }
-   
-    
+
+    private void OnImmuableCollision(GameObject _gameObject)
+    {
+        var stateMachine = _gameObject.GetComponent<ComportementsStateMachine>();
+        if (stateMachine.currentState is ComportementState)
+        {
+            ComportementState gameObjectCurrenState = (ComportementState)stateMachine.currentState;
+            EventReference _eventReference = FindStateComportement(gameObjectCurrenState.stateValue);
+            if (_eventReference.ToString() == FMODEvents.ImpulseImmuable.ToString() || _eventReference.ToString()==FMODEvents.ImmuableMagnet.ToString() ||_eventReference.ToString() == FMODEvents.ImmuableRocket.ToString())
+            {
+               GetInstanceFromEncyclopediaKey(_gameObject,_eventReference).setParameterByName("IMPACT",1); 
+            }
+        }
+    }
     #endregion
     
     #region Player Moving Sound
