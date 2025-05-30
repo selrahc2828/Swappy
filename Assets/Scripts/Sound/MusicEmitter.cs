@@ -16,7 +16,7 @@ namespace FMODUnity
         [SerializeField] private FMODMusicManager.MusicAction Action = FMODMusicManager.MusicAction.None;
         [SerializeField] private FMODMusicManager.OnWhat When =FMODMusicManager.OnWhat.None;
         [SerializeField] private FMODMusicManager.Layer layers = FMODMusicManager.Layer.None;
-        public LayerMask detectionLayer;
+        
 
         private void Reset()
         {
