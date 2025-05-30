@@ -39,9 +39,9 @@ public class AreaCondition : Condition
             }
         }
 
-        if (additionalCondition == null && validationType != ValidationTypes.OneOf)
+        if (additionalCondition == null && validationType != ValidationTypes.OneOf && validationType != ValidationTypes.Any)
         {
-            Debug.LogError("Si validationType est dans un autre mode que OneOf, une condition additionelle doit être renseignée pour vérifier un paramètre d'objet plutôt que l'identité d'un seul objet");
+            Debug.LogError("Si validationType est dans un autre mode que OneOf ou Any, une condition additionelle doit être renseignée pour vérifier un paramètre d'objet plutôt que l'identité d'un seul objet");
             Debug.Log("(C'est comme si vous demandiez à la police de retrouver deux 'Xavier Dupont de Ligonès' plutôt qu'un seul en disant qu'ils sont plusieurs à avoir transormé leur famille en terasse, ca peux pas fonctionner mdr.)");
         }
 
