@@ -82,11 +82,31 @@ public class FeedbackManager : MonoBehaviour
             case 0: // pas de comportement
                 if (sender.CompareTag("Player"))
                 {
-
+                    ImpulseSIMDroite.SetActive(false);
+                    BounceSIMDroite.SetActive(false);
+                    ImmuSIMDroite.SetActive(false);
+                    MagnetSIMDroite.SetActive(false);
+                    RocketSIMDroite.SetActive(false);
+                        
+                    ImpulseSIMGauche.SetActive(false);
+                    BounceSIMGauche.SetActive(false);
+                    ImmuSIMGauche.SetActive(false);
+                    MagnetSIMGauche.SetActive(false);
+                    RocketSIMGauche.SetActive(false);
                 }
                 else
                 {
-
+                    ImpulseSIMDroite.SetActive(false);
+                    BounceSIMDroite.SetActive(false);
+                    ImmuSIMDroite.SetActive(false);
+                    MagnetSIMDroite.SetActive(false);
+                    RocketSIMDroite.SetActive(false);
+                        
+                    ImpulseSIMGauche.SetActive(false);
+                    BounceSIMGauche.SetActive(false);
+                    ImmuSIMGauche.SetActive(false);
+                    MagnetSIMGauche.SetActive(false);
+                    RocketSIMGauche.SetActive(false);
                 }
 
                 break;
@@ -96,10 +116,30 @@ public class FeedbackManager : MonoBehaviour
                     if (playerStateMachine.inversion == true)
                     {
                         ImpulseSIMDroite.SetActive(true);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                     else
                     {
                         ImpulseSIMGauche.SetActive(true);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
+                        
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
                     }
                 }
                 else
@@ -113,11 +153,31 @@ public class FeedbackManager : MonoBehaviour
                 {
                     if (playerStateMachine.inversion == true)
                     {
+                        ImpulseSIMDroite.SetActive(false);
                         BounceSIMDroite.SetActive(true);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                     else
                     {
+                        ImpulseSIMGauche.SetActive(false);
                         BounceSIMGauche.SetActive(true);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
+                        
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
                     }
                 }
                 else
@@ -131,11 +191,31 @@ public class FeedbackManager : MonoBehaviour
                 {
                     if (playerStateMachine.inversion == true)
                     {
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
                         ImmuSIMDroite.SetActive(true);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                     else
                     {
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
                         ImmuSIMGauche.SetActive(true);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
+                        
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
                     }
                 }
                 else
@@ -149,11 +229,32 @@ public class FeedbackManager : MonoBehaviour
                 {
                     if (playerStateMachine.inversion == true)
                     {
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
                         MagnetSIMDroite.SetActive(true);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
+
                     }
                     else
                     {
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
                         MagnetSIMGauche.SetActive(true);
+                        RocketSIMGauche.SetActive(false);
+                        
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
                     }
                 }
                 else
@@ -167,11 +268,31 @@ public class FeedbackManager : MonoBehaviour
                 {
                     if (playerStateMachine.inversion == true)
                     {
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
                         RocketSIMDroite.SetActive(true);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                     else
                     {
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
                         RocketSIMGauche.SetActive(true);
+                        
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
                     }
                 }
                 else
@@ -185,6 +306,16 @@ public class FeedbackManager : MonoBehaviour
                 {
                     ImpulseSIMDroite.SetActive(true);
                     ImpulseSIMGauche.SetActive(true);
+                    
+                    BounceSIMDroite.SetActive(false);
+                    ImmuSIMDroite.SetActive(false);
+                    MagnetSIMDroite.SetActive(false);
+                    RocketSIMDroite.SetActive(false);
+                    
+                    BounceSIMGauche.SetActive(false);
+                    ImmuSIMGauche.SetActive(false);
+                    MagnetSIMGauche.SetActive(false);
+                    RocketSIMGauche.SetActive(false);
                 }
                 else
                 {
@@ -197,6 +328,16 @@ public class FeedbackManager : MonoBehaviour
                 {
                     BounceSIMDroite.SetActive(true);
                     BounceSIMGauche.SetActive(true);
+                    
+                    ImpulseSIMDroite.SetActive(false);
+                    ImmuSIMDroite.SetActive(false);
+                    MagnetSIMDroite.SetActive(false);
+                    RocketSIMDroite.SetActive(false);
+                    
+                    ImpulseSIMGauche.SetActive(false);
+                    ImmuSIMGauche.SetActive(false);
+                    MagnetSIMGauche.SetActive(false);
+                    RocketSIMGauche.SetActive(false);
                 }
                 else
                 {
@@ -209,6 +350,16 @@ public class FeedbackManager : MonoBehaviour
                 {
                     ImmuSIMDroite.SetActive(true);
                     ImmuSIMGauche.SetActive(true);
+                    
+                    ImpulseSIMDroite.SetActive(false);
+                    BounceSIMDroite.SetActive(false);
+                    MagnetSIMDroite.SetActive(false);
+                    RocketSIMDroite.SetActive(false);
+                    
+                    ImpulseSIMGauche.SetActive(false);
+                    BounceSIMGauche.SetActive(false);
+                    MagnetSIMGauche.SetActive(false);
+                    RocketSIMGauche.SetActive(false);
                 }
                 else
                 {
@@ -221,6 +372,17 @@ public class FeedbackManager : MonoBehaviour
                 {
                     MagnetSIMDroite.SetActive(true);
                     MagnetSIMGauche.SetActive(true);
+                    
+                    ImpulseSIMDroite.SetActive(false);
+                    BounceSIMDroite.SetActive(false);
+                    ImmuSIMDroite.SetActive(false);
+                    RocketSIMDroite.SetActive(false);
+                    
+                    ImpulseSIMGauche.SetActive(false);
+                    BounceSIMGauche.SetActive(false);
+                    ImmuSIMGauche.SetActive(false);
+                    RocketSIMGauche.SetActive(false);
+                    
                 }
                 else
                 {
@@ -233,6 +395,16 @@ public class FeedbackManager : MonoBehaviour
                 {
                     RocketSIMDroite.SetActive(true);
                     RocketSIMGauche.SetActive(true);
+                    
+                    ImpulseSIMDroite.SetActive(false);
+                    BounceSIMDroite.SetActive(false);
+                    ImmuSIMDroite.SetActive(false);
+                    MagnetSIMDroite.SetActive(false);
+                    
+                    ImpulseSIMGauche.SetActive(false);
+                    BounceSIMGauche.SetActive(false);
+                    ImmuSIMGauche.SetActive(false);
+                    MagnetSIMGauche.SetActive(false);
                 }
                 else
                 {
@@ -246,12 +418,30 @@ public class FeedbackManager : MonoBehaviour
                     if (playerStateMachine.inversion == true)
                     {
                         ImpulseSIMDroite.SetActive(true);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
                         BounceSIMGauche.SetActive(true);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                     else
                     {
-                        ImpulseSIMGauche.SetActive(true);
+                        ImpulseSIMDroite.SetActive(false);
                         BounceSIMDroite.SetActive(true);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(true);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                 }
                 else
@@ -267,12 +457,30 @@ public class FeedbackManager : MonoBehaviour
                     if (playerStateMachine.inversion == true)
                     {
                         ImpulseSIMDroite.SetActive(true);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
                         ImmuSIMGauche.SetActive(true);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                     else
                     {
-                        ImpulseSIMGauche.SetActive(true);
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
                         ImmuSIMDroite.SetActive(true);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(true);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                 }
                 else
@@ -288,12 +496,30 @@ public class FeedbackManager : MonoBehaviour
                     if (playerStateMachine.inversion == true)
                     {
                         ImpulseSIMDroite.SetActive(true);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
                         MagnetSIMGauche.SetActive(true);
+                        RocketSIMGauche.SetActive(false);
                     }
                     else
                     {
-                        ImpulseSIMGauche.SetActive(true);
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
                         MagnetSIMDroite.SetActive(true);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(true);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                 }
                 else
@@ -309,12 +535,30 @@ public class FeedbackManager : MonoBehaviour
                     if (playerStateMachine.inversion == true)
                     {
                         ImpulseSIMDroite.SetActive(true);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
                         RocketSIMGauche.SetActive(true);
                     }
                     else
                     {
-                        ImpulseSIMGauche.SetActive(true);
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
                         RocketSIMDroite.SetActive(true);
+                        
+                        ImpulseSIMGauche.SetActive(true);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                 }
                 else
@@ -329,13 +573,31 @@ public class FeedbackManager : MonoBehaviour
                 {
                     if (playerStateMachine.inversion == true)
                     {
+                        ImpulseSIMDroite.SetActive(false);
                         BounceSIMDroite.SetActive(true);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
                         ImmuSIMGauche.SetActive(true);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                     else
                     {
-                        BounceSIMGauche.SetActive(true);
-                        ImmuSIMDroite.SetActive(true);
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(true);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(true);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                 }
                 else
@@ -350,13 +612,31 @@ public class FeedbackManager : MonoBehaviour
                 {
                     if (playerStateMachine.inversion == true)
                     {
+                        ImpulseSIMDroite.SetActive(false);
                         BounceSIMDroite.SetActive(true);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
                         ImmuSIMGauche.SetActive(true);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                     else
                     {
-                        BounceSIMGauche.SetActive(true);
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
                         ImmuSIMDroite.SetActive(true);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(true);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                 }
                 else
@@ -371,13 +651,31 @@ public class FeedbackManager : MonoBehaviour
                 {
                     if (playerStateMachine.inversion == true)
                     {
+                        ImpulseSIMDroite.SetActive(false);
                         BounceSIMDroite.SetActive(true);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
                         RocketSIMGauche.SetActive(true);
                     }
                     else
                     {
-                        BounceSIMGauche.SetActive(true);
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
                         RocketSIMDroite.SetActive(true);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(true);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                 }
                 else
@@ -392,13 +690,31 @@ public class FeedbackManager : MonoBehaviour
                 {
                     if (playerStateMachine.inversion == true)
                     {
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
                         ImmuSIMDroite.SetActive(true);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
                         MagnetSIMGauche.SetActive(true);
+                        RocketSIMGauche.SetActive(false);
                     }
                     else
                     {
-                        ImmuSIMGauche.SetActive(true);
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
                         MagnetSIMDroite.SetActive(true);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(true);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                 }
                 else
@@ -413,13 +729,31 @@ public class FeedbackManager : MonoBehaviour
                 {
                     if (playerStateMachine.inversion == true)
                     {
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
                         ImmuSIMDroite.SetActive(true);
+                        MagnetSIMDroite.SetActive(false);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
                         RocketSIMGauche.SetActive(true);
                     }
                     else
                     {
-                        ImmuSIMGauche.SetActive(true);
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
                         RocketSIMDroite.SetActive(true);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(true);
+                        MagnetSIMGauche.SetActive(false);
+                        RocketSIMGauche.SetActive(false);
                     }
                 }
                 else
@@ -434,13 +768,31 @@ public class FeedbackManager : MonoBehaviour
                 {
                     if (playerStateMachine.inversion == true)
                     {
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
                         MagnetSIMDroite.SetActive(true);
+                        RocketSIMDroite.SetActive(false);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(false);
                         RocketSIMGauche.SetActive(true);
                     }
                     else
                     {
-                        MagnetSIMGauche.SetActive(true);
+                        ImpulseSIMDroite.SetActive(false);
+                        BounceSIMDroite.SetActive(false);
+                        ImmuSIMDroite.SetActive(false);
+                        MagnetSIMDroite.SetActive(false);
                         RocketSIMDroite.SetActive(true);
+                        
+                        ImpulseSIMGauche.SetActive(false);
+                        BounceSIMGauche.SetActive(false);
+                        ImmuSIMGauche.SetActive(false);
+                        MagnetSIMGauche.SetActive(true);
+                        RocketSIMGauche.SetActive(false);
                     }
                 }
                 else
@@ -772,11 +1124,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            ImpulseSIMDroite.SetActive(false);
+                            
                         }
                         else
                         {
-                            ImpulseSIMGauche.SetActive(false);
+                            
                         }
                     }
                     else
@@ -790,11 +1142,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            BounceSIMDroite.SetActive(false);
+                            
                         }
                         else
                         {
-                            BounceSIMGauche.SetActive(false);
+                            
                         }
                     }
                     else
@@ -808,11 +1160,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            ImmuSIMDroite.SetActive(false);
+                            
                         }
                         else
                         {
-                            ImmuSIMGauche.SetActive(false);
+                            
                         }
                     }
                     else
@@ -826,11 +1178,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            MagnetSIMDroite.SetActive(false);
+                            
                         }
                         else
                         {
-                            MagnetSIMGauche.SetActive(false);
+                            
                         }
                     }
                     else
@@ -854,11 +1206,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            RocketSIMDroite.SetActive(false);
+                            
                         }
                         else
                         {
-                            RocketSIMGauche.SetActive(false);
+                            
                         }
                     }
                     else
@@ -870,8 +1222,7 @@ public class FeedbackManager : MonoBehaviour
                 case 2: // double impulse
                     if (sender.CompareTag("Player"))
                     {
-                        ImpulseSIMDroite.SetActive(false);
-                        ImpulseSIMGauche.SetActive(false);
+                        
                     }
                     else
                     {
@@ -882,8 +1233,7 @@ public class FeedbackManager : MonoBehaviour
                 case 6: // double bouncing
                     if (sender.CompareTag("Player"))
                     {
-                        BounceSIMDroite.SetActive(false);
-                        BounceSIMGauche.SetActive(false);
+                        
                     }
                     else
                     {
@@ -894,8 +1244,7 @@ public class FeedbackManager : MonoBehaviour
                 case 18: // double immuable
                     if (sender.CompareTag("Player"))
                     {
-                        ImmuSIMDroite.SetActive(false);
-                        ImmuSIMGauche.SetActive(false);
+                        
                     }
                     else
                     {
@@ -906,8 +1255,7 @@ public class FeedbackManager : MonoBehaviour
                 case 54: // double magnet
                     if (sender.CompareTag("Player"))
                     {
-                        MagnetSIMDroite.SetActive(false);
-                        MagnetSIMGauche.SetActive(false);
+                        
                     }
                     else
                     {
@@ -918,8 +1266,7 @@ public class FeedbackManager : MonoBehaviour
                 case 162: // double rocket
                     if (sender.CompareTag("Player"))
                     {
-                        RocketSIMDroite.SetActive(false);
-                        RocketSIMGauche.SetActive(false);
+                        
                     }
                     else
                     {
@@ -932,13 +1279,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            ImpulseSIMDroite.SetActive(false);
-                            BounceSIMGauche.SetActive(false);
+                            
                         }
                         else
                         {
-                            ImpulseSIMGauche.SetActive(false);
-                            BounceSIMDroite.SetActive(false);
+                            
                         }
                     }
                     else
@@ -952,13 +1297,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            ImpulseSIMDroite.SetActive(false);
-                            ImmuSIMGauche.SetActive(false);
+                            
                         }
                         else
                         {
-                            ImpulseSIMGauche.SetActive(false);
-                            ImmuSIMDroite.SetActive(false);
+                            
                         }
                     }
                     else
@@ -972,13 +1315,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            ImpulseSIMDroite.SetActive(false);
-                            MagnetSIMGauche.SetActive(false);
+                            
                         }
                         else
                         {
-                            ImpulseSIMGauche.SetActive(false);
-                            MagnetSIMDroite.SetActive(false);
+                            
                         }
                     }
                     else
@@ -1001,13 +1342,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            ImpulseSIMDroite.SetActive(false);
-                            RocketSIMGauche.SetActive(false);
+                            
                         }
                         else
                         {
-                            ImpulseSIMGauche.SetActive(false);
-                            RocketSIMDroite.SetActive(false);
+                            
                         }
                     }
                     else
@@ -1021,13 +1360,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            BounceSIMDroite.SetActive(false);
-                            ImmuSIMGauche.SetActive(false);
+                            
                         }
                         else
                         {
-                            BounceSIMGauche.SetActive(false);
-                            ImmuSIMDroite.SetActive(false);
+                            
                         }
                     }
                     else
@@ -1041,13 +1378,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            BounceSIMDroite.SetActive(false);
-                            ImmuSIMGauche.SetActive(false);
+                            
                         }
                         else
                         {
-                            BounceSIMGauche.SetActive(false);
-                            ImmuSIMDroite.SetActive(false);
+                            
                         }
                     }
                     else
@@ -1071,13 +1406,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            BounceSIMDroite.SetActive(false);
-                            RocketSIMGauche.SetActive(false);
+                            
                         }
                         else
                         {
-                            BounceSIMGauche.SetActive(false);
-                            RocketSIMDroite.SetActive(false);
+                            
                         }
                     }
                     else
@@ -1091,13 +1424,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            ImmuSIMDroite.SetActive(false);
-                            MagnetSIMGauche.SetActive(false);
+                            
                         }
                         else
                         {
-                            ImmuSIMGauche.SetActive(false);
-                            MagnetSIMDroite.SetActive(false);
+                            
                         }
                     }
                     else
@@ -1111,13 +1442,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            ImmuSIMDroite.SetActive(false);
-                            RocketSIMGauche.SetActive(false);
+                            
                         }
                         else
                         {
-                            ImmuSIMGauche.SetActive(false);
-                            RocketSIMDroite.SetActive(false);
+                            
                         }
                     }
                     else
@@ -1141,13 +1470,11 @@ public class FeedbackManager : MonoBehaviour
                     {
                         if (playerStateMachine.inversion == true)
                         {
-                            MagnetSIMDroite.SetActive(false);
-                            RocketSIMGauche.SetActive(false);
+                            
                         }
                         else
                         {
-                            MagnetSIMGauche.SetActive(false);
-                            RocketSIMDroite.SetActive(false);
+                            
                         }
                     }
                     else
