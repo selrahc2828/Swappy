@@ -7,7 +7,8 @@ public class AreaCondition : Condition
     {
         OneOf,
         Precise,
-        MinMax
+        MinMax,
+        Any
     }
 
     [SerializeField] private ValidationTypes validationType;
@@ -44,7 +45,7 @@ public class AreaCondition : Condition
             Debug.Log("(C'est comme si vous demandiez à la police de retrouver deux 'Xavier Dupont de Ligonès' plutôt qu'un seul en disant qu'ils sont plusieurs à avoir transormé leur famille en terasse, ca peux pas fonctionner mdr.)");
         }
 
-        if (additionalCondition == null && targetObject == null)
+        if (additionalCondition == null && targetObject == null && validationType != ValidationTypes.Any)
         {
             Debug.LogError("Il faut renseigner un targetObject ou alors une additionalCondition dans ce script pour qu'il y est un sens de l'utiliser.");
         }
@@ -72,6 +73,14 @@ public class AreaCondition : Condition
 
     private void VerifyAreaCondition()
     {
+        if (validationType == ValidationTypes.Any)
+        {
+            foreach (GameObject target in objectsInArera)
+            {
+                SetConditionState(true);
+            }
+        }
+
         if (targetObject != null && validationType == ValidationTypes.OneOf) 
         {
             foreach (GameObject target in objectsInArera)
