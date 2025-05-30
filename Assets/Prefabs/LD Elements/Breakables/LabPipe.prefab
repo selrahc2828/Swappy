@@ -121,8 +121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shatteredVersion: {fileID: 5026889020820063628, guid: ccbdbf26dc6c5b947a44a1294f321b5c, type: 3}
-  minShatterPower: 1000000
-  avoidCollisionBreak: 0
+  minShatterPower: 0
+  avoidCollisionBreak: 1
   fragmentPrefab: {fileID: 0}
 --- !u!54 &2583385458023741903
 Rigidbody:
@@ -146,7 +146,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -213,7 +213,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6179eeed7394c99488ea649e6be90c3f, type: 2}
+  - {fileID: 2100000, guid: bbe11627c03e7944b8d9711e28a0c7eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 2043197186478487484}
   - component: {fileID: 2920670365441843304}
   - component: {fileID: 6706516718837077029}
+  - component: {fileID: 2925471362395976896}
   m_Layer: 0
   m_Name: TEMP Pot
   m_TagString: Untagged
@@ -320,7 +321,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 44d8ce73570e38b41901fd4a7b2a2f62, type: 2}
+  - {fileID: 2100000, guid: f61e13ff733d9884c82fd9298eee3fbe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -385,11 +386,28 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2925471362395976896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3939351970454301039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7a6870f499b3a41b76b84d1c8f626c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planetesRB: []
+  rb: {fileID: 0}
+  offsetRotation: {x: 0, y: 0, z: 0}
+  gravityConstant: 9.81
+  maxAngle: 30
 --- !u!1 &6574283680614587821
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,6 +459,7 @@ GameObject:
   - component: {fileID: 7704976844844150393}
   - component: {fileID: 1641766790126119079}
   - component: {fileID: 6549089484498953971}
+  - component: {fileID: 7851468437143499664}
   m_Layer: 0
   m_Name: Slab_Up
   m_TagString: Untagged
@@ -491,7 +510,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6179eeed7394c99488ea649e6be90c3f, type: 2}
+  - {fileID: 2100000, guid: bbe11627c03e7944b8d9711e28a0c7eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -548,7 +567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shatteredVersion: {fileID: 3329975194433794275, guid: a817e6f071b396445802cf655a3212a9, type: 3}
-  minShatterPower: 200
+  minShatterPower: 100
   avoidCollisionBreak: 0
   fragmentPrefab: {fileID: 0}
 --- !u!54 &1641766790126119079
@@ -596,7 +615,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5514875380827849088}
         m_TargetAssemblyTypeName: BreakableObject, Assembly-CSharp
-        m_MethodName: ShatterObject
+        m_MethodName: BreakObjectNoReturn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -606,6 +625,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7851468437143499664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8454103161184888609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7a6870f499b3a41b76b84d1c8f626c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planetesRB: []
+  rb: {fileID: 0}
+  offsetRotation: {x: 0, y: 0, z: 0}
+  gravityConstant: 9.81
+  maxAngle: 30
 --- !u!1001 &4076850349459275280
 PrefabInstance:
   m_ObjectHideFlags: 0
