@@ -46,6 +46,8 @@ public class FMODEvents : ScriptableObject
     [field: Space]
     [field: Space]
     [field: Header("Menu")]
+    [field: SerializeField] public EventReference TapeSystem { get; private set; }
+    [field: SerializeField] public EventReference TapeSystem2 { get; private set; }
     [field: SerializeField] public EventReference Hover { get; private set; }
     [field: SerializeField] public EventReference Validated { get; private set; }
     [field: SerializeField] public EventReference Back { get; private set; }

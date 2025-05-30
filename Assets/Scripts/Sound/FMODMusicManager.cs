@@ -169,8 +169,11 @@ public class FMODMusicManager : MonoBehaviour
     public void ChangeMusicWalkman(EventInstance musicTape, string newMusicName)
     {
         musicTape.stop(STOP_MODE.ALLOWFADEOUT);
+
         ChooseMusicWalkMan(musicTape, newMusicName);
+        FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.TapeSystem2,transform.position);
         musicTape.start();
+        
     }
 
     public void PlayMusicWalkman(string musicName)
@@ -178,12 +181,14 @@ public class FMODMusicManager : MonoBehaviour
         GetMusicPlaylistInstance(FMODSnapshotEvents.CasqueWalkman).getPlaybackState(out PLAYBACK_STATE snapshotState);
         if(snapshotState != PLAYBACK_STATE.PLAYING) GetMusicPlaylistInstance(FMODSnapshotEvents.CasqueWalkman).start();
         GetMusicPlaylistInstance(FMODMusicEvents.Walkman).getPlaybackState(out PLAYBACK_STATE musicState);
+        FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.TapeSystem2,transform.position);
         if (musicState == PLAYBACK_STATE.PLAYING)
         {
             SwitchMusicWalkman(musicName);
         }
         else
         {
+
             ChooseMusicWalkMan(GetMusicPlaylistInstance(FMODMusicEvents.Walkman), musicName);
             GetMusicPlaylistInstance(FMODMusicEvents.Walkman).start();
         }
@@ -193,7 +198,7 @@ public class FMODMusicManager : MonoBehaviour
     {
         GetMusicPlaylistInstance(FMODSnapshotEvents.CasqueWalkman).getPlaybackState(out PLAYBACK_STATE snapshotState);
         if(snapshotState == PLAYBACK_STATE.PLAYING) GetMusicPlaylistInstance(FMODSnapshotEvents.CasqueWalkman).stop(STOP_MODE.ALLOWFADEOUT);
-        
+        FMODEventManager.instance.PlayOneShot(FMODEventManager.instance.FMODEvents.TapeSystem,transform.position);
         GetMusicPlaylistInstance(FMODMusicEvents.Walkman).stop(STOP_MODE.ALLOWFADEOUT);
         GetMusicPlaylistInstance(FMODMusicEvents.Walkman).release();
     }
