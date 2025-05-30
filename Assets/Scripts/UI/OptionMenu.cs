@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class OptionMenu : MonoBehaviour
@@ -62,5 +63,14 @@ public class OptionMenu : MonoBehaviour
         FMODEventManager.instance.ChangeVolume(FMODEventManager.instance.Fmodbus.busMenu,GameManager.Instance.parameters.volumeMenu);
     }
     #endregion
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("SC_Intro");
+    }
     
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
