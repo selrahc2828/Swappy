@@ -142,4 +142,9 @@ public class C_Impulse_Immuable : ComportementState
         Vector3 direction = (objToApply.transform.position - _sm.transform.position).normalized;
         rbObj.AddForce(direction * force, ForceMode.Impulse);
     }
+
+    public override void CollisionStart(Collision other)
+    {
+        GlobalEventManager.Instance.ImmuableCollision(_sm.gameObject);
+    }
 }

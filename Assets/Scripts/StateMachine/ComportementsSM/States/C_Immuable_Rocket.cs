@@ -56,13 +56,14 @@ public class C_Immuable_Rocket : ComportementState
         float effectiveReleaseForce = rocketReleaseForce * (chargeTime / chargeTimeMax);
         
         _sm.rb.AddForce(_sm.transform.up * effectiveReleaseForce, ForceMode.Impulse);
-        GlobalEventManager.Instance.ComportmentStatePlay(_sm.gameObject);
-        base.Exit();
+        FMODEventManager.instance
+            .GetInstanceFromEncyclopediaKey(_sm.gameObject, FMODEventManager.instance.FMODEvents.ImmuableRocket)
+            .setParameterByName("Stinger", 1);
+        FMODEventManager.instance.GetInstanceFromEncyclopediaKey(_sm.gameObject, FMODEventManager.instance.FMODEvents.ImmuableRocket).release();
     }
 
     public override void CollisionStart(Collision other)
     {
-        base.CollisionStart(other);
         GlobalEventManager.Instance.ImmuableCollision(GetGameObject());
     }
 }

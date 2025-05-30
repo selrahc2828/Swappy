@@ -5,8 +5,9 @@ using UnityEngine;
 public class FMODMusicEvents : ScriptableObject
 {
     [field: Header("Biomes1")]
-    [field: SerializeField] public EventReference TestMusic1 { get; private set; }
-    [field: SerializeField] public EventReference TestMusic2 { get; private set; }
+    [field: SerializeField] public EventReference Zones1 { get; private set; }
+    [field: SerializeField] public EventReference Zones2 { get; private set; }
+    [field: SerializeField] public EventReference Zones3 { get; private set; }
     
     [field: Header("Biomes2")]
     [field: SerializeField] public EventReference TestMusic3 { get; private set; }
