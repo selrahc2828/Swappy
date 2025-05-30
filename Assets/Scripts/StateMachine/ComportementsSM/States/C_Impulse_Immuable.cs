@@ -145,6 +145,6 @@ public class C_Impulse_Immuable : ComportementState
 
     public override void CollisionStart(Collision other)
     {
-        //GlobalEventManager.Instance.ImmuableCollision(_sm.gameObject);
+        GlobalEventManager.Instance.ImmuableCollision(_sm.gameObject);
     }
 }

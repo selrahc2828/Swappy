@@ -151,6 +151,6 @@ public class C_Immuable_Magnet : ComportementState
 
     public override void CollisionStart(Collision other)
     {
-        //GlobalEventManager.Instance.ImmuableCollision(GetGameObject());
+        GlobalEventManager.Instance.ImmuableCollision(GetGameObject());
     }
 }
