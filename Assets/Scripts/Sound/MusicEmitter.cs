@@ -17,6 +17,8 @@ namespace FMODUnity
         [SerializeField] private FMODMusicManager.OnWhat When =FMODMusicManager.OnWhat.None;
         [SerializeField] private FMODMusicManager.Layer layers = FMODMusicManager.Layer.None;
         
+        private bool Starter = false;
+        
 
         private void Reset()
         {
@@ -30,6 +32,7 @@ namespace FMODUnity
         {
             _musicInstance = FMODMusicManager.instance.GetMusicPlaylistInstance(Music);
 
+            StartCoroutine(EnableTriggerAfterDelay());
             if (When == FMODMusicManager.OnWhat.OnStart )
             {
                 if (Action == FMODMusicManager.MusicAction.Play)
@@ -47,11 +50,18 @@ namespace FMODUnity
                 }
             }
         }
+        private IEnumerator EnableTriggerAfterDelay()
+        {
+            yield return new WaitForSeconds(0.1f); // Wait one physics frame
+            Starter = true;
+        }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player")&& When == FMODMusicManager.OnWhat.OnTriggerEnter)
+            if (Starter)
             {
+                if (other.CompareTag("Player")&& When == FMODMusicManager.OnWhat.OnTriggerEnter)
+                {
                     if (Action == FMODMusicManager.MusicAction.Play)
                     {
                         SetParameter(layers);
@@ -65,27 +75,31 @@ namespace FMODUnity
                     {
                         SetParameter( layers);
                     }
+                }
             }
         }
         
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player") && When == FMODMusicManager.OnWhat.OnTriggerExit)
+            if (Starter)
             {
-                if (Action == FMODMusicManager.MusicAction.Play)
+                if (other.CompareTag("Player") && When == FMODMusicManager.OnWhat.OnTriggerExit)
                 {
-                    SetParameter(layers);
-                    FMODMusicManager.instance.PlayMusicInstance(_musicInstance);
-                }
+                    if (Action == FMODMusicManager.MusicAction.Play)
+                    {
+                        SetParameter(layers);
+                        FMODMusicManager.instance.PlayMusicInstance(_musicInstance);
+                    }
 
-                if (Action == FMODMusicManager.MusicAction.Stop)
-                {
-                    FMODMusicManager.instance.StopMusic(_musicInstance);
-                }
+                    if (Action == FMODMusicManager.MusicAction.Stop)
+                    {
+                        FMODMusicManager.instance.StopMusic(_musicInstance);
+                    }
 
-                if (Action == FMODMusicManager.MusicAction.Switch)
-                {
-                    SetParameter(layers);
+                    if (Action == FMODMusicManager.MusicAction.Switch)
+                    {
+                        SetParameter(layers);
+                    }
                 }
             }
         }
