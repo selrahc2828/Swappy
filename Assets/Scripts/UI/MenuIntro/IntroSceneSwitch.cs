@@ -53,6 +53,14 @@ public class IntroSceneSwitch: MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            BlackScreen.SetActive(false);
+            title.SetActive(true);
+            playButton.SetActive(true);
+            parameterButton.SetActive(true);
+            quitButton.SetActive(true);
+        }
         if (playClicked)
         {
             if (_t / fadeOUTTimeRange <= 1 )
