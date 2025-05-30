@@ -16,13 +16,13 @@ public class MoveOnAxis : MonoBehaviour
 
     private void Start()
     {
-        basePosition = transform.position;
+        basePosition = transform.localPosition;
     }
     private void Update()
     {
         if (isAxisActive)
         {
-            transform.position = basePosition + OffsetAxisTick();
+            transform.localPosition = basePosition + OffsetAxisTick();
         }
     }
 
