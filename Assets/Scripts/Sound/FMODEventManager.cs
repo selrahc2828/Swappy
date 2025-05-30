@@ -620,7 +620,7 @@ public class FMODEventManager : MonoBehaviour
         {
             ComportementState gameObjectCurrenState = (ComportementState)stateMachine.currentState;
             EventReference _eventReference = FindStateComportement(gameObjectCurrenState.stateValue);
-            ActionOnStateComportement(_gameObject,_eventReference,step,force,haveEarlyStart,defaultValueBetweenHit,startingValueBetweenHit);
+            ActionOnStateComportement(_gameObject,_eventReference,step,force);
         }
     }
     private EventReference FindStateComportement( int stateValue)
@@ -629,6 +629,7 @@ public class FMODEventManager : MonoBehaviour
         switch (stateValue)
         {
             case 0:
+                _eventReference = FMODEvents.NOCOMPOORTEMENT;
                 break;
             case 1:
                 _eventReference =  FMODEvents.Impulse;
@@ -698,25 +699,14 @@ public class FMODEventManager : MonoBehaviour
         }
         return _eventReference;
     }
-    private void ActionOnStateComportement(GameObject _gameObject, EventReference _eventReference, Step step, float force, bool haveEarlyStart, float defaultValueBetweenHit, float startingValueBetweenHit)
+    private void ActionOnStateComportement(GameObject _gameObject, EventReference _eventReference, Step step, float force)
     {
         switch (step)
         {
             case Step.Enter:
                 AddInstanceInEncyclopedia(_gameObject, _eventReference,CreateEventInstance(_eventReference));
                 if(_gameObject.CompareTag("Player"))SetNamedParamEventInstance(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),"ISPLAYER",1);
-                if (defaultValueBetweenHit > -1f && startingValueBetweenHit > -1f && haveEarlyStart)
-                {
-                    int startingValue = Mathf.RoundToInt((defaultValueBetweenHit - startingValueBetweenHit) * 1000f);
-                    PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),_gameObject,_gameObject.GetComponent<Rigidbody>());
-                    GetInstanceFromEncyclopediaKey(_gameObject,_eventReference).setTimelinePosition(startingValue);
-                }
-                else
-                {
-                    PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),_gameObject,_gameObject.GetComponent<Rigidbody>());
-                }
-                
-                
+                PlayEventInstance3DMoving(GetInstanceFromEncyclopediaKey(_gameObject,_eventReference),_gameObject,_gameObject.GetComponent<Rigidbody>());
                 break;
             case Step.Play:
                 if (force < 0)

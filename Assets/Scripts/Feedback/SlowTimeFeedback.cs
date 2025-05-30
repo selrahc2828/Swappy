@@ -11,8 +11,8 @@ public class SlowTimeFeedback : MonoBehaviour
     public PostProcessProfile SlowProfile;
     private void Start()
     {
-        MainVolume = GameObject.Find("Volume").GetComponent<PostProcessVolume>();
-        MainVolume.profile = MainProfile;
+        //MainVolume = GameObject.Find("Volume").GetComponent<PostProcessVolume>();
+        //MainVolume.profile = MainProfile;
     }
 
     private void OnEnable()
