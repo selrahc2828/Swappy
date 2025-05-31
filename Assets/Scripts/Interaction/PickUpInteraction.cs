@@ -64,6 +64,7 @@ public class PickUpInteraction : InteractionSystem
                 break;
             case TapeData tapeData:
                 tapeSystem.SetLockTape(tapeData, true);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Menu/New Event");
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(itemData));

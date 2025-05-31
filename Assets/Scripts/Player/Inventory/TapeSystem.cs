@@ -21,6 +21,7 @@ public class TapeSystem : MonoBehaviour
 
     public void AddTape(TapeData newTape)
     {
+        
         Debug.Log($"Adding tape {newTape}");
 
         tapeList.Add(newTape);
