@@ -30,17 +30,17 @@ public class PreviewInventoryControl : MonoBehaviour
         }
         
         // Récupère le renderer pour connaître la taille
-        Renderer renderer = previewObject.GetComponent<Renderer>();
-        if (renderer == null)
-        {
-            Debug.LogError("Renderer non trouvé sur l’enfant !");
-            return;
-        }
+        // Renderer renderer = previewObject.GetComponent<Renderer>();
+        // if (renderer == null)
+        // {
+        //     Debug.LogError("Renderer non trouvé sur l’enfant !");
+        //     return;
+        // }
 
-        float halfWidth = renderer.bounds.size.x / 2f;
+        // float halfWidth = renderer.bounds.size.x / 2f;
 
         // Calculer la position finale de la caméra
-        Vector3 finalOffset = direction.normalized * (offset + halfWidth);
+        Vector3 finalOffset = direction.normalized * (offset ); // + halfWidth
         camPosition.transform.position = previewPosition.position + finalOffset;
     }
 }
