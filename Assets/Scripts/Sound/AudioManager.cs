@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FMOD.Studio;
@@ -7,38 +8,75 @@ using UnityEngine.Playables;
 
 namespace FMODUnity
 {
-    public class AudioManager : MonoBehaviour
+    public class AudioManager : Singleton<AudioManager>
     {
-        public Dictionary<GameObject,Dictionary<EventReference,EventInstance>>  EncyclopediAudio = new Dictionary<GameObject,Dictionary<EventReference,EventInstance>>();
+        public EncyclopediAudio EncyclopediAudio;
+        protected override void Initialize()
+        {
+            EncyclopediAudio = new EncyclopediAudio();
+        }
+
+        private void OnEnable()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Start()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Update()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnDisable()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnDestroy()
+        {
+            EncyclopediAudio.CleanUpSound();
+        }
+    }
+    
+    #region AudioSystem
+    #region EncyclopediAudio
+    public struct EncyclopediAudio
+    {
+        private Dictionary<GameObject,Dictionary<EventReference,EventInstance>>  EncyclopediaAudio;
+        
         private bool CheckAudioInstance(GameObject keyObject, EventReference reference, out EventInstance eventInstance, bool isDebbuging = false)
         {
-            if (EncyclopediAudio.ContainsKey(keyObject))
+            if (EncyclopediaAudio.ContainsKey(keyObject))
             {
-                if (EncyclopediAudio[keyObject].ContainsKey(reference))
+                if (EncyclopediaAudio[keyObject].ContainsKey(reference))
                 {
-                    eventInstance = EncyclopediAudio[keyObject][reference]; 
-                    if (isDebbuging) Debug.Log("EventInstance FOUND at "+gameObject.name+", "+ reference);
+                    eventInstance = EncyclopediaAudio[keyObject][reference]; 
+                    if (isDebbuging) Debug.Log("EventInstance FOUND at "+keyObject.name+", "+ reference);
                     return true;
                 }
-                else if(isDebbuging) Debug.LogError("EventInstance NOT FOUND in "+gameObject.name+".");
+                else if(isDebbuging) Debug.LogError("EventInstance NOT FOUND in "+keyObject.name+".");
             }
             else if (isDebbuging) Debug.LogError("GameObject NOT FOUND in EncyclopediAudio.");
             eventInstance = default;
             return false;
         }
 
-        public bool CheckAudioInstance(AudioInstance audioInstance,bool isDebbuging = false)
+        public bool CheckAudioInstance(AudioInstance audioInstance, bool isDebbuging = false)
         {
             GameObject keyObject = audioInstance.GetKeyObject();
             EventReference reference = audioInstance.GetReference();
-            if (EncyclopediAudio.ContainsKey(keyObject))
+            if (EncyclopediaAudio.ContainsKey(keyObject))
             {
-                if (EncyclopediAudio[keyObject].ContainsKey(reference))
+                if (EncyclopediaAudio[keyObject].ContainsKey(reference))
                 {
-                    if (isDebbuging) Debug.Log("EventInstance FOUND at "+gameObject.name+", "+ reference);
+                    if (isDebbuging) Debug.Log("EventInstance FOUND at "+keyObject.name+", "+ reference);
                     return true;
                 }
-                else if(isDebbuging) Debug.LogError("EventInstance NOT FOUND in "+gameObject.name+".");
+                else if(isDebbuging) Debug.LogError("EventInstance NOT FOUND in "+keyObject.name+".");
             }
             else if (isDebbuging) Debug.LogError("GameObject NOT FOUND in EncyclopediAudio.");
             return false;
@@ -48,9 +86,7 @@ namespace FMODUnity
             var audioInstance = new AudioInstance();
             if (CheckAudioInstance(keyObject, reference, out EventInstance eventInstance))
             {
-                audioInstance.SetInstance(eventInstance);
-                audioInstance.SetReference(reference);
-                audioInstance.SetKeyObject(keyObject);
+                audioInstance.SetUpInstance(keyObject, reference,eventInstance);
                 if (isDebbuging) Debug.Log("AudioInstance SUCCESSFULLY GET from EncyclopediAudio in "+ keyObject.name+" at "+ reference.ToString()+".");
             }
             else
@@ -59,7 +95,7 @@ namespace FMODUnity
             }
             return audioInstance;
         }
-        public AudioInstance CreateAudioInstance(GameObject keyObject,EventReference reference, bool isDebbuging = false)
+        public AudioInstance CreateAudioInstance(GameObject keyObject, EventReference reference, bool isDebbuging = false)
         {
             if (CheckAudioInstance(keyObject, reference, out EventInstance eventInstance))
             {
@@ -67,15 +103,16 @@ namespace FMODUnity
             }
             else
             {
-                AudioInstance newinstace = new AudioInstance();
-                eventInstance = RuntimeManager.CreateInstance(reference);
-                newinstace.SetInstance(eventInstance);
-                newinstace.SetReference(reference);
-                newinstace.SetKeyObject(keyObject);
-                if (!EncyclopediAudio.ContainsKey(keyObject)) EncyclopediAudio.Add(keyObject, new Dictionary<EventReference,EventInstance>());
-                EncyclopediAudio[keyObject][reference] = eventInstance;
-                if (isDebbuging) Debug.Log("AudioInstance SUCCESSFULLY CREATE in EncyclopediAudio");
-                return newinstace;
+                AudioInstance audioInstance = new AudioInstance();
+                audioInstance.CreateInstance(keyObject, reference);
+                if (!EncyclopediaAudio.ContainsKey(keyObject))
+                {
+                    EncyclopediaAudio.Add(keyObject, new Dictionary<EventReference,EventInstance>());
+                    if (isDebbuging) Debug.Log("New KeyObject SUCCESSFULLY CREATE in EncyclopediAudio");
+                }
+                EncyclopediaAudio[keyObject][reference] = audioInstance.GetInstance();
+                if (isDebbuging) Debug.Log("AudioInstance SUCCESSFULLY CREATE and ADD in EncyclopediAudio");
+                return audioInstance;
             }
         }
 
@@ -83,17 +120,17 @@ namespace FMODUnity
         {
             if (CheckAudioInstance(keyObject, reference, out EventInstance eventInstance))
             {
-                EncyclopediAudio[keyObject].Remove(reference);
-                if(isDebbuging) Debug.Log("EventInstance SUCCESSFULLY REMOVE from EncyclopediAudio");
-                if (EncyclopediAudio[keyObject].Count == 0)
-                {
-                    EncyclopediAudio.Remove(keyObject);
-                    if(isDebbuging) Debug.Log("KeyObject SUCCESSFULLY REMOVE from EncyclopediAudio");
-                }
                 eventInstance.getPlaybackState(out PLAYBACK_STATE playbackState);
                 if (playbackState != PLAYBACK_STATE.STOPPED || playbackState != PLAYBACK_STATE.STOPPING) Debug.LogWarning("EventInstance is about to be released, even if it still playing, assure yourself that the sound can Stop by itself before release it, to avoid memory leaks.");
                 eventInstance.release();
                 if(isDebbuging) Debug.Log("EventInstance SUCCESSFULLY RELEASE");
+                EncyclopediaAudio[keyObject].Remove(reference);
+                if(isDebbuging) Debug.Log("EventInstance SUCCESSFULLY REMOVE from EncyclopediAudio");
+                if (EncyclopediaAudio[keyObject].Count == 0)
+                {
+                    EncyclopediaAudio.Remove(keyObject);
+                    if(isDebbuging) Debug.Log("KeyObject SUCCESSFULLY REMOVE from EncyclopediAudio");
+                }
             }
             else
             {
@@ -107,11 +144,11 @@ namespace FMODUnity
             EventReference reference = audioInstance.GetReference();
             if (CheckAudioInstance(keyObject, reference, out EventInstance eventInstance))
             {
-                EncyclopediAudio[keyObject].Remove(reference);
+                EncyclopediaAudio[keyObject].Remove(reference);
                 if(isDebbuging) Debug.Log("EventInstance SUCCESSFULLY REMOVE from EncyclopediAudio");
-                if (EncyclopediAudio[keyObject].Count == 0)
+                if (EncyclopediaAudio[keyObject].Count == 0)
                 {
-                    EncyclopediAudio.Remove(keyObject);
+                    EncyclopediaAudio.Remove(keyObject);
                     if(isDebbuging) Debug.Log("KeyObject SUCCESSFULLY REMOVE from EncyclopediAudio");
                 }
                 if (audioInstance.GetState() != STATE.STOPPED || audioInstance.GetState() != STATE.STOPPING) Debug.LogWarning("EventInstance is about to be released, even if it still playing, assure yourself that the sound can Stop by itself before release it, to avoid memory leaks.");
@@ -123,23 +160,86 @@ namespace FMODUnity
                 if(isDebbuging) Debug.LogWarning("EventInstance can't be remove and release from EncyclopediAudio, because it don't exist in it.");
             }
         }
-        
-    }
 
-    
-    
-    
+        public int CountKeyPage()
+        {
+            int count = 0;
+            foreach (KeyValuePair<GameObject,Dictionary<EventReference,EventInstance>> Page in EncyclopediaAudio)
+            {
+                count++;
+            }
+            return count;
+        }
+        public int CountAudioInstance(GameObject keyObject)
+        {
+            int count = 0;
+            foreach (KeyValuePair<EventReference, EventInstance> Event in EncyclopediaAudio[keyObject])
+            {
+                count++;
+            }
+            return count;
+        }
+
+        public bool CountAll(bool isDebbuging = false)
+        {
+            bool isEmpty = true;
+            if (isDebbuging)
+            {
+                int pages = CountKeyPage();
+                if(pages > 0) isEmpty = false;
+                Debug.Log("There is "+pages+" Pages in EncyclopediAudio.");
+                if (!isEmpty)
+                {
+                    foreach (KeyValuePair<GameObject,Dictionary<EventReference,EventInstance>> Page in EncyclopediaAudio)
+                    {
+                        int count = CountAudioInstance(Page.Key);
+                        Debug.Log("There is "+count+" Event in the Page "+Page.Key.name +" in EncyclopediAudio.");
+                    }
+                }
+            }
+            return isEmpty;
+        }
+        
+        
+        public void CleanUpSound( bool IsDebbugging = false)
+        {
+            CountAll(IsDebbugging);
+            foreach (KeyValuePair<GameObject,Dictionary<EventReference,EventInstance>> Page in EncyclopediaAudio)
+            {
+                foreach (KeyValuePair<EventReference, EventInstance> Event in Page.Value)
+                {
+                    AudioInstance Instance = new AudioInstance();
+                    Instance.SetUpInstance(Page.Key, Event.Key, Event.Value);
+                    if(Instance.IsPlaying()) Instance.Stop(true);
+                    ReleaseAudioInstance(Instance,IsDebbugging);
+                    if(IsDebbugging) Debug.Log("EventInstance SUCCESSFULLY RELEASE at Page "+Page.Key.name+", on Event "+Event.Key+"." );
+                }
+                if(IsDebbugging) Debug.Log("Page "+Page.Key.name+"SUCCESSFULLY REMOVE from EncyclopediAudio." );
+            }
+
+            if (CountAll())
+            {
+                if(IsDebbugging) Debug.Log("EncyclopediAudio SUCCESSFULLY ClEAN");
+            }
+            else Debug.LogError("A ERROR has occured in the CLEANING of EncyclopediAudio, and it DOES'NT RELEASE all its content.");
+            
+            EncyclopediaAudio.Clear();
+        }
+    }
+    #endregion
+    #region AudioInstance
     public struct AudioInstance
     {
         private EventInstance Instance;
         private EventReference Reference;
+        private EventDescription Description;
         private GameObject GameObject;
-
+        
         public EventInstance GetInstance()
         {
             return Instance;
         }
-        public void SetInstance(EventInstance instance)
+        private void SetInstance(EventInstance instance)
         {
             Instance = instance;
         }
@@ -148,20 +248,49 @@ namespace FMODUnity
         {
             return Reference;
         }
-        public void SetReference(EventReference reference)
+        private void SetReference(EventReference reference)
         {
             Reference = reference;
+        }
+        
+        public EventDescription GetDescription()
+        {return Description;}
+        private void SetDescription(EventDescription description)
+        {
+            Description = description;
         }
 
         public GameObject GetKeyObject()
         {
             return GameObject;
         }
-        public void SetKeyObject(GameObject keyObject)
+        private void SetKeyObject(GameObject keyObject)
         {
             GameObject = keyObject;
         }
         
+        
+
+        public AudioInstance CreateInstance(GameObject gameObject, EventReference reference)
+        {
+            AudioInstance audioInstance = new AudioInstance();
+            audioInstance.SetInstance(RuntimeManager.CreateInstance(reference));
+            audioInstance.SetReference(reference);
+            Instance.getDescription(out EventDescription description);
+            audioInstance.SetDescription(description);
+            audioInstance.SetKeyObject(gameObject);
+            return audioInstance;
+        }
+        public AudioInstance SetUpInstance(GameObject gameObject, EventReference reference,EventInstance eventInstance)
+        {
+            AudioInstance audioInstance = new AudioInstance();
+            audioInstance.SetInstance(eventInstance);
+            audioInstance.SetReference(reference);
+            Instance.getDescription(out EventDescription description);
+            audioInstance.SetDescription(description);
+            audioInstance.SetKeyObject(gameObject);
+            return audioInstance;
+        }
         public void Play(bool isSpacialized = false )
         {
             if (isSpacialized)
@@ -244,8 +373,7 @@ namespace FMODUnity
             if (GetState() == STATE.STOPPED || GetState() == STATE.STOPPING) return true;
             return false;
         }
-        
-        
+     
         
         
 
@@ -285,6 +413,8 @@ namespace FMODUnity
 
 
     }
+    #endregion
+    #region Enum
     public enum STATE : int
     {
         PLAYING = 0,
@@ -293,5 +423,7 @@ namespace FMODUnity
         STARTING = 3,
         STOPPING = 4,
     }
+    #endregion
+    #endregion
 }
 
