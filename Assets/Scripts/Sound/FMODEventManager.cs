@@ -39,6 +39,7 @@ public class FMODEventManager : MonoBehaviour
         // DontDestroyOnLoad(gameObject);
     }
 
+    
     private void OnEnable()
     {
         GlobalEventManager.Instance.OnComportmentExtracted += OnComportementExtracted;

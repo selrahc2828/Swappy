@@ -11,6 +11,7 @@ namespace FMODUnity
     public class AudioManager : Singleton<AudioManager>
     {
         public EncyclopediAudio EncyclopediAudio;
+        
         protected override void Initialize()
         {
             EncyclopediAudio = new EncyclopediAudio();
@@ -24,6 +25,7 @@ namespace FMODUnity
         private void Start()
         {
             throw new NotImplementedException();
+            
         }
 
         private void Update()
@@ -40,54 +42,78 @@ namespace FMODUnity
         {
             EncyclopediAudio.CleanUpSound();
         }
+        #region TabSetting
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            if (hasFocus)
+            {
+                RuntimeManager.GetBus("bus:/").setMute(false);
+            }
+            else
+            {
+                RuntimeManager.GetBus("bus:/").setMute(true);
+            }
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+            {
+                RuntimeManager.GetBus("bus:/").setMute(true);
+            }
+            else
+            {
+                RuntimeManager.GetBus("bus:/").setMute(false);
+            }
+        }
+        #endregion
     }
     
     #region AudioSystem
     #region EncyclopediAudio
     public struct EncyclopediAudio
     {
-        private Dictionary<GameObject,Dictionary<EventReference,EventInstance>>  EncyclopediaAudio;
+        private Dictionary<GameObject,Dictionary<EventReference,AudioInstance>> _encyclopediaAudio;
         
-        private bool CheckAudioInstance(GameObject keyObject, EventReference reference, out EventInstance eventInstance, bool isDebbuging = false)
-        {
-            if (EncyclopediaAudio.ContainsKey(keyObject))
+        private bool CheckAudioInstance(GameObject keyObject, EventReference reference, out AudioInstance audioInstance, bool isDebugging = false)
+        {//The Method return a bool to express if an AudioInstance exist on the KeyObject and with the EventReference, but also return the AudioInstance. Can be use as a debbug.
+            if (_encyclopediaAudio.ContainsKey(keyObject))
             {
-                if (EncyclopediaAudio[keyObject].ContainsKey(reference))
+                if (_encyclopediaAudio[keyObject].ContainsKey(reference))
                 {
-                    eventInstance = EncyclopediaAudio[keyObject][reference]; 
-                    if (isDebbuging) Debug.Log("EventInstance FOUND at "+keyObject.name+", "+ reference);
+                    audioInstance = _encyclopediaAudio[keyObject][reference]; 
+                    if (isDebugging) Debug.Log("AudioInstance FOUND at "+keyObject.name+", "+ reference);
                     return true;
                 }
-                else if(isDebbuging) Debug.LogError("EventInstance NOT FOUND in "+keyObject.name+".");
+                else if(isDebugging) Debug.LogError("AudioInstance NOT FOUND in "+keyObject.name+".");
             }
-            else if (isDebbuging) Debug.LogError("GameObject NOT FOUND in EncyclopediAudio.");
-            eventInstance = default;
+            else if (isDebugging) Debug.LogError("GameObject NOT FOUND in EncyclopediAudio.");
+            audioInstance = default;
             return false;
         }
-
-        public bool CheckAudioInstance(AudioInstance audioInstance, bool isDebbuging = false)
+        public bool CheckAudioInstance(AudioInstance audioInstance, bool isDebugging = false)
         {
             GameObject keyObject = audioInstance.GetKeyObject();
             EventReference reference = audioInstance.GetReference();
-            if (EncyclopediaAudio.ContainsKey(keyObject))
+            if (_encyclopediaAudio.ContainsKey(keyObject))
             {
-                if (EncyclopediaAudio[keyObject].ContainsKey(reference))
+                if (_encyclopediaAudio[keyObject].ContainsKey(reference))
                 {
-                    if (isDebbuging) Debug.Log("EventInstance FOUND at "+keyObject.name+", "+ reference);
+                    if (isDebugging) Debug.Log("AudioInstance FOUND at "+keyObject.name+", "+ reference);
                     return true;
                 }
-                else if(isDebbuging) Debug.LogError("EventInstance NOT FOUND in "+keyObject.name+".");
+                else if(isDebugging) Debug.LogError("AudioInstance NOT FOUND in "+keyObject.name+".");
             }
-            else if (isDebbuging) Debug.LogError("GameObject NOT FOUND in EncyclopediAudio.");
+            else if (isDebugging) Debug.LogError("GameObject NOT FOUND in EncyclopediAudio.");
             return false;
         }
-        public AudioInstance GetAudioInstance(GameObject keyObject, EventReference reference, bool isDebbuging = false)
+        
+        public AudioInstance GetAudioInstance(GameObject keyObject, EventReference reference, bool isDebugging = false)
         {
-            var audioInstance = new AudioInstance();
-            if (CheckAudioInstance(keyObject, reference, out EventInstance eventInstance))
+            if (CheckAudioInstance(keyObject, reference, out AudioInstance audioInstance))
             {
-                audioInstance.SetUpInstance(keyObject, reference,eventInstance);
-                if (isDebbuging) Debug.Log("AudioInstance SUCCESSFULLY GET from EncyclopediAudio in "+ keyObject.name+" at "+ reference.ToString()+".");
+                audioInstance = _encyclopediaAudio[keyObject][reference];
+                if (isDebugging) Debug.Log("AudioInstance SUCCESSFULLY GET from EncyclopediAudio in "+ keyObject.name+" at "+ reference.ToString()+".");
             }
             else
             {
@@ -95,76 +121,67 @@ namespace FMODUnity
             }
             return audioInstance;
         }
-        public AudioInstance CreateAudioInstance(GameObject keyObject, EventReference reference, bool isDebbuging = false)
+        public AudioInstance CreateAudioInstance(GameObject keyObject, EventReference reference, bool isDebugging = false)
         {
-            if (CheckAudioInstance(keyObject, reference, out EventInstance eventInstance))
+            if (CheckAudioInstance(keyObject, reference, out AudioInstance audioInstance))
             {
-                return GetAudioInstance(keyObject,reference,isDebbuging);
+                return audioInstance;
             }
             else
             {
-                AudioInstance audioInstance = new AudioInstance();
                 audioInstance.CreateInstance(keyObject, reference);
-                if (!EncyclopediaAudio.ContainsKey(keyObject))
+                if (!_encyclopediaAudio.ContainsKey(keyObject))
                 {
-                    EncyclopediaAudio.Add(keyObject, new Dictionary<EventReference,EventInstance>());
-                    if (isDebbuging) Debug.Log("New KeyObject SUCCESSFULLY CREATE in EncyclopediAudio");
+                    _encyclopediaAudio.Add(keyObject, new Dictionary<EventReference,AudioInstance>());
+                    if (isDebugging) Debug.Log("New KeyObject SUCCESSFULLY CREATE in EncyclopediAudio");
                 }
-                EncyclopediaAudio[keyObject][reference] = audioInstance.GetInstance();
-                if (isDebbuging) Debug.Log("AudioInstance SUCCESSFULLY CREATE and ADD in EncyclopediAudio");
+                _encyclopediaAudio[keyObject][reference] = audioInstance;
+                if (isDebugging) Debug.Log("AudioInstance SUCCESSFULLY CREATE and ADD in EncyclopediAudio");
                 return audioInstance;
             }
         }
 
-        public void ReleaseAudioInstance(GameObject keyObject, EventReference reference, bool isDebbuging = false)
+        private void ReleaseAudioInstance(GameObject keyObject, EventReference reference, bool isDebugging = false)
         {
-            if (CheckAudioInstance(keyObject, reference, out EventInstance eventInstance))
+            if (CheckAudioInstance(keyObject, reference, out AudioInstance audioInstance))
             {
-                eventInstance.getPlaybackState(out PLAYBACK_STATE playbackState);
-                if (playbackState != PLAYBACK_STATE.STOPPED || playbackState != PLAYBACK_STATE.STOPPING) Debug.LogWarning("EventInstance is about to be released, even if it still playing, assure yourself that the sound can Stop by itself before release it, to avoid memory leaks.");
-                eventInstance.release();
-                if(isDebbuging) Debug.Log("EventInstance SUCCESSFULLY RELEASE");
-                EncyclopediaAudio[keyObject].Remove(reference);
-                if(isDebbuging) Debug.Log("EventInstance SUCCESSFULLY REMOVE from EncyclopediAudio");
-                if (EncyclopediaAudio[keyObject].Count == 0)
+                audioInstance.ReleaseInstance(isDebugging);
+                _encyclopediaAudio[keyObject].Remove(reference);
+                if(isDebugging) Debug.Log("AudioInstance SUCCESSFULLY REMOVE from EncyclopediAudio");
+                if (_encyclopediaAudio[keyObject].Count == 0)
                 {
-                    EncyclopediaAudio.Remove(keyObject);
-                    if(isDebbuging) Debug.Log("KeyObject SUCCESSFULLY REMOVE from EncyclopediAudio");
+                    _encyclopediaAudio.Remove(keyObject);
+                    if(isDebugging) Debug.Log("KeyObject SUCCESSFULLY REMOVE from EncyclopediAudio");
                 }
             }
             else
             {
-                if(isDebbuging) Debug.LogWarning("EventInstance can't be remove and release from EncyclopediAudio, because it don't exist in it.");
+                if(isDebugging) Debug.LogWarning("AudioInstance can't be remove and release from EncyclopediAudio, because it don't exist in it.");
             }
         }
-
-        public void ReleaseAudioInstance(AudioInstance audioInstance, bool isDebbuging = false)
+        public void ReleaseAudioInstance(AudioInstance audioInstance, bool isDebugging = false)
         {
-            GameObject keyObject = audioInstance.GetKeyObject();
-            EventReference reference = audioInstance.GetReference();
-            if (CheckAudioInstance(keyObject, reference, out EventInstance eventInstance))
+            if (CheckAudioInstance(audioInstance,isDebugging))
             {
-                EncyclopediaAudio[keyObject].Remove(reference);
-                if(isDebbuging) Debug.Log("EventInstance SUCCESSFULLY REMOVE from EncyclopediAudio");
-                if (EncyclopediaAudio[keyObject].Count == 0)
+                audioInstance.GetInstance().release();
+                _encyclopediaAudio[audioInstance.GetKeyObject()].Remove(audioInstance.GetReference());
+                if(isDebugging) Debug.Log("AudioInstance SUCCESSFULLY REMOVE from EncyclopediAudio");
+                if (_encyclopediaAudio[audioInstance.GetKeyObject()].Count == 0)
                 {
-                    EncyclopediaAudio.Remove(keyObject);
-                    if(isDebbuging) Debug.Log("KeyObject SUCCESSFULLY REMOVE from EncyclopediAudio");
+                    _encyclopediaAudio.Remove(audioInstance.GetKeyObject());
+                    if(isDebugging) Debug.Log("KeyObject SUCCESSFULLY REMOVE from EncyclopediAudio");
                 }
-                if (audioInstance.GetState() != STATE.STOPPED || audioInstance.GetState() != STATE.STOPPING) Debug.LogWarning("EventInstance is about to be released, even if it still playing, assure yourself that the sound can Stop by itself before release it, to avoid memory leaks.");
-                eventInstance.release();
-                if(isDebbuging) Debug.Log("EventInstance SUCCESSFULLY RELEASE");
             }
             else
             {
-                if(isDebbuging) Debug.LogWarning("EventInstance can't be remove and release from EncyclopediAudio, because it don't exist in it.");
+                if(isDebugging) Debug.LogWarning("AudioInstance can't be remove and release from EncyclopediAudio, because it don't exist in it.");
             }
         }
 
         public int CountKeyPage()
         {
             int count = 0;
-            foreach (KeyValuePair<GameObject,Dictionary<EventReference,EventInstance>> Page in EncyclopediaAudio)
+            foreach (KeyValuePair<GameObject,Dictionary<EventReference,AudioInstance>> page in _encyclopediaAudio)
             {
                 count++;
             }
@@ -173,27 +190,27 @@ namespace FMODUnity
         public int CountAudioInstance(GameObject keyObject)
         {
             int count = 0;
-            foreach (KeyValuePair<EventReference, EventInstance> Event in EncyclopediaAudio[keyObject])
+            foreach (KeyValuePair<EventReference, AudioInstance> @event in _encyclopediaAudio[keyObject])
             {
                 count++;
             }
             return count;
         }
 
-        public bool CountAll(bool isDebbuging = false)
+        public bool CountAll(bool isDebugging = false)
         {
             bool isEmpty = true;
-            if (isDebbuging)
+            if (isDebugging)
             {
                 int pages = CountKeyPage();
                 if(pages > 0) isEmpty = false;
                 Debug.Log("There is "+pages+" Pages in EncyclopediAudio.");
                 if (!isEmpty)
                 {
-                    foreach (KeyValuePair<GameObject,Dictionary<EventReference,EventInstance>> Page in EncyclopediaAudio)
+                    foreach (KeyValuePair<GameObject,Dictionary<EventReference,AudioInstance>> page in _encyclopediaAudio)
                     {
-                        int count = CountAudioInstance(Page.Key);
-                        Debug.Log("There is "+count+" Event in the Page "+Page.Key.name +" in EncyclopediAudio.");
+                        int count = CountAudioInstance(page.Key);
+                        Debug.Log("There is "+count+" Event in the Page "+page.Key.name +" in EncyclopediAudio.");
                     }
                 }
             }
@@ -201,147 +218,143 @@ namespace FMODUnity
         }
         
         
-        public void CleanUpSound( bool IsDebbugging = false)
+        public void CleanUpSound(bool isDebbugging = false)
         {
-            CountAll(IsDebbugging);
-            foreach (KeyValuePair<GameObject,Dictionary<EventReference,EventInstance>> Page in EncyclopediaAudio)
+            CountAll(isDebbugging);
+            foreach (KeyValuePair<GameObject,Dictionary<EventReference,AudioInstance>> page in _encyclopediaAudio)
             {
-                foreach (KeyValuePair<EventReference, EventInstance> Event in Page.Value)
+                foreach (KeyValuePair<EventReference, AudioInstance> line in page.Value)
                 {
-                    AudioInstance Instance = new AudioInstance();
-                    Instance.SetUpInstance(Page.Key, Event.Key, Event.Value);
-                    if(Instance.IsPlaying()) Instance.Stop(true);
-                    ReleaseAudioInstance(Instance,IsDebbugging);
-                    if(IsDebbugging) Debug.Log("EventInstance SUCCESSFULLY RELEASE at Page "+Page.Key.name+", on Event "+Event.Key+"." );
+                    AudioInstance audioInstance = line.Value;
+                    if(audioInstance.IsPlaying()) audioInstance.Stop(true);
+                    ReleaseAudioInstance(audioInstance,isDebbugging);
+                    if(isDebbugging) Debug.Log("AudioInstance SUCCESSFULLY RELEASE at Page "+page.Key.name+", on Event "+line.Key+"." );
                 }
-                if(IsDebbugging) Debug.Log("Page "+Page.Key.name+"SUCCESSFULLY REMOVE from EncyclopediAudio." );
+                if(isDebbugging) Debug.Log("Page "+page.Key.name+"SUCCESSFULLY REMOVE from EncyclopediAudio." );
             }
 
             if (CountAll())
             {
-                if(IsDebbugging) Debug.Log("EncyclopediAudio SUCCESSFULLY ClEAN");
+                if(isDebbugging) Debug.Log("EncyclopediAudio SUCCESSFULLY ClEAN");
             }
             else Debug.LogError("A ERROR has occured in the CLEANING of EncyclopediAudio, and it DOES'NT RELEASE all its content.");
             
-            EncyclopediaAudio.Clear();
+            _encyclopediaAudio.Clear();
         }
     }
     #endregion
     #region AudioInstance
     public struct AudioInstance
     {
-        private EventInstance Instance;
-        private EventReference Reference;
-        private EventDescription Description;
-        private GameObject GameObject;
+        private EventInstance _instance;         //The EventInstance of the AudioInstance
+        private EventReference _reference;       //The EventReference of the AudioInstance
+        private EventDescription _description;   //The EventDescription of the AudioInstance
+        private GameObject _gameObject;          //The GameObject of the AudioInstance
         
         public EventInstance GetInstance()
-        {
-            return Instance;
+        {//Get the EventInstance from somewhere else than here
+            return _instance;
         }
         private void SetInstance(EventInstance instance)
-        {
-            Instance = instance;
+        {//Set the EventInstance of this AudioInstance
+            _instance = instance;
         }
 
         public EventReference GetReference()
-        {
-            return Reference;
+        {//Get the EventReference from somewhere else than here
+            return _reference;
         }
         private void SetReference(EventReference reference)
-        {
-            Reference = reference;
+        {//Set the EventReference of this AudioInstance
+            _reference = reference;
         }
-        
+
         public EventDescription GetDescription()
-        {return Description;}
+        {//Get the EventDescription from somewhere else than here
+            return _description;
+        }
         private void SetDescription(EventDescription description)
-        {
-            Description = description;
+        {//Set the EventReference of this AudioInstance
+            _description = description;
         }
 
         public GameObject GetKeyObject()
-        {
-            return GameObject;
+        {//Get the GameObject from somewhere else than here
+            return _gameObject;
         }
         private void SetKeyObject(GameObject keyObject)
-        {
-            GameObject = keyObject;
+        {//Set the GameOnecject of this AudioInstance
+            _gameObject = keyObject;
         }
         
-        
-
         public AudioInstance CreateInstance(GameObject gameObject, EventReference reference)
-        {
-            AudioInstance audioInstance = new AudioInstance();
-            audioInstance.SetInstance(RuntimeManager.CreateInstance(reference));
-            audioInstance.SetReference(reference);
-            Instance.getDescription(out EventDescription description);
-            audioInstance.SetDescription(description);
-            audioInstance.SetKeyObject(gameObject);
-            return audioInstance;
+        {//The method retrun an AudioInstance from a GameObject And a EventReference. Usefull when you create a new instance of a EventInstance to store it in the EncyclopediAudio
+            SetInstance(RuntimeManager.CreateInstance(reference));
+            SetReference(reference);
+            _instance.getDescription(out EventDescription description);
+            SetDescription(description);
+            SetKeyObject(gameObject);
+            return this;
         }
-        public AudioInstance SetUpInstance(GameObject gameObject, EventReference reference,EventInstance eventInstance)
+        public void ReleaseInstance(bool isDebugging = false)
         {
-            AudioInstance audioInstance = new AudioInstance();
-            audioInstance.SetInstance(eventInstance);
-            audioInstance.SetReference(reference);
-            Instance.getDescription(out EventDescription description);
-            audioInstance.SetDescription(description);
-            audioInstance.SetKeyObject(gameObject);
-            return audioInstance;
+            if(isDebugging && IsPlaying()) Debug.LogWarning("AudioInstance is about to be released, even if it still playing, assure yourself that the sound can Stop by itself before release it, to avoid memory leaks.");
+            _instance.release();
+            if(isDebugging) Debug.Log("AudioInstance SUCCESSFULLY RELEASE");
+            _reference = default;
+            _description = default;
+            _gameObject = null;
         }
-        public void Play(bool isSpacialized = false )
-        {
-            if (isSpacialized)
+
+        public void Play()
+        {//The method retrun nothing but play the sound of the AudioInstance, if it's a 3D sound, it take the position and the rigidbody as a 3D reference point
+            _description.is3D(out bool is3D);
+            if (is3D)
             {
-                if (GameObject.GetComponent<Rigidbody>() != null)
+                if (_gameObject.GetComponent<Rigidbody>() != null)
                 {
-                    RuntimeManager.AttachInstanceToGameObject(Instance, GameObject.transform,GameObject.GetComponent<Rigidbody>());
+                    RuntimeManager.AttachInstanceToGameObject(_instance, _gameObject.transform,_gameObject.GetComponent<Rigidbody>());
                 }
                 else
                 {
-                    RuntimeManager.AttachInstanceToGameObject(Instance, GameObject.transform);
+                    RuntimeManager.AttachInstanceToGameObject(_instance, _gameObject.transform);
                 }
             }
-            Instance.start();
+            _instance.start();
         }
-        
-
         public void Stop(bool immediate = false)
-        {
+        {//The method retrun nothing but Stop the sound of the AudioInstance. When used, it's possible to choose if the sound should be release instantly or allow it own fade out 
             if (IsPlaying())
             {
-                if (immediate) Instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                else Instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                if (immediate) _instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                else _instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             }
         }
 
         public float GetActualNamedParameter(string parameterName)
-        {
-            Instance.getParameterByName(parameterName,out float value);
+        {//The method retrun a float that is a actual or aiming value, in case of seek speed using, of a named Parameter of the EventInstance in the AudioInstance 
+            _instance.getParameterByName(parameterName,out float value);
             return value;
         }
         public float GetFinalNamedParameter(string parameterName)
-        {
-            Instance.getParameterByName(parameterName,out float value, out float var);
+        {//The method retrun a float that is final value, which is the actual or aiming value with all effect applied on it like seek speed or velocity on it, of a named Parameter of the EventInstance in the AudioInstance 
+            _instance.getParameterByName(parameterName,out float value, out float var);
             return var;
         }
         public void SetNamedParameter(string parameterName, float value, bool ignoneSeekSpeed = false)
-        {
-            Instance.setParameterByName(parameterName, value, ignoneSeekSpeed);
+        {//The method retrun nothing but set a Named Parameter to a value. when used, it's possible to ignore the seek speed, if necessary 
+            _instance.setParameterByName(parameterName, value, ignoneSeekSpeed);
         }
-
         public void Set3Dparameter()
-        {
-            Instance.set3DAttributes(RuntimeUtils.To3DAttributes(GameObject));
+        {//The method return nothing but set the 3D parameter of a EventInstance on the GameObject of the AudioInstance, [It might be useless but just in case]
+            _instance.set3DAttributes(RuntimeUtils.To3DAttributes(_gameObject));
         }
         
         
-        public STATE GetState(bool isdebbuging = false )
-        {
+        public STATE GetState(bool isDebugging = false )
+        {//The method return the Actual Playing State of the EventInstance
             STATE state = new STATE();
-            Instance.getPlaybackState(out PLAYBACK_STATE playState);
+            _instance.getPlaybackState(out PLAYBACK_STATE playState);
             switch (playState)
             {
                 case PLAYBACK_STATE.PLAYING:
@@ -362,45 +375,39 @@ namespace FMODUnity
             }
             return state;
         }
-        
         public bool IsPlaying()
-        {
+        {//The method retrun a bool to express if the EventInstance is playing or about to be played
             if (GetState() == STATE.PLAYING || GetState() == STATE.STARTING) return true;
             return false;
         }
         public bool IsStopped()
-        {
+        {//The method return a bool to express if the EventInstance is stopped or about to be stopped
             if (GetState() == STATE.STOPPED || GetState() == STATE.STOPPING) return true;
             return false;
         }
-     
         
-        
-
         public bool IsValid(bool isDebugging = false)
-        {
+        {//The method return a bool to express if the AudioInstance is correctly set up, the debbugging factor is usefull in case of debbugging to tell what missing exactly
             bool instanceIsValid = true;
             bool referenceIsValid = true;
             bool gameObjectIsValid = true;
 
-            if (!Instance.isValid()) instanceIsValid = false;
-            if (Reference.IsNull) referenceIsValid = false;
-            if (GameObject == null) gameObjectIsValid = false;
-            if (instanceIsValid && referenceIsValid && gameObjectIsValid) return true;
+            if (!_instance.isValid()) instanceIsValid = false;
+            if (_reference.IsNull) referenceIsValid = false;
+            if (_gameObject == null) gameObjectIsValid = false;
 
             if (isDebugging)
             {
                 if (!instanceIsValid && (referenceIsValid || gameObjectIsValid))
                 {
-                    if (referenceIsValid && gameObjectIsValid) Debug.LogError("AudioInstance is not valid. Missing EventInstance ON KeyObject " + GameObject.name + " WITH EventReference "+ Reference.ToString()+".");
-                    else if (referenceIsValid && !gameObjectIsValid) Debug.LogError("AudioInstance is not valid. Missing EventInstance AND KeyObject WITH EventReference"+ Reference.ToString()+".");
-                    else Debug.LogError("AudioInstance is not valid. Missing EventInstance AND EventRerence ON KeyObject"+GameObject.name+".");
+                    if (referenceIsValid && gameObjectIsValid) Debug.LogError("AudioInstance is not valid. Missing EventInstance ON KeyObject " + _gameObject.name + " WITH EventReference "+ _reference.ToString()+".");
+                    else if (referenceIsValid) Debug.LogError("AudioInstance is not valid. Missing EventInstance AND KeyObject WITH EventReference"+ _reference.ToString()+".");
+                    else Debug.LogError("AudioIntance is not valid. Missing EventInstance AND EventRefence ON KeyObject "+ _gameObject.name+".");
                 }
                 else if (!referenceIsValid && (gameObjectIsValid || instanceIsValid))
                 {
-                    Instance.getDescription(out EventDescription description);
-                    description.getPath(out string path);
-                    if (gameObjectIsValid) Debug.LogError("AudioInstance is not valid. Missing EventReference ON KeyObject " + GameObject.name + " WITH an EventInstance"+ path+".");
+                    _description.getPath(out string path);
+                    if (gameObjectIsValid) Debug.Log("AudioInstance is not valid. Missing EventReference ON KeyObject "+ _gameObject.name +" WITH an EventInstance"+path+".");
                     else Debug.LogError("AudioInstance is not valid. Missing EventReference AND KeyObject WITH EventInstance"+ path+".");
                 }
                 else
@@ -408,7 +415,7 @@ namespace FMODUnity
                     Debug.LogError("AudioInstance is not valid. Missing all component of the Instance");
                 }
             }
-            return false;
+            return instanceIsValid && referenceIsValid && gameObjectIsValid;
         }
 
 
@@ -416,8 +423,8 @@ namespace FMODUnity
     #endregion
     #region Enum
     public enum STATE : int
-    {
-        PLAYING = 0,
+    {//Playing State of an EventInstance, copy of PLAYING_STATE from FMOD System, for easier use
+         PLAYING = 0,
         SUSTAINING = 1,
         STOPPED = 2,
         STARTING = 3,
